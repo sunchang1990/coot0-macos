@@ -1,5 +1,10 @@
 # One line per check: PASS / FAIL / PARTIAL and a few words.  (You can also just tell me in chat.)
-# Round 17 (see TEST-PROTOCOL.md, section Y):
+# Round 18 (see TEST-PROTOCOL.md, section Z):
+Z1 install build 18 (Enter): installed next to b17, summary mentions coot0 --legacy:
+Z2 coot0 with your data: sharp Retina view, picking OK, log says retina=1:
+Z3 coot0 --legacy: softer view, picking OK, retina=0:
+Z4 anything slow or wrong with the Retina view:
+# Round 17 (section Y):
 Y1 tar -xzf + ./install.sh (Enter at the folder question): checks, PATH line shown, start test ok:
 Y2 new Terminal window, coot0 in a data folder: Coot opens, coot-backup/ in that folder:
 Y3 coot0 --diagnose:

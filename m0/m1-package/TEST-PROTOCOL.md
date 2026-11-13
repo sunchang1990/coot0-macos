@@ -1,4 +1,25 @@
-# Coot 0.9.8.96 on Apple Silicon: test round 17 (build 17 = build 16 + installer and `coot0` command)
+# Coot 0.9.8.96 on Apple Silicon: test round 18 (build 18 = build 17 + Retina view by default for coot0)
+
+**From you** (13 Nov): build 17 installed and `coot0` works; the Gatekeeper dialog seen once at 12:25 could not be reproduced (paused; notes in the answer of 13 Nov). **No change to Coot itself**: the launcher, installer, tests and documents changed.
+
+1. **`coot0` draws the 3D view at full Retina resolution by default** (2 GL pixels per point, as `--retina` did; your earlier sessions used it 14 times). **`coot0 --legacy`** gives the standard resolution (1 pixel per point, enlarged by macOS: softer, less work for the graphics chip; useful for large maps, an external non-Retina monitor or an older Mac). `COOT_RETINA=0` / `1` in the environment does the same and wins over the default. The unpacked folder (`./run-coot.sh`) keeps the standard resolution unless you give `--retina`; `--legacy` works there too. `--legacy` is not passed on to Coot (Coot does not know it).
+2. `README-FIRST.txt` explains the two resolutions; the installer's final summary mentions `coot0 --legacy`.
+3. The installer suite checks the default (retina=1), `--legacy` (retina=0, Coot starts) and the unpacked folder (retina=0): 22 checks; build 17 fails 2 of them.
+
+**On screen: not verified by me** (the Retina view itself was used by you in builds 9-16 with `--retina`).
+
+## Z. Round 18 checks (about 5 minutes)
+
+| # | Do | Expected |
+|---|---|---|
+| Z1 | `tar -xzf ~/Desktop/test/coot0-0.9.8.96-b18-macos-arm64.tar.gz` (e.g. in ~/Downloads), `cd coot0-0.9.8.96-b18`, `./install.sh` (Enter). | Installed into `~/.local/share/coot0/0.9.8.96-b18` (b17 stays), summary mentions `coot0 --legacy`. |
+| Z2 | New Terminal window, a data folder: `coot0 --pdb <model> --auto <mtz>`. | Sharp (Retina) atoms, bonds, labels; picking (middle/right-click centre, click on atom) hits the atom under the pointer. The log line 2 says `retina=1`. |
+| Z3 | Quit, `coot0 --legacy` with the same files. | Softer view, same picking; log `retina=0`. |
+| Z4 | Anything slow or wrong with the Retina view (large map, rotate)? | Your impression. |
+
+---
+
+# Earlier round (Y1-Y5 still open): Coot 0.9.8.96 on Apple Silicon: test round 17 (build 17 = build 16 + installer and `coot0` command)
 
 **From you** (13 Nov): X1, X2, W2, W3, W5 confirmed; the MacBook Pro M2 Pro passes all 18 headless suites on build 16 (your `m1-results-20261113-112209.txt`; the `ERROR:: ... torsion gradients` / `Null link_p` lines in it are Coot's own messages while the tests refine deliberately distorted test data, the same on the iMac). W6: I ran collect-results myself (no errors in your 13 Nov session). Rounds 13-16 are closed. **No C++ change, no change to Coot's scripts**: only the package (installer, launcher, tests, documents).
 

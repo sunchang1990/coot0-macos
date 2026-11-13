@@ -359,3 +359,15 @@ Round 17: installer -> build 17  (no patch: package files only; coot-bin, lib/, 
               removed.  install.sh now stores the real path; uninstall.sh compares real paths; installer_test checks real paths and runs under TMPDIR=/tmp in
               run-headless-tests (env -i).  First b17 tarball: 15/19 under /tmp; fixed: 19/19.  Verified b17 tarball: 19 suites (installer 19/19 after the fix;
               the other 18 as build 16), sweep 248/0/5, bundle_check OK.  sha256 e70f8045...faad.
+
+Round 18: Retina default for coot0 -> build 18  (no patch: package only)
+  User request 13 Nov: --retina default for the installed coot0, --legacy to fall back, README note.
+  run-coot.sh: --legacy -> COOT_RETINA=0 (not passed to coot-bin); a copy with .coot0-installed sets COOT_RETINA=1 if unset (env wins).  The seam reads
+  COOT_RETINA: set and not "0" = on.  Unpacked folder unchanged (standard).  install.sh: wrapper comment + summary line; README-FIRST.txt section RESOLUTION.
+  installer_test 19 -> 22 (coot0 default retina=1; --legacy retina=0 + Coot starts; folder retina=0): build 17 20/22, build 18 22/22.
+  User 13 Nov: build 18 works.  The Gatekeeper "coot-bin Not Opened" dialog (12:25, again ~14:00) came from MY installer test: the new
+  "unpacked folder keeps standard resolution" check started the copy whose files the test flags with com.apple.quarantine on purpose
+  (COOT_IGNORE_QUARANTINE=1); the check still passed because it read the launcher's log line written before exec.  Fix: clear the flag
+  on that copy first, require INSTALL-CHECK OK, and check that no started copy was flagged (installer 22 -> 23).  Ships with the next build.
+  Licensing (user 13 Nov): Coot GPL-3.0-or-later (unchanged, its authors); coot0 modifications Copyright (C) 2026 Chang Sun, GPL-3.0-only,
+  stated separately (LICENSING.md); package as a whole GPL-3.0.  Credits: Huilin Li's lab (feedback), Paul Emsley (support).

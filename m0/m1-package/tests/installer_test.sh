@@ -50,10 +50,14 @@ check "coot0 uses the Retina (2x) 3D view by default" "grep -q '| retina=1 |' '$
     "$H1/.local/bin/coot0" --legacy --no-graphics --python --no-state-script --no-startup-scripts --script "$D1/tests/install_check.py" ) > "$T/legacy.txt" 2>&1 &
 pid=$!; for i in $(seq 1 240); do sleep 1; kill -0 $pid 2>/dev/null || break; done; kill -9 $pid 2>/dev/null; wait $pid 2>/dev/null
 check "coot0 --legacy: standard resolution, Coot starts (the option is not passed on to Coot)" "grep -q '| retina=0 |' '$T/legacy.txt' && grep -q '^INSTALL-CHECK OK' '$T/legacy.txt' && ! grep -qi 'legacy' <(grep -iE 'unrecognized|unknown|invalid' '$T/legacy.txt')"
+# the unpacked folder: remove the download flag that was set above on purpose first (starting a flagged coot-bin makes
+# macOS show its "Not Opened" malware dialog on the screen: seen 13 Nov during the build-17/18 test runs)
+xattr -dr com.apple.quarantine "$PKG" 2>/dev/null
 ( cd "$PROJ" && env -i HOME="$H1" PATH=$SYS TMPDIR="$T" COOT_NO_SPLASH=1 COOT_NO_DEFAULT_TOOLBAR=1 \
-    COOT_IGNORE_QUARANTINE=1 "$PKG/run-coot.sh" --no-graphics --python --no-state-script --no-startup-scripts --script "$D1/tests/install_check.py" ) > "$T/folder.txt" 2>&1 &
+    "$PKG/run-coot.sh" --no-graphics --python --no-state-script --no-startup-scripts --script "$D1/tests/install_check.py" ) > "$T/folder.txt" 2>&1 &
 pid=$!; for i in $(seq 1 240); do sleep 1; kill -0 $pid 2>/dev/null || break; done; kill -9 $pid 2>/dev/null; wait $pid 2>/dev/null
-check "the unpacked folder (./run-coot.sh, not installed) keeps the standard resolution" "grep -q '| retina=0 |' '$T/folder.txt'"
+check "the unpacked folder (./run-coot.sh, not installed) keeps the standard resolution, and Coot starts" "grep -q '| retina=0 |' '$T/folder.txt' && grep -q '^INSTALL-CHECK OK' '$T/folder.txt'"
+check "no Coot started by this test was a copy with the download flag" "! grep -q 'quarantine flag' '$T/folder.txt' '$T/run.txt' '$T/legacy.txt'"
 ( cd "$PROJ" && env -i HOME="$H1" PATH=$SYS "$H1/.local/bin/coot0" --diagnose ) > "$T/diag.txt" 2>&1
 check "coot0 --diagnose reports the Mac and the installed version" "grep -q 'Checking this Mac' '$T/diag.txt' && grep -qF 'installed version: $D1' '$T/diag.txt'"
 

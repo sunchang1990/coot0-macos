@@ -6,6 +6,11 @@ applied to the pristine tree by `setup.sh`) or a change of the packaged data / s
 round, `TEST-PROTOCOL.md` has the user-facing explanation and the checks for you (newest round first).  A "build" is one delivered zip.
 "Verified" means a headless test (no window server in the build environment); what only a screen can show is marked "on screen: not verified".
 
+## Build 18  (no patch: package only)
+- Changed: **`coot0` uses the Retina (2x) 3D view by default**; new option **`--legacy`** (also for `./run-coot.sh`) for the standard resolution. `COOT_RETINA=0/1` overrides.
+  The unpacked folder keeps the standard resolution unless `--retina` is given.  `README-FIRST.txt` and the installer summary explain it.
+- Tests: `installer` 19 -> 22 (fails on build 17).
+
 ## Build 17  (no patch: package only; `bin/coot-bin`, `lib/` and Coot's scripts as in build 16)
 - New: **`install.sh`** (and **Install coot0.command** for Finder): checks the Mac (arm64, macOS, disk, CCP4 / Phenix / reduce / probe with what each is for),
   removes the download quarantine from the installed copy, installs into `~/.local/share/coot0/<version>` (asked; any folder), writes the command
