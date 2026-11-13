@@ -1,0 +1,17 @@
+Tests of round 13 on the build-12 code and on the build-13 code (same test files).
+
+== gui-dialogs (gui_python_dialogs.py, 39 checks in build 13) on the build-12 python files ==  [/tmp/gd_b12code.txt]
+FAIL Stepped Refine: the refining atoms are displayed (refinement_already_ongoing_p) until the result is accepted, and the residues move  EXC AttributeError("module '__main__' has no attribute 'refine_auto_range_and_show'") 8-8928-538ecab9fb75/b/bundle-b13/tes
+FAIL Stepped Refine: pressing Stop ends the display at once and leaves nothing pending                                                    EXC AttributeError("module '__main__' has no attribute 'refine_auto_range_and_show'") 2-59a8-4328-8928-538ecab9fb75/b/bund
+FAIL Stepped Refine: COOT_STEPPED_REFINE_SHOW=0 keeps the old immediate behaviour                                                         EXC AttributeError("module '__main__' has no attribute 'refine_auto_range_and_show'") spaces/0c506472-59a8-4328-8928-538ec
+FAIL Fit Loop by Database Search: clicked atoms give a Loop Candidates dialog with candidate loops                                        "pick function raised SystemError('<built-in function protein_db_loops_py> returned a result with an exception set')"
+SUMMARY 35 / 39
+
+== the same file on the build-13 python files ==  [/tmp/gd_b13.txt]
+SUMMARY 39 / 39
+
+== gtk2compat case tree_views on the build-12 PyGTK replacement ==  [/tmp/tv_case_b12_out.txt]
+Traceback (most recent call last):
+TypeError: cannot map 'gboolean' to a GType
+== and on the build-13 replacement == 
+CASE-OK (gtk2compat 12 / 12)

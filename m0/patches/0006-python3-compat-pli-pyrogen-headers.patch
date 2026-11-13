@@ -1,0 +1,120 @@
+diff --git a/pli/flev-annotations.cc b/pli/flev-annotations.cc
+index 4722c8b..dd8c364 100644
+--- a/pli/flev-annotations.cc
++++ b/pli/flev-annotations.cc
+@@ -4,6 +4,7 @@
+ #ifndef HAVE_INCLUDED_PYTHON
+ #define HAVE_INCLUDED_PYTHON
+ #include <Python.h>
++#include "compat/coot-python3-compat.hh"
+ #endif
+ #endif
+ #endif
+diff --git a/pli/pi-stacking.cc b/pli/pi-stacking.cc
+index ec77668..3c82451 100644
+--- a/pli/pi-stacking.cc
++++ b/pli/pi-stacking.cc
+@@ -22,6 +22,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include <Python.h>
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include <cstring> // otherwise strchr() problems when using clang/Mac,
+diff --git a/pli/specs.hh b/pli/specs.hh
+index f2cf493..3111f4a 100644
+--- a/pli/specs.hh
++++ b/pli/specs.hh
+@@ -5,6 +5,7 @@
+ #ifdef USE_PYTHON
+ 
+ #include <Python.h>
++#include "compat/coot-python3-compat.hh"
+ 
+ #include "geometry/residue-and-atom-specs.hh"
+ 
+diff --git a/pyrogen/cairo-molecule.hh b/pyrogen/cairo-molecule.hh
+index a55814c..2b3a53f 100644
+--- a/pyrogen/cairo-molecule.hh
++++ b/pyrogen/cairo-molecule.hh
+@@ -3,6 +3,7 @@
+ 
+ #ifdef MAKE_ENHANCED_LIGAND_TOOLS
+ #include "Python.h"
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include <iostream> // for lig-build.hh - hmm.
+diff --git a/pyrogen/mmff-restraints.hh b/pyrogen/mmff-restraints.hh
+index 8ce9971..780e46d 100644
+--- a/pyrogen/mmff-restraints.hh
++++ b/pyrogen/mmff-restraints.hh
+@@ -20,6 +20,7 @@
+  */
+ 
+ #include "Python.h"
++#include "compat/coot-python3-compat.hh"
+ 
+ // #include <string>
+ // #include <vector>
+diff --git a/pyrogen/py-restraints.cc b/pyrogen/py-restraints.cc
+index 1de5489..3362074 100644
+--- a/pyrogen/py-restraints.cc
++++ b/pyrogen/py-restraints.cc
+@@ -21,6 +21,7 @@
+  */
+ 
+ #include <Python.h>
++#include "compat/coot-python3-compat.hh"
+ 
+ #include <cstring> // Fix strchr problems on using RDKit includes.
+ 
+diff --git a/pyrogen/py-restraints.hh b/pyrogen/py-restraints.hh
+index 7a6fef5..7c334fc 100644
+--- a/pyrogen/py-restraints.hh
++++ b/pyrogen/py-restraints.hh
+@@ -20,6 +20,7 @@
+  */
+ 
+ #include "Python.h"
++#include "compat/coot-python3-compat.hh"
+ #include <string>
+ #include <iostream>
+ #include <vector>
+diff --git a/pyrogen/restraints-boost.cc b/pyrogen/restraints-boost.cc
+index 86b13ee..8c2aaa7 100644
+--- a/pyrogen/restraints-boost.cc
++++ b/pyrogen/restraints-boost.cc
+@@ -21,6 +21,7 @@
+  */
+ 
+ #include "Python.h"
++#include "compat/coot-python3-compat.hh"
+ 
+ #include "compat/coot-sysdep.h"
+ #include <GraphMol/GraphMol.h>
+diff --git a/pyrogen/restraints-private.hh b/pyrogen/restraints-private.hh
+index 38b1eaa..400273c 100644
+--- a/pyrogen/restraints-private.hh
++++ b/pyrogen/restraints-private.hh
+@@ -24,6 +24,7 @@
+ #define RESTRAINTS_PRIVATE_HH
+ 
+ #include <Python.h>
++#include "compat/coot-python3-compat.hh"
+ #include <string>
+ #include <mmdb2/mmdb_manager.h>
+ #include <GraphMol/Substruct/SubstructMatch.h>
+diff --git a/pyrogen/restraints.hh b/pyrogen/restraints.hh
+index 6f01dc4..f654a71 100644
+--- a/pyrogen/restraints.hh
++++ b/pyrogen/restraints.hh
+@@ -24,6 +24,7 @@
+ #define RESTRAINTS_HH
+ 
+ #include <Python.h>
++#include "compat/coot-python3-compat.hh"
+ #include <cstddef>
+ #include <string>
+ #include <iostream>

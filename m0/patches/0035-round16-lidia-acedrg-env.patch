@@ -1,0 +1,65 @@
+diff --git a/python/3d_generator_import.py b/python/3d_generator_import.py
+index f837d64..12f8b90 100644
+--- a/python/3d_generator_import.py
++++ b/python/3d_generator_import.py
+@@ -56,25 +56,34 @@ if not os.getenv("CLIBD"):
+ # (Win)Coot setting since acedrg has a different python
+ #
+ def acedrg_env():
+-    
++    # macOS port: the original read os.environ["CBIN"] (KeyError when Coot was not started from a shell that
++    # sourced CCP4's setup, e.g. from Finder), joined PATH with ";" (Windows) and passed Coot's own PYTHONPATH
++    # (Python 3.11 modules) on to CCP4's Python.  Start from CCP4's variables for child programs instead.
+     import os
+-
+-    # copy what we have
+-    my_env = os.environ.copy()
+-    # then we need:
+-    # disable python home
+-    # put ccp4 bin ahead of coot
+-    dir_name = False
+-    for ccp4_dir in ["CBIN", "CCP4_BIN"]:
+-        dir_name = os.environ[ccp4_dir]
+-        if os.path.isdir(dir_name):
+-            break
+-    if dir_name:
+-        my_env["PATH"] = dir_name + ";" + my_env["PATH"]
+-    my_env["PYTHONHOME"] = ""
+-    
++    my_env = ccp4_child_env()
++    dir_name = my_env.get("CBIN") or my_env.get("CCP4_BIN") or ""
++    if dir_name and os.path.isdir(dir_name):
++        my_env["PATH"] = dir_name + os.pathsep + my_env.get("PATH", "")
++    for key in ("PYTHONHOME", "PYTHONPATH"):
++        my_env.pop(key, None)
+     return my_env
+ 
++def mdl_file_has_atoms_qm(mdl_file_name):
++    # Lidia writes an empty file when nothing is drawn; acedrg then stops with a traceback.
++    try:
++        with open(mdl_file_name) as f:
++            lines = f.read().splitlines()
++    except Exception:
++        return False
++    if file_name_extension(mdl_file_name) == "cif":
++        return len(lines) > 0
++    if len(lines) < 4:
++        return False
++    try:
++        return int(lines[3][0:3]) > 0
++    except ValueError:
++        return False
++
+ def import_from_3d_generator_from_mdl_using_acedrg(mdl_file_name, comp_id):
+ 
+     pdb_out_file_name = "acedrg-" + comp_id + ".pdb"
+@@ -124,6 +133,9 @@ def import_from_3d_generator_from_mdl_using_pyrogen(mdl_file_name, comp_id):
+ def import_from_3d_generator_from_mdl(mdl_file_name, comp_id):
+ 
+     global my_favourite_3d_generator
++    if not mdl_file_has_atoms_qm(mdl_file_name):
++        info_dialog("Nothing to import: the Ligand Builder (Lidia) sketch has no atoms.\nDraw a molecule first.")
++        return False
+     # if acedrg is in the path use that
+     if not my_favourite_3d_generator:
+         if command_in_path_qm("acedrg"):

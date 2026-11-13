@@ -1,0 +1,234 @@
+diff --git a/src/c-interface.cc b/src/c-interface.cc
+index 4af8a2b..5a2945a 100644
+--- a/src/c-interface.cc
++++ b/src/c-interface.cc
+@@ -116,6 +116,7 @@
+ 
+ // #include "xmap-interface.h"
+ #include "graphics-info.h"
++#include "coot-animation.hh"  // macOS port: wall-clock pacing of the animation steps
+ 
+ #include "skeleton/BuildCas.h"
+ 
+@@ -1528,7 +1529,9 @@ void toggle_idle_spin_function() {
+    graphics_info_t g; 
+ 
+    if (g.idle_function_spin_rock_token == 0) { 
+-      g.idle_function_spin_rock_token = gtk_idle_add((GtkFunction)animate_idle_spin, g.glarea);
++      // macOS port: a 60 Hz timer (not an idle function that runs as fast as the event loop
++      // allows); animate_idle_spin() uses the elapsed time so the speed does not depend on the frame rate.
++      g.idle_function_spin_rock_token = gtk_timeout_add(16, (GtkFunction)animate_idle_spin, g.glarea);
+    } else {
+       gtk_idle_remove(g.idle_function_spin_rock_token);
+       g.idle_function_spin_rock_token = 0; 
+@@ -7828,10 +7831,12 @@ void rotate_y_scene(int nsteps, float stepsize) {
+ 
+    // spin it 1 degree
+    float tbs =  g.get_trackball_size(); 
++   coot::animation_pacer_t pacer(graphics_info_t::glarea, ! graphics_info_t::make_movie_flag);
+    for(int i=0; i<nsteps; i++) { 
+      trackball(spin_quat, 0, 0, 0.0174533*stepsize, 0.000, tbs);
+      add_quats(spin_quat, g.quat, g.quat);
+      graphics_draw();
++     pacer.end_of_step();
+    }
+ } 
+ 
+@@ -7843,10 +7848,12 @@ void rotate_x_scene(int nsteps, float stepsize) {
+ 
+    // spin it 1 degree
+    float tbs =  g.get_trackball_size(); 
++   coot::animation_pacer_t pacer(graphics_info_t::glarea, ! graphics_info_t::make_movie_flag);
+    for(int i=0; i<nsteps; i++) { 
+      trackball(spin_quat, 0, 0, 0.0, 0.0174533*stepsize, tbs);
+      add_quats(spin_quat, g.quat, g.quat);
+      graphics_draw();
++     pacer.end_of_step();
+    }
+ } 
+ 
+@@ -7857,6 +7864,7 @@ void rotate_z_scene(int nsteps, float stepsize) {
+ 
+    float spin_quat[4];
+    graphics_info_t g;
++   coot::animation_pacer_t pacer(graphics_info_t::glarea, ! graphics_info_t::make_movie_flag);
+    for(int i=0; i<nsteps; i++) { 
+       trackball(spin_quat, 
+ 		1.0, 1.0,
+@@ -7864,6 +7872,7 @@ void rotate_z_scene(int nsteps, float stepsize) {
+ 		0.4);
+       add_quats(spin_quat, g.quat, g.quat);
+       graphics_draw();
++      pacer.end_of_step();
+    }
+ }
+ 
+diff --git a/src/coot-animation.hh b/src/coot-animation.hh
+new file mode 100644
+index 0000000..c4ae039
+--- /dev/null
++++ b/src/coot-animation.hh
+@@ -0,0 +1,62 @@
++// coot-animation.hh -- wall-clock pacing for Coot's synchronous view animations (macOS port)
++//
++// Coot animates view changes (smooth centring, view interpolation, "go to ligand", scripted
++// rotations) with loops of the form
++//
++//     for (istep=0; istep<nsteps; istep++) { change_the_view(istep); graphics_draw(); }
++//
++// On the original platform graphics_draw() == gtk_widget_draw() paints synchronously and the
++// X server/GLX takes real time per frame, so nsteps steps take about nsteps frame times.
++// With GTK2-Quartz + a Cocoa GL view the frames are issued back to back (and not necessarily
++// shown), so the whole animation collapses to a jump.
++//
++// animation_pacer_t restores the intended timing without restructuring the loops: call
++// end_of_step() after graphics_draw() in each iteration.  It lets pending GTK/Cocoa events run (so the
++// frame reaches the screen), then waits until the step's deadline.  One step takes
++// COOT_ANIM_MS_PER_STEP milliseconds (default 1000/60 = one frame at 60 Hz; 0 turns pacing off).
++// It does nothing when there is no GL widget (headless / --no-graphics) so scripts are not slowed.
++#ifndef COOT_ANIMATION_HH
++#define COOT_ANIMATION_HH
++
++#include <chrono>
++#include <cstdlib>
++#include <thread>
++#include <gtk/gtk.h>
++
++namespace coot {
++
++   class animation_pacer_t {
++      using clock_t_ = std::chrono::steady_clock;
++      clock_t_::time_point t_deadline;
++      std::chrono::microseconds step_us;
++      bool active;
++      static int &depth() { static int d = 0; return d; }
++   public:
++      // glarea: graphics_info_t::glarea (NULL when running without graphics)
++      explicit animation_pacer_t(GtkWidget *glarea, bool enabled = true) {
++         double ms = 1000.0/60.0;
++         const char *e = getenv("COOT_ANIM_MS_PER_STEP");
++         if (e) { double v = atof(e); if (v >= 0.0 && v < 1000.0) ms = v; }
++         step_us = std::chrono::microseconds(static_cast<long>(ms * 1000.0));
++         active = (glarea != NULL) && enabled && (step_us.count() > 0);
++         t_deadline = clock_t_::now();
++      }
++      void end_of_step() {
++         if (!active) return;
++         if (depth() == 0) {                  // do not recurse into event handling from a nested animation
++            depth()++;
++            for (int k = 0; k < 6 && gtk_events_pending(); k++)
++               gtk_main_iteration_do(FALSE);
++            depth()--;
++         }
++         t_deadline += step_us;
++         clock_t_::time_point now = clock_t_::now();
++         if (t_deadline > now)
++            std::this_thread::sleep_until(t_deadline);
++         else if (now - t_deadline > 4 * step_us)
++            t_deadline = now;                 // rendering is slower than the target rate: do not try to catch up
++      }
++   };
++
++}
++#endif // COOT_ANIMATION_HH
+diff --git a/src/globjects.cc b/src/globjects.cc
+index 64916ed..b8a629b 100644
+--- a/src/globjects.cc
++++ b/src/globjects.cc
+@@ -581,7 +581,10 @@ double graphics_info_t::ligand_interaction_pulse_previous = 0;
+ 
+ int   graphics_info_t::drag_refine_idle_function_token = -1; // magic unused value
+ coot::refinement_results_t graphics_info_t::saved_dragged_refinement_results(0, -2, "");
+-float graphics_info_t::idle_function_rotate_angle = 1.0; // degrees
++// macOS port: degrees per nominal 1/60 s frame (animate_idle_spin() is time-based, so this is
++// really a speed: value*60 degrees per second).  The original default (1.0) assumed a slow
++// redraw rate; at 60 Hz it is a full turn in 6 s, which is too fast.  0.15 -> 9 degrees/s.
++float graphics_info_t::idle_function_rotate_angle = 0.15;
+ bool  graphics_info_t::refinement_move_atoms_with_zero_occupancy_flag = 1; // yes
+ 
+ bool graphics_info_t::post_intermediate_atoms_moved_ready;
+@@ -3608,8 +3611,18 @@ animate_idle_spin(GtkWidget *widget) {
+    float spin_quat[4];
+    graphics_info_t g;
+ 
+-   // spin it 1 degree * user angle setting
+-   trackball(spin_quat, 0, 0, g.idle_function_rotate_angle*0.0174,
++   // macOS port: scale the step by the elapsed time, so that the spin speed
++   // (idle_function_rotate_angle degrees per 1/60 s) does not depend on how often we are called.
++   static long t_previous_ms = -1000000;
++   long t_now_ms = coot::gl_timer::elapsed_ms();
++   long dt_ms = t_now_ms - t_previous_ms;
++   t_previous_ms = t_now_ms;
++   if (dt_ms > 250 || dt_ms < 1) dt_ms = 17; // first call after (re)starting (or too quick to measure)
++   if (dt_ms > 50) dt_ms = 50;               // a stall must not become a jump
++   float time_scale = static_cast<float>(dt_ms) * 0.06f; // 1.0 for a 16.67 ms frame
++
++   // spin by (user angle setting) degrees per nominal frame
++   trackball(spin_quat, 0, 0, g.idle_function_rotate_angle*0.0174*time_scale,
+ 	     0.0, g.get_trackball_size());
+    add_quats(spin_quat, g.quat, g.quat);
+ 
+diff --git a/src/graphics-info.cc b/src/graphics-info.cc
+index 031e55b..73bef34 100644
+--- a/src/graphics-info.cc
++++ b/src/graphics-info.cc
+@@ -82,6 +82,7 @@
+ #include "globjects.h"
+ #include "ligand/ligand.hh"
+ #include "graphics-info.h"
++#include "coot-animation.hh"  // macOS port: wall-clock pacing of the animation steps
+ 
+ #include "ligand/dunbrack.hh"
+ 
+@@ -1049,6 +1050,7 @@ graphics_info_t::smooth_scroll_maybe_sinusoidal_acceleration(float x, float y, f
+ 
+       smooth_scroll_on = 1; // flag to stop wirecube being drawn.
+       double v_acc = 0; // accumulated distance
++      coot::animation_pacer_t pacer(glarea, ! make_movie_flag);
+       for (int istep=0; istep<smooth_scroll_steps; istep++) {
+ 	 if (do_zoom_and_move_flag)
+ 	    zoom = pre_zoom + float(istep+1)*frac*(target_zoom - pre_zoom);
+@@ -1069,6 +1071,7 @@ graphics_info_t::smooth_scroll_maybe_sinusoidal_acceleration(float x, float y, f
+                          << x << " " << y << " " << z << " " << delta << std::endl;
+          }
+ 	 graphics_draw();
++	 pacer.end_of_step();
+       }
+ 
+       smooth_scroll_on = 0;
+diff --git a/src/view.cc b/src/view.cc
+index e82f8b5..b0857a3 100644
+--- a/src/view.cc
++++ b/src/view.cc
+@@ -26,6 +26,7 @@
+ #endif // USE_PYTHON
+ #include "view.hh"
+ #include "graphics-info.h"
++#include "coot-animation.hh"  // macOS port: wall-clock pacing of the animation steps
+ 
+ coot::view_info_t
+ coot::view_info_t::interpolate(const coot::view_info_t &view1,
+@@ -43,6 +44,7 @@ coot::view_info_t::interpolate(const coot::view_info_t &view1,
+ // 	      << std::endl;
+ 
+    float total_zoom_by = view2.zoom/view1.zoom;
++   coot::animation_pacer_t pacer(graphics_info_t::glarea, ! graphics_info_t::make_movie_flag);
+    int smooth_scroll_state = graphics_info_t::smooth_scroll;
+    graphics_info_t::smooth_scroll = 0;
+ 
+@@ -86,6 +88,7 @@ coot::view_info_t::interpolate(const coot::view_info_t &view1,
+ 	    // << " zoom " << g.zoom << "   " << rct << std::endl;
+ 
+ 	    graphics_info_t::graphics_draw();
++	    pacer.end_of_step();
+ 	 }
+ 	 
+       } else {
+@@ -105,6 +108,7 @@ coot::view_info_t::interpolate(const coot::view_info_t &view1,
+ 	       g.setRotationCentre(rct);
+ 	       g.zoom = view1.zoom + frac*(view2.zoom-view1.zoom);
+ 	       graphics_info_t::graphics_draw();
++	       pacer.end_of_step();
+ 	    }
+ 	 }
+       }

@@ -1,0 +1,1 @@
+/* stub: goocanvas not available */

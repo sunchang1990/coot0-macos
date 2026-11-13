@@ -1,0 +1,976 @@
+{
+ "gtk": {
+  "Window": {
+   "uses": 61,
+   "files": [
+    "acedrg_link.py",
+    "check_for_updates.py",
+    "clear_backup.py",
+    "coot_gui.py",
+    "coot_output_to_window.py",
+    "coot_toolbuttons.py",
+    "extensions.py",
+    "fitting.py",
+    "generic_objects.py",
+    "get_recent_pdbe.py",
+    "gui_hole.py",
+    "gui_prosmart.py",
+    "interactive_nudge_residues.py",
+    "ligand_validation_sliders.py",
+    "pdbe_validation_data.py",
+    "sharpen_blur.py",
+    "shelx_extensions.py",
+    "tips_gui.py",
+    "user_define_restraints.py"
+   ]
+  },
+  "WINDOW_TOPLEVEL": {
+   "uses": 59,
+   "files": [
+    "acedrg_link.py",
+    "check_for_updates.py",
+    "clear_backup.py",
+    "coot_gui.py",
+    "coot_toolbuttons.py",
+    "extensions.py",
+    "fitting.py",
+    "generic_objects.py",
+    "get_recent_pdbe.py",
+    "gui_hole.py",
+    "gui_prosmart.py",
+    "interactive_nudge_residues.py",
+    "ligand_validation_sliders.py",
+    "pdbe_validation_data.py",
+    "sharpen_blur.py",
+    "shelx_extensions.py",
+    "tips_gui.py",
+    "user_define_restraints.py"
+   ]
+  },
+  "VBox": {
+   "uses": 96,
+   "files": [
+    "acedrg_link.py",
+    "check_for_updates.py",
+    "clear_backup.py",
+    "coot_gui.py",
+    "coot_output_to_window.py",
+    "coot_toolbuttons.py",
+    "extensions.py",
+    "fitting.py",
+    "generic_objects.py",
+    "get_recent_pdbe.py",
+    "gui_hole.py",
+    "gui_prosmart.py",
+    "interactive_nudge_residues.py",
+    "ligand_validation_sliders.py",
+    "pdbe_validation_data.py",
+    "sharpen_blur.py",
+    "shelx_extensions.py",
+    "tips_gui.py",
+    "user_define_restraints.py"
+   ]
+  },
+  "HBox": {
+   "uses": 105,
+   "files": [
+    "acedrg_link.py",
+    "check_for_updates.py",
+    "clear_backup.py",
+    "coot_gui.py",
+    "coot_output_to_window.py",
+    "coot_toolbuttons.py",
+    "dynamic_atom_overlaps_and_other_outliers.py",
+    "extensions.py",
+    "find_baddies.py",
+    "get_recent_pdbe.py",
+    "gui_hole.py",
+    "gui_prosmart.py",
+    "interactive_nudge_residues.py",
+    "ligand_validation_sliders.py",
+    "pdbe_validation_data.py",
+    "sharpen_blur.py",
+    "shelx_extensions.py",
+    "tips_gui.py",
+    "user_define_restraints.py"
+   ]
+  },
+  "Label": {
+   "uses": 114,
+   "files": [
+    "acedrg_link.py",
+    "check_for_updates.py",
+    "clear_backup.py",
+    "coot_gui.py",
+    "coot_output_to_window.py",
+    "coot_toolbuttons.py",
+    "extensions.py",
+    "get_recent_pdbe.py",
+    "gui_hole.py",
+    "interactive_nudge_residues.py",
+    "sharpen_blur.py"
+   ]
+  },
+  "combo_box_new_text": {
+   "uses": 25,
+   "files": [
+    "acedrg_link.py",
+    "coot_gui.py",
+    "sharpen_blur.py"
+   ]
+  },
+  "Tooltips": {
+   "uses": 2,
+   "files": [
+    "acedrg_link.py",
+    "coot_load_modules.py"
+   ]
+  },
+  "Entry": {
+   "uses": 39,
+   "files": [
+    "acedrg_link.py",
+    "coot_gui.py",
+    "coot_toolbuttons.py",
+    "gui_hole.py",
+    "interactive_nudge_residues.py",
+    "sharpen_blur.py"
+   ]
+  },
+  "HSeparator": {
+   "uses": 48,
+   "files": [
+    "acedrg_link.py",
+    "check_for_updates.py",
+    "clear_backup.py",
+    "coot_gui.py",
+    "coot_toolbuttons.py",
+    "extensions.py",
+    "generic_objects.py",
+    "get_recent_pdbe.py",
+    "gui_hole.py",
+    "gui_prosmart.py",
+    "interactive_nudge_residues.py",
+    "ligand_validation_sliders.py",
+    "pdbe_validation_data.py",
+    "sharpen_blur.py",
+    "shelx_extensions.py",
+    "user_define_restraints.py"
+   ]
+  },
+  "Button": {
+   "uses": 129,
+   "files": [
+    "acedrg_link.py",
+    "check_for_updates.py",
+    "clear_backup.py",
+    "coot_gui.py",
+    "coot_output_to_window.py",
+    "coot_toolbuttons.py",
+    "dynamic_atom_overlaps_and_other_outliers.py",
+    "extensions.py",
+    "find_baddies.py",
+    "fitting.py",
+    "get_recent_pdbe.py",
+    "gui_add_linked_cho.py",
+    "gui_hole.py",
+    "gui_prosmart.py",
+    "interactive_nudge_residues.py",
+    "ligand_validation_sliders.py",
+    "pdbe_validation_data.py",
+    "sharpen_blur.py",
+    "shelx_extensions.py",
+    "tips_gui.py",
+    "user_define_restraints.py"
+   ]
+  },
+  "ProgressBar": {
+   "uses": 6,
+   "files": [
+    "check_for_updates.py",
+    "coot_gui.py",
+    "get_recent_pdbe.py"
+   ]
+  },
+  "Frame": {
+   "uses": 13,
+   "files": [
+    "clear_backup.py",
+    "coot_gui.py",
+    "coot_toolbuttons.py",
+    "generic_objects.py"
+   ]
+  },
+  "pygtk_version": {
+   "uses": 12,
+   "files": [
+    "clear_backup.py",
+    "coot_gui.py",
+    "coot_load_modules.py",
+    "coot_output_to_window.py",
+    "coot_toolbuttons.py",
+    "extensions.py"
+   ]
+  },
+  "CAN_DEFAULT": {
+   "uses": 2,
+   "files": [
+    "clear_backup.py"
+   ]
+  },
+  "FALSE": {
+   "uses": 1,
+   "files": [
+    "coot_gui.py"
+   ]
+  },
+  "TextView": {
+   "uses": 11,
+   "files": [
+    "coot_gui.py",
+    "coot_output_to_window.py",
+    "shelx_extensions.py",
+    "tips_gui.py"
+   ]
+  },
+  "ScrolledWindow": {
+   "uses": 21,
+   "files": [
+    "coot_gui.py",
+    "coot_output_to_window.py",
+    "coot_toolbuttons.py",
+    "fitting.py",
+    "get_recent_pdbe.py",
+    "pdbe_validation_data.py",
+    "shelx_extensions.py",
+    "tips_gui.py"
+   ]
+  },
+  "EntryCompletion": {
+   "uses": 1,
+   "files": [
+    "coot_gui.py"
+   ]
+  },
+  "ListStore": {
+   "uses": 2,
+   "files": [
+    "coot_gui.py",
+    "coot_toolbuttons.py"
+   ]
+  },
+  "SORT_ASCENDING": {
+   "uses": 1,
+   "files": [
+    "coot_gui.py"
+   ]
+  },
+  "POLICY_AUTOMATIC": {
+   "uses": 21,
+   "files": [
+    "coot_gui.py",
+    "coot_output_to_window.py",
+    "coot_toolbuttons.py",
+    "fitting.py",
+    "get_recent_pdbe.py",
+    "pdbe_validation_data.py",
+    "shelx_extensions.py",
+    "tips_gui.py"
+   ]
+  },
+  "POLICY_ALWAYS": {
+   "uses": 21,
+   "files": [
+    "coot_gui.py",
+    "coot_output_to_window.py",
+    "coot_toolbuttons.py",
+    "fitting.py",
+    "get_recent_pdbe.py",
+    "pdbe_validation_data.py",
+    "shelx_extensions.py",
+    "tips_gui.py"
+   ]
+  },
+  "STATE_NORMAL": {
+   "uses": 11,
+   "files": [
+    "coot_gui.py",
+    "ligand_validation_sliders.py",
+    "pdbe_validation_data.py",
+    "shelx_extensions.py",
+    "tips_gui.py"
+   ]
+  },
+  "main": {
+   "uses": 4,
+   "files": [
+    "coot_gui.py",
+    "coot_output_to_window.py"
+   ]
+  },
+  "Menu": {
+   "uses": 21,
+   "files": [
+    "coot_gui.py",
+    "coot_toolbuttons.py",
+    "extensions.py"
+   ]
+  },
+  "MenuItem": {
+   "uses": 15,
+   "files": [
+    "coot_gui.py",
+    "coot_toolbuttons.py",
+    "extensions.py",
+    "gui_prosmart.py",
+    "rcrane_loader.py"
+   ]
+  },
+  "Adjustment": {
+   "uses": 6,
+   "files": [
+    "coot_gui.py",
+    "interactive_nudge_residues.py"
+   ]
+  },
+  "HScale": {
+   "uses": 5,
+   "files": [
+    "coot_gui.py",
+    "interactive_nudge_residues.py"
+   ]
+  },
+  "Notebook": {
+   "uses": 1,
+   "files": [
+    "coot_gui.py"
+   ]
+  },
+  "Table": {
+   "uses": 3,
+   "files": [
+    "coot_gui.py",
+    "gui_add_linked_cho.py"
+   ]
+  },
+  "SpinButton": {
+   "uses": 1,
+   "files": [
+    "coot_gui.py"
+   ]
+  },
+  "CheckButton": {
+   "uses": 21,
+   "files": [
+    "coot_gui.py",
+    "coot_toolbuttons.py",
+    "dynamic_atom_overlaps_and_other_outliers.py",
+    "find_baddies.py",
+    "generic_objects.py",
+    "gui_prosmart.py",
+    "sharpen_blur.py",
+    "user_define_restraints.py"
+   ]
+  },
+  "Dialog": {
+   "uses": 1,
+   "files": [
+    "coot_gui.py"
+   ]
+  },
+  "RESPONSE_ACCEPT": {
+   "uses": 2,
+   "files": [
+    "coot_gui.py"
+   ]
+  },
+  "events_pending": {
+   "uses": 2,
+   "files": [
+    "coot_gui.py"
+   ]
+  },
+  "gdk": {
+   "uses": 22,
+   "files": [
+    "coot_gui.py",
+    "coot_toolbuttons.py",
+    "coot_utils.py",
+    "ligand_validation_sliders.py",
+    "pdbe_validation_data.py",
+    "shelx_extensions.py",
+    "tips_gui.py"
+   ]
+  },
+  "main_quit": {
+   "uses": 5,
+   "files": [
+    "coot_gui.py",
+    "coot_output_to_window.py"
+   ]
+  },
+  "ToolItem": {
+   "uses": 1,
+   "files": [
+    "coot_gui.py"
+   ]
+  },
+  "WRAP_WORD_CHAR": {
+   "uses": 2,
+   "files": [
+    "coot_gui.py"
+   ]
+  },
+  "RadioButton": {
+   "uses": 9,
+   "files": [
+    "coot_gui.py",
+    "coot_toolbuttons.py",
+    "gui_add_linked_cho.py"
+   ]
+  },
+  "DIALOG_MODAL": {
+   "uses": 1,
+   "files": [
+    "coot_gui.py"
+   ]
+  },
+  "DIALOG_NO_SEPARATOR": {
+   "uses": 1,
+   "files": [
+    "coot_gui.py"
+   ]
+  },
+  "STOCK_YES": {
+   "uses": 1,
+   "files": [
+    "coot_gui.py"
+   ]
+  },
+  "STOCK_NO": {
+   "uses": 1,
+   "files": [
+    "coot_gui.py"
+   ]
+  },
+  "RESPONSE_REJECT": {
+   "uses": 1,
+   "files": [
+    "coot_gui.py"
+   ]
+  },
+  "main_iteration": {
+   "uses": 2,
+   "files": [
+    "coot_gui.py"
+   ]
+  },
+  "ToggleToolButton": {
+   "uses": 2,
+   "files": [
+    "coot_gui.py",
+    "coot_toolbuttons.py"
+   ]
+  },
+  "ToolButton": {
+   "uses": 2,
+   "files": [
+    "coot_gui.py",
+    "coot_toolbuttons.py"
+   ]
+  },
+  "FileSelection": {
+   "uses": 1,
+   "files": [
+    "coot_gui.py"
+   ]
+  },
+  "FileChooserDialog": {
+   "uses": 1,
+   "files": [
+    "coot_gui.py"
+   ]
+  },
+  "FILE_CHOOSER_ACTION_OPEN": {
+   "uses": 1,
+   "files": [
+    "coot_gui.py"
+   ]
+  },
+  "RESPONSE_OK": {
+   "uses": 2,
+   "files": [
+    "coot_gui.py"
+   ]
+  },
+  "keysyms": {
+   "uses": 4,
+   "files": [
+    "coot_gui.py"
+   ]
+  },
+  "STOCK_CANCEL": {
+   "uses": 1,
+   "files": [
+    "coot_gui.py"
+   ]
+  },
+  "RESPONSE_CANCEL": {
+   "uses": 2,
+   "files": [
+    "coot_gui.py"
+   ]
+  },
+  "STOCK_OPEN": {
+   "uses": 1,
+   "files": [
+    "coot_gui.py"
+   ]
+  },
+  "gtk_version": {
+   "uses": 1,
+   "files": [
+    "coot_output_to_window.py"
+   ]
+  },
+  "IconFactory": {
+   "uses": 1,
+   "files": [
+    "coot_toolbuttons.py"
+   ]
+  },
+  "stock_list_ids": {
+   "uses": 2,
+   "files": [
+    "coot_toolbuttons.py"
+   ]
+  },
+  "SeparatorToolItem": {
+   "uses": 2,
+   "files": [
+    "coot_toolbuttons.py"
+   ]
+  },
+  "icon_theme_get_default": {
+   "uses": 1,
+   "files": [
+    "coot_toolbuttons.py"
+   ]
+  },
+  "ComboBox": {
+   "uses": 1,
+   "files": [
+    "coot_toolbuttons.py"
+   ]
+  },
+  "CellRendererPixbuf": {
+   "uses": 1,
+   "files": [
+    "coot_toolbuttons.py"
+   ]
+  },
+  "TOOLBAR_ICONS": {
+   "uses": 1,
+   "files": [
+    "coot_toolbuttons.py"
+   ]
+  },
+  "TOOLBAR_BOTH_HORIZ": {
+   "uses": 1,
+   "files": [
+    "coot_toolbuttons.py"
+   ]
+  },
+  "Assistant": {
+   "uses": 1,
+   "files": [
+    "coot_toolbuttons.py"
+   ]
+  },
+  "ASSISTANT_PAGE_CONTENT": {
+   "uses": 4,
+   "files": [
+    "coot_toolbuttons.py"
+   ]
+  },
+  "ASSISTANT_PAGE_CONFIRM": {
+   "uses": 1,
+   "files": [
+    "coot_toolbuttons.py"
+   ]
+  },
+  "IconSet": {
+   "uses": 1,
+   "files": [
+    "coot_toolbuttons.py"
+   ]
+  },
+  "ICON_LOOKUP_USE_BUILTIN": {
+   "uses": 1,
+   "files": [
+    "coot_toolbuttons.py"
+   ]
+  },
+  "SeparatorMenuItem": {
+   "uses": 1,
+   "files": [
+    "extensions.py"
+   ]
+  },
+  "Image": {
+   "uses": 1,
+   "files": [
+    "get_recent_pdbe.py"
+   ]
+  },
+  "image_new_from_stock": {
+   "uses": 9,
+   "files": [
+    "get_recent_pdbe.py"
+   ]
+  },
+  "EXPAND": {
+   "uses": 10,
+   "files": [
+    "gui_add_linked_cho.py"
+   ]
+  },
+  "FILL": {
+   "uses": 10,
+   "files": [
+    "gui_add_linked_cho.py"
+   ]
+  },
+  "DrawingArea": {
+   "uses": 2,
+   "files": [
+    "ligand_validation_sliders.py",
+    "pdbe_validation_data.py"
+   ]
+  },
+  "MessageDialog": {
+   "uses": 1,
+   "files": [
+    "rcrane_loader.py"
+   ]
+  },
+  "MESSAGE_WARNING": {
+   "uses": 1,
+   "files": [
+    "rcrane_loader.py"
+   ]
+  },
+  "BUTTONS_OK": {
+   "uses": 1,
+   "files": [
+    "rcrane_loader.py"
+   ]
+  }
+ },
+ "gtk.gdk": {
+  "Font": {
+   "uses": 2,
+   "files": [
+    "coot_gui.py"
+   ]
+  },
+  "threads_init": {
+   "uses": 1,
+   "files": [
+    "coot_gui.py"
+   ]
+  },
+  "CONTROL_MASK": {
+   "uses": 1,
+   "files": [
+    "coot_gui.py"
+   ]
+  },
+  "color_parse": {
+   "uses": 8,
+   "files": [
+    "coot_gui.py",
+    "shelx_extensions.py",
+    "tips_gui.py"
+   ]
+  },
+  "threads_enter": {
+   "uses": 1,
+   "files": [
+    "coot_gui.py"
+   ]
+  },
+  "threads_leave": {
+   "uses": 1,
+   "files": [
+    "coot_gui.py"
+   ]
+  },
+  "Pixbuf": {
+   "uses": 1,
+   "files": [
+    "coot_toolbuttons.py"
+   ]
+  },
+  "pixbuf_new_from_file": {
+   "uses": 1,
+   "files": [
+    "coot_toolbuttons.py"
+   ]
+  },
+  "pixbuf_new_from_file_at_size": {
+   "uses": 1,
+   "files": [
+    "coot_toolbuttons.py"
+   ]
+  },
+  "keyval_from_name": {
+   "uses": 1,
+   "files": [
+    "coot_utils.py"
+   ]
+  },
+  "unicode_to_keyval": {
+   "uses": 1,
+   "files": [
+    "coot_utils.py"
+   ]
+  },
+  "RGB_DITHER_NONE": {
+   "uses": 2,
+   "files": [
+    "ligand_validation_sliders.py",
+    "pdbe_validation_data.py"
+   ]
+  },
+  "Color": {
+   "uses": 1,
+   "files": [
+    "pdbe_validation_data.py"
+   ]
+  }
+ },
+ "gtk.keysyms": {
+  "KP_Up": 1,
+  "Up": 1,
+  "KP_Down": 1,
+  "Down": 1
+ },
+ "gobject": {
+  "idle_add": 14,
+  "timeout_add": 10,
+  "TYPE_STRING": 1,
+  "source_remove": 1
+ },
+ "pango": {
+  "FontDescription": 8,
+  "WEIGHT_BOLD": 4,
+  "WEIGHT_LIGHT": 1,
+  "ALIGN_RIGHT": 2,
+  "STYLE_ITALIC": 2
+ },
+ "signals": {
+  "clicked": 137,
+  "activate": 4,
+  "key_press_event": 4,
+  "delete_event": 7,
+  "key-press-event": 4,
+  "destroy": 3,
+  "value_changed": 6,
+  "toggled": 18,
+  "changed": 2,
+  "button-press-event": 1,
+  "close": 1,
+  "cancel": 1,
+  "apply": 1,
+  "expose-event": 2
+ },
+ "widget_methods": {
+  "combo_box_new_text": 25,
+  "set_title": 41,
+  "pack_start": 511,
+  "set_usize": 4,
+  "set_tip": 14,
+  "connect": 191,
+  "show_all": 68,
+  "append_text": 4,
+  "destroy": 108,
+  "set_active": 32,
+  "get_text": 67,
+  "getenv": 34,
+  "set_border_width": 51,
+  "idle_add": 14,
+  "hide": 14,
+  "basename": 3,
+  "set_fraction": 9,
+  "timeout_add": 10,
+  "set_sensitive": 17,
+  "show": 89,
+  "time": 4,
+  "set_flags": 2,
+  "grab_default": 1,
+  "set_tooltip_text": 9,
+  "get_buffer": 15,
+  "set_completion": 1,
+  "set_sort_column_id": 1,
+  "set_model": 2,
+  "set_text_column": 1,
+  "set_default_size": 24,
+  "set_policy": 21,
+  "pack_end": 20,
+  "set_text": 61,
+  "set_editable": 8,
+  "set_cursor_visible": 1,
+  "get_end_iter": 10,
+  "create_tag": 17,
+  "insert_with_tags": 3,
+  "modify_base": 6,
+  "add_with_viewport": 14,
+  "main": 4,
+  "get_model": 4,
+  "get_active": 45,
+  "get_children": 35,
+  "toggled": 1,
+  "set_size_request": 16,
+  "append_page": 7,
+  "threads_init": 1,
+  "pulse": 3,
+  "start": 3,
+  "run": 3,
+  "place_cursor": 1,
+  "scroll_mark_onscreen": 1,
+  "events_pending": 2,
+  "color_parse": 8,
+  "main_quit": 5,
+  "set_is_important": 1,
+  "set_name": 1,
+  "get_start_iter": 7,
+  "insert_with_tags_by_name": 5,
+  "set_wrap_mode": 2,
+  "set_alignment": 3,
+  "modify_font": 1,
+  "resize": 4,
+  "set_value": 5,
+  "attach": 8,
+  "threads_enter": 1,
+  "source_remove": 1,
+  "emit_stop_by_name": 2,
+  "get_insert": 1,
+  "main_iteration": 2,
+  "flush": 6,
+  "set_submenu": 11,
+  "set_label": 1,
+  "set_stock_id": 1,
+  "get_label": 7,
+  "realize": 1,
+  "get_value": 5,
+  "get_bounds": 3,
+  "threads_leave": 1,
+  "acquire": 3,
+  "get_submenu": 1,
+  "get_filename": 2,
+  "release": 3,
+  "set_icon_widget": 1,
+  "get_name": 1,
+  "rename": 2,
+  "set_property": 12,
+  "set_homogeneous": 1,
+  "get_offset": 1,
+  "get_iter_at_offset": 1,
+  "apply_tag": 1,
+  "get_vadjustment": 1,
+  "iconify": 1,
+  "poll": 2,
+  "select": 1,
+  "stock_list_ids": 2,
+  "add_default": 1,
+  "popup": 1,
+  "icon_theme_get_default": 1,
+  "set_wrap_width": 1,
+  "add_attribute": 1,
+  "set_style": 4,
+  "set_page_title": 5,
+  "set_page_type": 5,
+  "set_line_wrap": 5,
+  "set_page_complete": 6,
+  "reorder_child": 2,
+  "get_active_iter": 3,
+  "get_parent": 5,
+  "load_icon": 1,
+  "get_stock_id": 1,
+  "get_iter": 1,
+  "set_active_iter": 1,
+  "strftime": 1,
+  "exists": 6,
+  "access": 4,
+  "stat": 4,
+  "wait": 1,
+  "keyval_from_name": 1,
+  "encode": 3,
+  "parse": 1,
+  "dup": 1,
+  "mkdir": 2,
+  "unicode_to_keyval": 1,
+  "chdir": 4,
+  "search": 1,
+  "system": 1,
+  "exit": 2,
+  "emit": 2,
+  "get_property": 1,
+  "connect_object": 2,
+  "put": 1,
+  "load": 1,
+  "empty": 2,
+  "image_new_from_stock": 9,
+  "set_from_file": 1,
+  "set_digits": 1,
+  "create_pango_layout": 13,
+  "get_style": 3,
+  "draw_rgb_image": 4,
+  "set_foreground": 4,
+  "draw_rectangle": 9,
+  "set_justify": 2,
+  "context_changed": 2,
+  "draw_layout": 18,
+  "set_font_description": 7,
+  "draw_slider": 7,
+  "alloc_color": 4,
+  "draw_line": 2,
+  "get_colormap": 4,
+  "use": 1,
+  "title": 1,
+  "set_markup": 1,
+  "send": 4,
+  "shutdown": 4,
+  "modify_text": 2
+ },
+ "gui_files": [
+  "acedrg_link.py",
+  "check_for_updates.py",
+  "clear_backup.py",
+  "coot_gui.py",
+  "coot_load_modules.py",
+  "coot_output_to_window.py",
+  "coot_toolbuttons.py",
+  "coot_utils.py",
+  "dynamic_atom_overlaps_and_other_outliers.py",
+  "extensions.py",
+  "find_baddies.py",
+  "fitting.py",
+  "generic_objects.py",
+  "get_recent_pdbe.py",
+  "gui_add_linked_cho.py",
+  "gui_hole.py",
+  "gui_prosmart.py",
+  "interactive_nudge_residues.py",
+  "ligand_validation_sliders.py",
+  "pathology_plots.py",
+  "pdbe_validation_data.py",
+  "rcrane_loader.py",
+  "remote_control.py",
+  "sharpen_blur.py",
+  "shelx_extensions.py",
+  "tips_gui.py",
+  "user_define_restraints.py"
+ ]
+}

@@ -1,0 +1,25 @@
+diff --git a/compat/pygtk2/_gtk2core.py b/compat/pygtk2/_gtk2core.py
+index a7011af..04446b0 100644
+--- a/compat/pygtk2/_gtk2core.py
++++ b/compat/pygtk2/_gtk2core.py
+@@ -415,7 +415,7 @@ def glist_to_list(ptr, fn=""):
+         data = c_void_p.from_address(p).value
+         out.append(wrap(data) if data else None)
+         p = c_void_p.from_address(p + 8).value
+-    if ptr and fn in ("gtk_container_get_children", "gtk_toolbar_get_children", "gtk_menu_shell_get_children"): call("g_list_free", ptr)
++    if ptr and fn in ("gtk_container_get_children", "gtk_toolbar_get_children", "gtk_menu_shell_get_children", "gtk_window_list_toplevels"): call("g_list_free", ptr)
+     return out
+ 
+ # ------------------------------------------------------------------------------------------------ signals
+diff --git a/compat/pygtk2/gtk/__init__.py b/compat/pygtk2/gtk/__init__.py
+index c9d07b2..62658c1 100644
+--- a/compat/pygtk2/gtk/__init__.py
++++ b/compat/pygtk2/gtk/__init__.py
+@@ -361,6 +361,7 @@ def combo_box_new_text(): return _wrap(_call("gtk_combo_box_new_text"))
+ def image_new_from_stock(stock_id, size): return _wrap(_call("gtk_image_new_from_stock", stock_id, size))
+ def image_new_from_file(filename): return _wrap(_call("gtk_image_new_from_file", filename))
+ def icon_theme_get_default(): return _wrap(_call("gtk_icon_theme_get_default"))
++def window_list_toplevels(): return _c.glist_to_list(_call("gtk_window_list_toplevels"), "gtk_window_list_toplevels")
+ def stock_list_ids(): return _c.gslist_of_strings(_call("gtk_stock_list_ids"))
+ def timeout_add(interval, func, *args): return _c.timeout_add(interval, func, *args)
+ def idle_add(func, *args): return _c.idle_add(func, *args)

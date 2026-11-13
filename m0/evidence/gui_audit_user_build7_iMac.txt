@@ -1,0 +1,271 @@
+== Coot GUI audit 2026-11-04 16:30:49 | 270 items (menu bar + toolbar) | real window
+AUDIT   0 | File > Open Coordinates... | WARN | 2 x (coot-bin:22835): Gtk-CRITICAL **: 16:30:55.199: shortcuts_add_bookmark_from_file: assertion 'G_IS_FILE (file)' failed (windows: 1, buttons clicked: 7, 2.4 s)
+AUDIT   1 | File > Auto Open MTZ... | WARN | 2 x (coot-bin:22835): Gtk-CRITICAL **: 16:30:57.575: shortcuts_add_bookmark_from_file: assertion 'G_IS_FILE (file)' failed (windows: 1, buttons clicked: 7, 2.3 s)
+AUDIT   2 | File > Open MTZ, mmCIF, fcf or phs... | WARN | 2 x (coot-bin:22835): Gtk-CRITICAL **: 16:30:59.916: shortcuts_add_bookmark_from_file: assertion 'G_IS_FILE (file)' failed (windows: 1, buttons clicked: 7, 2.3 s)
+AUDIT   3 | File > Open Map... | WARN | 2 x (coot-bin:22835): Gtk-CRITICAL **: 16:31:02.295: shortcuts_add_bookmark_from_file: assertion 'G_IS_FILE (file)' failed (windows: 1, buttons clicked: 7, 2.3 s)
+AUDIT   4 | File > Import CIF dictionary... | WARN | 2 x (coot-bin:22835): Gtk-CRITICAL **: 16:31:04.652: shortcuts_add_bookmark_from_file: assertion 'G_IS_FILE (file)' failed (windows: 1, buttons clicked: 8, 2.4 s)
+AUDIT   5 | File > Get Monomer... | SKIP | not run (network / exit / display-mode item: try it by hand)
+AUDIT   6 | File > Search Monomer Library... | SKIP | not run (network / exit / display-mode item: try it by hand)
+AUDIT   7 | File > Fetch PDB using Accession Code... | SKIP | not run (network / exit / display-mode item: try it by hand)
+AUDIT   8 | File > Fetch PDB & Map using EDS... | SKIP | not run (network / exit / display-mode item: try it by hand)
+AUDIT   9 | File > Fetch PDB & Map using PDB-REDO... | SKIP | not run (network / exit / display-mode item: try it by hand)
+AUDIT  10 | File > Fetch Corresponding AlphaFold Model & Superpose | SKIP | not run (network / exit / display-mode item: try it by hand)
+AUDIT  11 | File > Fetch AlphaFold Model using Uniprot ID | SKIP | not run (network / exit / display-mode item: try it by hand)
+AUDIT  12 | File > Save Coordinates... | WARN | 128 x (coot-bin:22835): GLib-GIO-CRITICAL **: 16:31:07.105: GFileInfo created without standard::is-hidden (windows: 1, buttons clicked: 1, 1.3 s)
+AUDIT  13 | File > Save Symmetry Coordinates... | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 14 | File > Save State... button [] | CRASH | Coot ended while this entry was running (restarting after it)
+AUDIT  15 | File > Recover Session... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  16 | File > Export Map... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  17 | File > Export Map Fragment... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  18 | File > Delete Molecules and Maps... | ok | windows: 1, buttons clicked: 2, 1.5 s
+AUDIT 19 | File > Curlew button [Install] | CRASH | Coot ended while this entry was running (restarting after it)
+AUDIT  20 | File > Exit | SKIP | not run (network / exit / display-mode item: try it by hand)
+AUDIT  21 | Edit > Bond Colours... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  22 | Edit > Bond Parameters... | ok | windows: 1, buttons clicked: 2, 1.4 s | ERROR:: bad imol in fill_bond_parameters_internals -1
+AUDIT  23 | Edit > Change Chain IDs... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 24 | Edit > Copy Molecule... | CRASH | Coot ended while this entry was running (restarting after it)
+AUDIT 25 | Edit > Copy Fragment... | CRASH | Coot ended while this entry was running (restarting after it)
+AUDIT  26 | Edit > Map Parameters... | ok | windows: 1, buttons clicked: 3, 1.6 s
+AUDIT  27 | Edit > Merge Molecules... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 28 | Edit > Replace Residue... | CRASH | Coot ended while this entry was running (restarting after it)
+AUDIT 29 | Edit > Replace Fragment... | CRASH | Coot ended while this entry was running (restarting after it)
+AUDIT  30 | Edit > Renumber Residues... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  31 | Edit > Restraints... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  32 | Edit > Skeleton Parameters > Skeleton Colour... | ok | windows: 2, buttons clicked: 3, 1.9 s
+AUDIT  33 | Edit > Skeleton Parameters > Skeleton Box Radius... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  34 | Edit > Skeleton Parameters > Skeletonization Level... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  35 | Edit > Residue Info... | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT  36 | Edit > Font Size... | ok | windows: 1, buttons clicked: 1, 1.4 s
+AUDIT  37 | Edit > Pink Pointer Size... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  38 | Edit > Background Colour... > Black | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT  39 | Edit > Background Colour... > White | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT  40 | Edit > Settings... > Set Refinement Options... | ok | windows: 1, buttons clicked: 2, 1.5 s
+AUDIT  41 | Edit > Settings... > Peptide Restraints... > Add Planar Peptide Restraints | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT  42 | Edit > Settings... > Peptide Restraints... > Remove Planar Peptide Restraints | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT  43 | Edit > Settings... > Occupancy refinement input for REFMAC... | ok | windows: 1, buttons clicked: 3, 3.2 s
+AUDIT  44 | Edit > Settings... > Refinement Speed... > Molasses Refinement mode | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT  45 | Edit > Settings... > Refinement Speed... > Smooth Refinement mode | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT  46 | Edit > Settings... > Refinement Speed... > Crocodile Refinement mode | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT  47 | Edit > Settings... > Refinement Speed... > Normal Refinement mode (1 Emsley) | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT  48 | Edit > Settings... > Auto-weight refinement | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT  49 | Edit > Settings... > Set Undo Molecule... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  50 | Edit > Settings... > B factor bonds scale factor... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  51 | Edit > Settings... > Rotate Translate Zone Mode... > Rotate About Fragment Centre | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT  52 | Edit > Settings... > Rotate Translate Zone Mode... > Rotate About Second Clicked Atom | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT  53 | Edit > Settings... > Set Density Fit Graph Weight... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  54 | Edit > Settings... > Set Spin Speed | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  55 | Edit > Settings... > Nudge Centre... | ok | windows: 1, buttons clicked: 7, 2.3 s
+AUDIT  56 | Edit > Settings... > All Molecules use "Near Chains" Symmetry | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT  57 | Edit > Settings... > Question Accept Refinement | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT  58 | Edit > Settings... > Save Graphics Size and Positions | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT  59 | Edit > Settings... > Save Dialog Positions... | WARN | 1 x (coot-bin:24409): Gtk-CRITICAL **: 16:32:44.867: gtk_widget_destroy: assertion 'GTK_IS_WIDGET (widget)' failed (windows: 3, buttons clicked: 17, 6.8 s)
+AUDIT  60 | Edit > Settings... > Key Bindings... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 61 | Edit > Settings... > Python: Install Template Keybindings button [F   JED-Flip] | CRASH | Coot ended while this entry was running (restarting after it)
+AUDIT  62 | Edit > Settings... > Enable Quick-Save checkpointing... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  63 | Edit > Preferences... | ok | windows: 1, buttons clicked: 8, 2.5 s
+AUDIT  64 | Calculate > Align & Mutate... | ok | windows: 1, buttons clicked: 1, 1.3 s | WARNING:: inapproproate molecule number -1
+AUDIT  65 | Calculate > All Molecule... > [Post MR] Fill Partial Residues... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  66 | Calculate > All Molecule... > Fit Protein... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  67 | Calculate > All Molecule... > Stepped Refine... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 68 | Calculate > Fit Loop > Fit Loop by Database Search... | CRASH | Coot ended while this entry was running (restarting after it)
+AUDIT  69 | Calculate > Fit Loop > Fit Loop by Rama Search... | ok | windows: 1, buttons clicked: 1, 1.3 s | WARNING:: unassigned molecule number: -1
+AUDIT  70 | Calculate > Frames/Sec... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 71 | Calculate > Load Tutorial Model and Data | CRASH | Coot ended while this entry was running (restarting after it)
+AUDIT 72 | Calculate > Ligand Builder | CRASH | Coot ended while this entry was running (restarting after it)
+AUDIT  73 | Calculate > LSQ Superpose... | ok | windows: 1, buttons clicked: 2, 1.5 s
+AUDIT  74 | Calculate > Map Tools... > Mask Map by Atom Selection... | ok | windows: 1, buttons clicked: 1, 1.4 s | BL WARNING:: dunno what to do!? No map found
+AUDIT  75 | Calculate > Map Tools... > Copy Map... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  76 | Calculate > Map Tools... > Make a Smoother Copy... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  77 | Calculate > Map Tools... > Make a Very Smooth Copy... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  78 | Calculate > Map Tools... > Make a Difference Map... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  79 | Calculate > Map Tools... > Transform map by LSQ model fit... | WARN | 1 x (coot-bin:26655): Gtk-CRITICAL **: 16:33:42.281: gtk_widget_destroy: assertion 'GTK_IS_WIDGET (widget)' failed (windows: 0, buttons clicked: 0, 2.7 s)
+AUDIT  80 | Calculate > Map Tools... > Average Maps... | ok | windows: 1, buttons clicked: 3, 1.7 s
+AUDIT  81 | Calculate > Map Tools... > Map Density Histogram... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  82 | Calculate > Map Tools... > Brighten Maps | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT  83 | Calculate > Map Tools... > Set map is a difference map... | ok | windows: 1, buttons clicked: 1, 1.3 s | WARNING:: No such molecule as 0
+AUDIT  84 | Calculate > Map Tools... > Another (contour) level... | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT  85 | Calculate > Map Tools... > Multi-chicken... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  86 | Calculate > Map Sharpening/Blurring... | ok | windows: 1, buttons clicked: 4, 1.8 s
+AUDIT  87 | Calculate > Map Skeleton... | ok | windows: 1, buttons clicked: 1, 1.3 s | ERROR:: Trapped a bad map for skeletoning!
+AUDIT  88 | Calculate > Modelling... > Add Hydrogen Atoms | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT  89 | Calculate > Modelling... > Add Hydrogens using Refmac | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT  90 | Calculate > Modelling... > Add Other Solvent Molecules... | ok | windows: 1, buttons clicked: 17, 8.7 s | WARNING:: No symmetry available for this molecule
+AUDIT  91 | Calculate > Modelling... > Arrange Waters Around Protein... | ok | windows: 1, buttons clicked: 1, 1.5 s
+AUDIT  92 | Calculate > Modelling... > Assign (force) HETATMs for this Residue | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT  93 | Calculate > Modelling... > Assign HETATM to molecule... | ok | windows: 1, buttons clicked: 1, 1.4 s
+AUDIT  94 | Calculate > Modelling... > Delete Hydrogen Atoms | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT  95 | Calculate > Modelling... > Delete Side-chains for Active Chain | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT  96 | Calculate > Modelling... > Duplicate range (pick atoms) | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT  97 | Calculate > Modelling... > Find Secondary Structure... > Find Helices | WARN | 1 x (coot-bin:26655): Gtk-CRITICAL **: 16:34:15.346: gtk_widget_destroy: assertion 'GTK_IS_WIDGET (widget)' failed (windows: 0, buttons clicked: 0, 2.8 s)
+AUDIT  98 | Calculate > Modelling... > Find Secondary Structure... > Find Strands | WARN | 1 x (coot-bin:26655): Gtk-CRITICAL **: 16:34:18.134: gtk_widget_destroy: assertion 'GTK_IS_WIDGET (widget)' failed (windows: 0, buttons clicked: 0, 2.7 s)
+AUDIT  99 | Calculate > Modelling... > Fetch PDBe description for this ligand | SKIP | not run (network / exit / display-mode item: try it by hand)
+AUDIT 100 | Calculate > Modelling... > Fetch PDBe Ligand Description | SKIP | not run (network / exit / display-mode item: try it by hand)
+AUDIT 101 | Calculate > Modelling... > Fill Partial Residues | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 102 | Calculate > Modelling... > Fix Nomenclature Errors... | ok | windows: 1, buttons clicked: 1, 1.4 s
+AUDIT 103 | Calculate > Modelling... > Invert This Chiral Centre | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 104 | Calculate > Modelling... > JLigand launch | ok | windows: 1, buttons clicked: 1, 1.6 s
+AUDIT 105 | Calculate > Modelling... > Make Link (click 2 atoms)... | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 106 | Calculate > Modelling... > Merge Water Chains... | ok | windows: 1, buttons clicked: 1, 1.7 s | WARNING:: no SolventChains in the model
+AUDIT 107 | Calculate > Modelling... > Monomer from Dictionary | ok | windows: 1, buttons clicked: 1, 1.3 s | WARNING:: Null residue in mol_from_dictionary() for
+AUDIT 108 | Calculate > Modelling... > Morph Fit Chain (Averaging Radius 7) | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 109 | Calculate > Modelling... > Morph Fit Chain (Averaging Radius 11) | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 110 | Calculate > Modelling... > Morph Fit Chain based on Secondary Structure | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 111 | Calculate > Modelling... > New Molecule by Sphere... | ok | windows: 1, buttons clicked: 1, 1.3 s | WARNING:: No symmetry available for this molecule
+AUDIT 112 | Calculate > Modelling... > New Molecule from Symmetry Op... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 113 | Calculate > Modelling... > Phosphorylate this residue | ok | windows: 1, buttons clicked: 1, 1.4 s
+AUDIT 114 | Calculate > Modelling... > Rename Residue... | ok | windows: 1, buttons clicked: 1, 1.5 s
+AUDIT 115 | Calculate > Modelling... > Renumber Waters... | ok | windows: 1, buttons clicked: 1, 1.5 s | WARNING:: no SolventChains in the model
+AUDIT 116 | Calculate > Modelling... > Reorder Chains... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 117 | Calculate > Modelling... > Residue Type Selection... | ok | windows: 1, buttons clicked: 1, 1.4 s
+AUDIT 118 | Calculate > Modelling... > Residues with Alt Confs... | ok | windows: 1, buttons clicked: 1, 3.1 s
+AUDIT 119 | Calculate > Modelling... > Residues with Cis Peptide Bonds... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 120 | Calculate > Modelling... > Residues with Missing Atoms... | ok | windows: 1, buttons clicked: 1, 2.9 s
+AUDIT 121 | Calculate > Modelling... > Rigid Body Fit Residue Ranges... | ok | windows: 1, buttons clicked: 3, 1.7 s
+AUDIT 122 | Calculate > Modelling... > Rigid Body Fit Molecule... | ok | windows: 1, buttons clicked: 1, 1.4 s | WARNING:: refinement map not defined.
+AUDIT 123 | Calculate > Modelling... > Superpose ligands | ok | windows: 1, buttons clicked: 1, 1.4 s
+AUDIT 124 | Calculate > Modelling... > Symm Shift Reference Chain Here | ok | windows: 0, buttons clicked: 0, 1.2 s
+AUDIT 125 | Calculate > Modelling... > Rotamer Search... > Use "Backrub" Rotamers | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 126 | Calculate > Modelling... > Rotamer Search... > DONT use "Backrub" Rotamers | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 127 | Calculate > Modelling... > Use SEGIDs... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 128 | Calculate > Modelling... > What's this? | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 129 | Calculate > Modelling... > Atoms with Zero Occupancies... | ok | windows: 1, buttons clicked: 1, 1.4 s
+AUDIT 130 | Calculate > Model/Fit/Refine... | WARN | 1 x (coot-bin:26655): Gtk-CRITICAL **: 16:35:05.034: gtk_widget_destroy: assertion 'GTK_IS_WIDGET (widget)' failed (windows: 1, buttons clicked: 11, 5.0 s)
+AUDIT 131 | Calculate > Modules... > Carbohydrate | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 132 | Calculate > Modules... > CCP4 | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 133 | Calculate > Modules... > Cryo-EM | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 134 | Calculate > Modules... > Restraints | ok | windows: 0, buttons clicked: 0, 1.2 s
+AUDIT 135 | Calculate > Modules... > Refine | ok | windows: 0, buttons clicked: 0, 1.2 s
+AUDIT 136 | Calculate > Modules... > PDBe | ok | windows: 0, buttons clicked: 0, 1.3 s
+AUDIT 137 | Calculate > Modules... > ProSMART | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 138 | Calculate > Modules... > SHELX | ok | windows: 0, buttons clicked: 0, 1.3 s
+AUDIT 139 | Calculate > Move Molecule Here... | ok | windows: 1, buttons clicked: 1, 1.9 s
+AUDIT 140 | Calculate > Mutate Residue Range... | ok | windows: 1, buttons clicked: 1, 1.3 s | WARNING:: can't mutate.  Sequence of length: 0 but residue range size: 1
+AUDIT 141 | Calculate > NCS Maps... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 142 | Calculate > NCS Tools... > Copy NCS Residue Range... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 143 | Calculate > NCS Tools... > Copy NCS Chain... | ok | windows: 1, buttons clicked: 1, 1.4 s
+AUDIT 144 | Calculate > NCS Tools... > NCS Ghosts by Residue Range... | ok | windows: 1, buttons clicked: 1, 1.4 s
+AUDIT 145 | Calculate > NCS Tools... > Update NCS Ghosts using Local Match | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 146 | Calculate > NCS Tools... > NCS Jumping... | ok | windows: 1, buttons clicked: 3, 1.7 s
+AUDIT 147 | Calculate > NCS Tools... > NCS ligands... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 148 | Calculate > NCS Tools... > NCS matrix type... > Accurate (SSM) | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 149 | Calculate > NCS Tools... > NCS matrix type... > Fast (LSQ) | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 150 | Calculate > NCS Tools... > NCS matrix type... > Extra Fast (LSQ, only every 2nd CA) | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 151 | Calculate > Other Modelling Tools... button [Place Strand Here] | CRASH | Coot ended while this entry was running (restarting after it)
+AUDIT 152 | Calculate > PISA... > PISA Assemblies... | ok | windows: 1, buttons clicked: 1, 2.2 s
+AUDIT 153 | Calculate > PISA... > PISA Interfaces... | ok | windows: 1, buttons clicked: 1, 1.5 s
+AUDIT 154 | Calculate > Run Script... button [] | CRASH | Coot ended while this entry was running (restarting after it)
+AUDIT 155 | Calculate > SSM Superpose... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 156 | Calculate > Scripting... > Python... | CRASH | Coot ended while this entry was running (restarting after it)
+AUDIT 157 | Calculate > Scripting... > Scheme... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 158 | Calculate > RCrane launch | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 159 | Calculate > Updating Maps... | CRASH | Coot ended while this entry was running (restarting after it)
+AUDIT 160 | Draw > Additional Representation... | ok | windows: 1, buttons clicked: 1, 1.4 s
+AUDIT 161 | Draw > Anisotropic Atoms... | ok | windows: 1, buttons clicked: 2, 1.5 s
+AUDIT 162 | Draw > Cell & Symmetry... | ok | windows: 1, buttons clicked: 3, 1.7 s
+AUDIT 163 | Draw > Centre Atom Label... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 164 | Draw > Clipping... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 165 | Draw > Model/Fit/Refine Toolbar | NO-HANDLER | no signal handler attached - the entry does nothing
+AUDIT 166 | Draw > Coordinates Recentring... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 167 | Draw > Crosshairs... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 168 | Draw > Display Manager... | ok | windows: 1, buttons clicked: 2, 1.5 s
+AUDIT 169 | Draw > Display only Active | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 170 | Draw > Dragged Map... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 171 | Draw > Generic Display Objects... | WARN | 1 x (coot-bin:27714): Gtk-CRITICAL **: 16:36:24.014: gtk_table_resize: assertion 'n_rows > 0 && n_rows <= 65535' failed (windows: 1, buttons clicked: 2, 1.5 s)
+AUDIT 172 | Draw > Go To Atom... | ok | windows: 1, buttons clicked: 5, 2.0 s | WARNING:: no molecule for imol = 0
+AUDIT 173 | Draw > Label Atoms in Residue | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 174 | Draw > Label Neighbours | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 175 | Draw > NCS Ghost Control... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 176 | Draw > Representation Tools... > Undo Symmetry View | ok | windows: 0, buttons clicked: 0, 1.1 s | WARNING:: No molecule found that was displaying symmetry
+AUDIT 177 | Draw > Representation Tools... > Ball & Stick... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 178 | Draw > Representation Tools... > Add Balls to Simple Sticks | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 179 | Draw > Representation Tools... > Simple Sticks (No Balls) | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 180 | Draw > Representation Tools... > Clear Ball & Stick... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 181 | Draw > Representation Tools... > Grey Carbons for Molecule | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 182 | Draw > Representation Tools... > Coloured Carbons for Molecule | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 183 | Draw > Representation Tools... > Clipped Surface Here (This Residue) | ERR | TypeError: 'bool' object is not subscriptable (windows: 0, buttons clicked: 0, 1.1 s)
+AUDIT 184 | Draw > Representation Tools... > Full Surface Around Here (This Residue) | ERR | TypeError: 'bool' object is not subscriptable (windows: 0, buttons clicked: 0, 1.1 s)
+AUDIT 185 | Draw > Representation Tools... > Un-Surface... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 186 | Draw > Representation Tools... > Highlight Interesting Site (here)... | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 187 | Draw > Representation Tools... > Dotted Surface... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 188 | Draw > Representation Tools... > Clear Surface Dots... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 189 | Draw > Representation Tools... > Limit Model Display Radius... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 190 | Draw > Representation Tools... > HOLE... | ok | windows: 1, buttons clicked: 3, 1.6 s
+AUDIT 191 | Draw > Representation Tools... > Label All CAs... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 192 | Draw > Representation Tools... > 3D Annotations... > Annotate position... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 193 | Draw > Representation Tools... > 3D Annotations... > Save Annotations... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 194 | Draw > Representation Tools... > 3D Annotations... > Load Annotations... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 195 | Draw > Representation Tools... > 3D Annotations... > Remove annotation here | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 196 | Draw > Representation Tools... > 3D Annotations... > Remove annotation near click | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 197 | Draw > Representation Tools... > CCP4MG... | ok | windows: 0, buttons clicked: 0, 1.4 s
+AUDIT 198 | Draw > Rock View On/Off | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 199 | Draw > Spin View On/Off | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 200 | Draw > Screenshot > Simple... | WARN | 180 x (coot-bin:27714): GLib-GIO-CRITICAL **: 16:37:02.253: GFileInfo created without standard::is-hidden (windows: 1, buttons clicked: 7, 2.4 s)
+AUDIT 201 | Draw > Screenshot > Povray... | WARN | 180 x (coot-bin:27714): GLib-GIO-CRITICAL **: 16:37:04.667: GFileInfo created without standard::is-hidden (windows: 1, buttons clicked: 7, 2.3 s)
+AUDIT 202 | Draw > Screenshot > Raster3D... | WARN | 180 x (coot-bin:27714): GLib-GIO-CRITICAL **: 16:37:07.021: GFileInfo created without standard::is-hidden (windows: 1, buttons clicked: 7, 2.3 s)
+AUDIT 203 | Draw > Smooth Recentring... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 204 | Draw > Stereo... | SKIP | not run (network / exit / display-mode item: try it by hand)
+AUDIT 205 | Draw > Undo Last Navigation | CRASH | Coot ended while this entry was running (restarting after it)
+AUDIT 206 | Draw > Antialiasing... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 207 | Measures > Residue Info... | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 208 | Measures > Distances & Angles... | ok | windows: 1, buttons clicked: 4, 1.8 s
+AUDIT 209 | Measures > Environment Distances... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 210 | Measures > Plane Distances... | ok | windows: 1, buttons clicked: 2, 1.5 s
+AUDIT 211 | Measures > Pointer Distances... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 212 | Measures > Clear Atom Labels | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 213 | Validate > Kleywegt Plot... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 214 | Validate > Incorrect Chiral Volumes... | ok | windows: 1, buttons clicked: 1, 1.3 s | WARNING:: no such molecule 0
+AUDIT 215 | Validate > Unmodelled blobs... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 216 | Validate > Difference Map Peaks... | ok | windows: 1, buttons clicked: 1, 1.4 s | WARNING:: failed to find a difference map Can't do peak search
+AUDIT 217 | Validate > Check/Delete Waters... | WARN | 1 x (coot-bin:28518): Gtk-CRITICAL **: 16:37:39.380: gtk_widget_destroy: assertion 'GTK_IS_WIDGET (widget)' failed (windows: 0, buttons clicked: 0, 2.8 s)
+AUDIT 218 | Validate > Atom Overlaps (Coot) | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 219 | Validate > All-Atom Contact Dots (Molprobity) | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 220 | Validate > Atom Overlaps Dialog | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 221 | Validate > Highly coordinated waters... | ok | windows: 1, buttons clicked: 2, 3.5 s
+AUDIT 222 | Validate > Pepflips from Difference Map... | ok | windows: 1, buttons clicked: 2, 1.5 s
+AUDIT 223 | Validate > Validation Outliers | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 224 | Validate > List Ramachandran outliers... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 225 | Validate > Read REFMAC logfile... | ok | windows: 1, buttons clicked: 2, 3.3 s
+AUDIT 226 | Validate > Assign Sequence... > 1: Associate Sequence to Chain... | ok | windows: 1, buttons clicked: 2, 3.3 s
+AUDIT 227 | Validate > Assign Sequence... > 2: Assign Sequence... | WARN | 1 x (coot-bin:28518): Gtk-CRITICAL **: 16:38:00.131: gtk_widget_destroy: assertion 'GTK_IS_WIDGET (widget)' failed (windows: 1, buttons clicked: 4, 3.5 s)
+AUDIT 228 | Validate > Views > Add View... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 229 | Validate > Views > Add a Spin View... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 230 | Validate > Views > Views Panel... | ok | windows: 1, buttons clicked: 4, 18.2 s
+AUDIT 231 | Validate > Views > Play Views | ok | windows: 0, buttons clicked: 0, 8.1 s
+AUDIT 232 | Validate > Views > Set Views Play Speed... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 233 | Validate > Views > Save Views... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 234 | Validate > Pukka Puckers...? | ok | windows: 1, buttons clicked: 1, 1.4 s
+AUDIT 235 | Validate > Alignment vs PIR... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 236 | Validate > Overlaps, Peptides, CBeta, Rama & Rota Outliers | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 237 | About > Header/Remarks Browser... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 238 | About > Hints... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 239 | About > About... | ok | windows: 1, buttons clicked: 4, 1.9 s
+AUDIT 240 | Ligand > Isolated Molprobity Dots for this Ligand | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 241 | Ligand > Isolated Coot Ligand Dots for this Ligand | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 242 | Ligand > Coot All-Atom Contact Dots | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 243 | Ligand > Find Ligands... | ok | windows: 3, buttons clicked: 3, 1.7 s | WARNING:: you must have a map to search for ligands!
+AUDIT 244 | Ligand > Jiggle-Fit Ligand | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 245 | Ligand > Hydrogenate region | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 246 | Ligand > Contact Dots for Ligand | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 247 | Ligand > SMILES -> 2D | ok | windows: 1, buttons clicked: 1, 1.4 s
+AUDIT 248 | Ligand > SMILES -> simple 3D | ok | windows: 1, buttons clicked: 1, 1.4 s | WARNING:: BAD SMILES LIG
+AUDIT 249 | Ligand > Residue -> 2D | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 250 | Ligand > FLEV this residue | ok | windows: 0, buttons clicked: 0, 1.2 s
+AUDIT 251 | Ligand > Toggle FLEV Ligand Interactions | ok | windows: 0, buttons clicked: 0, 1.2 s
+AUDIT 252 | Ligand > Solid Generic Objects | ok | windows: 0, buttons clicked: 0, 1.2 s
+AUDIT 253 | Ligand > Unsolid Generic Objects | ok | windows: 0, buttons clicked: 0, 1.2 s
+AUDIT 254 | Ligand > Show Chemical Features | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 255 | Ligand > Rename Atom to Reference | ok | windows: 0, buttons clicked: 0, 1.2 s
+AUDIT 256 | Ligand > Solid Generic Objects | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 257 | Ligand > Unsolid Generic Objects | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 258 | Ligand > Tabulate (on terminal) Ligand Distorsions | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 259 | Ligand > Display Ligand Distortions | ok | windows: 0, buttons clicked: 0, 1.2 s
+AUDIT 260 | Ligand > Quick Ligand Validate | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 261 | Ligand > Ligand Metric Sliders | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 262 | Toolbar > Open Coords... | NO-HANDLER | no signal handler attached - the entry does nothing
+AUDIT 263 | Toolbar > Reset View | NO-HANDLER | no signal handler attached - the entry does nothing
+AUDIT 264 | Toolbar > Display Manager | NO-HANDLER | no signal handler attached - the entry does nothing
+AUDIT 265 | Toolbar > Go To Atom... | NO-HANDLER | no signal handler attached - the entry does nothing
+AUDIT 266 | Toolbar > Go To Ligand | NO-HANDLER | no signal handler attached - the entry does nothing
+AUDIT 267 | Toolbar > GtkButton | CRASH | Coot ended while this entry was running (restarting after it)
+AUDIT 268 | Toolbar > GtkButton | CRASH | Coot ended while this entry was running (restarting after it)
+AUDIT 269 | Toolbar > GtkButton | CRASH | Coot ended while this entry was running (restarting after it)

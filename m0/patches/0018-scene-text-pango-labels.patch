@@ -1,0 +1,288 @@
+diff --git a/compat/coot-gl-scale.h b/compat/coot-gl-scale.h
+index 1d6b84f..f7ee2f6 100644
+--- a/compat/coot-gl-scale.h
++++ b/compat/coot-gl-scale.h
+@@ -9,6 +9,9 @@
+ extern "C" {
+ #endif
+ extern double coot_gl_pixel_scale;
++/* Scene text (see compat/gl-seam/coot-gl-seam.mm): draw at the current raster position with Pango; nominal size in GTK units. */
++extern void coot_gl_draw_text_at_raster_pos(const char *utf8, double logical_px);
++extern int  coot_gl_text_enabled(void);
+ #ifdef __cplusplus
+ }
+ #endif
+diff --git a/compat/gl-seam/coot-gl-seam.h b/compat/gl-seam/coot-gl-seam.h
+index dccd453..6546a98 100644
+--- a/compat/gl-seam/coot-gl-seam.h
++++ b/compat/gl-seam/coot-gl-seam.h
+@@ -9,6 +9,11 @@ extern "C" {
+ double coot_gl_backing_scale(GtkWidget *glarea);
+ /* Size of the GL framebuffer in pixels (== allocation unless Retina mode is on). */
+ void coot_gl_pixel_size(GtkWidget *glarea, int *width_px, int *height_px);
++/* Scene text.  Draw utf8 with the baseline-left corner at the current GL raster position, in the current colour.
++ * logical_px: nominal size in GTK units (scaled by COOT_LABEL_SCALE and the Retina factor). */
++void coot_gl_draw_text_at_raster_pos(const char *utf8, double logical_px);
++/* 1 unless COOT_BITMAP_LABELS=1 (then the caller should use the original GLUT bitmap fonts). */
++int coot_gl_text_enabled(void);
+ #ifdef __cplusplus
+ }
+ #endif
+diff --git a/compat/gl-seam/coot-gl-seam.mm b/compat/gl-seam/coot-gl-seam.mm
+index 898b786..c5ee6ec 100644
+--- a/compat/gl-seam/coot-gl-seam.mm
++++ b/compat/gl-seam/coot-gl-seam.mm
+@@ -21,6 +21,8 @@
+ #include <gdk/gdkgldrawable.h>
+ #include <gtk/gtkgl.h>
+ #include "coot-gl-seam.h"
++#include "coot-label-raster.h"
++#include <unordered_map>
+ 
+ @interface CootGLView : NSOpenGLView
+ @end
+@@ -210,4 +212,112 @@ void coot_gl_pixel_size(GtkWidget *w, int *width_px, int *height_px) {
+    if (height_px) *height_px = (int)(al.height * s + 0.5);
+ }
+ 
++
++// ---- Scene text (atom labels, distance labels, generic text) -------------------------------------------------------
++// Draws `utf8` with its baseline-left corner at the CURRENT RASTER POSITION (set by the caller with glRasterPos*),
++// in the current GL colour.  logical_px is the nominal font size in GTK units; it is multiplied by COOT_LABEL_SCALE
++// (default 1.4: the 0.9 bitmap fonts are small) and by the surface scale (2 with COOT_RETINA on a Retina display),
++// so text is the same physical size at 1x and Retina.  COOT_BITMAP_LABELS=1 selects the original GLUT bitmap fonts.
++static std::unordered_map<std::string, GLuint> g_label_tex;
++struct CootLabelDims { int w, h, baseline, pad; };
++static std::unordered_map<std::string, CootLabelDims> g_label_dims;
++
++int coot_gl_text_enabled(void) {
++   static int on = -1;
++   if (on < 0) { const char *e = getenv("COOT_BITMAP_LABELS"); on = (e && *e && strcmp(e, "0") != 0) ? 0 : 1; }
++   return on;
++}
++
++static double coot_label_scale(void) {
++   static double s = -1;
++   if (s < 0) {
++      s = 1.4;
++      const char *e = getenv("COOT_LABEL_SCALE");
++      if (e && *e) { double v = atof(e); if (v >= 0.3 && v <= 8.0) s = v; }
++   }
++   return s;
++}
++
++void coot_gl_draw_text_at_raster_pos(const char *utf8, double logical_px) {
++   if (!utf8 || !*utf8) return;
++   GLboolean valid = GL_FALSE;
++   glGetBooleanv(GL_CURRENT_RASTER_POSITION_VALID, &valid);
++   if (!valid) return;
++   GLfloat rp[4], col[4];
++   glGetFloatv(GL_CURRENT_RASTER_POSITION, rp);
++   glGetFloatv(GL_CURRENT_COLOR, col);
++   GLint vp[4];
++   glGetIntegerv(GL_VIEWPORT, vp);
++
++   double px = logical_px * coot_label_scale() * coot_gl_pixel_scale;
++   if (px < 6.0) px = 6.0;
++   px = (double)(int)(px + 0.5);
++   char key[32];
++   snprintf(key, sizeof key, "%d|", (int)px);
++   std::string k = std::string(key) + utf8;
++
++   glPushAttrib(GL_ENABLE_BIT | GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_TEXTURE_BIT | GL_CURRENT_BIT |
++                GL_LIGHTING_BIT | GL_FOG_BIT | GL_POLYGON_BIT | GL_VIEWPORT_BIT);
++   glPushClientAttrib(GL_CLIENT_PIXEL_STORE_BIT);
++
++   GLuint tex = 0;
++   auto it = g_label_tex.find(k);
++   if (it != g_label_tex.end()) {
++      tex = it->second;
++      glBindTexture(GL_TEXTURE_2D, tex);
++   } else {
++      coot_label_bitmap bm;
++      if (!coot_label_rasterize(utf8, px, bm)) { glPopClientAttrib(); glPopAttrib(); return; }
++      if (g_label_tex.size() > 6000) {   // keep GPU memory bounded
++         for (auto &kv : g_label_tex) glDeleteTextures(1, &kv.second);
++         g_label_tex.clear(); g_label_dims.clear();
++      }
++      glGenTextures(1, &tex);
++      glBindTexture(GL_TEXTURE_2D, tex);
++      glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
++      glPixelStorei(GL_UNPACK_ROW_LENGTH, bm.stride);
++      glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, bm.w, bm.h, 0, GL_ALPHA, GL_UNSIGNED_BYTE, bm.a8.data());
++      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
++      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
++      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
++      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
++      g_label_tex[k] = tex;
++      g_label_dims[k] = { bm.w, bm.h, bm.baseline, bm.pad };
++   }
++   const CootLabelDims &d = g_label_dims[k];
++
++   glMatrixMode(GL_PROJECTION); glPushMatrix(); glLoadIdentity();
++   glOrtho(vp[0], vp[0] + vp[2], vp[1], vp[1] + vp[3], -1.0, 1.0);
++   glMatrixMode(GL_MODELVIEW);  glPushMatrix(); glLoadIdentity();
++   glDisable(GL_LIGHTING); glDisable(GL_FOG); glDisable(GL_CULL_FACE); glDisable(GL_ALPHA_TEST);
++   glDisable(GL_STENCIL_TEST); glDisable(GL_SCISSOR_TEST); glDisable(GL_COLOR_LOGIC_OP); glDisable(GL_POLYGON_SMOOTH);
++   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
++   glEnable(GL_TEXTURE_2D);
++   glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
++   glEnable(GL_BLEND);
++   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
++   glDepthFunc(GL_LEQUAL);
++   glDepthMask(GL_FALSE);
++   glColor4f(col[0], col[1], col[2], col[3]);
++
++   float x0 = (float)(int)(rp[0] + 0.5f) - d.pad;               // pen position sits `pad` pixels inside the bitmap
++   float y_base = (float)(int)(rp[1] + 0.5f);
++   float y1 = y_base + d.baseline;                              // top edge
++   float y0 = y1 - d.h;                                         // bottom edge
++   float x1 = x0 + d.w;
++   float z = 2.0f * rp[2] - 1.0f;
++   glBegin(GL_QUADS);
++   glTexCoord2f(0, 0); glVertex3f(x0, y1, z);
++   glTexCoord2f(1, 0); glVertex3f(x1, y1, z);
++   glTexCoord2f(1, 1); glVertex3f(x1, y0, z);
++   glTexCoord2f(0, 1); glVertex3f(x0, y0, z);
++   glEnd();
++
++   glMatrixMode(GL_MODELVIEW);  glPopMatrix();
++   glMatrixMode(GL_PROJECTION); glPopMatrix();
++   glMatrixMode(GL_MODELVIEW);
++   glPopClientAttrib();
++   glPopAttrib();
++}
++
+ } // extern "C"
+diff --git a/compat/gl-seam/coot-label-raster.h b/compat/gl-seam/coot-label-raster.h
+new file mode 100644
+index 0000000..d69c590
+--- /dev/null
++++ b/compat/gl-seam/coot-label-raster.h
+@@ -0,0 +1,68 @@
++// coot-label-raster.h -- rasterise a UTF-8 string to an 8-bit alpha bitmap with Pango/cairo.  No GL, no display needed.
++//
++// Why: Coot 0.9 draws atom labels, distance labels and other 3D-scene text with GLUT bitmap fonts (fixed 10-24 pixel
++// Helvetica/Times bitmaps).  On a high-density screen those are tiny, and a GL-pixel font cannot follow the display scale.
++// Labels are instead rasterised once per (string, pixel size) and drawn as alpha-textured quads (see coot-gl-seam.mm).
++#ifndef COOT_LABEL_RASTER_H
++#define COOT_LABEL_RASTER_H
++#include <pango/pangocairo.h>
++#include <cairo.h>
++#include <glib.h>
++#include <string>
++#include <vector>
++#include <cstdlib>
++
++struct coot_label_bitmap {
++   int w = 0, h = 0;          // bitmap size in pixels
++   int baseline = 0;          // rows from the TOP of the bitmap to the text baseline
++   int pad = 1;               // blank pixels left of / above the text (the pen position is at x = pad)
++   int stride = 0;            // bytes per row
++   std::vector<unsigned char> a8; // h * stride bytes, row 0 = top
++};
++
++// px = font size in device pixels.  Family can be overridden with COOT_LABEL_FONT (default "Helvetica").
++static inline bool coot_label_rasterize(const char *utf8_in, double px, coot_label_bitmap &out) {
++   if (!utf8_in || px < 1.0) return false;
++   gchar *utf8 = g_utf8_make_valid(utf8_in, -1);
++   const char *fam = getenv("COOT_LABEL_FONT");
++   std::string family = (fam && *fam) ? fam : "Helvetica,Helvetica Neue,Arial,Sans";
++
++   PangoFontDescription *fd = pango_font_description_new();
++   pango_font_description_set_family(fd, family.c_str());
++   pango_font_description_set_absolute_size(fd, px * PANGO_SCALE);
++
++   cairo_surface_t *probe = cairo_image_surface_create(CAIRO_FORMAT_A8, 1, 1);
++   cairo_t *pcr = cairo_create(probe);
++   PangoLayout *pl = pango_cairo_create_layout(pcr);
++   pango_layout_set_font_description(pl, fd);
++   pango_layout_set_text(pl, utf8, -1);
++   PangoRectangle ink, logical;
++   pango_layout_get_pixel_extents(pl, &ink, &logical);
++   int baseline = pango_layout_get_baseline(pl) / PANGO_SCALE;
++   int w = (logical.width > ink.x + ink.width ? logical.width : ink.x + ink.width) + 2 * out.pad + 1;
++   int h = (logical.height > ink.y + ink.height ? logical.height : ink.y + ink.height) + 2 * out.pad + 1;
++   g_object_unref(pl); cairo_destroy(pcr); cairo_surface_destroy(probe);
++
++   bool ok = false;
++   if (w > 0 && h > 0 && w < 4096 && h < 1024) {
++      cairo_surface_t *surf = cairo_image_surface_create(CAIRO_FORMAT_A8, w, h);
++      cairo_t *cr = cairo_create(surf);
++      PangoLayout *layout = pango_cairo_create_layout(cr);
++      pango_layout_set_font_description(layout, fd);
++      pango_layout_set_text(layout, utf8, -1);
++      cairo_set_source_rgba(cr, 1, 1, 1, 1);
++      cairo_move_to(cr, out.pad, out.pad);
++      pango_cairo_show_layout(cr, layout);
++      cairo_surface_flush(surf);
++      out.w = w; out.h = h; out.baseline = baseline + out.pad;
++      out.stride = cairo_image_surface_get_stride(surf);
++      const unsigned char *d = cairo_image_surface_get_data(surf);
++      out.a8.assign(d, d + (size_t)out.stride * h);
++      g_object_unref(layout); cairo_destroy(cr); cairo_surface_destroy(surf);
++      ok = true;
++   }
++   pango_font_description_free(fd);
++   g_free(utf8);
++   return ok;
++}
++#endif
+diff --git a/src/graphics-info.cc b/src/graphics-info.cc
+index 73bef34..c2e0a3a 100644
+--- a/src/graphics-info.cc
++++ b/src/graphics-info.cc
+@@ -2883,6 +2883,23 @@ graphics_info_t::printString_internal(const std::string &s,
+    } else {
+ 
+       glRasterPos3f(x,y,z);
++#ifdef __APPLE__
++      // macOS port: Pango-rendered text, scaled with COOT_LABEL_SCALE and the Retina factor
++      if (coot_gl_text_enabled()) {
++	 double base_px = 12.0; // nominal size of the GLUT font that set_font_size() would have chosen
++	 switch (graphics_info_t::atom_label_font_size) {
++	 case 2: base_px = 12.0; break;
++	 case 3: base_px = 18.0; break;
++	 case 4: base_px = 10.0; break;
++	 case 5: base_px = 24.0; break;
++	 case 6: base_px = 13.0; break;
++	 case 7: base_px = 15.0; break;
++	 default: base_px = (graphics_info_t::atom_label_font_size < 2) ? 10.0 : 12.0;
++	 }
++	 coot_gl_draw_text_at_raster_pos(s.c_str(), base_px);
++	 return;
++      }
++#endif
+       glPushAttrib (GL_LIST_BIT);
+       for (unsigned int i = 0; i < s.length(); i++)
+ 	 glutBitmapCharacter (graphics_info_t::atom_label_font, s[i]);
+@@ -5794,6 +5811,12 @@ graphics_info_t::draw_generic_text() {
+       for (unsigned int i=0; i<generic_texts_p->size(); i++) {
+ 	 const coot::generic_text_object_t &gto = (*generic_texts_p)[i];
+ 	 glRasterPos3f(gto.x, gto.y, gto.z);
++#ifdef __APPLE__
++	 if (coot_gl_text_enabled()) {
++	    coot_gl_draw_text_at_raster_pos(gto.s.c_str(), 24.0);
++	    continue;
++	 }
++#endif
+ 	 for (unsigned int is = 0; is < gto.s.length(); is++)
+ 	    glutBitmapCharacter (font, gto.s[is]);
+       }
+diff --git a/src/graphics-ligand-view.cc b/src/graphics-ligand-view.cc
+index bb1944c..b432202 100644
+--- a/src/graphics-ligand-view.cc
++++ b/src/graphics-ligand-view.cc
+@@ -357,6 +357,12 @@ graphics_ligand_atom::make_text_item(const lig_build::atom_id_info_t &atom_id_in
+ 
+ void
+ graphics_ligand_atom::bitmap_text(const std::string &s) const {
++#ifdef __APPLE__
++   if (coot_gl_text_enabled()) {
++      coot_gl_draw_text_at_raster_pos(s.c_str(), 10.0);
++      return;
++   }
++#endif
+    glPushAttrib (GL_LIST_BIT);
+    for (unsigned int i = 0; i < s.length(); i++)
+       glutBitmapCharacter (GLUT_BITMAP_HELVETICA_10, s[i]);

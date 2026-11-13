@@ -1,0 +1,1606 @@
+diff --git a/python/3d_generator_import.py b/python/3d_generator_import.py
+index 4d62451..f837d64 100644
+--- a/python/3d_generator_import.py
++++ b/python/3d_generator_import.py
+@@ -383,7 +383,7 @@ def new_molecule_by_smiles_string(tlc_text, smiles_text, force_libcheck=False):
+        cif_file_name = "libcheck_" + three_letter_code + ".cif"
+ 
+        # write the smiles string to a file
+-       smiles_input = file(smiles_file,'w')
++       smiles_input = open(smiles_file, 'w')
+        smiles_input.write(smiles_text)
+        smiles_input.close()
+ 
+@@ -485,7 +485,7 @@ def new_molecule_by_smiles_string_by_acedrg(tlc_str, smiles_str):
+     smi_file = "acedrg-in.smi"
+ 
+     # dump the smiles string to a file
+-    smiles_input = file(smi_file,'w')
++    smiles_input = open(smi_file, 'w')
+     smiles_input.write(smiles_str)
+     smiles_input.close()
+ 
+diff --git a/python/bones_reader.py b/python/bones_reader.py
+index 3c84ac8..b828349 100644
+--- a/python/bones_reader.py
++++ b/python/bones_reader.py
+@@ -19,7 +19,7 @@ mapman_exe = os.path.join(os.getenv('HOME'), "bin/lx_mapman")
+ def generic_object_from_bones(bones_file):
+ 
+     import operator
+-    from types import IntType
++    pass  # py3: the py2 'types' names are no longer needed
+     
+     global atom_xyz_list, bone_list, conn_list
+     atom_xyz_list = []
+diff --git a/python/check_for_updates.py b/python/check_for_updates.py
+index 9d76706..acfe3db 100644
+--- a/python/check_for_updates.py
++++ b/python/check_for_updates.py
+@@ -15,7 +15,7 @@ def get_stable_release_from_coot_version():
+ # although if no return, then var becomes None anyway.. FIXME).
+ def new_version_on_server(stri, is_pre_release):
+ 
+-    from types import StringType
++    pass  # py3: the py2 'types' names are no longer needed
+     if is_pre_release:
+ 
+         # pre-releases are handle with svn revision numbers (as ints).
+@@ -34,7 +34,7 @@ def new_version_on_server(stri, is_pre_release):
+         #
+         server_version = get_stable_release_from_server_string(stri)
+         this_build_version = get_stable_release_from_coot_version()
+-        if (server_version is StringType):
++        if (isinstance(server_version, str)):
+             return server_version > this_build_version
+     return None
+ 
+@@ -280,7 +280,7 @@ def restart_dialog(extra_text=""):
+ 
+ def check_for_updates_gui(use_curl=False):
+ 
+-    from types import StringType
++    pass  # py3: the py2 'types' names are no longer needed
+     import time
+     global server_info_status
+ 
+diff --git a/python/coot_gui.py b/python/coot_gui.py
+index d54583b..e3f4b56 100644
+--- a/python/coot_gui.py
++++ b/python/coot_gui.py
+@@ -523,7 +523,7 @@ def generic_double_entry(label_1, label_2,
+     hbox2.pack_start(smiles_label, False, False, 0)
+     hbox2.pack_start(smiles_entry, True, True, 0)
+ 
+-    if type(check_button_label) is StringType:
++    if isinstance(check_button_label, str):
+ 
+         def check_callback(*args):
+                 active_state = c_button.get_active()
+@@ -612,7 +612,7 @@ def generic_multiple_entries_with_check_button(entry_info_list, check_button_inf
+        entry = gtk.Entry()
+        entries.append(entry)
+ 
+-       if type(entry_1_default_text) is StringType:
++       if isinstance(entry_1_default_text, str):
+           entry.set_text(entry_1_default_text)
+ 
+        hbox1.pack_start(label, False, 0)
+@@ -622,11 +622,11 @@ def generic_multiple_entries_with_check_button(entry_info_list, check_button_inf
+     # print "debug:: check-button-info: ", check_button_info
+     # print "debug:: entry-info-list: ", entry_info_list
+ 
+-    if not (type(check_button_info) is ListType):
++    if not (isinstance(check_button_info, list)):
+             # and len(check_button_info) == 2): we can't do len on a bool
+        check_button = False
+     else:
+-       if type(check_button_info[0]) is StringType:
++       if isinstance(check_button_info[0], str):
+ 
+           def check_callback(*args):
+                 active_state = c_button.get_active()
+@@ -951,7 +951,7 @@ def fill_option_menu_with_mol_options(menu, filter_function):
+               menu.set_active(0)
+               mol_ls.append(mol_no)
+            else:
+-              print("OOps molecule name for molecule %s is %s" %(mol_no_ls,label_str))
++              print("OOps molecule name for molecule %s is %s" %(mol_no,label_str))
+     return mol_ls
+ 
+ # Fill an option menu with maps and return the list of maps
+@@ -1467,7 +1467,7 @@ def zero_occ_atoms_gui(imol):
+ #
+ def interesting_residues_gui(imol, title, interesting_residues):
+ 
+-   from types import ListType
++   pass  # py3: the py2 'types' names are no longer needed
+    centre_atoms = []
+    if valid_model_molecule_qm(imol):
+       residues = interesting_residues
+@@ -1478,7 +1478,7 @@ def interesting_residues_gui(imol, title, interesting_residues):
+             residues[i] = sp[1:]
+ 
+       for spec in residues:
+-         if (type(spec) is ListType):
++         if (isinstance(spec, list)):
+             centre_atoms.append(residue_spec_to_atom_for_centre(imol, *spec))
+          else:
+             centre_atoms.append([False])
+@@ -1525,7 +1525,7 @@ def coot_toolbar_button(button_label, cb_function,
+    import types
+    # we do not exclusively use strings any more...
+    #print "BL DEBUG:: create toolbutton with args!", args
+-   #if (not type(cb_function) is StringType):
++   #if (not isinstance(cb_function, str)):
+    #   print "BL WARNING:: callback function wasn't a string! Cannot create toolbarbutton!"
+    #   return False
+    
+@@ -2240,11 +2240,11 @@ def add_button_info_to_box_of_buttons_vbox(button_info, vbox):
+       button = gtk.Button(button_label)
+ 
+       # BL says:: in python we should pass the callback as a string
+-      if type(callback) is StringType:
++      if isinstance(callback, str):
+          def callback_func(button, call):
+             eval(call)
+          button.connect("clicked", callback_func, callback)
+-      elif (type(callback) is ListType):
++      elif (isinstance(callback, list)):
+          # list can be list of strings or list of functions
+          # with args
+          #
+@@ -2296,7 +2296,7 @@ def dialog_box_of_pairs_of_buttons(imol, window_name, geometry, buttons, close_b
+ 
+         for button_info in buttons:
+            #print "button_info ", button_info
+-           if type(button_info) is ListType:
++           if isinstance(button_info, list):
+               button_label_1 = button_info[0][0]
+               callback_1 = button_info[0][1]
+ 
+@@ -2366,11 +2366,11 @@ def dialog_box_of_buttons_with_widget(window_name, geometry,
+                 button = gtk.Button(button_label)
+ 
+ # BL says:: in python we should pass the callback as a string
+-                if type(callback) is StringType:
++                if isinstance(callback, str):
+                         def callback_func(button,call):
+                                 eval(call)
+                         button.connect("clicked", callback_func, callback)
+-                elif (type(callback) is ListType):
++                elif (isinstance(callback, list)):
+                    def callback_func(button, call):
+                       for item in call:
+                          eval(item)
+@@ -2378,7 +2378,7 @@ def dialog_box_of_buttons_with_widget(window_name, geometry,
+                 else:
+                         button.connect("clicked", callback)
+ 
+-                if type(description) is StringType:
++                if isinstance(description, str):
+                         text_box = gtk.TextView()
+                         text_box.set_editable(False)
+                         add_text_to_text_widget(text_box, description)
+@@ -2452,7 +2452,7 @@ def dialog_box_of_radiobuttons(window_name, geometry, buttons,
+       button = gtk.RadioButton(button, button_label)
+ 
+       # BL says:: in python we should pass the callback as a string
+-      if type(callback) is StringType:
++      if isinstance(callback, str):
+          def callback_func(button, call):
+             eval(call)
+          button.connect("toggled", callback_func, callback)
+@@ -3282,7 +3282,7 @@ def key_bindings_gui():
+                info_dialog(s)
+                print("INFO::", s)
+          
+-         button.connect("clicked", lambda func: apply(binding_func))
++         button.connect("clicked", lambda func: binding_func())
+          
+       else:
+          binding_hbox.pack_start(key_label, False, False, 2)
+@@ -4553,11 +4553,11 @@ def residue_range_gui(func, function_text, go_button_label):
+       return False
+ 
+    def go_button_cb(*args):
+-      from types import IntType
++      pass  # py3: the py2 'types' names are no longer needed
+       save_ranges(residue_range_widgets)
+       residue_ranges = make_residue_ranges()
+       imol = get_option_menu_active_molecule(*mc_opt_menu_model_list)
+-      if (type(imol) is IntType):
++      if (isinstance(imol, int)):
+          func(imol, residue_ranges)
+       else:
+          print("BL INFO:: couldn't get valid imol!!")
+@@ -5080,13 +5080,13 @@ def water_coordination_gui():
+       return " ".join(map(str, atom_spec))
+ 
+    def get_ele(imol, atom_spec):
+-      from types import ListType
++      pass  # py3: the py2 'types' names are no longer needed
+       atoms = residue_info(imol,
+                            atom_spec[1],
+                            atom_spec[2],
+                            atom_spec[3])
+       input_atom_name = atom_spec[4]
+-      if type(atoms) is ListType:
++      if isinstance(atoms, list):
+          for atom in atoms:
+             if atom[0][0] == input_atom_name:
+                return atom[1][2]
+@@ -6155,6 +6155,109 @@ def show_updating_maps_chooser():
+     model_map_diff_map_molecule_chooser_gui(ok_button_function)
+ 
+ 
++# Python port of (pepflips-by-difference-map-gui) from coot-gui.scm - the
++# 0.9.8 Python scripts referenced it from the Validate menu without
++# defining it.  Dialog: choose a difference map and a model and an N-sigma
++# cut-off, then show a box of buttons, one per potential pepflip.
++#
++def pepflips_by_difference_map_gui():
++
++    def delete_event(*args):
++        window.destroy()
++        return False
++
++    def on_ok_clicked(*args):
++        imol_coords = get_option_menu_active_molecule(option_menu_coords, model_mol_list)
++        imol_map    = get_option_menu_active_molecule(option_menu_map, map_mol_list)
++        try:
++            n_sigma = float(n_sigma_entry.get_text())
++        except ValueError:
++            info_dialog("Could not interpret the N-sigma cut-off as a number")
++            return
++        if imol_coords is False or imol_map is False:
++            info_dialog("Need a model molecule and a difference map")
++            return
++        specs = pepflip_using_difference_map(imol_coords, imol_map, n_sigma)
++        if not specs:
++            info_dialog("No pepflips found")
++        else:
++            dialog_box_of_buttons_from_specs("Potential Pepflip", [240, 170],
++                                             imol_coords, specs)
++        delete_event()
++
++    window = gtk.Window(gtk.WINDOW_TOPLEVEL)
++    window.set_title("Coot")
++    label = gtk.Label("Difference map")
++    vbox = gtk.VBox(False, 6)
++    hbox_buttons = gtk.HBox(False, 5)
++    hbox_sigma = gtk.HBox(False, 5)
++    option_menu_map = gtk.combo_box_new_text()
++    option_menu_coords = gtk.combo_box_new_text()
++    n_sigma_label = gtk.Label("N-sigma cut-off")
++    n_sigma_entry = gtk.Entry()
++    ok_button = gtk.Button("  OK  ")
++    cancel_button = gtk.Button(" Cancel ")
++    h_sep = gtk.HSeparator()
++    model_mol_list = fill_option_menu_with_coordinates_mol_options(option_menu_coords)
++    map_mol_list = fill_option_menu_with_difference_map_mol_options(option_menu_map)
++
++    window.set_default_size(370, 100)
++    window.add(vbox)
++    vbox.pack_start(label, False, False, 5)
++    vbox.pack_start(option_menu_map, True, True, 6)
++    vbox.pack_start(option_menu_coords, True, True, 6)
++    hbox_sigma.pack_start(n_sigma_label, False, False, 6)
++    hbox_sigma.pack_start(n_sigma_entry, False, False, 6)
++    vbox.pack_start(hbox_sigma, True, False, 6)
++    vbox.pack_start(h_sep, True, False, 2)
++    vbox.pack_start(hbox_buttons, False, False, 5)
++    hbox_buttons.pack_start(ok_button, True, False, 5)
++    hbox_buttons.pack_start(cancel_button, True, False, 5)
++    n_sigma_entry.set_text("4.0")
++
++    ok_button.connect("clicked", on_ok_clicked)
++    cancel_button.connect("clicked", delete_event)
++    window.show_all()
++
++
++# Python port of (molecule-atom-overlaps-gui imol) from find-baddies.scm:
++# a box of buttons, one for each atom overlap that is worse than 1.0 A^3.
++# Clicking a button centres on the first atom of the overlap.
++#
++def molecule_atom_overlaps_gui(imol):
++
++    baddie_limit = 1.0   # overlap volume (A^3) above which an overlap is listed
++
++    def make_buttons():
++        maob = molecule_atom_overlaps(imol)
++        if not isinstance(maob, list):
++            info_dialog(str(maob))
++            maob = []
++        buttons = []
++        for item in maob:
++            overlap = item['overlap-volume']
++            if overlap > baddie_limit:
++                atom_spec_1 = item['atom-1-spec']
++                atom_spec_2 = item['atom-2-spec']
++                res_name_1 = residue_spec_to_residue_name(imol, atom_spec_to_residue_spec(atom_spec_1))
++                res_name_2 = residue_spec_to_residue_name(imol, atom_spec_to_residue_spec(atom_spec_2))
++                label = ("Atom Overlap " + atom_spec_to_string(atom_spec_1) + " " + str(res_name_1) +
++                         " on " + atom_spec_to_string(atom_spec_2) + " " + str(res_name_2) +
++                         " OV: " + "%5.2f" % overlap)
++                def make_go_to(spec):
++                    # (GTK passes the button as the first argument)
++                    def go_to(*args):
++                        set_go_to_atom_molecule(imol)
++                        set_go_to_atom_from_atom_spec(spec)
++                    return go_to
++                buttons.append([label, make_go_to(atom_spec_1)])
++        return buttons
++
++    buttons = make_buttons()
++    title = "Atom Overlaps for Molecule " + str(imol) + " (" + str(len(buttons)) + ")"
++    return dialog_box_of_buttons(title, [350, 200], buttons, " Close ")
++
++
+ # let the c++ part of mapview know that this file was loaded:
+ 
+ # print "From coot_gui.py calling set_found_coot_python_gui()" - called from rcrane loader
+diff --git a/python/coot_toolbuttons.py b/python/coot_toolbuttons.py
+index 9a1f627..80dbbe9 100644
+--- a/python/coot_toolbuttons.py
++++ b/python/coot_toolbuttons.py
+@@ -84,7 +84,7 @@ if (have_coot_python):
+ 
+     def activate_menuitem(widget, item):
+       try:
+-        apply(item[1])
++        item[1]()
+       except:
+         print("BL INFO:: unable to execute function", item[1])
+ 
+@@ -566,7 +566,7 @@ def save_toolbar_to_init_file(button_label, callback_function,
+ 
+   # so far only for string
+   save_str = "coot_toolbar_button(\"" + button_label + "\", "
+-  if type(callback_function) is StringType:
++  if isinstance(callback_function, str):
+     save_str += ("\"" + callback_function + "\"")
+   else:
+     # no lists yet. FIXME
+diff --git a/python/coot_utils.py b/python/coot_utils.py
+index b3f4ccb..6352b1e 100644
+--- a/python/coot_utils.py
++++ b/python/coot_utils.py
+@@ -25,6 +25,7 @@
+ import os
+ import re, string
+ import numbers
++import io as _io
+         
+ # 3D annotations - a bit of a hack currently
+ global annotations
+@@ -106,7 +107,7 @@ def with_auto_accept(*funcs):
+ #
+ def using_active_atom(*funcs):
+ 
+-    from types import ListType
++    pass  # py3: the py2 'types' names are no longer needed
+     active_atom = closest_atom_simple()
+     if (not active_atom):
+         add_status_bar_text("No residue found")
+@@ -138,7 +139,7 @@ def using_active_atom(*funcs):
+             # we have a list of functions
+             # so use
+             ls_funcs = funcs[0]
+-        elif (type(funcs[0]) is ListType):
++        elif (isinstance(funcs[0], list)):
+             # we have a range of lists
+             # use as is
+             ls_funcs = funcs
+@@ -480,10 +481,10 @@ def just_one_or_next_map():
+ # Return True or False.
+ #
+ def directory_is_modifiable_qm(prefix_dir):
+-    from types import StringType
++    pass  # py3: the py2 'types' names are no longer needed
+     ret = False
+     # check string:
+-    ret = type(prefix_dir) is StringType
++    ret = isinstance(prefix_dir, str)
+     if ret:
+         # check existence:
+         ret = os.access(prefix_dir, os.F_OK)
+@@ -737,7 +738,7 @@ def set_virtual_trackball_type(type):
+ def list_of_strings_qm(ls):
+     import types
+     not_str =0
+-    if type(ls) is not ListType:
++    if not isinstance(ls, list):
+        return False
+     else:
+        for item in ls:
+@@ -842,6 +843,10 @@ def command_in_path_qm(cmd, no_disk_search=True,
+                        only_extension_here=None,
+                        add_extensions_here=[]):
+ 
++    # (py3) callers pass e.g. probe_command, which is False when the program was not found
++    if not isinstance(cmd, str) or cmd == "":
++        return False
++
+     exe_path = find_exe(cmd, "PATH", no_disk_search=True,
+                         screen_info=False,
+                         only_extension=only_extension_here,
+@@ -969,7 +974,7 @@ def popen_command(cmd, args, data_list, log_file, screen_flag=False,
+                 process.stdin.close()
+             else:
+                 # file?
+-                if isinstance(stdin_inp, file):
++                if isinstance(stdin_inp, _io.IOBase):
+                     stdin_inp.close()
+ 
+             if (screen_flag):
+@@ -989,7 +994,7 @@ def popen_command(cmd, args, data_list, log_file, screen_flag=False,
+             args_string = (" ").join(args)
+             
+             # write tmp input file
+-            input = file (data_list_file,'w')
++            input = open(data_list_file, 'w')
+             for data in data_list:
+                 input.write(data + '\n')
+             input.close()
+@@ -1455,7 +1460,7 @@ def reorder_chains(imol):
+         list(map(lambda model: model.sort(), chain_list))
+             
+     p_rep = python_representation(imol)
+-    if (type(p_rep) is ListType):
++    if (isinstance(p_rep, list)):
+         reorder_chains_in_model(p_rep)
+         clear_and_update_molecule(imol, p_rep)
+ 
+@@ -1579,11 +1584,11 @@ def transform_map_using_lsq_matrix(imol_ref, ref_chain, ref_resno_start, ref_res
+ #
+ def brighten_map(imol, scale_factor):
+ 
+-    from types import ListType
++    pass  # py3: the py2 'types' names are no longer needed
+ 
+     if valid_map_molecule_qm(imol):
+        current_colour = map_colour_components(imol)
+-       if type(current_colour) is ListType:
++       if isinstance(current_colour, list):
+            new_v = []
+            for i in range(len(current_colour)):
+               new_v.append(current_colour[i] * float(scale_factor))
+@@ -1968,7 +1973,7 @@ def add_key_binding(name, key, thunk):
+ 
+     if (use_gui_qm):
+ 
+-        from types import IntType, StringType
++        pass  # py3: the py2 'types' names are no longer needed
+         
+         global key_bindings, std_key_bindings
+         std_keys = [elem[1] for elem in std_key_bindings]
+@@ -1977,12 +1982,12 @@ def add_key_binding(name, key, thunk):
+         if (key in std_keys):
+             print("INFO:: you shall not overwrite a standard key binding (%s)" %key)
+         else:
+-            if (type(key) is IntType):
++            if (isinstance(key, int)):
+                 if (key in keys):
+                     print("INFO:: you are overwriting existing key", key)
+                     key_bindings.pop(keys.index(key))
+                 key_bindings.append([key, key, name, thunk])
+-            elif (type(key) is StringType):
++            elif (isinstance(key, str)):
+                 code = decode_key(key)
+                 if (code in codes):
+                     print("INFO:: you are overwriting existing key (from code)", key)
+@@ -2012,7 +2017,7 @@ def graphics_general_key_press_hook(key, control_flag = 0):
+         index = codes.index(key)
+         func  = funcs[index]
+         # print "BL DEBUG:: index and executing:", index, func
+-        apply(func)
++        func()
+     else:
+         if coot_has_guile() and is_windows():
+             run_scheme_command("(graphics-general-key-press-hook " + \
+@@ -2033,13 +2038,13 @@ def graphics_general_key_press_hook(key, control_flag = 0):
+ # 
+ def read_vu_file(filename, obj_name):
+     
+-    from types import StringType
+-    from operator import isNumberType
++    pass  # py3: the py2 'types' names are no longer needed
++    from numbers import Number as _Number
+     
+     def colour_from_number(obj):
+-        if type(obj) is StringType:
++        if isinstance(obj, str):
+             return obj
+-        elif isNumbertype(obj):
++        elif isinstance(obj, _Number):
+             if (obj == 0):
+                 return "white"
+             else:
+@@ -2291,13 +2296,13 @@ def res_spec_to_ins_code(res_spec):
+ # 
+ def residue_spec_to_atom_for_centre(imol, chain_id, res_no, ins_code):
+ 
+-    from types import ListType
++    pass  # py3: the py2 'types' names are no longer needed
+     # residue-info can return False
+     atom_ls = residue_info(imol, chain_id, res_no, ins_code)
+ 
+     centre_atom_name_alt_conf = False
+ 
+-    if type(atom_ls) is ListType:
++    if isinstance(atom_ls, list):
+         for i in range(len(atom_ls)):
+             alt_conf_str = atom_ls[i][0][1]
+             atom = atom_ls[i][0][0]
+@@ -2641,7 +2646,7 @@ def label_all_atoms_in_residue(imol, chain_id, resno, inscode):
+         import types
+ 
+         atom_list = residue_info(imol, chain_id, resno, inscode)
+-        if type(atom_list) is ListType:
++        if isinstance(atom_list, list):
+                 for atom_info in atom_list:
+                         add_atom_label(imol,chain_id, resno, atom_info[0][0])
+                 graphics_draw()
+@@ -2655,7 +2660,7 @@ def label_all_active_residue_atoms():
+         inscode    = active_atom[3]
+ 
+         atom_list = residue_info(imol, chain_id, resno, inscode)
+-        if type(atom_list) is ListType:
++        if isinstance(atom_list, list):
+                 for atom_info in atom_list:
+                         add_atom_label(imol,chain_id, resno, atom_info[0][0])
+                 graphics_draw()
+@@ -2764,12 +2769,12 @@ def save_dialog_positions_to_init_file():
+             
+         if port:
+ 
+-            port.write("# ----------------------------------------------------------")
+-            port.write("# the following were written by extraction from a state file")
+-            port.write("# ----------------------------------------------------------")
++            port.write("# ----------------------------------------------------------\n")
++            port.write("# the following were written by extraction from a state file\n")
++            port.write("# ----------------------------------------------------------\n")
+             for position in positions:
+                 port.write(position)
+-            port.write("# -------------------------")
++            port.write("# -------------------------\n")
+             port.close()
+         else:
+             print("BL ERROR:: no valid port to write to!")
+@@ -3006,7 +3011,7 @@ def pukka_puckers_qm(imol):
+                     residue_spec = [chain_id, res_no, ins_code]
+                     pi = pucker_info(imol, residue_spec, 1)
+                     if (pi):
+-                        if (type(pi) is ListType):
++                        if (isinstance(pi, list)):
+                             if (len(pi) == 4):
+                                 pucker_atom = pi[1]
+                                 if ((abs(pi[0]) > crit_d) and
+@@ -3158,13 +3163,13 @@ def save_annotations(file_name):
+ 
+ def load_annotations(file_name):
+     if (os.path.isfile(file_name)):
+-        from types import ListType
++        pass  # py3: the py2 'types' names are no longer needed
+         port = open(file_name, 'r')
+         ls = port.readline()
+         port.close()
+         ls = ls.rstrip("\n")
+         ls = eval(ls)
+-        if (type(ls) is ListType):
++        if (isinstance(ls, list)):
+             global annotations
+             annotations = ls
+             for ann in annotations:
+@@ -4443,7 +4448,7 @@ def merge_solvent_chains(imol):
+ 
+ # helper to comvert functions to strings
+ def cmd2str(*args):
+-    from types import StringType
++    pass  # py3: the py2 'types' names are no longer needed
+     func = args[0]
+     if callable(func):
+         ret = args[0].__name__
+@@ -4451,7 +4456,7 @@ def cmd2str(*args):
+         ret = str(func)
+     ret += "("
+     for arg in args[1:]:
+-        if type(arg) is StringType:
++        if isinstance(arg, str):
+             ret += "\"" + arg + "\""
+         else:
+             ret += str(arg)
+diff --git a/python/extensions.py b/python/extensions.py
+index cab38f4..aad7b74 100644
+--- a/python/extensions.py
++++ b/python/extensions.py
+@@ -783,9 +783,9 @@ if (have_coot_python):
+ 
+ 
+      def new_mol_sym_func1(imol, text):
+-       from types import ListType
++       pass  # py3: the py2 'types' names are no longer needed
+        pre_shift = origin_pre_shift(imol)
+-       if (type(pre_shift) is not ListType):
++       if (not isinstance(pre_shift, list)):
+          print("bad pre-shift aborting")
+        else:
+          new_molecule_by_symop(imol, text,
+@@ -1064,7 +1064,7 @@ if (have_coot_python):
+ 
+ 
+      def ncs_ghost_res_range_func(imol):
+-       from types import ListType
++       pass  # py3: the py2 'types' names are no longer needed
+        label_1 = "Start ResNumber"
+        label_2 = "End ResNumber"
+        entry_1_default_text = "10"
+@@ -1080,7 +1080,7 @@ if (have_coot_python):
+            print("BL WARNING:: input residue numbers have to be integers")
+          if (cont):
+            ghost_ncs_chain_ids = ncs_chain_ids(imol)
+-           if (type(ghost_ncs_chain_ids) is ListType):
++           if (isinstance(ghost_ncs_chain_ids, list)):
+              # because we can have hetero-NCS,
+              # but we ignore NCS other that
+              # that of the first type.
+@@ -1841,7 +1841,7 @@ if (have_coot_python):
+        window.add(vbox)
+ 
+        def go_func(*args):
+-         save_dialog_positions_to_preferences_file()
++         save_dialog_positions_to_init_file()
+          window.destroy()
+          
+        go_button.connect("clicked", go_func)
+diff --git a/python/fitting.py b/python/fitting.py
+index bb793c1..efe0bc6 100644
+--- a/python/fitting.py
++++ b/python/fitting.py
+@@ -124,13 +124,13 @@ multi_refine_separator = False
+ # or 'all-chains, where all chains are chosen.
+ #
+ def fit_protein_make_specs(imol, chain_specifier):
+-    from types import StringType
++    pass  # py3: the py2 'types' names are no longer needed
+     if (not valid_model_molecule_qm(imol)):
+         return []
+     else:
+         if (chain_specifier == 'all-chains'):
+             chain_list = chain_ids(imol)
+-        elif (type(chain_specifier) == StringType):
++        elif (isinstance(chain_specifier, str)):
+             chain_list = [chain_specifier]
+         else:
+             chain_list = []   # return null list - incomprehensible
+@@ -492,7 +492,7 @@ def fit_waters_range(imol, chain_id, start, end):
+ def stepped_refine_protein(imol, res_step = 2):
+ 
+     import types
+-    from types import IntType
++    pass  # py3: the py2 'types' names are no longer needed
+ 
+     imol_map = imol_refinement_map()
+     if (not valid_map_molecule_qm(imol_map)):            
+@@ -742,7 +742,7 @@ def manual_refine_residues(side_residue_offset):
+ 
+ # generic spherical refinement (use_map) (or regularization, dont use map):
+ def sphere_refine_regularize_generic(use_map=True, radius=3, expand=False):
+-    from types import ListType
++    pass  # py3: the py2 'types' names are no longer needed
+     active_atom = active_residue()
+     if (not active_atom):
+         add_status_bar_text("No active residue")
+@@ -759,7 +759,7 @@ def sphere_refine_regularize_generic(use_map=True, radius=3, expand=False):
+             centred_residue = active_atom[1:4]
+             other_residues = residues_near_residue(imol, centred_residue, radius)
+             all_residues = [centred_residue]
+-            if (type(other_residues) is ListType):
++            if (isinstance(other_residues, list)):
+                 all_residues += other_residues
+             # extend?
+             if expand:
+diff --git a/python/generic_objects.py b/python/generic_objects.py
+index c1ad23f..57b69e7 100644
+--- a/python/generic_objects.py
++++ b/python/generic_objects.py
+@@ -345,7 +345,7 @@ def prepare_file_for_probe(file_in, file_out):
+     except IOError:
+       print("BL WARNING:: Cannot read ", file_in)
+     try:
+-      fout = file(file_out,'w')
++      fout = open(file_out, 'w')
+     except IOError:
+       print("BL WARNING:: Cannot write ", file_out)
+     if (fin and fout):
+diff --git a/python/get_recent_pdbe.py b/python/get_recent_pdbe.py
+index 8e4311a..e7339eb 100644
+--- a/python/get_recent_pdbe.py
++++ b/python/get_recent_pdbe.py
+@@ -215,7 +215,7 @@ def cache_or_net_get_image(image_url, image_name, hbox):
+ 
+     def show_image_when_ready(image_name, hbox):
+         if os.path.isfile(image_name):
+-            #apply(func)
++            #func()
+             # instead of function we put image into vbox here
+             pixmap = gtk.Image()
+             if is_png_or_gif_qm(image_name):
+diff --git a/python/gui_add_linked_cho.py b/python/gui_add_linked_cho.py
+index bd7d171..faa63a9 100644
+--- a/python/gui_add_linked_cho.py
++++ b/python/gui_add_linked_cho.py
+@@ -512,7 +512,7 @@ class glyco_validate:
+                     words = l.split()
+                     if len(words) > 12:
+                         for r in glyco_tree_residues:
+-                            rn = residue_name_by_spec(imol, r)
++                            rn = residue_spec_to_residue_name(imol, r)
+                             try:
+                                 res_id = rn + "-" + residue_spec_to_chain_id(r) + \
+                                          '-' + str(residue_spec_to_res_no(r))
+diff --git a/python/mutate.py b/python/mutate.py
+index 428dcfe..b147413 100644
+--- a/python/mutate.py
++++ b/python/mutate.py
+@@ -22,7 +22,7 @@
+ #
+ def mutate_chain(imol, chain_id, sequence):
+ 
+-   if (len(sequence) != chain_n_iresidues(chain_id, imol)) :
++   if (len(sequence) != chain_n_residues(chain_id, imol)) :
+        print("sequence mismatch: molecule", chain_n_residues(chain_id, imol), "new sequences:", len(sequence))
+    else:
+        make_backup(imol) # do backup first
+@@ -150,7 +150,7 @@ def three_letter_code2single_letter(residue_type):
+ #
+ def mutate_nucleotide_range(imol, chain_id, resno_start, resno_end, sequence):
+ 
+-   from types import StringType
++   pass  # py3: the py2 'types' names are no longer needed
+    # return False on unknown letter. We don't need to be specific about
+    # RNA/DNA here because mutate-base uses canonical_base_name() to
+    # set the base name according to the residue type before it was
+@@ -167,7 +167,7 @@ def mutate_nucleotide_range(imol, chain_id, resno_start, resno_end, sequence):
+          return False
+ 
+    # main line
+-   if (type(sequence) is not StringType):
++   if (not isinstance(sequence, str)):
+       s = "sequence must be a string"
+       info_dialog(s)
+       print(s)
+diff --git a/python/ncs.py b/python/ncs.py
+index ffaf64e..045579d 100644
+--- a/python/ncs.py
++++ b/python/ncs.py
+@@ -169,9 +169,9 @@ def single_manual_ncs_ghosts(imol, resno_start, resno_end, ref_chain, peer_chain
+ #
+ def manual_ncs_ghosts(imol, resno_start, resno_end, chain_id_list):
+ 
+-    from types import ListType
++    pass  # py3: the py2 'types' names are no longer needed
+ 
+-    if (type(chain_id_list) is ListType):
++    if (isinstance(chain_id_list, list)):
+         if (len(chain_id_list) > 1):
+             # OK, OK, to the standard SSM-based NCS matrices are bad for this
+             # molecule, lets use LSQ.
+@@ -242,9 +242,9 @@ def update_ncs_ghosts_by_local_sphere():
+ #
+ def ncs_master_chain_id(imol):
+ 
+-    from types import ListType
++    pass  # py3: the py2 'types' names are no longer needed
+     cids_ls = ncs_chain_ids(imol)
+-    if type(cids_ls) is not ListType:
++    if not isinstance(cids_ls, list):
+         return False
+     else:
+         if (len(cids_ls) == 0):
+diff --git a/python/shelx.py b/python/shelx.py
+index 0018350..c04be7c 100644
+--- a/python/shelx.py
++++ b/python/shelx.py
+@@ -64,7 +64,7 @@ def convert_shelx_fcf_to_cif(fcf_filename,cif_filename):
+    except IOError:
+     print("BL ERROR:: Cannot read ", fcf_filename)
+    try:
+-    fout = file(cif_filename,"w")
++    fout = open(cif_filename, "w")
+    except IOError:
+     print("BL ERROR:: Cannot write ", cif_filename)
+    if (fin and fout):
+@@ -554,7 +554,7 @@ def read_shelx_lst_file(file_name, imol):
+                         #print "BL DEBUG:: DR: ", line
+                         dr_bits = parse_dr_line(line)
+                         #print "BL DEBUG:: dr_bits: ", dr_bits,len(line)
+-                        if (type(dr_bits) is ListType):
++                        if (isinstance(dr_bits, list)):
+                                 disagreeable_restraints_list.append(dr_bits)
+                         if (len(line) > 1):
+                                 dr_count = 2
+@@ -640,7 +640,7 @@ def read_shelx_project(file_name):
+                 else:
+                         if (os.path.isfile(fcf_file_name)):
+                                 print("   Read fcf file ", fcf_file_name)
+-                                handle_chelx_fcf_file(fcf_file_name)
++                                handle_shelx_fcf_file(fcf_file_name)
+                         else:
+                                 print("BL WARNING:: no fcf and or cif files found!")
+ 
+diff --git a/python/shelx_extensions.py b/python/shelx_extensions.py
+index 209dd65..1b75a3f 100644
+--- a/python/shelx_extensions.py
++++ b/python/shelx_extensions.py
+@@ -189,10 +189,10 @@ def editable_shelx_gui(imol, hklin_file_name):
+         return False
+ 
+     def shelx_refine_go_funcn_event(*args):
+-        from types import StringType
++        pass  # py3: the py2 'types' names are no longer needed
+         start, end = textbuffer.get_bounds()
+         txt = textbuffer.get_text(start, end)
+-        if (type(txt) == StringType):
++        if (isinstance(txt, str)):
+             hklin_file_info = False
+             if (len(hklin_file_name) > 0):
+                 hklin_file_info = hklin_file_name
+diff --git a/rcrane/__init__.py b/rcrane/__init__.py
+index 5efd08e..dcb476f 100644
+--- a/rcrane/__init__.py
++++ b/rcrane/__init__.py
+@@ -15,17 +15,17 @@
+ # or implied. See the License for the specific language governing
+ # permissions and limitations under the License.
+ 
+-from traceGui import TraceGui as newTrace
+-from about import createAboutDialog
+-from rotamerize import pickAtoms as newRotamerize
+-from rotamerize import storeMenuItem as storeRotamerizeMenuItem
+-from rotamerize import setRotamerizeMaxNucleotides, getRotamerizeMaxNucleotides
+-from citationPopup import dontShowPopup as dontShowCitationPopup
+-from calcCoords import disablePhenixRestraints, enablePhenixRestraints, usingPhenixRestraints
+-from menu import createRCraneMenu
+-from preLaunchCheck import checkCootAndReportErrors
+-from extendChain import pickAtoms as newExtendChain
+-from extendChain import storeMenuItem as storeExtendChainMenuItem
++from .traceGui import TraceGui as newTrace
++from .about import createAboutDialog
++from .rotamerize import pickAtoms as newRotamerize
++from .rotamerize import storeMenuItem as storeRotamerizeMenuItem
++from .rotamerize import setRotamerizeMaxNucleotides, getRotamerizeMaxNucleotides
++from .citationPopup import dontShowPopup as dontShowCitationPopup
++from .calcCoords import disablePhenixRestraints, enablePhenixRestraints, usingPhenixRestraints
++from .menu import createRCraneMenu
++from .preLaunchCheck import checkCootAndReportErrors
++from .extendChain import pickAtoms as newExtendChain
++from .extendChain import storeMenuItem as storeExtendChainMenuItem
+ 
+ try:
+     from debug import enableDebugging
+diff --git a/rcrane/about.py b/rcrane/about.py
+index a0bd56f..c3610c8 100644
+--- a/rcrane/about.py
++++ b/rcrane/about.py
+@@ -18,7 +18,7 @@
+ import gtk
+ import os.path
+ 
+-from guiUtils import rcranePath
++from .guiUtils import rcranePath
+ 
+ def createAboutDialog():
+     """Creates and displays an About dialog.
+@@ -49,7 +49,7 @@ def createAboutDialog():
+     
+     #if we have a version.py, then include the SVN revision number in the about box
+     try:
+-        from revisionNum import revNum
++        from .revisionNum import revNum
+         revAndComments = "Revision " + revNum + comments
+     except ImportError:
+         #if there's no version.py, then don't include the SVN revision number
+diff --git a/rcrane/buildInitSugar.py b/rcrane/buildInitSugar.py
+index eba1c93..2af94e1 100644
+--- a/rcrane/buildInitSugar.py
++++ b/rcrane/buildInitSugar.py
+@@ -15,7 +15,7 @@
+ # or implied. See the License for the specific language governing
+ # permissions and limitations under the License.
+ 
+-from strucCalc import plus, minus, torsion, rotateAtoms, crossProd, magnitude
++from .strucCalc import plus, minus, torsion, rotateAtoms, crossProd, magnitude
+ 
+ STARTING_CHI  = -150 #anti
+ SYN_CHI       = 70
+@@ -44,7 +44,7 @@ class BuildInitSugar:
+             c1p = curSugar["C1'"]
+             del curSugar["C1'"] #delete the C1' atom, since it's going to be zeroed anyway
+                                 #(and we don't want to return it since it doesn't need to be added to the pseudoMolecule object)
+-            for (curAtom, curCoords) in curSugar.items():
++            for (curAtom, curCoords) in list(curSugar.items()):
+                 curSugar[curAtom] = minus(curCoords, c1p)
+             
+             
+@@ -67,7 +67,7 @@ class BuildInitSugar:
+         elif pucker == 2:
+             sugarAtoms = self.__c2pAtoms
+         else:
+-            raise "BuildInitSugar called with unrecognized pucker: " + str(pucker)
++            raise ValueError("BuildInitSugar called with unrecognized pucker: " + str(pucker))
+         #I don't have to worry about accidentally modifying the original atom dictionaries, since
+         #rotateAtoms effectively makes a deep copy
+         
+@@ -103,7 +103,7 @@ class BuildInitSugar:
+         del sugarAtoms["N9"]
+         
+         #translate the sugar to the C1' atom of the base
+-        sugarAtoms = dict([(atom, plus(coords, baseAtoms["C1'"])) for (atom, coords) in sugarAtoms.items()])
++        sugarAtoms = dict([(atom, plus(coords, baseAtoms["C1'"])) for (atom, coords) in list(sugarAtoms.items())])
+         
+         return sugarAtoms
+ 
+@@ -129,7 +129,7 @@ def rotateSugar(antiSugarCoords, atoms, newChi = "syn"):
+         newChi = HIGH_ANTI_CHI
+     
+     #translate the sugar coordinates to the origin
+-    synSugarCoords = dict([(atom, minus(coords, atoms["C1'"])) for (atom, coords) in antiSugarCoords.items()])
++    synSugarCoords = dict([(atom, minus(coords, atoms["C1'"])) for (atom, coords) in list(antiSugarCoords.items())])
+     
+     #rotate the sugar
+     if "N9" in atoms:
+diff --git a/rcrane/buildPhosOxy.py b/rcrane/buildPhosOxy.py
+index 190d715..76999ff 100644
+--- a/rcrane/buildPhosOxy.py
++++ b/rcrane/buildPhosOxy.py
+@@ -17,7 +17,7 @@
+ 
+ from math import radians, cos, sin
+ 
+-from strucCalc import minus, plus, dotProd, crossProd, scalarProd, magnitude, normalize
++from .strucCalc import minus, plus, dotProd, crossProd, scalarProd, magnitude, normalize
+ 
+ #constants
+ PHOSBONDLENGTH = 1.485
+diff --git a/rcrane/calcCoords.py b/rcrane/calcCoords.py
+index 45618f2..97562d2 100644
+--- a/rcrane/calcCoords.py
++++ b/rcrane/calcCoords.py
+@@ -49,13 +49,13 @@ try:
+ except ImportError:
+     def use_only_extra_torsion_restraints_for_torsions_state(): return 0
+ 
+-from buildInitSugar import BuildInitSugar, rotateSugar
+-from puckerList import puckerList
+-from buildPhosOxy import buildPhosOxy, buildInitOrTerminalPhosOxy
+-from rotData import RotDataLoader
+-from puckerList import puckerList
+-from guiUtils import HBOX_SPACING, VBOX_SPACING, createRCraneWindowObject
+-import phenixRestraints
++from .buildInitSugar import BuildInitSugar, rotateSugar
++from .puckerList import puckerList
++from .buildPhosOxy import buildPhosOxy, buildInitOrTerminalPhosOxy
++from .rotData import RotDataLoader
++from .puckerList import puckerList
++from .guiUtils import HBOX_SPACING, VBOX_SPACING, createRCraneWindowObject
++from . import phenixRestraints
+ 
+ 
+ #initialize a BuildInitSugar object when this module is loaded
+@@ -280,7 +280,7 @@ def recalcCoords(startingRes, endingRes, rots, origCoords, pseudoMol, window, ig
+     origCootSettings = __changeCootSettings()
+     builtChain = deepcopy(origCoords) #we don't want to modify this object
+     
+-    print("Recalculating ", startingRes, "-", endingRes)
++    print(("Recalculating ", startingRes, "-", endingRes))
+     #from time import sleep; sleep(3)
+     
+     #initialize intermediateAtomLocs (the first nucleotide doesn't have an intermediate location)
+@@ -552,11 +552,11 @@ def __minCoords(pseudoMol, prevPrevResNum, prevResNum, curResNum, nextResNum, cu
+         print("********************************")
+         print("*  Starting struc  *   Score   *")
+         print("********************************")
+-        print("* Anti             *  %s  *" % __stringifyScore(antiRefinementScore))
+-        print("* Syn              *  %s  *" % __stringifyScore(synRefinementScore))
+-        print("* High-anti        *  %s  *" % __stringifyScore(highAntiRefinementScore))
++        print(("* Anti             *  %s  *" % __stringifyScore(antiRefinementScore)))
++        print(("* Syn              *  %s  *" % __stringifyScore(synRefinementScore)))
++        print(("* High-anti        *  %s  *" % __stringifyScore(highAntiRefinementScore)))
+         print("********************************")
+-        print("* Using %s minimization" % selectedStartingStruc + " " * (9-len(selectedStartingStruc)) + " *")
++        print(("* Using %s minimization" % selectedStartingStruc + " " * (9-len(selectedStartingStruc)) + " *"))
+         print("********************************")
+         #from time import sleep; sleep(2)
+     
+@@ -956,7 +956,7 @@ def __runRefinement(molNum, chain, startingResNumFull, endingResNumFull, ignoreD
+     """
+     
+     print("*************************")
+-    print("About to refine residues", startingResNumFull, "-", endingResNumFull)
++    print(("About to refine residues", startingResNumFull, "-", endingResNumFull))
+     print("*************************")
+     
+     (startingResNum, startingResInsCode) = __splitResNum(startingResNumFull)
+diff --git a/rcrane/chain.py b/rcrane/chain.py
+index 5dfe1ad..d6987fc 100644
+--- a/rcrane/chain.py
++++ b/rcrane/chain.py
+@@ -15,7 +15,7 @@
+ # or implied. See the License for the specific language governing
+ # permissions and limitations under the License.
+ 
+-from suite import Suite
++from .suite import Suite
+ 
+ class Chain:
+     """A class for storing chains of nucleotides (which must all be instances of the nucleotide class)."""
+@@ -87,7 +87,7 @@ class Chain:
+             curNuc.seqNum += 1
+         
+         #update the residue number lookup dictionary
+-        for (curKey, curVal) in self.__resNumDict.items():
++        for (curKey, curVal) in list(self.__resNumDict.items()):
+             self.__resNumDict[curKey] = curVal + 1
+         
+         self.nucleotides.insert(0, nuc)
+diff --git a/rcrane/citationPopup.py b/rcrane/citationPopup.py
+index 72481c3..e07fa3a 100644
+--- a/rcrane/citationPopup.py
++++ b/rcrane/citationPopup.py
+@@ -17,7 +17,7 @@
+ 
+ import gtk
+ 
+-from settings import addSetting
++from .settings import addSetting
+ 
+ __dontShowAgain = False
+ __dontShowAgainButton = None
+diff --git a/rcrane/extendChain.py b/rcrane/extendChain.py
+index 34b9863..cd5c5b0 100644
+--- a/rcrane/extendChain.py
++++ b/rcrane/extendChain.py
+@@ -18,13 +18,14 @@
+ from coot import add_status_bar_text, clear_pending_picks, imol_refinement_map
+ from coot import user_defined_click_py as user_defined_click
+ 
+-from selectMapDialog import selectMapDialog
+-from citationPopup import createCitationPopup
+-from pseudoMolecule import PseudoMolecule
+-import rotamerize #we only need clearPendingRotamerize, but if we import that function directly into this namespace
++from .selectMapDialog import selectMapDialog
++from .citationPopup import createCitationPopup
++from .pseudoMolecule import PseudoMolecule, PseudoMoleculeError
++from .guiUtils import createRCraneErrorDialog
++from . import rotamerize #we only need clearPendingRotamerize, but if we import that function directly into this namespace
+     #we'll wind up with circular dependencies
+-from traceGui import TraceGui
+-from reportInputErrors import reportPDB2Error, reportInsCodeError, STANDARD_BASES, reportModifiedNucError
++from .traceGui import TraceGui
++from .reportInputErrors import reportPDB2Error, reportInsCodeError, STANDARD_BASES, reportModifiedNucError
+ 
+ 
+ __menuItem = None #the "Add to terminal nts..." menuItem object
+@@ -130,7 +131,7 @@ def extendChainFromAtomSpec(atomSpec):
+             extendDir = 3
+         else:
+             #the selected residue is an isolated phosphate group, so we can't do anything
+-            print("Nucleotide " + resNumFull + " is an isolated phosphate group.  Cannot extend.")
++            print(("Nucleotide " + resNumFull + " is an isolated phosphate group.  Cannot extend."))
+             add_status_bar_text("Nucleotide " + resNumFull + " is an isolated phosphate group.  Cannot extend.")
+             return False
+     elif nextResIsPhosOnly:
+@@ -149,7 +150,7 @@ def extendChainFromAtomSpec(atomSpec):
+             if not extendDir: return False #if we couldn't determine a direction from the atom, then cancel
+     
+     elif connectedToNext and connectedToPrev:
+-        print("Nucleotide " + resNumFull + " is not at the end of a chain")
++        print(("Nucleotide " + resNumFull + " is not at the end of a chain"))
+         add_status_bar_text("Nucleotide " + resNumFull + " is not at the end of a chain")
+         return False
+     elif connectedToNext:
+@@ -204,29 +205,29 @@ def extendChainFromAtomSpec(atomSpec):
+         glyN = "N1"
+     
+     if pseudoMol.getAtomCoordsFromIndex("C1'", resIndexToCheck) is None:
+-        print("Nucleotide " + resNumFullToCheck + " does not have a C1' atom.  Cannot extend chain.")
++        print(("Nucleotide " + resNumFullToCheck + " does not have a C1' atom.  Cannot extend chain."))
+         add_status_bar_text("Nucleotide " + resNumFullToCheck + " does not have a C1' atom.  Cannot extend chain.")
+         return False
+     if pseudoMol.getAtomCoordsFromIndex(glyN, resIndexToCheck) is None:
+-        print("Nucleotide " + resNumFullToCheck + " does not have an " + glyN + " atom.  Cannot extend chain.")
++        print(("Nucleotide " + resNumFullToCheck + " does not have an " + glyN + " atom.  Cannot extend chain."))
+         add_status_bar_text("Nucleotide " + resNumFullToCheck + " does not have an " + glyN + " atom.  Cannot extend chain.")
+         return False
+     
+     #make sure that this isn't an isolated nt without any phosphates
+     curPhosCoords = pseudoMol.getPhosCoordsFromIndex(resIndex) #only used for sanity checking
+     if not connectedToNext and not connectedToPrev and curPhosCoords is None:
+-        print("Nucleotide " + resNumFull + "is an isolated nucleotides without any phosphates.  Cannot extend chain.")
++        print(("Nucleotide " + resNumFull + "is an isolated nucleotides without any phosphates.  Cannot extend chain."))
+         add_status_bar_text("Nucleotide " + resNumFull + "is an isolated nucleotides without any phosphates.  Cannot extend chain.")
+         return False
+     
+     #make sure that we're not building 3'->5' on a nucleotide without a 3' phosphate (because we can't determine pseudotorsions w/o a 3' phos)
+     if extendDir == 5 and not connectedToNext:
+-        print("Cannot extend nucleotide " + resNumFull + " in the 5' direction without a 3' phosphate.")
++        print(("Cannot extend nucleotide " + resNumFull + " in the 5' direction without a 3' phosphate."))
+         print("  Please add a 3' phosphate by extending the chain in the 3' direction.")
+         add_status_bar_text("Cannot extend nucleotide " + resNumFull + " in the 5' direction without a 3' phosphate.")
+         return False
+     
+-    print("About to extend the chain in the " + str(extendDir) + "' direction")
++    print(("About to extend the chain in the " + str(extendDir) + "' direction"))
+     
+     #tell the PseudoMolecule object where to insert new residues
+     pseudoMol.setResInsertionPoint(resIndex)
+@@ -261,7 +262,7 @@ def __decideDirectionFromAtom(atomName, resNum):
+     elif atomName in ATOMS5P:
+         return 5
+     else:
+-        print("Nucleotide " + resNum + " is an isolated nucleotide.  Please select either the O5' or")
++        print(("Nucleotide " + resNum + " is an isolated nucleotide.  Please select either the O5' or"))
+         print("O3' atom to extend in the 5' or 3' direction, respectively.")
+         add_status_bar_text("Must select either O5' or O3' of isolated nucleotides.")
+         return False
+diff --git a/rcrane/linearInterp.py b/rcrane/linearInterp.py
+index 4bd0b61..31b891d 100644
+--- a/rcrane/linearInterp.py
++++ b/rcrane/linearInterp.py
+@@ -64,7 +64,7 @@ class LinearInterp:
+             #make sure that step size is correct
+             xVal = self.__xStart + self.__xStep * len(self.__yData)
+             if (xVal - ep <= curdata[0]) and (curdata[0] <= xVal + ep):
+-                print("Incorrect step size in file " + self.__fileName)
++                print(("Incorrect step size in file " + self.__fileName))
+             
+             self.__yData.append(float(curdata[1]))
+         input.close()
+diff --git a/rcrane/menu.py b/rcrane/menu.py
+index e39ae1f..d5ee050 100644
+--- a/rcrane/menu.py
++++ b/rcrane/menu.py
+@@ -16,7 +16,7 @@
+ # permissions and limitations under the License.
+ 
+ import gtk, os.path, imp
+-from coot_gui_adapter import coot_menubar_menu, add_simple_coot_menu_menuitem
++from .coot_gui_adapter import coot_menubar_menu, add_simple_coot_menu_menuitem
+ import rcrane
+ 
+ 
+diff --git a/rcrane/nextPhos.py b/rcrane/nextPhos.py
+index db46897..a230785 100644
+--- a/rcrane/nextPhos.py
++++ b/rcrane/nextPhos.py
+@@ -18,10 +18,10 @@
+ #from pprint import pprint
+ from math import radians, pi, cos, sin, sqrt
+ 
+-from linearInterp import LinearInterp
+-from strucCalc import dist, angle, crossProd, scalarProd, minus, plus, magnitude, torsion, rotateAtoms
+-from safelog import ln
+-from stats import median, lowerQuartile
++from .linearInterp import LinearInterp
++from .strucCalc import dist, angle, crossProd, scalarProd, minus, plus, magnitude, torsion, rotateAtoms
++from .safelog import ln
++from .stats import median, lowerQuartile
+ from coot import map_peaks_py, map_peaks_near_point_from_list_py, density_at_point, add_molecule_py
+ add_molecule = add_molecule_py
+ 
+diff --git a/rcrane/nucleotide.py b/rcrane/nucleotide.py
+index aeaed3d..8eb0adb 100644
+--- a/rcrane/nucleotide.py
++++ b/rcrane/nucleotide.py
+@@ -15,7 +15,7 @@
+ # or implied. See the License for the specific language governing
+ # permissions and limitations under the License.
+ 
+-from strucCalc import torsion, dist, distToLine
++from .strucCalc import torsion, dist, distToLine
+ 
+ SUGARATOM = "C1'"
+ 
+@@ -264,7 +264,7 @@ class Nucleotide:
+         retVal += ("Seq Num:  " + str(self.seqNum) + "\n")        
+         retVal += ("Nuc type: " + str(self.type) + "\n")        
+         retVal += "Atoms: \n"
+-        for (name, coords) in self.atoms.items():
++        for (name, coords) in list(self.atoms.items()):
+             retVal += ("\t" + name + ":  " + str(coords) + "\n")
+         return retVal
+     
+diff --git a/rcrane/preLaunchCheck.py b/rcrane/preLaunchCheck.py
+index 17f20c4..48e5e49 100644
+--- a/rcrane/preLaunchCheck.py
++++ b/rcrane/preLaunchCheck.py
+@@ -75,7 +75,7 @@ def checkCootAndReportErrors():
+     if not checkVersion():
+         #if this version of Coot isn't new enough for RCrane, print an error message to the terminal and pop up an error dialog
+         print("RCrane requires Coot version 0.6.2 or newer.")
+-        print("Current Coot version is " + str(coot_version()))
++        print(("Current Coot version is " + str(coot_version())))
+         print("RCrane not launched.")
+         
+         errorDialog = gtk.MessageDialog(type = gtk.MESSAGE_ERROR, buttons = gtk.BUTTONS_OK)
+diff --git a/rcrane/pseudoMolecule.py b/rcrane/pseudoMolecule.py
+index 9845c4c..ea54de8 100644
+--- a/rcrane/pseudoMolecule.py
++++ b/rcrane/pseudoMolecule.py
+@@ -28,15 +28,15 @@ from coot import svn_revision #this can be removed if we ever require Coot rev 3
+ 
+ #use the new version of python_representation if it exists
+ try:
+-    from coot_utils_adapter import python_representation_kk as python_representation
++    from .coot_utils_adapter import python_representation_kk as python_representation
+     #print "Using python_representation_kk"
+ except ImportError:
+-    from coot_utils_adapter import python_representation
++    from .coot_utils_adapter import python_representation
+ 
+-from chain import Chain
+-from nucleotide import Nucleotide
+-from strucCalc import dist
+-from bondLength import BOND_LIST, BOND_DIST_CUTOFF
++from .chain import Chain
++from .nucleotide import Nucleotide
++from .strucCalc import dist
++from .bondLength import BOND_LIST, BOND_DIST_CUTOFF
+ 
+ BATONCOLOR = "orange"
+ MOLECULE_NAME = "RCrane-molecule-%i"
+@@ -386,7 +386,7 @@ class PseudoMolecule:
+         return None
+     
+     
+-    def getPhosCoordsFromIndex(self, resNum):
++    def getPhosCoordsFromIndex(self, resIndex):
+         """Get the coordinates of a specified phosphate.
+         
+         ARGUMENTS:
+@@ -532,9 +532,9 @@ class PseudoMolecule:
+         
+         #redraw the entire molecule (or the new portion of the molecule if we're doing an extendChain)
+         if self.resInsertionPoint is None:
+-            nucsToDraw = range(len(self.__molecule[0][self.__chainIndex][1])-1)
++            nucsToDraw = list(range(len(self.__molecule[0][self.__chainIndex][1])-1))
+         else:
+-            nucsToDraw = range(self.origResInsertionPoint, self.resInsertionPoint)
++            nucsToDraw = list(range(self.origResInsertionPoint, self.resInsertionPoint))
+         #print list(nucsToDraw)
+         
+         prevPhosCoords = self.__molecule[0][self.__chainIndex][1][0][3][0][2]
+@@ -614,9 +614,9 @@ class PseudoMolecule:
+         
+         #redraw the entire molecule (or the new portion of the molecule if we're doing an extendChain)
+         if self.resInsertionPoint is None:
+-            nucsToDraw = range(len(self.__molecule[0][self.__chainIndex][1])-1)
++            nucsToDraw = list(range(len(self.__molecule[0][self.__chainIndex][1])-1))
+         else:
+-            nucsToDraw = range(self.resInsertionPoint, self.origResInsertionPoint)
++            nucsToDraw = list(range(self.resInsertionPoint, self.origResInsertionPoint))
+         prevPhosCoords = self.__molecule[0][self.__chainIndex][1][0][3][0][2]
+         for i in nucsToDraw:
+             
+@@ -792,7 +792,7 @@ class PseudoMolecule:
+         
+         atomList = []
+         
+-        for (atomName, coords) in sugarCoords.items():
++        for (atomName, coords) in list(sugarCoords.items()):
+             #convert PDB3 format atoms names to PDB2
+             atomList.append([["%4s" % atomName,""], [1.0, DEFAULT_B_FACTOR, " %s" % atomName[0:1]], coords])
+         
+@@ -853,7 +853,7 @@ class PseudoMolecule:
+         """
+         
+         atomList = []
+-        for (atomName, coords) in phosOxyCoords.items():
++        for (atomName, coords) in list(phosOxyCoords.items()):
+             #convert PDB3 format atoms names to PDB2
+             if atomName == "OP1" or atomName == "OP2":
+                 atomName = " " + atomName
+diff --git a/rcrane/pseudoPredictor.py b/rcrane/pseudoPredictor.py
+index b421228..7293451 100644
+--- a/rcrane/pseudoPredictor.py
++++ b/rcrane/pseudoPredictor.py
+@@ -15,9 +15,9 @@
+ # or implied. See the License for the specific language governing
+ # permissions and limitations under the License.
+ 
+-from thetaEtaPredictor import ThetaEtaPredictor
+-from smoothProb import SmoothProb, SmoothProbError
+-from puckerList import rotList, puckerListFullName as puckerList
++from .thetaEtaPredictor import ThetaEtaPredictor
++from .smoothProb import SmoothProb, SmoothProbError
++from .puckerList import rotList, puckerListFullName as puckerList
+ 
+ class PseudoPredictor:
+     """Predict rotamers from low resolution information"""
+@@ -142,7 +142,7 @@ class PseudoPredictor:
+         totalProb = sum(probs.values())
+         
+         try:
+-            probs = dict([(currot, curprob/totalProb) for (currot, curprob) in probs.items()])
++            probs = dict([(currot, curprob/totalProb) for (currot, curprob) in list(probs.items())])
+         except ZeroDivisionError:
+             #if totalProb is 0, then the structure is very, very bad
+             #our only reasonable options are to give up, or to give all rotamers equal likelihood
+diff --git a/rcrane/puckerList.py b/rcrane/puckerList.py
+index d1b3e01..279e278 100644
+--- a/rcrane/puckerList.py
++++ b/rcrane/puckerList.py
+@@ -82,7 +82,7 @@ puckerList = { '1a': [3,3],
+                '2u': [2,2]
+              }
+ 
+-puckerListFullName = dict([(rot, ["C%i'" % x for x in puckers]) for (rot, puckers) in puckerList.items()])
++puckerListFullName = dict([(rot, ["C%i'" % x for x in puckers]) for (rot, puckers) in list(puckerList.items())])
+ 
+ rotList = list(puckerList.keys())
+ 
+diff --git a/rcrane/reportInputErrors.py b/rcrane/reportInputErrors.py
+index 807c7ab..d30b7df 100644
+--- a/rcrane/reportInputErrors.py
++++ b/rcrane/reportInputErrors.py
+@@ -15,6 +15,9 @@
+ # or implied. See the License for the specific language governing
+ # permissions and limitations under the License.
+ 
++from coot import add_status_bar_text
++from .guiUtils import createRCraneErrorDialog
++
+ STANDARD_BASES = frozenset(["A", "G", "C", "U"]) #the names of the four standard RNA bases
+     #used to make sure that the user isn't trying to rotamerize a modified nucleotide
+ 
+@@ -51,7 +54,7 @@ def reportInsCodeError(resNum):
+         None
+     """
+     
+-    print("Residue " + str(resNum) + " contains an insertion code.  RCrane currently cannot rotamerize nucleotides with insertion codes.")
++    print(("Residue " + str(resNum) + " contains an insertion code.  RCrane currently cannot rotamerize nucleotides with insertion codes."))
+     add_status_bar_text("Residue " + str(resNum) + " contains an insertion code.  RCrane currently cannot rotamerize nucleotides with insertion codes.")
+     
+     
+@@ -64,5 +67,5 @@ def reportModifiedNucError(resNum, resType):
+         None
+     """
+     
+-    print("Nucleotide " + str(resNum) + " is a modified nucleotide (" + str(resType) + ").  RCrane does not currently support rotamerizing modified nucleotides.")
++    print(("Nucleotide " + str(resNum) + " is a modified nucleotide (" + str(resType) + ").  RCrane does not currently support rotamerizing modified nucleotides."))
+     add_status_bar_text("Nucleotide " + str(resNum) + " is a modified nucleotide (" + str(resType) + ").  RCrane does not currently support rotamerizing modified nucleotides.")
+diff --git a/rcrane/reviewSuitesGui.py b/rcrane/reviewSuitesGui.py
+index d7b9276..5f4655d 100644
+--- a/rcrane/reviewSuitesGui.py
++++ b/rcrane/reviewSuitesGui.py
+@@ -26,10 +26,10 @@ from time import sleep      #for debugging
+ 
+ from coot import set_rotation_centre, add_atom_label, remove_atom_label, graphics_draw, close_generic_object, set_display_generic_object
+ 
+-from puckerList import puckerListFullName, puckerList
+-from calcCoords import calcCoords, recalcCoords
+-from guiUtils import buttonWithIcon, HBOX_SPACING, VBOX_SPACING, BUTTON_SPACING, createRCraneWindowObject
+-from rotamerSeq import determineAlternateConf
++from .puckerList import puckerListFullName, puckerList
++from .calcCoords import calcCoords, recalcCoords
++from .guiUtils import buttonWithIcon, HBOX_SPACING, VBOX_SPACING, BUTTON_SPACING, createRCraneWindowObject
++from .rotamerSeq import determineAlternateConf
+ 
+ DIFFERENT_PUCKER_COLOR = "pink"
+ BEST_PATH_COLOR = "palegreen"
+@@ -334,7 +334,7 @@ class ReviewSuitesGui:
+         #figure out what the newly selected conformer is
+         (confListStore, selectedConfIter) = confTreeSelection.get_selected()
+         selectedConf = confListStore.get_value(selectedConfIter, 0)
+-        print("Conformer %s was selected" % selectedConf)
++        print(("Conformer %s was selected" % selectedConf))
+         self.__selectedConf = selectedConf
+         
+         #see if we're changing the starting pucker (and we're not at the first suite or the first suite of a rotamerize)
+diff --git a/rcrane/rotamerSeq.py b/rcrane/rotamerSeq.py
+index 5f36dbe..9bd9ba8 100644
+--- a/rcrane/rotamerSeq.py
++++ b/rcrane/rotamerSeq.py
+@@ -18,9 +18,9 @@
+ import os.path
+ from math import log
+ 
+-from pseudoPredictor import PseudoPredictor
+-from puckerList import puckerList, rotList, rotsByPucker
+-from safelog import ln, negInf
++from .pseudoPredictor import PseudoPredictor
++from .puckerList import puckerList, rotList, rotsByPucker
++from .safelog import ln, negInf
+ 
+ #initialize a PseudoPredictor object when this module is loaded
+ dataPath = os.path.dirname(os.path.abspath(__file__))
+diff --git a/rcrane/rotamerize.py b/rcrane/rotamerize.py
+index bda98ba..080b0d8 100644
+--- a/rcrane/rotamerize.py
++++ b/rcrane/rotamerize.py
+@@ -21,17 +21,17 @@ import os.path
+ from coot import add_status_bar_text, new_generic_object_number, set_display_generic_object, to_generic_object_add_line, graphics_draw, clear_pending_picks, imol_refinement_map
+ from coot import user_defined_click_py as user_defined_click
+ 
+-from pseudoMolecule import PseudoMolecule, PseudoMoleculeError
+-from rotamerSeq import determineRotamerSeq
+-from calcCoords import recalcCoords
+-from guiUtils import createRCraneWindowObject, createRCraneErrorDialog
+-from reviewSuitesGui import ReviewSuitesGui
+-from bondLength import BOND_LIST_FULL
+-from selectMapDialog import selectMapDialog
+-from citationPopup import createCitationPopup
+-import extendChain #we only need clearPendingExtendChain, but if we import that function directly into this namespace
++from .pseudoMolecule import PseudoMolecule, PseudoMoleculeError
++from .rotamerSeq import determineRotamerSeq
++from .calcCoords import recalcCoords
++from .guiUtils import createRCraneWindowObject, createRCraneErrorDialog
++from .reviewSuitesGui import ReviewSuitesGui
++from .bondLength import BOND_LIST_FULL
++from .selectMapDialog import selectMapDialog
++from .citationPopup import createCitationPopup
++from . import extendChain #we only need clearPendingExtendChain, but if we import that function directly into this namespace
+     #we'll wind up with circular dependencies
+-from reportInputErrors import reportPDB2Error, reportInsCodeError, STANDARD_BASES, reportModifiedNucError
++from .reportInputErrors import reportPDB2Error, reportInsCodeError, STANDARD_BASES, reportModifiedNucError
+ 
+ #from pprint import pprint
+ 
+@@ -200,7 +200,7 @@ def rotamerizeFromAtomSpecs(atomSpec1, atomSpec2, ignoreDensity = False):
+     #make sure that the selected residues are all connected
+     for curIndex in range(startIndex, endIndex):
+         if not pseudoMol.connectedToNextFromIndex(curIndex):
+-            print("Nucleotides " + pseudoMol.resNumFull(curIndex) + " and " + pseudoMol.resNumFull(curIndex+1) + " are not connected.  Cannot rotamerize.")
++            print(("Nucleotides " + pseudoMol.resNumFull(curIndex) + " and " + pseudoMol.resNumFull(curIndex+1) + " are not connected.  Cannot rotamerize."))
+             add_status_bar_text("Nucleotides " + pseudoMol.resNumFull(curIndex) + " and " + pseudoMol.resNumFull(curIndex+1) + " are not connected.  Cannot rotamerize.")
+             return False
+     #note that this loop does not check to see if the last nucleotide is connectedToNext, since that's not required
+@@ -216,7 +216,7 @@ def rotamerizeFromAtomSpecs(atomSpec1, atomSpec2, ignoreDensity = False):
+         #make sure that all selected residues have phosphates and glycosidic bonds
+         missingAtom = pseudoMol.checkPhosAndGlycosidicFromIndex(curIndex)
+         if missingAtom is not None:
+-            print("Nucleotide " + pseudoMol.resNumFull(curIndex) + " is missing " + missingAtom + " atom.  Cannot rotamerize without phosphate and glycosidic bond coordinates.")
++            print(("Nucleotide " + pseudoMol.resNumFull(curIndex) + " is missing " + missingAtom + " atom.  Cannot rotamerize without phosphate and glycosidic bond coordinates."))
+             add_status_bar_text("Nucleotide " + pseudoMol.resNumFull(curIndex) + " is missing " + missingAtom + " atom.  Cannot rotamerize without phosphate and glycosidic bond coordinates.")
+             return False
+     
+@@ -248,9 +248,9 @@ def rotamerizeFromAtomSpecs(atomSpec1, atomSpec2, ignoreDensity = False):
+     if (MAX_NUCLEOTIDES_TO_ROTAMERIZE > 0) and (numNucsToRotamerize > MAX_NUCLEOTIDES_TO_ROTAMERIZE):
+         
+         print("Warning:  Too many nucleotides to rotamerize.")
+-        print("   Trying to rotamerize", numNucsToRotamerize, "nucleotides and your current maximum is", MAX_NUCLEOTIDES_TO_ROTAMERIZE)
++        print(("   Trying to rotamerize", numNucsToRotamerize, "nucleotides and your current maximum is", MAX_NUCLEOTIDES_TO_ROTAMERIZE))
+         print("   To increase the maximum, go to Calculate -> Scripting -> Python")
+-        print("   and type rcrane.setRotamerizeMaxNucleotides(" + str(numNucsToRotamerize) + ")")
++        print(("   and type rcrane.setRotamerizeMaxNucleotides(" + str(numNucsToRotamerize) + ")"))
+         print("   or type rcrane.setRotamerizeMaxNucleotides(-1) to remove the limit.")
+         add_status_bar_text("Warning:  Too many nts to rotamerize.  Trying to rotamerize " + str(numNucsToRotamerize) + " nts and your current max is " + str(MAX_NUCLEOTIDES_TO_ROTAMERIZE))
+         return False
+@@ -265,7 +265,7 @@ def rotamerizeFromAtomSpecs(atomSpec1, atomSpec2, ignoreDensity = False):
+     #run the conformer predictions
+     (chainObj, resNum5p, resNum3p) = pseudoMol.createPartialChainObject(startResFull, endResFull, True)
+     (bestPath, predictedProbs) = determineRotamerSeq(chainObj)
+-    print("Suite string: " + "".join(bestPath))
++    print(("Suite string: " + "".join(bestPath)))
+     
+     prevTorsions = None
+     if resNum5p is None:
+diff --git a/rcrane/smoothProb.py b/rcrane/smoothProb.py
+index f6e2d05..65a28be 100644
+--- a/rcrane/smoothProb.py
++++ b/rcrane/smoothProb.py
+@@ -80,9 +80,9 @@ class SmoothProb:
+             
+             #make sure that step size is correct
+             xVal = self.__xStart + self.__xStep * len(self.__yData)
+-            curdist = curdata.pop(0)
+-            if (xVal - ep <= curdist) and (curdist <= xVal + ep):
+-                raise "Incorrect smoothProb step size in file " + self.__fileName
++            curdist = float(curdata.pop(0))
++            # (py3) the original comparison mixed a float with a str, which in py2 never raised.
++            # The step-size check was never effective (and used len(dict)), so it is not enforced.
+             
+             for curindex, curvalue in enumerate(curdata):
+                 self.__yData[labels[curindex]].append(float(curvalue))
+@@ -131,7 +131,7 @@ class SmoothProb:
+         totalProb = sum(yDict.values())
+         
+         try:
+-            yDict = dict([(curlabel, curval/totalProb) for (curlabel, curval) in yDict.items()])
++            yDict = dict([(curlabel, curval/totalProb) for (curlabel, curval) in list(yDict.items())])
+         except ZeroDivisionError:
+             #if totalProb = 0, then we're trying to make predictions with *very* bad data
+             raise SmoothProbError("Underflow error: all probabilities equal to zero.")
+diff --git a/rcrane/thetaEtaPredictor.py b/rcrane/thetaEtaPredictor.py
+index 4e00782..7aed96f 100644
+--- a/rcrane/thetaEtaPredictor.py
++++ b/rcrane/thetaEtaPredictor.py
+@@ -87,7 +87,7 @@ class ThetaEtaPredictor:
+         
+         #scale the raw probabilities so they add up to 1
+         totalProb = sum(probs.values())
+-        probs = dict([(currot, curprob/totalProb) for (currot, curprob) in probs.items()])
++        probs = dict([(currot, curprob/totalProb) for (currot, curprob) in list(probs.items())])
+         
+         #return either the desired probability or the dictionary containing all probabilities
+         if rot is None:
+diff --git a/rcrane/traceGui.py b/rcrane/traceGui.py
+index 2b38e95..3a06487 100644
+--- a/rcrane/traceGui.py
++++ b/rcrane/traceGui.py
+@@ -27,17 +27,17 @@ from copy import deepcopy
+ #from cPickle import dump    #for debugging
+ #from time import sleep      #for debugging
+ 
+-from nextPhos import NextPhos
+-from strucCalc import plus, minus, rotateAtoms, dist
+-from rotamerSeq import determineRotamerSeq, determinePucker
+-from calcCoords import calcCoords, recalcCoords, buildOnlyPhosOxy
+-from reviewSuitesGui import ReviewSuitesGui
+-from guiUtils import buttonWithIcon, HBOX_SPACING, VBOX_SPACING, BUTTON_SPACING, createRCraneWindowObject
+-from pseudoMolecule import PseudoMolecule
+-from selectMapDialog import selectMapDialog
+-from citationPopup import createCitationPopup
+-from pseudoMolecule import CONNECTED_DISTANCE_CUTOFF
+-from reportInputErrors import STANDARD_BASES
++from .nextPhos import NextPhos
++from .strucCalc import plus, minus, rotateAtoms, dist
++from .rotamerSeq import determineRotamerSeq, determinePucker
++from .calcCoords import calcCoords, recalcCoords, buildOnlyPhosOxy
++from .reviewSuitesGui import ReviewSuitesGui
++from .guiUtils import buttonWithIcon, HBOX_SPACING, VBOX_SPACING, BUTTON_SPACING, createRCraneWindowObject
++from .pseudoMolecule import PseudoMolecule
++from .selectMapDialog import selectMapDialog
++from .citationPopup import createCitationPopup
++from .pseudoMolecule import CONNECTED_DISTANCE_CUTOFF
++from .reportInputErrors import STANDARD_BASES
+ 
+ srcPath = os.path.dirname(os.path.abspath(__file__))
+ 
+@@ -432,7 +432,7 @@ class TraceGui:
+         
+         #if we've been given an initialNtCoords, find out if the user set a custom base position but didn't move C1'
+         if initialNtCoords is not None and self.__customBase is None:
+-            for (atomName, coords) in self.__candidateBases[phosIndex][c1index][1].items():
++            for (atomName, coords) in list(self.__candidateBases[phosIndex][c1index][1].items()):
+                 if initialNtCoords[atomName][0] != coords[0] or initialNtCoords[atomName][1] != coords[1] or initialNtCoords[atomName][2] != coords[2]:
+                     #there is a custom base position
+                     self.__customBase = [self.__baseType, deepcopy(initialNtCoords)]
+@@ -1120,7 +1120,7 @@ class TraceGui:
+         movement[2] = screenVectors[dim][2] * adjDiff * scaleFactor * zoom
+         
+         #calculate the new base coordinates
+-        for curAtom, prevCoords in self.__adjustedBaseCoords[1].items():
++        for curAtom, prevCoords in list(self.__adjustedBaseCoords[1].items()):
+             self.__adjustedBaseCoords[1][curAtom] = plus(prevCoords, movement)
+         
+         #figure out the current phosphate coordinates so we know what to draw
+@@ -1156,7 +1156,7 @@ class TraceGui:
+         #translate the base to the origin
+         c1loc = self.__adjustedBaseCoords[1]["C1'"]
+         translatedCoords = dict()
+-        for curAtom, prevCoords in self.__adjustedBaseCoords[1].items():
++        for curAtom, prevCoords in list(self.__adjustedBaseCoords[1].items()):
+             translatedCoords[curAtom] = minus(prevCoords, c1loc)
+         
+         #do the rotation
+@@ -1189,7 +1189,7 @@ class TraceGui:
+         #translate the base to the origin
+         c1loc = self.__adjustedBaseCoords[1]["C1'"]
+         translatedCoords = dict()
+-        for curAtom, prevCoords in self.__adjustedBaseCoords[1].items():
++        for curAtom, prevCoords in list(self.__adjustedBaseCoords[1].items()):
+             translatedCoords[curAtom] = minus(prevCoords, c1loc)
+         
+         axis = None
+@@ -1969,7 +1969,7 @@ class TraceGui:
+             builtChainOrig = deepcopy(builtChain)
+             #for curNuc in builtChain.nucleotides: pprint(curNuc.atoms)
+             (bestPath, predictedProbs) = determineRotamerSeq(builtChain)
+-            print("Suite string: " + "".join(bestPath))
++            print(("Suite string: " + "".join(bestPath)))
+             
+             #FOR DEBUGGING
+             #print "OPENING foo3.txt"

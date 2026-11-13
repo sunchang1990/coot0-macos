@@ -1,0 +1,30 @@
+diff --git a/geometry/cif-parse.cc b/geometry/cif-parse.cc
+index 7efb8ce..4f88f3f 100644
+--- a/geometry/cif-parse.cc
++++ b/geometry/cif-parse.cc
+@@ -1893,8 +1893,15 @@ coot::protein_geometry::init_standard() {
+ 
+    char *s = getenv("COOT_REFMAC_LIB_DIR");
+    // it is not refmac, it's CCP4
+-   if (! s)
++   if (! s) {
+       s = getenv("COOT_MONOMER_LIB_DIR");
++      // macOS port: COOT_MONOMER_LIB_DIR is the monomer library directory itself
++      // ($DIR/a/ALA.cif, $DIR/list/mon_lib_list.cif, $DIR/ener_lib.cif), not a CCP4-style
++      // $DIR/data/monomers/ tree.  Without recording it in cmld the code below appended
++      // "/data/monomers/" to it, so mon_lib_list.cif (the link restraints: TRANS, PCIS, ...)
++      // and ener_lib.cif were never loaded.
++      if (s) cmld = s;
++   }
+    if (! s)
+       s = getenv("COOT_CCP4_LIB_DIR");
+    if (s) {
+@@ -1989,7 +1996,7 @@ coot::protein_geometry::init_standard() {
+       std::string filename = mon_lib_dir;
+       // contains the linkages:
+       filename += "/data/monomers/list/mon_lib_list.cif";
+-      if (using_clibd_mon) {
++      if (using_clibd_mon || cmld) {
+ 	 filename = util::remove_trailing_slash(mon_lib_dir);
+ 	 filename += "/list/mon_lib_list.cif";
+       }

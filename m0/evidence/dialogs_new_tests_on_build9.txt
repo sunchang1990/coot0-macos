@@ -1,0 +1,28 @@
+new gui_python_dialogs.py run against build 9 (expected: the 3 new checks fail)
+PASS all GUI scripts load (including rcrane_loader.py)                                            
+PASS no Python-2-only names in the shipped scripts                                                
+PASS Manage Buttons dialog offers Sphere Refine and Sphere Regularization                         
+PASS dialog_box_of_buttons builds and its buttons run string/list/function callbacks              
+PASS molecule_atom_overlaps_gui (ported from Scheme) builds a box of buttons                      
+PASS pepflips_by_difference_map_gui (ported from Scheme) builds and OK reports 'no difference map'
+PASS copy molecule chooser builds                                                                 
+PASS generic_chooser_and_entry builds                                                             
+PASS smiles_gui builds                                                                            
+PASS whats_new_dialog builds                                                                      
+PASS save_dialog_positions_to_init_file is defined                                                
+PASS chain_n_residues is defined                                                                  
+PASS residue_spec_to_residue_name is defined                                                      
+PASS handle_shelx_fcf_file is defined                                                             
+PASS molecule_atom_overlaps_gui is defined                                                        
+PASS pepflips_by_difference_map_gui is defined                                                    
+PASS save_dialog_positions_to_init_file appends whole lines to ~/.coot.py                         
+PASS RCrane imports and its pre-launch check passes                                               
+PASS Calculate menu has 'RCrane launch'                                                           
+PASS C callback on_edit_copy_molecule1_activate (Edit > Copy Molecule...) runs its Python call-out
+PASS C callback on_edit_copy_fragment1_activate (Edit > Copy Fragment...) runs its Python call-out
+PASS log filter drops the two harmless GTK messages but not other criticals                       
+FAIL a toolbar button with a string callback runs it                                                'the string callback did not run: []'
+FAIL Stop makes Cancel and Continue buttons appear, Cancel removes them again                       "after Stop the toolbar has ['TestStringCb', 'GtkSeparatorToolItem', 'Stop']"
+FAIL no str/bytes type tests left in the shipped scripts (2to3 turned types.StringType into bytes)  ['coot_gui.py: isinstance(func_maybe1, bytes)', 'coot_gui.py: isinstance(func_maybe2, bytes)', 'coot_gui.py: isinstance(func_maybe1, bytes)', 'coot_gui.py: type(callback_function) is bytes', 'coot_gui
+PASS no exception in any GTK signal handler                                                       
+SUMMARY 23 / 26

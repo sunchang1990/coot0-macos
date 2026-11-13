@@ -1,0 +1,32 @@
+diff --git a/utils/backward.cpp b/utils/backward.cpp
+index 110441c..0cbea4b 100644
+--- a/utils/backward.cpp
++++ b/utils/backward.cpp
+@@ -35,8 +35,27 @@
+ 
+ #include "backward.hpp"
+ 
++#ifdef __APPLE__
++#include <stdlib.h>
++#endif
++
+ namespace backward {
+ 
++#ifdef __APPLE__
++// macOS: the system crash reporter (~/Library/Logs/DiagnosticReports) gives better reports, and this handler was observed
++// to fault inside itself and hang the process after a fatal signal.  Opt in with COOT_BACKWARD=1.
++namespace {
++struct opt_in_signal_handling {
++   backward::SignalHandling *handler;
++   opt_in_signal_handling() : handler(0) {
++      const char *e = getenv("COOT_BACKWARD");
++      if (e && *e && *e != '0') handler = new backward::SignalHandling();
++   }
++};
++opt_in_signal_handling maybe_sh;
++}
++#else
+ backward::SignalHandling sh;
++#endif
+ 
+ } // namespace backward

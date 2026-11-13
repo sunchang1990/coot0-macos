@@ -1,0 +1,27 @@
+diff --git a/src/rama_plot.cc b/src/rama_plot.cc
+index d8f8b58..446a9b8 100644
+--- a/src/rama_plot.cc
++++ b/src/rama_plot.cc
+@@ -468,14 +468,14 @@ coot::rama_plot::init_internal(const std::string &mol_name,
+    // so they would interfere with the input. Therefore (as long as there is
+    // only +, -, we disable them as accellerators and use them as key press
+    // events. In case we use other accellerators we need to revise this.
+-   GSList *accel_grp_ls;
+-   GtkAccelGroup *accel_gr;
+-   accel_grp_ls = gtk_accel_groups_from_object(G_OBJECT(dynawin));
+-   while (accel_grp_ls) {
+-      accel_gr = GTK_ACCEL_GROUP(accel_grp_ls->data);
+-      gtk_window_remove_accel_group(GTK_WINDOW(dynawin), accel_gr);
+-      accel_grp_ls = accel_grp_ls->next;
+-   }
++   // gtk_accel_groups_from_object() returns the window's own internal list and
++   // gtk_window_remove_accel_group() frees nodes of that list, so walk a copy.
++   // (Walking the original reads freed memory: glibc happens to leave it intact,
++   // macOS's allocator does not, and the Ramachandran plot crashed with SIGSEGV.)
++   GSList *accel_grp_ls = g_slist_copy(gtk_accel_groups_from_object(G_OBJECT(dynawin)));
++   for (GSList *l = accel_grp_ls; l; l = l->next)
++      gtk_window_remove_accel_group(GTK_WINDOW(dynawin), GTK_ACCEL_GROUP(l->data));
++   g_slist_free(accel_grp_ls);
+ 
+ #endif
+ 

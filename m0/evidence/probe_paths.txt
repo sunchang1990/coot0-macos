@@ -1,0 +1,14 @@
+probe headless tests (Coot 0.9.8.96 macOS build 2, scheme probe from patch 0016)
+== PATH with ccp4bin first
+568:============= reduce finished: exit status 1, 514154 bytes written to "coot-molprobity/reduced.pdb"
+570:DONE probe
+== PATH with fakebin first
+83:============= reduce finished: exit status 1, 0 bytes written to "coot-molprobity/reduced.pdb"
+84:ERROR:: reduce (reduce) produced no output, so probe was not run.
+85:Run it by hand to see why:
+87:DONE probe
+
+direct runs outside Coot, same input file:
+Phenix reduce (x86_64, Rosetta): exit 1 (normal for reduce), 514188 bytes (measured earlier in this session)
+CCP4 9 reduce (arm64): exit 1,   514154 bytes
+user's round-1 run: reduced.pdb 0 bytes, probe-dots.out 0 bytes, no reduce stderr in the log -> reduce did not run to completion in the GUI session; cause not established (see report)

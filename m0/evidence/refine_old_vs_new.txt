@@ -1,0 +1,42 @@
+=== old binary (before patch 0014): real-space refine zone A40-A46 on tutorial-modern.pdb, peptide C(i)-N(i+1) distances
+peptide C(i)-N(i+1) after refinement, residues 37 .. 49
+  A37-38  before 1.34  after 1.34  outside
+  A38-39  before 1.32  after 1.32  outside
+  A39-40  before 1.33  after 1.96  FIXED-flank
+  A40-41  before 1.31  after 2.08  in-zone
+  A41-42  before 1.34  after 2.74  in-zone
+  A42-43  before 1.33  after 2.02  in-zone
+  A43-44  before 1.34  after 2.00  in-zone
+  A44-45  before 1.34  after 2.07  in-zone
+  A45-46  before 1.33  after 2.02  in-zone
+  A46-47  before 1.33  after 1.91  FIXED-flank
+  A47-48  before 1.31  after 1.31  outside
+  A48-49  before 1.33  after 1.33  outside
+mean shift in zone 0.549  max flank(fixed) 0.000  max elsewhere 0.000 (A)
+
+126:link type "CIS" not found in dictionary!!
+127:   Made 0 link bond restraints
+128:   Made 0 link angle restraints
+129:   Made 5 link plane restraints
+130:   Made 5 link trans-peptide restraints
+
+=== new binary (after patch 0014): real-space refine zone A40-A46 on tutorial-modern.pdb, peptide C(i)-N(i+1) distances
+peptide C(i)-N(i+1) after refinement, residues 37 .. 49
+  A37-38  before 1.34  after 1.34  outside
+  A38-39  before 1.32  after 1.32  outside
+  A39-40  before 1.33  after 1.34  FIXED-flank
+  A40-41  before 1.31  after 1.32  in-zone
+  A41-42  before 1.34  after 1.30  in-zone
+  A42-43  before 1.33  after 1.34  in-zone
+  A43-44  before 1.34  after 1.33  in-zone
+  A44-45  before 1.34  after 1.35  in-zone
+  A45-46  before 1.33  after 1.33  in-zone
+  A46-47  before 1.33  after 1.33  FIXED-flank
+  A47-48  before 1.31  after 1.31  outside
+  A48-49  before 1.33  after 1.33  outside
+mean shift in zone 0.346  max flank(fixed) 0.000  max elsewhere 0.000 (A)
+
+107:   Made 6 link bond restraints
+108:   Made 19 link angle restraints
+109:   Made 12 link plane restraints
+110:   Made 5 link trans-peptide restraints

@@ -1,0 +1,8 @@
+# One line per check: PASS / FAIL / PARTIAL and a few words.  (You can also just tell me in chat.)
+# Round 17 (see TEST-PROTOCOL.md, section Y):
+Y1 tar -xzf + ./install.sh (Enter at the folder question): checks, PATH line shown, start test ok:
+Y2 new Terminal window, coot0 in a data folder: Coot opens, coot-backup/ in that folder:
+Y3 coot0 --diagnose:
+Y4 (MacBook, optional) install + coot0 --self-test: 19 lines N / N:
+Y5 anything unclear in the installer output:
+# Round 16 (section X): all confirmed 13 Nov.  Rounds 13-15: closed.

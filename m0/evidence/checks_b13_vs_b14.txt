@@ -1,0 +1,32 @@
+# gui-dialogs suite (tests/gui_python_dialogs.py of build 14) run twice in the same bundle:
+# (1) with the Python files of build 13 (coot_utils.py, fitting.py, rcrane_loader.py, rcrane/menu.py, rcrane/__init__.py) -> the new checks FAIL
+# (2) with the files of build 14 -> all PASS
+
+=== build 13 files: lines that FAIL / SUMMARY
+FAIL Calculate menu has the 'RCrane' sub-menu with 6 entries                                                                              'no Calculate > RCrane sub-menu (0)'
+FAIL Stepped Refine: Coot's 'Accept Refinement?' window is hidden while the residues are shown and closed after the accept                "the window was not hidden before the accept: ['accept']"
+FAIL Stepped Refine: the map is re-contoured around each residue that is refined (density follows the focus)                              'no map re-contouring around residue(s) [20, 60] (re-contoured centres: [])'
+FAIL Alt conf occupancy slider: OK sets the occupancies (0.4 / 0.6) and closes the dialog                                                 'OK raised: 61deedaa91/workspaces/0c506472-59a8-4328-8928-538ecab9fb75/b/bundle-b14/share/coot/python/coot_utils.py", line 4538, in set_alt_conf_occ\n    if (alt_confs > 1):\n        ^^^^^^^^^^^^^\nTy
+FAIL rename_alt_confs: swapping alt confs A and B of Cys B 72 works                                                                       EXC TypeError("'>' not supported between instances of 'list' and 'int'") .../bundle-b14/share/coot/python/coot_utils.py", line 4819, in rename_alt_confs |     if (alt_confs > 
+FAIL coot_utils.py: no list compared with a number (alt_confs > 1) left                                                                   "list-versus-number comparison left: ['    if (alt_confs > 1):', '        if (alt_confs > 1):']"
+FAIL no exception in any GTK signal handler                                                                                               ['.../bundle-b14/share/coot/python/coot_utils.py", line 4538, in set_alt_conf_occ\n    if (al
+SUMMARY 37 / 44
+
+=== build 14 files: SUMMARY and the new checks
+SUMMARY 44 / 44
+PASS Calculate menu has the 'RCrane' sub-menu with 6 entries                                                                            
+PASS Stepped Refine: Coot's 'Accept Refinement?' window is hidden while the residues are shown and closed after the accept              
+PASS Stepped Refine: the map is re-contoured around each residue that is refined (density follows the focus)                            
+PASS Alt conf occupancy slider: OK sets the occupancies (0.4 / 0.6) and closes the dialog                                               
+PASS rename_alt_confs: swapping alt confs A and B of Cys B 72 works                                                                     
+PASS coot_utils.py: no list compared with a number (alt_confs > 1) left                                                                 
+
+=== probe: map re-contouring (DEBUG-MAPS lines, COOT_DEBUG_MAPS=1) during fit_protein_stepped_refine_function on residues 20 and 60 of tutorial-modern.pdb
+CA 20 (67.05, -1.12, 5.71) CA 60 (72.99, 14.56, 10.74)
+update_maps disabled (build-13 behaviour) n DEBUG-MAPS lines: 0
+with update_maps (build 14) n DEBUG-MAPS lines: 2
+    DEBUG-MAPS:: update_map_triangles imol 1 centre (67.035, -1.178, 5.721) radius 16.000 contour 0.560 vectors 157857 bbox (51.208, -16.285, -10.010) - (
+    DEBUG-MAPS:: update_map_triangles imol 1 centre (72.924, 14.669, 10.695) radius 16.000 contour 0.560 vectors 114508 bbox (56.935, -0.979, -2.909) - (8
+
+=== gui-rcrane suite on build 14: SUMMARY
+(21 / 21; see headless_suite_b14.txt)

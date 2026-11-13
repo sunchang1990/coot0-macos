@@ -1,0 +1,366 @@
+diff --git a/python/fitting.py b/python/fitting.py
+index 576da99..7c9bcdd 100644
+--- a/python/fitting.py
++++ b/python/fitting.py
+@@ -231,6 +231,32 @@ def hide_accept_reject_dialog(destroy=False):
+         pass
+     return n
+ 
++# macOS port (build 15): Coot 0.9.8.96's refine_auto_range() looks the residue up by its " CA " atom (c-interface-refine.cc), so on RNA/DNA (and on
++# ligands) it refined nothing ("refine_auto_range: Can't get index for resno1"), and Stepped Refine centred the view on "CA", which nucleotides do not
++# have, so the view did not move either.  Residues without CA are now centred on C1' (else P, else their first atom) and refined as the zone
++# res-1 .. res+1 (the same range refine_auto_range uses), limited to the residues that exist.
++def stepped_refine_centre_atom(imol, chain_id, res_no, ins_code=""):
++    """Atom name to centre a residue on: CA, else C1', else P, else the first atom (None if the residue has no atoms)."""
++    names = []
++    try:
++        for atom in residue_info(imol, chain_id, res_no, ins_code) or []:
++            names.append(atom[0][0].strip())
++    except Exception:
++        return None
++    for n in ("CA", "C1'", "C1*", "P"):
++        if n in names:
++            return n
++    return names[0] if names else None
++
++def refine_auto_range_any(imol, chain_id, res_no, alt_conf):
++    """refine_auto_range() for any residue: protein residues (with CA) go to Coot's own function, others are refined as res-1 .. res+1."""
++    if stepped_refine_centre_atom(imol, chain_id, res_no) in (None, "CA"):
++        refine_auto_range(imol, chain_id, res_no, alt_conf)
++        return
++    lo = res_no - 1 if residue_exists_qm(imol, chain_id, res_no - 1, "") else res_no
++    hi = res_no + 1 if residue_exists_qm(imol, chain_id, res_no + 1, "") else res_no
++    refine_zone(imol, chain_id, lo, hi, alt_conf)
++
+ def refine_auto_range_and_show(imol, chain_id, res_no, alt_conf, seconds=None, force=False):
+     """Refine the residues around res_no (refine_auto_range), keep the refining atoms on the screen for `seconds`, then accept."""
+     import time
+@@ -239,14 +265,14 @@ def refine_auto_range_and_show(imol, chain_id, res_no, alt_conf, seconds=None, f
+     if seconds <= 0 or (not force and use_graphics_interface_state() == 0):
+         with NoBackups(imol):
+             with AutoAccept():
+-                refine_auto_range(imol, chain_id, res_no, alt_conf)
++                refine_auto_range_any(imol, chain_id, res_no, alt_conf)
+         return
+     if refinement_already_ongoing_p():
+         accept_regularizement()          # (a refinement left over from the user's own work)
+         hide_accept_reject_dialog(destroy=True)
+     import gtk
+     with NoBackups(imol):
+-        refine_auto_range(imol, chain_id, res_no, alt_conf)
++        refine_auto_range_any(imol, chain_id, res_no, alt_conf)
+         hide_accept_reject_dialog()      # before any event is handled: it is never drawn
+         t0 = time.time()
+         while time.time() - t0 < seconds:
+@@ -274,9 +300,10 @@ def fit_protein_stepped_refine_function(res_spec, imol_map, use_rama = False):
+             set_refine_ramachandran_angles(1)
+         res_name = residue_name(imol, chain_id, res_no, ins_code)
+         if (not res_name == "HOH"):
+-            print("centering on", chain_id, res_no, "CA")
++            centre_atom = stepped_refine_centre_atom(imol, chain_id, res_no, ins_code) or "CA"
++            print("centering on", chain_id, res_no, centre_atom)
+             set_go_to_atom_chain_residue_atom_name_full(chain_id, res_no,
+-                                                        ins_code, "CA",
++                                                        ins_code, centre_atom,
+                                                         alt_conf)
+             # (macOS port, build 14) the move to the next residue only draws the new view; the density is contoured around the old centre, so the residue
+             # that is being refined had no density around it (until the user changed the contour level).  Re-contour the maps around the new centre.
+@@ -296,6 +323,27 @@ def fit_protein_rama_fit_function(res_spec, imol_map):
+ # func is a refinement function that takes 2 args, one a residue
+ # spec, the other the imol_refinement_map.  e.g. fit_protein_fit_function
+ #
++# macOS port (build 15): the toolbar buttons of Fit Protein / Stepped Refine (Stop, then Cancel / Continue) were kept in globals that the next run
++# overwrote: after Stop + a new run (or two runs at once) the old buttons stayed on the toolbar and pressing them raised
++# AttributeError: 'bool' object has no attribute 'destroy' (found by the real-window GUI audit).  Now every run has a number, a new run first stops
++# the old one and removes its buttons, an old run's idle function ends itself, and removing a button that is already gone is harmless.
++multi_refine_run_id = 0
++multi_refine_stop_button = False
++multi_refine_cancel_button = False
++multi_refine_continue_button = False
++multi_refine_separator = False
++
++def _multi_refine_remove(*names):
++    """Destroy the named toolbar widgets (globals) if they exist; set them to False."""
++    for name in names:
++        w = globals().get(name)
++        if w:
++            try:
++                w.destroy()
++            except Exception:
++                pass
++        globals()[name] = False
++
+ def interruptible_fit_protein(imol, func):
+ 
+     import gobject
+@@ -304,8 +352,16 @@ def interruptible_fit_protein(imol, func):
+     global multi_refine_idle_proc
+     global multi_refine_stop_button
+     global multi_refine_separator
++    global multi_refine_run_id
+     specs = fit_protein_make_specs(imol, 'all-chains')
+     if specs:
++        # a run that is still going (or stopped, with Cancel / Continue on the toolbar) is ended first
++        continue_multi_refine = False
++        _multi_refine_remove("multi_refine_stop_button", "multi_refine_cancel_button",
++                             "multi_refine_continue_button", "multi_refine_separator")
++        continue_multi_refine = True
++        multi_refine_run_id += 1
++        run_id = multi_refine_run_id
+         # lets make a backup before we start
+         make_backup(imol)
+         
+@@ -317,16 +373,11 @@ def interruptible_fit_protein(imol, func):
+         def idle_func():
+             global multi_refine_spec_list
+             global continue_multi_refine
+-            global multi_refine_idle_proc
+-            global multi_refine_stop_button
+-            global multi_refine_separator
++            if run_id != multi_refine_run_id:      # a newer run has replaced this one
++                return False
+             if not multi_refine_spec_list:
+-                #set_visible_toolbar_multi_refine_stop_button(0)
+-                #set_visible_toolbar_multi_refine_continue_button(0)
+-                multi_refine_stop_button.destroy()
+-                multi_refine_stop_button = False
+-                multi_refine_separator.destroy()
+-                multi_refine_separator = False
++                _multi_refine_remove("multi_refine_stop_button", "multi_refine_cancel_button",
++                                     "multi_refine_continue_button", "multi_refine_separator")
+                 return False
+             if continue_multi_refine:
+                 imol_map = imol_refinement_map()
+@@ -345,58 +396,44 @@ def interruptible_fit_protein(imol, func):
+ #
+ def stop_interruptible_fit_protein():
+     global continue_multi_refine
+-    global multi_refine_stop_button
+     global multi_refine_cancel_button
+     global multi_refine_continue_button
+     
+     continue_multi_refine = False
++    if not multi_refine_stop_button:          # nothing is running (any more)
++        return
+ 
+-    multi_refine_cancel_button = coot_toolbar_button("Cancel",
+-                                                     "cancel_interruptible_fit_protein()",
+-                                                     "gtk-cancel")
+-    multi_refine_continue_button = coot_toolbar_button("Continue",
+-                                                     "continue_interruptible_fit_protein()",
+-                                                     "gtk-apply")
+-    
++    if not multi_refine_cancel_button:
++        multi_refine_cancel_button = coot_toolbar_button("Cancel",
++                                                         "cancel_interruptible_fit_protein()",
++                                                         "gtk-cancel")
++    if not multi_refine_continue_button:
++        multi_refine_continue_button = coot_toolbar_button("Continue",
++                                                           "continue_interruptible_fit_protein()",
++                                                           "gtk-apply")
+     multi_refine_stop_button.set_sensitive(False)
+-    #multi_refine_cancel_button.set_sensitive(True)
+-    #multi_refine_continue_button.set_sensitive(True)
+ 
+ # Continue with the interruptible fitting
+ #
+ def continue_interruptible_fit_protein():
+-    global multi_refine_stop_button
+-    global multi_refine_cancel_button
+-    global multi_refine_continue_button
+     global continue_multi_refine
+-    global multi_refine_idle_proc
+ 
++    _multi_refine_remove("multi_refine_cancel_button", "multi_refine_continue_button")
++    if not multi_refine_stop_button:          # the run has ended meanwhile
++        return
+     multi_refine_stop_button.set_sensitive(True)
+-    multi_refine_cancel_button.destroy()
+-    multi_refine_cancel_button = False
+-    multi_refine_continue_button.destroy()
+-    multi_refine_continue_button = False
+     continue_multi_refine = True
++    import gobject
+     gobject.idle_add(multi_refine_idle_proc)
+ 
+ # use to completely stop the interruptible fit function
+ #
+ def cancel_interruptible_fit_protein():
+-    global multi_refine_stop_button
+-    global multi_refine_cancel_button
+-    global multi_refine_continue_button
+-    global multi_refine_separator
+     global continue_multi_refine
+ 
+     continue_multi_refine = False
+-    multi_refine_stop_button.destroy()
+-    multi_refine_stop_button = False
+-    multi_refine_cancel_button.destroy()
+-    multi_refine_cancel_button = False
+-    multi_refine_continue_button.destroy()
+-    multi_refine_continue_button = False
+-    multi_refine_separator.destroy()
+-    multi_refine_separator = False
++    _multi_refine_remove("multi_refine_stop_button", "multi_refine_cancel_button",
++                         "multi_refine_continue_button", "multi_refine_separator")
+     
+ 
+ # For each residue in chain chain-id of molecule number imol, do a
+diff --git a/python/get_ebi.py b/python/get_ebi.py
+index 0d2aa29..5ff9235 100644
+--- a/python/get_ebi.py
++++ b/python/get_ebi.py
+@@ -1,3 +1,4 @@
++import os
+ import numbers
+ # get-ebi.py
+ # Copyright 2005, 2006 by Bernhard Lohkamp
+@@ -337,53 +338,90 @@ def get_eds_pdb_and_mtz(id):
+ def net_get_url(my_url, file_name):
+     coot_get_url(my_url, file_name)
+ 
++# macOS port (build 15): File > Fetch PDB & Map using PDB-REDO.  PDB-REDO answers a missing file with HTTP 404 and a small HTML page, and Coot's
++# downloader saved that page under the data file's name: for entries that PDB-REDO only serves as mmCIF (most new ones, e.g. 9E5H) the "model"
++# was an HTML page (read error, map only) and the HTML "guided tour" was then run as a script.  Now every download is checked (an HTML page or an
++# empty file is not data and is removed), the model falls back to <id>_final.cif, the guided tour is only run if it is real, and a message says
++# what could not be fetched.
++def pdb_redo_download_ok(file_name, kind="text"):
++    """True if file_name is a real download (not missing, empty, or an HTML error page); an MTZ must start with 'MTZ '."""
++    try:
++        with open(file_name, "rb") as f:
++            head = f.read(512)
++    except (IOError, OSError):
++        return False
++    if not head:
++        return False
++    if kind == "mtz":
++        return head[:4] == b"MTZ "
++    h = head.lstrip().lower()
++    return not h.startswith((b"<html", b"<!doctype", b"<head", b"<body", b"<?xml"))
++
++def pdb_redo_fetch(url, file_name, kind="text"):
++    """Download url to file_name; returns True if a real file arrived (an HTML error page is removed again)."""
++    print("getting", url)
++    try:
++        net_get_url(url, file_name)
++    except Exception as e:
++        print("PDB-REDO: download of %s failed: %s" % (url, e))
++    if pdb_redo_download_ok(file_name, kind):
++        return True
++    print("PDB-REDO: %s is not available (missing, or an error page came back instead of the file)" % url)
++    try:
++        if os.path.exists(file_name):
++            os.remove(file_name)          # (the error page this download just wrote)
++    except OSError:
++        pass
++    return False
++
+ def get_pdb_redo(text):
+ 
+     if not isinstance(text, str):
+         print("BL WARNING:: No string. No accession code.")
+-    else:
+-        if not (len(text) == 4):
+-            print("BL WARNING:: Accession code not 4 chars.")
+-        else:
+-            text = (text).lower()
+-            stub = "https://pdb-redo.eu/db/" + \
+-                   text + "/" + text + "_final"
+-            pdb_file_name = text + "_final.pdb"
+-            mtz_file_name = text + "_final.mtz"
+-            py_file_name = text + ".py"
+-            url_pdb = stub + ".pdb"
+-            url_mtz = stub + ".mtz"
+-            url_py = stub + ".py"
+-
+-            print("getting", url_pdb)
+-            status = net_get_url(url_pdb, pdb_file_name)
+-            if not status == 0:
+-                print("Failed to get %s %s status %s" %(url_pdb, pdb_file_name,
+-                                                       status))
+-            print("getting", url_mtz)
+-            status = net_get_url(url_mtz, mtz_file_name)
+-            if not status == 0:
+-                print("Failed to get %s %s status %s" %(url_mtz, mtz_file_name,
+-                                                       status))
+-            print("getting", url_py)
+-            status = net_get_url(url_py, py_file_name)
+-            if not status == 0:
+-                print("Failed to get %s %s status %s" %(url_py, py_file_name,
+-                                                       status))
+-
+-            status_imol = read_pdb(pdb_file_name)
+-            if status_imol < 0:
+-                print("BL INFO:: problem opening pdb file. Most likely \
+-                something went wrong in the download")
+-            else:
+-                print("make-and-draw-map with", mtz_file_name)
+-                make_and_draw_map(mtz_file_name, "FWT", "PHWT", "", 0, 0)
+-                make_and_draw_map(mtz_file_name, "DELFWT", "PHDELWT", "", 0, 1)
+-                anom_map = make_and_draw_map(mtz_file_name, "FAN", "PHAN", "", 0, 1)
+-                if anom_map > -1:
+-                    set_map_colour(anom_map, 0.5, 0.5, 0)
+-                exec(compile(open(py_file_name, "rb").read(), py_file_name, 'exec'))
+-            
++        return False
++    text = text.strip().lower()
++    if not (len(text) == 4):
++        print("BL WARNING:: Accession code not 4 chars.")
++        return False
++    stub = "https://pdb-redo.eu/db/" + text + "/" + text + "_final"
++    mtz_file_name = text + "_final.mtz"
++    py_file_name = text + ".py"
++
++    coords_file_name = text + "_final.pdb"
++    have_coords = pdb_redo_fetch(stub + ".pdb", coords_file_name)
++    if not have_coords:                               # mmCIF-only entries
++        coords_file_name = text + "_final.cif"
++        have_coords = pdb_redo_fetch(stub + ".cif", coords_file_name)
++    have_mtz = pdb_redo_fetch(stub + ".mtz", mtz_file_name, "mtz")
++
++    imol = -1
++    if have_coords:
++        imol = handle_read_draw_molecule_with_recentre(coords_file_name, 1)
++    if have_mtz:
++        print("make-and-draw-map with", mtz_file_name)
++        make_and_draw_map(mtz_file_name, "FWT", "PHWT", "", 0, 0)
++        make_and_draw_map(mtz_file_name, "DELFWT", "PHDELWT", "", 0, 1)
++        anom_map = make_and_draw_map(mtz_file_name, "FAN", "PHAN", "", 0, 1)
++        if anom_map > -1:
++            set_map_colour(anom_map, 0.5, 0.5, 0)
++
++    missing = []
++    if not (have_coords and imol >= 0): missing.append("the model")
++    if not have_mtz: missing.append("the maps (MTZ)")
++    if missing:
++        msg = ("PDB-REDO: could not get %s for %s.\n\nThe entry may not be in the PDB-REDO databank, or the network did not answer.\n"
++               "(https://pdb-redo.eu/db/%s)" % (" and ".join(missing), text.upper(), text))
++        print(msg)
++        try:
++            info_dialog(msg)
++        except Exception:
++            pass
++    elif pdb_redo_fetch(stub + ".py", py_file_name):     # PDB-REDO's "guided tour" window (optional)
++        try:
++            exec(compile(open(py_file_name, "rb").read(), py_file_name, 'exec'), globals())
++        except Exception as e:
++            print("PDB-REDO: the guided tour script %s failed: %s" % (py_file_name, e))
++    return imol >= 0 and have_mtz
+ 
+ # BL says: to test, some examples
+ 
+diff --git a/scheme/python-gui-bridge.scm b/scheme/python-gui-bridge.scm
+index 0b7c804..3844109 100644
+--- a/scheme/python-gui-bridge.scm
++++ b/scheme/python-gui-bridge.scm
+@@ -44,3 +44,10 @@
+               baddies)))
+     (run-python-command (string-append "interesting_things_with_fix_maybe(" (coot-python-literal title)
+                                        ", [" (string-join python-baddies ", ") "])"))))
++
++;; File > Fetch PDB & Map using PDB-REDO (build 15):  C++ calls (get-pdb-redo "1abc").  The Scheme version saved PDB-REDO's HTML 404 pages as the
++;; model and the "guided tour" (.scm) and then loaded them (mmCIF-only entries such as 9E5H gave a read error and "Unbound variable <html>"), and its
++;; guided tour needs the guile-gtk window interesting-things-gui, which this build does not have.  The Python version checks every download, falls
++;; back to <id>_final.cif and shows the guided tour with the Python window.
++(define (get-pdb-redo text)
++  (coot-call-python "get_pdb_redo" text))

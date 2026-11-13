@@ -1,0 +1,5 @@
+coot-splash --selftest coot-splash@2x.png out.png
+image 1160x956 pixels -> 580x478 points (scale 2.0); bitmap 1160x956
+rc=0
+Pixel comparison of out.png (AppKit draw into a 1160x956 bitmap) with coot-splash@2x.png: mean abs difference 0.0, max 0.
+Not verified (no window server in the build environment): the window itself (position, level, fade, closing when Coot's window appears).

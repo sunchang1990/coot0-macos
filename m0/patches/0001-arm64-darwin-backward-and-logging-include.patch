@@ -1,0 +1,26 @@
+diff --git a/utils/backward.hpp b/utils/backward.hpp
+index 195ca8f..bba39ea 100644
+--- a/utils/backward.hpp
++++ b/utils/backward.hpp
+@@ -4156,6 +4156,9 @@ public:
+     error_addr = reinterpret_cast<void *>(uctx->uc_mcontext.gregs[REG_EIP]);
+ #elif defined(__arm__)
+     error_addr = reinterpret_cast<void *>(uctx->uc_mcontext.arm_pc);
++#elif defined(__APPLE__) && defined(__aarch64__)
++    // macOS / Apple Silicon: uc_mcontext is a pointer to __darwin_mcontext64
++    error_addr = reinterpret_cast<void *>(uctx->uc_mcontext->__ss.__pc);
+ #elif defined(__aarch64__)
+     error_addr = reinterpret_cast<void *>(uctx->uc_mcontext.pc);
+ #elif defined(__mips__)
+diff --git a/utils/logging.cc b/utils/logging.cc
+index a25f4a8..7e749bb 100644
+--- a/utils/logging.cc
++++ b/utils/logging.cc
+@@ -1,6 +1,6 @@
+ 
+ #include <iostream>
+-#include <logging.hh>
++#include "logging.hh"
+ 
+ void logging::log(const std::string &type, const std::string &s) {
+ 

@@ -1,0 +1,9 @@
+# gui sweep of the extracted final build 14 zip (tests/run-gui-sweep.sh), env -i
+GUI sweep: 248 items ok, 0 items with errors, 0 items without a handler, 5 items whose activation killed the headless process (OpenGL or screen needed; started but not completed, listed below, checked by the GUI audit), 0 dialog buttons with errors
+SWEEP 21 | Edit > Settings... > Python: Install Template Keybindings button '   X   Edit Chi Angles' | CRASH (process died: OpenGL call without a graphics context, or hang)
+SWEEP 34 | Calculate > Map Tools... > Brighten Maps | CRASH (process died: OpenGL call without a graphics context, or hang)
+SWEEP 106 | Draw > Representation Tools... > Ball & Stick... button '  OK  ' | CRASH (process died: OpenGL call without a graphics context, or hang)
+SWEEP 115 | Draw > Representation Tools... > Highlight Interesting Site (here)... | CRASH (process died: OpenGL call without a graphics context, or hang)
+SWEEP 149 | Ligand > Find Ligands... | CRASH (process died: OpenGL call without a graphics context, or hang)
+details: /private/tmp/<test folder>/Coot-0.9.8.96-arm64/work/gui-sweep
+SUMMARY 1 / 1

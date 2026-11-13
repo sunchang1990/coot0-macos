@@ -1,0 +1,72 @@
+# New checks of build 15: run with the new test files on the build-14 Python/Scheme/launcher (OLD) and after dev_sync of patch 0034 (NEW). Headless, 2026-11-11.
+
+## refine-zone OLD (build 14 files)
+FAIL Stepped Refine centres a nucleotide on C1' (got None) False
+FAIL Stepped Refine step refines RNA residue A 22 (mean move 0.000 A) False
+PASS RNA residues away from A 21-23 did not move (max 0.0000 A) True
+SUMMARY 5 / 7
+## refine-zone NEW
+PASS Stepped Refine centres a nucleotide on C1' (got "C1'") True
+PASS Stepped Refine step refines RNA residue A 22 (mean move 0.127 A) True
+PASS RNA residues away from A 21-23 did not move (max 0.0000 A) True
+SUMMARY 7 / 7
+
+## data-and-maps OLD (build 14 files)
+FAIL PDB-REDO mmCIF-only entry: model read from <id>_final.cif (new molecules []) False
+FAIL PDB-REDO mmCIF-only entry: maps made from the MTZ False
+FAIL PDB-REDO: the HTML 404 page is not left as 9e5h_final.pdb / 9e5h.py False
+FAIL PDB-REDO entry without any files: returns False and reads nothing (got None) False
+FAIL menu path (Scheme get-pdb-redo) uses the checked downloader (urls []) False
+FAIL PDB-REDO guided tour (Python) runs when PDB-REDO has it False
+SUMMARY 32 / 38
+## data-and-maps NEW
+PASS PDB-REDO mmCIF-only entry: model read from <id>_final.cif (new molecules [27, 28, 29]) True
+PASS PDB-REDO mmCIF-only entry: maps made from the MTZ True
+PASS PDB-REDO: the HTML 404 page is not left as 9e5h_final.pdb / 9e5h.py True
+PASS PDB-REDO entry without any files: returns False and reads nothing (got False) True
+PASS menu path (Scheme get-pdb-redo) uses the checked downloader (urls ['https://pdb-redo.eu/db/1ehz/1ehz_final.pdb', 'https://pdb-redo.eu/db/1ehz/1ehz_final.mtz', 'https://pdb-redo.eu/db/1ehz/1ehz_final.py']) True
+PASS PDB-REDO guided tour (Python) runs when PDB-REDO has it True
+SUMMARY 38 / 38
+
+## bundle-python OLD (build 14 files)
+FAIL the private HOME has .local/share (GTK recently-used list; build 15) False
+SUMMARY 18 / 19
+## bundle-python NEW
+PASS the private HOME has .local/share (GTK recently-used list; build 15) True
+SUMMARY 19 / 19
+
+## live (network) fetch, new files, headless:
+LIVE 9e5h models [0] maps [1, 2] files ['9e5h_final.cif', '9e5h_final.mtz']
+LIVE 1ehz models [3] maps [4, 5] files ['1ehz.py', '1ehz_final.mtz', '1ehz_final.pdb', '9e5h_final.cif', '9e5h_final.mtz']
+
+## gui-dialogs OLD (build-14 fitting.py, new test file)
+FAIL Stop, then a new Stepped Refine run: one Stop button, old buttons gone, Cancel/Stop/Continue after the end are harmless "after a new run the toolbar has ['Stop', 'Cancel', 'Continue'] (expected only the new Stop)"
+FAIL typing 1+1 into the scripting window shows 2 (no gtk.FALSE error) 'callback error: ["AttributeError: \'bool\' object has no attribute \'destroy\'"]'
+FAIL no exception in any GTK signal handler ['4/-Users-chang-sun-Desktop-test-coot-port/1dc8a850-30b6-4c48-8016-e53b17df6710/scratchpad/wb/Coot-0.9.8.96-arm64/share/coot/python/fitting.py", line 326, in idle_func\n multi_refine_stop_button.d
+SUMMARY 42 / 45
+## gui-dialogs NEW
+PASS Stop, then a new Stepped Refine run: one Stop button, old buttons gone, Cancel/Stop/Continue after the end are harmless 
+SUMMARY 45 / 45
+
+## data-and-maps: JSON error page check against the first draft of the fix (HEAD of coot-src before the amend)
+FAIL PDB-REDO entry without any files: no JSON/HTML error page left as 0xyz_final.* (left: ['0xyz_final.pdb']) False
+SUMMARY 38 / 39
+## data-and-maps NEW (final)
+PASS PDB-REDO entry without any files: no JSON/HTML error page left as 0xyz_final.* (left: []) True
+SUMMARY 39 / 39
+
+## real window (scripted, iMac, build-15 working copy; window list read inside Coot, no screenshot: no Screen Recording permission)
+WATCH mapped windows: [('Coot 0.9.8.96 EL', 1), ('PDB_REDO results', 1)]
+TOUR buttons: ['Removed HOH A 102 ', 'Removed HOH A 106 ', 'Removed HOH A 113 ', 'Removed HOH A 117 '] ... 81
+REDO windows: ['Coot 0.9.8.96 EL']
+REDO windows: ['Coot 0.9.8.96 EL', 'Info:']
+FILES ['0xyz_final.pdb', '1ehz.py', '1ehz_final.mtz', '1ehz_final.pdb', '9e5h_final.cif', '9e5h_final.mtz']
+(the FILES line above is from before the JSON fix: 0xyz_final.pdb was the {"error":"Not Found"} body; fixed and tested after this run)
+Stepped Refine in the real window on 1EHZ residues 2-5:
+centering on A 2 C1'
+centering on A 3 C1'
+centering on A 4 C1'
+centering on A 5 C1'
+centering on A 1 C1'
+centering on A 2 C1'
+centering on A 3 C1'

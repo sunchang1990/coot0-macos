@@ -1,0 +1,1 @@
+/* stub: libgnomecanvas not available */

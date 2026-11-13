@@ -1,0 +1,2 @@
+== Coot GUI audit 2026-11-11 17:29:52 | 1 items (menu bar + toolbar) | real window
+AUDIT   0 | Calculate > Ligand Builder | ok | windows: 1, buttons clicked: 8, 2.5 s

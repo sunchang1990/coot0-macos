@@ -1,0 +1,2 @@
+build 9: 14 suites pass from a path with spaces under env -i (data-and-maps 16/16); dyld (COOT_DYLD_DEBUG=1, tests/gui_python_dialogs.py): 784 images = 145 inside the bundle + 639 macOS system, 0 from anywhere else; bundle_check OK (210 Mach-O, minos 11.0); sweep 159 ok / 0 ERR / 4 headless-only crashes; zip tested after ditto -x -k.
+zip sha256 d9429b3e7a87ab90fb172d6db120da868aaab3565c5c798db6b541ab0f57d4b3 (219,492,259 bytes)

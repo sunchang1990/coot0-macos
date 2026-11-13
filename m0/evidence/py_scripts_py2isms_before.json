@@ -1,0 +1,268 @@
+{
+ "files": 67,
+ "compile_ok": 15,
+ "failures": [
+  [
+   "3d_generator_import.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 144)"
+  ],
+  [
+   "acedrg_link.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 11)"
+  ],
+  [
+   "add_linked_cho.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 13)"
+  ],
+  [
+   "background_demo.py",
+   "inconsistent use of tabs and spaces in indentation (line 37)"
+  ],
+  [
+   "bones_reader.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 74)"
+  ],
+  [
+   "brute_lsqman.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 52)"
+  ],
+  [
+   "check_for_updates.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 137)"
+  ],
+  [
+   "chemical_feature_clusters.py",
+   "inconsistent use of tabs and spaces in indentation (line 162)"
+  ],
+  [
+   "cho_restraints_from_models.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 115)"
+  ],
+  [
+   "clear_backup.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 83)"
+  ],
+  [
+   "cns2coot.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 40)"
+  ],
+  [
+   "contact_score_isolated_ligand.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 87)"
+  ],
+  [
+   "coot_gui.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 36)"
+  ],
+  [
+   "coot_load_modules.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 140)"
+  ],
+  [
+   "coot_lsq.py",
+   "inconsistent use of tabs and spaces in indentation (line 56)"
+  ],
+  [
+   "coot_toolbuttons.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 63)"
+  ],
+  [
+   "coot_utils.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 423)"
+  ],
+  [
+   "create_server.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 22)"
+  ],
+  [
+   "enhanced_ligand.py",
+   "Lambda expression parameters cannot be parenthesized (line 138)"
+  ],
+  [
+   "extensions.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 303)"
+  ],
+  [
+   "filter.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 30)"
+  ],
+  [
+   "fitting.py",
+   "inconsistent use of tabs and spaces in indentation (line 54)"
+  ],
+  [
+   "gap.py",
+   "Lambda expression parameters cannot be parenthesized (line 138)"
+  ],
+  [
+   "generic_objects.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 66)"
+  ],
+  [
+   "get_ebi.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 72)"
+  ],
+  [
+   "get_recent_pdbe.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 35)"
+  ],
+  [
+   "gui_add_linked_cho.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 502)"
+  ],
+  [
+   "gui_hole.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 48)"
+  ],
+  [
+   "gui_ligand_sliders.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 14)"
+  ],
+  [
+   "gui_prosmart.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 41)"
+  ],
+  [
+   "hello.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 73)"
+  ],
+  [
+   "interactive_nudge_residues.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 11)"
+  ],
+  [
+   "jligand.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 138)"
+  ],
+  [
+   "jligand_gui.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 30)"
+  ],
+  [
+   "libcheck.py",
+   "inconsistent use of tabs and spaces in indentation (line 65)"
+  ],
+  [
+   "ligand_check.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 34)"
+  ],
+  [
+   "ligand_validation_sliders.py",
+   "inconsistent use of tabs and spaces in indentation (line 37)"
+  ],
+  [
+   "mutate.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 26)"
+  ],
+  [
+   "ncs.py",
+   "inconsistent use of tabs and spaces in indentation (line 52)"
+  ],
+  [
+   "parse_pisa_xml.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 46)"
+  ],
+  [
+   "pathology_plots.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 16)"
+  ],
+  [
+   "pdbe_validation_data.py",
+   "inconsistent use of tabs and spaces in indentation (line 30)"
+  ],
+  [
+   "povray.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 57)"
+  ],
+  [
+   "python_coot_docs.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 21)"
+  ],
+  [
+   "raster3d.py",
+   "inconsistent use of tabs and spaces in indentation (line 41)"
+  ],
+  [
+   "rcrane_loader.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 50)"
+  ],
+  [
+   "refmac.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 107)"
+  ],
+  [
+   "remote_control.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 41)"
+  ],
+  [
+   "shelx.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 64)"
+  ],
+  [
+   "shelx_extensions.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 133)"
+  ],
+  [
+   "template_key_bindings.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 20)"
+  ],
+  [
+   "user_define_restraints.py",
+   "Missing parentheses in call to 'print'. Did you mean print(...)? (line 32)"
+  ]
+ ],
+ "pyisms": {
+  "print statement": [
+   662,
+   49
+  ],
+  "execfile": [
+   5,
+   3
+  ],
+  "has_key": [
+   7,
+   4
+  ],
+  "xrange": [
+   0,
+   0
+  ],
+  "except X, e": [
+   0,
+   0
+  ],
+  "unicode()": [
+   0,
+   0
+  ],
+  "string module funcs": [
+   30,
+   9
+  ],
+  "raw_input": [
+   3,
+   3
+  ],
+  "import pygtk/gtk": [
+   37,
+   12
+  ],
+  "dict.iteritems": [
+   2,
+   2
+  ],
+  "backticks/<>": [
+   1,
+   1
+  ],
+  "basestring/long": [
+   2,
+   2
+  ],
+  "reduce/apply/map(list)": [
+   4,
+   4
+  ]
+ }
+}

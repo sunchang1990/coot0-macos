@@ -1,0 +1,95 @@
+diff --git a/src/c-interface-gui.cc b/src/c-interface-gui.cc
+index 3dc2be0..ab9d96d 100644
+--- a/src/c-interface-gui.cc
++++ b/src/c-interface-gui.cc
+@@ -2762,6 +2762,8 @@ void hide_modelling_toolbar() {
+       } else {
+ 	 graphics_info_t::model_toolbar_show_hide_state = 0;
+ 	 gtk_widget_hide(w);
++	 GtkWidget *mi = lookup_widget(graphics_info_t::glarea, "model_toolbar_menuitem");
++	 if (mi) gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(mi), FALSE);
+       }
+    }
+ }
+@@ -2786,6 +2788,8 @@ void show_modelling_toolbar() {
+       } else {
+ 	 graphics_info_t::model_toolbar_show_hide_state = 1;
+ 	 gtk_widget_show(w);
++	 GtkWidget *mi = lookup_widget(graphics_info_t::glarea, "model_toolbar_menuitem");
++	 if (mi) gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(mi), TRUE);
+       }
+    }
+ }
+diff --git a/src/callbacks.c b/src/callbacks.c
+index fa0e135..cf4ab37 100644
+--- a/src/callbacks.c
++++ b/src/callbacks.c
+@@ -197,6 +197,17 @@ on_clipping1_activate                  (GtkMenuItem     *menuitem,
+ }
+ 
+ 
++void
++on_model_toolbar_menuitem_toggled      (GtkCheckMenuItem *menuitem,
++                                        gpointer         user_data)
++{
++  if (gtk_check_menu_item_get_active(menuitem))
++    show_modelling_toolbar();
++  else
++    hide_modelling_toolbar();
++}
++
++
+ void
+ on_ok_button_coordinates_clicked       (GtkButton       *button,
+                                         gpointer         user_data)
+diff --git a/src/callbacks.h b/src/callbacks.h
+index b0c6585..9196bff 100644
+--- a/src/callbacks.h
++++ b/src/callbacks.h
+@@ -47,6 +47,10 @@ void
+ on_clipping1_activate                  (GtkMenuItem     *menuitem,
+                                         gpointer         user_data);
+ 
++void
++on_model_toolbar_menuitem_toggled      (GtkCheckMenuItem *menuitem,
++                                        gpointer         user_data);
++
+ void
+ on_coords_fileselection1_destroy       (GtkObject       *object,
+                                         gpointer         user_data);
+diff --git a/src/gtk2-interface.c b/src/gtk2-interface.c
+index 44ab620..7ffed0b 100644
+--- a/src/gtk2-interface.c
++++ b/src/gtk2-interface.c
+@@ -179,6 +179,7 @@ create_window1 (void)
+   GtkWidget *centre_atom_label1;
+   GtkWidget *image14446;
+   GtkWidget *clipping1;
++  GtkWidget *model_toolbar_menuitem;
+   GtkWidget *coordinates_recentring1;
+   GtkWidget *crosshairs1;
+   GtkWidget *image14447;
+@@ -1004,6 +1005,15 @@ create_window1 (void)
+   gtk_widget_show (clipping1);
+   gtk_container_add (GTK_CONTAINER (draw1_menu), clipping1);
+ 
++  /* macOS port: a way to bring back the Model/Fit/Refine toolbar after it has been hidden */
++  model_toolbar_menuitem = gtk_check_menu_item_new_with_mnemonic ("Model/Fit/Refine _Toolbar");
++  gtk_widget_show (model_toolbar_menuitem);
++  gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (model_toolbar_menuitem), TRUE);
++  gtk_container_add (GTK_CONTAINER (draw1_menu), model_toolbar_menuitem);
++  g_signal_connect ((gpointer) model_toolbar_menuitem, "toggled",
++                    G_CALLBACK (on_model_toolbar_menuitem_toggled),
++                    NULL);
++
+   coordinates_recentring1 = gtk_menu_item_new_with_mnemonic ("Coordinates Recentring...");
+   gtk_container_add (GTK_CONTAINER (draw1_menu), coordinates_recentring1);
+ 
+@@ -2750,6 +2760,7 @@ create_window1 (void)
+   GLADE_HOOKUP_OBJECT (window1, centre_atom_label1, "centre_atom_label1");
+   GLADE_HOOKUP_OBJECT (window1, image14446, "image14446");
+   GLADE_HOOKUP_OBJECT (window1, clipping1, "clipping1");
++  GLADE_HOOKUP_OBJECT (window1, model_toolbar_menuitem, "model_toolbar_menuitem");
+   GLADE_HOOKUP_OBJECT (window1, coordinates_recentring1, "coordinates_recentring1");
+   GLADE_HOOKUP_OBJECT (window1, crosshairs1, "crosshairs1");
+   GLADE_HOOKUP_OBJECT (window1, image14447, "image14447");

@@ -1,0 +1,46 @@
+diff --git a/src/globjects.cc b/src/globjects.cc
+index b8a629b..4c95237 100644
+--- a/src/globjects.cc
++++ b/src/globjects.cc
+@@ -1003,11 +1003,11 @@ int graphics_info_t::reset_b_factor_moved_atoms_flag = 0;
+ // show environment
+ float graphics_info_t::environment_min_distance = 0.0;
+ float graphics_info_t::environment_max_distance = 3.2;
+-bool graphics_info_t::environment_show_distances = 0;
++bool graphics_info_t::environment_show_distances = 1; // macOS port: on by default (H-bonds, bumps, 0-3.2 A)
+ bool graphics_info_t::environment_distances_show_bumps = 1;
+ bool graphics_info_t::environment_distances_show_h_bonds = 1;
+ 
+-short int graphics_info_t::environment_distance_label_atom = 0;
++short int graphics_info_t::environment_distance_label_atom = 1; // macOS port: label the distances
+ 
+ // dynamic distances to intermediate atoms:
+ short int graphics_info_t::in_dynamic_distance_define = 0;
+@@ -4006,6 +4006,18 @@ gint glarea_button_press(GtkWidget *widget, GdkEventButton *event) {
+    return TRUE;
+ }
+ 
++// macOS port: trackpads (and Magic Mouse) have no middle button.  A still right-click (a two-finger
++// click on a trackpad) acts as a middle-click, i.e. it re-centres on the atom under the pointer.
++// Right-button *drags* are unchanged (zoom).  Set COOT_RIGHT_CLICK_CENTRE=0 to turn this off.
++static bool coot_right_click_centres() {
++   static int state = -1;
++   if (state < 0) {
++      const char *e = getenv("COOT_RIGHT_CLICK_CENTRE");
++      state = (e && (std::string(e) == "0" || std::string(e) == "no" || std::string(e) == "off")) ? 0 : 1;
++   }
++   return state == 1;
++}
++
+ gint glarea_button_release(GtkWidget *widget, GdkEventButton *event) {
+ 
+    graphics_info_t g;
+@@ -4019,7 +4031,7 @@ gint glarea_button_release(GtkWidget *widget, GdkEventButton *event) {
+       gdk_window_get_pointer(event->window, &x_as_int, &y_as_int, &state);
+       GdkModifierType my_button2_mask = g.gdk_button2_mask();
+ 
+-      if (event->button == 2) {
++      if (event->button == 2 || (event->button == 3 && coot_right_click_centres())) {
+ 
+ 	 // move this block into glarea_button_release (now done of course)
+ 

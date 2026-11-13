@@ -1,0 +1,4 @@
+# python m0/tools/bundle_check.py on the extracted build 14 zip
+Mach-O files checked: 211 | highest minos: 11.0 | dangling symlinks: 0
+RESULT: OK
+# bin/coot-bin of build 14 is byte-identical to the delivered build 13 (cmp); lib/ differs only in __pycache__ files

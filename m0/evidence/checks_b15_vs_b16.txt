@@ -1,0 +1,27 @@
+# refmac-run suite with the build-16 checks, on build-15 files (expected: 3 new checks FAIL)
+PASS Scheme bridge: Scheme values become Python source text                                                  
+PASS Scheme bridge: (run-refmac-by-filename ...) from C++ reaches the Python runner with the same arguments  
+PASS Scheme bridge: GLN and ASN B-factor outliers window request reaches the Python version                  
+PASS Scheme programs get CCP4's environment (env(1) arguments of the child only)                             
+PASS Run Refmac (Scheme request -> Python runner -> refmac5): new model and maps are read in                 
+PASS Run Refmac without an R-free column: LABIN has no empty FREE=                                           
+PASS Run Refmac reports the child environment instead of 'not set !' warnings                                
+FAIL Lidia/acedrg: acedrg's environment can be made when Coot was not started from a CCP4 shell                EXC KeyError('CBIN') esktop-test-coot-port/1dc8a850-30b6-4c48-8016-e53b17df6710/scratchpad/audit15/Coot-0.9.8.96-arm64/share/coot/python/3d_generator_import.py", line 69, in acedrg_env |   
+FAIL Lidia Apply with an empty sketch: says 'draw a molecule first', no acedrg run                             EXC KeyError('CBIN') esktop-test-coot-port/1dc8a850-30b6-4c48-8016-e53b17df6710/scratchpad/audit15/Coot-0.9.8.96-arm64/share/coot/python/3d_generator_import.py", line 69, in acedrg_env |   
+FAIL Lidia Apply -> acedrg on benzene (CCP4 not in Coot's own environment): ligand and dictionary are read in  EXC KeyError('CBIN') esktop-test-coot-port/1dc8a850-30b6-4c48-8016-e53b17df6710/scratchpad/audit15/Coot-0.9.8.96-arm64/share/coot/python/3d_generator_import.py", line 69, in acedrg_env |   
+PASS no exception in any GTK signal handler                                                                  
+SUMMARY 8 / 11
+
+# same suite on build-16 files
+PASS Scheme bridge: Scheme values become Python source text                                                  
+PASS Scheme bridge: (run-refmac-by-filename ...) from C++ reaches the Python runner with the same arguments  
+PASS Scheme bridge: GLN and ASN B-factor outliers window request reaches the Python version                  
+PASS Scheme programs get CCP4's environment (env(1) arguments of the child only)                             
+PASS Run Refmac (Scheme request -> Python runner -> refmac5): new model and maps are read in                 
+PASS Run Refmac without an R-free column: LABIN has no empty FREE=                                           
+PASS Run Refmac reports the child environment instead of 'not set !' warnings                                
+PASS Lidia/acedrg: acedrg's environment can be made when Coot was not started from a CCP4 shell              
+PASS Lidia Apply with an empty sketch: says 'draw a molecule first', no acedrg run                           
+PASS Lidia Apply -> acedrg on benzene (CCP4 not in Coot's own environment): ligand and dictionary are read in
+PASS no exception in any GTK signal handler                                                                  
+SUMMARY 11 / 11

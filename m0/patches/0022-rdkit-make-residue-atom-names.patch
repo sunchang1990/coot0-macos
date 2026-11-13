@@ -1,0 +1,26 @@
+diff --git a/lidia-core/rdkit-interface.cc b/lidia-core/rdkit-interface.cc
+index 1ab13e2..e538347 100644
+--- a/lidia-core/rdkit-interface.cc
++++ b/lidia-core/rdkit-interface.cc
+@@ -2068,9 +2068,21 @@ coot::make_residue(const RDKit::ROMol &rdkm, int iconf, const std::string &res_n
+       mmdb::Chain *chain_p = new mmdb::Chain;
+       chain_p->SetChainID("");
+       chain_p->AddResidue(residue_p);
++       std::map<std::string, int> element_count; // macOS port: running numbers for unnamed atoms
+       for (unsigned int iat=0; iat<mol.atoms.size(); iat++) { 
+ 	 mmdb::Atom *at = new mmdb::Atom;
+ 	 std::string atom_name = mol.atoms[iat].name; // overridden hopefully
++	 if (atom_name == "ZZZZ") {
++	    // macOS port: make_molfile_molecule() found no name; make one from the element and a running number (C1, C2, O1, H1, ... CL1),
++	    // as the comment at the top of this function intends (upstream never did it: every atom was called ZZZZ).
++	    std::string ele = mol.atoms[iat].element;
++	    for (unsigned int ic=0; ic<ele.size(); ic++) ele[ic] = toupper(ele[ic]);
++	    int n = ++element_count[ele];
++	    std::string nm = ele + std::to_string(n);
++	    if (nm.size() < 4 && ele.size() == 1) nm = " " + nm;
++	    while (nm.size() < 4) nm += " ";
++	    atom_name = nm.substr(0, 4);
++	 }
+ 	 at->SetAtomName(atom_name.c_str());
+ 	 at->SetElementName(mol.atoms[iat].element.c_str());
+ 	 at->SetCoordinates(mol.atoms[iat].atom_position.x(),

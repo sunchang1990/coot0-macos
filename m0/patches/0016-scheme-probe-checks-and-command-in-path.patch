@@ -1,0 +1,78 @@
+diff --git a/scheme/coot-utils.scm b/scheme/coot-utils.scm
+index a294f7a..fcad109 100644
+--- a/scheme/coot-utils.scm
++++ b/scheme/coot-utils.scm
+@@ -785,9 +785,15 @@
+ ;; 
+ ;; Thank you for this, rixed at happyleptic.org
+ (define (command-in-path? f)
+-  (let ((path (string-split (getenv "PATH") #\:))
+-	(make-absolute (lambda (path) (string-append path "/" f))))
+-    (any file-exists? (map make-absolute path))))
++  ;; macOS port: a directory called "reduce" (e.g. <phenix>/build/reduce) in a PATH entry used to
++  ;; count as "the command is there"; require a regular file that can be executed.
++  (let ((path (string-split (or (getenv "PATH") "") #\:))
++	(make-absolute (lambda (path) (string-append path "/" f)))
++	(executable-file? (lambda (fn)
++			    (and (file-exists? fn)
++				 (eq? 'regular (stat:type (stat fn)))
++				 (access? fn X_OK)))))
++    (any executable-file? (map make-absolute path))))
+ 
+ 
+ ;; Return #t or #f
+diff --git a/scheme/generic-objects.scm b/scheme/generic-objects.scm
+index 83f399e..76d181f 100644
+--- a/scheme/generic-objects.scm
++++ b/scheme/generic-objects.scm
+@@ -179,6 +179,12 @@
+ ;; run molprobity (well reduce and probe) to make generic objects (and
+ ;; display the generic objects gui)
+ ;; 
++;; macOS port: size in bytes of a file, 0 if it does not exist
++(define (probe-file-size file-name)
++  (if (file-exists? file-name)
++      (stat:size (stat file-name))
++      0))
++
+ (define probe
+   (lambda (imol)
+ 
+@@ -221,7 +227,15 @@
+ 			      *reduce-command* arg-list reduce-out-pdb-file)
+ 		      (format #t "============= running reduce: REDUCE_HET_DICT env var: ~s~%" 
+ 			      (getenv "REDUCE_HET_DICT"))
+-		      (goosh-command *reduce-command* arg-list '() reduce-out-pdb-file #f)
++		      (let ((reduce-status (goosh-command *reduce-command* arg-list '() reduce-out-pdb-file #f)))
++			(format #t "============= reduce finished: exit status ~s, ~s bytes written to ~s~%"
++				reduce-status (probe-file-size reduce-out-pdb-file) reduce-out-pdb-file))
++		      (if (= 0 (probe-file-size reduce-out-pdb-file))
++			  (let ((msg (string-append "reduce (" *reduce-command* ") produced no output, so probe was not run.\n"
++						    "Run it by hand to see why:\n  " *reduce-command* " -build "
++						    mol-pdb-file " -DB " reduce-het-dict-file-name)))
++			    (format #t "ERROR:: ~a~%" msg)
++			    (if (using-gui?) (info-dialog msg)))
+ 		      (let* ((probe-name-stub (strip-extension (strip-path (molecule-name imol))))
+ 			     (probe-pdb-in  (string-append 
+ 					     "coot-molprobity/" probe-name-stub "-with-H.pdb"))
+@@ -251,7 +265,7 @@
+ 			      (set-recentre-on-read-pdb 1))
+ 			  
+ 			  ;; show the GUI for the USER MODS
+-			  (if (using-gui?)
++			  (if (and (using-gui?) (defined? 'user-mods-gui)) ; (in the GUI scripts: not always available)
+ 			      (user-mods-gui imol-probe reduce-out-pdb-file))
+ 			  
+ 					; (toggle-active-mol imol-probe) let's not do
+@@ -263,8 +277,9 @@
+ 					; several probes, the wrong molecule is
+ 					; getting refined).
+ 			  (handle-read-draw-probe-dots-unformatted probe-out imol-probe 1)
+-			  (generic-objects-gui)
+-			  (graphics-draw)))))))))))
++			  (if (defined? 'generic-objects-gui)
++			      (generic-objects-gui))
++			  (graphics-draw))))))))))))
+ 
+ ;; Write the connectivity for the non-standard (non-water) residues in
+ ;; the given molecule for which we have the dictionary.

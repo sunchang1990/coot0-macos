@@ -1,0 +1,35 @@
+{
+ "libart_lgpl": {
+  "version": "2.3.21",
+  "file": "canvas/src/libart_lgpl-2.3.21.tar.bz2",
+  "sha256": "fdc11e74c10fc9ffe4188537e2b370c0abacca7d89021d4d303afdf7fd7476fa",
+  "published": "fdc11e74c10fc9ffe4188537e2b370c0abacca7d89021d4d303afdf7fd7476fa",
+  "match": true,
+  "bytes": 329102
+ },
+ "libgnomecanvas": {
+  "version": "2.30.3",
+  "file": "canvas/src/libgnomecanvas-2.30.3.tar.bz2",
+  "sha256": "859b78e08489fce4d5c15c676fec1cd79782f115f516e8ad8bed6abcb8dedd40",
+  "published": "859b78e08489fce4d5c15c676fec1cd79782f115f516e8ad8bed6abcb8dedd40",
+  "match": true,
+  "bytes": 574139
+ },
+ "goocanvas": {
+  "version": "1.0.0",
+  "file": "canvas/src/goocanvas-1.0.0.tar.bz2",
+  "sha256": "1c072ef88567cad241fb4addee26e9bd96741b1503ff736d1c152fa6d865711e",
+  "published": "1c072ef88567cad241fb4addee26e9bd96741b1503ff736d1c152fa6d865711e",
+  "match": true,
+  "bytes": 570552
+ },
+ "intltool": {
+  "version": "0.40.6",
+  "file": "canvas/src/intltool-0.40.6.tar.bz2",
+  "sha256": "4d1e5f8561f09c958e303d4faa885079a5e173a61d28437d0013ff5efc9e3b64",
+  "published": "4d1e5f8561f09c958e303d4faa885079a5e173a61d28437d0013ff5efc9e3b64",
+  "match": true,
+  "bytes": 140340,
+  "note": "build tool only (libgnomecanvas configure)"
+ }
+}

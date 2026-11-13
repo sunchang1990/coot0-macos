@@ -1,0 +1,319 @@
+diff --git a/compat/gl-seam/coot-gl-seam.mm b/compat/gl-seam/coot-gl-seam.mm
+index 45b1e4e..ac37dac 100644
+--- a/compat/gl-seam/coot-gl-seam.mm
++++ b/compat/gl-seam/coot-gl-seam.mm
+@@ -355,6 +355,8 @@ void coot_gl_draw_text_at_raster_pos(const char *utf8, double logical_px) {
+    glGetFloatv(GL_CURRENT_COLOR, col);
+    GLint vp[4];
+    glGetIntegerv(GL_VIEWPORT, vp);
++   GLint caller_matrix_mode = GL_MODELVIEW;   // the caller may be in GL_PROJECTION mode (e.g. the density-level text and the
++   glGetIntegerv(GL_MATRIX_MODE, &caller_matrix_mode);   // ligand view): its own glPopMatrix() must pop the stack it expects
+ 
+    double px = logical_px * coot_label_scale() * coot_gl_pixel_scale;
+    if (px < 6.0) px = 6.0;
+@@ -422,7 +424,7 @@ void coot_gl_draw_text_at_raster_pos(const char *utf8, double logical_px) {
+ 
+    glMatrixMode(GL_MODELVIEW);  glPopMatrix();
+    glMatrixMode(GL_PROJECTION); glPopMatrix();
+-   glMatrixMode(GL_MODELVIEW);
++   glMatrixMode((GLenum)caller_matrix_mode);
+    glPopClientAttrib();
+    glPopAttrib();
+ }
+diff --git a/python/coot_gui.py b/python/coot_gui.py
+index e3f4b56..20486d5 100644
+--- a/python/coot_gui.py
++++ b/python/coot_gui.py
+@@ -802,7 +802,7 @@ def interesting_things_with_fix_maybe(title, baddie_list):
+                 return False, False, False
+              
+           elif (isinstance(func_maybe2, list) and len(func_maybe2)>0
+-                and isinstance(func_maybe1, bytes)):
++                and isinstance(func_maybe1, str)):
+              # the second last is function, last is button name
+              func_maybe_strip = func_maybe2[0]
+              button_name = func_maybe1
+@@ -812,8 +812,8 @@ def interesting_things_with_fix_maybe(title, baddie_list):
+                 return False, False, False
+              
+           elif (isinstance(func_maybe3, list) and len(func_maybe3)>0
+-                and isinstance(func_maybe2, bytes)
+-                and isinstance(func_maybe1, bytes)):
++                and isinstance(func_maybe2, str)
++                and isinstance(func_maybe1, str)):
+              # the third last is function, second last is button name, last is tooltip
+              func_maybe_strip = func_maybe3[0]
+              button_name = func_maybe2
+@@ -1565,7 +1565,7 @@ def coot_toolbar_button(button_label, cb_function,
+             coot_tooltips.set_tip(toolbutton, tooltip)
+ 
+       def cb_wrapper(widget, callback_function):
+-         if (type(callback_function) is bytes):
++         if (isinstance(callback_function, str)):
+             # old style with string as function
+             eval(callback_function)
+          else:
+@@ -1652,7 +1652,7 @@ def coot_toolbar_combobox(label, entry_list, cb_function, tooltip=""):
+ 
+       def cb_wrapper(widget, callback_function):
+          pos = widget.get_active()
+-         if (type(callback_function) is bytes):
++         if (isinstance(callback_function, str)):
+             # old style with string as function
+             # does not take into account the positions pos! Or how?
+             # FIXME? Maybe
+diff --git a/python/ligand_validation_sliders.py b/python/ligand_validation_sliders.py
+index b5e6998..7c37cc5 100644
+--- a/python/ligand_validation_sliders.py
++++ b/python/ligand_validation_sliders.py
+@@ -128,7 +128,7 @@ class ligand_validation_metrics_gui:
+         da.window.draw_layout(gc, 4+x_for_rj, y-3, pangolayout)
+ 
+         # Values text
+-        if isinstance(value_str, bytes):
++        if isinstance(value_str, str):
+             x_for_value = self.x_bar_offset + self.bar_length + 12
+             pangolayout.set_text(value_str)
+             # print "Drawing Value value", x_for_value, y, value_str
+diff --git a/python/ncs.py b/python/ncs.py
+index 045579d..9590256 100644
+--- a/python/ncs.py
++++ b/python/ncs.py
+@@ -65,7 +65,7 @@ def skip_to_next_ncs_chain(direction):
+       #
+       chain_guess = skip_to_chain_internal(this_chain_id, chain_id_list)
+ 
+-      if ((not type(chain_guess) is bytes)):
++      if ((not isinstance(chain_guess, str))):
+           return chain_guess
+       elif (is_solvent_chain_qm(imol, chain_guess)):
+           skip_to_chain(imol, chain_guess, chain_id_list)
+diff --git a/python/pdbe_validation_data.py b/python/pdbe_validation_data.py
+index e4c1791..7963b51 100644
+--- a/python/pdbe_validation_data.py
++++ b/python/pdbe_validation_data.py
+@@ -696,7 +696,7 @@ class validation_entry_to_canvas:
+         da.window.draw_layout(gc, 4+x_for_rj, y-6, pangolayout)
+ 
+         # Values text
+-        if isinstance(value_str, bytes):
++        if isinstance(value_str, str):
+             x_for_value = self.x_bar_offset + self.bar_length + 12
+             pangolayout.set_text(value_str)
+             # print "value", x_for_value, y
+diff --git a/src/draw.cc b/src/draw.cc
+index cfbea2b..dac5b9a 100644
+--- a/src/draw.cc
++++ b/src/draw.cc
+@@ -221,6 +221,24 @@ draw_mono(GtkWidget *widget, GdkEventExpose *event, short int stereo_mode) {
+       }
+ 
+ 
++      {  // macOS port: a draw routine that leaves an extra matrix on a stack must not accumulate over frames
++         GLint depth = 1;
++         glMatrixMode(GL_PROJECTION);
++         glGetIntegerv(GL_PROJECTION_STACK_DEPTH, &depth);
++         if (depth > 1) {
++            static int n_reports = 0;
++            if (n_reports++ < 3) std::cout << "WARNING:: GL projection stack depth " << depth << " at start of frame (a drawing routine did not pop)" << std::endl;
++            while (depth-- > 1) glPopMatrix();
++         }
++         glMatrixMode(GL_MODELVIEW);
++         glGetIntegerv(GL_MODELVIEW_STACK_DEPTH, &depth);
++         if (depth > 1) {
++            static int n_reports = 0;
++            if (n_reports++ < 3) std::cout << "WARNING:: GL modelview stack depth " << depth << " at start of frame (a drawing routine did not pop)" << std::endl;
++            while (depth-- > 1) glPopMatrix();
++         }
++      }
++
+       glMatrixMode(GL_PROJECTION);
+       glLoadIdentity();
+ 
+@@ -276,6 +294,8 @@ draw_mono(GtkWidget *widget, GdkEventExpose *event, short int stereo_mode) {
+ 		   -graphics_info_t::RotationCentre_y(),
+ 		   -graphics_info_t::RotationCentre_z());
+ 
++      coot_scene_matrices_capture();   // macOS port: what picking will use
++
+       draw_molecular_triangles(widget);
+ 
+       if (false) { // try/test clipping
+@@ -538,6 +558,7 @@ draw_mono(GtkWidget *widget, GdkEventExpose *event, short int stereo_mode) {
+    } // gtkgl make area current test
+ 
+ 
++   coot_scene_matrices_frame_done();
+    gdkglext_finish_frame(widget);
+    return TRUE;
+ }
+diff --git a/src/graphics-info-residues.cc b/src/graphics-info-residues.cc
+index f573409..d6ac9ac 100644
+--- a/src/graphics-info-residues.cc
++++ b/src/graphics-info-residues.cc
+@@ -296,6 +296,7 @@ graphics_info_t::graphics_ligand_view() {
+ 	 glDisable(GL_LINE_SMOOTH);
+ 	 glDisable(GL_BLEND);
+    
++	 glMatrixMode(GL_PROJECTION);   // macOS port: do not rely on render() leaving the matrix mode alone
+ 	 glPopMatrix();
+ 	 glMatrixMode(GL_MODELVIEW);
+ 	 glPopMatrix();
+diff --git a/src/graphics-ligand-view.cc b/src/graphics-ligand-view.cc
+index b432202..34c9243 100644
+--- a/src/graphics-ligand-view.cc
++++ b/src/graphics-ligand-view.cc
+@@ -20,6 +20,7 @@
+  */
+ 
+ #include <string.h>
++#include <vector>
+ #include <string>
+ 
+ #ifdef __APPLE__
+@@ -44,6 +45,33 @@
+ #include "geometry/residue-and-atom-specs.hh"
+ 
+ graphics_ligand_molecule::~graphics_ligand_molecule() {}
++
++// macOS port: atom labels cannot live inside the compiled display list.  The text helper reads the current raster
++// position, colour and viewport (glGet* calls are executed while a list is being compiled, so they return stale values:
++// the labels came out at the wrong place, in the colour of the rotation-centre cube, as pink blobs) and it changes
++// the matrix mode.  So the labels are collected while the list is compiled and drawn in render(), in immediate mode.
++namespace {
++   struct ligand_text_item_t {
++      double x, y;
++      std::string text;
++      float col[3];
++   };
++   std::vector<ligand_text_item_t> g_ligand_text_items;
++   bool g_collect_ligand_text = false;
++
++   void draw_ligand_text_now(const std::string &s) {
++#ifdef __APPLE__
++      if (coot_gl_text_enabled()) {
++         coot_gl_draw_text_at_raster_pos(s.c_str(), 10.0);
++         return;
++      }
++#endif
++      glPushAttrib(GL_LIST_BIT);
++      for (unsigned int i = 0; i < s.length(); i++)
++         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10, s[i]);
++      glPopAttrib();
++   }
++}
+  
+ // template<class Tgraphics_ligand_atom, class Tgraphics_ligand_bond> lig_build::molecule_t<graphics_ligand_atom, graphics_ligand_bond>::~molecule_t() {}
+ // template<class graphics_ligand_atom, class graphics_ligand_bond> lig_build::molecule_t<graphics_ligand_atom, graphics_ligand_bond>::~molecule_t() {}
+@@ -61,9 +89,19 @@ graphics_ligand_molecule::generate_display_list(bool dark_background_flag) {
+    }
+    display_list_tag = glGenLists(1); // range of 1.
+ 
++   g_ligand_text_items.clear();
++   g_collect_ligand_text = true;
+    glNewList(display_list_tag, GL_COMPILE);
+-   gl_bonds(dark_background_flag);
++   try {
++      gl_bonds(dark_background_flag);
++   }
++   catch (...) {
++      glEndList();
++      g_collect_ligand_text = false;
++      throw;
++   }
+    glEndList();
++   g_collect_ligand_text = false;
+ }
+ 
+ coot::colour_t
+@@ -337,6 +375,15 @@ graphics_ligand_atom::make_text_item(const lig_build::atom_id_info_t &atom_id_in
+ 	 if (atom_id_info_in.offsets[i].superscript)
+ 	    y_pos += 0.3;
+ 
++	 if (g_collect_ligand_text) {
++	    ligand_text_item_t item;
++	    item.x = x_pos; item.y = y_pos;
++	    item.text = atom_id_info_in.offsets[i].text;
++	    item.col[0] = fc.col[0]; item.col[1] = fc.col[1]; item.col[2] = fc.col[2];
++	    g_ligand_text_items.push_back(item);
++	    continue;
++	 }
++
+ 	 double screen_z = -1.5;
+ 	 glRasterPos3d(x_pos, y_pos, screen_z);
+ 
+@@ -381,6 +428,12 @@ graphics_ligand_molecule::render() {
+    // 
+    glDisable(GL_FOG);
+    glCallList(display_list_tag);
++   for (unsigned int i=0; i<g_ligand_text_items.size(); i++) {
++      const ligand_text_item_t &item = g_ligand_text_items[i];
++      glColor3f(item.col[0], item.col[1], item.col[2]);
++      glRasterPos3d(item.x, item.y, -1.5);
++      draw_ligand_text_now(item.text);
++   }
+    glEnable(GL_FOG);
+ }
+ 
+diff --git a/src/pick.cc b/src/pick.cc
+index dd0035b..fc7c48b 100644
+--- a/src/pick.cc
++++ b/src/pick.cc
+@@ -363,6 +363,23 @@ coot::Cartesian unproject(float screen_z) {
+ 
+ }
+ 
++namespace {
++   bool g_scene_matrices_valid = false;
++   bool g_scene_in_frame = false;
++   GLint    g_scene_viewport[4];
++   GLdouble g_scene_mv[16], g_scene_proj[16];
++}
++
++void coot_scene_matrices_capture() {
++   glGetIntegerv(GL_VIEWPORT, g_scene_viewport);
++   glGetDoublev(GL_MODELVIEW_MATRIX, g_scene_mv);
++   glGetDoublev(GL_PROJECTION_MATRIX, g_scene_proj);
++   g_scene_matrices_valid = true;
++   g_scene_in_frame = true;     // while the frame is being drawn, unproject uses the live GL state, as before
++}
++
++void coot_scene_matrices_frame_done() { g_scene_in_frame = false; }
++
+ coot::Cartesian unproject_xyz(int x, int y, float screen_z) {
+    
+    //cout << "using mouse coords: "
+@@ -379,9 +396,14 @@ coot::Cartesian unproject_xyz(int x, int y, float screen_z) {
+    GLdouble wx, wy, wz;  /*  returned world x, y, z coords  */
+ 
+       
+-   glGetIntegerv (GL_VIEWPORT, viewport);
+-   glGetDoublev (GL_MODELVIEW_MATRIX, mvmatrix);
+-   glGetDoublev (GL_PROJECTION_MATRIX, projmatrix);
++   if (g_scene_matrices_valid && !g_scene_in_frame) {
++      for (int i=0; i<4; i++)  viewport[i] = g_scene_viewport[i];
++      for (int i=0; i<16; i++) { mvmatrix[i] = g_scene_mv[i]; projmatrix[i] = g_scene_proj[i]; }
++   } else {
++      glGetIntegerv (GL_VIEWPORT, viewport);
++      glGetDoublev (GL_MODELVIEW_MATRIX, mvmatrix);
++      glGetDoublev (GL_PROJECTION_MATRIX, projmatrix);
++   }
+    // mouse positions are in GTK points, the viewport is in framebuffer pixels (2x with COOT_RETINA=1 on macOS)
+    double mouse_scale = 1.0;
+ #ifdef __APPLE__
+diff --git a/src/pick.h b/src/pick.h
+index 5be8ddd..65cad23 100644
+--- a/src/pick.h
++++ b/src/pick.h
+@@ -15,6 +15,11 @@
+ 
+ coot::Cartesian unproject(float screen_z);
+ coot::Cartesian unproject_xyz(int x, int y, float screen_z);
++// macOS port: the scene's own viewport/projection/modelview, captured by draw_mono() right after the scene matrices are set,
++// are what picking (unproject) uses outside of drawing.  Reading whatever GL state the last overlay left behind
++// (ligand view, density-level text, labels) made picks fail whenever one of them had left a matrix changed.
++void coot_scene_matrices_capture();
++void coot_scene_matrices_frame_done();
+ 
+ class pick_info {
+  public:

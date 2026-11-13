@@ -1,0 +1,53 @@
+gui-rcrane (tests/gui_rcrane.py) from the build-13 zip, path with spaces, env -i
+(tRNA 1EHZ: test-data/1ehz.pdb + 1ehz_map.mtz FWT/PHWT; 8 scripted refinements were stopped by the 10 s limit during the run)
+
+[ok] Calculate > RCrane launch creates the RCrane menu with its 6 entries  (0 s)
+[ok] About RCrane... builds its dialog (logo, licence, reference button)  (0 s)
+[ok] the citation pop-up builds (check button + OK)  (0 s)
+[ok] the data tables load (linearInterp compared a float with text in Python 3)  (0 s)
+WARNING:: refinement stopped after 10.005 seconds without converging (limit for scripted refinements: COOT_REFINE_MAX_SECONDS=10.000)
+WARNING:: refinement stopped after 10.001 seconds without converging (limit for scripted refinements: COOT_REFINE_MAX_SECONDS=10.000)
+[ok] Rotamerize existing structure...: the two clicks (nucleotides 3-6) open the review window  (35 s)
+[ok] the review window shows the conformer list (52 rows, 5 columns), the suite overview and its 6 buttons  (0 s)
+WARNING:: refinement stopped after 10.007 seconds without converging (limit for scripted refinements: COOT_REFINE_MAX_SECONDS=10.000)
+[ok] Previous/Next Conformer and Previous/Next Suite re-minimise and move through the review window  (15 s)
+ROUND-TRIP: rotamerize nucleotides 3-6 of tRNA 1EHZ, accept: 1652 atoms, mean shift 0.02 A, max 1.19 A (nucleotides 2-7: mean 0.26 A)
+[ok] Accept New Coordinates keeps all atoms and the rebuilt RNA stays within 0.6 A (mean) of the deposited model  (0 s)
+[ok] Rotamerize without density, then Restore Original Coordinates gives back the starting coordinates  (13 s)
+WARNING:: refinement stopped after 10.001 seconds without converging (limit for scripted refinements: COOT_REFINE_MAX_SECONDS=10.000)
+WARNING:: refinement stopped after 10.003 seconds without converging (limit for scripted refinements: COOT_REFINE_MAX_SECONDS=10.000)
+[ok] Rotamerize without density, Next Conformer, Accept New Coordinates changes the nucleotides  (37 s)
+[ok] the limit on the number of nucleotides to rotamerize is respected  (0 s)
+[ok] New trace: the initial-phosphate window offers Next / Previous / Manually Adjust / Accept / Cancel  (0 s)
+[ok] New trace: Next/Previous peak, Accept -> the nucleotide window with 10 buttons  (0 s)
+[ok] New trace: Accept Nt, Next/Previous Phos and C1', Anti/Syn Flip, Previous Nt run without errors  (0 s)
+[ok] New trace: Manually Adjust (x/y/z sliders) moves the phosphate and OK closes the dialog  (0 s)
+[ok] New trace: Build Backbone builds a molecule of >= 4 phosphates, the review window works and Done closes it  (26 s)
+WARNING:: refinement stopped after 10.005 seconds without converging (limit for scripted refinements: COOT_REFINE_MAX_SECONDS=10.000)
+[ok] New trace 3'->5': Accept, Accept Nt, Previous Nt, Build Backbone, Done build a molecule  (23 s)
+[ok] Extend chain...: a click on the 3' nucleotide opens the phosphate-selection window  (0 s)
+WARNING:: refinement stopped after 10.004 seconds without converging (limit for scripted refinements: COOT_REFINE_MAX_SECONDS=10.000)
+WARNING:: refinement stopped after 10.008 seconds without converging (limit for scripted refinements: COOT_REFINE_MAX_SECONDS=10.000)
+[ok] Extend chain...: Accept, 3 x Accept Nt, Build Backbone and Done add >= 3 nucleotides to the model  (29 s)
+[ok] no callback errors during the whole RCrane run  (0 s)
+PASS Calculate > RCrane launch creates the RCrane menu with its 6 entries
+PASS About RCrane... builds its dialog (logo, licence, reference button)
+PASS the citation pop-up builds (check button + OK)
+PASS the data tables load (linearInterp compared a float with text in Python 3)
+PASS Rotamerize existing structure...: the two clicks (nucleotides 3-6) open the review window
+PASS the review window shows the conformer list (52 rows, 5 columns), the suite overview and its 6 buttons
+PASS Previous/Next Conformer and Previous/Next Suite re-minimise and move through the review window
+PASS Accept New Coordinates keeps all atoms and the rebuilt RNA stays within 0.6 A (mean) of the deposited model
+PASS Rotamerize without density, then Restore Original Coordinates gives back the starting coordinates
+PASS Rotamerize without density, Next Conformer, Accept New Coordinates changes the nucleotides
+PASS the limit on the number of nucleotides to rotamerize is respected
+PASS New trace: the initial-phosphate window offers Next / Previous / Manually Adjust / Accept / Cancel
+PASS New trace: Next/Previous peak, Accept -> the nucleotide window with 10 buttons
+PASS New trace: Accept Nt, Next/Previous Phos and C1', Anti/Syn Flip, Previous Nt run without errors
+PASS New trace: Manually Adjust (x/y/z sliders) moves the phosphate and OK closes the dialog
+PASS New trace: Build Backbone builds a molecule of >= 4 phosphates, the review window works and Done closes it
+PASS New trace 3'->5': Accept, Accept Nt, Previous Nt, Build Backbone, Done build a molecule
+PASS Extend chain...: a click on the 3' nucleotide opens the phosphate-selection window
+PASS Extend chain...: Accept, 3 x Accept Nt, Build Backbone and Done add >= 3 nucleotides to the model
+PASS no callback errors during the whole RCrane run
+SUMMARY 20 / 20

@@ -1,0 +1,228 @@
+diff --git a/scheme/coot-utils.scm b/scheme/coot-utils.scm
+index fcad109..93f718f 100644
+--- a/scheme/coot-utils.scm
++++ b/scheme/coot-utils.scm
+@@ -762,22 +762,17 @@
+ ;; 
+ (define (shell-command-to-file-with-data cmd file-name data-list)
+ 
+-;    (call-with-output-file file-name
+-;	(lambda (port)
+-
+-  (let ((write-port (open-pipe cmd OPEN_WRITE)))
+-    
+-    (let f ((data-list data-list))
+-      
+-      (if (null? data-list)
+-	  
+-	  (close-port write-port)
+-	  
+-	  (begin
+-	    (format #t "writing ~s~%" (car data-list))
+-	    (write (car data-list) write-port)
+-	    (newline write-port)
+-	    (f (cdr data-list)))))))
++  ;; macOS port: the data goes through a temporary file and system() (open-pipe is spawn-based, see guile-compat.scm)
++  (let ((in-file (%tmp-file-name ".in")))
++    (call-with-output-file in-file
++      (lambda (port)
++        (for-each (lambda (data)
++                    (format #t "writing ~s~%" data)
++                    (write data port)
++                    (newline port))
++                  data-list)))
++    (%system-status (string-append cmd " < " (%sh-quote in-file)))
++    (delete-file in-file)))
+ 
+ 
+ ;; Is the command @var{f} in the path?
+@@ -826,36 +821,26 @@
+         (format #t "command ~s not found~%" cmd)
+         255)
+ 
+-      (let* ((cmd-ports (apply run-with-pipe (append (list "r+" cmd) args)))
+-             (pid (car cmd-ports))
+-             (output-port (car (cdr cmd-ports)))
+-             (input-port  (cdr (cdr cmd-ports))))
+-
+-        (let loop ((data-list data-list))
+-          (if (null? data-list)
+-              (begin
+-                (close input-port))
+-
+-              (begin
+-                (format input-port "~a~%" (car data-list))
+-                (loop (cdr data-list)))))
+-
+-        (call-with-output-file log-file-name
+-          (lambda (log-file-port)
+-
+-            (let f ((obj (read-line output-port)))
+-              (if (eof-object? obj)
+-                  (begin
+-                    (let* ((status-info (waitpid pid))
+-                           (status (status:exit-val (cdr status-info))))
+-                      ;; (format #t "exit status: ~s~%" status) silence
+-                      status)) ; return status
+-
+-                  (begin
+-                    (if (eq? screen-output-also? #t)
+-                        (format #t ":~a~%" obj))
+-                    (format log-file-port "~a~%" obj)
+-                    (f (read-line output-port))))))))))
++      ;; macOS port: run through system() with the shell doing the redirections (see guile-compat.scm)
++      (let* ((in-file (if (null? data-list)
++                          #f
++                          (let ((f (%tmp-file-name ".in")))
++                            (call-with-output-file f
++                              (lambda (port)
++                                (for-each (lambda (line) (format port "~a~%" line)) data-list)))
++                            f)))
++             (status (run-redirected cmd args in-file log-file-name)))
++
++        (if in-file (delete-file in-file))
++        (if (and (eq? screen-output-also? #t) (file-exists? log-file-name))
++            (call-with-input-file log-file-name
++              (lambda (port)
++                (let f ((obj (read-line port)))
++                  (if (not (eof-object? obj))
++                      (begin
++                        (format #t ":~a~%" obj)
++                        (f (read-line port))))))))
++        status)))
+ 
+ (define (ok-goosh-status? status)
+ 
+@@ -882,11 +867,7 @@
+ 
+ 	(if have-command? ; we *do* have the command
+ 
+-	    (with-output-to-file log-file-name
+-	      (lambda ()
+-		(with-input-from-file input-file
+-		  (lambda() 
+-		    (apply run (cons cmd args))))))
++	    (run-redirected cmd args input-file log-file-name) ; macOS port: system() + shell redirection
+ 	    '()))
+       '()))
+ 
+@@ -897,35 +878,23 @@
+   (if (not (command-in-path-or-absolute? cmd))
+ 
+       (begin
+-	(format #t "command ~s not found~%" cmd)
+-	#f)
+-
+-      (begin 
+-	(let* ((cmd-ports (apply run-with-pipe (append (list "r+" cmd) args)))
+-	       (pid (car cmd-ports))
+-	       (output-port (car (cdr cmd-ports)))
+-	       (input-port  (cdr (cdr cmd-ports))))
+-	  
+-	  (let loop ((data-list data-list))
+-	    (if (null? data-list)
+-		(begin 
+-		  (close input-port))
+-		
+-		(begin
+-		  (format input-port "~a~%" (car data-list))
+-		  (loop (cdr data-list)))))
+-	  
+-	  (let f ((obj (read-line output-port))
+-		  (ls '()))
+-	    
+-	    (if (eof-object? obj)
+-		(begin 
+-		  (let* ((status-info (waitpid pid))
+-			 (status (status:exit-val (cdr status-info))))
+-		    (reverse ls))) ; return ls (in the right order)
+-		
+-		(begin
+-		  (f (read-line output-port) (cons obj ls)))))))))
++  (format #t "command ~s not found~%" cmd)
++  #f)
++
++      ;; macOS port: system() with the output in a temporary file (see guile-compat.scm)
++      (let* ((out-file (%tmp-file-name ".out"))
++       (status (goosh-command cmd args data-list out-file #f))
++       (lines (if (file-exists? out-file)
++      (call-with-input-file out-file
++        (lambda (port)
++          (let f ((obj (read-line port))
++            (ls '()))
++            (if (eof-object? obj)
++          (reverse ls)
++          (f (read-line port) (cons obj ls))))))
++      '())))
++  (if (file-exists? out-file) (delete-file out-file))
++  lines)))
+ 
+ 
+ ;(define goosh-command-sans-log
+diff --git a/scheme/guile-compat.scm b/scheme/guile-compat.scm
+index aae65e2..d92f691 100644
+--- a/scheme/guile-compat.scm
++++ b/scheme/guile-compat.scm
+@@ -22,27 +22,46 @@
+         (if (and (file-port? (current-output-port))) (current-output-port) 1)
+         (if (and (file-port? (current-error-port)))  (current-error-port)  2)))
+ 
++;; macOS port: external programs are started through the C library's system() (via /bin/sh), not through
++;; Guile's fork+exec spawn().  Inside the Cocoa GUI process spawn() children exited with status 127 without
++;; ever running the program (and without any message) -- reduce, probe, refmac... never ran.  With system()
++;; a missing/unrunnable program is reported by the shell on stderr, and redirections are done by the shell.
++
++;; POSIX single-quote a string for /bin/sh
++(define (%sh-quote s)
++  (string-append "'" (string-join (string-split s #\') "'\\''") "'"))
++
++;; "prog arg1 arg2 ..." with every word quoted
++(define (%command-line prog args)
++  (string-join (map %sh-quote (cons prog args)) " "))
++
++;; run a shell command line, wait; the exit status (0-255), or #f if the shell was killed by a signal
++(define (%system-status cmdline)
++  (force-output (current-output-port))
++  (force-output (current-error-port))
++  (status:exit-val (system cmdline)))
++
++;; a fresh temporary file name
++(define (%tmp-file-name suffix)
++  (string-append (or (getenv "TMPDIR") "/tmp") "/coot-" (number->string (getpid)) "-"
++                 (number->string (random 1000000000 (random-state-from-platform))) suffix))
++
+ ;; (run prog arg ...) : run PROG (searched for in $PATH) and wait for it.
+ ;; Returns #t if the exit status was 0, else #f   (the (os process) semantics the scheme layer relies on).
+ (define (run prog . args)
+-  (force-output (current-output-port))
+-  (let* ((stdio (%child-stdio))
+-         (pid (catch 'system-error
+-                (lambda () (spawn prog (cons prog args)
+-                                  #:input (car stdio) #:output (cadr stdio) #:error (caddr stdio)))
+-                (lambda args #f))))
+-    (and pid
+-         (let ((st (cdr (waitpid pid))))
+-           (eqv? 0 (status:exit-val st))))))
++  (eqv? 0 (%system-status (%command-line prog args))))
+ 
+-;; (run-concurrently prog arg ...) : start PROG and do not wait.  Returns the pid (or #f).
++;; (run-concurrently prog arg ...) : start PROG and do not wait.  Returns #t (the (os process) pid is not available).
+ (define (run-concurrently prog . args)
+-  (force-output (current-output-port))
+-  (let ((stdio (%child-stdio)))
+-    (catch 'system-error
+-      (lambda () (spawn prog (cons prog args)
+-                        #:input (car stdio) #:output (cadr stdio) #:error (caddr stdio)))
+-      (lambda args #f))))
++  (%system-status (string-append (%command-line prog args) " &"))
++  #t)
++
++;; (run-redirected prog args input-file output-file) : stdin from INPUT-FILE (#f: /dev/null), stdout to OUTPUT-FILE
++;; (#f: Coot's stdout); stderr stays Coot's.  Returns the exit status.
++(define (run-redirected prog args input-file output-file)
++  (%system-status (string-append "exec " (%command-line prog args)
++                                 " < " (%sh-quote (or input-file "/dev/null"))
++                                 (if output-file (string-append " > " (%sh-quote output-file)) ""))))
+ 
+ ;; (run-with-pipe mode prog arg ...) :
+ ;;   "r+" -> (pid output-port . input-port)   output-port reads the child's stdout, input-port writes the child's stdin

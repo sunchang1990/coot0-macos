@@ -1,0 +1,141 @@
+diff --git a/compat/coot-gl-scale.h b/compat/coot-gl-scale.h
+new file mode 100644
+index 0000000..1d6b84f
+--- /dev/null
++++ b/compat/coot-gl-scale.h
+@@ -0,0 +1,20 @@
++/* coot-gl-scale.h -- GL units: GTK widget sizes and mouse positions are in points; the GL framebuffer is in pixels.
++ * With COOT_RETINA=1 the GL surface is 2x the point size on a Retina display, so widths given "in pixels" by Coot must scale.
++ * Include AFTER the OpenGL headers.  coot_gl_pixel_scale is maintained by compat/gl-seam/coot-gl-seam.mm (1.0 unless COOT_RETINA=1). */
++#ifndef COOT_GL_SCALE_H
++#define COOT_GL_SCALE_H
++#ifdef __APPLE__
++#include <OpenGL/gl.h>
++#ifdef __cplusplus
++extern "C" {
++#endif
++extern double coot_gl_pixel_scale;
++#ifdef __cplusplus
++}
++#endif
++static inline void coot_glLineWidth(GLfloat w) { glLineWidth(w * (GLfloat)coot_gl_pixel_scale); }
++static inline void coot_glPointSize(GLfloat s) { glPointSize(s * (GLfloat)coot_gl_pixel_scale); }
++#define glLineWidth(w) coot_glLineWidth(w)
++#define glPointSize(s) coot_glPointSize(s)
++#endif /* __APPLE__ */
++#endif /* COOT_GL_SCALE_H */
+diff --git a/src/globjects.cc b/src/globjects.cc
+index 8a91147..64916ed 100644
+--- a/src/globjects.cc
++++ b/src/globjects.cc
+@@ -44,6 +44,9 @@
+ 
+ #include <gdk/gdkglconfig.h>
+ #include <gtk/gtkgl.h>
++#ifdef __APPLE__
++#include "coot-gl-seam.h"
++#endif
+ 
+ #if __APPLE__
+ #   include <OpenGL/gl.h>
+@@ -1749,7 +1752,12 @@ init(GtkWidget *widget)
+ gint
+ init_gl_widget(GtkWidget *widget) {
+ 
+-   glViewport(0,0, widget->allocation.width, widget->allocation.height);
++   int viewport_width_px  = widget->allocation.width;
++   int viewport_height_px = widget->allocation.height;
++#ifdef __APPLE__
++   coot_gl_pixel_size(widget, &viewport_width_px, &viewport_height_px); // framebuffer pixels (2x points with COOT_RETINA=1)
++#endif
++   glViewport(0,0, viewport_width_px, viewport_height_px);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(-10,30, 10,-20, -20,20); // change clipping
+@@ -1956,7 +1964,12 @@ void show_lighting() {
+ gint reshape(GtkWidget *widget, GdkEventConfigure *event) {
+ 
+    if (graphics_info_t::make_current_gl_context(widget)) {
+-      glViewport(0,0, widget->allocation.width, widget->allocation.height);
++      int viewport_width_px  = widget->allocation.width;
++      int viewport_height_px = widget->allocation.height;
++#ifdef __APPLE__
++      coot_gl_pixel_size(widget, &viewport_width_px, &viewport_height_px); // framebuffer pixels (2x points with COOT_RETINA=1)
++#endif
++      glViewport(0,0, viewport_width_px, viewport_height_px);
+       graphics_info_t g;
+       GtkWidget *win = lookup_widget(widget, "window1");
+       g.graphics_x_size = win->allocation.width;
+diff --git a/src/graphics-info.h b/src/graphics-info.h
+index eeb964b..755f1c6 100644
+--- a/src/graphics-info.h
++++ b/src/graphics-info.h
+@@ -44,6 +44,9 @@
+ #else
+ #   include <GL/gl.h>
+ #endif
++#ifdef __APPLE__
++#  include "compat/coot-gl-scale.h"
++#endif
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"
+diff --git a/src/graphics-ligand-view.cc b/src/graphics-ligand-view.cc
+index 7212a26..bb1944c 100644
+--- a/src/graphics-ligand-view.cc
++++ b/src/graphics-ligand-view.cc
+@@ -28,6 +28,10 @@
+ #  include <GL/glut.h>
+ #endif
+ 
++#ifdef __APPLE__
++#include "compat/coot-gl-scale.h"
++#endif
++
+ #include <mmdb2/mmdb_manager.h>
+ #include "graphics-ligand-view.hh"
+ 
+diff --git a/src/molecule-class-info.h b/src/molecule-class-info.h
+index a45062a..9578ede 100644
+--- a/src/molecule-class-info.h
++++ b/src/molecule-class-info.h
+@@ -50,6 +50,9 @@ enum {CONTOUR_UP, CONTOUR_DOWN};
+ #else
+ #   include <GL/gl.h>
+ #endif
++#ifdef __APPLE__
++#  include "compat/coot-gl-scale.h"
++#endif
+ 
+ #ifdef USE_MOLECULES_TO_TRIANGLES
+ #ifdef HAVE_CXX11
+diff --git a/src/pick.cc b/src/pick.cc
+index df7d7dc..dd0035b 100644
+--- a/src/pick.cc
++++ b/src/pick.cc
+@@ -42,6 +42,9 @@
+ #include "coords/Bond_lines.h"
+ 
+ #include "graphics-info.h"
++#ifdef __APPLE__
++#include "coot-gl-seam.h"
++#endif
+ 
+ #if __APPLE__
+ #   include <OpenGL/glu.h>
+@@ -379,8 +382,13 @@ coot::Cartesian unproject_xyz(int x, int y, float screen_z) {
+    glGetIntegerv (GL_VIEWPORT, viewport);
+    glGetDoublev (GL_MODELVIEW_MATRIX, mvmatrix);
+    glGetDoublev (GL_PROJECTION_MATRIX, projmatrix);
+-   realy = viewport[3] - y - 1;
+-   double x_as_double = x;
++   // mouse positions are in GTK points, the viewport is in framebuffer pixels (2x with COOT_RETINA=1 on macOS)
++   double mouse_scale = 1.0;
++#ifdef __APPLE__
++   if (graphics_info_t::glarea) mouse_scale = coot_gl_backing_scale(graphics_info_t::glarea);
++#endif
++   realy = viewport[3] - int(y * mouse_scale) - 1;
++   double x_as_double = x * mouse_scale;
+    double realy_as_double = realy;
+    /*  note viewport[3] is height of window in pixels  */
+    //printf ("Coordinates at cursor are (%4d, %4d)\n", x, realy);

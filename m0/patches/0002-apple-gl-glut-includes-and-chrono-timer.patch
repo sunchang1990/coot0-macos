@@ -1,0 +1,509 @@
+diff --git a/src/c-interface.cc b/src/c-interface.cc
+index 069d8a2..4585fd5 100644
+--- a/src/c-interface.cc
++++ b/src/c-interface.cc
+@@ -81,7 +81,12 @@
+ #include <direct.h>
+ #endif // _MSC_VER
+ 
+-#include <GL/glut.h> // needed for glutGet(GLUT_ELAPSED_TIME);
++#ifdef __APPLE__
++#  include <GLUT/glut.h>
++#else
++#  include <GL/glut.h>
++#endif
++#include "coot-gl-timer.hh"
+ 
+ #include "clipper/ccp4/ccp4_map_io.h"
+  
+@@ -1541,7 +1546,7 @@ void toggle_idle_rock_function() {
+ 	 gtk_timeout_add(25, // 40 fps
+ 			 (GtkFunction) animate_idle_rock,
+ 			 g.glarea);
+-      g.time_holder_for_rocking = glutGet(GLUT_ELAPSED_TIME);
++      g.time_holder_for_rocking = coot::gl_timer::elapsed_ms();
+ 
+       g.idle_function_rock_angle_previous =
+ 	 get_idle_function_rock_target_angle();
+@@ -1595,7 +1600,7 @@ void set_flev_idle_ligand_interactions(int state) {
+ 	    gtk_timeout_add(100,
+ 			    (GtkFunction) animate_idle_ligand_interactions,
+ 			    NULL);
+-	 g.time_holder_for_ligand_interactions = glutGet(GLUT_ELAPSED_TIME);
++	 g.time_holder_for_ligand_interactions = coot::gl_timer::elapsed_ms();
+       }
+    }
+    g.graphics_draw();
+diff --git a/src/cmtz-interface.cc b/src/cmtz-interface.cc
+index 5f81b20..1eb033d 100644
+--- a/src/cmtz-interface.cc
++++ b/src/cmtz-interface.cc
+@@ -41,7 +41,11 @@
+ // #endif // DATADIR
+ 
+ #include <gtk/gtk.h>
+-#include <GL/glut.h> // for glutInit()
++#ifdef __APPLE__
++#  include <GLUT/glut.h>
++#else
++#  include <GL/glut.h>
++#endif
+ 
+ #include <clipper/ccp4/ccp4_mtz_io.h>
+ 
+diff --git a/src/coot-gl-timer.hh b/src/coot-gl-timer.hh
+new file mode 100644
+index 0000000..c9b3e2a
+--- /dev/null
++++ b/src/coot-gl-timer.hh
+@@ -0,0 +1,20 @@
++// coot-gl-timer.hh -- replacement for glutGet(GLUT_ELAPSED_TIME)
++//
++// On macOS, GLUT_ELAPSED_TIME returns INT_MAX when GLUT is initialised but not run
++// (measured on Apple Silicon / macOS 26), which breaks every timing use in Coot.
++// This returns milliseconds on a monotonic clock, measured from the first call,
++// so differences between two calls behave as they did with GLUT.
++#ifndef COOT_GL_TIMER_HH
++#define COOT_GL_TIMER_HH
++#include <chrono>
++
++namespace coot {
++   namespace gl_timer {
++      inline long elapsed_ms() {
++         static const std::chrono::steady_clock::time_point t0 = std::chrono::steady_clock::now();
++         return static_cast<long>(std::chrono::duration_cast<std::chrono::milliseconds>
++                                  (std::chrono::steady_clock::now() - t0).count());
++      }
++   }
++}
++#endif // COOT_GL_TIMER_HH
+diff --git a/src/draw-generic-display-objects.cc b/src/draw-generic-display-objects.cc
+index 585116f..577899a 100644
+--- a/src/draw-generic-display-objects.cc
++++ b/src/draw-generic-display-objects.cc
+@@ -5,7 +5,11 @@
+ 
+ #include "compat/coot-sysdep.h"
+ 
+-#include <GL/glu.h>
++#ifdef __APPLE__
++#  include <OpenGL/glu.h>
++#else
++#  include <GL/glu.h>
++#endif
+ 
+ #include "generic-display-object.hh"
+ #include "graphics-info.h"
+diff --git a/src/draw.cc b/src/draw.cc
+index 2f46946..5467cae 100644
+--- a/src/draw.cc
++++ b/src/draw.cc
+@@ -11,7 +11,11 @@
+ 
+ #ifdef WINDOWS_MINGW
+ // in windows we need these for some newer openGL functions
+-#include <GL/glext.h>
++#ifdef __APPLE__
++#  include <OpenGL/glext.h>
++#else
++#  include <GL/glext.h>
++#endif
+ #endif // WINDOWS_MINGW
+ // #define GRAPHICS_TESTING
+ 
+diff --git a/src/globjects.cc b/src/globjects.cc
+index 64ceb38..a041fd0 100644
+--- a/src/globjects.cc
++++ b/src/globjects.cc
+@@ -52,11 +52,20 @@
+ #   include <GL/glu.h>
+ #endif
+ 
+-#include <GL/glut.h> // needed for wirecube and wiresphere.
++#ifdef __APPLE__
++#  include <GLUT/glut.h> // needed for wirecube and wiresphere.
++#else
++#  include <GL/glut.h> // needed for wirecube and wiresphere.
++#endif
++#include "coot-gl-timer.hh"
+ 
+ #ifdef WINDOWS_MINGW
+ // in windows we need these for some newer openGL functions
+-#include <GL/glext.h>
++#ifdef __APPLE__
++#  include <OpenGL/glext.h>
++#else
++#  include <GL/glext.h>
++#endif
+ #endif // WINDOWS_MINGW
+ 
+ #include "compat/sleep-fixups.h"
+@@ -3633,7 +3642,7 @@ get_idle_function_rock_target_angle() {
+ 
+    graphics_info_t g;
+ 
+-   long t = glutGet(GLUT_ELAPSED_TIME);
++   long t = coot::gl_timer::elapsed_ms();
+    long delta_t = t - g.time_holder_for_rocking;
+    double rock_sf = 0.001 * g.idle_function_rock_freq_scale_factor;
+ 
+diff --git a/src/graphics-info-graphs.cc b/src/graphics-info-graphs.cc
+index 4a05e71..bc9e6a8 100644
+--- a/src/graphics-info-graphs.cc
++++ b/src/graphics-info-graphs.cc
+@@ -40,7 +40,11 @@
+ #endif
+ 
+ #include <gtk/gtk.h>  // must come after mmdb_manager on MacOS X Darwin
+-#include <GL/glut.h>  // for some reason...  // Eh?
++#ifdef __APPLE__
++#  include <GLUT/glut.h>
++#else
++#  include <GL/glut.h>
++#endif
+ 
+ #include <iostream>
+ 
+diff --git a/src/graphics-info-gui.cc b/src/graphics-info-gui.cc
+index 5556d8d..ae683fe 100644
+--- a/src/graphics-info-gui.cc
++++ b/src/graphics-info-gui.cc
+@@ -40,7 +40,11 @@
+ #include <algorithm>
+ 
+ #include <gtk/gtk.h>  // must come after mmdb_manager on MacOS X Darwin
+-#include <GL/glut.h>  // for some reason...  // Eh?
++#ifdef __APPLE__
++#  include <GLUT/glut.h>
++#else
++#  include <GL/glut.h>
++#endif
+ 
+ #include <iostream>
+ #include <dirent.h>   // for refmac dictionary files
+diff --git a/src/graphics-info-lsq.cc b/src/graphics-info-lsq.cc
+index 5ecbfc8..695a58e 100644
+--- a/src/graphics-info-lsq.cc
++++ b/src/graphics-info-lsq.cc
+@@ -37,7 +37,11 @@
+ #endif
+ 
+ #include <gtk/gtk.h>  // must come after mmdb_manager on MacOS X Darwin
+-#include <GL/glut.h>  // for some reason...  // Eh?
++#ifdef __APPLE__
++#  include <GLUT/glut.h>
++#else
++#  include <GL/glut.h>
++#endif
+ 
+ #include "clipper/core/rotation.h"
+ 
+diff --git a/src/graphics-info-modelling.cc b/src/graphics-info-modelling.cc
+index f3ff859..fc00dbf 100644
+--- a/src/graphics-info-modelling.cc
++++ b/src/graphics-info-modelling.cc
+@@ -45,7 +45,12 @@
+ #include <stdexcept>
+ 
+ #include <gtk/gtk.h>  // must come after mmdb_manager on MacOS X Darwin
+-#include <GL/glut.h>  // for some reason...  // Eh?
++#ifdef __APPLE__
++#  include <GLUT/glut.h>
++#else
++#  include <GL/glut.h>
++#endif
++#include "coot-gl-timer.hh"
+ 
+ #include <gdk/gdkkeysyms.h> // for keyboarding (in this case nudge_active_residue) added 20091101
+ 
+@@ -2620,11 +2625,11 @@ graphics_info_t::refine_residue_range(int imol,
+ 	    }
+ 	    if (!simple_water) { 
+ 	       flash_selection(imol, resno_1, ins_code_1, resno_2, ins_code_2, altconf, chain_id_1);
+-	       long t0 = glutGet(GLUT_ELAPSED_TIME);
++	       long t0 = coot::gl_timer::elapsed_ms();
+ 	       rr = copy_mol_and_refine(imol, imol_map, resno_1, ins_code_1, resno_2, ins_code_2,
+ 					altconf, chain_id_1);
+ 	       short int istat = rr.found_restraints_flag;
+-	       long t1 = glutGet(GLUT_ELAPSED_TIME);
++	       long t1 = coot::gl_timer::elapsed_ms();
+ 	       std::cout << "Refinement elapsed time: " << float(t1-t0)/1000.0 << std::endl;
+ 	       if (istat) { 
+ 		  graphics_draw();
+diff --git a/src/graphics-info-mutate.cc b/src/graphics-info-mutate.cc
+index 57fa2fb..a7999f6 100644
+--- a/src/graphics-info-mutate.cc
++++ b/src/graphics-info-mutate.cc
+@@ -56,7 +56,11 @@
+ #include "coords/Bond_lines.h"
+ 
+ #include <gtk/gtk.h>  // must come after mmdb_manager on MacOS X Darwin
+-#include <GL/glut.h>  // for some reason...  // Eh?
++#ifdef __APPLE__
++#  include <GLUT/glut.h>
++#else
++#  include <GL/glut.h>
++#endif
+ 
+ #include "interface.h"
+ 
+diff --git a/src/graphics-info-refmac.cc b/src/graphics-info-refmac.cc
+index 37a092e..9bc4f92 100644
+--- a/src/graphics-info-refmac.cc
++++ b/src/graphics-info-refmac.cc
+@@ -47,7 +47,11 @@
+ #endif
+ 
+ #include <gtk/gtk.h>  // must come after mmdb_manager on MacOS X Darwin
+-#include <GL/glut.h>  // for some reason...  // Eh?
++#ifdef __APPLE__
++#  include <GLUT/glut.h>
++#else
++#  include <GL/glut.h>
++#endif
+ 
+ #include <iostream>
+ #include <dirent.h>   // for refmac dictionary files
+diff --git a/src/graphics-info.cc b/src/graphics-info.cc
+index 040582e..5d8c734 100644
+--- a/src/graphics-info.cc
++++ b/src/graphics-info.cc
+@@ -39,7 +39,12 @@
+ #endif
+ 
+ #include <gtk/gtk.h>  // must come after mmdb_manager on MacOS X Darwin
+-#include <GL/glut.h>  // Timing
++#ifdef __APPLE__
++#  include <GLUT/glut.h>
++#else
++#  include <GL/glut.h>
++#endif
++#include "coot-gl-timer.hh"
+ 
+ #include <iostream>
+ #include <dirent.h>   // for refmac dictionary files
+@@ -1288,7 +1293,7 @@ graphics_info_t::ShowFPS(){
+ 
+    long t = 0;
+ 
+-   t = glutGet(GLUT_ELAPSED_TIME);
++   t = coot::gl_timer::elapsed_ms();
+    if (t - graphics_info_t::T0 >= 5000) {
+       GLfloat seconds = (t-T0)/1000.0;
+       GLfloat fps = GLfloat (Frames)/seconds;
+diff --git a/src/graphics-ligand-view.cc b/src/graphics-ligand-view.cc
+index 7645b65..7212a26 100644
+--- a/src/graphics-ligand-view.cc
++++ b/src/graphics-ligand-view.cc
+@@ -22,7 +22,11 @@
+ #include <string.h>
+ #include <string>
+ 
+-#include <GL/glut.h>
++#ifdef __APPLE__
++#  include <GLUT/glut.h>
++#else
++#  include <GL/glut.h>
++#endif
+ 
+ #include <mmdb2/mmdb_manager.h>
+ #include "graphics-ligand-view.hh"
+diff --git a/src/main.cc b/src/main.cc
+index 5343fce..e5a9420 100644
+--- a/src/main.cc
++++ b/src/main.cc
+@@ -49,7 +49,11 @@
+ 
+ #include <gtk/gtk.h>
+ 
+-#include <GL/glut.h> // for glutInit()
++#ifdef __APPLE__
++#  include <GLUT/glut.h>
++#else
++#  include <GL/glut.h>
++#endif
+ 
+ // #include "lbg/lbg.hh"
+ 
+diff --git a/src/molecule-class-info-maps.cc b/src/molecule-class-info-maps.cc
+index bbfdc61..1e3cd68 100644
+--- a/src/molecule-class-info-maps.cc
++++ b/src/molecule-class-info-maps.cc
+@@ -71,7 +71,12 @@
+ #include "coot-utils/xmap-stats.hh"
+ 
+ #include "graphics-info.h"
+-#include <GL/glut.h> // needed (only?) for wirecube
++#ifdef __APPLE__
++#  include <GLUT/glut.h>
++#else
++#  include <GL/glut.h>
++#endif
++#include "coot-gl-timer.hh"
+ #include "globjects.h" // for set_bond_colour()
+ #include "skeleton/graphical_skel.h"
+ 
+@@ -1277,7 +1282,7 @@ molecule_class_info_t::map_fill_from_mtz_with_reso_limits(std::string mtz_file_n
+    //clipper::MTZcrystal mtzxtl;
+ 
+    long T0 = 0; // timer
+-   T0 = glutGet(GLUT_ELAPSED_TIME);
++   T0 = coot::gl_timer::elapsed_ms();
+ 
+    clipper::CCP4MTZfile mtzin;
+    mtzin.open_read( mtz_file_name );       // open new file
+@@ -1527,7 +1532,7 @@ molecule_class_info_t::map_fill_from_cns_hkl(std::string cns_file_name,
+ 
+    try {
+       long T0 = 0; // timer
+-      T0 = glutGet(GLUT_ELAPSED_TIME);
++      T0 = coot::gl_timer::elapsed_ms();
+ 
+       clipper::CNS_HKLfile cnsin;
+       cnsin.open_read( cns_file_name );       // open new file
+@@ -1555,7 +1560,7 @@ molecule_class_info_t::map_fill_from_cns_hkl(std::string cns_file_name,
+       initialize_map_things_on_read_molecule(mol_name,
+ 					     is_diff_map, false,
+ 					     g.swap_difference_map_colours);
+-      long T1 = glutGet(GLUT_ELAPSED_TIME);
++      long T1 = coot::gl_timer::elapsed_ms();
+ 
+       int n_reflections = fphidata.num_obs();
+       std::cout << "Number of OBSERVED reflections: " << n_reflections << "\n";
+@@ -1573,13 +1578,13 @@ molecule_class_info_t::map_fill_from_cns_hkl(std::string cns_file_name,
+       xmap.init( fphidata.spacegroup(), fphidata.cell(), gs ); // 1.5 default
+       // 	 cout << "Grid..." << xmap.grid_sampling().format() << "\n";
+ 
+-      long T2 = glutGet(GLUT_ELAPSED_TIME);
++      long T2 = coot::gl_timer::elapsed_ms();
+ 
+       // cout << "doing fft..." << endl;
+       xmap.fft_from( fphidata );                  // generate map
+       // cout << "done fft..." << endl;
+ 
+-      long T3 = glutGet(GLUT_ELAPSED_TIME);
++      long T3 = coot::gl_timer::elapsed_ms();
+       std::cout << "INFO:: " << float(T1-T0)/1000.0 << " seconds to read CNS file\n";
+       std::cout << "INFO:: " << float(T2-T1)/1000.0 << " seconds to initialize map\n";
+       std::cout << "INFO:: " << float(T3-T2)/1000.0 << " seconds for FFT\n";
+@@ -1609,7 +1614,7 @@ molecule_class_info_t::map_fill_from_cns_hkl(std::string cns_file_name,
+       // original_fphis.init(fphidata.spacegroup(),fphidata.cell(),fphidata.hkl_sampling());
+       // original_fphis = fphidata;
+ 
+-      long T4 = glutGet(GLUT_ELAPSED_TIME);
++      long T4 = coot::gl_timer::elapsed_ms();
+       std::cout << "INFO:: " << float(T4-T3)/1000.0 << " seconds for statistics\n";
+ 
+       std::cout << "      Map mean: ........ " << map_mean_ << std::endl;
+@@ -1620,7 +1625,7 @@ molecule_class_info_t::map_fill_from_cns_hkl(std::string cns_file_name,
+       set_initial_contour_level();
+ 
+       update_map(true);
+-      long T5 = glutGet(GLUT_ELAPSED_TIME);
++      long T5 = coot::gl_timer::elapsed_ms();
+       std::cout << "INFO:: " << float(T5-T4)/1000.0 << " seconds for contour map\n";
+       std::cout << "INFO:: " << float(T5-T0)/1000.0 << " seconds in total\n";
+       return 1;
+diff --git a/src/molecule-class-info-other.cc b/src/molecule-class-info-other.cc
+index 9717549..c1d0531 100644
+--- a/src/molecule-class-info-other.cc
++++ b/src/molecule-class-info-other.cc
+@@ -89,8 +89,16 @@
+ 
+ #include "coot-nomenclature.hh"
+ 
+-#include "GL/glu.h"
+-#include "GL/glut.h"
++#ifdef __APPLE__
++#  include <OpenGL/glu.h>
++#else
++#  include <GL/glu.h>
++#endif
++#ifdef __APPLE__
++#  include <GLUT/glut.h>
++#else
++#  include <GL/glut.h>
++#endif
+ 
+ #include "rotamer-search-modes.hh"
+ 
+diff --git a/src/molecule-class-info-residues.cc b/src/molecule-class-info-residues.cc
+index d8cd288..24b84dc 100644
+--- a/src/molecule-class-info-residues.cc
++++ b/src/molecule-class-info-residues.cc
+@@ -36,7 +36,12 @@
+ #include <stdexcept>
+ 
+ #include <string.h>
+-#include <GL/glut.h>
++#ifdef __APPLE__
++#  include <GLUT/glut.h>
++#else
++#  include <GL/glut.h>
++#endif
++#include "coot-gl-timer.hh"
+ 
+ // #ifdef MAKE_ENHANCED_LIGAND_TOOLS
+ // // includes order important, otherwise we get dcgettext() problems.
+@@ -840,7 +845,7 @@ coot::animated_ligand_interactions_t::draw(mmdb::Manager *mol,
+ 	 glEnable (GL_BLEND);
+ 	 glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+ 
+-	 long now_time = glutGet(GLUT_ELAPSED_TIME);
++	 long now_time = coot::gl_timer::elapsed_ms();
+ 
+ 	 double add_fac = 1.4;
+ 	 double m_fac = 1/(1+add_fac) - 0.01;
+diff --git a/src/molecule-class-info.cc b/src/molecule-class-info.cc
+index a49f4fe..468a8a6 100644
+--- a/src/molecule-class-info.cc
++++ b/src/molecule-class-info.cc
+@@ -82,7 +82,11 @@
+ #include "coot-utils/coot-coord-utils.hh"
+ #include "utils/coot-utils.hh"
+ 
+-#include <GL/glut.h> // needed (only?) for wirecube
++#ifdef __APPLE__
++#  include <GLUT/glut.h>
++#else
++#  include <GL/glut.h>
++#endif
+ 
+ #ifndef CLIPPER_MAP_INTERP
+ #include "clipper/core/map_interp.h"
+diff --git a/src/testing.cc b/src/testing.cc
+index 7deda88..53e233c 100644
+--- a/src/testing.cc
++++ b/src/testing.cc
+@@ -37,7 +37,12 @@
+ #include <iostream>
+ #include <sstream>
+ 
+-#include <GL/glut.h> // needed for GLUT_ELAPSED_TIME
++#ifdef __APPLE__
++#  include <GLUT/glut.h>
++#else
++#  include <GL/glut.h>
++#endif
++#include "coot-gl-timer.hh"
+ 
+ #include "clipper/core/ramachandran.h"
+ #include "clipper/ccp4/ccp4_map_io.h"
+@@ -668,7 +673,7 @@ testing_func_probabilities_refine_fragment(atom_selection_container_t atom_sel,
+ 
+ #ifdef HAVE_GSL
+ 
+-   long t0 = glutGet(GLUT_ELAPSED_TIME);
++   long t0 = coot::gl_timer::elapsed_ms();
+    
+    // now refine a bit of structure:
+    std::vector<coot::atom_spec_t> fixed_atom_specs;
+@@ -766,7 +771,7 @@ testing_func_probabilities_refine_fragment(atom_selection_container_t atom_sel,
+    res_sel.nSelResidues = post_refine_nSelResidues;
+    res_sel.SelResidues = post_refine_SelResidues;
+ 
+-   long t1 = glutGet(GLUT_ELAPSED_TIME);
++   long t1 = coot::gl_timer::elapsed_ms();
+    float seconds = float(t1-t0)/1000.0;
+    std::cout << "refinement_took " << seconds << " seconds" << std::endl;
+    return res_sel;

@@ -1,0 +1,185 @@
+diff --git a/scheme/Makefile.am b/scheme/Makefile.am
+index 1246f13..5a7ce4b 100644
+--- a/scheme/Makefile.am
++++ b/scheme/Makefile.am
+@@ -2,7 +2,7 @@
+ schemedir = $(pkgdatadir)/scheme
+ 
+ dist_scheme_DATA = \
+-0-auto-rot.scm       coot-utils.scm       get-ebi.scm     mutate.scm       \
++0-auto-rot.scm guile-compat.scm       coot-utils.scm       get-ebi.scm     mutate.scm       \
+ background-demo.scm  demo-script.scm      gtkin.scm       my-readline.scm  \
+ bit.scm              extra-top-level.scm  hello.scm       raster3d.scm     \
+ brute-lsqman.scm     file-utils.scm       junk.scm        refmac.scm       \
+diff --git a/scheme/Makefile.in b/scheme/Makefile.in
+index 27a51d0..f286ef4 100644
+--- a/scheme/Makefile.in
++++ b/scheme/Makefile.in
+@@ -407,7 +407,7 @@ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+ schemedir = $(pkgdatadir)/scheme
+ dist_scheme_DATA = \
+-0-auto-rot.scm       coot-utils.scm       get-ebi.scm     mutate.scm       \
++0-auto-rot.scm guile-compat.scm       coot-utils.scm       get-ebi.scm     mutate.scm       \
+ background-demo.scm  demo-script.scm      gtkin.scm       my-readline.scm  \
+ bit.scm              extra-top-level.scm  hello.scm       raster3d.scm     \
+ brute-lsqman.scm     file-utils.scm       junk.scm        refmac.scm       \
+diff --git a/scheme/coot-crash-catcher.scm b/scheme/coot-crash-catcher.scm
+index 0feaca7..1ec46fc 100644
+--- a/scheme/coot-crash-catcher.scm
++++ b/scheme/coot-crash-catcher.scm
+@@ -26,8 +26,8 @@
+ (use-modules (ice-9 popen)
+ 	     (ice-9 string-fun)
+ 	     (ice-9 regex)
+-	     (ice-9 rdelim)
+-	     (os process))
++	     (ice-9 rdelim))
++(cond-expand (guile-2 #t) (else (use-modules (os process))))
+ 
+ 
+ ;;; What was the executable?  Let's pass that on the command line to
+diff --git a/scheme/coot-utils.scm b/scheme/coot-utils.scm
+index a1ec82f..a294f7a 100644
+--- a/scheme/coot-utils.scm
++++ b/scheme/coot-utils.scm
+@@ -24,7 +24,8 @@
+ 	     (ice-9 format)
+ 	     (ice-9 rdelim)
+ 	     (srfi srfi-1))
+-(use-modules (os process)) 
++;; (os process) is a Guile 1.x module; Guile 2+/3 provides system*, etc. in the core
++(cond-expand (guile-2 #t) (else (use-modules (os process)))) 
+ 
+ ;; 3D annotations - a bit of a hack currently
+ (define *annotations* '())
+diff --git a/scheme/coot.scm b/scheme/coot.scm
+index 26ff15b..800d323 100644
+--- a/scheme/coot.scm
++++ b/scheme/coot.scm
+@@ -18,8 +18,11 @@
+ 
+ ;; enable debugging.  We don't care about the speed of scheme code,
+ ;; but we do care about the ease of debugging.
+-(debug-enable 'debug)
+-(debug-enable 'backtrace)
++;; Guile 1.x only: Guile 2+/3 has no debug-enable (backtraces and the evaluator debug support are built in)
++(if (< (string->number (major-version)) 2)
++    (begin
++      (debug-enable 'debug)
++      (debug-enable 'backtrace)))
+ 
+ ;; globals 
+ 
+@@ -44,8 +47,19 @@
+ 	    (load f))
+ 	  (format #t "Error finding ~s~%" file)))))
+ 
++;; Guile 2+/3: provide the pieces of the Guile 1.x environment that the rest of the scheme layer uses
++;; (regex/threads/sxml modules, (os process) run/run-with-pipe/run-concurrently, inet-aton).
++(cond-expand
++  (guile-2 (load-by-search "guile-compat.scm"))
++  (else #t))
++
+ ;; set the prompt to be coot, not guile.
+-(set-repl-prompt! "coot> ")
++;; Guile 1.x has set-repl-prompt!; Guile 2+/3 sets the default prompt via (system repl common).
++(if (< (string->number (major-version)) 2)
++    (set-repl-prompt! "coot> ")
++    (begin
++      (use-modules (system repl common))
++      (repl-default-prompt-set! "coot> ")))
+ 
+ ;; 20210915-PE coot tips have been removed from the list in load-all-scheme
+ ;; but Clemens suggest that there may be users who have (no-coot-tips) in
+diff --git a/scheme/guile-compat.scm b/scheme/guile-compat.scm
+new file mode 100644
+index 0000000..aae65e2
+--- /dev/null
++++ b/scheme/guile-compat.scm
+@@ -0,0 +1,71 @@
++;;;; guile-compat.scm -- Guile 1.8 -> Guile 2.x/3.x compatibility for the Coot scheme layer.
++;;;;
++;;;; Loaded by coot.scm on Guile 2+ only (see the cond-expand there).  It provides the parts of the
++;;;; Guile 1.x top-level environment that the rest of the scheme layer expects and that no longer exist:
++;;;;   - regex, threads, sxml: part of the Guile 1.x core, separate modules from Guile 2 on
++;;;;   - (os process) run / run-with-pipe / run-concurrently  (Guile 1.x)
++;;;;   - inet-aton (removed in Guile 3; inet-pton is the replacement)
++;;;; The scheme files are all load()ed into the same module, so these bindings are visible to all of them.
++
++(use-modules (ice-9 regex)      ; string-match, regexp-quote, match:substring ...
++             (ice-9 threads)    ; call-with-new-thread
++             (ice-9 popen)
++             (ice-9 rdelim)
++             (srfi srfi-1)
++             (sxml simple))     ; xml->sxml
++
++;; stdio to hand to a child: the *current* ports when they are file-descriptor ports (so that
++;; with-output-to-file / with-input-from-file redirect the child as they did with (os process)),
++;; else the process's fds 0/1/2.
++(define (%child-stdio)
++  (list (if (and (file-port? (current-input-port)))  (current-input-port)  0)
++        (if (and (file-port? (current-output-port))) (current-output-port) 1)
++        (if (and (file-port? (current-error-port)))  (current-error-port)  2)))
++
++;; (run prog arg ...) : run PROG (searched for in $PATH) and wait for it.
++;; Returns #t if the exit status was 0, else #f   (the (os process) semantics the scheme layer relies on).
++(define (run prog . args)
++  (force-output (current-output-port))
++  (let* ((stdio (%child-stdio))
++         (pid (catch 'system-error
++                (lambda () (spawn prog (cons prog args)
++                                  #:input (car stdio) #:output (cadr stdio) #:error (caddr stdio)))
++                (lambda args #f))))
++    (and pid
++         (let ((st (cdr (waitpid pid))))
++           (eqv? 0 (status:exit-val st))))))
++
++;; (run-concurrently prog arg ...) : start PROG and do not wait.  Returns the pid (or #f).
++(define (run-concurrently prog . args)
++  (force-output (current-output-port))
++  (let ((stdio (%child-stdio)))
++    (catch 'system-error
++      (lambda () (spawn prog (cons prog args)
++                        #:input (car stdio) #:output (cadr stdio) #:error (caddr stdio)))
++      (lambda args #f))))
++
++;; (run-with-pipe mode prog arg ...) :
++;;   "r+" -> (pid output-port . input-port)   output-port reads the child's stdout, input-port writes the child's stdin
++;;   "r"  -> (pid . output-port)
++;;   "w"  -> (pid . input-port)
++;; The caller is expected to close input-port to give the child EOF and to waitpid the pid.
++(define (run-with-pipe mode prog . args)
++  (let* ((rd? (or (string=? mode "r") (string=? mode "r+")))
++         (wr? (or (string=? mode "w") (string=? mode "r+")))
++         (to-child   (and wr? (pipe)))     ; (read-end . write-end)
++         (from-child (and rd? (pipe)))
++         (cloexec (lambda (p) (fcntl p F_SETFD FD_CLOEXEC))))
++    (if to-child   (cloexec (cdr to-child)))      ; parent's ends must not leak into the child
++    (if from-child (cloexec (car from-child)))
++    (let ((pid (spawn prog (cons prog args)
++                      #:input  (if to-child   (car to-child)   (current-input-port))
++                      #:output (if from-child (cdr from-child) (current-output-port))
++                      #:error  (current-error-port))))
++      (if to-child   (close-port (car to-child)))
++      (if from-child (close-port (cdr from-child)))
++      (cond ((string=? mode "r+") (cons pid (cons (car from-child) (cdr to-child))))
++            ((string=? mode "r")  (cons pid (car from-child)))
++            (else                 (cons pid (cdr to-child)))))))
++
++;; Guile 3 dropped inet-aton; inet-pton is its replacement (AF_INET only here).
++(define (inet-aton address) (inet-pton AF_INET address))
+diff --git a/scheme/snarf-coot-docs.scm b/scheme/snarf-coot-docs.scm
+index 9201455..701958e 100644
+--- a/scheme/snarf-coot-docs.scm
++++ b/scheme/snarf-coot-docs.scm
+@@ -20,7 +20,8 @@
+ 	     (ice-9 rdelim)
+ 	     (ice-9 regex))
+ 
+-(use-modules (os process))
++;; (os process) is a Guile 1.x module; Guile 2+/3 provides system*, etc. in the core
++(cond-expand (guile-2 #t) (else (use-modules (os process))))
+ 
+ (define is-valid-model-molecule 1) ;; hack to get past problem loading
+ 				   ;; coot-utils on bubbles

@@ -1,0 +1,765 @@
+{
+ "kind": "menubar",
+ "var": "menubar1",
+ "children": [
+  {
+   "kind": "item",
+   "label": "_File",
+   "var": "file1",
+   "submenu": {
+    "kind": "menu",
+    "var": "file1_menu",
+    "children": [
+     {
+      "kind": "imageitem",
+      "label": "Open Coordinates...",
+      "var": "open_coordinates1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Auto Open MTZ...",
+      "var": "auto_open_mtz"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Open MTZ, mmCIF, fcf or phs...",
+      "var": "open_dataset1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Open Map...",
+      "var": "open_map1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Import CIF dictionary...",
+      "var": "import_cif_dictionary1"
+     },
+     {
+      "kind": "separator",
+      "var": "separator2"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Get Monomer...",
+      "var": "get_monomer1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Search Monomer Library...",
+      "var": "search_monomer_library1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Fetch PDB using Accession Code...",
+      "var": "get_pdb_using_code1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Fetch PDB & Map using EDS...",
+      "var": "get_pdb_and_map_using_eds1"
+     },
+     {
+      "kind": "item",
+      "label": "Fetch PDB & Map using PDB-REDO...",
+      "var": "fetch_pdb_and_map_using_pdbredo1"
+     },
+     {
+      "kind": "item",
+      "label": "Fetch Corresponding AlphaFold Model & Superpose",
+      "var": "fetch_corresponding_alphafold_model_and_superpose1"
+     },
+     {
+      "kind": "item",
+      "label": "Fetch AlphaFold Model using Uniprot ID",
+      "var": "fetch_alphafold_model_using_uniprot_id1"
+     },
+     {
+      "kind": "separator",
+      "var": "separator3"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Save Coordinates...",
+      "var": "save_coordinates1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Save Symmetry Coordinates...",
+      "var": "save_symmetry_coordinates1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Save State...",
+      "var": "save_state1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Recover Session...",
+      "var": "recover_session1"
+     },
+     {
+      "kind": "separator",
+      "var": "separator4"
+     },
+     {
+      "kind": "item",
+      "label": "Export Map...",
+      "var": "export_map1"
+     },
+     {
+      "kind": "item",
+      "label": "Export Map Fragment...",
+      "var": "export_map_fragment1"
+     },
+     {
+      "kind": "separator",
+      "var": "separator7"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Delete Molecules and Maps...",
+      "var": "close_molecule1"
+     },
+     {
+      "kind": "separator",
+      "var": "separator6"
+     },
+     {
+      "kind": "item",
+      "label": "Curlew",
+      "var": "curlew1"
+     },
+     {
+      "kind": "separator",
+      "var": "separator9"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Exit",
+      "var": "exit1"
+     }
+    ]
+   }
+  },
+  {
+   "kind": "item",
+   "label": "_Edit",
+   "var": "edit1",
+   "submenu": {
+    "kind": "menu",
+    "var": "edit1_menu",
+    "children": [
+     {
+      "kind": "imageitem",
+      "label": "Bond Colours...",
+      "var": "bond_colours1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Bond Parameters...",
+      "var": "bond_parameters1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Change Chain IDs...",
+      "var": "edit_change_chain_ids1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Copy Molecule...",
+      "var": "edit_copy_molecule1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Copy Fragment...",
+      "var": "edit_copy_fragment1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Map Colour...",
+      "var": "map_colour1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Map Parameters...",
+      "var": "density_size1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Merge Molecules...",
+      "var": "edit_merge_molecules1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Replace Residue...",
+      "var": "edit_replace_residue1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Replace Fragment...",
+      "var": "edit_replace_fragment1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Renumber Residues...",
+      "var": "edit_renumber_residues1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Restraints...",
+      "var": "restraints1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Skeleton Parameters",
+      "var": "skeleton_parameters1",
+      "submenu": {
+       "kind": "menu",
+       "var": "skeleton_parameters1_menu",
+       "children": [
+        {
+         "kind": "imageitem",
+         "label": "Skeleton Colour...",
+         "var": "skeleton_colour1"
+        },
+        {
+         "kind": "item",
+         "label": "Skeleton Box Radius...",
+         "var": "skeleton_box_radius1"
+        },
+        {
+         "kind": "item",
+         "label": "Skeletonization Level...",
+         "var": "skeletonization_level1"
+        }
+       ]
+      }
+     },
+     {
+      "kind": "separator",
+      "var": "separator5"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Residue Info...",
+      "var": "residue_info2"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Font Size...",
+      "var": "font_size1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Pink Pointer Size...",
+      "var": "pink_pointer_size1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Background Colour...",
+      "var": "background_colour1",
+      "submenu": {
+       "kind": "menu",
+       "var": "background_colour1_menu",
+       "children": [
+        {
+         "kind": "radioitem",
+         "label": "Black",
+         "var": "background_black1"
+        },
+        {
+         "kind": "radioitem",
+         "label": "White",
+         "var": "background_white1"
+        }
+       ]
+      }
+     },
+     {
+      "kind": "separator",
+      "var": "separator8"
+     },
+     {
+      "kind": "item",
+      "label": "Settings...",
+      "var": "edit_settings"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Preferences...",
+      "var": "preferences1"
+     }
+    ]
+   }
+  },
+  {
+   "kind": "item",
+   "label": "_Calculate",
+   "var": "calculate1",
+   "submenu": {
+    "kind": "menu",
+    "var": "calculate1_menu",
+    "children": [
+     {
+      "kind": "item",
+      "label": "Align & Mutate...",
+      "var": "align_and_mutate1"
+     },
+     {
+      "kind": "item",
+      "label": "All Molecule...",
+      "var": "calculate_all_molecule"
+     },
+     {
+      "kind": "item",
+      "label": "Fit Loop",
+      "var": "fit_loop1",
+      "submenu": {
+       "kind": "menu",
+       "var": "fit_loop1_menu",
+       "children": [
+        {
+         "kind": "item",
+         "label": "Fit Loop by Database Search...",
+         "var": "fit_loop_by_database_search1"
+        },
+        {
+         "kind": "item",
+         "label": "Fit Loop by Rama Search...",
+         "var": "fit_loop_by_rama_search1"
+        }
+       ]
+      }
+     },
+     {
+      "kind": "imageitem",
+      "label": "Frames/Sec...",
+      "var": "frames_sec1"
+     },
+     {
+      "kind": "item",
+      "label": "Load Tutorial Model and Data",
+      "var": "calculate_load_tutorial_model_and_data1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Ligand Builder",
+      "var": "ligand_builder1"
+     },
+     {
+      "kind": "item",
+      "label": "LSQ Superpose...",
+      "var": "lsq_superpose1"
+     },
+     {
+      "kind": "item",
+      "label": "Map Tools...",
+      "var": "calculate_map_tools"
+     },
+     {
+      "kind": "item",
+      "label": "Map Sharpening/Blurring...",
+      "var": "map_sharpening1"
+     },
+     {
+      "kind": "item",
+      "label": "Map Skeleton...",
+      "var": "cowtan_foadi_skeleton1"
+     },
+     {
+      "kind": "item",
+      "label": "Modelling...",
+      "var": "modelling"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Model/Fit/Refine...",
+      "var": "regularize1"
+     },
+     {
+      "kind": "item",
+      "label": "Modules...",
+      "var": "calculate_modules"
+     },
+     {
+      "kind": "item",
+      "label": "Move Molecule Here...",
+      "var": "move_molecule_here1"
+     },
+     {
+      "kind": "item",
+      "label": "Mutate Residue Range...",
+      "var": "mutate_molecule1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "NCS Maps...",
+      "var": "ncs_maps1"
+     },
+     {
+      "kind": "item",
+      "label": "NCS Tools...",
+      "var": "calculate_ncs_tools"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Other Modelling Tools...",
+      "var": "other_modelling_tools1"
+     },
+     {
+      "kind": "item",
+      "label": "PISA...",
+      "var": "calculate_pisa"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Run Script...",
+      "var": "run_script1"
+     },
+     {
+      "kind": "item",
+      "label": "SSM Superpose...",
+      "var": "ssm_superposition1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Scripting...",
+      "var": "scripting_testing1",
+      "submenu": {
+       "kind": "menu",
+       "var": "scripting_testing1_menu",
+       "children": [
+        {
+         "kind": "item",
+         "label": "Python...",
+         "var": "scripting_python1"
+        },
+        {
+         "kind": "item",
+         "label": "Scheme...",
+         "var": "scripting_scheme1"
+        }
+       ]
+      }
+     },
+     {
+      "kind": "item",
+      "label": "Updating Maps...",
+      "var": "calculate_updating_maps1"
+     }
+    ]
+   }
+  },
+  {
+   "kind": "item",
+   "label": "_Draw",
+   "var": "draw1",
+   "submenu": {
+    "kind": "menu",
+    "var": "draw1_menu",
+    "children": [
+     {
+      "kind": "item",
+      "label": "Additional Representation...",
+      "var": "additional_representation1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Anisotropic Atoms...",
+      "var": "anisotropic_atoms1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Cell & Symmetry...",
+      "var": "show_symmetry1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Centre Atom Label...",
+      "var": "centre_atom_label1"
+     },
+     {
+      "kind": "item",
+      "label": "Clipping...",
+      "var": "clipping1"
+     },
+     {
+      "kind": "checkitem",
+      "label": "Model/Fit/Refine _Toolbar",
+      "var": "model_toolbar_menuitem"
+     },
+     {
+      "kind": "item",
+      "label": "Coordinates Recentring...",
+      "var": "coordinates_recentring1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Crosshairs...",
+      "var": "crosshairs1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Display Manager...",
+      "var": "map_and_mol_control1"
+     },
+     {
+      "kind": "item",
+      "label": "Display only Active",
+      "var": "display_only_active1"
+     },
+     {
+      "kind": "item",
+      "label": "Dragged Map...",
+      "var": "dragged_map1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Generic Display Objects...",
+      "var": "generic_display_objects1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Go To Atom...",
+      "var": "go_to_atom1"
+     },
+     {
+      "kind": "item",
+      "label": "Label Atoms in Residue",
+      "var": "label_atoms_in_residue1"
+     },
+     {
+      "kind": "item",
+      "label": "Label Neighbours",
+      "var": "label_neighbours1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "NCS Ghost Control...",
+      "var": "ncs_ghost_control1"
+     },
+     {
+      "kind": "item",
+      "label": "Representation Tools...",
+      "var": "draw_representation_tools"
+     },
+     {
+      "kind": "item",
+      "label": "Rock View On/Off",
+      "var": "rock_view_on_off1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Spin View On/Off",
+      "var": "spin_view_on_off1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Sequence View",
+      "var": "sequence_view1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Screenshot",
+      "var": "screenshot1",
+      "submenu": {
+       "kind": "menu",
+       "var": "screenshot1_menu",
+       "children": [
+        {
+         "kind": "item",
+         "label": "Simple...",
+         "var": "simple1"
+        },
+        {
+         "kind": "item",
+         "label": "Povray...",
+         "var": "povray1"
+        },
+        {
+         "kind": "item",
+         "label": "Raster3D...",
+         "var": "raster3d1"
+        }
+       ]
+      }
+     },
+     {
+      "kind": "item",
+      "label": "Smooth Recentring...",
+      "var": "recentring1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Stereo...",
+      "var": "stereo1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Undo Last Navigation",
+      "var": "undo_last_navigation1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Antialiasing...",
+      "var": "antialiasing1"
+     }
+    ]
+   }
+  },
+  {
+   "kind": "item",
+   "label": "_Measures",
+   "var": "main_menu_info",
+   "submenu": {
+    "kind": "menu",
+    "var": "main_menu_info_menu",
+    "children": [
+     {
+      "kind": "imageitem",
+      "label": "Residue Info...",
+      "var": "residue_info1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Distances & Angles...",
+      "var": "distances___angles1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Environment Distances...",
+      "var": "environment_distances1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Plane Distances...",
+      "var": "plane_distances1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Pointer Distances...",
+      "var": "pointer_distances1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Clear Atom Labels",
+      "var": "clear_atom_labels1"
+     }
+    ]
+   }
+  },
+  {
+   "kind": "item",
+   "label": "_Validate",
+   "var": "validate1",
+   "submenu": {
+    "kind": "menu",
+    "var": "validate1_menu",
+    "children": [
+     {
+      "kind": "imageitem",
+      "label": "Ramachandran Plot",
+      "var": "ramachandran_plot1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Kleywegt Plot...",
+      "var": "ramachandran_differences_plot1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Incorrect Chiral Volumes...",
+      "var": "incorrect_chiral_volumes1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Unmodelled blobs...",
+      "var": "unmodelled_blobs1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Difference Map Peaks...",
+      "var": "difference_map_peaks1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Check/Delete Waters...",
+      "var": "check_waters1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Geometry analysis",
+      "var": "geometry_analysis1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Peptide omega analysis",
+      "var": "peptide_omega_analysis1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Temp. fact. variance analysis",
+      "var": "temp_fact_variance_analysis1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Average Temp. fact. analysis",
+      "var": "temp_fact_analysis1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "GLN and ASN B-factor Outliers",
+      "var": "gln_and_asn_b_factor_outliers1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Rotamer analysis",
+      "var": "rotamer_analysis1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Density fit analysis",
+      "var": "density_fit_analysis1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Probe clashes",
+      "var": "probe_clashes1"
+     },
+     {
+      "kind": "item",
+      "label": "NCS Differences",
+      "var": "ncs_differences1"
+     }
+    ]
+   }
+  },
+  {
+   "kind": "item",
+   "label": "About",
+   "var": "help1",
+   "submenu": {
+    "kind": "menu",
+    "var": "help1_menu",
+    "children": [
+     {
+      "kind": "item",
+      "label": "Header/Remarks Browser...",
+      "var": "remarks_browser1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "Hints...",
+      "var": "hints1"
+     },
+     {
+      "kind": "imageitem",
+      "label": "About...",
+      "var": "about1"
+     }
+    ]
+   }
+  }
+ ]
+}

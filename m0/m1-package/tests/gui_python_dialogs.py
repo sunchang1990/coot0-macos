@@ -1,0 +1,492 @@
+
+# Headless tests of dialogs and fixes in the Python GUI scripts (PyGTK compatibility layer on real GTK, no display).
+import os, sys, ast, glob, json, traceback
+sys.path.insert(0, os.path.join(os.environ["COOT_PREFIX"], "tests"))
+import gui_harness as H
+import _gtk2core as _c
+import gtk
+res = []
+def check(name, fn):
+    try:
+        v = fn(); ok = (v is None or v is True)   # anything else returned by a check is the failure detail
+        res.append((name, ok, "" if ok else repr(v)[:200]))
+    except BaseException as e:
+        res.append((name, False, "EXC " + repr(e)[:160] + " " + traceback.format_exc()[-300:].replace("\n", " | ")))
+g, errs, log = H.load()
+import coot
+here = os.environ["COOT_PREFIX"]
+pydir = os.path.join(here, "share/coot/python")
+
+check("all GUI scripts load (including rcrane_loader.py)", lambda: True if not errs else errs[:3])
+
+# 1. no Python-2-only names left in the scripts
+PY2 = {"StringType", "ListType", "IntType", "TupleType", "DictType", "FloatType", "isNumbertype", "unicode", "basestring", "xrange", "raw_input"}
+PY2_CALLS = {"apply", "file"}
+def py2_names():
+    bad = []
+    for f in sorted([x for x in glob.glob(os.path.join(pydir, "*.py")) if not x.endswith("/coot.py") and not x.endswith("/coot_python.py")] + glob.glob(os.path.join(pydir, "rcrane", "*.py"))):
+        tree = ast.parse(open(f, encoding="utf-8", errors="replace").read())
+        for n in ast.walk(tree):
+            if isinstance(n, ast.Name) and isinstance(n.ctx, ast.Load) and n.id in PY2:
+                bad.append("%s:%d %s" % (os.path.basename(f), n.lineno, n.id))
+            if isinstance(n, ast.Call) and isinstance(n.func, ast.Name) and n.func.id in PY2_CALLS:
+                bad.append("%s:%d %s()" % (os.path.basename(f), n.lineno, n.func.id))
+            if isinstance(n, ast.ImportFrom) and n.module == "types" and any(a.name in PY2 for a in n.names):
+                bad.append("%s:%d from types import ..." % (os.path.basename(f), n.lineno))
+    return bad
+check("no Python-2-only names in the shipped scripts", lambda: True if not py2_names() else py2_names()[:5])
+
+# 2. toolbar manager has the buttons the user asked for
+def labels_of(win):
+    out = []
+    for x in H.walk(win):
+        for m in ("get_label", "get_text"):
+            if hasattr(x, m) and type(x).__name__ in ("Button", "CheckButton", "RadioButton", "Label", "ToggleButton"):
+                try: out.append(getattr(x, m)())
+                except Exception: pass
+    return out
+def dialog(fn, *a):
+    n0 = len(H.windows); r = fn(*a); return r, H.windows[n0:]
+def manage_buttons():
+    r, ws = dialog(g["make_toolbar_button_gui"])
+    lab = [l for w in ws for l in labels_of(w)]
+    return ("Sphere Refine" in lab and "Sphere Regularization" in lab and len(lab) > 100) or lab[:10]
+check("Manage Buttons dialog offers Sphere Refine and Sphere Regularization", manage_buttons)
+
+# 3. dialog_box_of_buttons (was NameError StringType) with string, list and function callbacks; click them
+clicked = []
+g["_probe_clicked"] = clicked
+def box_of_buttons():
+    funcs = [["string callback", "_probe_clicked.append('s')"], ["list callback", ["_probe_clicked.append('l')"]],
+             ["function callback", lambda *a: clicked.append("f")]]
+    r, ws = dialog(g["dialog_box_of_buttons"], "probe", [200, 200], funcs, " Close ")
+    for w in ws:
+        for x in H.walk(w):
+            if type(x).__name__ == "Button" and x.get_label() in ("string callback", "list callback", "function callback"): x.clicked()
+    return sorted(clicked) == ["f", "l", "s"] or clicked
+check("dialog_box_of_buttons builds and its buttons run string/list/function callbacks", box_of_buttons)
+
+# 4. data-dependent dialogs
+imol = coot.read_pdb(os.path.join(here, "test-data", "tutorial-modern.pdb"))
+imap = coot.make_and_draw_map(os.path.join(here, "test-data", "rnasa-1.8-all_refmac1.mtz"), "FWT", "PHWT", "", 0, 0)
+g["imol"] = imol
+check("molecule_atom_overlaps_gui (ported from Scheme) builds a box of buttons", lambda: True if len(dialog(g["molecule_atom_overlaps_gui"], imol)[1]) >= 1 else "no window")
+check("pepflips_by_difference_map_gui (ported from Scheme) builds and OK reports 'no difference map'", lambda: (lambda r, ws: [x.clicked() for w in ws for x in H.walk(w) if type(x).__name__ == "Button" and "OK" in x.get_label()] and True)(*dialog(g["pepflips_by_difference_map_gui"])) or "no OK button")
+check("copy molecule chooser builds", lambda: True if len(dialog(g["molecule_chooser_gui"], "Molecule to copy", lambda i: None)[1]) >= 1 else "no window")
+check("generic_chooser_and_entry builds", lambda: True if len(dialog(g["generic_chooser_and_entry"], "Molecule:", "Atom selection:", "//A/1-10", lambda i, t: None)[1]) >= 1 else "no window")
+check("smiles_gui builds", lambda: True if len(dialog(g["smiles_gui"])[1]) >= 1 else "no window")
+check("whats_new_dialog builds", lambda: True if len(dialog(g["whats_new_dialog"])[1]) >= 1 else "no window")
+
+# 5. fixed name bugs
+for fn in ("save_dialog_positions_to_init_file", "chain_n_residues", "residue_spec_to_residue_name", "handle_shelx_fcf_file", "molecule_atom_overlaps_gui", "pepflips_by_difference_map_gui"):
+    check("%s is defined" % fn, lambda f=fn: f in g or hasattr(coot, f))
+def save_positions():
+    home = os.environ.get("HOME", "/tmp"); rc = os.path.join(home, ".coot.py")
+    existed = os.path.isfile(rc)
+    if not existed: open(rc, "w").write("# probe\n")
+    size0 = os.path.getsize(rc)
+    open("0-coot.state.py", "w").write("set_main_window_dialog_position(1, 2)\nset_go_to_atom_window_position(3, 4)\nother_line(5)\n")
+    save = g["save_state"]; g["save_state"] = lambda: None      # --no-state-script: the real save_state writes nothing here
+    try: g["save_dialog_positions_to_init_file"]()
+    finally: g["save_state"] = save
+    txt = open(rc).read()[size0:]
+    if not existed: os.remove(rc)
+    os.remove("0-coot.state.py")
+    lines = txt.splitlines()
+    ok = ("set_go_to_atom_window_position(3, 4)" in lines) and "other_line(5)" not in lines and sum(1 for l in lines if l.startswith("# ---")) >= 3
+    return True if ok else repr(txt[:300])
+check("save_dialog_positions_to_init_file appends whole lines to ~/.coot.py", save_positions)
+
+# 6. RCrane
+def rcrane_menu():
+    import rcrane
+    return rcrane.createRCraneMenuWithCheck() is True
+check("RCrane imports and its pre-launch check passes", rcrane_menu)
+def rcrane_submenu_exists():
+    # since build 14: a sub-menu "RCrane" of the Calculate menu from start-up (build 13: an item "RCrane launch" that created a top-level menu)
+    def rec(shell, path, out):
+        for it in shell.get_children():
+            lab = (getattr(it, "get_label", lambda: "")() or "").replace("_", "")
+            sub = it.get_submenu() if hasattr(it, "get_submenu") else None
+            if sub is not None:
+                out.append((path + [lab], [(i.get_label() or "") for i in sub.get_children()]))
+                rec(sub, path + [lab], out)
+        return out
+    subs = [e for e in rec(g["_menubar"], [], []) if e[0] == ["Calculate", "RCrane"]]
+    if len(subs) != 1: return "no Calculate > RCrane sub-menu (%d)" % len(subs)
+    return True if len(subs[0][1]) == 6 else "RCrane sub-menu entries: %r" % (subs[0][1],)
+check("Calculate menu has the 'RCrane' sub-menu with 6 entries", rcrane_submenu_exists)
+
+# 7. C -> Python call-outs while Python drives GTK (the GUI audit found Coot crashing here when the GIL was released during GTK calls):
+#    a menu item wired to Coot's own C callback (on_edit_copy_molecule1_activate -> do_edit_copy_molecule -> PyRun_SimpleString) is activated from Python.
+def c_callout(cb_name, expect_new_window=True):
+    import ctypes
+    lib = ctypes.PyDLL(None)                                           # coot-bin's own exported symbols
+    fn = ctypes.cast(getattr(lib, cb_name), ctypes.c_void_p).value
+    item = gtk.MenuItem("probe")
+    _c.call("g_signal_connect_data", item._ptr, "activate", fn, None, None, 0)
+    n0 = len(H.windows)
+    item.activate()                                                    # a crash here kills the whole test run
+    return True if (not expect_new_window or len(H.windows) > n0) else "the C call-out ran but built no dialog"
+check("C callback on_edit_copy_molecule1_activate (Edit > Copy Molecule...) runs its Python call-out", lambda: c_callout("on_edit_copy_molecule1_activate"))
+check("C callback on_edit_copy_fragment1_activate (Edit > Copy Fragment...) runs its Python call-out", lambda: c_callout("on_edit_copy_fragment1_activate", False))
+
+# 8. the two harmless GTK/GLib messages are filtered, other criticals are not
+def log_filter():
+    import tempfile
+    path = tempfile.mktemp()
+    sys.stderr.flush(); fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_TRUNC); keep = os.dup(2); os.dup2(fd, 2)
+    try:
+        _c.call("g_return_if_fail_warning", "Gtk", "shortcuts_add_bookmark_from_file", "G_IS_FILE (file)")
+        _c.call("g_return_if_fail_warning", "Gtk", "some_other_function", "SOME_OTHER_CHECK (x)")
+    finally:
+        os.dup2(keep, 2); os.close(keep); os.close(fd)
+    txt = open(path).read(); os.remove(path)
+    return True if ("SOME_OTHER_CHECK" in txt and "G_IS_FILE" not in txt) else repr(txt[:300])
+check("log filter drops the two harmless GTK messages but not other criticals", log_filter)
+
+# Stop / Continue / Cancel buttons of "Stepped Refine..." and the other interruptible fits.  A Python 3 porting slip
+# (`type(cb) is bytes` for the old string-callback style) made every string callback print "cannot evaluate or call
+# function", so Stop did nothing and no Continue button ever appeared.
+import __main__ as _m
+def string_callback_runs():
+    hit = []
+    _m.__dict__["_toolbar_test_hit"] = lambda: hit.append(1)
+    b = _m.coot_toolbar_button("TestStringCb", "_toolbar_test_hit()", "gtk-stop")
+    b.emit("clicked")
+    return True if hit == [1] else "the string callback did not run: %r" % (hit,)
+check("a toolbar button with a string callback runs it", string_callback_runs)
+def stop_continue_cancel():
+    _m.continue_multi_refine = True
+    _m.multi_refine_separator = _m.add_coot_toolbar_separator()
+    _m.multi_refine_stop_button = _m.coot_toolbar_button("Stop", "stop_interruptible_fit_protein()", "gtk-stop")
+    _m.multi_refine_stop_button.emit("clicked")
+    labels = [f[0] for f in _m.toolbar_label_list()]
+    if not ("Cancel" in labels and "Continue" in labels):
+        return "after Stop the toolbar has %r" % (labels,)
+    if _m.continue_multi_refine is not False:
+        return "Stop did not clear continue_multi_refine"
+    _m.cancel_interruptible_fit_protein()
+    labels = [f[0] for f in _m.toolbar_label_list()]
+    left = {"Stop", "Cancel", "Continue"} & set(labels)
+    return True if not left else "buttons left after Cancel: %r" % (sorted(left),)
+check("Stop makes Cancel and Continue buttons appear, Cancel removes them again", stop_continue_cancel)
+# (build 15, found by the real-window audit) Stop, then a new Stepped Refine: the old Stop / Cancel / Continue stayed on the toolbar and pressing them
+# raised AttributeError: 'bool' object has no attribute 'destroy'.
+def stop_then_new_run():
+    def tb(): return [f[0] for f in _m.toolbar_label_list() if f[0] in ("Stop", "Cancel", "Continue")]
+    dummy = lambda spec, imap: None
+    e0 = len(_c.CALLBACK_ERRORS)
+    _m.cancel_interruptible_fit_protein() if _m.__dict__.get("multi_refine_stop_button") else None
+    _m.continue_multi_refine = True
+    _m.interruptible_fit_protein(imol, dummy)
+    _m.multi_refine_stop_button.emit("clicked")                       # Stop: Cancel + Continue appear
+    _m.continue_multi_refine = True
+    _m.interruptible_fit_protein(imol, dummy)                        # a new run while the first is stopped
+    after_new = tb()
+    if sorted(after_new) != ["Stop"]:
+        return "after a new run the toolbar has %r (expected only the new Stop)" % (after_new,)
+    _m.multi_refine_stop_button.emit("clicked")
+    _m.cancel_interruptible_fit_protein(); _m.cancel_interruptible_fit_protein()   # twice: harmless
+    _m.stop_interruptible_fit_protein(); _m.continue_interruptible_fit_protein()   # after the run is gone: harmless
+    errs = [e[1].strip().splitlines()[-1] for e in _c.CALLBACK_ERRORS[e0:]]
+    if errs: return "callback errors: %r" % errs[:3]
+    return True if not tb() else "buttons left: %r" % (tb(),)
+check("Stop, then a new Stepped Refine run: one Stop button, old buttons gone, Cancel/Stop/Continue after the end are harmless", stop_then_new_run)
+def str_checks():
+    import re
+    bad = []
+    for f in sorted(glob.glob(os.path.join(pydir, "*.py"))):
+        src = open(f, encoding="utf-8", errors="replace").read()
+        for m in re.finditer(r"(type\([^)]*\)\s+is\s+bytes|isinstance\([^)]*,\s*bytes\))", src):
+            bad.append("%s: %s" % (os.path.basename(f), m.group(0)))
+    return True if not bad else bad[:5]
+check("no str/bytes type tests left in the shipped scripts (2to3 turned types.StringType into bytes)", str_checks)
+
+# Calculate > Scripting... > Python...: the window's code returns gtk.FALSE from a helper; the compatibility layer had no gtk.FALSE, so every
+# command typed into the window ended in AttributeError and showed no result (build 11 and earlier).
+import contextlib, io
+import __main__ as _m
+def scripting_window():
+    w0 = len(H.windows)
+    with contextlib.redirect_stdout(io.StringIO()): _m.coot_gui()
+    wins = H.windows[w0:]
+    ents = [x for w in wins for x in H.walk(w) if type(x).__name__ == "Entry"]
+    tvs = [x for w in wins for x in H.walk(w) if type(x).__name__ == "TextView"]
+    if not (ents and tvs): return "no entry / text view in the scripting window"
+    return ents[0], tvs[0]
+def typed(entry, tv, text):
+    n0 = len(_c.CALLBACK_ERRORS)
+    entry.set_text(text)
+    with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()): entry.emit("activate")
+    tb = tv.get_buffer(); shown = tb.get_text(tb.get_start_iter(), tb.get_end_iter())
+    return shown, [e[1].strip().splitlines()[-1] for e in _c.CALLBACK_ERRORS[n0:]]
+_sw = {}
+def sw_open():
+    r = scripting_window()
+    if isinstance(r, str): return r
+    _sw["entry"], _sw["tv"] = r; return True
+check("Python scripting window opens", sw_open)
+def sw_result():
+    shown, errs_ = typed(_sw["entry"], _sw["tv"], "1+1")
+    if errs_: return "callback error: %r" % errs_
+    return True if shown.rstrip().endswith("2") or "\n2\n" in shown else "window text: %r" % shown[-120:]
+check("typing 1+1 into the scripting window shows 2 (no gtk.FALSE error)", sw_result)
+def sw_coot_call():
+    shown, errs_ = typed(_sw["entry"], _sw["tv"], "graphics_n_molecules()")
+    if errs_: return "callback error: %r" % errs_
+    answers = [l.strip() for l in shown.splitlines() if l.strip() and not l.strip().startswith("coot >>")]
+    return True if (answers and answers[-1].isdigit()) else "window text: %r" % shown[-120:]
+check("a Coot function typed into the scripting window returns its value", sw_coot_call)
+def sw_error():
+    shown, errs_ = typed(_sw["entry"], _sw["tv"], "1/0")
+    if errs_: return "callback error: %r" % errs_
+    return True if "ZeroDivisionError" in shown or "division" in shown else "window text: %r" % shown[-160:]
+check("a Python error typed into the scripting window is reported in the window", sw_error)
+def compat_classes():
+    import gtk
+    bad = []
+    if (gtk.TRUE, gtk.FALSE) != (True, False): bad.append("TRUE/FALSE")
+    a = gtk.Alignment(xalign=0.5, yalign=0.5); a.add(gtk.Label("x"))
+    d = gtk.AboutDialog()
+    for call in ("set_name", "set_version", "set_copyright", "set_website", "set_comments", "set_license"): getattr(d, call)("x")
+    d.set_wrap_license(True)
+    d.action_area.pack_start(gtk.Button("References"), False, True, 0)
+    gtk.HScrollbar(); gtk.VScrollbar()
+    return True if not bad else bad
+check("gtk.TRUE/FALSE, Alignment, AboutDialog (set_*, action_area) and scrollbars exist in the compatibility layer", compat_classes)
+
+# Sliders: PyGTK 2 gave gtk.Adjustment the struct members value / lower / upper / ...; the compatibility layer did not, so every move of the
+# clipping / zoom slider (Nudge Screen Centre with Extras), the map sharpening slider, the nudge-residues slider and the occupancy slider raised
+# AttributeError: 'Adjustment' object has no attribute 'value' (build 11 and earlier)
+def adjustment_members():
+    a = gtk.Adjustment(5.0, 0.0, 10.0, 1.0, 2.0, 0.0)
+    got = (a.value, a.lower, a.upper, a.step_increment, a.page_increment, a.page_size)
+    a.value = 7.5
+    return True if (got == (5.0, 0.0, 10.0, 1.0, 2.0, 0.0) and a.value == 7.5) else "got %r, then value %r" % (got, a.value)
+check("gtk.Adjustment has value, lower, upper, step_increment, page_increment, page_size (settable)", adjustment_members)
+def scales_of(wins): return [x for w in wins for x in H.walk(w) if type(x).__name__ == "HScale"]
+def move(adj, v):
+    n0 = len(_c.CALLBACK_ERRORS)
+    with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()): adj.value = v
+    return [e[1].strip().splitlines()[-1] for e in _c.CALLBACK_ERRORS[n0:]]
+def zoom_clip_dialog():
+    w0 = len(H.windows)
+    with contextlib.redirect_stdout(io.StringIO()): _m.nudge_screen_centre_extra_gui()
+    sc = scales_of(H.windows[w0:])
+    if len(sc) != 2: return "%d sliders in the dialog" % len(sc)
+    clip, zoom = sc[0].get_adjustment(), sc[1].get_adjustment()
+    e1 = move(clip, 2.0)
+    z0 = coot.zoom_factor(); e2 = move(zoom, z0 * 2.0)
+    if e1 or e2: return "callback errors %r %r" % (e1, e2)
+    return True if abs(coot.zoom_factor() - z0 * 2.0) < 1e-3 * z0 else "zoom %.4f -> %.4f, expected %.4f" % (z0, coot.zoom_factor(), z0 * 2.0)
+check("Nudge Screen Centre with Extras: the zoom slider changes the zoom, the clipping slider runs", zoom_clip_dialog)
+def sharpen_dialog():
+    mtz = os.path.join(here, "test-data", "rnasa-1.8-all_refmac1.mtz")
+    imap = coot.make_and_draw_map(mtz, "FWT", "PHWT", "", 0, 0)
+    w0 = len(H.windows)
+    with contextlib.redirect_stdout(io.StringIO()): _m.map_sharpening_gui(imap)
+    sc = scales_of(H.windows[w0:])
+    if len(sc) != 1: return "%d sliders in the dialog" % len(sc)
+    errs_ = move(sc[0].get_adjustment(), 12.0)
+    return True if not errs_ else errs_
+check("map sharpening slider (Python dialog) runs sharpen() when moved", sharpen_dialog)
+def nudge_dialog():
+    imol_n = coot.read_pdb(os.path.join(here, "test-data", "tutorial-modern.pdb"))
+    n0 = coot.graphics_n_molecules()
+    w0 = len(H.windows)
+    with contextlib.redirect_stdout(io.StringIO()): _m.nudge_residues_gui(imol_n, ["A", 40, ""])
+    sc = scales_of(H.windows[w0:])
+    if len(sc) != 1: return "%d sliders in the dialog" % len(sc)
+    errs_ = move(sc[0].get_adjustment(), 2.0)
+    if errs_: return errs_
+    return True if coot.graphics_n_molecules() > n0 + 0 else "no molecule was made by nudging"
+check("Interactive Nudge Residues: moving the slider makes a molecule with the nudged residues", nudge_dialog)
+
+# Stepped Refine (Calculate > All Molecule... > Stepped Refine...): the residues being refined are shown in the refinement style (the intermediate
+# atoms) and the result is accepted afterwards.  Before build 13 the refinement ran in "immediate replacement" mode, in which nothing of it is drawn.
+import time as _time
+def stepped_refine_shows():
+    imol_s = coot.read_pdb(os.path.join(here, "test-data", "tutorial-modern.pdb"))
+    imap_s = coot.make_and_draw_map(os.path.join(here, "test-data", "rnasa-1.8-all_refmac1.mtz"), "FWT", "PHWT", "", 0, 0)
+    coot.set_imol_refinement_map(imap_s); coot.set_refinement_immediate_replacement(0)
+    ch = coot.chain_id_py(imol_s, 0)
+    coot.write_pdb_file(imol_s, "stepped_before.pdb")
+    log = []
+    keep = _m.accept_regularizement
+    def spy(*a):
+        log.append(bool(coot.refinement_already_ongoing_p())); return keep(*a)
+    _m.accept_regularizement = spy
+    try: _m.refine_auto_range_and_show(imol_s, ch, 43, "", seconds=0.3, force=True)
+    finally: _m.accept_regularizement = keep
+    coot.write_pdb_file(imol_s, "stepped_after.pdb")
+    def atoms(fn):
+        d = {}
+        for l in open(fn):
+            if l.startswith(("ATOM", "HETATM")) and l[16] in " A": d[(l[21], int(l[22:26]), l[12:16].strip())] = (float(l[30:38]), float(l[38:46]), float(l[46:54]))
+        return d
+    b, a = atoms("stepped_before.pdb"), atoms("stepped_after.pdb")
+    moved = sorted(set(k[1] for k in a if k in b and sum((x - y) ** 2 for x, y in zip(a[k], b[k])) > 1e-8))
+    if log != [True]: return "refining atoms were shown when the result was accepted: %r (expected [True])" % (log,)
+    if coot.refinement_already_ongoing_p(): return "refinement still displayed after the result was accepted"
+    return True if (43 in moved and len(moved) >= 2) else "residues that moved: %r" % (moved,)
+check("Stepped Refine: the refining atoms are displayed (refinement_already_ongoing_p) until the result is accepted, and the residues move", stepped_refine_shows)
+def stepped_refine_stop():
+    imol_s = coot.read_pdb(os.path.join(here, "test-data", "tutorial-modern.pdb"))
+    ch = coot.chain_id_py(imol_s, 0)
+    _m.continue_multi_refine = False
+    t0 = _time.time()
+    _m.refine_auto_range_and_show(imol_s, ch, 60, "", seconds=30.0, force=True)
+    dt = _time.time() - t0; _m.continue_multi_refine = True
+    return True if (dt < 15 and not coot.refinement_already_ongoing_p()) else "took %.1f s / refinement left displayed" % dt
+check("Stepped Refine: pressing Stop ends the display at once and leaves nothing pending", stepped_refine_stop)
+def old_way_zero_seconds():
+    imol_s = coot.read_pdb(os.path.join(here, "test-data", "tutorial-modern.pdb"))
+    ch = coot.chain_id_py(imol_s, 0)
+    _m.refine_auto_range_and_show(imol_s, ch, 70, "", seconds=0)
+    return True if not coot.refinement_already_ongoing_p() else "refinement left displayed"
+check("Stepped Refine: COOT_STEPPED_REFINE_SHOW=0 keeps the old immediate behaviour", old_way_zero_seconds)
+
+# Stepped Refine, round 14: (a) Coot's own "Accept Refinement?" window must not be left on the screen (its buttons are useless there: the script accepts every
+# residue itself) - it is hidden when it appears and closed after the accept; (b) the density must be re-contoured around every residue that is refined
+# (go-to-atom only moves the view: before build 14 the map stayed contoured around the old position, and a residue had no density until the user changed
+# the contour level).
+def stepped_refine_accept_window():
+    imol_s = coot.read_pdb(os.path.join(here, "test-data", "tutorial-modern.pdb"))
+    imap_s = coot.make_and_draw_map(os.path.join(here, "test-data", "rnasa-1.8-all_refmac1.mtz"), "FWT", "PHWT", "", 0, 0)
+    coot.set_imol_refinement_map(imap_s); coot.set_refinement_immediate_replacement(0)
+    ch = coot.chain_id_py(imol_s, 0)
+    events = []
+    def title_of(w):
+        try: return w.get_title()
+        except Exception: return None
+    orig_call = _c.call
+    def spy_call(name, *a, **k):          # (Widget.hide / Widget.destroy are looked up at run time: watch the GTK calls)
+        if name in ("gtk_widget_hide", "gtk_widget_destroy") and a and title_of(a[0]) == "Accept Refinement?":
+            events.append("hide" if name == "gtk_widget_hide" else "destroy")
+        return orig_call(name, *a, **k)
+    keep_ra, keep_acc = _m.refine_auto_range, _m.accept_regularizement
+    def fake_refine(*a):          # Coot opens this window for every ordinary refinement
+        w = gtk.Window(gtk.WINDOW_TOPLEVEL); w.set_title("Accept Refinement?")
+        return keep_ra(*a)
+    def acc(*a): events.append("accept"); return keep_acc(*a)
+    _c.call = spy_call
+    _m.refine_auto_range, _m.accept_regularizement = fake_refine, acc
+    try: _m.refine_auto_range_and_show(imol_s, ch, 43, "", seconds=0.3, force=True)
+    finally:
+        _c.call = orig_call
+        _m.refine_auto_range, _m.accept_regularizement = keep_ra, keep_acc
+    left = [w for w in gtk.window_list_toplevels() if title_of(w) == "Accept Refinement?"]
+    if "hide" not in events or events.index("hide") > events.index("accept"): return "the window was not hidden before the accept: %r" % (events,)
+    if events[-1] != "destroy" or events.index("destroy") < events.index("accept"): return "the window was not closed after the accept: %r" % (events,)
+    return True if not left else "%d 'Accept Refinement?' windows are still there" % len(left)
+check("Stepped Refine: Coot's 'Accept Refinement?' window is hidden while the residues are shown and closed after the accept", stepped_refine_accept_window)
+def stepped_refine_maps_follow():
+    import tempfile, re, math
+    imol_s = coot.read_pdb(os.path.join(here, "test-data", "tutorial-modern.pdb"))
+    imap_s = coot.make_and_draw_map(os.path.join(here, "test-data", "rnasa-1.8-all_refmac1.mtz"), "FWT", "PHWT", "", 0, 0)
+    coot.set_imol_refinement_map(imap_s); coot.set_go_to_atom_molecule(imol_s)
+    ch = coot.chain_id_py(imol_s, 0)
+    def ca(r):
+        for a in coot.residue_info_py(imol_s, ch, r, "") or []:
+            if a[0][0].strip() == "CA": return a[2][:3]
+    want = {r: ca(r) for r in (20, 60)}
+    keep_env = os.environ.get("COOT_DEBUG_MAPS"); os.environ["COOT_DEBUG_MAPS"] = "1"      # every re-contouring is reported with its centre
+    sys.stdout.flush(); saved = os.dup(1); tmp = tempfile.TemporaryFile(); os.dup2(tmp.fileno(), 1)
+    try:
+        for r in want: _m.fit_protein_stepped_refine_function([imol_s, ch, r, ""], imap_s)
+    finally:
+        sys.stdout.flush(); os.dup2(saved, 1); os.close(saved)
+        if keep_env is None: del os.environ["COOT_DEBUG_MAPS"]
+        else: os.environ["COOT_DEBUG_MAPS"] = keep_env
+    tmp.seek(0); out = tmp.read().decode(errors="replace")
+    centres = [tuple(float(x) for x in m_.groups()) for m_ in re.finditer(r"DEBUG-MAPS:: update_map_triangles imol %d centre \(([-\d.e]+), ([-\d.e]+), ([-\d.e]+)\)" % imap_s, out)]
+    miss = [r for r, xyz in want.items() if not any(math.dist(c, xyz) < 1.0 for c in centres)]
+    return True if not miss else "no map re-contouring around residue(s) %r (re-contoured centres: %r)" % (miss, centres[:6])
+check("Stepped Refine: the map is re-contoured around each residue that is refined (density follows the focus)", stepped_refine_maps_follow)
+
+# Alt conf occupancy slider (Extensions > Modelling or the toolbar): "OK" did nothing in build 13 (set_alt_conf_occ compared a list with a number: a
+# TypeError in Python 3, silently true in Python 2).  Cys B 72 of tutorial-modern.pdb has SG A (occ 0.7) / SG B (occ 0.3).
+def occ_slider_ok():
+    imol_o = coot.read_pdb(os.path.join(here, "test-data", "tutorial-modern.pdb"))
+    def occs():
+        d = {}
+        for a in coot.residue_info_py(imol_o, "B", 72, "") or []:
+            if a[0][0].strip() == "SG": d[a[0][1]] = round(a[1][0], 3)
+        return d
+    before = occs()
+    if set(before) != {"A", "B"}: return "test residue has SG alt confs %r" % (before,)
+    n_err0 = len(_c.CALLBACK_ERRORS); w0 = len(H.windows)
+    with contextlib.redirect_stdout(io.StringIO()): _m.scale_alt_conf_occ_gui(imol_o, "B", 72, "")
+    ws = H.windows[w0:]
+    sc = scales_of(ws)
+    if len(sc) != 1: return "%d sliders in the occupancy dialog" % len(sc)
+    sc[0].get_adjustment().set_value(0.4)
+    ok = [x for w in ws for x in H.walk(w) if type(x).__name__ == "Button" and (x.get_label() or "").strip() == "OK"]
+    if len(ok) != 1: return "%d OK buttons" % len(ok)
+    with contextlib.redirect_stdout(io.StringIO()): ok[0].clicked()
+    after = occs()
+    if len(_c.CALLBACK_ERRORS) > n_err0: return "OK raised: " + _c.CALLBACK_ERRORS[-1][1][-250:]
+    if after != {"A": 0.4, "B": 0.6}: return "occupancies after OK: %r (expected A 0.4, B 0.6; before %r)" % (after, before)
+    alive = [w for w in ws if w in gtk.window_list_toplevels()]
+    return True if not alive else "the dialog is still open after OK"
+check("Alt conf occupancy slider: OK sets the occupancies (0.4 / 0.6) and closes the dialog", occ_slider_ok)
+def swap_alt_confs():
+    # rename_alt_confs (Extensions: swap alt confs A and B of the residue under the centre) had the same list-versus-number comparison
+    imol_o = coot.read_pdb(os.path.join(here, "test-data", "tutorial-modern.pdb"))
+    def occs():
+        return {a[0][1]: round(a[1][0], 3) for a in (coot.residue_info_py(imol_o, "B", 72, "") or []) if a[0][0].strip() == "SG"}
+    before = occs()
+    with contextlib.redirect_stdout(io.StringIO()): _m.rename_alt_confs(imol_o, "B", 72, "")
+    after = occs()
+    return True if (before == {"A": 0.7, "B": 0.3} and after == {"A": 0.3, "B": 0.7}) else "SG occupancies before %r, after the swap %r" % (before, after)
+check("rename_alt_confs: swapping alt confs A and B of Cys B 72 works", swap_alt_confs)
+def occ_rename_guard():
+    # the second place with the same py2 comparison (the alt-conf renaming helper): code lines only, not the explanatory comments
+    import re as _re
+    full = open(os.path.join(pydir, "coot_utils.py")).read()
+    hits = _re.findall(r"^\s*if \(?alt_confs\s*>\s*\d\)?\s*:", full, _re.M)
+    return True if not hits else "list-versus-number comparison left: %r" % (hits,)
+check("coot_utils.py: no list compared with a number (alt_confs > 1) left", occ_rename_guard)
+
+# Calculate > Fit Loop > Fit Loop by Database Search...: the atoms the user clicks arrive as 7-element specs
+# [model number, imol, chain, res-no, ins-code, atom-name, alt-conf]; atom_spec_to_residue_spec gave None for them, so the loop search got
+# a list of None ("Ooops - no specs in object" / SystemError) in build 12 and before.
+def fit_loop_db_search():
+    imol_l = coot.read_pdb(os.path.join(here, "test-data", "tutorial-modern.pdb"))
+    imap_l = coot.make_and_draw_map(os.path.join(here, "test-data", "rnasa-1.8-all_refmac1.mtz"), "FWT", "PHWT", "", 0, 0)
+    coot.set_imol_refinement_map(imap_l)
+    ch = coot.chain_id_py(imol_l, 0)
+    cap = []
+    keep = _m.user_defined_click; _m.user_defined_click = lambda n, f: cap.append((n, f))
+    try:
+        w0 = len(H.windows)
+        with contextlib.redirect_stdout(io.StringIO()): _m.click_protein_db_loop_gui()
+        wins = H.windows[w0:]
+        btn = [x for w in wins for x in H.walk(w) if type(x).__name__ == "Button" and (x.get_label() or "").startswith("Pick")]
+        if not btn: return "no 'Pick Atoms...' button in the number chooser"
+        with contextlib.redirect_stdout(io.StringIO()): btn[0].clicked()
+    finally: _m.user_defined_click = keep
+    if not cap: return "the dialog did not ask for atom clicks"
+    n, func = cap[0]
+    specs = [[1, imol_l, ch, r, "", " CA ", ""] for r in (40, 41, 42, 43)][:n]
+    w1 = len(H.windows); n_mol0 = coot.graphics_n_molecules(); n0 = len(_c.CALLBACK_ERRORS)
+    buf = io.StringIO()
+    try:
+        with contextlib.redirect_stdout(buf): func(*specs)
+    except BaseException as e:
+        return "pick function raised %r" % (e,)
+    out = buf.getvalue()
+    if "no specs in object" in out: return "the residue specs were not understood: " + out[-200:]
+    labels = ["%s" % (x.get_label(),) for w in H.windows[w1:] for x in H.walk(w) if type(x).__name__ == "Button"]
+    if not any("Original loop" in l for l in labels): return "no 'Loop Candidates' dialog (buttons %r, %d new molecules)" % (labels, coot.graphics_n_molecules() - n_mol0)
+    if not any("Toggle All" in l for l in labels): return "buttons %r" % (labels,)
+    cands = [l for l in labels if l and l[0].isdigit()]
+    return True if cands else "dialog has no candidate buttons: %r" % (labels,)
+check("Fit Loop by Database Search: clicked atoms give a Loop Candidates dialog with candidate loops", fit_loop_db_search)
+
+check("no exception in any GTK signal handler", lambda: True if not _c.CALLBACK_ERRORS else [e[1][-300:] for e in _c.CALLBACK_ERRORS][:2])
+w = max(len(r[0]) for r in res)
+for n, ok, v in res: print(("PASS " if ok else "FAIL ") + n.ljust(w) + (("  " + v) if v else ""))
+print("SUMMARY", sum(1 for r in res if r[1]), "/", len(res), flush=True)
+coot.coot_real_exit(0)

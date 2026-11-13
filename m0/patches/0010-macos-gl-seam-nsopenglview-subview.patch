@@ -1,0 +1,308 @@
+diff --git a/compat/gl-seam/coot-gl-seam.h b/compat/gl-seam/coot-gl-seam.h
+new file mode 100644
+index 0000000..dccd453
+--- /dev/null
++++ b/compat/gl-seam/coot-gl-seam.h
+@@ -0,0 +1,15 @@
++/* coot-gl-seam.h -- Coot-specific additions to the GtkGLExt-compatible seam (see coot-gl-seam.mm). */
++#ifndef COOT_GL_SEAM_H
++#define COOT_GL_SEAM_H
++#include <gtk/gtk.h>
++#ifdef __cplusplus
++extern "C" {
++#endif
++/* Ratio of GL framebuffer pixels to GTK (point) units for this widget: 1.0 unless COOT_RETINA=1 on a Retina display. */
++double coot_gl_backing_scale(GtkWidget *glarea);
++/* Size of the GL framebuffer in pixels (== allocation unless Retina mode is on). */
++void coot_gl_pixel_size(GtkWidget *glarea, int *width_px, int *height_px);
++#ifdef __cplusplus
++}
++#endif
++#endif
+diff --git a/compat/gl-seam/coot-gl-seam.mm b/compat/gl-seam/coot-gl-seam.mm
+new file mode 100644
+index 0000000..898b786
+--- /dev/null
++++ b/compat/gl-seam/coot-gl-seam.mm
+@@ -0,0 +1,213 @@
++// coot-gl-seam.mm -- GtkGLExt replacement for GTK2-Quartz on macOS.
++//
++// Implements the 10 GtkGLExt entry points Coot 0.9.8.96 uses, with an NSOpenGLView hosted as a SUBVIEW of the toplevel
++// window's content view (design decision G1, measured on Apple M1: 57.5 fps, tracks window resizes, dialogs draw on top;
++// hosting the GL context directly on the GDK native view did not follow resizes).
++//   - the view's hitTest: returns nil, so GTK keeps receiving mouse events
++//   - it is repositioned on every size-allocate of the GtkDrawingArea, hidden on unmap, removed on unrealize/destroy
++//   - legacy (2.1, fixed-function) profile: Coot's renderer is fixed-function
++// Retina: off by default (1 GL pixel per GTK unit, macOS upscales).  COOT_RETINA=1 requests the high-resolution surface;
++// Coot code that mixes units uses coot_gl_backing_scale() / coot_gl_pixel_size().
++#define GL_SILENCE_DEPRECATION 1
++#import <Cocoa/Cocoa.h>
++#import <OpenGL/OpenGL.h>
++#import <OpenGL/gl.h>
++#include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
++#include <gtk/gtk.h>
++#include <gdk/gdkquartz.h>
++#include <gdk/gdkglconfig.h>
++#include <gdk/gdkgldrawable.h>
++#include <gtk/gtkgl.h>
++#include "coot-gl-seam.h"
++
++@interface CootGLView : NSOpenGLView
++@end
++@implementation CootGLView
++- (NSView *)hitTest:(NSPoint)p { return nil; }   // GTK (the view underneath) receives mouse events
++- (BOOL)isOpaque { return YES; }
++@end
++
++extern "C" { double coot_gl_pixel_scale = 1.0; }
++
++namespace {
++
++struct CootGLConfig {
++   GdkGLConfigMode mode;
++   NSOpenGLPixelFormat *pf;
++   bool double_buffered;
++};
++
++struct CootGLState {
++   CootGLConfig *config = nullptr;
++   GtkWidget *widget = nullptr;
++   CootGLView *glview = nil;
++   NSOpenGLContext *ctx = nil;
++   gulong sig[6] = {0, 0, 0, 0, 0, 0};
++   bool logged = false;
++};
++
++const char *state_key = "coot-gl-seam-state";
++
++bool retina_requested() {
++   static int r = -1;
++   if (r < 0) { const char *e = getenv("COOT_RETINA"); r = (e && *e && strcmp(e, "0") != 0) ? 1 : 0; }
++   return r == 1;
++}
++
++CootGLState *state_of(GtkWidget *w) {
++   return w ? static_cast<CootGLState *>(g_object_get_data(G_OBJECT(w), state_key)) : nullptr;
++}
++
++NSOpenGLPixelFormat *make_pixel_format(GdkGLConfigMode mode, bool with_msaa) {
++   NSOpenGLPixelFormatAttribute a[32]; int n = 0;
++   a[n++] = NSOpenGLPFAOpenGLProfile; a[n++] = NSOpenGLProfileVersionLegacy;
++   a[n++] = NSOpenGLPFAColorSize; a[n++] = 24;
++   a[n++] = NSOpenGLPFAAlphaSize; a[n++] = 8;
++   a[n++] = NSOpenGLPFADepthSize; a[n++] = 24;
++   if (mode & GDK_GL_MODE_STENCIL) { a[n++] = NSOpenGLPFAStencilSize; a[n++] = 8; }
++   if (mode & GDK_GL_MODE_DOUBLE) a[n++] = NSOpenGLPFADoubleBuffer;
++   a[n++] = NSOpenGLPFAAccelerated;
++   if (with_msaa) { a[n++] = NSOpenGLPFAMultisample; a[n++] = NSOpenGLPFASampleBuffers; a[n++] = 1; a[n++] = NSOpenGLPFASamples; a[n++] = 4; }
++   a[n++] = 0;
++   return [[NSOpenGLPixelFormat alloc] initWithAttributes:a];
++}
++
++void position_subview(GtkWidget *w, CootGLState *st) {
++   if (!st->glview) return;
++   NSView *parent = [st->glview superview]; if (!parent) return;
++   GtkAllocation al; gtk_widget_get_allocation(w, &al);
++   int x = 0, y = 0;
++   if (!gtk_widget_translate_coordinates(w, gtk_widget_get_toplevel(w), 0, 0, &x, &y)) return;
++   NSRect pb = [parent bounds];
++   CGFloat ny = [parent isFlipped] ? y : pb.size.height - y - al.height;
++   [st->glview setFrame:NSMakeRect(x, ny, al.width, al.height)];
++   [[st->glview openGLContext] update];
++}
++
++void on_realize(GtkWidget *w, gpointer) {
++   CootGLState *st = state_of(w); if (!st || st->glview) return;
++   GdkWindow *top = gtk_widget_get_window(gtk_widget_get_toplevel(w));
++   NSView *parent = top ? gdk_quartz_window_get_nsview(top) : nil;
++   if (!parent) { fprintf(stderr, "coot-gl-seam: ERROR no NSView for the toplevel window\n"); return; }
++   st->glview = [[CootGLView alloc] initWithFrame:NSMakeRect(0, 0, 64, 64) pixelFormat:st->config->pf];
++   if (!st->glview) { fprintf(stderr, "coot-gl-seam: ERROR could not create NSOpenGLView\n"); return; }
++   [st->glview setWantsBestResolutionOpenGLSurface:(retina_requested() ? YES : NO)];
++   [parent addSubview:st->glview positioned:NSWindowAbove relativeTo:nil];
++   st->ctx = [st->glview openGLContext];
++   GLint swap_interval = 1; [st->ctx setValues:&swap_interval forParameter:NSOpenGLCPSwapInterval];
++   position_subview(w, st);
++   [st->ctx makeCurrentContext];
++   if (!st->logged) {
++      st->logged = true;
++      GLint samples = 0; glGetIntegerv(GL_SAMPLES, &samples);
++      const GLubyte *v = glGetString(GL_VERSION), *r = glGetString(GL_RENDERER);
++      fprintf(stderr, "coot-gl-seam: NSOpenGLView subview OK: GL_VERSION=\"%s\" GL_RENDERER=\"%s\" samples=%d double_buffered=%d retina_surface=%d\n",
++              v ? (const char *)v : "?", r ? (const char *)r : "?", (int)samples, (int)st->config->double_buffered, retina_requested() ? 1 : 0);
++   }
++}
++
++void remove_view(CootGLState *st) {
++   if (st->glview) { [st->glview removeFromSuperview]; st->glview = nil; st->ctx = nil; }
++}
++void on_unrealize(GtkWidget *w, gpointer) { CootGLState *st = state_of(w); if (st) remove_view(st); }
++void on_size_allocate(GtkWidget *w, GtkAllocation *, gpointer) { CootGLState *st = state_of(w); if (st) position_subview(w, st); }
++void on_map(GtkWidget *w, gpointer)   { CootGLState *st = state_of(w); if (st && st->glview) { [st->glview setHidden:NO]; position_subview(w, st); } }
++void on_unmap(GtkWidget *w, gpointer) { CootGLState *st = state_of(w); if (st && st->glview) [st->glview setHidden:YES]; }
++
++void state_free(gpointer p) {
++   CootGLState *st = static_cast<CootGLState *>(p);
++   if (!st) return;
++   remove_view(st);
++   delete st;
++}
++
++} // namespace
++
++extern "C" {
++
++GdkGLConfig *gdk_gl_config_new_by_mode(GdkGLConfigMode mode) {
++   @autoreleasepool {
++      if (mode & GDK_GL_MODE_STEREO) {
++         fprintf(stderr, "coot-gl-seam: hardware stereo is not available on macOS\n");
++         return NULL;
++      }
++      bool want_msaa = (mode & GDK_GL_MODE_MULTISAMPLE) != 0;
++      NSOpenGLPixelFormat *pf = make_pixel_format(mode, want_msaa);
++      if (!pf && want_msaa) {   // Coot would otherwise fall back to a single-buffered visual; keep double buffering, drop MSAA
++         fprintf(stderr, "coot-gl-seam: 4x MSAA pixel format unavailable, continuing without multisampling\n");
++         mode = (GdkGLConfigMode)(mode & ~GDK_GL_MODE_MULTISAMPLE);
++         pf = make_pixel_format(mode, false);
++      }
++      if (!pf) {
++         fprintf(stderr, "coot-gl-seam: could not create an OpenGL pixel format (is a window server / display available?)\n");
++         return NULL;
++      }
++      CootGLConfig *c = new CootGLConfig;
++      c->mode = mode; c->pf = pf; c->double_buffered = (mode & GDK_GL_MODE_DOUBLE) != 0;
++      return reinterpret_cast<GdkGLConfig *>(c);
++   }
++}
++
++gboolean gdk_gl_config_has_stencil_buffer(GdkGLConfig *c) {
++   CootGLConfig *cc = reinterpret_cast<CootGLConfig *>(c);
++   return (cc && (cc->mode & GDK_GL_MODE_STENCIL)) ? TRUE : FALSE;
++}
++
++gboolean gtk_widget_set_gl_capability(GtkWidget *w, GdkGLConfig *c, GdkGLContext *share, gboolean direct, int render_type) {
++   (void)share; (void)direct; (void)render_type;
++   if (!w || !c) return FALSE;
++   if (state_of(w)) return TRUE;
++   CootGLState *st = new CootGLState;
++   st->config = reinterpret_cast<CootGLConfig *>(c); st->widget = w;
++   g_object_set_data_full(G_OBJECT(w), state_key, st, state_free);
++   st->sig[0] = g_signal_connect(w, "realize",       G_CALLBACK(on_realize), NULL);   // runs after GTK's own realize, before Coot's handlers
++   st->sig[1] = g_signal_connect(w, "unrealize",     G_CALLBACK(on_unrealize), NULL);
++   st->sig[2] = g_signal_connect(w, "size-allocate", G_CALLBACK(on_size_allocate), NULL);
++   st->sig[3] = g_signal_connect(w, "map",           G_CALLBACK(on_map), NULL);
++   st->sig[4] = g_signal_connect(w, "unmap",         G_CALLBACK(on_unmap), NULL);
++   if (gtk_widget_get_realized(w)) on_realize(w, NULL);
++   return TRUE;
++}
++
++GdkGLContext  *gtk_widget_get_gl_context(GtkWidget *w)  { return reinterpret_cast<GdkGLContext *>(state_of(w)); }
++GdkGLDrawable *gtk_widget_get_gl_drawable(GtkWidget *w) { return reinterpret_cast<GdkGLDrawable *>(state_of(w)); }
++GdkGLConfig   *gtk_widget_get_gl_config(GtkWidget *w)   { CootGLState *st = state_of(w); return st ? reinterpret_cast<GdkGLConfig *>(st->config) : NULL; }
++
++gboolean gdk_gl_drawable_gl_begin(GdkGLDrawable *d, GdkGLContext *) {
++   CootGLState *st = reinterpret_cast<CootGLState *>(d);
++   if (!st || !st->ctx) return FALSE;
++   [st->ctx makeCurrentContext];
++   coot_gl_pixel_scale = coot_gl_backing_scale(st->widget);
++   return TRUE;
++}
++void gdk_gl_drawable_gl_end(GdkGLDrawable *) { /* the context stays current, as it effectively did with GtkGLExt in Coot's usage */ }
++void gdk_gl_drawable_swap_buffers(GdkGLDrawable *d) {
++   CootGLState *st = reinterpret_cast<CootGLState *>(d);
++   if (!st || !st->ctx) return;
++   if (st->config->double_buffered) [st->ctx flushBuffer]; else glFlush();
++}
++gboolean gdk_gl_drawable_is_double_buffered(GdkGLDrawable *d) {
++   CootGLState *st = reinterpret_cast<CootGLState *>(d);
++   return (st && st->config && st->config->double_buffered) ? TRUE : FALSE;
++}
++
++double coot_gl_backing_scale(GtkWidget *w) {
++   if (!retina_requested()) return 1.0;
++   CootGLState *st = state_of(w);
++   if (st && st->glview && [st->glview window]) return [[st->glview window] backingScaleFactor];
++   NSScreen *s = [NSScreen mainScreen];
++   return s ? [s backingScaleFactor] : 1.0;
++}
++
++void coot_gl_pixel_size(GtkWidget *w, int *width_px, int *height_px) {
++   // from the GTK allocation x the backing factor (not from the NSView bounds, which may not have been resized yet
++   // when a configure-event arrives)
++   GtkAllocation al; gtk_widget_get_allocation(w, &al);
++   double s = coot_gl_backing_scale(w);
++   if (width_px) *width_px = (int)(al.width * s + 0.5);
++   if (height_px) *height_px = (int)(al.height * s + 0.5);
++}
++
++} // extern "C"
+diff --git a/compat/gl-seam/gdk/gdkgl.h b/compat/gl-seam/gdk/gdkgl.h
+new file mode 100644
+index 0000000..c9acb3c
+--- /dev/null
++++ b/compat/gl-seam/gdk/gdkgl.h
+@@ -0,0 +1,2 @@
++#include <gdk/gdkglconfig.h>
++#include <gdk/gdkgldrawable.h>
+diff --git a/compat/gl-seam/gdk/gdkglconfig.h b/compat/gl-seam/gdk/gdkglconfig.h
+new file mode 100644
+index 0000000..ebe5005
+--- /dev/null
++++ b/compat/gl-seam/gdk/gdkglconfig.h
+@@ -0,0 +1,20 @@
++/* Minimal GtkGLExt-compatible API surface used by Coot 0.9.8.96 (GtkGLExt itself needs X11/GLX and is unmaintained).
++ * Implemented for macOS in compat/gl-seam/coot-gl-seam.mm (NSOpenGLView subview).  Only the entry points Coot calls exist here. */
++#ifndef COOT_GL_SEAM_GDKGLCONFIG_H
++#define COOT_GL_SEAM_GDKGLCONFIG_H
++#include <glib-object.h>
++#include <gdk/gdk.h>
++G_BEGIN_DECLS
++typedef struct _GdkGLConfig GdkGLConfig;
++typedef struct _GdkGLContext GdkGLContext;
++typedef struct _GdkGLDrawable GdkGLDrawable;
++typedef enum { GDK_GL_MODE_RGB=0, GDK_GL_MODE_RGBA=0, GDK_GL_MODE_INDEX=1<<2, GDK_GL_MODE_SINGLE=0, GDK_GL_MODE_DOUBLE=1<<1,
++               GDK_GL_MODE_STEREO=1<<3, GDK_GL_MODE_ALPHA=1<<4, GDK_GL_MODE_DEPTH=1<<5, GDK_GL_MODE_STENCIL=1<<6,
++               GDK_GL_MODE_ACCUM=1<<7, GDK_GL_MODE_MULTISAMPLE=1<<8 } GdkGLConfigMode;
++#define GDK_GL_MODE_SAMPLES_SHIFT 9
++#define GDK_GL_STEREO 0
++#define GDK_GL_RGBA_TYPE 0
++GdkGLConfig *gdk_gl_config_new_by_mode(GdkGLConfigMode mode);
++gboolean gdk_gl_config_has_stencil_buffer(GdkGLConfig *c);
++G_END_DECLS
++#endif
+diff --git a/compat/gl-seam/gdk/gdkgldrawable.h b/compat/gl-seam/gdk/gdkgldrawable.h
+new file mode 100644
+index 0000000..c9b25f5
+--- /dev/null
++++ b/compat/gl-seam/gdk/gdkgldrawable.h
+@@ -0,0 +1,10 @@
++#ifndef COOT_GL_SEAM_GDKGLDRAWABLE_H
++#define COOT_GL_SEAM_GDKGLDRAWABLE_H
++#include <gdk/gdkglconfig.h>
++G_BEGIN_DECLS
++gboolean gdk_gl_drawable_gl_begin(GdkGLDrawable *d, GdkGLContext *c);
++void gdk_gl_drawable_gl_end(GdkGLDrawable *d);
++void gdk_gl_drawable_swap_buffers(GdkGLDrawable *d);
++gboolean gdk_gl_drawable_is_double_buffered(GdkGLDrawable *d);
++G_END_DECLS
++#endif
+diff --git a/compat/gl-seam/gtk/gtkgl.h b/compat/gl-seam/gtk/gtkgl.h
+new file mode 100644
+index 0000000..d2e2b31
+--- /dev/null
++++ b/compat/gl-seam/gtk/gtkgl.h
+@@ -0,0 +1,12 @@
++#ifndef COOT_GL_SEAM_GTKGL_H
++#define COOT_GL_SEAM_GTKGL_H
++#include <gtk/gtk.h>
++#include <gdk/gdkglconfig.h>
++#include <gdk/gdkgldrawable.h>
++G_BEGIN_DECLS
++gboolean gtk_widget_set_gl_capability(GtkWidget *w, GdkGLConfig *c, GdkGLContext *share, gboolean direct, int render_type);
++GdkGLContext  *gtk_widget_get_gl_context(GtkWidget *w);
++GdkGLDrawable *gtk_widget_get_gl_drawable(GtkWidget *w);
++GdkGLConfig   *gtk_widget_get_gl_config(GtkWidget *w);
++G_END_DECLS
++#endif

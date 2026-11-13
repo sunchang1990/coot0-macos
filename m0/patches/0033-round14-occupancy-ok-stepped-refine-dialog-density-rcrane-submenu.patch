@@ -1,0 +1,287 @@
+diff --git a/python/coot_utils.py b/python/coot_utils.py
+index 0676b69..0a0ae35 100644
+--- a/python/coot_utils.py
++++ b/python/coot_utils.py
+@@ -4535,7 +4535,7 @@ def set_alt_conf_occ(imol, chain_id, res_no, ins_code, alt_conf_list):
+     """
+     # first check if we have alt confs:
+     alt_confs = residue_alt_confs(imol, chain_id, res_no, ins_code)
+-    if (alt_confs > 1):
++    if (len(alt_confs) > 1):     # (macOS port) was "alt_confs > 1": a list compared with a number, which Python 2 allowed (always true) and Python 3 rejects (TypeError)
+         atom_ls = residue_info(imol, chain_id, res_no, ins_code)
+         change_list = []
+         for i in range(len(atom_ls)):
+@@ -4816,7 +4816,7 @@ def rename_alt_confs(imol, chain_id, res_no, ins_code,
+ 
+         # first check if we have alt confs:
+         alt_confs = residue_alt_confs(imol, chain_id, res_no, ins_code)
+-        if (alt_confs > 1):
++        if (len(alt_confs) > 1):     # (macOS port) was "alt_confs > 1": a list compared with a number, which Python 2 allowed (always true) and Python 3 rejects (TypeError)
+             atom_ls = residue_info(imol, chain_id, res_no, ins_code)
+             change_list = []
+             for i in range(len(atom_ls)):
+diff --git a/python/fitting.py b/python/fitting.py
+index 95d542c..576da99 100644
+--- a/python/fitting.py
++++ b/python/fitting.py
+@@ -203,6 +203,34 @@ try:
+ except ValueError:
+     stepped_refine_show_seconds = 0.6
+ 
++# macOS port (build 14): Coot opens its "Accept Refinement?" window for every ordinary refinement.  Stepped Refine accepts each residue itself, so that
++# window (a floating window titled "Accept Refinement?", or the docked panel) is useless there - its buttons act on a refinement that is already
++# finished - and it stayed on the screen.  It is hidden the moment it appears (hiding does not reject the refinement) and closed after the accept
++# (closing it after the accept is what its own Accept button does).
++def hide_accept_reject_dialog(destroy=False):
++    """Hide (destroy=False) or close (destroy=True) Coot's \"Accept Refinement?\" window; returns the number of windows found."""
++    n = 0
++    try:
++        import gtk
++        for w in gtk.window_list_toplevels():
++            try:
++                if w.get_title() == "Accept Refinement?":
++                    n += 1
++                    if destroy: w.destroy()
++                    else: w.hide()
++            except Exception:
++                pass
++    except Exception:
++        pass
++    try:
++        if accept_reject_dialog_docked_state():                   # the docked version: hides the panel without changing the preference
++            old = accept_reject_dialog_docked_show_state()
++            set_accept_reject_dialog_docked_show(0); set_accept_reject_dialog_docked_show(old)
++            n += 1
++    except Exception:
++        pass
++    return n
++
+ def refine_auto_range_and_show(imol, chain_id, res_no, alt_conf, seconds=None, force=False):
+     """Refine the residues around res_no (refine_auto_range), keep the refining atoms on the screen for `seconds`, then accept."""
+     import time
+@@ -215,17 +243,21 @@ def refine_auto_range_and_show(imol, chain_id, res_no, alt_conf, seconds=None, f
+         return
+     if refinement_already_ongoing_p():
+         accept_regularizement()          # (a refinement left over from the user's own work)
++        hide_accept_reject_dialog(destroy=True)
+     import gtk
+     with NoBackups(imol):
+         refine_auto_range(imol, chain_id, res_no, alt_conf)
++        hide_accept_reject_dialog()      # before any event is handled: it is never drawn
+         t0 = time.time()
+         while time.time() - t0 < seconds:
+             while gtk.events_pending():          # redraw, and let the Stop button work
+                 gtk.main_iteration(False)
++                hide_accept_reject_dialog()      # (the window can also be created or re-shown while events are handled)
+             time.sleep(0.02)
+             if globals().get("continue_multi_refine", True) is False:
+                 break
+         accept_regularizement()
++        hide_accept_reject_dialog(destroy=True)
+ 
+ def fit_protein_stepped_refine_function(res_spec, imol_map, use_rama = False):
+ 
+@@ -246,6 +278,9 @@ def fit_protein_stepped_refine_function(res_spec, imol_map, use_rama = False):
+             set_go_to_atom_chain_residue_atom_name_full(chain_id, res_no,
+                                                         ins_code, "CA",
+                                                         alt_conf)
++            # (macOS port, build 14) the move to the next residue only draws the new view; the density is contoured around the old centre, so the residue
++            # that is being refined had no density around it (until the user changed the contour level).  Re-contour the maps around the new centre.
++            update_maps()
+             rotate_y_scene(10, 0.3) # n_frames frame_interval(degrees)
+             refine_auto_range_and_show(imol, chain_id, res_no, alt_conf)
+             rotate_y_scene(10, 0.3)    
+diff --git a/python/rcrane_loader.py b/python/rcrane_loader.py
+index 349a1d4..3a27e14 100644
+--- a/python/rcrane_loader.py
++++ b/python/rcrane_loader.py
+@@ -3,18 +3,14 @@
+ import rcrane
+ 
+ def import_rcrane_wrapper():
+-   
+-   #create the menu entry in the Extensions menu
+-   extMenu = coot_menubar_menu("Calculate")
+-   rcraneLaunch = gtk.MenuItem("RCrane launch")
+-   rcraneLaunch.connect("activate", lambda x: rcrane.createRCraneMenuWithCheck())
+-   rcraneLaunch.show()
+-   extMenu.insert(rcraneLaunch, len(extMenu.get_children())-1)
+ 
+-   #destroy any variables that we've created, since the variables will be visible from the
+-   # Coot Python scripting window
+-   del extMenu
+-   del rcraneLaunch
++   # macOS port (build 14): the RCrane entries are a sub-menu "RCrane" of the Calculate menu from the start (see rcrane/menu.py).
++   try:
++      rcrane.createRCraneMenu()
++   except Exception:
++      import traceback
++      print("ERROR:: RCrane: the menu Calculate > RCrane could not be made:")
++      traceback.print_exc()
+ 
+    #check to see if the user has an old version of RCrane installed
+    #if they do, stop it from running
+@@ -54,7 +50,7 @@ def import_rcrane_wrapper():
+        noticeDialog = gtk.MessageDialog(type = gtk.MESSAGE_WARNING, buttons = gtk.BUTTONS_OK)
+        noticeDialog.set_title("Old version of RCrane detected")
+        noticeDialog.set_markup("An old version of RCrane was detected.  Coot now includes "
+-           + "RCrane 1.1, which may be accessed via Extensions -> RCrane launch.  To prevent the "
++           + "RCrane 1.1, which may be accessed via Calculate -> RCrane.  To prevent the "
+            + "old version of RCrane from running, your "
+            + "~/.coot-preferences/rcrane.py file was moved to ~/.coot-preferences/rcrane.py.bak.")
+        noticeDialog.run()
+@@ -73,7 +69,8 @@ def import_rcrane_wrapper():
+ # macOS port: RCrane's Python 2 code needed (a) a PyGTK-2 TreeView/TreeViewColumn/TreeSelection layer for its review window (added to the gtk
+ # compatibility layer), (b) fixes for Python 3 semantics (a float compared with text in linearInterp.py, unknown atom names such as OP3 in
+ # pseudoMolecule.finalMoleculeCleanup), and (c) a time limit for scripted refinements that do not converge (COOT_REFINE_MAX_SECONDS, default 10 s):
+-# without it a rotamerize could freeze Coot for ever.  "Calculate > RCrane launch" is offered again; COOT_DISABLE_RCRANE=1 hides it.
++# without it a rotamerize could freeze Coot for ever.  Its entries are "Calculate > RCrane" (a sub-menu that exists from start-up since build 14);
++# COOT_DISABLE_RCRANE=1 leaves them out.
+ if (use_gui_qm != 2):
+     import os as _os
+     if not _os.environ.get("COOT_DISABLE_RCRANE"):
+diff --git a/rcrane/__init__.py b/rcrane/__init__.py
+index dcb476f..a877e53 100644
+--- a/rcrane/__init__.py
++++ b/rcrane/__init__.py
+@@ -52,7 +52,7 @@ def createRCraneMenuWithCheck():
+     """
+     
+     if checkCootAndReportErrors():
+-        createRCraneMenu()
++        createRCraneMenu()          # (a no-op when "Calculate > RCrane" exists already, which it does from start-up)
+         return True
+     else:
+         return False
+diff --git a/rcrane/menu.py b/rcrane/menu.py
+index d5ee050..9fbdcc3 100644
+--- a/rcrane/menu.py
++++ b/rcrane/menu.py
+@@ -15,57 +15,106 @@
+ # or implied. See the License for the specific language governing
+ # permissions and limitations under the License.
+ 
++# macOS port (build 14): the entries are a sub-menu "RCrane" of the Calculate menu that exists from start-up (build 13 had a "RCrane launch" entry
++# that created a new top-level menu when used; on one machine that gave no menu and no message).  Every entry says in the terminal / log what
++# it does, the Coot / monomer-library check of RCrane runs the first time an entry is used, and an exception of a handler is printed with its
++# traceback and shown in a message window instead of being lost.
++
+ import gtk, os.path, imp
+ from .coot_gui_adapter import coot_menubar_menu, add_simple_coot_menu_menuitem
+ import rcrane
+ 
++_submenu = None          # the gtk.Menu of "Calculate > RCrane" once it exists
++_check_passed = False    # the pre-launch check (Coot version, monomer library) passed
++
++
++def _error_window(title, text):
++    try:
++        d = gtk.MessageDialog(type = gtk.MESSAGE_ERROR, buttons = gtk.BUTTONS_OK)
++        d.set_title(title)
++        d.set_markup(text.replace("&", "&amp;").replace("<", "&lt;"))
++        d.run()
++        d.destroy()
++    except Exception:
++        pass
++
++
++def _guarded(label, action, check = True):
++    """The "activate" handler of the menu entry `label`: logs, runs the pre-launch check once, calls `action`, reports exceptions."""
++    def handler(*args):
++        global _check_passed
++        print("INFO:: RCrane: \"%s\" selected" % label)
++        try:
++            if check and not _check_passed:
++                _check_passed = bool(rcrane.checkCootAndReportErrors())
++                if not _check_passed:
++                    print("INFO:: RCrane: the pre-launch check failed (see the message above): \"%s\" was not started" % label)
++                    return
++            action()
++        except Exception:
++            import traceback
++            print("ERROR:: RCrane: \"%s\" failed:" % label)
++            traceback.print_exc()
++            _error_window("RCrane Error", "\"%s\" failed:\n\n%s\n\nThe full traceback is in the terminal / the log file." % (label, traceback.format_exc()[-700:]))
++    return handler
++
+ 
+ def createRCraneMenu():
+-    """Create the RCrane menu
+-    
++    """Create the RCrane sub-menu of the Calculate menu
++
+     ARGUMENTS:
+         None
+     RETURNS:
+         True if the RCrane menu was created
+-        False if the RCrane menu already had entries and no new entries were created
++        False if the RCrane menu already exists (or the Calculate menu cannot be found) and no new entries were created
+     """
+-    
+-    #create a separate menu for RCrane (default)
+-    menu = coot_menubar_menu("_RCrane")
+-    
+-    #if the RCrane menu already has entries, then give up
+-    if len(menu.get_children()) > 0:
++
++    global _submenu
++    if _submenu is not None:
+         return False
+ 
+-    add_simple_coot_menu_menuitem(menu, "New trace 5'->3'...", lambda x: rcrane.newTrace(direction=3))
+-    add_simple_coot_menu_menuitem(menu, "New trace 3'->5'...", lambda x: rcrane.newTrace(direction=5))
+-    
++    calc = coot_menubar_menu("Calculate")
++    if calc is None:
++        print("WARNING:: RCrane: the Calculate menu was not found: no RCrane menu")
++        return False
++
++    top = gtk.MenuItem("RCrane")
++    menu = gtk.Menu()
++    top.set_submenu(menu)
++
++    add_simple_coot_menu_menuitem(menu, "New trace 5'->3'...", _guarded("New trace 5'->3'", lambda: rcrane.newTrace(direction=3)))
++    add_simple_coot_menu_menuitem(menu, "New trace 3'->5'...", _guarded("New trace 3'->5'", lambda: rcrane.newTrace(direction=5)))
++
+     #create and store the extend chain... option
+     extendChain = gtk.MenuItem("Extend chain...")
+-    extendChain.connect("activate", lambda x: rcrane.newExtendChain())
++    extendChain.connect("activate", _guarded("Extend chain", lambda: rcrane.newExtendChain()))
+     extendChain.show()
+     menu.append(extendChain)
+     rcrane.storeExtendChainMenuItem(extendChain)
+-    
+-    #add_simple_coot_menu_menuitem(menu, "Rotamerize existing structure...", lambda x: rcrane.rotamerize())
++
+     rotamerize = gtk.MenuItem("Rotamerize existing structure...")
+-    rotamerize.connect("activate", lambda x: rcrane.newRotamerize())
++    rotamerize.connect("activate", _guarded("Rotamerize existing structure", lambda: rcrane.newRotamerize()))
+     rotamerize.show()
+     menu.append(rotamerize)
+     rcrane.storeRotamerizeMenuItem(rotamerize)
+-    
++
+     #if Coot is newer than 3728 and has the regularize_zone_with_score_py function, then add a menu option for Rotamerize without density
+     try:
+         from coot import regularize_zone_with_score_py
+ 
+         rotamerizeNoDensity = gtk.MenuItem("Rotamerize without density...")
+-        rotamerizeNoDensity.connect("activate", lambda x: rcrane.newRotamerize(ignoreDensity = True))
++        rotamerizeNoDensity.connect("activate", _guarded("Rotamerize without density", lambda: rcrane.newRotamerize(ignoreDensity = True)))
+         rotamerizeNoDensity.show()
+         menu.append(rotamerizeNoDensity)
+         rcrane.storeRotamerizeMenuItem(rotamerizeNoDensity, ignoreDensity = True)
+     except ImportError:
+         print("Coot r3728 (0.7-pre) required for Rotamerize without density.\n\tRotamerize without density not available.")
+-    
+-    add_simple_coot_menu_menuitem(menu, "About RCrane...", lambda x: rcrane.createAboutDialog())
+-    
++
++    add_simple_coot_menu_menuitem(menu, "About RCrane...", _guarded("About RCrane", lambda: rcrane.createAboutDialog(), check = False))
++
++    top.show()
++    # in the place where build 13 had "RCrane launch": before the last entry of the Calculate menu
++    calc.insert(top, max(len(calc.get_children()) - 1, 0))
++    _submenu = menu
++    print("INFO:: RCrane: menu \"Calculate > RCrane\" is ready (%d entries)" % len(menu.get_children()))
+     return True

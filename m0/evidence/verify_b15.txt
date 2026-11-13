@@ -1,0 +1,22 @@
+
+## headless suites on the build-15 zip (ditto into a path with spaces, env -i)
+python-api                 SUMMARY 19 / 19
+scheme-api                 SUMMARY 27 / 27
+data-and-maps              SUMMARY 39 / 39
+ondemand-read              SUMMARY 3 / 3
+refine-zone                SUMMARY 7 / 7
+process-helpers            SUMMARY 10 / 10
+bundle-python              SUMMARY 19 / 19
+bundle-scheme              SUMMARY 6 / 6
+rdkit-python               SUMMARY 10 / 10
+rdkit-scheme               SUMMARY 3 / 3
+gtk2compat                 SUMMARY 12 / 12
+gui-scripts                SUMMARY 14 / 14
+gui-dialogs                SUMMARY 45 / 45
+gui-glyco                  SUMMARY 14 / 14
+gui-toolbar                SUMMARY 13 / 13
+gui-rcrane                 SUMMARY 21 / 21
+refmac-run                 SUMMARY 8 / 8
+startup-dictionaries       SUMMARY 1 / 1
+GUI sweep: 248 items ok, 0 items with errors, 0 items without a handler, 5 items whose activation killed the headless process (OpenGL or screen needed; started but not completed, listed below, checked
+bundle_check: 211 Mach-O, minos 11.0, RESULT: OK

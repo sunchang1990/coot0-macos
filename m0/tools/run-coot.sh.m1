@@ -1,0 +1,47 @@
+#!/bin/bash
+# Coot 0.9.8.96 for Apple Silicon -- M1 "first light" test launcher.
+# Usage:  ./run-coot.sh [--retina] [coot arguments...]
+#   --retina    request the high-resolution (2x) GL surface (COOT_RETINA=1); default is 1x so that everything is geometrically simple
+# Everything written to the terminal is also saved in logs/coot-<time>.log
+HERE="$(cd "$(dirname "$0")" && pwd)"
+ENV="${COOT_DEPS_ENV:-$HOME/.claude-science/conda/envs/coot-deps}"     # GTK2-Quartz, Python 3.11, Guile 3, clipper, mmdb2 ... (conda-forge)
+if [ ! -d "$ENV/lib" ]; then echo "ERROR: dependency environment not found at $ENV (set COOT_DEPS_ENV)"; exit 1; fi
+
+mkdir -p "$HERE/logs" "$HERE/.cache"
+LOG="$HERE/logs/coot-$(date +%Y%m%d-%H%M%S).log"
+exec > >(tee -a "$LOG") 2>&1
+
+args=()
+for a in "$@"; do
+  if [ "$a" = "--retina" ]; then export COOT_RETINA=1; else args+=("$a"); fi
+done
+
+export COOT_PREFIX="$HERE"
+export COOT_DATA_DIR="$HERE/share/coot"
+export SYMINFO="$COOT_DATA_DIR/syminfo.lib"
+export COOT_STANDARD_RESIDUES="$COOT_DATA_DIR/standard-residues.pdb"
+export COOT_PIXMAPS_DIR="$COOT_DATA_DIR/pixmaps"
+export COOT_RESOURCES_FILE="$COOT_DATA_DIR/cootrc"
+export COOT_SCHEME_DIR="$COOT_DATA_DIR/scheme"
+export COOT_PYTHON_DIR="$COOT_DATA_DIR/python"
+if [ -d "$HERE/monomers" ]; then
+  export CLIBD_MON="$HERE/monomers/"             # CCP4 monomer library: preloaded standard residues
+  export COOT_MONOMER_LIB_DIR="$HERE/monomers"   # ... and on-demand loading of any other comp-id (try_dynamic_add)
+fi
+[ -d "$HERE/reference-structures" ] && export COOT_REF_STRUCTS="$HERE/reference-structures"
+
+export PYTHONHOME="$ENV"
+export PYTHONPATH="$COOT_PYTHON_DIR"
+export GUILE_LOAD_PATH="$COOT_SCHEME_DIR"
+export GUILE_WARN_DEPRECATED=no
+export XDG_CACHE_HOME="$HERE/.cache"                                     # Guile's compiled scheme (.go) cache lives with the package
+export GDK_PIXBUF_MODULE_FILE="$HERE/lib/gdk-pixbuf-loaders.cache"       # includes the SVG loader (the toolbar icons are SVG)
+export GSETTINGS_SCHEMA_DIR="$ENV/share/glib-2.0/schemas"
+export XDG_DATA_DIRS="$ENV/share:${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"
+export FONTCONFIG_FILE="$ENV/etc/fonts/fonts.conf"
+# locale: UTF-8 for text, "C" for numbers (Coot parses and prints numbers with '.')
+export LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 LC_NUMERIC=C
+
+echo "== Coot M1 test launch $(date) =="
+echo "macOS $(sw_vers -productVersion) $(uname -m) | retina=${COOT_RETINA:-0} | monomer library: ${CLIBD_MON:-NOT FOUND}"
+exec "$HERE/bin/coot-bin" "${args[@]}"

@@ -1,0 +1,78 @@
+Refinement stall: RCrane rotamerize of tRNA 1EHZ (nucleotides 3-6, with density), then Next Conformer x2, Next Suite, Next Conformer, Previous Suite, Accept.
+Every refinement call of RCrane is timed; a SIGALRM watchdog (alarm(150) -> abort()) was armed around each one so that a hang ends the probe.
+
+== build 12 coot-bin (no limit) ==  [/tmp/rc_probe8_out.txt]
+refinement #1 took 0.65 s
+refinement #2 took 1.92 s
+INFO:: make_last_restraints() [immediate] restraints locked by
+refinement #3 took 1.03 s
+refinement #4 took 0.66 s
+INFO:: make_last_restraints() [immediate] restraints locked by
+refinement #5 took 1.08 s
+refinement #6 took 0.80 s
+INFO:: make_last_restraints() [immediate] restraints locked by
+refinement #7 took 1.12 s
+refinement #8 took 0.87 s
+refinement #9 took 0.70 s
+refinement #10 took 39.67 s
+refinement #11 took 0.79 s
+refinement #12 took 0.61 s
+refinement #13 took 0.64 s
+refinement #14 took 0.92 s
+INFO:: make_last_restraints() [immediate] restraints locked by
+refinement #15 took 1.65 s
+   ... refinement #17 ('6-8', residue 7 starts with a P-O5' bond of 5.5 A: 'Bad Bond ... nZ 310.50 delta 5.527') had not returned after 150 s: 217 lines 'restraints locked by refinement_loop_threaded' (0.7 s each = 152 s), 365 CPU-seconds used, the watchdog aborted the process.
+   (other runs with the build-12 binary: the same steps took 450 s for six refinements in one run; in another run the rotamerize needed more than 25 minutes with ~8 busy threads and the whole probe 73 minutes ('Next Conformer' alone 964 s); in the run listed above refinement #10 took 39.67 s. The minimiser always ended eventually, but Coot's window is frozen all that time.)
+
+== build 13 coot-bin (COOT_REFINE_MAX_SECONDS=10 default) ==  [/tmp/rc_probe8b_out.txt]
+refinement #1 took 0.63 s
+refinement #2 took 0.90 s
+refinement #3 took 0.70 s
+refinement #4 took 0.63 s
+WARNING:: refinement stopped after 10.005 seconds without converging (limit for scripted refinements: COOT_REFINE_MAX_SECONDS=10.000)
+refinement #5 took 10.51 s
+refinement #6 took 0.72 s
+refinement #7 took 0.51 s
+refinement #8 took 1.20 s
+refinement #9 took 0.76 s
+refinement #10 took 0.70 s
+refinement #11 took 0.81 s
+refinement #12 took 1.07 s
+refinement #13 took 1.08 s
+refinement #14 took 1.11 s
+refinement #15 took 0.85 s
+refinement #16 took 0.61 s
+refinement #17 took 0.74 s
+refinement #18 took 0.60 s
+rotamerize returned None in 24 s
+refinement #19 took 0.60 s
+refinement #20 took 0.80 s
+refinement #21 took 0.56 s
+refinement #22 took 0.64 s
+refinement #23 took 1.52 s
+refinement #24 took 0.79 s
+Next Conformer took 5 s
+refinement #25 took 0.48 s
+refinement #26 took 0.85 s
+refinement #27 took 0.80 s
+WARNING:: refinement stopped after 10.007 seconds without converging (limit for scripted refinements: COOT_REFINE_MAX_SECONDS=10.000)
+refinement #28 took 10.86 s
+refinement #29 took 0.92 s
+refinement #30 took 1.20 s
+Next Conformer took 15 s
+Next Suite took 0 s
+refinement #31 took 1.42 s
+refinement #32 took 0.98 s
+WARNING:: refinement stopped after 10.002 seconds without converging (limit for scripted refinements: COOT_REFINE_MAX_SECONDS=10.000)
+refinement #33 took 10.87 s
+refinement #34 took 0.65 s
+refinement #35 took 0.71 s
+WARNING:: refinement stopped after 10.012 seconds without converging (limit for scripted refinements: COOT_REFINE_MAX_SECONDS=10.000)
+refinement #36 took 10.94 s
+Next Conformer took 26 s
+Previous Suite took 0 s
+accept took 0 s
+callback errors []
+
+Normal refinements of the same zones take 0.5-1.5 s (accept_regularizement waits in steps of 200 ms, refine_zone_with_score in steps of 700 ms).
+Interactive refinement (use_graphics_interface_flag and not refinement_immediate_replacement) is not limited.

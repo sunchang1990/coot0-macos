@@ -1,0 +1,88 @@
+diff --git a/src/c-interface.cc b/src/c-interface.cc
+index d2a1972..4af8a2b 100644
+--- a/src/c-interface.cc
++++ b/src/c-interface.cc
+@@ -7150,9 +7150,18 @@ run_python_script(const char *filename_in) {
+ #ifdef USE_PYTHON
+ 
+    std::string s = coot::util::intelligent_debackslash(filename_in);
++#if PY_MAJOR_VERSION >= 3
++   // Python 3 has no execfile(); run the file in the __main__ namespace, as execfile() did.
++   std::string simple = "exec(compile(open(";
++   simple += single_quote(s);
++   simple += ", 'rb').read(), ";
++   simple += single_quote(s);
++   simple += ", 'exec'))";
++#else
+    std::string simple = "execfile(";
+    simple += single_quote(s);
+    simple += ")";
++#endif
+    std::cout << "Running python script " << s  << std::endl;
+    PyRun_SimpleString(simple.c_str());
+ 
+diff --git a/src/coot-setup-python.cc b/src/coot-setup-python.cc
+index f7ddd3d..1bcaf87 100644
+--- a/src/coot-setup-python.cc
++++ b/src/coot-setup-python.cc
+@@ -59,13 +59,32 @@ void setup_python(int argc, char **argv) {
+ #ifdef USE_PYMAC_INIT 
+   PyMac_Initialize();
+ #else  
++#if PY_MAJOR_VERSION >= 3
++  // Python 3: built-in modules must be registered before the interpreter is initialized.
++  // coot.py (SWIG output) does "import _coot", which then resolves to the compiled-in module.
++  PyImport_AppendInittab("_coot", &PyInit__coot);
++#endif
+   Py_Initialize(); // otherwise it core dumps saying python
+   // interpreter not initialized (or something).
+   PySys_SetArgv(argc, argv);
+ #endif     
+ 
++#if PY_MAJOR_VERSION >= 3
++  {
++     // same job as init_coot() under Python 2: make sure the SWIG module is initialized
++     // before running .coot.py, eh?
++     PyObject *swig_module = PyImport_ImportModule("_coot");
++     if (swig_module == NULL) {
++        std::cout << "ERROR:: could not initialize the _coot SWIG module" << std::endl;
++        PyErr_Print();
++     } else {
++        Py_DECREF(swig_module);
++     }
++  }
++#else
+   init_coot(); // i.e. SWIG_init for python, best we do this before
+                // running .coot.py, eh?
++#endif
+ 
+   
+   std::string home_directory = coot::get_home_dir();;
+diff --git a/src/coot-setup-python.hh b/src/coot-setup-python.hh
+index f1189b4..eebeb7d 100644
+--- a/src/coot-setup-python.hh
++++ b/src/coot-setup-python.hh
+@@ -8,6 +8,13 @@
+ 
+ #if defined (USE_PYTHON)
+ // #include "Python.h" // for Py_Initialize(); 20100813 included above now.
++#if PY_MAJOR_VERSION >= 3
++// Python 3: the SWIG module init function is PyInit__coot (see SWIG_init in coot_wrap_python.cc).
++// It is registered as a built-in module with PyImport_AppendInittab() before Py_Initialize().
++extern "C" {
++PyObject *PyInit__coot(void);
++}
++#else
+ #define SWIG_init    init_coot
+ #if defined(_WIN32) || defined(__WIN32__)
+ #       if defined(_MSC_VER)
+@@ -34,7 +41,8 @@
+ extern "C" {
+ SWIGEXPORT(void) SWIG_init(void);
+ }
+-#endif
++#endif // PY_MAJOR_VERSION >= 3
++#endif // USE_PYTHON
+ 
+ void setup_python(int argc, char **argv);
+ // which calls:

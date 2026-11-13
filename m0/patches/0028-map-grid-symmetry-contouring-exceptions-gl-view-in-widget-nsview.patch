@@ -1,0 +1,416 @@
+diff --git a/compat/gl-seam/coot-gl-seam.mm b/compat/gl-seam/coot-gl-seam.mm
+index c5ee6ec..45b1e4e 100644
+--- a/compat/gl-seam/coot-gl-seam.mm
++++ b/compat/gl-seam/coot-gl-seam.mm
+@@ -15,6 +15,7 @@
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
++#include <math.h>
+ #include <gtk/gtk.h>
+ #include <gdk/gdkquartz.h>
+ #include <gdk/gdkglconfig.h>
+@@ -48,6 +49,11 @@ struct CootGLState {
+    NSOpenGLContext *ctx = nil;
+    gulong sig[6] = {0, 0, 0, 0, 0, 0};
+    bool logged = false;
++   guint heal_id = 0;                    // GLib timeout that re-checks the frame while the widget is mapped
++   NSRect last_frame = NSZeroRect;       // frame we set last
++   bool have_frame = false;
++   bool widget_parent = false;           // true: the GL view is a subview of the GtkDrawingArea's own NSView (GDK places that view)
++   NSView *top_view = nil;               // the toplevel's content view (diagnostics / fallback placement)
+ };
+ 
+ const char *state_key = "coot-gl-seam-state";
+@@ -76,30 +82,129 @@ NSOpenGLPixelFormat *make_pixel_format(GdkGLConfigMode mode, bool with_msaa) {
+    return [[NSOpenGLPixelFormat alloc] initWithAttributes:a];
+ }
+ 
++// Where is the GtkDrawingArea inside the toplevel's content view, in GTK units (origin top-left)?
++// Primary source: the GdkWindows' own origins (this is also what GDK uses to turn mouse events into widget coordinates, so the
++// GL view and picking agree by construction).  gtk_widget_translate_coordinates is the fallback (and a diagnostic cross-check).
++bool widget_offset_in_toplevel(GtkWidget *w, int *ox, int *oy, int *tx_out, int *ty_out) {
++   GtkWidget *top = gtk_widget_get_toplevel(w);
++   int tx = 0, ty = 0;
++   bool ok_translate = top && gtk_widget_translate_coordinates(w, top, 0, 0, &tx, &ty);
++   if (tx_out) *tx_out = ok_translate ? tx : -99999;
++   if (ty_out) *ty_out = ok_translate ? ty : -99999;
++   GdkWindow *gw = gtk_widget_get_window(w), *tw = top ? gtk_widget_get_window(top) : NULL;
++   if (gw && tw) {
++      int gx = 0, gy = 0, hx = 0, hy = 0;
++      gdk_window_get_origin(gw, &gx, &gy);
++      gdk_window_get_origin(tw, &hx, &hy);
++      *ox = gx - hx; *oy = gy - hy;
++      return true;
++   }
++   if (ok_translate) { *ox = tx; *oy = ty; return true; }
++   return false;
++}
++
++bool debug_geometry() { static int d = -1; if (d < 0) { const char *e = getenv("COOT_GL_DEBUG"); d = (e && *e && strcmp(e, "0") != 0) ? 1 : 0; } return d == 1; }
++
++// Preferred placement (default): the GL view lives INSIDE the NSView that GDK keeps for the GtkDrawingArea's GdkWindow and fills it.
++// GDK moves and resizes that view together with the widget, and it is the very view GTK draws the widget into and takes mouse
++// coordinates from, so no GTK-to-AppKit coordinate arithmetic is involved and a displacement cannot arise.
++void position_in_widget_view(GtkWidget *w, CootGLState *st) {
++   NSView *parent = [st->glview superview]; if (!parent) return;
++   NSRect fr = [parent bounds];
++   NSRect cur = [st->glview frame];
++   bool differs = fabs(cur.origin.x - fr.origin.x) > 0.5 || fabs(cur.origin.y - fr.origin.y) > 0.5 ||
++                  fabs(cur.size.width - fr.size.width) > 0.5 || fabs(cur.size.height - fr.size.height) > 0.5;
++   if (!differs && st->have_frame) return;
++   static int n_logged = 0;
++   if ((debug_geometry() || n_logged < 8) && n_logged < 60) {
++      n_logged++;
++      GtkAllocation al; gtk_widget_get_allocation(w, &al);
++      int x = 0, y = 0, tx = 0, ty = 0; bool have_off = widget_offset_in_toplevel(w, &x, &y, &tx, &ty);
++      NSRect inTop = st->top_view ? [st->top_view convertRect:[parent bounds] fromView:parent] : NSZeroRect;   // where AppKit really has the widget's view
++      bool disagree = have_off && st->top_view && (fabs(inTop.origin.x - x) > 1.5 || fabs(inTop.origin.y - y) > 1.5 ||
++                      fabs(inTop.size.width - al.width) > 1.5 || fabs(inTop.size.height - al.height) > 1.5);
++      fprintf(stderr, "coot-gl-seam: widget-view mode: GL frame (%.0f,%.0f %.0fx%.0f) = widget NSView bounds | gtk alloc (%d,%d %dx%d) gdk-offset (%d,%d) translate (%d,%d) | widget view in toplevel view (%.0f,%.0f %.0fx%.0f)%s%s\n",
++              fr.origin.x, fr.origin.y, fr.size.width, fr.size.height, al.x, al.y, al.width, al.height, x, y, tx, ty,
++              inTop.origin.x, inTop.origin.y, inTop.size.width, inTop.size.height, disagree ? " DISAGREE" : "", differs ? " (frame corrected)" : "");
++   }
++   [st->glview setFrame:fr];
++   [[st->glview openGLContext] update];
++   st->last_frame = fr; st->have_frame = true;
++}
++
+ void position_subview(GtkWidget *w, CootGLState *st) {
+    if (!st->glview) return;
++   if (st->widget_parent) { position_in_widget_view(w, st); return; }
+    NSView *parent = [st->glview superview]; if (!parent) return;
+    GtkAllocation al; gtk_widget_get_allocation(w, &al);
+-   int x = 0, y = 0;
+-   if (!gtk_widget_translate_coordinates(w, gtk_widget_get_toplevel(w), 0, 0, &x, &y)) return;
++   int x = 0, y = 0, tx = 0, ty = 0;
++   if (!widget_offset_in_toplevel(w, &x, &y, &tx, &ty)) return;
+    NSRect pb = [parent bounds];
+    CGFloat ny = [parent isFlipped] ? y : pb.size.height - y - al.height;
+-   [st->glview setFrame:NSMakeRect(x, ny, al.width, al.height)];
+-   [[st->glview openGLContext] update];
++   NSRect fr = NSMakeRect(x, ny, al.width, al.height);
++   bool changed = !st->have_frame || fabs(fr.origin.x - st->last_frame.origin.x) > 0.5 || fabs(fr.origin.y - st->last_frame.origin.y) > 0.5 ||
++                  fabs(fr.size.width - st->last_frame.size.width) > 0.5 || fabs(fr.size.height - st->last_frame.size.height) > 0.5;
++   NSRect cur = [st->glview frame];                    // somebody else (AppKit autoresizing) may have moved it
++   bool moved_by_others = fabs(cur.origin.x - fr.origin.x) > 0.5 || fabs(cur.origin.y - fr.origin.y) > 0.5 ||
++                          fabs(cur.size.width - fr.size.width) > 0.5 || fabs(cur.size.height - fr.size.height) > 0.5;
++   if (changed || moved_by_others) {
++      static int n_logged = 0;
++      bool disagree = (abs(tx - x) > 1 || abs(ty - y) > 1);
++      if ((debug_geometry() || disagree || moved_by_others || n_logged < 12) && n_logged < 80) {
++         n_logged++;
++         fprintf(stderr, "coot-gl-seam: frame (%.0f,%.0f %.0fx%.0f) alloc (%d,%d %dx%d) gdk-offset (%d,%d) translate (%d,%d)%s parent bounds %.0fx%.0f flipped=%d%s\n",
++                 fr.origin.x, fr.origin.y, fr.size.width, fr.size.height, al.x, al.y, al.width, al.height, x, y, tx, ty,
++                 disagree ? " DISAGREE" : "", pb.size.width, pb.size.height, (int)[parent isFlipped], moved_by_others ? " (frame had been moved by AppKit)" : "");
++      }
++      [st->glview setFrame:fr];
++      [[st->glview openGLContext] update];
++      st->last_frame = fr; st->have_frame = true;
++   }
++}
++
++// Layout can settle after the last size-allocate (toolbars shown by scripts or preferences, window zoom animation, NSView resizes that
++// arrive later than GTK's allocation): re-check the frame a few times a second while the view is on screen.
++gboolean heal_cb(gpointer data) {
++   GtkWidget *w = static_cast<GtkWidget *>(data);
++   CootGLState *st = state_of(w);
++   if (!st || !st->glview) { return FALSE; }
++   if (gtk_widget_get_mapped(w)) position_subview(w, st);
++   return TRUE;
+ }
+ 
+ void on_realize(GtkWidget *w, gpointer) {
+    CootGLState *st = state_of(w); if (!st || st->glview) return;
+    GdkWindow *top = gtk_widget_get_window(gtk_widget_get_toplevel(w));
+-   NSView *parent = top ? gdk_quartz_window_get_nsview(top) : nil;
+-   if (!parent) { fprintf(stderr, "coot-gl-seam: ERROR no NSView for the toplevel window\n"); return; }
++   NSView *top_view = top ? gdk_quartz_window_get_nsview(top) : nil;
++   if (!top_view) { fprintf(stderr, "coot-gl-seam: ERROR no NSView for the toplevel window\n"); return; }
++   // Host the GL view in the widget's own NSView when GDK has one (COOT_GL_PARENT=toplevel forces the older placement by arithmetic).
++   GdkWindow *gw = gtk_widget_get_window(w);
++   NSView *wview = gw ? gdk_quartz_window_get_nsview(gw) : nil;
++   const char *pmode = getenv("COOT_GL_PARENT");
++   bool want_toplevel = pmode && strcmp(pmode, "toplevel") == 0;
++   st->widget_parent = !want_toplevel && wview && wview != top_view && [wview superview] != nil;
++   NSView *parent = st->widget_parent ? wview : top_view;
++   st->top_view = top_view;
++   fprintf(stderr, "coot-gl-seam: GL view parent = %s (%s)\n", st->widget_parent ? "the drawing area's own NSView" : "the toplevel content view",
++           want_toplevel ? "COOT_GL_PARENT=toplevel" : (st->widget_parent ? "default" : "the widget has no separate NSView"));
+    st->glview = [[CootGLView alloc] initWithFrame:NSMakeRect(0, 0, 64, 64) pixelFormat:st->config->pf];
+    if (!st->glview) { fprintf(stderr, "coot-gl-seam: ERROR could not create NSOpenGLView\n"); return; }
+    [st->glview setWantsBestResolutionOpenGLSurface:(retina_requested() ? YES : NO)];
++   if (st->widget_parent) [st->glview setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
+    [parent addSubview:st->glview positioned:NSWindowAbove relativeTo:nil];
++   {  // one line of window geometry in the launch log: lets a mis-placed GL view be diagnosed from the log alone
++      NSWindow *win = [parent window];
++      NSRect pf = [parent frame], pbo = [parent bounds];
++      NSRect wf = win ? [win frame] : NSZeroRect, lr = win ? [win contentLayoutRect] : NSZeroRect;
++      fprintf(stderr, "coot-gl-seam: window frame (%.0f,%.0f %.0fx%.0f) contentLayoutRect (%.0f,%.0f %.0fx%.0f) styleMask 0x%lx | parent %s frame (%.0f,%.0f %.0fx%.0f) bounds (%.0f,%.0f %.0fx%.0f) flipped=%d isContentView=%d\n",
++              wf.origin.x, wf.origin.y, wf.size.width, wf.size.height, lr.origin.x, lr.origin.y, lr.size.width, lr.size.height,
++              win ? (unsigned long)[win styleMask] : 0UL, [[parent className] UTF8String], pf.origin.x, pf.origin.y, pf.size.width, pf.size.height,
++              pbo.origin.x, pbo.origin.y, pbo.size.width, pbo.size.height, (int)[parent isFlipped], (int)(win && [win contentView] == parent));
++   }
+    st->ctx = [st->glview openGLContext];
+    GLint swap_interval = 1; [st->ctx setValues:&swap_interval forParameter:NSOpenGLCPSwapInterval];
+    position_subview(w, st);
++   if (!st->heal_id) st->heal_id = g_timeout_add(250, heal_cb, w);
+    [st->ctx makeCurrentContext];
+    if (!st->logged) {
+       st->logged = true;
+@@ -111,6 +216,8 @@ void on_realize(GtkWidget *w, gpointer) {
+ }
+ 
+ void remove_view(CootGLState *st) {
++   if (st->heal_id) { g_source_remove(st->heal_id); st->heal_id = 0; }
++   st->have_frame = false;
+    if (st->glview) { [st->glview removeFromSuperview]; st->glview = nil; st->ctx = nil; }
+ }
+ void on_unrealize(GtkWidget *w, gpointer) { CootGLState *st = state_of(w); if (st) remove_view(st); }
+diff --git a/coot-utils/coot-map-utils.cc b/coot-utils/coot-map-utils.cc
+index 29a4e6b..0c46ac2 100644
+--- a/coot-utils/coot-map-utils.cc
++++ b/coot-utils/coot-map-utils.cc
+@@ -184,13 +184,64 @@ coot::util::reinterp_map_fine_gridding(const clipper::Xmap<float> &xmap) {
+    }
+ }
+ 
++bool
++coot::util::grid_is_compatible_with_spacegroup(const clipper::Spacegroup &spgr,
++                                               const clipper::Grid_sampling &gs) {
++
++   if (gs.nu() <= 0 || gs.nv() <= 0 || gs.nw() <= 0) return false;
++   const double n[3] = { double(gs.nu()), double(gs.nv()), double(gs.nw()) };
++   const double tol = 1.0e-4;
++   for (int isym=0; isym<spgr.num_symops(); isym++) {
++      const clipper::Symop &op = spgr.symop(isym);
++      for (int i=0; i<3; i++) {
++         // translation part must be a whole number of grid steps
++         double t = op.trn()[i] * n[i];
++         if (std::fabs(t - std::floor(t + 0.5)) > tol) return false;
++         // the rotation part must map grid points onto grid points
++         for (int j=0; j<3; j++) {
++            double r = op.rot()(i,j) * n[i] / n[j];
++            if (std::fabs(r - std::floor(r + 0.5)) > tol) return false;
++         }
++      }
++   }
++   return true;
++}
++
++clipper::Grid_sampling
++coot::util::compatible_grid_sampling(const clipper::Spacegroup &spgr,
++                                     const clipper::Cell &cell,
++                                     int nu, int nv, int nw) {
++
++   clipper::Grid_sampling gs_wanted(nu, nv, nw);
++   if (grid_is_compatible_with_spacegroup(spgr, gs_wanted))
++      return gs_wanted;
++
++   // let clipper choose a grid that is OK for this space group, with a spacing no
++   // coarser than the one that was asked for. Shrink the spacing a little at a time in
++   // the (unexpected) case that the first answer still fails the test.
++   double spacing = std::min(std::min(cell.a()/double(nu), cell.b()/double(nv)),
++                             cell.c()/double(nw));
++   for (int itry=0; itry<100; itry++) {
++      clipper::Grid_sampling gs(spgr, cell, clipper::Resolution(2.0 * spacing), 1.0);
++      if (grid_is_compatible_with_spacegroup(spgr, gs))
++         return gs;
++      spacing *= 0.98;
++   }
++   return gs_wanted; // not reached in practice
++}
++
+ clipper::Xmap<float>
+    coot::util::reinterp_map(const clipper::Xmap<float> &xmap_in, float sampling_multiplier) {
+ 
+    clipper::Grid_sampling gs_old = xmap_in.grid_sampling();
+-   clipper::Grid_sampling gs(xmap_in.grid_sampling().nu()*sampling_multiplier,
+-                             xmap_in.grid_sampling().nv()*sampling_multiplier,
+-                             xmap_in.grid_sampling().nw()*sampling_multiplier);
++   // macOS port: a non-integer multiplier (e.g. the 1.25 of "Make a Smoother Copy") can give
++   // a grid that is not allowed by the space group (e.g. 225 for P 43 21 2), which crashed
++   // Coot on first use of the new map. Choose a grid that is valid for the space group.
++   clipper::Grid_sampling gs =
++      compatible_grid_sampling(xmap_in.spacegroup(), xmap_in.cell(),
++                               int(xmap_in.grid_sampling().nu()*sampling_multiplier),
++                               int(xmap_in.grid_sampling().nv()*sampling_multiplier),
++                               int(xmap_in.grid_sampling().nw()*sampling_multiplier));
+ 
+    clipper::Xmap<float> xmap_new(xmap_in.spacegroup(), xmap_in.cell(), gs);
+ 
+diff --git a/coot-utils/coot-map-utils.hh b/coot-utils/coot-map-utils.hh
+index 6d64d63..a48d06e 100644
+--- a/coot-utils/coot-map-utils.hh
++++ b/coot-utils/coot-map-utils.hh
+@@ -322,6 +322,21 @@ namespace coot {
+       //
+       clipper::Xmap<float> reinterp_map(const clipper::Xmap<float> &xmap_in, float sampling_multiplier);
+ 
++      // macOS port: a grid is only usable by clipper::Xmap if every symmetry operator of the
++      // space group maps the grid onto itself (translation parts must be whole grid steps, e.g.
++      // an odd nu is not allowed with a 2_1 axis; rotations that exchange axes need equal
++      // dimensions). A grid that fails this test makes clipper throw clipper::Message_fatal
++      // when the map is used ("Xmap: Internal map ASU error").
++      bool grid_is_compatible_with_spacegroup(const clipper::Spacegroup &spgr,
++                                              const clipper::Grid_sampling &gs);
++
++      // Return a grid that is compatible with the space group and has at least (about) the
++      // requested number of points along each axis. If the requested grid is already
++      // compatible it is returned unchanged.
++      clipper::Grid_sampling compatible_grid_sampling(const clipper::Spacegroup &spgr,
++                                                      const clipper::Cell &cell,
++                                                      int nu, int nv, int nw);
++
+ 
+       // make a copy of map_in, but in the cell, spacegroup and gridding of reference_map
+       clipper::Xmap<float> reinterp_map(const clipper::Xmap<float> &xmap_in,
+diff --git a/python/fitting.py b/python/fitting.py
+index efe0bc6..6476abb 100644
+--- a/python/fitting.py
++++ b/python/fitting.py
+@@ -553,6 +553,11 @@ def stepped_refine_protein_with_refine_func(imol, refine_func, res_step):
+             set_refine_auto_range_step(int(res_step / 2))
+ 
+         for chain_id in chain_ids(imol):
++            # macOS port: ligand/water/sugar chains have no CA to centre on; stepping over them only produced
++            # "Can't get index" / "moving_atoms_asc_type not known" errors
++            if not is_protein_chain_p(imol, chain_id):
++                print("Stepped refine: skipping chain %s (not a protein chain)" % chain_id)
++                continue
+             n_residues = chain_n_residues(chain_id,imol)
+             print("There are %(a)i residues in chain %(b)s" % {"a":n_residues,"b":chain_id})
+             
+diff --git a/src/molecule-class-info-maps.cc b/src/molecule-class-info-maps.cc
+index beb0076..af6abc1 100644
+--- a/src/molecule-class-info-maps.cc
++++ b/src/molecule-class-info-maps.cc
+@@ -44,6 +44,9 @@
+ #include <sys/stat.h>
+ 
+ #include <string>
++#include <atomic>
++#include <set>
++#include <cstdlib>
+ #include <mmdb2/mmdb_manager.h>
+ #include "coords/mmdb-extras.h"
+ #include "coords/Cartesian.h"
+@@ -328,6 +331,22 @@ molecule_class_info_t::update_map_internal() {
+    float radius = graphics_info_t::box_radius_xray;
+ 
+    if (has_xmap()) {
++
++      // macOS port: a map whose grid is not allowed by its space group makes clipper throw
++      // Message_fatal on first use. Refuse to contour it (and say why, once).
++      if (! coot::util::grid_is_compatible_with_spacegroup(xmap.spacegroup(), xmap.grid_sampling())) {
++         static std::set<std::string> already_reported;
++         std::string key = name_ + "/" + xmap.grid_sampling().format();
++         if (already_reported.find(key) == already_reported.end()) {
++            already_reported.insert(key);
++            std::cout << "ERROR:: map \"" << name_ << "\" has grid " << xmap.grid_sampling().format()
++                      << " which is not compatible with space group "
++                      << xmap.spacegroup().descr().symbol_hm()
++                      << " - it cannot be contoured. Re-make the map with a compatible grid." << std::endl;
++         }
++         return;
++      }
++
+       if (is_EM_map())
+          radius = graphics_info_t::box_radius_em;
+ 
+@@ -358,6 +377,12 @@ molecule_class_info_t::update_map_internal() {
+       catch (const std::bad_alloc &ba) {
+          std::cout << "ERROR:: out of memory " << ba.what() << std::endl;
+       }
++      catch (const clipper::Message_fatal &mf) {   // macOS port: do not let a clipper error abort Coot
++         std::cout << "ERROR:: map contouring failed (map " << imol_no << "): " << mf.text() << std::endl;
++      }
++      catch (const std::exception &e) {
++         std::cout << "ERROR:: map contouring failed (map " << imol_no << "): " << e.what() << std::endl;
++      }
+    }
+ }
+ 
+@@ -793,6 +818,31 @@ molecule_class_info_t::update_map_triangles(float radius, coot::Cartesian centre
+          for (unsigned int ii=0; ii<draw_vector_sets.size(); ii++)
+             dynamically_transform(draw_vector_sets[ii]);
+ 
++      // macOS port: the first 40 re-contourings are always reported in the log (where, how big); COOT_DEBUG_MAPS=1 reports
++      // every one, COOT_DEBUG_MAPS=0 none
++      static int n_debug_reports = 0;
++      const char *dbg_env = getenv("COOT_DEBUG_MAPS");
++      bool want_debug = dbg_env ? (*dbg_env != 0 && std::string(dbg_env) != "0") : (n_debug_reports < 40);
++      if (want_debug) {
++         n_debug_reports++;
++         int n_vec = 0;
++         float lo[3] = {1e30f, 1e30f, 1e30f}, hi[3] = {-1e30f, -1e30f, -1e30f};   // bounding box of the contour lines
++         for (unsigned int ii=0; ii<draw_vector_sets.size(); ii++) {
++            n_vec += draw_vector_sets[ii].size;
++            for (int j=0; j<draw_vector_sets[ii].size; j++) {
++               const coot::Cartesian &a = draw_vector_sets[ii].data[j].getStart();
++               float c3[3] = {a.x(), a.y(), a.z()};
++               for (int k=0; k<3; k++) { if (c3[k] < lo[k]) lo[k] = c3[k]; if (c3[k] > hi[k]) hi[k] = c3[k]; }
++            }
++         }
++         std::cout << "DEBUG-MAPS:: update_map_triangles imol " << imol_no << " centre (" << centre.x() << ", " << centre.y()
++                   << ", " << centre.z() << ") radius " << dy_radius << " contour " << contour_level
++                   << " vectors " << n_vec;
++         if (n_vec > 0)
++            std::cout << " bbox (" << lo[0] << ", " << lo[1] << ", " << lo[2] << ") - (" << hi[0] << ", " << hi[1] << ", " << hi[2] << ")";
++         std::cout << std::endl;
++      }
++
+       if (draw_it_for_solid_density_surface) {
+          tri_con = my_isosurface.GenerateTriangles_from_Xmap(xmap,
+                                  contour_level, dy_radius, centre,
+@@ -816,6 +866,7 @@ void gensurf_and_add_vecs_threaded_workpackage(const clipper::Xmap<float> *xmap_
+ 					       bool is_em_map,
+ 					       std::vector<coot::CartesianPairInfo> *draw_vector_sets_p) {
+ 
++   bool have_lock = false;   // macOS port: an exception while the shared lock is held must not leave it locked (hang)
+    try {
+       CIsoSurface<float> my_isosurface;
+       coot::CartesianPairInfo v;
+@@ -830,6 +881,7 @@ void gensurf_and_add_vecs_threaded_workpackage(const clipper::Xmap<float> *xmap_
+          std::this_thread::sleep_for(std::chrono::microseconds(10));
+          unlocked = false;
+       }
++      have_lock = true;
+       // no longer dynamically change the size of draw_vector_sets
+       // clear_draw_vecs will set the size to zero. If we find a element with size 0,
+       // replace that one, rather than adding to draw_vector_sets
+@@ -859,10 +911,34 @@ void gensurf_and_add_vecs_threaded_workpackage(const clipper::Xmap<float> *xmap_
+       }
+ 
+       molecule_class_info_t::draw_vector_sets_lock = false; // unlock
++      have_lock = false;
+    }
+    catch (const std::out_of_range &oor) {
++      if (have_lock) molecule_class_info_t::draw_vector_sets_lock = false;
+       std::cout << "ERROR:: contouring threaded workpackage " << oor.what() << std::endl;
+    }
++   // macOS port: an exception that leaves a std::thread calls std::terminate and aborts Coot (seen as
++   // "terminating due to uncaught exception of type clipper::Message_fatal" when the contouring box reached a
++   // grid point that the map's symmetry table could not map into its asymmetric unit).  Report it and carry on:
++   // this slice of the map is not drawn, everything else keeps working.
++   catch (const clipper::Message_fatal &mf) {
++      if (have_lock) molecule_class_info_t::draw_vector_sets_lock = false;
++      static std::atomic<int> n_reports(0);
++      if (n_reports++ < 5)
++         std::cout << "ERROR:: map contouring failed for one slice (not drawn): " << mf.text() << std::endl;
++   }
++   catch (const std::exception &e) {
++      if (have_lock) molecule_class_info_t::draw_vector_sets_lock = false;
++      static std::atomic<int> n_reports(0);
++      if (n_reports++ < 5)
++         std::cout << "ERROR:: map contouring failed for one slice (not drawn): " << e.what() << std::endl;
++   }
++   catch (...) {
++      if (have_lock) molecule_class_info_t::draw_vector_sets_lock = false;
++      static std::atomic<int> n_reports(0);
++      if (n_reports++ < 5)
++         std::cout << "ERROR:: map contouring failed for one slice (not drawn): unknown exception" << std::endl;
++   }
+ }
+ 
+ 

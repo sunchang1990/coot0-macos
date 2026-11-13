@@ -1,0 +1,368 @@
+diff --git a/src/c-interface-gtk-widgets.h b/src/c-interface-gtk-widgets.h
+index a12221b..aa66bed 100644
+--- a/src/c-interface-gtk-widgets.h
++++ b/src/c-interface-gtk-widgets.h
+@@ -67,6 +67,7 @@
+ #ifdef USE_GUILE
+ #include <cstdio> /* for std::FILE in gmp.h for libguile.h */
+ #include <libguile.h>		/* for SCM type (returned by safe_scheme_command) */
++#include "guile-fixups.h"
+ #else
+ #include <string> /* for std::string; included (sic!) in above for guile */
+ #endif /*  USE_GUILE */
+diff --git a/src/c-interface-gtk2.cc b/src/c-interface-gtk2.cc
+index 5ed30f4..14fe207 100644
+--- a/src/c-interface-gtk2.cc
++++ b/src/c-interface-gtk2.cc
+@@ -42,6 +42,7 @@
+ #ifdef USE_GUILE
+ #include <cstdio>  // for std::FILE
+ #include <libguile.h>
++#include "guile-fixups.h"
+ #endif 
+ 
+ #if !defined(WINDOWS_MINGW) && !defined(_MSC_VER)
+diff --git a/src/c-interface-info.cc b/src/c-interface-info.cc
+index 7ad3668..2edf8ce 100644
+--- a/src/c-interface-info.cc
++++ b/src/c-interface-info.cc
+@@ -2198,7 +2198,7 @@ update_sequence_view_current_position_highlight_from_active_atom() {
+ #ifdef USE_GUILE
+ SCM generic_string_vector_to_list_internal(const std::vector<std::string> &v) {
+ 
+-   SCM r = SCM_CAR(scm_listofnull);
++   SCM r = SCM_EOL;
+    for (int i=v.size()-1; i>=0; i--) {
+       r = scm_cons(scm_makfrom0str(v[i].c_str()), r);
+    }
+@@ -2438,7 +2438,7 @@ PyObject *inverse_rtop_py(PyObject *rtop_py) {
+ //
+ SCM get_symmetry(int imol) {
+ 
+-   SCM r = SCM_CAR(scm_listofnull);
++   SCM r = SCM_EOL;
+    if (is_valid_model_molecule(imol) ||
+        is_valid_map_molecule(imol)) {
+       std::vector<std::string> symop_list =
+diff --git a/src/c-interface-mmdb.hh b/src/c-interface-mmdb.hh
+index 0ef49b9..c677ce9 100644
+--- a/src/c-interface-mmdb.hh
++++ b/src/c-interface-mmdb.hh
+@@ -28,6 +28,7 @@
+ #ifdef __cplusplus
+ #ifdef USE_GUILE
+ #include <libguile.h>	
++#include "guile-fixups.h"
+ 
+ // return 0 on failure.  An atom with an atom name of "" and element
+ // of "" is converted to a Ter atom.
+diff --git a/src/c-interface-mogul.hh b/src/c-interface-mogul.hh
+index e5c208d..18c19ed 100644
+--- a/src/c-interface-mogul.hh
++++ b/src/c-interface-mogul.hh
+@@ -24,6 +24,7 @@
+ #ifdef USE_GUILE
+ #include <cstdio> // for std::FILE in gmp.h for libguile.h
+ #include <libguile.h>		/* for SCM type (returned by safe_scheme_command) */
++#include "guile-fixups.h"
+ #endif /*  USE_GUILE */
+ 
+ 
+diff --git a/src/c-interface-refmac.h b/src/c-interface-refmac.h
+index d90d68d..f1b006e 100644
+--- a/src/c-interface-refmac.h
++++ b/src/c-interface-refmac.h
+@@ -50,6 +50,7 @@
+ #ifdef USE_GUILE
+ #include <cstdio> /* for std::FILE in gmp.h for libguile.h */
+ #include <libguile.h>		/* for SCM type (returned by safe_scheme_command) */
++#include "guile-fixups.h"
+ #else
+ #include <string> /* for std::string; included (sic!) in above for guile */
+ #endif /*  USE_GUILE */
+diff --git a/src/c-interface-residues.cc b/src/c-interface-residues.cc
+index 9d66594..211050b 100644
+--- a/src/c-interface-residues.cc
++++ b/src/c-interface-residues.cc
+@@ -28,6 +28,7 @@
+ #ifdef USE_GUILE
+ #include <cstddef> // define std::ptrdiff_t for clang
+ #include <libguile.h>
++#include "guile-fixups.h"
+ #endif
+ 
+ #include <vector>
+diff --git a/src/c-interface-scm.hh b/src/c-interface-scm.hh
+index 14a01bf..d6668d2 100644
+--- a/src/c-interface-scm.hh
++++ b/src/c-interface-scm.hh
+@@ -27,6 +27,7 @@
+ // Load the head if it hasn't been included.
+ #ifndef LIBGUILEH
+ #include <libguile.h>		/* for SCM type (returned by safe_scheme_command) */
++#include "guile-fixups.h"
+ #endif
+ 
+ #include "coot-utils/coot-coord-utils.hh"
+diff --git a/src/c-interface-validate.cc b/src/c-interface-validate.cc
+index f1ef870..cefdd59 100644
+--- a/src/c-interface-validate.cc
++++ b/src/c-interface-validate.cc
+@@ -57,6 +57,7 @@
+ 
+ #ifdef USE_GUILE
+ #include <libguile.h>
++#include "guile-fixups.h"
+ #endif // USE_GUILE
+ 
+ // Including python needs to come after graphics-info.h, because
+diff --git a/src/c-interface-view.cc b/src/c-interface-view.cc
+index 87e3545..b77bc94 100644
+--- a/src/c-interface-view.cc
++++ b/src/c-interface-view.cc
+@@ -28,6 +28,7 @@
+ #ifdef USE_GUILE
+ #include <cstddef> // define std::ptrdiff_t for clang
+ #include <libguile.h>
++#include "guile-fixups.h"
+ #endif
+ 
+ #include "cc-interface.hh"
+diff --git a/src/c-interface-waters-gui.cc b/src/c-interface-waters-gui.cc
+index 3f45288..10c6f5b 100644
+--- a/src/c-interface-waters-gui.cc
++++ b/src/c-interface-waters-gui.cc
+@@ -57,6 +57,7 @@
+ 
+ #ifdef USE_GUILE
+ #include <libguile.h>
++#include "guile-fixups.h"
+ #endif // USE_GUILE
+ 
+ // Including python needs to come after graphics-info.h, because
+diff --git a/src/c-interface.cc b/src/c-interface.cc
+index 4585fd5..e54d3da 100644
+--- a/src/c-interface.cc
++++ b/src/c-interface.cc
+@@ -2454,7 +2454,7 @@ SCM map_colour_components(int imol) {
+       double rc = graphics_info_t::molecules[imol].map_colour[0][0]; 
+       double gc = graphics_info_t::molecules[imol].map_colour[0][1]; 
+       double bc = graphics_info_t::molecules[imol].map_colour[0][2]; 
+-      r = SCM_CAR(scm_listofnull);
++      r = SCM_EOL;
+       // put red at the front of the resulting list
+       r = scm_cons(scm_double2num(bc), r);
+       r = scm_cons(scm_double2num(gc), r);
+diff --git a/src/c-interface.h b/src/c-interface.h
+index 6a81bc5..33e5261 100644
+--- a/src/c-interface.h
++++ b/src/c-interface.h
+@@ -65,6 +65,7 @@ p  So we need to have this function external for c++ linking.
+ #ifdef USE_GUILE
+ #include <cstdio> /* for std::FILE in gmp.h for libguile.h */
+ #include <libguile.h>		/* for SCM type (returned by safe_scheme_command) */
++#include "guile-fixups.h"
+ #else
+ #include <string> /* for std::string; included (sic!) in above for guile */
+ #endif /*  USE_GUILE */
+diff --git a/src/cc-interface-alignment.cc b/src/cc-interface-alignment.cc
+index 12c7dad..26b63d9 100644
+--- a/src/cc-interface-alignment.cc
++++ b/src/cc-interface-alignment.cc
+@@ -11,6 +11,7 @@
+ 
+ #ifdef USE_GUILE
+ #include <libguile.h>
++#include "guile-fixups.h"
+ #endif
+ 
+ #include "graphics-info.h"
+diff --git a/src/cc-interface-merge.cc b/src/cc-interface-merge.cc
+index 904c127..04c72be 100644
+--- a/src/cc-interface-merge.cc
++++ b/src/cc-interface-merge.cc
+@@ -8,6 +8,7 @@
+ 
+ #ifdef USE_GUILE
+ #include <libguile.h>
++#include "guile-fixups.h"
+ #endif
+ 
+ #include "graphics-info.h"
+diff --git a/src/cc-interface-png.cc b/src/cc-interface-png.cc
+index 9b51dd9..0709073 100644
+--- a/src/cc-interface-png.cc
++++ b/src/cc-interface-png.cc
+@@ -14,6 +14,7 @@
+ 
+ #ifdef USE_GUILE
+ #include <libguile.h>
++#include "guile-fixups.h"
+ #endif
+ 
+ #include <cairo.h>
+diff --git a/src/cc-interface-user-defined-atom-colours.hh b/src/cc-interface-user-defined-atom-colours.hh
+index 2b6434f..4008cb3 100644
+--- a/src/cc-interface-user-defined-atom-colours.hh
++++ b/src/cc-interface-user-defined-atom-colours.hh
+@@ -5,6 +5,7 @@
+ 
+ #ifdef USE_GUILE
+ #include <libguile.h>
++#include "guile-fixups.h"
+ #endif
+ 
+ // #include<graphics-info.h>
+diff --git a/src/cc-interface.hh b/src/cc-interface.hh
+index 0ea21d9..88ea292 100644
+--- a/src/cc-interface.hh
++++ b/src/cc-interface.hh
+@@ -27,6 +27,7 @@
+ 
+ #ifdef USE_GUILE
+ #include <libguile.h>
++#include "guile-fixups.h"
+ #endif // USE_GUILE
+ 
+ #ifdef USE_PYTHON
+diff --git a/src/cfc.cc b/src/cfc.cc
+index 9198d33..602628c 100644
+--- a/src/cfc.cc
++++ b/src/cfc.cc
+@@ -32,6 +32,7 @@
+ // needed to parse cc-interface.hh
+ #ifdef USE_GUILE
+ #include <libguile.h> 
++#include "guile-fixups.h"
+ #endif // USE_GUILE
+ 
+ // For drawing balls
+diff --git a/src/drag-and-drop.cc b/src/drag-and-drop.cc
+index a9ce339..d64d175 100644
+--- a/src/drag-and-drop.cc
++++ b/src/drag-and-drop.cc
+@@ -31,6 +31,7 @@
+ #ifdef USE_GUILE   
+ #include <cstdio> // for std::FILE in gmp.h for libguile.h
+ #include <libguile.h>		/* for SCM type (returned by safe_scheme_command) */
++#include "guile-fixups.h"
+ #endif
+ 
+ #include "cc-interface.hh"
+diff --git a/src/graphics-info.h b/src/graphics-info.h
+index de12904..01326b2 100644
+--- a/src/graphics-info.h
++++ b/src/graphics-info.h
+@@ -116,6 +116,7 @@
+ 
+ #ifdef USE_GUILE
+ #include <libguile.h>
++#include "guile-fixups.h"
+ #endif
+ 
+ #ifdef HAVE_GSL
+diff --git a/src/guile-fixups.h b/src/guile-fixups.h
+index b5279e5..d24e7d8 100644
+--- a/src/guile-fixups.h
++++ b/src/guile-fixups.h
+@@ -1,8 +1,25 @@
+ #ifdef USE_GUILE
+ #include <libguile.h>
+ #if (SCM_MAJOR_VERSION > 1) || (SCM_MINOR_VERSION > 7)
+-// no fix up needed 
+-#else    
++// Guile >= 1.8: the "scm_to_*"/"scm_from_*" API exists, so no fix up is needed for it.
++#if SCM_MAJOR_VERSION >= 3
++// Guile 3.0 removed these Guile 1.x names, which Coot 0.9.x still uses.  Map them to the
++// current API (the same replacements Guile 2.x's own deprecated.h used).
++#ifndef COOT_GUILE_1X_COMPAT
++#define COOT_GUILE_1X_COMPAT
++#define SCM_MAKINUM(n)          scm_from_long(static_cast<long>(n))
++#define scm_makfrom0str(s)      scm_from_locale_string(s)
++#define scm_double2num(d)       scm_from_double(d)
++#define scm_float2num(d)        scm_from_double(d)
++#define scm_int2num(i)          scm_from_int(i)
++#define scm_str2symbol(s)       scm_from_locale_symbol(s)
++#define SCM_LIST2(a,b)          scm_list_2((a),(b))
++#define SCM_LIST3(a,b,c)        scm_list_3((a),(b),(c))
++#define SCM_LIST4(a,b,c,d)      scm_list_4((a),(b),(c),(d))
++#define SCM_LIST6(a,b,c,d,e,f)  scm_list_n((a),(b),(c),(d),(e),(f),SCM_UNDEFINED)
++#endif // COOT_GUILE_1X_COMPAT
++#endif // SCM_MAJOR_VERSION >= 3
++#else
+ #define scm_to_int gh_scm2int
+ #define scm_to_locale_string SCM_STRING_CHARS
+ #define scm_from_locale_string scm_makfrom0str
+diff --git a/src/main.cc b/src/main.cc
+index e5a9420..a1f9f5b 100644
+--- a/src/main.cc
++++ b/src/main.cc
+@@ -119,6 +119,7 @@
+ 
+ #ifdef USE_GUILE
+ #include <libguile.h>
++#include "guile-fixups.h"
+ #endif
+ 
+ 
+diff --git a/src/probe-clash-score.hh b/src/probe-clash-score.hh
+index 5ae4cf9..2a728d4 100644
+--- a/src/probe-clash-score.hh
++++ b/src/probe-clash-score.hh
+@@ -27,6 +27,7 @@
+ 
+ #ifdef USE_GUILE
+ #include <libguile.h>     
++#include "guile-fixups.h"
+ #endif // USE_GUILE
+ 
+ #include "utils/coot-utils.hh"
+diff --git a/src/scm-boot-guile.cc b/src/scm-boot-guile.cc
+index ceaf5a8..1b62271 100644
+--- a/src/scm-boot-guile.cc
++++ b/src/scm-boot-guile.cc
+@@ -31,6 +31,7 @@
+ #include <cstddef> // needed for gmp.h I think.
+ 
+ #include <libguile.h>
++#include "guile-fixups.h"
+ #include <glib.h>
+ #include <gtk/gtk.h>
+ 
+@@ -68,9 +69,12 @@ void inner_main(void *closure, int argc, char **argv) {
+ #endif	/* USE_GUILE_GTK */
+ 
+   /* debugging voodoo */
++#if SCM_MAJOR_VERSION < 2
++  // Guile 1.x debug flags; they do not exist in Guile 2+/3 (backtraces are on by default there)
+   SCM_DEVAL_P = 1;
+   SCM_BACKTRACE_P = 1;
+   SCM_RECORD_POSITIONS_P = 1;
++#endif // SCM_MAJOR_VERSION < 2
+ 
+   // this is not the right place.  We need to be in
+   std::string d1 = coot::util::append_dir_dir(PKGDATADIR, "scheme");
+diff --git a/src/user-mods.hh b/src/user-mods.hh
+index 51b66ce..6c02dbe 100644
+--- a/src/user-mods.hh
++++ b/src/user-mods.hh
+@@ -5,6 +5,7 @@
+ 
+ #ifdef USE_GUILE
+ #include <libguile.h>
++#include "guile-fixups.h"
+ #if (SCM_MAJOR_VERSION > 1) || (SCM_MINOR_VERSION > 7)
+ // no fix up needed 
+ #else    
+diff --git a/src/validation.hh b/src/validation.hh
+index 2b80615..f380078 100644
+--- a/src/validation.hh
++++ b/src/validation.hh
+@@ -7,6 +7,7 @@
+ 
+ #ifdef USE_GUILE
+ #include <libguile.h>
++#include "guile-fixups.h"
+ #endif // USE_GUILE
+ 
+ #ifdef USE_PYTHON

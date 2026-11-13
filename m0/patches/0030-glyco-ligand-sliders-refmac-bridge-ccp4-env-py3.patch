@@ -1,0 +1,679 @@
+diff --git a/compat/pygtk2/gtk/__init__.py b/compat/pygtk2/gtk/__init__.py
+index 62658c1..984ea76 100644
+--- a/compat/pygtk2/gtk/__init__.py
++++ b/compat/pygtk2/gtk/__init__.py
+@@ -45,7 +45,9 @@ class Widget(Object):
+     def get_colormap(self): return _wrap(_call("gtk_widget_get_colormap", self))
+     def create_pango_layout(self, text=None): return _wrap(_call("gtk_widget_create_pango_layout", self, text))
+ 
+-class Container(Widget): pass
++class Container(Widget):
++    # PyGTK 2: "for child in container:" iterates over container.get_children() (Coot's glyco dialog does this on a gtk.Table)
++    def __iter__(self): return iter(self.get_children())
+ class Bin(Container): pass
+ class Misc(Widget): pass
+ 
+diff --git a/compat/pygtk2/tests/selftest.py b/compat/pygtk2/tests/selftest.py
+index c641dbe..3c03abe 100644
+--- a/compat/pygtk2/tests/selftest.py
++++ b/compat/pygtk2/tests/selftest.py
+@@ -46,6 +46,7 @@ def boxes_buttons_labels_entries():
+     eq(sw.get_policy(), (1, 0))
+     t = gtk.Table(2, 3, False); t.attach(gtk.Label("a"), 0, 1, 0, 1); t.attach(gtk.Label("b"), 1, 2, 0, 1, gtk.EXPAND, gtk.FILL, 2, 2)
+     eq(len(t.get_children()), 2)
++    eq([type(c).__name__ for c in t], ["Label", "Label"]); eq(len(list(hb)), 3)   # PyGTK 2 Container iteration (glyco dialog: "for c in table")
+     vb.destroy()
+ 
+ @case
+diff --git a/python/add_linked_cho.py b/python/add_linked_cho.py
+index 07536ff..98a2acd 100644
+--- a/python/add_linked_cho.py
++++ b/python/add_linked_cho.py
+@@ -29,9 +29,30 @@ def use_unimodal_pyranose_ring_torsions():
+         use_unimodal_ring_torsion_restraints(tlc)
+ 
+ 
++# add_linked_residue() (C++, Python flavour) returns the spec of the new residue ([True, chain, resno, ins]) only when
++# "fit and refine for link addition" is on (set_add_linked_residue_do_fit_and_refine, on by default); otherwise it adds
++# the residue but returns False. The N-linked glycan dialog switches that off, so the callers below never got the new
++# residue back (no extra restraints, no refinement, no further residues for a tree). This wrapper always gives the
++# spec: if the C++ call returned False it finds the residue that appeared next to the parent.
++def add_linked_residue_and_get_spec(imol, chain_id, res_no, ins_code, new_res_type, link_type, mode=2):
++    parent = [chain_id, res_no, ins_code]
++    def neighbours():
++        ns = residues_near_residue(imol, parent, 2.2)
++        return [list(n)[-3:] for n in ns] if isinstance(ns, list) else []
++    before = neighbours()
++    r = add_linked_residue(imol, chain_id, res_no, ins_code, new_res_type, link_type, mode)
++    if isinstance(r, list):
++        return r
++    new_ones = [n for n in neighbours() if n not in before]
++    if len(new_ones) == 1:
++        return [True] + new_ones[0]
++    return r
++
++
+ def multi_add_linked_residue(imol, res_spec, residues_to_add):
+ 
+     "INFO:: multi-add-linked-residue", imol, res_spec
++    set_add_linked_residue_do_fit_and_refine(1)
+     set_go_to_atom_molecule(imol)
+     wm = matrix_state()
+     set_matrix(wm/2.)
+@@ -60,7 +81,7 @@ def multi_add_linked_residue(imol, res_spec, residues_to_add):
+                     new_res = residue_to_add[0]
+                     new_link = residue_to_add[1]
+ 
+-                    new_res_spec = add_linked_residue(imol,
++                    new_res_spec = add_linked_residue_and_get_spec(imol,
+                                                       res_spec_to_chain_id(current_residue_spec),
+                                                       res_spec_to_res_no(current_residue_spec),
+                                                       res_spec_to_ins_code(current_residue_spec),
+@@ -343,7 +364,7 @@ def add_linked_residue_add_cho_function(imol, parent, res_pair):
+             imol_save = new_molecule_by_residue_specs(imol,
+                                                       tree_residues)
+ 
+-            new_res_spec = add_linked_residue(imol,
++            new_res_spec = add_linked_residue_and_get_spec(imol,
+                                               res_spec_to_chain_id(parent),
+                                               res_spec_to_res_no(parent),
+                                               res_spec_to_ins_code(parent),
+@@ -371,7 +392,7 @@ def add_linked_residue_add_cho_function(imol, parent, res_pair):
+                     print("----------- That was not well fitting. Deleting:", preped_new_res_spec)
+                     delete_extra_restraints_for_residue_spec(imol,
+                                                              preped_new_res_spec)
+-                    delete_residue_by_spec(*preped_new_res_spec)
++                    delete_residue_by_spec(imol, preped_new_res_spec)
+                     # restore glyco-tree residues from imol_save
+                     replace_fragment(imol, imol_save, "//")
+                     return False
+@@ -431,6 +452,7 @@ def add_linked_residue_tree(imol, parent, tree):
+     add_synthetic_pyranose_planes()
+     use_unimodal_pyranose_ring_torsions()
+     set_refine_with_torsion_restraints(1)
++    set_add_linked_residue_do_fit_and_refine(1)   # the N-linked glycan dialog may have switched it off
+     wm = matrix_state()
+     set_matrix(wm / 2.)
+     set_residue_selection_flash_frames_number(1)
+@@ -495,7 +517,7 @@ def add_linked_residue_with_extra_restraints_to_active_residue(new_res_type,
+     set_add_linked_residue_do_fit_and_refine(0)
+     with UsingActiveAtom(True) as [aa_imol, aa_chain_id, aa_res_no, aa_ins_code,
+                                    aa_atom_name, aa_alt_conf, aa_res_spec]:
+-        new_res_spec = add_linked_residue(aa_imol, aa_chain_id, aa_res_no,
++        new_res_spec = add_linked_residue_and_get_spec(aa_imol, aa_chain_id, aa_res_no,
+                                           aa_ins_code, new_res_type, link_type, 2)
+         if isinstance(new_res_spec, list):
+             add_cho_restraints_for_residue(aa_imol, new_res_spec)
+@@ -503,6 +525,7 @@ def add_linked_residue_with_extra_restraints_to_active_residue(new_res_type,
+             with AutoAccept():
+                 residues = [aa_res_spec] + residues_near_residue(aa_imol, aa_res_spec, 1.9)
+                 refine_residues(aa_imol, residues)
++    set_add_linked_residue_do_fit_and_refine(1)   # back to the default (tree builders rely on it)
+     set_matrix(wm)
+ 
+ def delete_all_cho():
+diff --git a/python/check_for_updates.py b/python/check_for_updates.py
+index acfe3db..644e8c8 100644
+--- a/python/check_for_updates.py
++++ b/python/check_for_updates.py
+@@ -310,7 +310,7 @@ def check_for_updates_gui(use_curl=False):
+             # pythonic version
+             import urllib.request, urllib.parse, urllib.error
+             try:
+-                latest_version_server_response = urllib.request.urlopen(url).read()
++                latest_version_server_response = urllib.request.urlopen(url).read().decode('utf-8', 'replace')
+             except:
+                 info_dialog("Could not establish connection to get latest version on server")
+                 return
+diff --git a/python/coot_gui.py b/python/coot_gui.py
+index 20486d5..a69c9b1 100644
+--- a/python/coot_gui.py
++++ b/python/coot_gui.py
+@@ -3412,7 +3412,7 @@ def coot_news_info(*args):
+       global news_string_2
+       import urllib.request, urllib.parse, urllib.error
+       try:
+-         s = urllib.request.urlopen(url).read()
++         s = urllib.request.urlopen(url).read().decode('utf-8', 'replace')
+          both_news = trim_news(s)
+          news_string_1 = both_news[1]
+          news_string_2 = both_news[0]
+diff --git a/python/coot_toolbuttons.py b/python/coot_toolbuttons.py
+index 80dbbe9..74e74f9 100644
+--- a/python/coot_toolbuttons.py
++++ b/python/coot_toolbuttons.py
+@@ -66,7 +66,7 @@ def add_coot_toolbar_separator():
+ 
+   # main body
+   toolbar_items = coot_main_toolbar.get_children()
+-  if (type(toolbar_items[-1]) != gtk.SeparatorToolItem):
++  if (not toolbar_items) or (type(toolbar_items[-1]) != gtk.SeparatorToolItem):
+     # only add if last one is not already separator
+     sep = gtk.SeparatorToolItem()
+     coot_main_toolbar.insert(sep, -1)
+diff --git a/python/coot_utils.py b/python/coot_utils.py
+index 6352b1e..e236f72 100644
+--- a/python/coot_utils.py
++++ b/python/coot_utils.py
+@@ -825,7 +825,7 @@ def shell_command_to_string(cmd):
+ 
+     if (major >= 2 and minor >= 7):
+         try:
+-            ret = subprocess.check_output(cmd.split())
++            ret = subprocess.check_output(cmd.split(), universal_newlines=True)
+         except:
+             ret = ""
+     else:
+@@ -906,6 +906,49 @@ def command_in_path_qm_old_version(cmd, only_extension="", add_extensions=[]):
+ 
+ global gtk_thread_return_value
+ gtk_thread_return_value = None
++# macOS port: environment for CCP4 programs that Coot starts (refmac5, ...).  Those programs need the variables that
++# CCP4's setup script exports (refmac5 stops with "Cannot open environ.def" without CINCL).  Coot's launcher cleans the
++# environment on purpose (CLIB would redirect Coot's own dictionary lookup), so the variables are added here, to the
++# environment of the child process only, and only where they are not set already.  The CCP4 installation is taken from
++# $CCP4, else $COOT_CCP4_HOME (set by run-coot.sh when it finds one), else /Applications/ccp4-*.
++def ccp4_child_env(base_env=None):
++    import os, glob, tempfile
++    env = dict(os.environ if base_env is None else base_env)
++    home = env.get("CCP4") or env.get("COOT_CCP4_HOME") or ""
++    if not home or not os.path.isdir(home):
++        home = ""
++        for d in sorted(glob.glob("/Applications/ccp4-*"), reverse=True):
++            if os.path.isdir(os.path.join(d, "bin")):
++                home = d
++                break
++    if not home:
++        return env
++    try:
++        import getpass
++        user = getpass.getuser()
++    except Exception:
++        user = "user"
++    scr = os.path.join(tempfile.gettempdir(), "ccp4-" + user)
++    wanted = [("CCP4",      home),
++              ("CBIN",      os.path.join(home, "bin")),
++              ("CLIB",      os.path.join(home, "lib")),
++              ("CLIBD",     os.path.join(home, "lib", "data")),
++              ("CETC",      os.path.join(home, "etc")),
++              ("CINCL",     os.path.join(home, "include")),
++              ("MMCIFDIC",  os.path.join(home, "lib", "ccp4", "cif_mmdic.lib")),
++              ("CCP4_SCR",  scr),
++              ("CCP4_OPEN", "UNKNOWN"),
++              ("GFORTRAN_UNBUFFERED_PRECONNECTED", "Y")]
++    for key, value in wanted:
++        if not env.get(key):
++            env[key] = value
++    try:
++        if not os.path.isdir(env["CCP4_SCR"]):
++            os.makedirs(env["CCP4_SCR"])
++    except Exception:
++        pass
++    return env
++
+ # Where cmd is e.g. "refmac"
+ #       args is ["HKLIN","thing.mtz"]
+ #       data_list is ["HEAD","END"] OR
+@@ -958,15 +1001,21 @@ def popen_command(cmd, args, data_list, log_file, screen_flag=False,
+             else:
+                 stderr_arg = None
+ 
++            # macOS port: Python 3 pipes are bytes unless universal_newlines is set ("a bytes-like object is
++            # required, not 'str'" when writing the data lines), and CCP4 programs need CCP4's variables
++            if local_env is None:
++                local_env = ccp4_child_env()
+             if (screen_flag):
+                 process = subprocess.Popen(cmd_args, stdin=stdin_inp,
+                                            stdout=subprocess.PIPE,
+                                            stderr=stderr_arg,
+-                                           env=local_env)
++                                           env=local_env,
++                                           universal_newlines=True)
+             else:
+                 process = subprocess.Popen(cmd_args, stdin=stdin_inp,
+                                            stdout=log, stderr=stderr_arg,
+-                                           env=local_env)
++                                           env=local_env,
++                                           universal_newlines=True)
+ 
+             if pipe_data:
+                 for data in data_list:
+@@ -3498,7 +3547,7 @@ def get_url_as_string(my_url):
+ 
+     import urllib.request, urllib.parse, urllib.error
+     try:
+-        s = urllib.request.urlopen(my_url).read()
++        s = urllib.request.urlopen(my_url).read().decode('utf-8', 'replace')   # Python 3: bytes -> str
+     except:
+         s = False # not sure if that's the right way
+     return s
+@@ -3677,11 +3726,11 @@ def get_drug_via_wikipedia(drug_name_in):
+         key_re = re.compile(key)
+         drug_bank_id = False
+         query_ele = tree.find("query")
+-        rev_iter = query_ele.getiterator("rev")
++        rev_iter = list(query_ele.iter("rev"))   # (getiterator was removed in Python 3.9)
+         if len(rev_iter) > 0:
+            rev_text = rev_iter[0].text
+            # seems to be in some strange format!?
+-           decode_text = rev_text.encode('ascii', 'ignore')
++           decode_text = rev_text.encode('ascii', 'ignore').decode('ascii')   # drop non-ASCII characters, keep a str
+            for line in decode_text.split("\n"):
+               # if key in line: # too simple, we need a regular expresssion search
+               if key_re.search(line):
+@@ -4253,10 +4302,12 @@ def run_concurrently(cmd, args=[], data_list=None, logfile=None, screen_flag=Fal
+                 log = open(logfile, 'w')
+             try:
+                 process = subprocess.Popen(cmd_args, stdin=subprocess.PIPE,
+-                                           stdout=log)
++                                           stdout=log, env=ccp4_child_env(),
++                                           universal_newlines=True)
+                 if (data_list):
+                     for data in data_list:
+                         process.stdin.write(data + "\n")
++                    process.stdin.close()   # macOS port: Python 3 buffers the pipe; the program waits for its input
+ 
+                 pid = process.pid            
+ 
+diff --git a/python/dynamic_atom_overlaps_and_other_outliers.py b/python/dynamic_atom_overlaps_and_other_outliers.py
+index a534630..d5108fe 100644
+--- a/python/dynamic_atom_overlaps_and_other_outliers.py
++++ b/python/dynamic_atom_overlaps_and_other_outliers.py
+@@ -166,7 +166,7 @@ def make_quick_test_validation_info(imol):
+                        " " + \
+                        residue_spec_to_residue_name(imol, spec) + \
+                        " " + \
+-                       score_string + '\u212B'.encode('utf-8')
++                       score_string + '\u212B'   # (Python 3: str, not bytes)
+         c_beta_buttons.append([spec, baddie_score, button_label,
+                                [[set_go_to_atom_molecule, imol],
+                                 [set_go_to_atom_from_res_spec, spec]]])
+diff --git a/python/find_baddies.py b/python/find_baddies.py
+index daee9ee..9d52012 100644
+--- a/python/find_baddies.py
++++ b/python/find_baddies.py
+@@ -235,7 +235,7 @@ def validation_outliers_dialog(imol, imol_map):
+                            " " + \
+                            residue_spec_to_residue_name(imol, spec) + \
+                            " " + \
+-                           score_string + '\u212B'.encode('utf-8')
++                           score_string + '\u212B'   # (Python 3: str, not bytes)
+             c_beta_buttons.append([button_label,
+                                    [[set_go_to_atom_molecule, imol],
+                                     [set_go_to_atom_from_res_spec, spec]]])
+diff --git a/python/gap.py b/python/gap.py
+index 5025c1c..fe42e65 100644
+--- a/python/gap.py
++++ b/python/gap.py
+@@ -72,7 +72,7 @@ def fit_gap(imol, chain_id, start_resno, stop_resno,
+          if (loop_len >= 6):
+             start_resno1 = min([start_resno, stop_resno])
+             stop_resno2  = max([start_resno, stop_resno])
+-            stop_resno1  = start_resno1 + loop_len/2 - 1
++            stop_resno1  = start_resno1 + loop_len//2 - 1
+             start_resno2 = stop_resno1 + 1
+             sequence1    = sequence[0:loop_len//2]
+             sequence2    = sequence[loop_len//2:len(sequence)]
+diff --git a/python/generic_objects.py b/python/generic_objects.py
+index 57b69e7..d2af0f1 100644
+--- a/python/generic_objects.py
++++ b/python/generic_objects.py
+@@ -333,7 +333,7 @@ def write_reduce_het_dict(imol, reduce_het_dict_file_name):
+   if con_file_names:
+     fin = open(reduce_het_dict_file_name, 'w')
+     for file_name in con_file_names:
+-      shutil.copyfileobj(open(file_name, 'rb'), fin)
++      shutil.copyfileobj(open(file_name, 'r'), fin)   # text into a text file (Python 3)
+     fin.close()
+     
+       
+diff --git a/python/get_recent_pdbe.py b/python/get_recent_pdbe.py
+index e7339eb..863e654 100644
+--- a/python/get_recent_pdbe.py
++++ b/python/get_recent_pdbe.py
+@@ -1012,16 +1012,16 @@ def pdbe_latest_releases_gui():
+ 
+     thread = GetUrlThread(url, json_file_name,
+                           progress_bars[0], progress_bars[1])
+-    _thread.start()
++    thread.start()
+ 
+     def start_table():
+-        if _thread.get_url_status() == 0:
++        if thread.get_url_status() == 0:
+             recent_structure_browser(get_recent_json(json_file_name))
+             return False  # stop
+         return True  # continue
+ 
+     def run_sleeper():
+-        if _thread.get_url_status() == 0:
++        if thread.get_url_status() == 0:
+             return False   # stop
+         time.sleep(0.02)
+         return True # continue
+diff --git a/python/ligand_validation_sliders.py b/python/ligand_validation_sliders.py
+index 7c37cc5..8ccd180 100644
+--- a/python/ligand_validation_sliders.py
++++ b/python/ligand_validation_sliders.py
+@@ -61,7 +61,7 @@ class ligand_validation_metrics_gui:
+ 
+     def setup_colour_bar_buff(self):
+ 
+-        c = 3*self.bar_length*self.bar_height*['\0']
++        c = bytearray(3*self.bar_length*self.bar_height)   # Python 3: raw RGB bytes (a str of chr() values is not a pixel buffer)
+         for j in range(self.bar_length):
+ 
+             f_j = float(j)/float(self.bar_length)
+@@ -76,10 +76,10 @@ class ligand_validation_metrics_gui:
+             b = int(255*math.pow(f_j, 0.2))
+             for i in range(self.bar_height):
+                 idx = 3*(self.bar_length*i + j)
+-                c[idx  ] = chr(r)
+-                c[idx+1] = chr(g)
+-                c[idx+2] = chr(b)
+-        self.colour_bar_buff = ('').join(c)
++                c[idx  ] = r
++                c[idx+1] = g
++                c[idx+2] = b
++        self.colour_bar_buff = bytes(c)
+ 
+     def draw_sliders(self, ligand_validation_specs, da, gc):
+ 
+diff --git a/python/parse_pisa_xml.py b/python/parse_pisa_xml.py
+index ebb5167..68ff0ed 100644
+--- a/python/parse_pisa_xml.py
++++ b/python/parse_pisa_xml.py
+@@ -180,7 +180,7 @@ def pisa_handle_xml_molecule(imol, molecule, pisa_results_type):
+         out.write(" molecule: area %s\n"     %rec_dic['area'])
+         out.write(" molecule: solv-en %s\n"  %rec_dic['solv-en'])
+         out.write(" molecule: pvalue %s\n"   %rec_dic['pvalue'])
+-        out.write(" molecule: with %s residues]\n" %len(record_xml.getiterator("residues")))
++        out.write(" molecule: with %s residues]\n" %len(list(record_xml.iter("residues"))))
+         if (port == STRING):
+             ret = out.getvalue()
+             out.close()
+@@ -249,7 +249,7 @@ def pisa_handle_xml_molecule(imol, molecule, pisa_results_type):
+ 
+         # do something with residues (if interface)
+         if "residues" in mol_dic:
+-            residues = molecule.getiterator("residue")
++            residues = list(molecule.iter("residue"))
+             mol_dic["residues"] = handle_residues(residues)
+             
+         if not (len(ass_rtop_symbols) == 12):
+@@ -409,7 +409,7 @@ def parse_pisa_assemblies(imol, entity):
+     def handle_assembly(assembly):
+         assembly_molecule_numbers = []
+         assembly_dic = dict((ele.tag, ele.text) for ele in assembly)
+-        molecules = assembly.getiterator("molecule")
++        molecules = list(assembly.iter("molecule"))
+         for molecule in molecules:
+             mol_no = pisa_handle_xml_molecule(imol, molecule, 'assemblies')
+             assembly_molecule_numbers.append(mol_no)
+@@ -442,7 +442,7 @@ def parse_pisa_assemblies(imol, entity):
+     first_assembly_set_is_displayed_already_qm = False
+     top_assembly_set = False
+ 
+-    assemblies = entity.getiterator("asm_set")
++    assemblies = list(entity.iter("asm_set"))
+     for ass in assemblies:
+         molecule_number, assembly_record_set = handle_assembly_set(ass)
+         if not top_assembly_set:
+@@ -746,7 +746,7 @@ def parse_pisa_interfaces(imol, xml_entity):
+                     
+         ret_bonds = []
+         bond_type = entity.tag
+-        bonds = entity.getiterator("bond")
++        bonds = list(entity.iter("bond"))
+         for bond in bonds:
+             atom_specs = parse_bond(bond)
+             if atom_specs:
+@@ -762,7 +762,7 @@ def parse_pisa_interfaces(imol, xml_entity):
+         # molecule info is either False or a pair of a new
+         # molecule number and a pisa molecule record (which contains
+         # things like pvalue, residues, id, class).
+-        for molecule in interface_entity.getiterator("molecule"):
++        for molecule in list(interface_entity.iter("molecule")):
+             molecule_info = pisa_handle_xml_molecule(imol, molecule, 'interfaces')
+             if molecule_info:
+                 molecules.append(molecule_info)
+@@ -777,7 +777,7 @@ def parse_pisa_interfaces(imol, xml_entity):
+ 
+     def pisa_handle_pdb_entry(pdb_entry_entity):
+         interfaces = []
+-        for interface_xml in pdb_entry_entity.getiterator("interface"):
++        for interface_xml in list(pdb_entry_entity.iter("interface")):
+             interface = pisa_handle_xml_interface(interface_xml)
+             if interface:
+                 interfaces.append(interface)
+@@ -785,7 +785,7 @@ def parse_pisa_interfaces(imol, xml_entity):
+     
+     # main line
+     #
+-    pdb_entries = xml_entity.getiterator("pdb_entry")
++    pdb_entries = list(xml_entity.iter("pdb_entry"))
+     for pdb_entry_xml in pdb_entries:
+         pdb_entry = pisa_handle_pdb_entry(pdb_entry_xml)
+         handle_pisa_interfaces(pdb_entry)
+diff --git a/python/pdbe_validation_data.py b/python/pdbe_validation_data.py
+index 7963b51..268623a 100644
+--- a/python/pdbe_validation_data.py
++++ b/python/pdbe_validation_data.py
+@@ -565,7 +565,7 @@ class validation_entry_to_canvas:
+ 
+     def setup_colour_bar_buff(self):
+ 
+-        c = 3*self.bar_length*self.bar_height*['\0']
++        c = bytearray(3*self.bar_length*self.bar_height)   # Python 3: raw RGB bytes (a str of chr() values is not a pixel buffer)
+         for j in range(self.bar_length):
+ 
+             f_j = float(j)/float(self.bar_length)
+@@ -580,10 +580,10 @@ class validation_entry_to_canvas:
+             b = int(255*math.pow(f_j, 0.2))
+             for i in range(self.bar_height):
+                 idx = 3*(self.bar_length*i + j)
+-                c[idx  ] = chr(r)
+-                c[idx+1] = chr(g)
+-                c[idx+2] = chr(b)
+-        self.colour_bar_buff = ('').join(c)
++                c[idx  ] = r
++                c[idx+1] = g
++                c[idx+2] = b
++        self.colour_bar_buff = bytes(c)
+ 
+     def on_drawing_area_expose(self, da, event):
+         style = da.get_style()
+diff --git a/python/refmac.py b/python/refmac.py
+index 1a5484f..536230b 100644
+--- a/python/refmac.py
++++ b/python/refmac.py
+@@ -207,7 +207,7 @@ def run_refmac_by_filename(pdb_in_filename, pdb_out_filename,
+         imol_mtz_molecule, show_diff_map_flag,
+         phase_combine_flag, phib_fom_pair,
+         force_n_cycles, make_molecules_flag,
+-        ccp4i_project_dir, f_col, sig_f_col, r_free_col="")
++        ccp4i_project_dir, f_col, sig_f_col, r_free_col)   # (the R-free label used to be dropped here: refmac then got "FREE=" and stopped)
+ 
+     # gobject.timeout_add(1000, check_for_refmac_finished_then_do_stuff)
+ 
+@@ -237,14 +237,13 @@ def run_refmac_by_filename_inner(pdb_in_filename, pdb_out_filename,
+         # False here is in a sub-thread, do it noiselessly; True as normal.
+         to_screen_flag = False if make_molecules_flag == 0 else True
+ 
+-    # some additional argument jiggery-pokery: convert
+-    # [["/crystal/thing/R-free"]] to ["/crystal/thing/R-free"]
+-    if (isinstance(r_free_col, list)):
+-        if r_free_col:
+-            if (isinstance(r_free_col[0], list)):
+-                r_free_col = r_free_col[0]
+-
+-    local_r_free_col = [] if not r_free_col else r_free_col[0]
++    # some additional argument jiggery-pokery: the R-free label may come as
++    # "/crystal/thing/R-free", ["/crystal/thing/R-free"] or [["/crystal/thing/R-free"]]; use the string
++    while isinstance(r_free_col, list):
++        r_free_col = r_free_col[0] if r_free_col else ""
++    if not isinstance(r_free_col, str):
++        r_free_col = ""
++    local_r_free_col = r_free_col
+     # need to check for f-col being a string or list
+     labin_string = ""
+     if not ((isinstance(f_col, str)) and (f_col == "")):
+@@ -261,7 +260,7 @@ def run_refmac_by_filename_inner(pdb_in_filename, pdb_out_filename,
+                 labin_string = "LABIN FP=" + split_label(f_col) +\
+                     " SIGFP=" + split_label(sig_f_col)
+ 
+-        if (local_r_free_col != ""):
++        if local_r_free_col:        # (was: [] != "", always true, so a missing R-free column gave "FREE=")
+             labin_string += " FREE=" + split_label(r_free_col)
+ 
+         if (phase_combine_flag == 1):
+@@ -431,8 +430,8 @@ def post_run_refmac(imol_refmac_count,
+             logObj.close()
+             refmac_status = refmac_process.poll()
+             if button:
+-                button[0].destroy()
+-                button[1].destroy()
++                for b in button:
++                    if b: b.destroy()        # (the separator is False when none was added)
+             # and stop the loop - later
+         else:
+             # continue the loop
+@@ -446,8 +445,8 @@ def post_run_refmac(imol_refmac_count,
+         add_status_bar_text("Refmac failed")
+ 
+         if (button):
+-            button[0].destroy()
+-            button[1].destroy()
++            for b in button:
++                if b: b.destroy()
+         if (run_in_timer):
+             # stop the gobject timer
+             print("... or was killed")
+diff --git a/scheme/coot.scm b/scheme/coot.scm
+index 800d323..57aa0d4 100644
+--- a/scheme/coot.scm
++++ b/scheme/coot.scm
+@@ -109,7 +109,8 @@
+ 			   "add-linked-cho.scm"
+ 			   "jligand.scm"
+ 			   "americanisms.scm"
+-			   "group-settings.scm")))
++			   "group-settings.scm"
++			   "python-gui-bridge.scm")))   ; macOS port: no guile-gtk, hand GUI functions to Python
+ 
+       (let ((scheme-list 
+ 	     (cond 
+diff --git a/scheme/guile-compat.scm b/scheme/guile-compat.scm
+index d92f691..a4e4de9 100644
+--- a/scheme/guile-compat.scm
++++ b/scheme/guile-compat.scm
+@@ -31,9 +31,55 @@
+ (define (%sh-quote s)
+   (string-append "'" (string-join (string-split s #\') "'\\''") "'"))
+ 
+-;; "prog arg1 arg2 ..." with every word quoted
++;; CCP4 programs (refmac5, libcheck, mapman, ...) need CCP4's environment (CINCL for environ.def, CCP4_SCR, ...).
++;; Coot itself must not see it (CCP4 and CLIB change how Coot finds its dictionaries), so it is given to the
++;; programs Coot starts and to nothing else.  Variables that are already set are left alone.
++(use-modules (ice-9 ftw))
++(define %ccp4-env-words
++  (let ((cache 'unset))
++    (lambda ()
++      (if (eq? cache 'unset)
++          (set! cache
++                (catch #t
++                  (lambda ()
++                    (let* ((dir? (lambda (d) (and d (file-exists? d) (file-is-directory? d))))
++                           (home (let ((h (or (getenv "CCP4") (getenv "COOT_CCP4_HOME"))))
++                                   (if (dir? h)
++                                       h
++                                       (let ((found (filter (lambda (d) (dir? (string-append d "/bin")))
++                                                            (map (lambda (n) (string-append "/Applications/" n))
++                                                                 (or (scandir "/Applications" (lambda (n) (string-prefix? "ccp4-" n))) '())))))
++                                         (if (null? found) #f (car (reverse found))))))))
++                      (if (not home)
++                          '()
++                          (let* ((scr (string-append (or (getenv "TMPDIR") "/tmp") "/ccp4-" (or (getenv "USER") "user")))
++                                 (wanted (list (cons "CCP4" home)
++                                               (cons "CBIN" (string-append home "/bin"))
++                                               (cons "CLIB" (string-append home "/lib"))
++                                               (cons "CLIBD" (string-append home "/lib/data"))
++                                               (cons "CETC" (string-append home "/etc"))
++                                               (cons "CINCL" (string-append home "/include"))
++                                               (cons "MMCIFDIC" (string-append home "/lib/ccp4/cif_mmdic.lib"))
++                                               (cons "CCP4_SCR" scr)
++                                               (cons "CCP4_OPEN" "UNKNOWN")
++                                               (cons "GFORTRAN_UNBUFFERED_PRECONNECTED" "Y"))))
++                            (catch #t (lambda () (if (not (file-exists? scr)) (mkdir scr))) (lambda args #f))
++                            (filter-map (lambda (kv)
++                                          (let ((v (getenv (car kv))))
++                                            (if (and v (not (string-null? v)))
++                                                #f
++                                                (string-append (car kv) "=" (cdr kv)))))
++                                        wanted)))))
++                  (lambda args '()))))
++      cache)))
++
++;; "prog arg1 arg2 ..." with every word quoted (started through env(1) so that CCP4 programs get CCP4's environment)
+ (define (%command-line prog args)
+-  (string-join (map %sh-quote (cons prog args)) " "))
++  (let ((env-words (%ccp4-env-words)))
++    (string-join (map %sh-quote (if (null? env-words)
++                                    (cons prog args)
++                                    (append (cons "/usr/bin/env" env-words) (cons prog args))))
++                 " ")))
+ 
+ ;; run a shell command line, wait; the exit status (0-255), or #f if the shell was killed by a signal
+ (define (%system-status cmdline)
+diff --git a/scheme/python-gui-bridge.scm b/scheme/python-gui-bridge.scm
+new file mode 100644
+index 0000000..0b7c804
+--- /dev/null
++++ b/scheme/python-gui-bridge.scm
+@@ -0,0 +1,46 @@
++;;;; python-gui-bridge.scm -- macOS port.  This Coot has no guile-gtk (no gtk-* procedures, no gtk-timeout-add), so the
++;;;; scripted GUI is Python.  A few places in the C++ code still ask the Scheme interpreter for a GUI function when Guile
++;;;; is compiled in; for those the Scheme function is handed to the Python version here.  Loaded last, so it overrides.
++
++;; a Scheme value as Python source text
++(define (coot-python-literal x)
++  (cond ((string? x) (call-with-output-string (lambda (port) (write x port))))
++        ((eq? x #t) "True")
++        ((eq? x #f) "False")
++        ((number? x) (number->string x))
++        ((null? x) "[]")
++        ((symbol? x) (coot-python-literal (symbol->string x)))
++        ((and (pair? x) (not (list? x)))
++         (string-append "[" (coot-python-literal (car x)) ", " (coot-python-literal (cdr x)) "]"))
++        ((list? x) (string-append "[" (string-join (map coot-python-literal x) ", ") "]"))
++        (else "None")))
++
++;; call a Python function (by name, in __main__) with Scheme values as arguments
++(define (coot-call-python function-name . args)
++  (run-python-command (string-append function-name "(" (string-join (map coot-python-literal args) ", ") ")")))
++
++;; Calculate > Run Refmac:  the Scheme version starts refmac and then polls with gtk-timeout-add to read the new
++;; model and maps; the Python version does the same with a GLib timeout.
++(if (not (defined? 'gtk-timeout-add))
++    (set! run-refmac-by-filename
++          (lambda args
++            (apply coot-call-python "run_refmac_by_filename" args))))
++
++;; Validate > GLN and ASN B-factor Outliers:  C++ calls (interesting-things-with-fix-maybe title baddies), baddies being
++;; (list (list "label" imol "chain" resno "ins" "atom" "alt" [fix]) ...) where a fix is the Scheme lambda that C++ makes
++;; for a 180 degree side-chain flip.  The Python list has [do_180_degree_side_chain_flip, imol, chain, resno, ins, alt]
++;; in its place.  (Without guile-gtk there is no Scheme version of this window.)
++(define (interesting-things-with-fix-maybe title baddies)
++  (let ((python-baddies
++         (map (lambda (b)
++                (let ((base (list-head b 7)))
++                  (if (> (length b) 7)
++                      (let ((imol (list-ref b 1)) (chain (list-ref b 2)) (resno (list-ref b 3))
++                            (ins (list-ref b 4)) (alt (list-ref b 6)))
++                        (string-append (substring (coot-python-literal base) 0 (- (string-length (coot-python-literal base)) 1))
++                                       ", [do_180_degree_side_chain_flip, "
++                                       (string-join (map coot-python-literal (list imol chain resno ins alt)) ", ") "]]"))
++                      (coot-python-literal base))))
++              baddies)))
++    (run-python-command (string-append "interesting_things_with_fix_maybe(" (coot-python-literal title)
++                                       ", [" (string-join python-baddies ", ") "])"))))

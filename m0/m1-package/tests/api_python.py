@@ -1,0 +1,40 @@
+
+import sys, os, traceback
+res = []
+def check(name, fn):
+    try:
+        v = fn()
+        ok = True if v is None else bool(v)
+        res.append((name, ok, repr(v)[:80]))
+    except Exception as e:
+        res.append((name, False, "EXC " + repr(e)[:110]))
+print("PYVER", sys.version.split()[0], flush=True)
+import coot
+check("import coot (SWIG _coot)", lambda: coot.__name__ == "coot")
+check("coot_version -> str", lambda: isinstance(coot.coot_version(), str) and coot.coot_version())
+imol = coot.read_pdb(os.path.join(os.environ["COOT_PREFIX"], "test-data", "standard-residues.pdb"))
+check("read_pdb -> valid imol", lambda: imol >= 0 and coot.is_valid_model_molecule(imol))
+check("molecule_name -> str", lambda: isinstance(coot.molecule_name(imol), str) and coot.molecule_name(imol).endswith("standard-residues.pdb"))
+check("n_chains -> int", lambda: isinstance(coot.n_chains(imol), int) and coot.n_chains(imol) > 0)
+check("chain_id_py -> str", lambda: isinstance(coot.chain_id_py(imol, 0), str))
+c0 = coot.chain_id_py(imol, 0)
+check("chain_n_residues -> int", lambda: coot.chain_n_residues(c0, imol) > 0)
+r0 = coot.seqnum_from_serial_number(imol, c0, 0)
+check("residue_name -> str", lambda: isinstance(coot.residue_name(imol, c0, r0, ""), str))
+check("residue_info_py -> list of atoms", lambda: isinstance(coot.residue_info_py(imol, c0, r0, ""), list) and len(coot.residue_info_py(imol, c0, r0, "")) > 0)
+check("atom names are str (not bytes)", lambda: all(isinstance(a[0][0], str) for a in coot.residue_info_py(imol, c0, r0, "")))
+check("symmetry_operators_py (patched PyBool_Check)", lambda: coot.symmetry_operators_py(imol) is not None)
+check("symmetry_operators_to_xHM_py (patched)", lambda: coot.symmetry_operators_to_xHM_py(["x,y,z", "-x,y+1/2,-z"]) is not None)
+check("non-ASCII path arg -> -1", lambda: coot.read_pdb("/nonexistent/\u00e9.pdb") == -1)
+check("write_pdb_file", lambda: coot.write_pdb_file(imol, os.path.join(os.environ["COOT_PREFIX"], "work", "out.pdb")) in (0, None))
+g = globals()
+check("script layer loaded into __main__ (chain_ids, is_protein_chain_qm)", lambda: "chain_ids" in g and "is_protein_chain_qm" in g)
+check("chain_ids -> list[str]", lambda: isinstance(g["chain_ids"](imol), list) and all(isinstance(c, str) for c in g["chain_ids"](imol)))
+check("is_protein_chain_qm(imol, chain)", lambda: g["is_protein_chain_qm"](imol, c0) in (0, 1))
+check("residue_spec helper (str ops ported)", lambda: g["residue_spec_to_chain_id"](["A", 1, ""]) == "A")
+check("atom_spec -> residue_spec", lambda: g["atom_spec_to_residue_spec"](["A", 1, "", " CA ", ""]) is not None)
+nfun = sum(1 for k, v in g.items() if callable(v) and not k.startswith("_"))
+print("INFO callables visible in __main__:", nfun)
+w = max(len(r[0]) for r in res)
+for n, ok, v in res: print(("PASS " if ok else "FAIL ") + n.ljust(w) + "  " + v)
+print("SUMMARY", sum(1 for r in res if r[1]), "/", len(res), flush=True)

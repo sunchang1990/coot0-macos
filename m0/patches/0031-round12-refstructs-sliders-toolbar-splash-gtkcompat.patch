@@ -1,0 +1,524 @@
+diff --git a/compat/pygtk2/gtk/__init__.py b/compat/pygtk2/gtk/__init__.py
+index 984ea76..5a32459 100644
+--- a/compat/pygtk2/gtk/__init__.py
++++ b/compat/pygtk2/gtk/__init__.py
+@@ -16,6 +16,8 @@ ver = gtk_version
+ for _k, _v in _consts().items():                       # WINDOW_TOPLEVEL, STOCK_YES, POLICY_AUTOMATIC, ... (names as in PyGTK: GTK_ prefix removed)
+     if _k.startswith("GTK_"): globals()[_k[4:]] = _v
+ 
++TRUE, FALSE = True, False         # (PyGTK 2 still had gtk.TRUE / gtk.FALSE; coot_gui.py's scripting window uses gtk.FALSE)
++
+ def _adopt(self, ptr):
+     """Make `self` the wrapper of a freshly created GObject (sinks its floating reference)."""
+     if not ptr: raise RuntimeError("could not create a %s" % type(self).__name__)
+@@ -25,6 +27,14 @@ class Object(_GObject): pass
+ class Adjustment(Object):
+     def __init__(self, value=0.0, lower=0.0, upper=0.0, step_incr=0.0, page_incr=0.0, page_size=0.0):
+         _adopt(self, _call("gtk_adjustment_new", value, lower, upper, step_incr, page_incr, page_size))
++    # PyGTK 2 exposed the GtkAdjustment struct members as attributes (adj.value is used by the clipping / zoom, sharpening, occupancy and
++    # nudge sliders; without them every move of such a slider raised AttributeError)
++    value = property(lambda self: _call("gtk_adjustment_get_value", self), lambda self, v: _call("gtk_adjustment_set_value", self, float(v)))
++    lower = property(lambda self: _call("gtk_adjustment_get_lower", self), lambda self, v: _call("gtk_adjustment_set_lower", self, float(v)))
++    upper = property(lambda self: _call("gtk_adjustment_get_upper", self), lambda self, v: _call("gtk_adjustment_set_upper", self, float(v)))
++    step_increment = property(lambda self: _call("gtk_adjustment_get_step_increment", self), lambda self, v: _call("gtk_adjustment_set_step_increment", self, float(v)))
++    page_increment = property(lambda self: _call("gtk_adjustment_get_page_increment", self), lambda self, v: _call("gtk_adjustment_set_page_increment", self, float(v)))
++    page_size = property(lambda self: _call("gtk_adjustment_get_page_size", self), lambda self, v: _call("gtk_adjustment_set_page_size", self, float(v)))
+ 
+ class Widget(Object):
+     def set_flags(self, flags):
+@@ -68,6 +78,8 @@ class Table(Container):
+         _call("gtk_table_attach", self, child, left_attach, right_attach, top_attach, bottom_attach, xoptions, yoptions, xpadding, ypadding)
+ class Frame(Bin):
+     def __init__(self, label=None): _adopt(self, _call("gtk_frame_new", label))
++class Alignment(Bin):
++    def __init__(self, xalign=0.0, yalign=0.0, xscale=0.0, yscale=0.0): _adopt(self, _call("gtk_alignment_new", xalign, yalign, xscale, yscale))
+ class ScrolledWindow(Bin):
+     def __init__(self, hadjustment=None, vadjustment=None): _adopt(self, _call("gtk_scrolled_window_new", hadjustment, vadjustment))
+ class Notebook(Container):
+@@ -112,6 +124,8 @@ class FileSelection(FileChooserDialog):
+     def cancel_button(self): return _wrap(_call("gtk_dialog_get_widget_for_response", self, RESPONSE_CANCEL))
+ class Assistant(Window):
+     def __init__(self): _adopt(self, _call("gtk_assistant_new"))
++class AboutDialog(Dialog):
++    def __init__(self): _adopt(self, _call("gtk_about_dialog_new"))
+ 
+ class Button(Bin):
+     def __init__(self, label=None, stock=None, use_underline=True):
+@@ -143,6 +157,10 @@ class SpinButton(Entry):
+ class ProgressBar(Widget):
+     def __init__(self): _adopt(self, _call("gtk_progress_bar_new"))
+ class Range(Widget): pass
++class HScrollbar(Range):
++    def __init__(self, adjustment=None): _adopt(self, _call("gtk_hscrollbar_new", adjustment))
++class VScrollbar(Range):
++    def __init__(self, adjustment=None): _adopt(self, _call("gtk_vscrollbar_new", adjustment))
+ class Scale(Range): pass
+ class HScale(Scale):
+     def __init__(self, adjustment=None): _adopt(self, _call("gtk_hscale_new", adjustment))
+diff --git a/compat/splash/coot-splash.m b/compat/splash/coot-splash.m
+new file mode 100644
+index 0000000..fa4969e
+--- /dev/null
++++ b/compat/splash/coot-splash.m
+@@ -0,0 +1,119 @@
++// coot-splash: start-up picture for the macOS build of Coot 0.9.8.96.
++//
++// GTK 2 on macOS draws at 1 pixel = 1 point, so the picture that Coot's own start-up window shows is enlarged 2x on a Retina screen
++// and looks soft.  This helper (started by run-coot.sh before Coot) shows a 2x picture through AppKit instead, at the same size in points,
++// so every pixel of the picture is a pixel of the screen.  It closes itself when Coot has opened its main window (or Coot has
++// ended, or after --timeout seconds), but not before --min seconds have passed.
++//
++//   coot-splash IMAGE.png [--scale 2] [--pid PID] [--min 2.5] [--timeout 40]
++//   coot-splash --selftest IMAGE.png OUT.png [--scale 2]     (no window: loads the picture, draws it at 2x into a bitmap, writes OUT.png)
++//
++// Build:  clang -O2 -fobjc-arc -arch arm64 -mmacosx-version-min=11.0 -framework Cocoa -o coot-splash coot-splash.m
++#import <Cocoa/Cocoa.h>
++#import <CoreGraphics/CoreGraphics.h>
++#include <signal.h>
++#include <unistd.h>
++
++static NSImage *load_image(NSString *path, double scale, NSSize *points, NSSize *pixels) {
++  NSImage *img = [[NSImage alloc] initWithContentsOfFile:path];
++  if (!img) return nil;
++  NSBitmapImageRep *rep = nil;
++  for (NSImageRep *r in img.representations)
++    if ([r isKindOfClass:[NSBitmapImageRep class]]) { rep = (NSBitmapImageRep *)r; break; }
++  if (!rep) return nil;
++  *pixels = NSMakeSize(rep.pixelsWide, rep.pixelsHigh);
++  *points = NSMakeSize(rep.pixelsWide / scale, rep.pixelsHigh / scale);
++  [img setSize:*points];             // size in points; the bitmap keeps all its pixels
++  rep.size = *points;
++  return img;
++}
++
++// does the process have an ordinary window of some size on screen?
++static BOOL process_has_main_window(pid_t pid) {
++  CFArrayRef list = CGWindowListCopyWindowInfo(kCGWindowListOptionOnScreenOnly | kCGWindowListExcludeDesktopElements, kCGNullWindowID);
++  if (!list) return NO;
++  BOOL found = NO;
++  for (NSDictionary *w in (__bridge NSArray *)list) {
++    if ([w[(id)kCGWindowOwnerPID] intValue] != pid) continue;
++    if ([w[(id)kCGWindowLayer] intValue] != 0) continue;
++    CGRect b; if (!CGRectMakeWithDictionaryRepresentation((__bridge CFDictionaryRef)w[(id)kCGWindowBounds], &b)) continue;
++    if (b.size.width >= 400 && b.size.height >= 300) { found = YES; break; }
++  }
++  CFRelease(list);
++  return found;
++}
++
++@interface Splash : NSObject
++@property NSWindow *win; @property pid_t pid; @property NSTimeInterval started, minShow, timeout; @property BOOL closing;
++- (void)tick:(NSTimer *)t;
++@end
++@implementation Splash
++- (void)tick:(NSTimer *)t {
++  if (self.closing) return;
++  NSTimeInterval age = [NSDate timeIntervalSinceReferenceDate] - self.started;
++  BOOL gone = (self.pid > 0 && kill(self.pid, 0) != 0 && errno == ESRCH);
++  BOOL ready = (self.pid > 0 && age >= self.minShow && process_has_main_window(self.pid));
++  if (gone || ready || age >= self.timeout) {
++    self.closing = YES;
++    if (gone) { [NSApp terminate:nil]; return; }
++    [NSAnimationContext runAnimationGroup:^(NSAnimationContext *ctx) { ctx.duration = 0.35; [[self.win animator] setAlphaValue:0.0]; }
++                        completionHandler:^{ [NSApp terminate:nil]; }];
++  }
++}
++@end
++
++int main(int argc, char **argv) {
++  @autoreleasepool {
++    NSString *path = nil, *out = nil; double scale = 2.0, minShow = 2.5, timeout = 40.0; pid_t pid = 0; BOOL selftest = NO;
++    for (int i = 1; i < argc; i++) {
++      NSString *a = [NSString stringWithUTF8String:argv[i]];
++      if ([a isEqualToString:@"--scale"] && i + 1 < argc) scale = atof(argv[++i]);
++      else if ([a isEqualToString:@"--pid"] && i + 1 < argc) pid = (pid_t)atoi(argv[++i]);
++      else if ([a isEqualToString:@"--min"] && i + 1 < argc) minShow = atof(argv[++i]);
++      else if ([a isEqualToString:@"--timeout"] && i + 1 < argc) timeout = atof(argv[++i]);
++      else if ([a isEqualToString:@"--selftest"]) selftest = YES;
++      else if (!path) path = a;
++      else if (selftest && !out) out = a;
++    }
++    if (!path || scale <= 0) { fprintf(stderr, "usage: coot-splash IMAGE.png [--scale 2] [--pid PID] [--min S] [--timeout S]\n"); return 2; }
++    NSSize pts, px; NSImage *img = load_image(path, scale, &pts, &px);
++    if (!img) { fprintf(stderr, "coot-splash: cannot read %s\n", argv[1]); return 1; }
++
++    if (selftest) {
++      // draw into a bitmap of 2 x the size in points (what a Retina window is): one picture pixel per bitmap pixel when scale == 2
++      NSInteger W = (NSInteger)(pts.width * 2), H = (NSInteger)(pts.height * 2);
++      NSBitmapImageRep *dst = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:NULL pixelsWide:W pixelsHigh:H bitsPerSample:8 samplesPerPixel:4
++                               hasAlpha:YES isPlanar:NO colorSpaceName:NSDeviceRGBColorSpace bytesPerRow:0 bitsPerPixel:0];
++      [NSGraphicsContext saveGraphicsState];
++      NSGraphicsContext *gc = [NSGraphicsContext graphicsContextWithBitmapImageRep:dst];
++      [NSGraphicsContext setCurrentContext:gc];
++      [img drawInRect:NSMakeRect(0, 0, W, H) fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:1.0];
++      [NSGraphicsContext restoreGraphicsState];
++      printf("image %.0fx%.0f pixels -> %.0fx%.0f points (scale %.1f); bitmap %ldx%ld\n", px.width, px.height, pts.width, pts.height, scale, (long)W, (long)H);
++      if (out) {
++        NSData *png = dst ? [dst representationUsingType:NSBitmapImageFileTypePNG properties:@{}] : nil;
++        NSError *err = nil;
++        if (!png) { fprintf(stderr, "coot-splash: could not encode the bitmap\n"); return 1; }
++        if (![png writeToFile:out options:0 error:&err]) { fprintf(stderr, "coot-splash: cannot write %s: %s\n", [out UTF8String], [[err localizedDescription] UTF8String]); return 1; }
++      }
++      return 0;
++    }
++
++    NSApplication *app = [NSApplication sharedApplication];
++    [app setActivationPolicy:NSApplicationActivationPolicyAccessory];     // no Dock icon, no menu bar
++    NSRect vf = [[NSScreen mainScreen] visibleFrame];
++    NSRect r = NSMakeRect(floor(NSMidX(vf) - pts.width / 2), floor(NSMidY(vf) - pts.height / 2), pts.width, pts.height);
++    NSWindow *win = [[NSWindow alloc] initWithContentRect:r styleMask:NSWindowStyleMaskBorderless backing:NSBackingStoreBuffered defer:NO];
++    win.releasedWhenClosed = NO; win.opaque = YES; win.hasShadow = YES; win.ignoresMouseEvents = YES; win.level = NSFloatingWindowLevel;
++    NSImageView *iv = [[NSImageView alloc] initWithFrame:NSMakeRect(0, 0, pts.width, pts.height)];
++    iv.image = img; iv.imageScaling = NSImageScaleAxesIndependently; iv.imageFrameStyle = NSImageFrameNone;
++    win.contentView = iv;
++    [win orderFrontRegardless];
++
++    Splash *s = [Splash new]; s.win = win; s.pid = pid; s.started = [NSDate timeIntervalSinceReferenceDate]; s.minShow = minShow; s.timeout = timeout;
++    [NSTimer scheduledTimerWithTimeInterval:0.15 target:s selector:@selector(tick:) userInfo:nil repeats:YES];
++    signal(SIGTERM, SIG_DFL);
++    [app run];
++  }
++  return 0;
++}
+diff --git a/python/coot_gui.py b/python/coot_gui.py
+index a69c9b1..522627a 100644
+--- a/python/coot_gui.py
++++ b/python/coot_gui.py
+@@ -5380,7 +5380,7 @@ def refmac_multi_sharpen_gui():
+             info_dialog(m)
+             return
+          print("active_item_imol", active_item_imol)
+-         step_size = max_b/n_levels
++         step_size = max_b // n_levels
+          numbers_string = ' '.join(str((i+1) * step_size) for i in range(n_levels))
+          blur_string = "SFCALC BLUR  " + numbers_string
+          sharp_string = "SFCALC SHARP " + numbers_string
+@@ -5395,6 +5395,10 @@ def refmac_multi_sharpen_gui():
+             info_dialog("WARNING:: Current directory is not writable")
+          else:
+             refmac_execfile = find_exe("refmac5", "CBIN", "CCP4_BIN", "PATH")
++            if not refmac_execfile:
++               info_dialog("WARNING:: refmac5 was not found.\nMulti-sharpening runs refmac5 from CCP4: install CCP4 (it is found in /Applications/ccp4-*)\nor put the directory of refmac5 on the PATH, then start Coot again.")
++               delete_event(widget)
++               return
+             s = popen_command(refmac_execfile,
+                               cmd_line_args,
+                               data_lines,
+diff --git a/python/coot_toolbuttons.py b/python/coot_toolbuttons.py
+index 74e74f9..7cb6d81 100644
+--- a/python/coot_toolbuttons.py
++++ b/python/coot_toolbuttons.py
+@@ -558,6 +558,17 @@ if (have_coot_python):
+     coot_main_toolbar = coot_python.main_toolbar()
+     coot_main_toolbar.connect("button-press-event", show_pop_up_menu)
+ 
++# remove the line of exactly this button from the file (macOS port: the old code matched the label as a substring, so removing
++# "Sphere Refine" also removed the line of "Sphere Refine +")
++def remove_toolbar_line_from_file(filename, button_label):
++  if not os.path.isfile(filename):
++    return
++  start = "coot_toolbar_button(\"" + button_label + "\","
++  lines = open(filename).readlines()
++  keep = [l for l in lines if not l.strip().startswith(start)]
++  if len(keep) != len(lines):
++    open(filename, "w").writelines(keep)
++
+ # save a toolbar button to ~/.coot-preferences/coot_toolbuttons.py
+ #
+ def save_toolbar_to_init_file(button_label, callback_function,
+@@ -588,8 +599,9 @@ def save_toolbar_to_init_file(button_label, callback_function,
+     print("BL ERROR:: could not find a home directory")
+   else:
+     filename = os.path.join(home, ".coot-preferences", "coot_toolbuttons.py")
+-    remove_line_containing_from_file(["coot_toolbar_button", button_label],
+-                                     filename)
++    if not os.path.isdir(os.path.dirname(filename)):
++      os.makedirs(os.path.dirname(filename))
++    remove_toolbar_line_from_file(filename, button_label)
+     save_string_to_file(save_str, filename)
+ 
+     
+@@ -603,9 +615,8 @@ def remove_toolbar_from_init_file(button_label):
+     print("BL ERROR:: could not find a home directory")
+   else:    
+     filename = os.path.join(home, ".coot-preferences", "coot_toolbuttons.py")
+-    remove_str_ls = ["coot_toolbar_button", button_label]
+     if (os.path.isfile(filename)):
+-      remove_line_containing_from_file(remove_str_ls, filename)
++      remove_toolbar_line_from_file(filename, button_label)
+ 
+ 
+ # returns a list with pre-defined toolbar-functions (stock-id is optional,
+@@ -632,12 +643,12 @@ def list_of_toolbar_functions():
+            "delete.svg", True, True],
+          ],
+         ["Refinement",
+-         ["Sphere Refine", "sphere_refine()", "RSR around active residue", "reset-view.svg"],
+-         ["Sphere Refine +", "sphere_refine_plus()", "RSR around active residue +/- 1 residue", "reset-view.svg"],
++         ["Sphere Refine", "sphere_refine()", "RSR around active residue", "refine-1.svg"],
++         ["Sphere Refine +", "sphere_refine_plus()", "RSR around active residue +/- 1 residue", "refine-1.svg"],
+          ["Repeat Refine Zone", "repeat_refine_zone()", "Repeat (so that I don't need to click the atoms again)", "rrz.svg"],
+          ["Tandem Refine", "refine_tandem_residues()", "Refine a tandem 7-residue range", "something.svg"],
+-         ["Sphere Regularization", "sphere_regularize()", "Regularize around active residue", "reset-view.svg"],
+-         ["Sphere Regularization +", "sphere_regularize_plus()", "Regularize around active residue +/- 1 residue", "reset-view.svg"],
++         ["Sphere Regularization", "sphere_regularize()", "Regularize around active residue", "regularize-1.svg"],
++         ["Sphere Regularization +", "sphere_regularize_plus()", "Regularize around active residue +/- 1 residue", "regularize-1.svg"],
+          ["Refine residue", "refine_active_residue()", "RSR active residue"],
+          ["Reset B", "reset_b_factor_active_residue()", "Reset the B-Factor of active Residue"],
+          ["Add Alt Conf", "altconf()", "Add alternative conformation", "add-alt-conf.svg"],
+@@ -675,3 +686,56 @@ def list_of_toolbar_functions():
+ # to make combobox
+ #coot_toolbar_combobox("MC restraints", ["no","aH","bS"], [set_secondary_structure_restraints_type], tooltip="Change refinement restraints for secondary structure")
+   
++
++
++# ---- macOS port: toolbar buttons that are present from the first start ----------------------------------------------------
++# Sphere Refine, Sphere Refine +, Sphere Regularization and Sphere Regularization + are optional buttons (right-click the toolbar,
++# "Manage Buttons").  Used all the time, so the first start in a new (private) home folder writes them into
++# ~/.coot-preferences/coot_toolbuttons.py, which Coot reads right after the modules are loaded.  A marker file records that this has
++# been done: "Remove a Button" is then permanent, and Manage Buttons can bring a button back.  (run-coot.sh sets COOT_DEFAULT_TOOLBAR=1
++# when it uses its private home; COOT_NO_DEFAULT_TOOLBAR=1 switches this off.)
++default_toolbar_button_labels = ["Sphere Refine", "Sphere Refine +", "Sphere Regularization", "Sphere Regularization +"]
++
++def install_default_toolbar_buttons(home=None):
++  if os.getenv("COOT_NO_DEFAULT_TOOLBAR") or not os.getenv("COOT_DEFAULT_TOOLBAR"):
++    return False
++  home = home or os.getenv("HOME")
++  if not home:
++    return False
++  pref_dir = os.path.join(home, ".coot-preferences")
++  marker = os.path.join(pref_dir, ".default-toolbar-buttons-v1")
++  if os.path.exists(marker):
++    return False
++  filename = os.path.join(pref_dir, "coot_toolbuttons.py")
++  try:
++    if not os.path.isdir(pref_dir):
++      os.makedirs(pref_dir)
++    existing = open(filename).read() if os.path.isfile(filename) else ""
++    new_lines = []
++    for group in list_of_toolbar_functions():
++      for entry in group[1:]:
++        if not entry:
++          continue                      # (the empty groups, e.g. ["NMR", []])
++        label = entry[0]
++        if label in default_toolbar_button_labels and ("coot_toolbar_button(\"" + label + "\",") not in existing:
++          l = "coot_toolbar_button(\"" + label + "\", \"" + entry[1] + "\""
++          if len(entry) > 3 and entry[3]:
++            l += ", icon_name=\"" + entry[3] + "\""
++          if len(entry) > 2 and entry[2]:
++            l += ", tooltip=\"" + entry[2] + "\""
++          new_lines.append(l + ")\n")
++    if new_lines:
++      with open(filename, "a") as f:
++        if existing and not existing.endswith("\n"):
++          f.write("\n")
++        f.writelines(new_lines)
++    open(marker, "w").write("The default toolbar buttons (Sphere Refine, Sphere Regularization ...) were added to coot_toolbuttons.py once.\n")
++    print("INFO:: added the default toolbar buttons to", filename)
++    return True
++  except Exception as e:
++    print("WARNING:: could not add the default toolbar buttons:", e)
++    return False
++
++if (have_coot_python):
++  if coot_python.main_toolbar():
++    install_default_toolbar_buttons()
+diff --git a/python/coot_utils.py b/python/coot_utils.py
+index e236f72..25df399 100644
+--- a/python/coot_utils.py
++++ b/python/coot_utils.py
+@@ -4134,6 +4134,9 @@ def find_exe(program_name, *args, **kwargs):
+     info = True  # Yeah... no.
+     info = False
+ 
++    if not isinstance(program_name, str) or not program_name:
++        return False          # (callers pass on the result of an earlier failed find_exe)
++
+     # we shall check for full path names first
+     if (os.path.isfile(program_name)):
+         return os.path.abspath(program_name)
+diff --git a/python/gui_ligand_sliders.py b/python/gui_ligand_sliders.py
+index b936585..ca4f0b4 100644
+--- a/python/gui_ligand_sliders.py
++++ b/python/gui_ligand_sliders.py
+@@ -1,18 +1,22 @@
+ global cache_ligand_metrics
+ cache_ligand_metrics = False
+ 
+-# return 3 things
++# return 3 things: the column labels of F, sigma(F) and R-free; (False, False, False) when the file cannot give them
+ #
+ def mtz_file_name2refinement_column_labels(file_name):
+ 
++    if not file_name:
++        print("No MTZ file name: cannot look for the F, sigF and R-free columns")
++        return False, False, False
++
+     columns = get_mtz_columns(file_name)
+     read_success = columns.read_success
+ 
+     if (not read_success == 1):
+ 
+         # unhappy path
+-        print("Failed to read columms from file %s for map molecule %s" \
+-              %(file_name, imol_map()))
++        print("Failed to read columms from file %s" % file_name)
++        return False, False, False
+ 
+     else:
+         
+@@ -36,12 +40,53 @@ def mtz_file_name2refinement_column_labels(file_name):
+ 
+             # happy path
+             f_col_label = f_cols[0].column_label
+-            sigf_col_label = sigf_cols[0].column_label
+             r_free_col_label = rfree_cols[0].column_label
+ 
++            # The sigma that belongs to this F: the same data set (Phenix MTZ files also have SIGI-obs, listed first, and
++            # SIGF-obs-filtered), else the one whose name is "SIG" + the name of F.
++            sigf_labels = [sigf_cols[i].column_label for i in range(l2)]
++            f_set, f_name = f_col_label.rsplit("/", 1) if "/" in f_col_label else ("", f_col_label)
++            same_set = [x for x in sigf_labels if x.rsplit("/", 1)[0] == f_set]
++            named = [x for x in sigf_labels if x.rsplit("/", 1)[-1].upper() == "SIG" + f_name.upper()]
++            sigf_col_label = (named + same_set + sigf_labels)[0]
++
+             return f_col_label, sigf_col_label, r_free_col_label
+ 
+ 
++# The MTZ file for the ligand metrics must have the observed amplitudes, their sigmas and the R-free flags (it is what refmac5 is run
++# on to get the difference-map correlation).  The refinement map's file can be something else - an EDS/PDBe "_map.mtz" holds map
++# coefficients only, and a map read from a .map file has no MTZ at all.
++# returns (mtz file name, (F label, sigF label, R-free label), [(file, what is wrong)]); the file name is None when none is usable
++#
++def ligand_metrics_find_mtz(imol_map):
++
++    import os
++    candidates = []
++    try:
++        l = refmac_parameters(imol_map)
++        if l and l[0]:
++            candidates.append(l[0])
++    except Exception as e:
++        print("ligand_metrics_find_mtz: refmac_parameters failed:", e)
++    try:
++        f = mtz_file_name(imol_map)
++        if f and f not in candidates:
++            candidates.append(f)
++    except Exception as e:
++        print("ligand_metrics_find_mtz: mtz_file_name failed:", e)
++
++    problems = []
++    for c in candidates:
++        if not os.path.isfile(c):
++            problems.append((c, "the file does not exist"))
++            continue
++        labels = mtz_file_name2refinement_column_labels(c)
++        if all(labels):
++            return c, labels, problems
++        problems.append((c, "it has no observed F, sigF and R-free columns (map coefficients only?)"))
++    return None, (False, False, False), problems
++
++
+ def ligand_validation_metrics_gui_list_wrapper_pre(
+     imol, chain_id, res_no, ins_code, refmac_input_mtz_file_name,
+     fp_col, sigfp_col, rfree_col, refmac_dir):
+@@ -107,16 +152,28 @@ if (use_gui_qm != 2):
+ 
+         if (not valid_map_molecule_qm(imol_map)):
+             add_status_bar_text("No valid refinement map molecule")
++            info_dialog("Ligand Metric Sliders need a refinement map.\n\n" +
++                        "Open the MTZ file you refined against (File > Auto Open MTZ...)\n" +
++                        "and make it the refinement map (Calculate > Model/Fit/Refine... > Select Map).")
+         else:
+-            l = refmac_parameters(imol_map)
+-            if l:
+-                refmac_input_mtz_file_name = l[0]
+-            else:
+-                refmac_input_mtz_file_name = mtz_file_name(imol_map)
++            refmac_input_mtz_file_name, labels, problems = ligand_metrics_find_mtz(imol_map)
++            f_col_label, sigf_col_label, r_free_col_label = labels
++            if not refmac_input_mtz_file_name:
++                txt = "Ligand Metric Sliders cannot be calculated from the refinement map\n" + \
++                      "(molecule %s: %s).\n\n" % (imol_map, molecule_name(imol_map))
++                for (f, why) in problems:
++                    txt += "%s:\n   %s.\n" % (f, why[0].upper() + why[1:])
++                if not problems:
++                    txt += "This map was not made from an MTZ file.\n"
++                txt += "\nThe sliders need the MTZ file with the observed structure factors (F, sigF)\n" + \
++                       "and the R-free flags, i.e. the data you refined against.\n" + \
++                       "Open that file (File > Auto Open MTZ...), make its map the refinement map\n" + \
++                       "(Calculate > Model/Fit/Refine... > Select Map), and try again."
++                print(txt)
++                info_dialog(txt)
++                return
+             refmac_dir = get_directory("coot-refmac")
+ 
+-            f_col_label, sigf_col_label, r_free_col_label = \
+-                         mtz_file_name2refinement_column_labels(refmac_input_mtz_file_name)
+             print("    f_col_label:", f_col_label)
+             print(" sigf-col-label:", sigf_col_label)
+             print("rfree-col-label:", r_free_col_label)
+diff --git a/python/gui_prosmart.py b/python/gui_prosmart.py
+index 4b843be..d88b007 100644
+--- a/python/gui_prosmart.py
++++ b/python/gui_prosmart.py
+@@ -144,7 +144,7 @@ def add_module_restraints():
+                     other_residues = residues_near_residue(aa_imol,
+                                                            centred_residue,
+                                                            radius)
+-                    residue_specs = (centred_residue + other_residues) if isinstance(other_residues, list) else centred_residue
++                    residue_specs = ([centred_residue] + other_residues) if isinstance(other_residues, list) else [centred_residue]   # (a list of residue specs)
+                     generate_local_self_restraints_by_residues_py(aa_imol,
+                                                                   residue_specs,
+                                                                   local_dist_max)
+diff --git a/python/rcrane_loader.py b/python/rcrane_loader.py
+index 16fb103..af06605 100644
+--- a/python/rcrane_loader.py
++++ b/python/rcrane_loader.py
+@@ -70,5 +70,12 @@ def import_rcrane_wrapper():
+ 
+ # print '===== in rcrane loader: use_gui_qm is ', use_gui_qm
+ 
++# macOS port: "Calculate > RCrane launch" is not offered by default.  RCrane's Python 2 code compares numbers with text and relies on other
++# Python 2 behaviour (New trace stops at start-up with "'<=' not supported between instances of 'float' and 'str'"), so its trace /
++# rotamerize / review windows are not usable yet.  COOT_ENABLE_RCRANE=1 brings the menu entry back (for work on the port).
+ if (use_gui_qm != 2):
+-    import_rcrane_wrapper()
++    import os as _os
++    if _os.environ.get("COOT_ENABLE_RCRANE"):
++        import_rcrane_wrapper()
++    else:
++        print("INFO:: RCrane is switched off in this build (see python/rcrane_loader.py); COOT_ENABLE_RCRANE=1 enables its menu")
+diff --git a/python/refmac.py b/python/refmac.py
+index 536230b..eb951d0 100644
+--- a/python/refmac.py
++++ b/python/refmac.py
+@@ -341,22 +341,13 @@ def run_refmac_by_filename_inner(pdb_in_filename, pdb_out_filename,
+ 
+     print("INFO: running refmac with these command line args: ", command_line_args)
+     print("INFO: running refmac with these data lines: ", data_lines)
++    # the environment the refmac5 process gets (Coot's own plus CCP4's variables, see ccp4_child_env): shown for the log
+     try:
+-        print("environment variable:  SYMOP: ", os.environ['SYMINFO'])
+-    except:
+-        print(" not set !")
+-    try:
+-        print("environment variable: ATOMSF: ", os.environ['ATOMSF'])
+-    except:
+-        print(" not set !")
+-    try:
+-        print("environment variable:  CLIBD: ", os.environ['CLIBD'])
+-    except:
+-        print(" not set !")
+-    try:
+-        print("environment variable:   CLIB: ", os.environ['CLIB'])
+-    except:
+-        print(" not set !")
++        child_env = ccp4_child_env()
++        shown = ["%s=%s" % (k, child_env[k]) for k in ("SYMINFO", "ATOMSF", "CLIBD", "CLIB", "CCP4") if child_env.get(k)]
++        print("INFO: environment for refmac5:", ", ".join(shown) if shown else "(no CCP4 variables found)")
++    except Exception as e:
++        print("INFO: environment for refmac5 not shown:", e)
+ 
+     data_lines += ["END"]
+ 

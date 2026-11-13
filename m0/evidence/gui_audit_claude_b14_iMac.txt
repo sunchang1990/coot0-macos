@@ -1,0 +1,276 @@
+== Coot GUI audit 2026-11-11 13:39:10 | 275 items (menu bar + toolbar) | real window
+AUDIT   0 | File > Open Coordinates... | ok | windows: 1, buttons clicked: 0, 1.2 s
+AUDIT   1 | File > Auto Open MTZ... | ok | windows: 1, buttons clicked: 0, 1.1 s
+AUDIT   2 | File > Open MTZ, mmCIF, fcf or phs... | ok | windows: 1, buttons clicked: 0, 1.1 s
+AUDIT   3 | File > Open Map... | ok | windows: 1, buttons clicked: 0, 1.2 s
+AUDIT   4 | File > Import CIF dictionary... | ok | windows: 1, buttons clicked: 0, 1.2 s
+AUDIT   5 | File > Get Monomer... | SKIP | not run (network / exit / display-mode item: try it by hand)
+AUDIT   6 | File > Search Monomer Library... | SKIP | not run (network / exit / display-mode item: try it by hand)
+AUDIT   7 | File > Fetch PDB using Accession Code... | SKIP | not run (network / exit / display-mode item: try it by hand)
+AUDIT   8 | File > Fetch PDB & Map using EDS... | SKIP | not run (network / exit / display-mode item: try it by hand)
+AUDIT   9 | File > Fetch PDB & Map using PDB-REDO... | SKIP | not run (network / exit / display-mode item: try it by hand)
+AUDIT  10 | File > Fetch Corresponding AlphaFold Model & Superpose | SKIP | not run (network / exit / display-mode item: try it by hand)
+AUDIT  11 | File > Fetch AlphaFold Model using Uniprot ID | SKIP | not run (network / exit / display-mode item: try it by hand)
+AUDIT  12 | File > Save Coordinates... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  13 | File > Save Symmetry Coordinates... | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT  14 | File > Save State... | ok | windows: 1, buttons clicked: 0, 1.1 s
+AUDIT  15 | File > Recover Session... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  16 | File > Export Map... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  17 | File > Export Map Fragment... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  18 | File > Delete Molecules and Maps... | ok | windows: 1, buttons clicked: 2, 1.5 s
+AUDIT  19 | File > Curlew | ok | windows: 1, buttons clicked: 2, 5.7 s
+AUDIT  20 | File > Exit | SKIP | not run (network / exit / display-mode item: try it by hand)
+AUDIT  21 | Edit > Bond Colours... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  22 | Edit > Bond Parameters... | ok | windows: 1, buttons clicked: 2, 1.5 s
+AUDIT  23 | Edit > Change Chain IDs... | ok | windows: 1, buttons clicked: 1, 1.5 s
+AUDIT  24 | Edit > Copy Molecule... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  25 | Edit > Copy Fragment... | ok | windows: 1, buttons clicked: 2, 1.5 s
+AUDIT  26 | Edit > Map Parameters... | ok | windows: 1, buttons clicked: 3, 1.7 s
+AUDIT  27 | Edit > Merge Molecules... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  28 | Edit > Replace Residue... | ok | windows: 1, buttons clicked: 1, 2.8 s | WARNING:: No symmetry available for this molecule
+AUDIT  29 | Edit > Replace Fragment... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  30 | Edit > Renumber Residues... | ok | windows: 1, buttons clicked: 1, 1.5 s
+AUDIT  31 | Edit > Restraints... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  32 | Edit > Skeleton Parameters > Skeleton Colour... | ok | windows: 1, buttons clicked: 3, 1.6 s
+AUDIT  33 | Edit > Skeleton Parameters > Skeleton Box Radius... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  34 | Edit > Skeleton Parameters > Skeletonization Level... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  35 | Edit > Residue Info... | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT  36 | Edit > Font Size... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  37 | Edit > Pink Pointer Size... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  38 | Edit > Background Colour... > Black | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT  39 | Edit > Background Colour... > White | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT  40 | Edit > Settings... > Set Refinement Options... | ok | windows: 1, buttons clicked: 2, 1.5 s
+AUDIT  41 | Edit > Settings... > Peptide Restraints... > Add Planar Peptide Restraints | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT  42 | Edit > Settings... > Peptide Restraints... > Remove Planar Peptide Restraints | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT  43 | Edit > Settings... > Occupancy refinement input for REFMAC... | ok | windows: 1, buttons clicked: 3, 3.3 s
+AUDIT  44 | Edit > Settings... > Refinement Speed... > Molasses Refinement mode | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT  45 | Edit > Settings... > Refinement Speed... > Smooth Refinement mode | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT  46 | Edit > Settings... > Refinement Speed... > Crocodile Refinement mode | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT  47 | Edit > Settings... > Refinement Speed... > Normal Refinement mode (1 Emsley) | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT  48 | Edit > Settings... > Auto-weight refinement | ok | windows: 0, buttons clicked: 0, 12.5 s
+AUDIT  49 | Edit > Settings... > Set Undo Molecule... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  50 | Edit > Settings... > B factor bonds scale factor... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  51 | Edit > Settings... > Rotate Translate Zone Mode... > Rotate About Fragment Centre | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT  52 | Edit > Settings... > Rotate Translate Zone Mode... > Rotate About Second Clicked Atom | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT  53 | Edit > Settings... > Set Density Fit Graph Weight... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  54 | Edit > Settings... > Set Spin Speed | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  55 | Edit > Settings... > Nudge Centre... | ok | windows: 1, buttons clicked: 7, 2.4 s
+AUDIT  56 | Edit > Settings... > All Molecules use "Near Chains" Symmetry | ok | windows: 0, buttons clicked: 0, 1.2 s
+AUDIT  57 | Edit > Settings... > Question Accept Refinement | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT  58 | Edit > Settings... > Save Graphics Size and Positions | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT  59 | Edit > Settings... > Save Dialog Positions... | WARN | 1 x (coot-bin:70797): Gtk-CRITICAL **: 13:40:45.302: gtk_widget_destroy: assertion 'GTK_IS_WIDGET (widget)' failed (windows: 3, buttons clicked: 17, 8.5 s)
+AUDIT  60 | Edit > Settings... > Key Bindings... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  61 | Edit > Settings... > Python: Install Template Keybindings | ok | windows: 1, buttons clicked: 29, 10.2 s | ERROR:: A: last_restraints not cleared up
+AUDIT  62 | Edit > Settings... > Enable Quick-Save checkpointing... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  63 | Edit > Preferences... | ok | windows: 1, buttons clicked: 8, 2.5 s
+AUDIT  64 | Calculate > Align & Mutate... | ok | windows: 1, buttons clicked: 1, 1.5 s | WARNING:: no sequence found or improper fasta sequence format
+AUDIT  65 | Calculate > All Molecule... > [Post MR] Fill Partial Residues... | ok | windows: 1, buttons clicked: 1, 1.8 s
+AUDIT  66 | Calculate > All Molecule... > Fit Protein... | ok | windows: 1, buttons clicked: 1, 150.3 s | WARNING:: no rotamers probabilities for residue type GLY
+AUDIT  67 | Calculate > All Molecule... > Stepped Refine... | ok | windows: 1, buttons clicked: 1, 182.2 s | WARNING:: full_atom_spec_to_atom_index() Could not find " CA ","A"/72/B in this molecule: (0) tutorial-modern-coot-0.pdb
+AUDIT  68 | Calculate > Fit Loop > Fit Loop by Database Search... | ok | windows: 1, buttons clicked: 1, 1.4 s
+AUDIT  69 | Calculate > Fit Loop > Fit Loop by Rama Search... | ok | windows: 1, buttons clicked: 1, 1.3 s | WARNING:: can't mutate.  Sequence of length: 0 but residue range size: 1
+AUDIT  70 | Calculate > Frames/Sec... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  71 | Calculate > Load Tutorial Model and Data | ok | windows: 0, buttons clicked: 0, 1.2 s
+AUDIT  72 | Calculate > Ligand Builder | ERR | button [] raised ModuleNotFoundError("No module named 'recap_wrapper'") (windows: 1, buttons clicked: 13, 10.2 s)
+AUDIT  73 | Calculate > LSQ Superpose... | WARN | 10 x (coot-bin:70797): Gtk-CRITICAL **: 13:46:58.561: gtk_combo_box_get_model: assertion 'GTK_IS_COMBO_BOX (combo_box)' failed (windows: 1, buttons clicked: 2, 1.6 s)
+AUDIT  74 | Calculate > Map Tools... > Mask Map by Atom Selection... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  75 | Calculate > Map Tools... > Copy Map... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  76 | Calculate > Map Tools... > Make a Smoother Copy... | ok | windows: 1, buttons clicked: 1, 1.5 s
+AUDIT  77 | Calculate > Map Tools... > Make a Very Smooth Copy... | ok | windows: 1, buttons clicked: 1, 2.1 s
+AUDIT  78 | Calculate > Map Tools... > Make a Difference Map... | ok | windows: 1, buttons clicked: 1, 1.4 s
+AUDIT  79 | Calculate > Map Tools... > Transform map by LSQ model fit... | ok | windows: 1, buttons clicked: 1, 1.3 s | ERROR:: No symmetry available
+AUDIT  80 | Calculate > Map Tools... > Average Maps... | ok | windows: 1, buttons clicked: 3, 1.6 s
+AUDIT  81 | Calculate > Map Tools... > Map Density Histogram... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  82 | Calculate > Map Tools... > Brighten Maps | ok | windows: 0, buttons clicked: 0, 1.2 s
+AUDIT  83 | Calculate > Map Tools... > Set map is a difference map... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  84 | Calculate > Map Tools... > Another (contour) level... | ok | windows: 0, buttons clicked: 0, 1.2 s
+AUDIT  85 | Calculate > Map Tools... > Multi-chicken... | ok | windows: 1, buttons clicked: 1, 1.6 s
+AUDIT  86 | Calculate > Map Sharpening/Blurring... | ok | windows: 1, buttons clicked: 4, 2.8 s
+AUDIT  87 | Calculate > Map Skeleton... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT  88 | Calculate > Modelling... > Add Hydrogen Atoms | ok | windows: 0, buttons clicked: 0, 1.3 s
+AUDIT  89 | Calculate > Modelling... > Add Hydrogens using Refmac | ok | windows: 0, buttons clicked: 0, 7.9 s
+AUDIT  90 | Calculate > Modelling... > Add Other Solvent Molecules... | ok | windows: 1, buttons clicked: 17, 34.1 s | WARNING:: No symmetry available for this molecule
+AUDIT  91 | Calculate > Modelling... > Arrange Waters Around Protein... | ok | windows: 1, buttons clicked: 1, 1.5 s
+AUDIT  92 | Calculate > Modelling... > Assign (force) HETATMs for this Residue | ok | windows: 0, buttons clicked: 0, 1.2 s
+AUDIT  93 | Calculate > Modelling... > Assign HETATM to molecule... | ok | windows: 1, buttons clicked: 1, 1.4 s
+AUDIT  94 | Calculate > Modelling... > Delete Hydrogen Atoms | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT  95 | Calculate > Modelling... > Delete Side-chains for Active Chain | ok | windows: 0, buttons clicked: 0, 1.3 s
+AUDIT  96 | Calculate > Modelling... > Duplicate range (pick atoms) | ok | windows: 0, buttons clicked: 0, 1.2 s
+AUDIT  97 | Calculate > Modelling... > Find Secondary Structure... > Find Helices | ok | windows: 0, buttons clicked: 0, 2.6 s | WARNING:: residue is not amino acid or nucleotide! Assuming non-standard nucleotide.
+AUDIT  98 | Calculate > Modelling... > Find Secondary Structure... > Find Strands | ok | windows: 0, buttons clicked: 0, 3.1 s | WARNING:: residue is not amino acid or nucleotide! Assuming non-standard nucleotide.
+AUDIT  99 | Calculate > Modelling... > Fetch PDBe description for this ligand | SKIP | not run (network / exit / display-mode item: try it by hand)
+AUDIT 100 | Calculate > Modelling... > Fetch PDBe Ligand Description | SKIP | not run (network / exit / display-mode item: try it by hand)
+AUDIT 101 | Calculate > Modelling... > Fill Partial Residues | ok | windows: 0, buttons clicked: 0, 1.9 s | ERROR::: failure to get orientation matrix
+AUDIT 102 | Calculate > Modelling... > Fix Nomenclature Errors... | ok | windows: 1, buttons clicked: 1, 1.5 s
+AUDIT 103 | Calculate > Modelling... > Invert This Chiral Centre | ok | windows: 0, buttons clicked: 0, 1.2 s | WARNING:: No symmetry available for this molecule
+AUDIT 104 | Calculate > Modelling... > JLigand launch | ok | windows: 1, buttons clicked: 1, 1.7 s
+AUDIT 105 | Calculate > Modelling... > Make Link (click 2 atoms)... | ok | windows: 0, buttons clicked: 0, 1.2 s
+AUDIT 106 | Calculate > Modelling... > Merge Water Chains... | ok | windows: 1, buttons clicked: 1, 1.6 s
+AUDIT 107 | Calculate > Modelling... > Monomer from Dictionary | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 108 | Calculate > Modelling... > Morph Fit Chain (Averaging Radius 7) | ok | windows: 0, buttons clicked: 0, 1.3 s
+AUDIT 109 | Calculate > Modelling... > Morph Fit Chain (Averaging Radius 11) | ok | windows: 0, buttons clicked: 0, 1.4 s
+AUDIT 110 | Calculate > Modelling... > Morph Fit Chain based on Secondary Structure | ok | windows: 0, buttons clicked: 0, 1.3 s
+AUDIT 111 | Calculate > Modelling... > New Molecule by Sphere... | ok | windows: 1, buttons clicked: 1, 1.3 s | WARNING:: No symmetry available for this molecule
+AUDIT 112 | Calculate > Modelling... > New Molecule from Symmetry Op... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 113 | Calculate > Modelling... > Phosphorylate this residue | ok | windows: 0, buttons clicked: 0, 2.8 s | WARNING:: No symmetry available for this molecule
+AUDIT 114 | Calculate > Modelling... > Rename Residue... | ok | windows: 1, buttons clicked: 1, 1.5 s
+AUDIT 115 | Calculate > Modelling... > Renumber Waters... | ok | windows: 1, buttons clicked: 1, 1.5 s
+AUDIT 116 | Calculate > Modelling... > Reorder Chains... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 117 | Calculate > Modelling... > Residue Type Selection... | ok | windows: 1, buttons clicked: 1, 1.4 s
+AUDIT 118 | Calculate > Modelling... > Residues with Alt Confs... | ok | windows: 1, buttons clicked: 1, 3.1 s
+AUDIT 119 | Calculate > Modelling... > Residues with Cis Peptide Bonds... | ok | windows: 1, buttons clicked: 1, 3.0 s
+AUDIT 120 | Calculate > Modelling... > Residues with Missing Atoms... | ok | windows: 1, buttons clicked: 1, 3.0 s
+AUDIT 121 | Calculate > Modelling... > Rigid Body Fit Residue Ranges... | ok | windows: 1, buttons clicked: 3, 1.6 s
+AUDIT 122 | Calculate > Modelling... > Rigid Body Fit Molecule... | ok | windows: 1, buttons clicked: 1, 1.4 s
+AUDIT 123 | Calculate > Modelling... > Superpose ligands | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 124 | Calculate > Modelling... > Symm Shift Reference Chain Here | ok | windows: 0, buttons clicked: 0, 1.2 s
+AUDIT 125 | Calculate > Modelling... > Rotamer Search... > Use "Backrub" Rotamers | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 126 | Calculate > Modelling... > Rotamer Search... > DONT use "Backrub" Rotamers | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 127 | Calculate > Modelling... > Use SEGIDs... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 128 | Calculate > Modelling... > What's this? | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 129 | Calculate > Modelling... > Atoms with Zero Occupancies... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 130 | Calculate > Model/Fit/Refine... | WARN | 1 x (coot-bin:70797): Gtk-CRITICAL **: 13:49:15.715: gtk_widget_destroy: assertion 'GTK_IS_WIDGET (widget)' failed (windows: 1, buttons clicked: 11, 5.9 s)
+AUDIT 131 | Calculate > Modules... > Carbohydrate | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 132 | Calculate > Modules... > CCP4 | ok | windows: 0, buttons clicked: 0, 1.2 s
+AUDIT 133 | Calculate > Modules... > Cryo-EM | ok | windows: 0, buttons clicked: 0, 1.2 s
+AUDIT 134 | Calculate > Modules... > Restraints | ok | windows: 0, buttons clicked: 0, 1.2 s
+AUDIT 135 | Calculate > Modules... > Refine | ok | windows: 0, buttons clicked: 0, 1.2 s
+AUDIT 136 | Calculate > Modules... > PDBe | SKIP | not run (network / exit / display-mode item: try it by hand)
+AUDIT 137 | Calculate > Modules... > ProSMART | ok | windows: 0, buttons clicked: 0, 1.2 s
+AUDIT 138 | Calculate > Modules... > SHELX | ok | windows: 0, buttons clicked: 0, 1.2 s
+AUDIT 139 | Calculate > Move Molecule Here... | ok | windows: 1, buttons clicked: 1, 1.5 s
+AUDIT 140 | Calculate > Mutate Residue Range... | ok | windows: 1, buttons clicked: 1, 1.3 s | WARNING:: can't mutate.  Sequence of length: 0 but residue range size: 1
+AUDIT 141 | Calculate > NCS Maps... | ok | windows: 1, buttons clicked: 1, 1.5 s
+AUDIT 142 | Calculate > NCS Tools... > Copy NCS Residue Range... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 143 | Calculate > NCS Tools... > Copy NCS Chain... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 144 | Calculate > NCS Tools... > NCS Ghosts by Residue Range... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 145 | Calculate > NCS Tools... > Update NCS Ghosts using Local Match | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 146 | Calculate > NCS Tools... > NCS Jumping... | ok | windows: 1, buttons clicked: 3, 1.7 s
+AUDIT 147 | Calculate > NCS Tools... > NCS ligands... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 148 | Calculate > NCS Tools... > NCS matrix type... > Accurate (SSM) | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 149 | Calculate > NCS Tools... > NCS matrix type... > Fast (LSQ) | ok | windows: 0, buttons clicked: 0, 1.2 s
+AUDIT 150 | Calculate > NCS Tools... > NCS matrix type... > Extra Fast (LSQ, only every 2nd CA) | ok | windows: 0, buttons clicked: 0, 1.2 s
+AUDIT 151 | Calculate > Other Modelling Tools... | ok | windows: 1, buttons clicked: 12, 3.5 s | WARNING:: Problem:: mmdb does not understand space group: Unknown
+AUDIT 152 | Calculate > PISA... > PISA Assemblies... | ok | windows: 1, buttons clicked: 1, 1.7 s
+AUDIT 153 | Calculate > PISA... > PISA Interfaces... | ok | windows: 1, buttons clicked: 1, 1.7 s
+AUDIT 154 | Calculate > Run Script... | ok | windows: 1, buttons clicked: 0, 1.2 s
+AUDIT 155 | Calculate > SSM Superpose... | ok | windows: 1, buttons clicked: 1, 1.5 s
+AUDIT 156 | Calculate > Scripting... > Python... | ok | windows: 1, buttons clicked: 1, 1.4 s
+AUDIT 157 | Calculate > Scripting... > Scheme... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 158 | Calculate > RCrane > New trace 5'->3'... | ok | windows: 1, buttons clicked: 5, 3.1 s | WARNING:: No symmetry available for this molecule
+AUDIT 159 | Calculate > RCrane > New trace 3'->5'... | ok | windows: 1, buttons clicked: 5, 2.3 s | WARNING:: No symmetry available for this molecule
+AUDIT 160 | Calculate > RCrane > Extend chain... | ok | windows: 0, buttons clicked: 0, 2.9 s
+AUDIT 161 | Calculate > RCrane > Rotamerize existing structure... | ok | windows: 0, buttons clicked: 0, 2.9 s
+AUDIT 162 | Calculate > RCrane > Rotamerize without density... | ok | windows: 0, buttons clicked: 0, 2.9 s
+AUDIT 163 | Calculate > RCrane > About RCrane... | ok | windows: 0, buttons clicked: 0, 2.9 s
+AUDIT 164 | Calculate > Updating Maps... | ok | windows: 1, buttons clicked: 1, 1.4 s
+AUDIT 165 | Draw > Additional Representation... | ok | windows: 1, buttons clicked: 1, 1.4 s
+AUDIT 166 | Draw > Anisotropic Atoms... | ok | windows: 1, buttons clicked: 2, 1.5 s
+AUDIT 167 | Draw > Cell & Symmetry... | ok | windows: 1, buttons clicked: 3, 1.7 s
+AUDIT 168 | Draw > Centre Atom Label... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 169 | Draw > Clipping... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 170 | Draw > Model/Fit/Refine Toolbar | ok | windows: 0, buttons clicked: 0, 1.3 s
+AUDIT 171 | Draw > Coordinates Recentring... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 172 | Draw > Crosshairs... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 173 | Draw > Display Manager... | ok | windows: 1, buttons clicked: 104, 18.5 s
+AUDIT 174 | Draw > Display only Active | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 175 | Draw > Dragged Map... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 176 | Draw > Generic Display Objects... | ok | windows: 1, buttons clicked: 2, 1.5 s
+AUDIT 177 | Draw > Go To Atom... | ok | windows: 1, buttons clicked: 5, 3.3 s
+AUDIT 178 | Draw > Label Atoms in Residue | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 179 | Draw > Label Neighbours | ok | windows: 0, buttons clicked: 0, 1.2 s
+AUDIT 180 | Draw > NCS Ghost Control... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 181 | Draw > Representation Tools... > Undo Symmetry View | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 182 | Draw > Representation Tools... > Ball & Stick... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 183 | Draw > Representation Tools... > Add Balls to Simple Sticks | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 184 | Draw > Representation Tools... > Simple Sticks (No Balls) | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 185 | Draw > Representation Tools... > Clear Ball & Stick... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 186 | Draw > Representation Tools... > Grey Carbons for Molecule | ok | windows: 0, buttons clicked: 0, 1.2 s
+AUDIT 187 | Draw > Representation Tools... > Coloured Carbons for Molecule | ok | windows: 0, buttons clicked: 0, 1.2 s
+AUDIT 188 | Draw > Representation Tools... > Clipped Surface Here (This Residue) | ok | windows: 0, buttons clicked: 0, 1.3 s
+AUDIT 189 | Draw > Representation Tools... > Full Surface Around Here (This Residue) | ok | windows: 0, buttons clicked: 0, 1.3 s
+AUDIT 190 | Draw > Representation Tools... > Un-Surface... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 191 | Draw > Representation Tools... > Highlight Interesting Site (here)... | ok | windows: 0, buttons clicked: 0, 1.2 s
+AUDIT 192 | Draw > Representation Tools... > Dotted Surface... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 193 | Draw > Representation Tools... > Clear Surface Dots... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 194 | Draw > Representation Tools... > Limit Model Display Radius... | ok | windows: 1, buttons clicked: 1, 1.4 s
+AUDIT 195 | Draw > Representation Tools... > HOLE... | ok | windows: 1, buttons clicked: 3, 35.6 s
+AUDIT 196 | Draw > Representation Tools... > Label All CAs... | ok | windows: 1, buttons clicked: 1, 1.3 s | WARNING:: seqnum_from_serial_number: requested residue with serial_num 93 but only 93 residues in chain A
+AUDIT 197 | Draw > Representation Tools... > 3D Annotations... > Annotate position... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 198 | Draw > Representation Tools... > 3D Annotations... > Save Annotations... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 199 | Draw > Representation Tools... > 3D Annotations... > Load Annotations... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 200 | Draw > Representation Tools... > 3D Annotations... > Remove annotation here | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 201 | Draw > Representation Tools... > 3D Annotations... > Remove annotation near click | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 202 | Draw > Representation Tools... > CCP4MG... | ok | windows: 0, buttons clicked: 0, 1.7 s
+AUDIT 203 | Draw > Rock View On/Off | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 204 | Draw > Spin View On/Off | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 205 | Draw > Screenshot > Simple... | WARN | 150 x (coot-bin:70797): GLib-GIO-CRITICAL **: 13:52:09.513: file ../gio/gfileinfo.c: line 1647 (g_file_info_get_is_hidden): should not be reached (windows: 2, buttons clicked: 1, 1.3 s)
+AUDIT 206 | Draw > Screenshot > Povray... | WARN | 150 x (coot-bin:70797): GLib-GIO-CRITICAL **: 13:52:10.854: file ../gio/gfileinfo.c: line 1647 (g_file_info_get_is_hidden): should not be reached (windows: 1, buttons clicked: 0, 1.2 s)
+AUDIT 207 | Draw > Screenshot > Raster3D... | WARN | 150 x (coot-bin:70797): GLib-GIO-CRITICAL **: 13:52:12.111: file ../gio/gfileinfo.c: line 1647 (g_file_info_get_is_hidden): should not be reached (windows: 1, buttons clicked: 0, 1.2 s)
+AUDIT 208 | Draw > Smooth Recentring... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 209 | Draw > Stereo... | SKIP | not run (network / exit / display-mode item: try it by hand)
+AUDIT 210 | Draw > Undo Last Navigation | ok | windows: 0, buttons clicked: 0, 1.2 s
+AUDIT 211 | Draw > Antialiasing... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 212 | Measures > Residue Info... | ok | windows: 0, buttons clicked: 0, 1.2 s
+AUDIT 213 | Measures > Distances & Angles... | ok | windows: 1, buttons clicked: 4, 1.8 s
+AUDIT 214 | Measures > Environment Distances... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 215 | Measures > Plane Distances... | ok | windows: 1, buttons clicked: 2, 1.5 s
+AUDIT 216 | Measures > Pointer Distances... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 217 | Measures > Clear Atom Labels | ok | windows: 0, buttons clicked: 0, 1.2 s
+AUDIT 218 | Validate > Kleywegt Plot... | ok | windows: 1, buttons clicked: 1, 1.4 s
+AUDIT 219 | Validate > Incorrect Chiral Volumes... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 220 | Validate > Unmodelled blobs... | ok | windows: 1, buttons clicked: 1, 1.4 s
+AUDIT 221 | Validate > Difference Map Peaks... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 222 | Validate > Check/Delete Waters... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 223 | Validate > Atom Overlaps (Coot) | ok | windows: 0, buttons clicked: 0, 1.2 s
+AUDIT 224 | Validate > All-Atom Contact Dots (Molprobity) | ok | windows: 0, buttons clicked: 0, 3.7 s | BL WARNING:: could neither find nor set REDUCE_HET_DICT !
+AUDIT 225 | Validate > Atom Overlaps Dialog | ok | windows: 1, buttons clicked: 41, 20.3 s
+AUDIT 226 | Validate > Highly coordinated waters... | ok | windows: 1, buttons clicked: 2, 3.5 s
+AUDIT 227 | Validate > Pepflips from Difference Map... | ok | windows: 1, buttons clicked: 2, 1.5 s
+AUDIT 228 | Validate > Validation Outliers | ok | windows: 1, buttons clicked: 33, 20.5 s
+AUDIT 229 | Validate > List Ramachandran outliers... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 230 | Validate > Read REFMAC logfile... | ok | windows: 1, buttons clicked: 2, 3.2 s
+AUDIT 231 | Validate > Assign Sequence... > 1: Associate Sequence to Chain... | ok | windows: 1, buttons clicked: 2, 3.0 s
+AUDIT 232 | Validate > Assign Sequence... > 2: Assign Sequence... | ok | windows: 1, buttons clicked: 4, 1.8 s | ERROR:: the input contains an invalid chain and/or sequence
+AUDIT 233 | Validate > Views > Add View... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 234 | Validate > Views > Add a Spin View... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 235 | Validate > Views > Views Panel... | ok | windows: 1, buttons clicked: 4, 18.2 s
+AUDIT 236 | Validate > Views > Play Views | ok | windows: 0, buttons clicked: 0, 8.2 s
+AUDIT 237 | Validate > Views > Set Views Play Speed... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 238 | Validate > Views > Save Views... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 239 | Validate > Pukka Puckers...? | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 240 | Validate > Alignment vs PIR... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 241 | Validate > Overlaps, Peptides, CBeta, Rama & Rota Outliers | ok | windows: 1, buttons clicked: 27, 12.6 s
+AUDIT 242 | About > Header/Remarks Browser... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 243 | About > Hints... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT 244 | About > About... | ok | windows: 1, buttons clicked: 4, 1.9 s
+AUDIT 245 | Ligand > Isolated Molprobity Dots for this Ligand | ok | windows: 0, buttons clicked: 0, 2.3 s | BL WARNING:: could neither find nor set REDUCE_HET_DICT !
+AUDIT 246 | Ligand > Isolated Coot Ligand Dots for this Ligand | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 247 | Ligand > Coot All-Atom Contact Dots | ok | windows: 0, buttons clicked: 0, 1.2 s
+AUDIT 248 | Ligand > Find Ligands... | ok | windows: 1, buttons clicked: 2, 1.5 s
+AUDIT 249 | Ligand > Jiggle-Fit Ligand | ok | windows: 0, buttons clicked: 0, 1.6 s
+AUDIT 250 | Ligand > Hydrogenate region | ok | windows: 0, buttons clicked: 0, 1.4 s | BL WARNING:: could neither find nor set REDUCE_HET_DICT !
+AUDIT 251 | Ligand > Contact Dots for Ligand | ok | windows: 0, buttons clicked: 0, 1.2 s
+AUDIT 252 | Ligand > SMILES -> 2D | ok | windows: 1, buttons clicked: 1, 1.4 s
+AUDIT 253 | Ligand > SMILES -> simple 3D | ok | windows: 1, buttons clicked: 1, 1.3 s | WARNING:: BAD SMILES LIG
+AUDIT 254 | Ligand > Residue -> 2D | ok | windows: 0, buttons clicked: 0, 1.2 s
+AUDIT 255 | Ligand > FLEV this residue | ok | windows: 0, buttons clicked: 0, 1.2 s | ERROR:: (runtime error) in fle_view_with_rdkit(): Failed to get atom index for atom name " OXT" in residue of type ARG [
+AUDIT 256 | Ligand > Toggle FLEV Ligand Interactions | ok | windows: 0, buttons clicked: 0, 1.2 s
+AUDIT 257 | Ligand > Solid Generic Objects | ok | windows: 0, buttons clicked: 0, 1.4 s
+AUDIT 258 | Ligand > Unsolid Generic Objects | ok | windows: 0, buttons clicked: 0, 1.3 s
+AUDIT 259 | Ligand > Show Chemical Features | ok | windows: 0, buttons clicked: 0, 1.3 s
+AUDIT 260 | Ligand > Rename Atom to Reference | ok | windows: 1, buttons clicked: 1, 1.5 s
+AUDIT 261 | Ligand > Solid Generic Objects | ok | windows: 0, buttons clicked: 0, 1.3 s
+AUDIT 262 | Ligand > Unsolid Generic Objects | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT 263 | Ligand > Tabulate (on terminal) Ligand Distorsions | ok | windows: 0, buttons clicked: 0, 1.2 s
+AUDIT 264 | Ligand > Display Ligand Distortions | ok | windows: 0, buttons clicked: 0, 1.4 s
+AUDIT 265 | Ligand > Quick Ligand Validate | ok | windows: 1, buttons clicked: 1, 7.7 s | BL WARNING:: could neither find nor set REDUCE_HET_DICT !
+AUDIT 266 | Ligand > Ligand Metric Sliders | ok | windows: 1, buttons clicked: 1, 22.4 s | BL WARNING:: could neither find nor set REDUCE_HET_DICT !
+AUDIT 267 | Toolbar > Open Coords... | ok | windows: 1, buttons clicked: 0, 1.4 s
+AUDIT 268 | Toolbar > Reset View | ok | windows: 0, buttons clicked: 0, 7.3 s
+AUDIT 269 | Toolbar > Display Manager | ok | windows: 1, buttons clicked: 22, 6.1 s
+AUDIT 270 | Toolbar > Go To Atom... | ok | windows: 1, buttons clicked: 5, 14.8 s
+AUDIT 271 | Toolbar > Go To Ligand | ok | windows: 0, buttons clicked: 0, 1.3 s
+AUDIT 272 | Toolbar > GtkButton | ok | windows: 0, buttons clicked: 0, 1.4 s
+AUDIT 273 | Toolbar > GtkButton | ERR | AttributeError: 'bool' object has no attribute 'destroy' (windows: 0, buttons clicked: 0, 1.3 s)
+AUDIT 274 | Toolbar > GtkButton | SKIP | insensitive (greyed out) at this point

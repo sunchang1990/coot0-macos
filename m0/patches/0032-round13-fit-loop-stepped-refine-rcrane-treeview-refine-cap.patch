@@ -1,0 +1,495 @@
+diff --git a/compat/pygtk2/gtk/__init__.py b/compat/pygtk2/gtk/__init__.py
+index 5a32459..2910bf3 100644
+--- a/compat/pygtk2/gtk/__init__.py
++++ b/compat/pygtk2/gtk/__init__.py
+@@ -52,6 +52,16 @@ class Widget(Object):
+         r = _Rect(); _call("gtk_widget_get_allocation", self, r); return r
+     @property
+     def parent(self): return _wrap(_call("gtk_widget_get_parent", self))
++    def size_request(self):
++        r = (c_int * 2)(); _call("gtk_widget_size_request", self, r); return (r[0], r[1])
++    def style_get_property(self, name):
++        klass = _call("g_type_class_peek", _c.instance_gtype(self._ptr))
++        ps = _call("gtk_widget_class_find_style_property", klass, name)
++        if not ps: raise TypeError("widget of type %s has no style property '%s'" % (type(self).__name__, name))
++        v = _c.gvalue_init(ctypes.c_ulong.from_address(ps + 24).value)
++        try:
++            _call("gtk_widget_style_get_property", self, name, v); return _c.gvalue_get(v)
++        finally: _call("g_value_unset", v)
+     def get_colormap(self): return _wrap(_call("gtk_widget_get_colormap", self))
+     def create_pango_layout(self, text=None): return _wrap(_call("gtk_widget_create_pango_layout", self, text))
+ 
+@@ -64,6 +74,10 @@ class Misc(Widget): pass
+ class Box(Container):
+     def pack_start(self, child, expand=True, fill=True, padding=0): _call("gtk_box_pack_start", self, child, expand, fill, padding)
+     def pack_end(self, child, expand=True, fill=True, padding=0): _call("gtk_box_pack_end", self, child, expand, fill, padding)
++    def query_child_packing(self, child):
++        e, f, p, t = c_int(0), c_int(0), c_uint(0), c_int(0)
++        _call("gtk_box_query_child_packing", self, child, ctypes.byref(e), ctypes.byref(f), ctypes.byref(p), ctypes.byref(t))
++        return (bool(e.value), bool(f.value), p.value, t.value)
+ class HBox(Box):
+     def __init__(self, homogeneous=False, spacing=0): _adopt(self, _call("gtk_hbox_new", homogeneous, spacing))
+ class VBox(Box):
+@@ -248,12 +262,28 @@ def _gtype_of(t):
+     if isinstance(t, int): return t
+     simple = {str: _c.G_TYPE_STRING, int: _c.G_TYPE_INT, float: _c.G_TYPE_DOUBLE, bool: _c.G_TYPE_BOOLEAN}
+     if t in simple: return simple[t]
++    if isinstance(t, str):               # PyGTK also takes GType names: gtk.ListStore(str, 'gboolean', 'gint') (RCrane's review window does)
++        names = {"gboolean": _c.G_TYPE_BOOLEAN, "gint": _c.G_TYPE_INT, "guint": _c.G_TYPE_UINT, "glong": _c.G_TYPE_LONG, "gulong": _c.G_TYPE_ULONG,
++                 "gchararray": _c.G_TYPE_STRING, "gstring": _c.G_TYPE_STRING, "gdouble": _c.G_TYPE_DOUBLE, "gfloat": _c.G_TYPE_FLOAT, "gpointer": _c.G_TYPE_POINTER,
++                 "PyObject": _c.G_TYPE_POINTER}
++        if t in names: return names[t]
++        g = _c.type_from_name(t)
++        if g: return g
+     if isinstance(t, type) and issubclass(t, _GObject):
+         if t is gdk.Pixbuf: return _call("gdk_pixbuf_get_type")
+         g = _c.type_from_name(getattr(t, "_ctype_name", "")) 
+         if g: return g
+     raise TypeError("cannot map %r to a GType" % (t,))
+ 
++def _path_new(path):
++    """GtkTreePath* from a PyGTK path (int, tuple/list of ints or the 'a:b:c' string); the caller frees it."""
++    if isinstance(path, int): path = str(path)
++    elif isinstance(path, (tuple, list)): path = ":".join(str(i) for i in path)
++    return _call("gtk_tree_path_new_from_string", path)
++def _path_tuple(p):
++    n = _call("gtk_tree_path_get_depth", p); arr = _call("gtk_tree_path_get_indices", p)
++    return tuple(c_int.from_address(arr + 4 * i).value for i in range(n))
++
+ class TreeModelRow(object):
+     def __init__(self, model, it): self.model, self.iter = model, it
+     def __getitem__(self, col): return self.model.get_value(self.iter, col)
+@@ -280,6 +310,23 @@ class ListStore(_GObject):
+         return it
+     def get_iter_first(self):
+         it = TreeIter(); return it if _call("gtk_tree_model_get_iter_first", self, it) else None
++    def get_path(self, it):
++        p = _call("gtk_tree_model_get_path", self, it)
++        try: return _path_tuple(p)
++        finally: _call("gtk_tree_path_free", p)
++    # row signals take a GtkTreePath: PyGTK lets a tuple/int/string stand for it (RCrane's suite overview calls model.row_changed((0,), iter))
++    def row_changed(self, path, it):
++        tp = _path_new(path)
++        try: _call("gtk_tree_model_row_changed", self, tp, it)
++        finally: _call("gtk_tree_path_free", tp)
++    def row_inserted(self, path, it):
++        tp = _path_new(path)
++        try: _call("gtk_tree_model_row_inserted", self, tp, it)
++        finally: _call("gtk_tree_path_free", tp)
++    def row_deleted(self, path):
++        tp = _path_new(path)
++        try: _call("gtk_tree_model_row_deleted", self, tp)
++        finally: _call("gtk_tree_path_free", tp)
+     def iter_next(self, it):
+         n = it.copy(); return n if _call("gtk_tree_model_iter_next", self, n) else None
+     def get_value(self, it, column):
+@@ -315,7 +362,12 @@ _reg("GtkListStore", ListStore)
+ 
+ class EntryCompletion(_GObject):
+     def __init__(self): _adopt(self, _call("gtk_entry_completion_new"))
+-class CellRenderer(Object): pass
++class CellRenderer(Object):
++    def set_property(self, name, value):
++        # PyGTK accepts a gtk.gdk.Color for the boxed 'cell-background-gdk' / 'foreground-gdk' ... properties; the plain-name colour properties take its string form
++        if isinstance(name, str) and name.endswith("-gdk") and isinstance(value, gdk.Color):
++            name, value = name[:-4], value.to_string()
++        _GObject.set_property(self, name, value)
+ class CellRendererPixbuf(CellRenderer):
+     def __init__(self): _adopt(self, _call("gtk_cell_renderer_pixbuf_new"))
+ class CellRendererText(CellRenderer):
+@@ -327,6 +379,86 @@ class ComboBox(Bin):
+     def add_attribute(self, cell, attribute, column): _call("gtk_cell_layout_add_attribute", self, cell, attribute, column)
+     def set_active_iter(self, it): _call("gtk_combo_box_set_active_iter", self, it)
+ 
++# ---- tree views (GtkTreeView, GtkTreeViewColumn, GtkTreeSelection): RCrane's review window and other Coot scripts build lists with them
++class TreeSelection(_GObject):
++    def get_selected(self):
++        model = c_void_p(); it = TreeIter()
++        ok = _call("gtk_tree_selection_get_selected", self, ctypes.byref(model), it)
++        return (_wrap(model.value) if model.value else None, it if ok else None)
++    def get_selected_rows(self):
++        model = c_void_p()
++        gl = _call("gtk_tree_selection_get_selected_rows", self, ctypes.byref(model))
++        rows = []; p = gl
++        while p:
++            data = c_void_p.from_address(p).value
++            if data: rows.append(_path_tuple(data)); _call("gtk_tree_path_free", data)
++            p = c_void_p.from_address(p + 8).value
++        if gl: _call("g_list_free", gl)
++        return (_wrap(model.value) if model.value else None, rows)
++class TreeView(Container):
++    def __init__(self, model=None): _adopt(self, _call("gtk_tree_view_new") if model is None else _call("gtk_tree_view_new_with_model", model))
++    def get_selection(self): return _wrap(_call("gtk_tree_view_get_selection", self))
++    def get_model(self): return _wrap(_call("gtk_tree_view_get_model", self))
++    def scroll_to_cell(self, path, column=None, use_align=False, row_align=0.0, col_align=0.0):
++        tp = _path_new(path)
++        try: _call("gtk_tree_view_scroll_to_cell", self, tp, column, use_align, float(row_align), float(col_align))
++        finally: _call("gtk_tree_path_free", tp)
++    def set_cursor(self, path, focus_column=None, start_editing=False):
++        tp = _path_new(path)
++        try: _call("gtk_tree_view_set_cursor", self, tp, focus_column, start_editing)
++        finally: _call("gtk_tree_path_free", tp)
++    def get_cursor(self):
++        path, col = c_void_p(), c_void_p()
++        _call("gtk_tree_view_get_cursor", self, ctypes.byref(path), ctypes.byref(col))
++        r = None
++        if path.value:
++            r = _path_tuple(path.value); _call("gtk_tree_path_free", path.value)
++        return (r, _wrap(col.value) if col.value else None)
++    def get_path_at_pos(self, x, y):
++        path, col, cx, cy = c_void_p(), c_void_p(), c_int(0), c_int(0)
++        ok = _call("gtk_tree_view_get_path_at_pos", self, int(x), int(y), ctypes.byref(path), ctypes.byref(col), ctypes.byref(cx), ctypes.byref(cy))
++        if not ok: return None
++        r = _path_tuple(path.value); _call("gtk_tree_path_free", path.value)
++        return (r, _wrap(col.value) if col.value else None, cx.value, cy.value)
++_CELL_DATA_FUNC = ctypes.CFUNCTYPE(None, c_void_p, c_void_p, c_void_p, c_void_p, c_void_p)
++_cell_data_funcs = {}
++class TreeViewColumn(Object):
++    def __init__(self, title="", cell_renderer=None, **attributes):
++        _adopt(self, _call("gtk_tree_view_column_new"))
++        if title: _call("gtk_tree_view_column_set_title", self, title)
++        if cell_renderer is not None:
++            _call("gtk_tree_view_column_pack_start", self, cell_renderer, True)
++            for k, v in attributes.items(): _call("gtk_tree_view_column_add_attribute", self, cell_renderer, k.replace("_", "-"), int(v))
++    def pack_start(self, cell, expand=True): _call("gtk_tree_view_column_pack_start", self, cell, expand)
++    def pack_end(self, cell, expand=True): _call("gtk_tree_view_column_pack_end", self, cell, expand)
++    def add_attribute(self, cell, attribute, column): _call("gtk_tree_view_column_add_attribute", self, cell, attribute.replace("_", "-"), int(column))
++    def set_attributes(self, cell, **attributes):
++        _call("gtk_tree_view_column_clear_attributes", self, cell)
++        for k, v in attributes.items(): _call("gtk_tree_view_column_add_attribute", self, cell, k.replace("_", "-"), int(v))
++    def cell_get_size(self, cell_area=None):
++        """(cell_area, x_offset, y_offset, width, height); RCrane reads the height as [4]."""
++        x, y, w, h = c_int(0), c_int(0), c_int(0), c_int(0)
++        _call("gtk_tree_view_column_cell_get_size", self, cell_area, ctypes.byref(x), ctypes.byref(y), ctypes.byref(w), ctypes.byref(h))
++        return (cell_area, x.value, y.value, w.value, h.value)
++    def set_cell_data_func(self, cell_renderer, func, user_data=None):
++        key = (self._ptr, cell_renderer._ptr)
++        if func is None:
++            _cell_data_funcs.pop(key, None)
++            _call("gtk_tree_view_column_set_cell_data_func", self, cell_renderer, None, None, None); return
++        def tramp(col, cell, model, it, _unused):
++            try:
++                i = TreeIter(); ctypes.memmove(i._ptr, it, 32)
++                args = (_wrap(col), _wrap(cell), _wrap(model), i)
++                func(*(args + ((user_data,) if user_data is not None else ())))
++            except SystemExit: raise
++            except BaseException:
++                import traceback
++                _c.CALLBACK_ERRORS.append(("cell-data-func", traceback.format_exc())); traceback.print_exc()
++        cf = _CELL_DATA_FUNC(tramp)
++        _cell_data_funcs[key] = cf
++        _call("gtk_tree_view_column_set_cell_data_func", self, cell_renderer, ctypes.cast(cf, c_void_p).value, None, None)
++for _n, _cls in (("GtkTreeSelection", TreeSelection), ("GtkTreeView", TreeView), ("GtkTreeViewColumn", TreeViewColumn)): _reg(_n, _cls)
++
+ # ---- icons
+ class IconFactory(_GObject):
+     def __init__(self): _adopt(self, _call("gtk_icon_factory_new"))
+@@ -350,6 +482,17 @@ class Style(_GObject):
+     class _GCArray(object):
+         def __init__(self, style, base): self.s, self.b = style, base
+         def __getitem__(self, i): return self.s._gc(self.b, i)
++    class _ColorArray(object):
++        def __init__(self, style, base): self.s, self.b = style, base
++        def __len__(self): return 5
++        def __getitem__(self, i):
++            if not 0 <= i < 5: raise IndexError(i)
++            c = gdk.Color(); ctypes.memmove(addressof(c), self.s._ptr + self.b + 12 * i, 12); return c      # GdkColor = {pixel, red, green, blue} = 12 bytes
++    # GtkStyle: GObject (24 bytes) then GdkColor fg[5], bg[5], light[5], dark[5], mid[5], text[5], base[5], text_aa[5]
++    fg = property(lambda self: Style._ColorArray(self, 24)); bg = property(lambda self: Style._ColorArray(self, 84))
++    light = property(lambda self: Style._ColorArray(self, 144)); dark = property(lambda self: Style._ColorArray(self, 204))
++    mid = property(lambda self: Style._ColorArray(self, 264)); text = property(lambda self: Style._ColorArray(self, 324))
++    base = property(lambda self: Style._ColorArray(self, 384)); text_aa = property(lambda self: Style._ColorArray(self, 444))
+     fg_gc = property(lambda self: Style._GCArray(self, 544)); bg_gc = property(lambda self: Style._GCArray(self, 584))
+     light_gc = property(lambda self: Style._GCArray(self, 624)); dark_gc = property(lambda self: Style._GCArray(self, 664))
+     mid_gc = property(lambda self: Style._GCArray(self, 704)); text_gc = property(lambda self: Style._GCArray(self, 744))
+diff --git a/compat/pygtk2/tests/selftest.py b/compat/pygtk2/tests/selftest.py
+index 3c03abe..62fa44a 100644
+--- a/compat/pygtk2/tests/selftest.py
++++ b/compat/pygtk2/tests/selftest.py
+@@ -122,6 +122,58 @@ def list_stores_and_combos():
+     eq(cb2.get_active_iter(), None)
+     comp = gtk.EntryCompletion(); comp.set_model(ls); comp.set_text_column(0); e = gtk.Entry(); e.set_completion(comp)
+ 
++@case
++def tree_views():
++    """TreeView / TreeViewColumn / TreeSelection / CellRendererText properties / ListStore GType names (RCrane's review window needs all of them)."""
++    import gtk, pango, _gtk2core as _c
++    n_errors = len(_c.CALLBACK_ERRORS)
++    ls = gtk.ListStore(str, str, 'gboolean', int)                       # GType names are accepted as in PyGTK
++    for row in (["a", "1.00", True, 5], ["b", "2.00", False, 6], ["c", "3.00", False, 7]): ls.append(row)
++    eq(len(ls), 3); eq(ls[0][2], True); eq(ls[1][3], 6); eq(ls.get_path(ls.get_iter(2)), (2,)); eq(ls.get_path(ls.get_iter((1,))), (1,))
++    win = gtk.Window()
++    bg = win.get_style().bg[gtk.STATE_NORMAL]
++    assert isinstance(bg, gtk.gdk.Color) and (bg.red or bg.green or bg.blue), bg           # a real colour out of the GtkStyle struct
++    tv = gtk.TreeView(ls); tv.set_enable_search(False); tv.set_headers_visible(True); tv.set_grid_lines(gtk.TREE_VIEW_GRID_LINES_VERTICAL)
++    r1 = gtk.CellRendererText(); r1.set_property("xalign", 0.5); r1.set_property("cell-background-gdk", bg); r1.set_property("cell-background", "red")
++    r1.set_property("weight", pango.WEIGHT_HEAVY); r1.set_property("width-chars", 8); r1.set_property("height", 20); r1.set_property("cell-background", None)
++    col1 = gtk.TreeViewColumn("Name", r1, text=0, cell_background_set=2); col1.set_expand(True)
++    eq(tv.append_column(col1), 1); eq(col1.get_title(), "Name"); assert tv.get_column(0) is col1 and tv.get_columns() == [col1]
++    eq(col1.get_cell_renderers(), [r1])
++    r2 = gtk.CellRendererText(); col2 = gtk.TreeViewColumn("Score", r2, markup=1)
++    seen = []
++    def cdf(column, cell, model, it, data):
++        seen.append((column is col2, cell is r2, model is ls, model.get_value(it, 0), data))
++        cell.set_property("cell-background", "red" if model.get_value(it, 2) else None)
++    col2.set_cell_data_func(r2, cdf, (2, 3)); tv.append_column(col2)
++    _c.call("gtk_tree_view_column_cell_set_cell_data", col2, ls, ls.get_iter(0), False, False)        # what GTK does for every row it draws
++    eq(seen, [(True, True, True, "a", (2, 3))]); eq(r2.get_property("cell-background-set"), True)
++    _c.call("gtk_tree_view_column_cell_set_cell_data", col2, ls, ls.get_iter(1), False, False); eq(r2.get_property("cell-background-set"), False)
++    eq(_c.CALLBACK_ERRORS[n_errors:], [])
++    col2.set_cell_data_func(r2, None)
++    sel = tv.get_selection(); assert isinstance(sel, gtk.TreeSelection)
++    eq(sel.get_selected()[1], None)
++    sel.select_iter(ls.get_iter(1)); model, it = sel.get_selected()
++    assert model is ls and model.get_path(it) == (1,) and model.get_value(it, 0) == "b"
++    eq(sel.get_selected_rows()[1], [(1,)]); assert sel.get_tree_view() is tv
++    ch = []; hid = sel.connect("changed", lambda s: ch.append(s.get_selected()[1] is not None))
++    sel.select_iter(ls.get_iter(2)); eq(ch, [True]); sel.disconnect(hid); sel.select_iter(ls.get_iter(0)); eq(ch, [True])
++    sel.set_mode(gtk.SELECTION_NONE); eq(sel.get_mode(), gtk.SELECTION_NONE)
++    assert tv.get_model() is ls; tv.set_model(None); eq(tv.get_model(), None); tv.set_model(ls)
++    tv.scroll_to_cell((1,), None, True, 0.5, 0.0); tv.set_cursor((2,)); eq(tv.get_cursor()[0], (2,)); eq(tv.get_path_at_pos(5, 5), None)      # not realised: nothing under the pointer
++    cs = col1.cell_get_size(); eq(len(cs), 5); assert all(isinstance(v, int) for v in cs[1:]) and cs[4] >= 0, cs
++    w, h = tv.size_request(); assert w >= 0 and h >= 0
++    eq(tv.style_get_property("vertical-separator"), 2)
++    sw = gtk.ScrolledWindow(); sw.add(tv); sw.set_policy(gtk.POLICY_NEVER, gtk.POLICY_AUTOMATIC)
++    eq(sw.style_get_property("scrollbar-spacing"), 3); assert sw.get_vscrollbar().size_request()[0] > 0 and gtk.VScrollbar().size_request()[0] > 0
++    assert gtk.HScrollbar().size_request()[1] > 0 and sw.get_hscrollbar() is not None
++    try: tv.style_get_property("no-such-style-property"); raise AssertionError("no TypeError")
++    except TypeError: pass
++    hb = gtk.HBox(False, 0); b = gtk.Button("x"); hb.pack_start(b, True, False, 7)
++    eq(hb.query_child_packing(b)[:3], (True, False, 7))
++    overview = gtk.ListStore(*([str] * 4)); overview.append(["1", "2", "3", "4"]); eq(len(overview[0]), 4)
++    changed = []; hid2 = ls.connect("row-changed", lambda m, path, it: changed.append(path))
++    ls.row_changed((1,), ls.get_iter((1,))); eq(len(changed), 1); ls.row_changed(0, ls.get_iter(0)); eq(len(changed), 2); ls.disconnect(hid2)
++
+ @case
+ def menus_toolbars():
+     import gtk
+diff --git a/python/coot_gui.py b/python/coot_gui.py
+index 522627a..d1d0486 100644
+--- a/python/coot_gui.py
++++ b/python/coot_gui.py
+@@ -5316,10 +5316,11 @@ def click_protein_db_loop_gui():
+ 
+             if valid_model_molecule_qm(imol_loop_orig):
+                if len(loop_mols) > 0:
++                  # (loop_mol is bound as a default argument: without it every button copied the LAST candidate)
+                   buttons = [[str(loop_mol) + " " + molecule_name(loop_mol),
+-                                 lambda func: copy_residue_range(imol, chain_id,
+-                                                                 loop_mol, chain_id,
+-                                                                 min_resno, max_resno)] for loop_mol in loop_mols]
++                                 lambda func, loop_mol=loop_mol: copy_residue_range(imol, chain_id,
++                                                                                    loop_mol, chain_id,
++                                                                                    min_resno, max_resno)] for loop_mol in loop_mols]
+                   def toggle_func(imol):
+                      toggle_active_mol(imol)
+                      toggle_display_mol(imol)
+diff --git a/python/coot_utils.py b/python/coot_utils.py
+index 25df399..0676b69 100644
+--- a/python/coot_utils.py
++++ b/python/coot_utils.py
+@@ -1799,7 +1799,10 @@ def atom_spec_to_residue_spec(atom_spec):
+        if l == 6: # active_residue give an atom-spec prepended by the imol
+           return atom_spec[1:][:3]
+        else:
+-          return None
++          if l == 7: # the atom specs that user_defined_click passes: [model number, imol, chain-id, res-no, ins-code, atom-name, alt-conf]
++             return atom_spec[2:5]
++          else:
++             return None
+ 
+ # return a guess at the map to be refined (usually called after
+ # imol_refinement_map returns -1)
+diff --git a/python/fitting.py b/python/fitting.py
+index 6476abb..95d542c 100644
+--- a/python/fitting.py
++++ b/python/fitting.py
+@@ -190,6 +190,43 @@ def fit_protein_fit_function(res_spec, imol_map):
+                     rotate_y_scene(10, 0.3)
+ 
+ 
++# macOS port: Stepped Refine used to refine each residue with "immediate replacement" (AutoAccept).  In Coot 0.9.8.96 that mode does not
++# start the redraw of the refining atoms and the main thread just waits for the refinement to finish, so nothing of the refinement was
++# visible: the atoms jumped.  Now the refinement runs as it does for Refine Zone: the atoms that are being refined are drawn in Coot's
++# refinement style (the "intermediate atoms": thicker grey-yellow bonds and balls, Ramachandran dodecs if switched on) while the minimizer
++# works, they stay on the screen for stepped_refine_show_seconds, then the result is accepted and the next residue is done.
++# COOT_STEPPED_REFINE_SHOW=<seconds> sets the time (default 0.6; 0 = accept at once, the old way).
++global stepped_refine_show_seconds
++try:
++    import os as _os
++    stepped_refine_show_seconds = float(_os.environ.get("COOT_STEPPED_REFINE_SHOW", "0.6"))
++except ValueError:
++    stepped_refine_show_seconds = 0.6
++
++def refine_auto_range_and_show(imol, chain_id, res_no, alt_conf, seconds=None, force=False):
++    """Refine the residues around res_no (refine_auto_range), keep the refining atoms on the screen for `seconds`, then accept."""
++    import time
++    if seconds is None:
++        seconds = stepped_refine_show_seconds
++    if seconds <= 0 or (not force and use_graphics_interface_state() == 0):
++        with NoBackups(imol):
++            with AutoAccept():
++                refine_auto_range(imol, chain_id, res_no, alt_conf)
++        return
++    if refinement_already_ongoing_p():
++        accept_regularizement()          # (a refinement left over from the user's own work)
++    import gtk
++    with NoBackups(imol):
++        refine_auto_range(imol, chain_id, res_no, alt_conf)
++        t0 = time.time()
++        while time.time() - t0 < seconds:
++            while gtk.events_pending():          # redraw, and let the Stop button work
++                gtk.main_iteration(False)
++            time.sleep(0.02)
++            if globals().get("continue_multi_refine", True) is False:
++                break
++        accept_regularizement()
++
+ def fit_protein_stepped_refine_function(res_spec, imol_map, use_rama = False):
+ 
+     imol     = res_spec[0]
+@@ -210,9 +247,7 @@ def fit_protein_stepped_refine_function(res_spec, imol_map, use_rama = False):
+                                                         ins_code, "CA",
+                                                         alt_conf)
+             rotate_y_scene(10, 0.3) # n_frames frame_interval(degrees)
+-            with NoBackups(imol):
+-                with AutoAccept():
+-                    refine_auto_range(imol, chain_id, res_no, alt_conf)
++            refine_auto_range_and_show(imol, chain_id, res_no, alt_conf)
+             rotate_y_scene(10, 0.3)    
+ 
+     set_refine_ramachandran_angles(current_rama_state)
+diff --git a/python/rcrane_loader.py b/python/rcrane_loader.py
+index af06605..349a1d4 100644
+--- a/python/rcrane_loader.py
++++ b/python/rcrane_loader.py
+@@ -70,12 +70,13 @@ def import_rcrane_wrapper():
+ 
+ # print '===== in rcrane loader: use_gui_qm is ', use_gui_qm
+ 
+-# macOS port: "Calculate > RCrane launch" is not offered by default.  RCrane's Python 2 code compares numbers with text and relies on other
+-# Python 2 behaviour (New trace stops at start-up with "'<=' not supported between instances of 'float' and 'str'"), so its trace /
+-# rotamerize / review windows are not usable yet.  COOT_ENABLE_RCRANE=1 brings the menu entry back (for work on the port).
++# macOS port: RCrane's Python 2 code needed (a) a PyGTK-2 TreeView/TreeViewColumn/TreeSelection layer for its review window (added to the gtk
++# compatibility layer), (b) fixes for Python 3 semantics (a float compared with text in linearInterp.py, unknown atom names such as OP3 in
++# pseudoMolecule.finalMoleculeCleanup), and (c) a time limit for scripted refinements that do not converge (COOT_REFINE_MAX_SECONDS, default 10 s):
++# without it a rotamerize could freeze Coot for ever.  "Calculate > RCrane launch" is offered again; COOT_DISABLE_RCRANE=1 hides it.
+ if (use_gui_qm != 2):
+     import os as _os
+-    if _os.environ.get("COOT_ENABLE_RCRANE"):
++    if not _os.environ.get("COOT_DISABLE_RCRANE"):
+         import_rcrane_wrapper()
+     else:
+-        print("INFO:: RCrane is switched off in this build (see python/rcrane_loader.py); COOT_ENABLE_RCRANE=1 enables its menu")
++        print("INFO:: RCrane is switched off (COOT_DISABLE_RCRANE is set)")
+diff --git a/rcrane/linearInterp.py b/rcrane/linearInterp.py
+index 31b891d..bc9219e 100644
+--- a/rcrane/linearInterp.py
++++ b/rcrane/linearInterp.py
+@@ -61,10 +61,9 @@ class LinearInterp:
+                 continue
+             curdata = curline.split(",")
+             
+-            #make sure that step size is correct
+-            xVal = self.__xStart + self.__xStep * len(self.__yData)
+-            if (xVal - ep <= curdata[0]) and (curdata[0] <= xVal + ep):
+-                print(("Incorrect step size in file " + self.__fileName))
++            # (py3) the original step-size check compared a float with the str curdata[0].  Python 2 never raised for that (and the
++            # check never fired: a number is always smaller than a str there), Python 3 raises a TypeError that broke "New trace".
++            # The check was never effective, so it is not enforced.
+             
+             self.__yData.append(float(curdata[1]))
+         input.close()
+diff --git a/rcrane/pseudoMolecule.py b/rcrane/pseudoMolecule.py
+index ea54de8..3ae333b 100644
+--- a/rcrane/pseudoMolecule.py
++++ b/rcrane/pseudoMolecule.py
+@@ -489,7 +489,9 @@ class PseudoMolecule:
+             return (None, None)
+         
+         if self.resInsertionPoint is None:
+-            lastPhosNtIndex = len(self.__molecule[0][self.__chainIndex][1])
++            # (Coot 0.9.8.96 macOS port) upstream used len(...) here, one past the end of the list: "Previous Nt" of a 5'->3' trace raised an IndexError
++            # (in Python 2 as well) and did nothing.  The last residue is the 5' phosphate of the nucleotide that is about to be built.
++            lastPhosNtIndex = len(self.__molecule[0][self.__chainIndex][1]) - 1
+         else:
+             lastPhosNtIndex = self.resInsertionPoint
+         lastFullNtIndex =  lastPhosNtIndex - 1
+@@ -497,6 +499,7 @@ class PseudoMolecule:
+         #retrieve the 5' phosphate and the last full nucleotide from the __molecule object
+         lastPhosNt = self.__molecule[0][self.__chainIndex][1][lastPhosNtIndex]
+         lastFullNt = self.__molecule[0][self.__chainIndex][1][lastFullNtIndex]
++        removedResNum = str(lastPhosNt[0])      # the residue that is deleted below (its resNumDict entry has to go, not the one of its predecessor)
+         
+         #get the nucleotide type
+         nucType = lastFullNt[2]
+@@ -518,7 +521,7 @@ class PseudoMolecule:
+         
+         #update the resNumDict
+         if self.resInsertionPoint is None:
+-            del self.__resNumDict[str(self.__molecule[0][self.__chainIndex][1][-1][0])]
++            del self.__resNumDict[removedResNum]
+         else:
+             self.__initializeResNumDict()
+             
+@@ -1736,7 +1739,9 @@ class PseudoMolecule:
+         
+         for curRes in self.__molecule[0][self.__chainIndex][1][startIndex:endIndex]:
+             #sort all the atoms by name, using the ordering in __reorderAtomsOrder for the current residue type
+-            curRes[3].sort(key = lambda x: self.__reorderAtomsOrder[str(curRes[2])][x[0][0].strip()])
++            # (Coot 0.9.8.96 macOS port) atoms that are not in the standard list (a 5' terminal OP3 as in PDB 1EHZ, hydrogens, ...) used to raise a KeyError
++            # here and abort "Accept"; they now keep their relative order after the standard atoms
++            curRes[3].sort(key = lambda x: self.__reorderAtomsOrder[str(curRes[2])].get(x[0][0].strip(), 1000))
+         
+         #if this residue previously had a segid, apply it to all the new atoms
+         for curRes in self.__molecule[0][self.__chainIndex][1][startIndex:endIndex]:
+diff --git a/src/graphics-info-modelling.cc b/src/graphics-info-modelling.cc
+index 7bccd00..0db60d8 100644
+--- a/src/graphics-info-modelling.cc
++++ b/src/graphics-info-modelling.cc
+@@ -41,6 +41,8 @@
+ // was used for debugging - not needed now.
+ // #include <iomanip> // extern char *dcgettext (const char *__domainname, if placed later
+ #include <algorithm>
++#include <cstdlib>
++#include <chrono>
+ 
+ #include <iostream>
+ #include <stdexcept>
+@@ -437,6 +439,17 @@ graphics_info_t::refinement_loop_threaded() {
+ 
+    coot::restraint_usage_Flags flags = g.set_refinement_flags(); // flags should not be needed for minimize()
+ 
++   // (macOS port) A synchronous refinement - driven from a script (refinement_immediate_replacement_flag) or running without a
++   // graphical interface - whose minimiser neither converges nor fails used to run for ever, and the main thread that waits for it
++   // (conditionally_wait_for_refinement_to_finish(), accept_regularizement()) never came back: Coot froze.  RCrane's "rotamerize"
++   // does this with its badly distorted starting geometries.  Such a refinement is now stopped after COOT_REFINE_MAX_SECONDS
++   // (default 10; 0 = no limit).  Interactive refinement (the user can stop it with Esc/Return) is not limited.
++   static const double max_sync_refinement_seconds = []() {
++      const char *e = getenv("COOT_REFINE_MAX_SECONDS");
++      return e ? atof(e) : 10.0;
++   }();
++   const auto t_refinement_loop_start = std::chrono::steady_clock::now();
++
+    // continue_threaded_refinement_loop = true; not here - set it in the calling function
+    while (continue_threaded_refinement_loop) {
+ 
+@@ -493,6 +506,18 @@ graphics_info_t::refinement_loop_threaded() {
+ 	 }
+       }
+ 
++      if (continue_threaded_refinement_loop && max_sync_refinement_seconds > 0 &&
++          (refinement_immediate_replacement_flag || !use_graphics_interface_flag)) {
++         double dt = std::chrono::duration<double>(std::chrono::steady_clock::now() - t_refinement_loop_start).count();
++         if (dt > max_sync_refinement_seconds) {
++            std::cout << "WARNING:: refinement stopped after " << dt << " seconds without converging"
++                      << " (limit for scripted refinements: COOT_REFINE_MAX_SECONDS=" << max_sync_refinement_seconds << ")" << std::endl;
++            graphics_info_t::continue_update_refinement_atoms_flag = false;
++            refinement_has_finished_moving_atoms_representation_update_needed_flag = true;
++            continue_threaded_refinement_loop = false;
++         }
++      }
++
+       graphics_info_t::threaded_refinement_loop_counter++;
+ 
+       if (false)

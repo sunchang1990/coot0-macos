@@ -1,0 +1,62 @@
+{
+ "python": {
+  "before": [
+   14,
+   66
+  ],
+  "n_in": 1,
+  "after": [
+   66,
+   66
+  ],
+  "bad": []
+ },
+ "python-tests": {
+  "before": [
+   2,
+   11
+  ],
+  "n_in": 0,
+  "after": [
+   11,
+   11
+  ],
+  "bad": []
+ },
+ "rcrane": {
+  "before": [
+   26,
+   38
+  ],
+  "n_in": 0,
+  "after": [
+   38,
+   38
+  ],
+  "bad": []
+ },
+ "lbg": {
+  "before": [
+   1,
+   2
+  ],
+  "n_in": 0,
+  "after": [
+   2,
+   2
+  ],
+  "bad": []
+ },
+ "pyrogen": {
+  "before": [
+   5,
+   6
+  ],
+  "n_in": 0,
+  "after": [
+   6,
+   6
+  ],
+  "bad": []
+ }
+}

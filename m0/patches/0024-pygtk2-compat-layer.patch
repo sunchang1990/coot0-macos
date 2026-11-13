@@ -1,0 +1,1517 @@
+diff --git a/compat/pygtk2/.gitignore b/compat/pygtk2/.gitignore
+new file mode 100644
+index 0000000..e259b81
+--- /dev/null
++++ b/compat/pygtk2/.gitignore
+@@ -0,0 +1,4 @@
++_gtk2_protos.json
++_gtk2_consts.json
++tests/menubar.json
++__pycache__/
+diff --git a/compat/pygtk2/_gtk2core.py b/compat/pygtk2/_gtk2core.py
+new file mode 100644
+index 0000000..a7011af
+--- /dev/null
++++ b/compat/pygtk2/_gtk2core.py
+@@ -0,0 +1,553 @@
++"""_gtk2core.py -- ctypes foundation of the PyGTK 2 compatibility layer used by Coot 0.9.8.96's Python scripts on macOS.
++
++Coot's python/*.py scripts were written for PyGTK 2 (`import gtk, gobject, pango`).  PyGTK does not exist for Python 3, so this package provides the
++subset of its API that those scripts use (and, through generic dispatch, most of the rest) directly on the GTK 2.24 libraries that Coot itself is linked to.
++
++Design rules
++  * C prototypes come from _gtk2_protos.json (generated with clang from the GTK headers: tools/gen_gtk_protos.py), never typed by hand.
++  * Variadic C functions are never called with extra arguments: on Apple-silicon the variadic calling convention differs and ctypes gets it wrong
++    (a call such as snprintf(buf, n, "%d %s", ...) crashes the interpreter).  Variadic entry points are replaced by non-variadic equivalents.
++  * A Python wrapper owns one reference to its GObject; callbacks are kept alive by a table that does not depend on the wrapper's lifetime.
++  * No import of anything outside the standard library.
++"""
++import ctypes, json, os, sys, weakref, traceback, re
++from ctypes import (c_void_p, c_int, c_uint, c_ulong, c_double, c_float, c_char_p, c_bool, c_int64, c_uint64, c_short, c_ushort, c_byte, c_ubyte,
++                    byref, cast, CFUNCTYPE, Structure, POINTER, sizeof, addressof)
++
++_HERE = os.path.dirname(os.path.abspath(__file__))
++HEADLESS = bool(os.environ.get("COOT_GTK2COMPAT_HEADLESS"))     # tests only: windows are never shown (no window server in the build sandbox)
++
++# ------------------------------------------------------------------------------------------------ libraries
++_libs = []
++def _open_libs():
++    if _libs: return
++    g = ctypes.CDLL(None)                                     # inside coot-bin the GTK libraries are already loaded into the process
++    if hasattr(g, "gtk_button_new") and hasattr(g, "g_object_ref"):
++        _libs.append(g); return
++    libdir = os.environ.get("COOT_GTK2_LIBDIR") or os.path.join(os.environ.get("COOT_PREFIX", ""), "lib")
++    for stem in ("libglib-2.0.0", "libgobject-2.0.0", "libgdk_pixbuf-2.0.0", "libpango-1.0.0", "libgdk-quartz-2.0.0", "libgtk-quartz-2.0.0"):
++        p = os.path.join(libdir, stem + ".dylib")
++        if os.path.exists(p): _libs.append(ctypes.CDLL(p, mode=ctypes.RTLD_GLOBAL))
++    if not _libs: raise ImportError("the GTK 2 libraries are not loaded in this process and COOT_GTK2_LIBDIR / COOT_PREFIX/lib does not contain them")
++
++# ------------------------------------------------------------------------------------------------ prototypes and calls
++_PROTOS = None
++def _protos():
++    global _PROTOS
++    if _PROTOS is None:
++        with open(os.path.join(_HERE, "_gtk2_protos.json")) as f: _PROTOS = json.load(f)
++    return _PROTOS
++
++_CT = {"i": c_int, "u": c_uint, "l": c_int64, "U": c_uint64, "d": c_double, "f": c_float, "b": c_bool, "h": c_short, "H": c_ushort, "c": c_byte, "C": c_ubyte}
++_NUMERIC = set(_CT)
++_CONSTS = None
++def consts():
++    global _CONSTS
++    if _CONSTS is None:
++        with open(os.path.join(_HERE, "_gtk2_consts.json")) as f: _CONSTS = json.load(f)
++    return _CONSTS
++_bound = {}
++def has_function(name): return name in _protos()
++def _bind(name):
++    b = _bound.get(name)
++    if b is not None: return b
++    _open_libs()
++    pr = _protos().get(name)
++    if pr is None: raise AttributeError("no C function '%s' in the GTK 2 prototype table" % name)
++    cf = None
++    for lib in _libs:
++        try: cf = getattr(lib, name); break
++        except AttributeError: continue
++    if cf is None: raise AttributeError("C function '%s' is not exported by the loaded GTK libraries" % name)
++    ret, args, variadic = pr[0], pr[1], pr[2]
++    def ct(code):
++        k = code.split(":")[0]
++        if k in _CT: return _CT[k]
++        if k == "s": return c_char_p
++        return c_void_p
++    cf.argtypes = [ct(a) for a in args]
++    r = ret.split(":")[0]
++    cf.restype = None if r == "v" else (c_char_p if r == "S" else (c_void_p if r in ("p", "A", "X") else _CT.get(r, c_void_p)))
++    b = (cf, ret, [a.split(":")[0] for a in args], variadic, args, pr[3] if len(pr) > 3 else [])
++    _bound[name] = b
++    return b
++
++def _conv_arg(code, a):
++    if code in _NUMERIC:
++        if code in ("d", "f"): return float(a)
++        if code == "b": return bool(a)
++        return int(a)
++    if code == "s":
++        if a is None: return None
++        if isinstance(a, str): return a.encode("utf-8")
++        if isinstance(a, (bytes, bytearray)): return bytes(a)
++        return str(a).encode("utf-8")
++    # pointer
++    if a is None: return None
++    p = getattr(a, "_ptr", None)
++    if p is not None: return p
++    if isinstance(a, (Structure, ctypes.Array)): return addressof(a)
++    if isinstance(a, ctypes._CFuncPtr): return cast(a, c_void_p).value
++    if isinstance(a, c_void_p): return a.value
++    return a
++
++def free(ptr):
++    if ptr: call("g_free", ptr)
++
++class GError(Exception):
++    pass
++# PyGTK defaults that differ from "NULL / 0" for omitted trailing arguments: function -> {argument index: value}
++DEFAULTS = {
++    "gtk_text_buffer_get_text": {3: True}, "gdk_colormap_alloc_color": {3: True}, "gtk_box_pack_start": {2: True, 3: True}, "gtk_box_pack_end": {2: True, 3: True},
++    "gtk_cell_layout_pack_start": {2: True}, "gtk_cell_layout_pack_end": {2: True}, "gtk_main_iteration_do": {0: True},
++}
++def _default_for(name, i, code, pname):
++    d = DEFAULTS.get(name)
++    if d is not None and i in d: return d[i]
++    if pname in ("len", "length", "n_bytes", "max_len", "text_length", "n_chars", "len_bytes"): return -1
++    return None if code in ("s", "p") else 0
++
++def call(name, *args):
++    """Call a C function from the prototype table with Python arguments; returns a Python value (str for strings, int/None for pointers).
++    Omitted trailing arguments become NULL/0 (or the PyGTK default); a trailing GError** is hidden and raised as GError."""
++    cf, ret, argc, variadic, full, pnames = _bind(name)
++    gerr = None
++    if len(args) == len(argc) - 1 and full[-1] == "p:GError":
++        gerr = c_void_p(); args = tuple(args) + (byref(gerr),)
++    if len(args) < len(argc):
++        args = tuple(args) + tuple(_default_for(name, i, argc[i], pnames[i] if i < len(pnames) else "") for i in range(len(args), len(argc)))
++    if len(args) > len(argc):
++        raise TypeError("%s takes %d arguments (%d given)%s" % (name, len(argc), len(args), "; variadic C functions cannot be called with extra arguments here" if variadic else ""))
++    r = cf(*[_conv_arg(c, a) for c, a in zip(argc, args)])
++    if gerr is not None and gerr.value:
++        mp = c_void_p.from_address(gerr.value + 8).value          # struct GError { GQuark domain; gint code; gchar *message; }
++        msg = ctypes.string_at(mp).decode("utf-8", "replace") if mp else "GError"
++        _bind("g_error_free")[0](gerr.value)
++        raise GError(msg)
++    k = ret.split(":")[0]
++    if k == "S": return r.decode("utf-8", "replace") if r is not None else None
++    if k == "A":
++        if not r: return None
++        s = ctypes.string_at(r).decode("utf-8", "replace"); free(r); return s
++    return r
++
++# ------------------------------------------------------------------------------------------------ GType helpers
++G_TYPE_CHAR, G_TYPE_UCHAR, G_TYPE_BOOLEAN, G_TYPE_INT, G_TYPE_UINT, G_TYPE_LONG, G_TYPE_ULONG, G_TYPE_INT64, G_TYPE_UINT64 = 12, 16, 20, 24, 28, 32, 36, 40, 44
++G_TYPE_ENUM, G_TYPE_FLAGS, G_TYPE_FLOAT, G_TYPE_DOUBLE, G_TYPE_STRING, G_TYPE_POINTER, G_TYPE_BOXED, G_TYPE_PARAM, G_TYPE_OBJECT = 48, 52, 56, 60, 64, 68, 72, 76, 80
++_tname_cache = {}
++def type_name(gtype):
++    n = _tname_cache.get(gtype)
++    if n is None:
++        n = call("g_type_name", gtype) or ""; _tname_cache[gtype] = n
++    return n
++def type_from_name(name): return call("g_type_from_name", name)
++def instance_gtype(ptr):
++    klass = c_void_p.from_address(ptr).value                    # GTypeInstance.g_class
++    return c_ulong.from_address(klass).value                    # GTypeClass.g_type
++def type_chain(gtype):
++    out = []
++    while gtype:
++        out.append(gtype); gtype = call("g_type_parent", gtype)
++    return out
++def type_interfaces(gtype):
++    n = c_uint(0)
++    p = call("g_type_interfaces", gtype, byref(n))
++    out = [c_ulong.from_address(p + 8 * i).value for i in range(n.value)] if p else []
++    if p: free(p)
++    return out
++_is_obj_cache = {}
++def is_gobject_typename(tn):
++    r = _is_obj_cache.get(tn)
++    if r is None:
++        gt = type_from_name(tn)
++        r = bool(gt) and bool(call("g_type_is_a", gt, G_TYPE_OBJECT)); _is_obj_cache[tn] = r
++    return r
++
++# C type name -> function-name prefix ("GtkHBox" -> "gtk_hbox", "GtkScrolledWindow" -> "gtk_scrolled_window")
++_prefix_cache = {}
++def prefix_for(tn, gtype):
++    if tn in _prefix_cache: return _prefix_cache[tn]
++    m = re.match(r"^(Gtk|Gdk|Pango|G)(.+)$", tn)
++    cands = []
++    if m:
++        mod, rest = m.group(1).lower(), m.group(2)
++        snake = re.sub(r"(?<=[a-z0-9])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])", "_", rest).lower()
++        cands = [mod + "_" + snake, mod + "_" + snake.replace("_", ""), mod + "_" + rest.lower()]
++        if mod == "g": cands.append("g_" + snake)
++    res = None
++    for c in cands:
++        gt = c + "_get_type"
++        if has_function(gt):
++            try:
++                if call(gt) == gtype: res = c; break
++            except Exception: pass
++    _prefix_cache[tn] = res
++    return res
++
++# ------------------------------------------------------------------------------------------------ GValue
++class GValue(Structure):
++    _fields_ = [("g_type", c_ulong), ("data", c_uint64 * 2)]
++def gvalue_init(gtype):
++    v = GValue(); call("g_value_init", v, gtype); return v
++def gvalue_set(v, py):
++    f = call("g_type_fundamental", v.g_type)
++    if f == G_TYPE_STRING: call("g_value_set_string", v, py)
++    elif f == G_TYPE_BOOLEAN: call("g_value_set_boolean", v, bool(py))
++    elif f == G_TYPE_INT: call("g_value_set_int", v, int(py))
++    elif f == G_TYPE_UINT: call("g_value_set_uint", v, int(py))
++    elif f == G_TYPE_LONG: call("g_value_set_long", v, int(py))
++    elif f == G_TYPE_ULONG: call("g_value_set_ulong", v, int(py))
++    elif f == G_TYPE_INT64: call("g_value_set_int64", v, int(py))
++    elif f == G_TYPE_UINT64: call("g_value_set_uint64", v, int(py))
++    elif f == G_TYPE_DOUBLE: call("g_value_set_double", v, float(py))
++    elif f == G_TYPE_FLOAT: call("g_value_set_float", v, float(py))
++    elif f == G_TYPE_ENUM: call("g_value_set_enum", v, int(py))
++    elif f == G_TYPE_FLAGS: call("g_value_set_flags", v, int(py))
++    elif f == G_TYPE_OBJECT: call("g_value_set_object", v, py)
++    elif f in (G_TYPE_BOXED,): call("g_value_set_boxed", v, py)
++    elif f == G_TYPE_POINTER: call("g_value_set_pointer", v, py)
++    elif f == G_TYPE_CHAR: call("g_value_set_char", v, int(py))
++    elif f == G_TYPE_UCHAR: call("g_value_set_uchar", v, int(py))
++    else: raise TypeError("cannot store a Python value in a GValue of type %s" % type_name(v.g_type))
++def gvalue_get(v):
++    f = call("g_type_fundamental", v.g_type)
++    if f == G_TYPE_STRING: return call("g_value_get_string", v)
++    if f == G_TYPE_BOOLEAN: return bool(call("g_value_get_boolean", v))
++    if f == G_TYPE_INT: return call("g_value_get_int", v)
++    if f == G_TYPE_UINT: return call("g_value_get_uint", v)
++    if f == G_TYPE_LONG: return call("g_value_get_long", v)
++    if f == G_TYPE_ULONG: return call("g_value_get_ulong", v)
++    if f == G_TYPE_INT64: return call("g_value_get_int64", v)
++    if f == G_TYPE_UINT64: return call("g_value_get_uint64", v)
++    if f == G_TYPE_DOUBLE: return call("g_value_get_double", v)
++    if f == G_TYPE_FLOAT: return call("g_value_get_float", v)
++    if f == G_TYPE_ENUM: return call("g_value_get_enum", v)
++    if f == G_TYPE_FLAGS: return call("g_value_get_flags", v)
++    if f == G_TYPE_OBJECT: return wrap(call("g_value_get_object", v))
++    if f in (G_TYPE_BOXED, G_TYPE_POINTER): return call("g_value_get_boxed" if f == G_TYPE_BOXED else "g_value_get_pointer", v)
++    if f == G_TYPE_CHAR: return call("g_value_get_char", v)
++    if f == G_TYPE_UCHAR: return call("g_value_get_uchar", v)
++    return None
++
++# ------------------------------------------------------------------------------------------------ the object model
++_classes = {}                       # C type name -> Python class (filled in by gtk/__init__.py, pango, gdk)
++_wrappers = weakref.WeakValueDictionary()
++def register_class(typename, cls): _classes[typename] = cls; cls._ctype_name = typename
++
++def _class_for(gtype):
++    for t in type_chain(gtype):
++        c = _classes.get(type_name(t))
++        if c is not None: return c
++    return _classes["GObject"]
++
++def wrap(ptr, take_ref=True):
++    """The Python wrapper of a GObject* (the same wrapper for the same object while one is alive)."""
++    if not ptr: return None
++    w = _wrappers.get(ptr)
++    if w is not None: return w
++    cls = _class_for(instance_gtype(ptr))
++    w = cls.__new__(cls)
++    w._ptr = ptr
++    call("g_object_ref_sink", ptr)                              # one reference for the wrapper (sinks a floating reference)
++    _wrappers[ptr] = w
++    return w
++
++_shutting_down = False
++import atexit
++atexit.register(lambda: globals().__setitem__("_shutting_down", True))
++
++class GObject(object):
++    """Base class of every wrapped GObject.  Unknown attributes are looked up as C methods of the object's type (and its ancestors), so
++    `button.set_label("x")` calls gtk_button_set_label(button, "x"), `box.get_children()` calls gtk_container_get_children, and so on."""
++    __slots__ = ("_ptr", "__weakref__", "_methods")
++    _ctype_name = "GObject"
++    def __init__(self, **props):
++        # direct construction of a plain GObject (rare): g_object_new_with_properties is not in 2.24, use g_object_newv with no properties
++        raise TypeError("%s cannot be created directly" % type(self).__name__)
++    def __del__(self):
++        p = getattr(self, "_ptr", None)
++        if p and not _shutting_down:
++            try: call("g_object_unref", p)
++            except Exception: pass
++    def __eq__(self, o): return isinstance(o, GObject) and o._ptr == self._ptr
++    def __ne__(self, o): return not self.__eq__(o)
++    def __hash__(self): return hash(self._ptr)
++    def __bool__(self): return True
++    def __repr__(self): return "<%s object at 0x%x>" % (type(self).__name__, self._ptr or 0)
++
++    # ---- method dispatch
++    def _find_method(self, name):
++        gt = instance_gtype(self._ptr)
++        key = (gt, name)
++        r = _method_cache.get(key)
++        if r is not None: return r or None
++        chain = type_chain(gt)
++        cands = chain + type_interfaces(gt)
++        for t in cands:
++            tn = type_name(t); pf = prefix_for(tn, t)
++            if not pf: continue
++            fn = pf + "_" + name
++            if has_function(fn):
++                a = _protos()[fn][1]
++                if a and a[0].startswith("p"):
++                    _method_cache[key] = fn; return fn
++        if any(type_name(t) == "GdkDrawable" for t in chain):         # gdk_draw_rectangle(drawable, ...) etc.
++            fn = "gdk_" + name
++            if has_function(fn): _method_cache[key] = fn; return fn
++        _method_cache[key] = ""
++        return None
++    def __getattr__(self, name):
++        if name.startswith("_") or name == "_methods":
++            raise AttributeError(name)
++        fn = self._find_method(name)
++        if fn is None:
++            if name.startswith("get_") or name.startswith("set_"):          # PyGTK also offers get_x()/set_x() through GObject properties
++                prop = name[4:].replace("_", "-")
++                if call("g_object_class_find_property", call("g_type_class_peek", instance_gtype(self._ptr)), prop):
++                    return (lambda: self.get_property(prop)) if name.startswith("get_") else (lambda v: self.set_property(prop, v))
++            raise AttributeError("'%s' object has no attribute '%s'" % (type(self).__name__, name))
++        return _make_method(self, fn)
++
++    # ---- properties
++    def _pspec(self, name):
++        ps = call("g_object_class_find_property", call("g_type_class_peek", instance_gtype(self._ptr)), name)
++        if not ps: raise TypeError("object of type %s has no property named '%s'" % (type(self).__name__, name))
++        return ps
++    def get_property(self, name):
++        ps = self._pspec(name)
++        # GParamSpec: GTypeInstance(8) + name(8) + flags(4,+4 pad) + value_type(8) -> value_type is at offset 24
++        gt = c_ulong.from_address(ps + 24).value
++        v = gvalue_init(gt); call("g_object_get_property", self._ptr, name, v)
++        try: return gvalue_get(v)
++        finally: call("g_value_unset", v)
++    def set_property(self, name, value):
++        ps = self._pspec(name)
++        gt = c_ulong.from_address(ps + 24).value
++        v = gvalue_init(gt)
++        try:
++            gvalue_set(v, value._ptr if isinstance(value, GObject) else value)
++            call("g_object_set_property", self._ptr, name, v)
++        finally: call("g_value_unset", v)
++    def set_properties(self, **props):
++        for k, v in props.items(): self.set_property(k.replace("_", "-"), v)
++
++    # ---- data
++    def set_data(self, key, value): _user_data.setdefault(self._ptr, {})[key] = value
++    def get_data(self, key): return _user_data.get(self._ptr, {}).get(key)
++
++    # ---- signals
++    def connect(self, name, func, *args): return connect_signal(self, name, func, args, after=False, swap=False)
++    def connect_after(self, name, func, *args): return connect_signal(self, name, func, args, after=True, swap=False)
++    def connect_object(self, name, func, obj, *args): return connect_signal(self, name, func, (obj,) + args, after=False, swap=True)
++    def disconnect(self, handler_id): call("g_signal_handler_disconnect", self._ptr, handler_id)
++    def handler_block(self, handler_id): call("g_signal_handler_block", self._ptr, handler_id)
++    def handler_unblock(self, handler_id): call("g_signal_handler_unblock", self._ptr, handler_id)
++    def stop_emission(self, name): call("g_signal_stop_emission_by_name", self._ptr, name)
++    emit_stop_by_name = stop_emission
++    def emit(self, name, *args): return emit_signal(self, name, args)
++    def freeze_notify(self): call("g_object_freeze_notify", self._ptr)
++    def thaw_notify(self): call("g_object_thaw_notify", self._ptr)
++
++_method_cache = {}
++_user_data = {}
++
++# ---- out parameters: C functions whose listed argument positions are filled in by the function (PyGTK returns them)
++_OUT_STRUCT = {"GtkTextIter": 128, "GtkTreeIter": 32, "GdkColor": 12, "GdkRectangle": 16, "GtkRequisition": 8, "GtkAllocation": 16}
++# function -> (indices of output arguments counted from the object, True if the C return value says whether the outputs are valid)
++OUT_PARAMS = {
++    "gtk_text_buffer_get_start_iter": ((1,), False), "gtk_text_buffer_get_end_iter": ((1,), False), "gtk_text_buffer_get_bounds": ((1, 2), False),
++    "gtk_text_buffer_get_iter_at_offset": ((1,), False), "gtk_text_buffer_get_iter_at_line": ((1,), False), "gtk_text_buffer_get_iter_at_mark": ((1,), False),
++    "gtk_text_buffer_get_iter_at_line_offset": ((1,), False), "gtk_text_buffer_get_selection_bounds": ((1, 2), True),
++    "gtk_combo_box_get_active_iter": ((1,), True), "gtk_tree_model_get_iter_first": ((1,), True),
++    "gtk_list_store_append": ((1,), False), "gtk_list_store_prepend": ((1,), False), "gtk_widget_size_request": ((1,), False),
++}
++_struct_classes = {}          # filled by gtk/__init__.py: "GtkTextIter" -> class (TextIter), ...
++# functions whose listed argument positions are plain int outputs (PyGTK returns them as a tuple)
++OUT_INTS = {"gtk_scrolled_window_get_policy": (1, 2), "gtk_window_get_size": (1, 2), "gtk_window_get_position": (1, 2), "gtk_widget_get_size_request": (1, 2)}
++
++def _make_method(obj, fn):
++    proto = _protos()[fn]
++    ret, argc = proto[0], proto[1]
++    outs = OUT_PARAMS.get(fn)
++    oints = OUT_INTS.get(fn)
++    def method(*args):
++        a = [obj] + list(args)
++        made = []
++        has_gerr = bool(argc) and argc[-1] == "p:GError"
++        nfull = len(argc) - (1 if has_gerr else 0)
++        if outs is not None and len(a) == nfull - len(outs[0]):       # the caller left out the output arguments: allocate them at their positions
++            for i in outs[0]:
++                tn = argc[i].split(":")[1] if ":" in argc[i] else ""
++                made.append(_struct_classes[tn]() if tn in _struct_classes else None)
++                a.insert(i, made[-1])
++        cints = []
++        if oints is not None and len(a) == nfull - len(oints):
++            for i in oints:
++                cints.append(c_int(0)); a.insert(i, byref(cints[-1]))
++        r = call(fn, *a)
++        if cints: return tuple(v.value for v in cints)
++        if outs is not None and made:
++            if outs[1] and not r: return None
++            return made[0] if len(made) == 1 else tuple(made)
++        k = ret.split(":")
++        if k[0] == "p" and len(k) > 1:
++            tn = k[1]
++            if tn == "GList": return glist_to_list(r, fn)
++            if tn == "GSList": return gslist_to_list(r)
++            if r and is_gobject_typename(tn): return wrap(r)
++        return r
++    method.__name__ = fn
++    return method
++
++def gslist_to_list(ptr):
++    """GSList* of GObjects -> Python list (the list is owned by its container: not freed)."""
++    out = []; p = ptr
++    while p:
++        data = c_void_p.from_address(p).value
++        out.append(wrap(data) if data else None); p = c_void_p.from_address(p + 8).value
++    return out
++
++def glist_to_list(ptr, fn=""):
++    """GList* -> Python list.  Widgets are wrapped; the list itself is freed (get_children() returns a newly allocated list)."""
++    out = []
++    p = ptr
++    while p:
++        data = c_void_p.from_address(p).value
++        out.append(wrap(data) if data else None)
++        p = c_void_p.from_address(p + 8).value
++    if ptr and fn in ("gtk_container_get_children", "gtk_toolbar_get_children", "gtk_menu_shell_get_children"): call("g_list_free", ptr)
++    return out
++
++# ------------------------------------------------------------------------------------------------ signals
++_HANDLERS = {}                      # key -> (cfunc, callback info)   (kept until GTK reports the closure is gone)
++CALLBACK_ERRORS = []                # (signal name, traceback text) of every exception raised inside a Python signal handler (tests read this)
++_next_key = [1]
++_NOTIFY_T = CFUNCTYPE(None, c_void_p, c_void_p)
++def _notify(data, closure):
++    _HANDLERS.pop(data, None)
++_NOTIFY = _NOTIFY_T(_notify)
++
++class Event(object):
++    """A GdkEvent as seen by Python: the common fields, plus those of key / button / motion / expose / scroll events."""
++    def __init__(self, ptr):
++        self._ptr = ptr
++        self.type = c_int.from_address(ptr).value
++        self.window = c_void_p.from_address(ptr + 8).value
++        t = self.type
++        if t in (8, 9):                                                  # GDK_KEY_PRESS, GDK_KEY_RELEASE
++            self.time = c_uint.from_address(ptr + 20).value; self.state = c_uint.from_address(ptr + 24).value
++            self.keyval = c_uint.from_address(ptr + 28).value
++            s = c_void_p.from_address(ptr + 40).value; self.string = ctypes.string_at(s).decode("utf-8", "replace") if s else ""
++        elif t in (4, 5, 6, 7):                                          # BUTTON_PRESS, 2BUTTON, 3BUTTON, BUTTON_RELEASE
++            self.time = c_uint.from_address(ptr + 20).value; self.x = c_double.from_address(ptr + 24).value; self.y = c_double.from_address(ptr + 32).value
++            self.state = c_uint.from_address(ptr + 48).value; self.button = c_uint.from_address(ptr + 52).value
++        elif t == 3:                                                     # MOTION_NOTIFY
++            self.time = c_uint.from_address(ptr + 20).value; self.x = c_double.from_address(ptr + 24).value; self.y = c_double.from_address(ptr + 32).value
++            self.state = c_uint.from_address(ptr + 48).value
++        elif t == 2:                                                     # EXPOSE
++            self.area = tuple(c_int.from_address(ptr + 20 + 4 * i).value for i in range(4))
++    def get_coords(self): return (getattr(self, "x", 0.0), getattr(self, "y", 0.0))
++
++def _arg_to_py(gtype, raw):
++    """Convert one raw ctypes signal argument to Python."""
++    f = call("g_type_fundamental", gtype)
++    if f == G_TYPE_OBJECT: return wrap(raw) if raw else None
++    if f == G_TYPE_BOXED:
++        if type_name(gtype) == "GdkEvent": return Event(raw) if raw else None
++        return raw
++    if f == G_TYPE_STRING: return ctypes.string_at(raw).decode("utf-8", "replace") if raw else None
++    if f == G_TYPE_BOOLEAN: return bool(raw)
++    return raw
++
++class SignalQuery(Structure):
++    _fields_ = [("signal_id", c_uint), ("signal_name", c_char_p), ("itype", c_ulong), ("signal_flags", c_int), ("return_type", c_ulong),
++                ("n_params", c_uint), ("param_types", c_void_p)]
++
++def _signal_info(obj, name):
++    gt = instance_gtype(obj._ptr)
++    sid = call("g_signal_lookup", name, gt)
++    if not sid: raise TypeError("%s: unknown signal name '%s'" % (type(obj).__name__, name))
++    q = SignalQuery(); call("g_signal_query", sid, q)
++    params = [c_ulong.from_address(q.param_types + 8 * i).value & ~1 for i in range(q.n_params)]     # (G_SIGNAL_TYPE_STATIC_SCOPE bit)
++    return sid, q.return_type, params
++
++_CT_FOR_FUND = {G_TYPE_BOOLEAN: c_int, G_TYPE_INT: c_int, G_TYPE_UINT: c_uint, G_TYPE_ENUM: c_int, G_TYPE_FLAGS: c_uint, G_TYPE_LONG: c_int64, G_TYPE_ULONG: c_uint64,
++                G_TYPE_INT64: c_int64, G_TYPE_UINT64: c_uint64, G_TYPE_DOUBLE: c_double, G_TYPE_FLOAT: c_float, G_TYPE_CHAR: c_byte, G_TYPE_UCHAR: c_ubyte}
++def connect_signal(obj, name, func, user_args, after=False, swap=False):
++    if not callable(func): raise TypeError("callback is not callable: %r" % (func,))
++    name = name.replace("_", "-") if "::" not in name and call("g_signal_lookup", name, instance_gtype(obj._ptr)) == 0 else name
++    sid, rtype, params = _signal_info(obj, name)
++    rf = call("g_type_fundamental", rtype)
++    argcts = [_CT_FOR_FUND.get(call("g_type_fundamental", p), c_void_p) for p in params]
++    rct = None if rf == 4 else (c_int if rf in (G_TYPE_BOOLEAN, G_TYPE_INT, G_TYPE_ENUM) else (c_uint if rf in (G_TYPE_UINT, G_TYPE_FLAGS) else c_void_p))
++    key = _next_key[0]; _next_key[0] += 1
++    def tramp(*raw):
++        inst = raw[0]; vals = raw[1:1 + len(params)]
++        try:
++            w = wrap(inst)
++            pyargs = [_arg_to_py(p, v) for p, v in zip(params, vals)]
++            if swap: res = func(*(list(user_args) + pyargs + [w]))
++            else:    res = func(w, *(pyargs + list(user_args)))
++            if rct is None: return None
++            if rf == G_TYPE_BOOLEAN: return 1 if res else 0
++            return int(res or 0)
++        except SystemExit: raise
++        except BaseException:
++            CALLBACK_ERRORS.append((name, traceback.format_exc()))
++            traceback.print_exc()
++            return 0 if rct is not None else None
++    cft = CFUNCTYPE(rct, c_void_p, *argcts, c_void_p)
++    cf = cft(tramp)
++    _HANDLERS[key] = (cf, func, user_args)
++    # g_signal_connect_data is NOT variadic.
++    hid = call("g_signal_connect_data", obj._ptr, name, cast(cf, c_void_p).value, key, cast(_NOTIFY, c_void_p).value, 1 if after else 0)
++    return hid
++
++def emit_signal(obj, name, args):
++    sid, rtype, params = _signal_info(obj, name)
++    n = 1 + len(params)
++    vals = (GValue * n)()
++    call("g_value_init", vals[0], instance_gtype(obj._ptr)); call("g_value_set_object", vals[0], obj._ptr)
++    for i, (p, a) in enumerate(zip(params, args)):
++        call("g_value_init", vals[i + 1], p); gvalue_set(vals[i + 1], a._ptr if isinstance(a, GObject) else a)
++    ret = GValue()
++    if rtype and call("g_type_fundamental", rtype) != 4: call("g_value_init", ret, rtype); call("g_signal_emitv", vals, sid, 0, ret)
++    else: call("g_signal_emitv", vals, sid, 0, None)
++    for i in range(n): call("g_value_unset", vals[i])
++    if ret.g_type:
++        try: return gvalue_get(ret)
++        finally: call("g_value_unset", ret)
++    return None
++
++# ------------------------------------------------------------------------------------------------ main loop, timeouts, idles
++_SRC_T = CFUNCTYPE(c_int, c_void_p)
++_SOURCES = {}
++def _add_source(adder, interval, func, args):
++    holder = {}
++    def tramp(data):
++        try:
++            r = func(*args)
++        except BaseException:
++            CALLBACK_ERRORS.append(("source", traceback.format_exc())); traceback.print_exc(); r = False
++        if not r: _SOURCES.pop(holder.get("id"), None)
++        return 1 if r else 0
++    cf = _SRC_T(tramp)
++    sid = adder(cf, interval)
++    holder["id"] = sid
++    _SOURCES[sid] = cf
++    return sid
++def timeout_add(interval, func, *args): return _add_source(lambda cf, i: call("g_timeout_add", i, cast(cf, c_void_p).value, None), interval, func, args)
++def idle_add(func, *args): return _add_source(lambda cf, i: call("g_idle_add", cast(cf, c_void_p).value, None), 0, func, args)
++def source_remove(sid):
++    _SOURCES.pop(sid, None); return bool(call("g_source_remove", sid))
++
++
++def gslist_of_strings(ptr, free_strings=True):
++    out = []; p = ptr
++    while p:
++        data = c_void_p.from_address(p).value
++        out.append(ctypes.string_at(data).decode("utf-8", "replace") if data else None)
++        if free_strings and data: free(data)
++        p = c_void_p.from_address(p + 8).value
++    if ptr: call("g_slist_free", ptr)
++    return out
+diff --git a/compat/pygtk2/coot_python.py b/compat/pygtk2/coot_python.py
+new file mode 100644
+index 0000000..acc734d
+--- /dev/null
++++ b/compat/pygtk2/coot_python.py
+@@ -0,0 +1,8 @@
++"""coot_python -- the four widgets Coot's C++ hands to its Python scripts, as wrapped GTK objects.
++The native module `_coot_python_native` (src/coot_pythonmodule.cc) returns the raw GtkWidget pointers."""
++import _gtk2core as _c
++import _coot_python_native as _n
++def main_menubar(): return _c.wrap(_n.main_menubar())
++def main_statusbar(): return _c.wrap(_n.main_statusbar())
++def main_toolbar(): return _c.wrap(_n.main_toolbar())
++def main_hbox(): return _c.wrap(_n.main_hbox())
+diff --git a/compat/pygtk2/gobject.py b/compat/pygtk2/gobject.py
+new file mode 100644
+index 0000000..26fdfdc
+--- /dev/null
++++ b/compat/pygtk2/gobject.py
+@@ -0,0 +1,9 @@
++"""gobject -- PyGTK 2 compatible subset on ctypes."""
++import _gtk2core as _c
++from _gtk2core import GObject, timeout_add, idle_add, source_remove, GError
++TYPE_NONE, TYPE_CHAR, TYPE_UCHAR, TYPE_BOOLEAN, TYPE_INT, TYPE_UINT, TYPE_LONG, TYPE_ULONG = 4, 12, 16, 20, 24, 28, 32, 36
++TYPE_INT64, TYPE_UINT64, TYPE_ENUM, TYPE_FLAGS, TYPE_FLOAT, TYPE_DOUBLE, TYPE_STRING, TYPE_POINTER, TYPE_BOXED, TYPE_PARAM, TYPE_OBJECT = 40, 44, 48, 52, 56, 60, 64, 68, 72, 76, 80
++PRIORITY_DEFAULT, PRIORITY_HIGH, PRIORITY_LOW, PRIORITY_DEFAULT_IDLE = 0, -100, 300, 200
++IO_IN, IO_OUT, IO_PRI, IO_ERR, IO_HUP = 1, 4, 2, 8, 16
++def type_name(gtype): return _c.type_name(gtype)
++def threads_init(): pass          # (Python threads and GTK: the GIL is held by the GTK main thread, as in Coot's other Python)
+diff --git a/compat/pygtk2/gtk/__init__.py b/compat/pygtk2/gtk/__init__.py
+new file mode 100644
+index 0000000..c9d07b2
+--- /dev/null
++++ b/compat/pygtk2/gtk/__init__.py
+@@ -0,0 +1,375 @@
++"""gtk -- PyGTK 2 compatible subset on ctypes, for Coot 0.9.8.96's Python scripts (see _gtk2core.py).
++
++Classes with PyGTK-specific constructors or semantics are written out below; every other method of every GTK/GDK/GObject class is found by name in the
++C API (box.get_children() -> gtk_container_get_children, entry.set_text(s) -> gtk_entry_set_text, ...), with PyGTK conventions for output arguments
++(text iterators, GError, GList) handled in _gtk2core.
++"""
++import sys, ctypes
++from ctypes import c_int, c_uint, c_void_p, create_string_buffer, addressof, string_at
++import _gtk2core as _c
++from _gtk2core import (GObject as _GObject, call as _call, wrap as _wrap, register_class as _reg, consts as _consts, _wrappers, GError)
++from . import gdk, keysyms
++
++pygtk_version = (2, 24, 0)
++gtk_version = (2, 24, 33)
++ver = gtk_version
++for _k, _v in _consts().items():                       # WINDOW_TOPLEVEL, STOCK_YES, POLICY_AUTOMATIC, ... (names as in PyGTK: GTK_ prefix removed)
++    if _k.startswith("GTK_"): globals()[_k[4:]] = _v
++
++def _adopt(self, ptr):
++    """Make `self` the wrapper of a freshly created GObject (sinks its floating reference)."""
++    if not ptr: raise RuntimeError("could not create a %s" % type(self).__name__)
++    self._ptr = ptr; _call("g_object_ref_sink", ptr); _wrappers[ptr] = self
++
++class Object(_GObject): pass
++class Adjustment(Object):
++    def __init__(self, value=0.0, lower=0.0, upper=0.0, step_incr=0.0, page_incr=0.0, page_size=0.0):
++        _adopt(self, _call("gtk_adjustment_new", value, lower, upper, step_incr, page_incr, page_size))
++
++class Widget(Object):
++    def set_flags(self, flags):
++        if flags & CAN_DEFAULT: _call("gtk_widget_set_can_default", self, True)
++        if flags & CAN_FOCUS: _call("gtk_widget_set_can_focus", self, True)
++    def unset_flags(self, flags):
++        if flags & CAN_DEFAULT: _call("gtk_widget_set_can_default", self, False)
++        if flags & CAN_FOCUS: _call("gtk_widget_set_can_focus", self, False)
++    @property
++    def window(self): return _wrap(_call("gtk_widget_get_window", self))
++    @property
++    def style(self): return _wrap(_call("gtk_widget_get_style", self))
++    @property
++    def allocation(self):
++        r = _Rect(); _call("gtk_widget_get_allocation", self, r); return r
++    @property
++    def parent(self): return _wrap(_call("gtk_widget_get_parent", self))
++    def get_colormap(self): return _wrap(_call("gtk_widget_get_colormap", self))
++    def create_pango_layout(self, text=None): return _wrap(_call("gtk_widget_create_pango_layout", self, text))
++
++class Container(Widget): pass
++class Bin(Container): pass
++class Misc(Widget): pass
++
++class Box(Container):
++    def pack_start(self, child, expand=True, fill=True, padding=0): _call("gtk_box_pack_start", self, child, expand, fill, padding)
++    def pack_end(self, child, expand=True, fill=True, padding=0): _call("gtk_box_pack_end", self, child, expand, fill, padding)
++class HBox(Box):
++    def __init__(self, homogeneous=False, spacing=0): _adopt(self, _call("gtk_hbox_new", homogeneous, spacing))
++class VBox(Box):
++    def __init__(self, homogeneous=False, spacing=0): _adopt(self, _call("gtk_vbox_new", homogeneous, spacing))
++class HSeparator(Widget):
++    def __init__(self): _adopt(self, _call("gtk_hseparator_new"))
++class VSeparator(Widget):
++    def __init__(self): _adopt(self, _call("gtk_vseparator_new"))
++class Table(Container):
++    def __init__(self, rows=1, columns=1, homogeneous=False): _adopt(self, _call("gtk_table_new", rows, columns, homogeneous))
++    def attach(self, child, left_attach, right_attach, top_attach, bottom_attach, xoptions=EXPAND | FILL, yoptions=EXPAND | FILL, xpadding=0, ypadding=0):
++        _call("gtk_table_attach", self, child, left_attach, right_attach, top_attach, bottom_attach, xoptions, yoptions, xpadding, ypadding)
++class Frame(Bin):
++    def __init__(self, label=None): _adopt(self, _call("gtk_frame_new", label))
++class ScrolledWindow(Bin):
++    def __init__(self, hadjustment=None, vadjustment=None): _adopt(self, _call("gtk_scrolled_window_new", hadjustment, vadjustment))
++class Notebook(Container):
++    def __init__(self): _adopt(self, _call("gtk_notebook_new"))
++class DrawingArea(Widget):
++    def __init__(self): _adopt(self, _call("gtk_drawing_area_new"))
++
++class Window(Bin):
++    def __init__(self, type=WINDOW_TOPLEVEL): _adopt(self, _call("gtk_window_new", type))
++class Dialog(Window):
++    def __init__(self, title=None, parent=None, flags=0, buttons=None):
++        _adopt(self, _call("gtk_dialog_new"))
++        self._setup(title, parent, flags, buttons)
++    def _setup(self, title, parent, flags, buttons):
++        if title: _call("gtk_window_set_title", self, title)
++        if parent: _call("gtk_window_set_transient_for", self, parent)
++        if flags & DIALOG_MODAL: _call("gtk_window_set_modal", self, True)
++        if flags & DIALOG_DESTROY_WITH_PARENT: _call("gtk_window_set_destroy_with_parent", self, True)
++        if buttons:
++            for i in range(0, len(buttons) - 1, 2): _call("gtk_dialog_add_button", self, buttons[i], buttons[i + 1])   # (not the variadic gtk_dialog_new_with_buttons)
++    @property
++    def vbox(self): return _wrap(_call("gtk_dialog_get_content_area", self))
++    @property
++    def action_area(self): return _wrap(_call("gtk_dialog_get_action_area", self))
++class MessageDialog(Dialog):
++    def __init__(self, parent=None, flags=0, type=MESSAGE_INFO, buttons=BUTTONS_NONE, message_format=None):
++        _adopt(self, _call("gtk_message_dialog_new", parent, flags, type, buttons, None))        # (format = NULL: no variadic arguments follow)
++        if message_format is not None:
++            _call("gtk_message_dialog_set_markup", self, _call("g_markup_escape_text", message_format, -1))
++class FileChooserDialog(Dialog):
++    def __init__(self, title=None, parent=None, action=FILE_CHOOSER_ACTION_OPEN, buttons=None, backend=None):
++        _adopt(self, _call("gtk_file_chooser_dialog_new", title, parent, action, None))          # (first_button_text = NULL terminates the C varargs)
++        if buttons:
++            for i in range(0, len(buttons) - 1, 2): _call("gtk_dialog_add_button", self, buttons[i], buttons[i + 1])
++class FileSelection(FileChooserDialog):
++    """GtkFileSelection (deprecated, struct members only) emulated with a file chooser dialog; ok_button / cancel_button are its real buttons."""
++    def __init__(self, title=None):
++        FileChooserDialog.__init__(self, title, None, FILE_CHOOSER_ACTION_OPEN, (STOCK_CANCEL, RESPONSE_CANCEL, STOCK_OK, RESPONSE_OK))
++    @property
++    def ok_button(self): return _wrap(_call("gtk_dialog_get_widget_for_response", self, RESPONSE_OK))
++    @property
++    def cancel_button(self): return _wrap(_call("gtk_dialog_get_widget_for_response", self, RESPONSE_CANCEL))
++class Assistant(Window):
++    def __init__(self): _adopt(self, _call("gtk_assistant_new"))
++
++class Button(Bin):
++    def __init__(self, label=None, stock=None, use_underline=True):
++        if stock: p = _call("gtk_button_new_from_stock", stock)
++        elif label is None: p = _call("gtk_button_new")
++        else: p = _call("gtk_button_new_with_mnemonic" if use_underline else "gtk_button_new_with_label", label)
++        _adopt(self, p)
++class ToggleButton(Button):
++    def __init__(self, label=None, use_underline=True):
++        _adopt(self, _call("gtk_toggle_button_new") if label is None else _call("gtk_toggle_button_new_with_mnemonic" if use_underline else "gtk_toggle_button_new_with_label", label))
++class CheckButton(ToggleButton):
++    def __init__(self, label=None, use_underline=True):
++        _adopt(self, _call("gtk_check_button_new") if label is None else _call("gtk_check_button_new_with_mnemonic" if use_underline else "gtk_check_button_new_with_label", label))
++class RadioButton(CheckButton):
++    def __init__(self, group=None, label=None, use_underline=True):
++        if group is None: p = _call("gtk_radio_button_new_with_mnemonic", None, label) if label is not None else _call("gtk_radio_button_new", None)
++        else: p = _call("gtk_radio_button_new_with_mnemonic_from_widget", group, label) if label is not None else _call("gtk_radio_button_new_from_widget", group)
++        _adopt(self, p)
++class Label(Misc):
++    def __init__(self, str=None): _adopt(self, _call("gtk_label_new", str))
++class Image(Misc):
++    def __init__(self): _adopt(self, _call("gtk_image_new"))
++class Entry(Widget):
++    def __init__(self, max=0):
++        _adopt(self, _call("gtk_entry_new"))
++        if max: _call("gtk_entry_set_max_length", self, max)
++class SpinButton(Entry):
++    def __init__(self, adjustment=None, climb_rate=0.0, digits=0): _adopt(self, _call("gtk_spin_button_new", adjustment, climb_rate, digits))
++class ProgressBar(Widget):
++    def __init__(self): _adopt(self, _call("gtk_progress_bar_new"))
++class Range(Widget): pass
++class Scale(Range): pass
++class HScale(Scale):
++    def __init__(self, adjustment=None): _adopt(self, _call("gtk_hscale_new", adjustment))
++class VScale(Scale):
++    def __init__(self, adjustment=None): _adopt(self, _call("gtk_vscale_new", adjustment))
++
++class Tooltips(Object):
++    def __init__(self): _adopt(self, _call("gtk_tooltips_new"))
++
++# ---- menus and toolbars
++class MenuShell(Container): pass
++class Menu(MenuShell):
++    def __init__(self): _adopt(self, _call("gtk_menu_new"))
++class MenuBar(MenuShell):
++    def __init__(self): _adopt(self, _call("gtk_menu_bar_new"))
++class MenuItem(Bin):
++    def __init__(self, label=None, use_underline=True):
++        _adopt(self, _call("gtk_menu_item_new") if label is None else _call("gtk_menu_item_new_with_mnemonic" if use_underline else "gtk_menu_item_new_with_label", label))
++class SeparatorMenuItem(MenuItem):
++    def __init__(self): _adopt(self, _call("gtk_separator_menu_item_new"))
++class CheckMenuItem(MenuItem):
++    def __init__(self, label=None, use_underline=True):
++        _adopt(self, _call("gtk_check_menu_item_new") if label is None else _call("gtk_check_menu_item_new_with_mnemonic" if use_underline else "gtk_check_menu_item_new_with_label", label))
++class ImageMenuItem(MenuItem):
++    def __init__(self, stock_id=None, accel_group=None):
++        _adopt(self, _call("gtk_image_menu_item_new") if stock_id is None else _call("gtk_image_menu_item_new_from_stock", stock_id, accel_group))
++class RadioMenuItem(CheckMenuItem): pass
++class Statusbar(Container):
++    def __init__(self): _adopt(self, _call("gtk_statusbar_new"))
++class Toolbar(Container):
++    def __init__(self): _adopt(self, _call("gtk_toolbar_new"))
++class ToolItem(Bin):
++    def __init__(self): _adopt(self, _call("gtk_tool_item_new"))
++class SeparatorToolItem(ToolItem):
++    def __init__(self): _adopt(self, _call("gtk_separator_tool_item_new"))
++class ToolButton(ToolItem):
++    def __init__(self, icon_widget=None, label=None): _adopt(self, _call("gtk_tool_button_new", icon_widget, label))
++class ToggleToolButton(ToolButton):
++    def __init__(self): _adopt(self, _call("gtk_toggle_tool_button_new"))
++
++# ---- text
++class TextTag(_GObject):
++    def __init__(self, name=None): _adopt(self, _call("gtk_text_tag_new", name))
++class TextBuffer(_GObject):
++    def __init__(self, table=None): _adopt(self, _call("gtk_text_buffer_new", table))
++    def create_tag(self, tag_name=None, **properties):
++        tag = _wrap(_call("gtk_text_buffer_create_tag", self, tag_name, None))               # (no property list: nothing variadic is passed)
++        for k, v in properties.items(): tag.set_property(k.replace("_", "-"), v)
++        return tag
++    def insert(self, iter, text, length=-1): _call("gtk_text_buffer_insert", self, iter, text, length)
++    def insert_with_tags(self, iter, text, *tags):
++        start = iter.get_offset(); _call("gtk_text_buffer_insert", self, iter, text, -1)
++        s = self.get_iter_at_offset(start)
++        for t in tags: _call("gtk_text_buffer_apply_tag", self, t, s, iter)
++    def insert_with_tags_by_name(self, iter, text, *tag_names):
++        start = iter.get_offset(); _call("gtk_text_buffer_insert", self, iter, text, -1)
++        s = self.get_iter_at_offset(start)
++        for t in tag_names: _call("gtk_text_buffer_apply_tag_by_name", self, t, s, iter)
++    def set_text(self, text): _call("gtk_text_buffer_set_text", self, text, -1)
++    def get_text(self, start, end, include_hidden_chars=True): return _call("gtk_text_buffer_get_text", self, start, end, include_hidden_chars)
++class TextView(Container):
++    def __init__(self, buffer=None): _adopt(self, _call("gtk_text_view_new") if buffer is None else _call("gtk_text_view_new_with_buffer", buffer))
++class TextIter(object):
++    """GtkTextIter (opaque, 80 bytes on 64-bit; room for 128)."""
++    def __init__(self): self._buf = create_string_buffer(128); self._ptr = addressof(self._buf)
++    def copy(self):
++        n = TextIter(); ctypes.memmove(n._ptr, self._ptr, 128); return n
++    def get_char(self):
++        c = _call("gtk_text_iter_get_char", self); return chr(c) if c else ""
++    def __getattr__(self, name):
++        if name.startswith("_"): raise AttributeError(name)
++        fn = "gtk_text_iter_" + name
++        if not _c.has_function(fn): raise AttributeError(name)
++        return lambda *a: _call(fn, self, *a)
++_c._struct_classes["GtkTextIter"] = TextIter
++
++# ---- models
++class TreeIter(object):
++    def __init__(self): self._buf = create_string_buffer(32); self._ptr = addressof(self._buf)
++    def copy(self):
++        n = TreeIter(); ctypes.memmove(n._ptr, self._ptr, 32); return n
++_c._struct_classes["GtkTreeIter"] = TreeIter
++
++def _gtype_of(t):
++    if isinstance(t, int): return t
++    simple = {str: _c.G_TYPE_STRING, int: _c.G_TYPE_INT, float: _c.G_TYPE_DOUBLE, bool: _c.G_TYPE_BOOLEAN}
++    if t in simple: return simple[t]
++    if isinstance(t, type) and issubclass(t, _GObject):
++        if t is gdk.Pixbuf: return _call("gdk_pixbuf_get_type")
++        g = _c.type_from_name(getattr(t, "_ctype_name", "")) 
++        if g: return g
++    raise TypeError("cannot map %r to a GType" % (t,))
++
++class TreeModelRow(object):
++    def __init__(self, model, it): self.model, self.iter = model, it
++    def __getitem__(self, col): return self.model.get_value(self.iter, col)
++    def __setitem__(self, col, value): self.model.set_value(self.iter, col, value)
++    def __len__(self): return _call("gtk_tree_model_get_n_columns", self.model)
++    def __iter__(self):
++        for i in range(len(self)): yield self[i]
++
++class ListStore(_GObject):
++    def __init__(self, *column_types):
++        gts = [_gtype_of(t) for t in column_types]
++        arr = (ctypes.c_ulong * len(gts))(*gts)
++        _adopt(self, _call("gtk_list_store_newv", len(gts), arr))
++    # --- row access (PyGTK TreeModel)
++    def __len__(self): return _call("gtk_tree_model_iter_n_children", self, None)
++    def iter_n_children(self, it=None): return _call("gtk_tree_model_iter_n_children", self, it)
++    def get_iter(self, path):
++        if isinstance(path, int): path = str(path)
++        elif isinstance(path, (tuple, list)): path = ":".join(str(i) for i in path)
++        tp = _call("gtk_tree_path_new_from_string", path)
++        it = TreeIter()
++        ok = _call("gtk_tree_model_get_iter", self, it, tp); _call("gtk_tree_path_free", tp)
++        if not ok: raise ValueError("invalid tree path")
++        return it
++    def get_iter_first(self):
++        it = TreeIter(); return it if _call("gtk_tree_model_get_iter_first", self, it) else None
++    def iter_next(self, it):
++        n = it.copy(); return n if _call("gtk_tree_model_iter_next", self, n) else None
++    def get_value(self, it, column):
++        gt = _call("gtk_tree_model_get_column_type", self, column)
++        v = _c.GValue(); _call("gtk_tree_model_get_value", self, it, column, v)
++        try: return _c.gvalue_get(v)
++        finally: _call("g_value_unset", v)
++    def get(self, it, *columns): return tuple(self.get_value(it, c) for c in columns)
++    def set_value(self, it, column, value):
++        gt = _call("gtk_tree_model_get_column_type", self, column)
++        v = _c.gvalue_init(gt)
++        try:
++            _c.gvalue_set(v, value._ptr if isinstance(value, (_GObject,)) else value)
++            _call("gtk_list_store_set_value", self, it, column, v)
++        finally: _call("g_value_unset", v)
++    def _fill(self, it, row):
++        if row is not None:
++            for i, val in enumerate(row): self.set_value(it, i, val)
++        return it
++    def append(self, row=None):
++        it = TreeIter(); _call("gtk_list_store_append", self, it); return self._fill(it, row)
++    def prepend(self, row=None):
++        it = TreeIter(); _call("gtk_list_store_prepend", self, it); return self._fill(it, row)
++    def insert(self, position, row=None):
++        it = TreeIter(); _call("gtk_list_store_insert", self, it, position); return self._fill(it, row)
++    def __getitem__(self, index):
++        if isinstance(index, int) and (index < 0): index += len(self)
++        if isinstance(index, int) and not (0 <= index < len(self)): raise IndexError(index)
++        return TreeModelRow(self, self.get_iter(index))
++    def __iter__(self):
++        for i in range(len(self)): yield self[i]
++_reg("GtkListStore", ListStore)
++
++class EntryCompletion(_GObject):
++    def __init__(self): _adopt(self, _call("gtk_entry_completion_new"))
++class CellRenderer(Object): pass
++class CellRendererPixbuf(CellRenderer):
++    def __init__(self): _adopt(self, _call("gtk_cell_renderer_pixbuf_new"))
++class CellRendererText(CellRenderer):
++    def __init__(self): _adopt(self, _call("gtk_cell_renderer_text_new"))
++class ComboBox(Bin):
++    def __init__(self, model=None): _adopt(self, _call("gtk_combo_box_new") if model is None else _call("gtk_combo_box_new_with_model", model))
++    def pack_start(self, cell, expand=True): _call("gtk_cell_layout_pack_start", self, cell, expand)
++    def pack_end(self, cell, expand=True): _call("gtk_cell_layout_pack_end", self, cell, expand)
++    def add_attribute(self, cell, attribute, column): _call("gtk_cell_layout_add_attribute", self, cell, attribute, column)
++    def set_active_iter(self, it): _call("gtk_combo_box_set_active_iter", self, it)
++
++# ---- icons
++class IconFactory(_GObject):
++    def __init__(self): _adopt(self, _call("gtk_icon_factory_new"))
++class IconSet(object):
++    def __init__(self, pixbuf=None):
++        self._ptr = _call("gtk_icon_set_new_from_pixbuf", pixbuf) if pixbuf is not None else _call("gtk_icon_set_new")
++    def __del__(self):
++        try: _call("gtk_icon_set_unref", self._ptr)
++        except Exception: pass
++class IconTheme(_GObject): pass
++
++class _Rect(ctypes.Structure):
++    _fields_ = [("x", c_int), ("y", c_int), ("width", c_int), ("height", c_int)]
++    @property
++    def _ptr(self): return addressof(self)
++_c._struct_classes["GtkAllocation"] = _Rect; _c._struct_classes["GdkRectangle"] = _Rect
++
++class Style(_GObject):
++    """GtkStyle: the graphics contexts that custom drawing code uses."""
++    def _gc(self, base, i): return _wrap(c_void_p.from_address(self._ptr + base + 8 * i).value)
++    class _GCArray(object):
++        def __init__(self, style, base): self.s, self.b = style, base
++        def __getitem__(self, i): return self.s._gc(self.b, i)
++    fg_gc = property(lambda self: Style._GCArray(self, 544)); bg_gc = property(lambda self: Style._GCArray(self, 584))
++    light_gc = property(lambda self: Style._GCArray(self, 624)); dark_gc = property(lambda self: Style._GCArray(self, 664))
++    mid_gc = property(lambda self: Style._GCArray(self, 704)); text_gc = property(lambda self: Style._GCArray(self, 744))
++    base_gc = property(lambda self: Style._GCArray(self, 784)); text_aa_gc = property(lambda self: Style._GCArray(self, 824))
++    black_gc = property(lambda self: self._gc(864, 0)); white_gc = property(lambda self: self._gc(872, 0))
++
++# ---- register classes by C type name (children before parents is not required: lookup walks the GType ancestry)
++for _n, _cls in (("GObject", _GObject), ("GInitiallyUnowned", _GObject), ("GtkObject", Object), ("GtkAdjustment", Adjustment), ("GtkWidget", Widget), ("GtkContainer", Container),
++                 ("GtkBin", Bin), ("GtkMisc", Misc), ("GtkBox", Box), ("GtkHBox", HBox), ("GtkVBox", VBox), ("GtkHSeparator", HSeparator), ("GtkVSeparator", VSeparator),
++                 ("GtkTable", Table), ("GtkFrame", Frame), ("GtkScrolledWindow", ScrolledWindow), ("GtkNotebook", Notebook), ("GtkDrawingArea", DrawingArea),
++                 ("GtkWindow", Window), ("GtkDialog", Dialog), ("GtkMessageDialog", MessageDialog), ("GtkFileChooserDialog", FileChooserDialog),
++                 ("GtkAssistant", Assistant), ("GtkButton", Button), ("GtkToggleButton", ToggleButton), ("GtkCheckButton", CheckButton),
++                 ("GtkRadioButton", RadioButton), ("GtkLabel", Label), ("GtkImage", Image), ("GtkEntry", Entry), ("GtkSpinButton", SpinButton), ("GtkProgressBar", ProgressBar),
++                 ("GtkRange", Range), ("GtkScale", Scale), ("GtkHScale", HScale), ("GtkVScale", VScale), ("GtkTooltips", Tooltips), ("GtkMenuShell", MenuShell),
++                 ("GtkMenu", Menu), ("GtkMenuBar", MenuBar), ("GtkMenuItem", MenuItem), ("GtkSeparatorMenuItem", SeparatorMenuItem), ("GtkCheckMenuItem", CheckMenuItem), ("GtkImageMenuItem", ImageMenuItem), ("GtkRadioMenuItem", RadioMenuItem), ("GtkStatusbar", Statusbar),
++                 ("GtkToolbar", Toolbar), ("GtkToolItem", ToolItem), ("GtkSeparatorToolItem", SeparatorToolItem), ("GtkToolButton", ToolButton),
++                 ("GtkToggleToolButton", ToggleToolButton), ("GtkTextTag", TextTag), ("GtkTextBuffer", TextBuffer), ("GtkTextView", TextView),
++                 ("GtkEntryCompletion", EntryCompletion), ("GtkCellRenderer", CellRenderer), ("GtkCellRendererPixbuf", CellRendererPixbuf),
++                 ("GtkCellRendererText", CellRendererText), ("GtkComboBox", ComboBox), ("GtkIconFactory", IconFactory), ("GtkIconTheme", IconTheme), ("GtkStyle", Style)):
++    _reg(_n, _cls)
++
++# ---- module-level functions
++def main(): _call("gtk_main")
++def main_quit(): _call("gtk_main_quit")
++def main_level(): return _call("gtk_main_level")
++def main_iteration(block=True): return bool(_call("gtk_main_iteration_do", block))
++def events_pending(): return bool(_call("gtk_events_pending"))
++def combo_box_new_text(): return _wrap(_call("gtk_combo_box_new_text"))
++def image_new_from_stock(stock_id, size): return _wrap(_call("gtk_image_new_from_stock", stock_id, size))
++def image_new_from_file(filename): return _wrap(_call("gtk_image_new_from_file", filename))
++def icon_theme_get_default(): return _wrap(_call("gtk_icon_theme_get_default"))
++def stock_list_ids(): return _c.gslist_of_strings(_call("gtk_stock_list_ids"))
++def timeout_add(interval, func, *args): return _c.timeout_add(interval, func, *args)
++def idle_add(func, *args): return _c.idle_add(func, *args)
++def quit_add(level, func, *args): return 0
++Tooltips = Tooltips
++
++if _c.HEADLESS:        # tests only: nothing is shown, dialogs "answer" cancel immediately, the main loop is not entered
++    Dialog.run = lambda self: RESPONSE_CANCEL
++    main = lambda: None
++if _c.HEADLESS:        # tests only: no window server in the build sandbox, so nothing is ever shown or presented
++    for _n in ("show", "show_all", "show_now", "present", "grab_focus", "grab_default", "iconify", "realize"):
++        setattr(Widget, _n, lambda self, *a, **k: None)
+diff --git a/compat/pygtk2/gtk/gdk.py b/compat/pygtk2/gtk/gdk.py
+new file mode 100644
+index 0000000..a898320
+--- /dev/null
++++ b/compat/pygtk2/gtk/gdk.py
+@@ -0,0 +1,70 @@
++"""gtk.gdk -- PyGTK 2 compatible subset on ctypes."""
++import ctypes
++from ctypes import Structure, c_uint32, c_uint16, addressof
++import _gtk2core as _c
++from _gtk2core import GObject, call as _call, wrap as _wrap, register_class as _reg, consts as _consts
++
++for _k, _v in _consts().items():                       # CONTROL_MASK, RGB_DITHER_NONE, KEY_Up, ...
++    if _k.startswith("GDK_"): globals()[_k[4:]] = _v
++
++Event = _c.Event
++
++class Pixbuf(GObject):
++    def __init__(self, colorspace=0, has_alpha=False, bits_per_sample=8, width=1, height=1):
++        p = _call("gdk_pixbuf_new", colorspace, has_alpha, bits_per_sample, width, height)
++        self._ptr = p; _call("g_object_ref_sink", p); _c._wrappers[p] = self
++class Drawable(GObject): pass
++class Window(Drawable): pass
++class Pixmap(Drawable): pass
++class Colormap(GObject):
++    def alloc_color(self, color, writeable=False, best_match=True):
++        if isinstance(color, str): color = Color(color)
++        if not _call("gdk_colormap_alloc_color", self, color, writeable, best_match): raise ValueError("could not allocate colour")
++        return color
++class GC(GObject): pass
++class Screen(GObject): pass
++class Display(GObject): pass
++for _n, _cls in (("GdkPixbuf", Pixbuf), ("GdkDrawable", Drawable), ("GdkWindow", Window), ("GdkPixmap", Pixmap), ("GdkColormap", Colormap), ("GdkGC", GC),
++                 ("GdkScreen", Screen), ("GdkDisplay", Display)): _reg(_n, _cls)
++
++class Color(Structure):
++    """GdkColor: 16-bit red/green/blue."""
++    _fields_ = [("pixel", c_uint32), ("red", c_uint16), ("green", c_uint16), ("blue", c_uint16)]
++    _ctype_name = "GdkColor"
++    def __init__(self, red=0, green=0, blue=0, pixel=0):
++        Structure.__init__(self)
++        if isinstance(red, str):
++            if not _call("gdk_color_parse", red, self): raise ValueError("unable to parse colour specification %r" % red)
++        else:
++            self.red, self.green, self.blue, self.pixel = int(red), int(green), int(blue), int(pixel)
++    @property
++    def _ptr(self): return addressof(self)
++    def to_string(self): return _call("gdk_color_to_string", self)
++    def __repr__(self): return "<gtk.gdk.Color (%d, %d, %d)>" % (self.red, self.green, self.blue)
++_c._struct_classes["GdkColor"] = Color
++
++def color_parse(spec):
++    c = Color()
++    if not _call("gdk_color_parse", spec, c): raise ValueError("unable to parse colour specification %r" % spec)
++    return c
++
++class Font(object):
++    """GdkFont (deprecated X11 font).  Coot's scripts create one ("fixed") and never use it; GDK-Quartz cannot load X fonts, so failure is not an error."""
++    def __init__(self, font_name):
++        try: self._ptr = _call("gdk_font_load", font_name)
++        except Exception: self._ptr = None
++    def __del__(self):
++        try:
++            if self._ptr: _call("gdk_font_unref", self._ptr)
++        except Exception: pass
++
++def pixbuf_new_from_file(filename): return _wrap(_call("gdk_pixbuf_new_from_file", filename))
++def pixbuf_new_from_file_at_size(filename, width, height): return _wrap(_call("gdk_pixbuf_new_from_file_at_size", filename, width, height))
++def threads_init(): _call("gdk_threads_init")
++def threads_enter(): _call("gdk_threads_enter")
++def threads_leave(): _call("gdk_threads_leave")
++def keyval_from_name(name): return _call("gdk_keyval_from_name", name)
++def keyval_name(keyval): return _call("gdk_keyval_name", keyval)
++def unicode_to_keyval(wc): return _call("gdk_unicode_to_keyval", ord(wc) if isinstance(wc, str) else wc)
++def screen_width(): return _call("gdk_screen_width")
++def screen_height(): return _call("gdk_screen_height")
+diff --git a/compat/pygtk2/gtk/keysyms.py b/compat/pygtk2/gtk/keysyms.py
+new file mode 100644
+index 0000000..3e0a164
+--- /dev/null
++++ b/compat/pygtk2/gtk/keysyms.py
+@@ -0,0 +1,4 @@
++"""gtk.keysyms -- key symbols from the GDK headers (GDK_KEY_Up -> keysyms.Up)."""
++import _gtk2core as _c
++for _k, _v in _c.consts().items():
++    if _k.startswith("GDK_KEY_"): globals()[_k[8:]] = _v
+diff --git a/compat/pygtk2/pango.py b/compat/pygtk2/pango.py
+new file mode 100644
+index 0000000..88ac6c6
+--- /dev/null
++++ b/compat/pygtk2/pango.py
+@@ -0,0 +1,21 @@
++"""pango -- PyGTK 2 compatible subset on ctypes."""
++import _gtk2core as _c
++from _gtk2core import GObject, call as _call, register_class as _reg, consts as _consts
++for _k, _v in _consts().items():
++    if _k.startswith("PANGO_"): globals()[_k[6:]] = _v
++class Layout(GObject): pass
++_reg("PangoLayout", Layout)
++class Context(GObject): pass
++_reg("PangoContext", Context)
++class FontDescription(object):
++    def __init__(self, desc=None):
++        self._ptr = _call("pango_font_description_from_string", desc) if desc else _call("pango_font_description_new")
++    def __del__(self):
++        try: _call("pango_font_description_free", self._ptr)
++        except Exception: pass
++    def __str__(self): return _call("pango_font_description_to_string", self)
++    def __getattr__(self, name):
++        if name.startswith("_"): raise AttributeError(name)
++        fn = "pango_font_description_" + name
++        if not _c.has_function(fn): raise AttributeError(name)
++        return lambda *a: _call(fn, self, *a)
+diff --git a/compat/pygtk2/pygtk.py b/compat/pygtk2/pygtk.py
+new file mode 100644
+index 0000000..cacfa77
+--- /dev/null
++++ b/compat/pygtk2/pygtk.py
+@@ -0,0 +1,4 @@
++"""pygtk -- compatibility stub: `pygtk.require("2.0")` is accepted and ignored."""
++version = (2, 24, 0)
++def require(version_string="2.0"): pass
++def require20(): pass
+diff --git a/compat/pygtk2/tests/selftest.py b/compat/pygtk2/tests/selftest.py
+new file mode 100644
+index 0000000..c641dbe
+--- /dev/null
++++ b/compat/pygtk2/tests/selftest.py
+@@ -0,0 +1,243 @@
++#!/usr/bin/env python3
++"""selftest.py -- tests of the PyGTK 2 compatibility layer against the real GTK 2 libraries, without a display.
++Each case runs in its own subprocess (a crash is reported as a failure of that case only).
++
++  COOT_GTK2_LIBDIR=<dir with libgtk-quartz-2.0.0.dylib ...>  python selftest.py [case ...]
++(inside a Coot bundle COOT_PREFIX is used instead.)  COOT_GTK2COMPAT_HEADLESS=1 is set so that nothing is shown (there is no window server).
++"""
++import os, sys, subprocess, traceback, glob
++
++HERE = os.path.dirname(os.path.abspath(__file__))
++sys.path.insert(0, os.path.dirname(HERE))
++CASES = {}
++def case(f): CASES[f.__name__] = f; return f
++def eq(a, b, what=""):
++    assert a == b, "%s: %r != %r" % (what, a, b)
++
++@case
++def imports_and_constants():
++    import pygtk; pygtk.require("2.0")
++    import gtk, gobject, pango
++    import gtk.gdk, gtk.keysyms
++    eq(gtk.WINDOW_TOPLEVEL, 0); eq(gtk.POLICY_AUTOMATIC, 1); eq(gtk.POLICY_ALWAYS, 0); eq(gtk.STOCK_YES, "gtk-yes")
++    eq(gtk.gdk.CONTROL_MASK, 4); eq(gtk.keysyms.Up, 65362); eq(pango.WEIGHT_BOLD, 700); eq(gobject.TYPE_STRING, 64)
++    assert gtk.pygtk_version >= (2, 12); eq(gtk.RESPONSE_ACCEPT, -3); eq(gtk.ASSISTANT_PAGE_CONFIRM, 2)
++
++@case
++def boxes_buttons_labels_entries():
++    import gtk
++    w = gtk.Window(gtk.WINDOW_TOPLEVEL); w.set_title("t"); eq(w.get_title(), "t")
++    w2 = gtk.Window(); w2.set_default_size(100, 50)
++    vb = gtk.VBox(False, 3); hb = gtk.HBox(False, 0)
++    b1 = gtk.Button("_One"); b2 = gtk.Button("Two"); lab = gtk.Label("lbl"); en = gtk.Entry(); sep = gtk.HSeparator()
++    hb.pack_start(b1, False, False, 2); hb.pack_start(b2); hb.pack_end(lab, True, True, 0)
++    vb.pack_start(hb, False, False, 5); vb.pack_start(en, True, True, 0); vb.pack_start(sep, False, False, 2)
++    w.add(vb); w.set_border_width(4)
++    ch = hb.get_children(); eq(len(ch), 3); eq([type(c).__name__ for c in ch], ["Button", "Button", "Label"])
++    assert ch[0] is b1, "same Python wrapper expected for the same widget"
++    eq(b1.get_label(), "_One"); b2.set_label("Zwei"); eq(b2.get_label(), "Zwei")
++    eq(lab.get_text(), "lbl"); lab.set_text("neu"); eq(lab.get_text(), "neu"); lab.set_line_wrap(True); lab.set_alignment(0.0, 0.5)
++    en.set_text("hello"); eq(en.get_text(), "hello"); en.set_editable(False); en2 = gtk.Entry(max=5); eq(en2.get_max_length(), 5)
++    eq(w.get_children()[0], vb); eq(vb.get_parent(), w)
++    b1.set_sensitive(False); eq(b1.get_sensitive(), False); b1.set_size_request(40, 20)
++    sb = gtk.Button(stock=gtk.STOCK_OK); assert sb.get_label() == "gtk-ok"
++    fr = gtk.Frame("f"); eq(fr.get_label(), "f"); fr2 = gtk.Frame(label="g"); eq(fr2.get_label(), "g"); fr.add(gtk.Label("in"))
++    sw = gtk.ScrolledWindow(); sw.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_ALWAYS); sw.add_with_viewport(gtk.VBox())
++    eq(sw.get_policy(), (1, 0))
++    t = gtk.Table(2, 3, False); t.attach(gtk.Label("a"), 0, 1, 0, 1); t.attach(gtk.Label("b"), 1, 2, 0, 1, gtk.EXPAND, gtk.FILL, 2, 2)
++    eq(len(t.get_children()), 2)
++    vb.destroy()
++
++@case
++def toggles_and_radios():
++    import gtk
++    cb = gtk.CheckButton("chk"); eq(cb.get_active(), False); cb.set_active(True); eq(cb.get_active(), True); eq(cb.get_label(), "chk")
++    r1 = gtk.RadioButton(None, "a"); r2 = gtk.RadioButton(r1, "b"); r1.set_active(True)
++    eq(r1.get_active(), True); eq(r2.get_active(), False); r2.set_active(True); eq(r1.get_active(), False)
++    eq(len(r1.get_group()), 2)
++    tb = gtk.ToggleButton("t"); tb.set_active(True); eq(tb.get_active(), True)
++
++@case
++def signals():
++    import gtk
++    b = gtk.Button("x"); calls = []
++    hid = b.connect("clicked", lambda w, *a: calls.append((w, a)), "u1", 2)
++    b.emit("clicked"); eq(len(calls), 1); assert calls[0][0] is b; eq(calls[0][1], ("u1", 2))
++    b.handler_block(hid); b.emit("clicked"); eq(len(calls), 1); b.handler_unblock(hid); b.emit("clicked"); eq(len(calls), 2)
++    b.disconnect(hid); b.emit("clicked"); eq(len(calls), 2)
++    cb = gtk.CheckButton("c"); st = []
++    cb.connect("toggled", lambda w: st.append(w.get_active())); cb.set_active(True); cb.set_active(False); eq(st, [True, False])
++    w = gtk.Window(); seen = []
++    w.connect("delete_event", lambda win, ev: seen.append(("del", ev is not None)) or True)
++    r = w.emit("delete-event", None) if False else None
++    adj = gtk.Adjustment(1.0, 0.0, 10.0, 1.0, 2.0, 0.0); vals = []
++    adj.connect("value_changed", lambda a: vals.append(a.get_value())); adj.set_value(4.5); eq(vals, [4.5])
++    e = gtk.Entry(); ch = []; e.connect("changed", lambda w: ch.append(w.get_text())); e.set_text("ab"); eq(ch[-1], "ab")
++    mi = gtk.MenuItem("m"); act = []; mi.connect("activate", lambda w: act.append(1)); mi.activate(); eq(act, [1])
++    # an exception in a callback is printed, not propagated
++    b2 = gtk.Button("y"); b2.connect("clicked", lambda w: 1 / 0); b2.emit("clicked")
++    # connect_object passes the object last
++    got = []; b3 = gtk.Button("z"); o = gtk.Label("obj"); b3.connect_object("clicked", lambda *a: got.append(a), o); b3.emit("clicked")
++    eq(len(got[0]), 2); eq(got[0][0], o); eq(got[0][1], b3)
++    try: b.connect("no_such_signal", lambda w: None); raise AssertionError("expected TypeError")
++    except TypeError: pass
++
++@case
++def text_buffers():
++    import gtk, pango
++    tv = gtk.TextView(); buf = tv.get_buffer(); eq(type(buf).__name__, "TextBuffer")
++    tv.set_editable(False); tv.set_wrap_mode(gtk.WRAP_WORD_CHAR); tv.set_cursor_visible(False)
++    buf.set_text("hello world"); start, end = buf.get_bounds(); eq(buf.get_text(start, end), "hello world")
++    end = buf.get_end_iter(); eq(end.get_offset(), 11)
++    tag = buf.create_tag(foreground="red", weight=pango.WEIGHT_BOLD); assert tag is not None
++    buf.insert_with_tags(end, " bold", tag); eq(buf.get_text(*buf.get_bounds()), "hello world bold")
++    buf.create_tag("blue", foreground="blue"); e2 = buf.get_end_iter(); buf.insert_with_tags_by_name(e2, " BLUE", "blue")
++    eq(buf.get_text(buf.get_start_iter(), buf.get_end_iter()), "hello world bold BLUE")
++    it = buf.get_iter_at_offset(6); eq(it.get_offset(), 6); eq(it.get_char(), "w")
++    buf.apply_tag(tag, buf.get_iter_at_offset(0), it)
++    buf.place_cursor(buf.get_end_iter()); mark = buf.get_insert(); assert mark is not None
++    tv.scroll_mark_onscreen(mark)
++    tv2 = gtk.TextView(); tv2.set_size_request(100, 50)
++
++@case
++def list_stores_and_combos():
++    import gtk, gobject
++    ls = gtk.ListStore(gobject.TYPE_STRING); eq(len(ls), 0)
++    for s in ("b", "a", "c"): ls.append([s])
++    eq(len(ls), 3); eq(ls[1][0], "a"); eq([r[0] for r in ls], ["b", "a", "c"])
++    ls.set_sort_column_id(0, gtk.SORT_ASCENDING); eq([r[0] for r in ls], ["a", "b", "c"])
++    it = ls.get_iter(2); eq(ls.get_value(it, 0), "c"); eq(ls.get(it, 0), ("c",))
++    ls3 = gtk.ListStore(gtk.gdk.Pixbuf, str, str)
++    ls3.append([None, "icon.svg", "/x/icon.svg"]); ls3.append([None, "stock", None])
++    eq(len(ls3), 2); eq(ls3.get(ls3.get_iter(0), 0, 1, 2), (None, "icon.svg", "/x/icon.svg")); eq(ls3.get(ls3.get_iter(1), 1, 2), ("stock", None))
++    li = gtk.ListStore(int, float, bool); li.append([3, 2.5, True]); eq(li.get(li.get_iter(0), 0, 1, 2), (3, 2.5, True))
++    cb = gtk.combo_box_new_text()
++    for t in ("one", "two", "three"): cb.append_text(t)
++    eq(cb.get_active(), -1); cb.set_active(1); eq(cb.get_active(), 1); eq(cb.get_active_text(), "two")
++    m = cb.get_model(); eq(len(m), 3); eq(m[2][0], "three")
++    it = cb.get_active_iter(); eq(m.get_value(it, 0), "two")
++    cb.set_active_iter(m.get_iter(2)); eq(cb.get_active_text(), "three")
++    cb2 = gtk.ComboBox(); cb2.set_wrap_width(10); cb2.set_model(ls3); crpx = gtk.CellRendererPixbuf(); cb2.pack_start(crpx, False); cb2.add_attribute(crpx, "pixbuf", 0)
++    eq(cb2.get_active_iter(), None)
++    comp = gtk.EntryCompletion(); comp.set_model(ls); comp.set_text_column(0); e = gtk.Entry(); e.set_completion(comp)
++
++@case
++def menus_toolbars():
++    import gtk
++    menu = gtk.Menu(); mb = gtk.MenuBar(); top = gtk.MenuItem("File")
++    for l in ("A", "B", "C"): menu.append(gtk.MenuItem(l))
++    menu.append(gtk.SeparatorMenuItem()); top.set_submenu(menu); mb.append(top)
++    eq(len(menu.get_children()), 4); eq(len(mb.get_children()), 1); eq(top.get_submenu(), menu)
++    eq(mb.get_children()[0].get_label(), "File")
++    tb = gtk.Toolbar(); eq(len(tb.get_children()), 0)
++    b1 = gtk.ToolButton(icon_widget=gtk.image_new_from_stock(gtk.STOCK_OPEN, gtk.ICON_SIZE_SMALL_TOOLBAR), label="Open")
++    b2 = gtk.ToggleToolButton(); b2.set_label("tog"); sep = gtk.SeparatorToolItem(); ti = gtk.ToolItem()
++    for it in (b1, b2, sep, ti): tb.insert(it, -1)
++    ch = tb.get_children(); eq(len(ch), 4); assert ch[0] is b1
++    b2.set_active(True); eq(b2.get_active(), True)
++    tb.set_style(gtk.TOOLBAR_ICONS); tb.set_style(gtk.TOOLBAR_BOTH_HORIZ)
++    b1.set_tooltip_text("tip"); b1.set_is_important(True)
++    img = gtk.image_new_from_stock("gtk-ok", gtk.ICON_SIZE_MENU); eq(type(img).__name__, "Image")
++    tips = gtk.Tooltips(); tips.set_tip(b1, "a tip", None)
++
++@case
++def sliders_progress_notebook_assistant():
++    import gtk
++    pb = gtk.ProgressBar(); pb.set_fraction(0.25); eq(round(pb.get_fraction(), 3), 0.25); pb.set_text("x"); pb.pulse()
++    adj = gtk.Adjustment(5.0, 0.0, 10.0, 1.0, 2.0, 0.0); sc = gtk.HScale(adj); sc.set_digits(1); eq(sc.get_value(), 5.0); sc.set_value(7.0); eq(adj.get_value(), 7.0)
++    sp = gtk.SpinButton(gtk.Adjustment(1, 0, 100, 1, 10, 0), 1.0, 0); eq(sp.get_value(), 1.0); sp.set_value(3); eq(sp.get_value_as_int(), 3)
++    nb = gtk.Notebook(); nb.append_page(gtk.Label("page"), gtk.Label("tab")); eq(nb.get_n_pages(), 1)
++    asst = gtk.Assistant(); pg = gtk.VBox(); asst.append_page(pg); asst.set_page_type(pg, gtk.ASSISTANT_PAGE_CONTENT); asst.set_page_title(pg, "T")
++    asst.set_page_complete(pg, True); eq(asst.get_page_complete(pg), True); eq(asst.get_n_pages(), 1)
++    for s in ("close", "cancel", "apply"): asst.connect(s, lambda *a: None)
++    da = gtk.DrawingArea(); da.set_size_request(10, 10); da.connect("expose-event", lambda w, e: True)
++
++@case
++def dialogs():
++    import gtk
++    w = gtk.Window()
++    d = gtk.Dialog("Title", w, gtk.DIALOG_MODAL | gtk.DIALOG_NO_SEPARATOR, (gtk.STOCK_YES, gtk.RESPONSE_ACCEPT, gtk.STOCK_NO, gtk.RESPONSE_REJECT))
++    eq(d.get_title(), "Title"); assert d.vbox is not None; eq(len(d.action_area.get_children()), 2); d.vbox.pack_end(gtk.Label("q"), True, True, 0)
++    md = gtk.MessageDialog(type=gtk.MESSAGE_WARNING, buttons=gtk.BUTTONS_OK); md.set_markup("<b>hi</b>")
++    md2 = gtk.MessageDialog(None, 0, gtk.MESSAGE_INFO, gtk.BUTTONS_OK, "plain 100% & <text>")
++    fc = gtk.FileChooserDialog("Open", None, gtk.FILE_CHOOSER_ACTION_OPEN, (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OPEN, gtk.RESPONSE_OK))
++    fc.set_default_response(gtk.RESPONSE_OK)
++    fs = gtk.FileSelection("file selection"); fs.ok_button.connect("clicked", lambda *a: None); fs.cancel_button.connect("clicked", lambda w: None)
++    res = []; d.connect("response", lambda dlg, rid: res.append(rid)); d.response(gtk.RESPONSE_ACCEPT); eq(res, [gtk.RESPONSE_ACCEPT])
++
++@case
++def gdk_and_pango():
++    import gtk, pango
++    c = gtk.gdk.color_parse("#ff8000"); eq((c.red, c.green, c.blue), (65535, 32896, 0)); c2 = gtk.gdk.Color(red=1, green=2, blue=3); eq((c2.red, c2.green, c2.blue), (1, 2, 3))
++    try: gtk.gdk.color_parse("not-a-colour"); raise AssertionError("expected ValueError")
++    except ValueError: pass
++    eq(gtk.gdk.keyval_from_name("Up"), gtk.keysyms.Up); eq(gtk.gdk.unicode_to_keyval("a"), 97)
++    fd = pango.FontDescription("Sans Bold 10"); eq(fd.get_size() // pango.SCALE, 10); eq(fd.get_weight(), pango.WEIGHT_BOLD); assert "Bold" in str(fd)
++    lab = gtk.Label("x"); lab.modify_font(fd)
++    e = gtk.Entry(); e.modify_base(gtk.STATE_NORMAL, gtk.gdk.color_parse("#bfe6bf"))
++    gtk.gdk.Font("fixed")          # created and ignored by Coot's scripts; must not raise on GDK-Quartz
++    # pixbufs
++    pngs = glob.glob(os.path.join(os.environ.get("COOT_TEST_PIXMAPS", ""), "*.png")) if os.environ.get("COOT_TEST_PIXMAPS") else []
++    if pngs:
++        pb = gtk.gdk.pixbuf_new_from_file(pngs[0]); assert pb.get_width() > 0
++        small = gtk.gdk.pixbuf_new_from_file_at_size(pngs[0], 16, 16); assert small.get_width() <= 16
++    try: gtk.gdk.pixbuf_new_from_file("/no/such/file.png"); raise AssertionError("expected GError")
++    except gtk.GError: pass
++    th = gtk.icon_theme_get_default()     # None without a screen (headless); checked in the real GUI by gui_python_smoke.py
++    ids = gtk.stock_list_ids(); assert len(ids) > 50 and all(isinstance(i, str) for i in ids) and "gtk-ok" in ids
++    f = gtk.IconFactory(); f.add_default()
++
++@case
++def gobject_sources_and_errors():
++    import gtk, gobject, ctypes
++    import _gtk2core as c
++    hits = []; idles = []
++    def tick(*a): hits.append(a); return len(hits) < 3
++    sid = gobject.timeout_add(1, tick, "x", 1)
++    iid = gobject.idle_add(lambda *a: idles.append(a) and False, "i")
++    import time
++    for _ in range(3000):
++        c.call("g_main_context_iteration", None, False)
++        if len(hits) >= 3 and idles: break
++        time.sleep(0.001)
++    eq(hits, [("x", 1)] * 3)            # the timeout fired three times and removed itself when the callback returned False
++    eq(idles, [("i",)])
++    sid2 = gobject.timeout_add(100000, lambda: True); assert gobject.source_remove(sid2)
++    try: c.call("gtk_list_store_new", 1, 64, 64); raise AssertionError("variadic call with extra arguments must be refused")
++    except TypeError: pass
++    b = gtk.Button("p"); b.set_property("label", "via property"); eq(b.get_property("label"), "via property")
++    b.set_name("nm"); eq(b.get_name(), "nm")
++    try: b.no_such_method(); raise AssertionError("expected AttributeError")
++    except AttributeError: pass
++
++def run_case(name):
++    env = dict(os.environ, COOT_GTK2COMPAT_HEADLESS="1", PYTHONPATH=os.path.dirname(HERE) + os.pathsep + os.environ.get("PYTHONPATH", ""))
++    r = subprocess.run([sys.executable, os.path.abspath(__file__), "--case", name], capture_output=True, text=True, env=env, timeout=120)
++    ok = r.returncode == 0 and "CASE-OK" in r.stdout
++    return ok, (r.stdout + r.stderr).strip()
++
++def run_inprocess(names=None):
++    """For use inside Coot's embedded Python (tests/gtk2compat_python.py): no subprocess isolation."""
++    os.environ["COOT_GTK2COMPAT_HEADLESS"] = "1"
++    results = []
++    for n in names or list(CASES):
++        try: CASES[n](); results.append((n, True, ""))
++        except BaseException: results.append((n, False, traceback.format_exc()[-600:]))
++    return results
++
++if __name__ == "__main__" and not os.environ.get("COOT_SELFTEST_NO_MAIN"):
++    if len(sys.argv) > 2 and sys.argv[1] == "--case":
++        try:
++            CASES[sys.argv[2]](); print("CASE-OK")
++        except BaseException:
++            traceback.print_exc(); sys.exit(1)
++        sys.exit(0)
++    names = sys.argv[1:] or list(CASES)
++    npass = 0
++    for n in names:
++        ok, out = run_case(n)
++        print(("PASS " if ok else "FAIL ") + n)
++        if not ok: print("    " + out.replace("\n", "\n    ")[-1500:])
++        npass += ok
++    print("SUMMARY", npass, "/", len(names), flush=True)
++    sys.exit(0 if npass == len(names) else 1)
+diff --git a/compat/pygtk2/tools/gen_gtk_consts.py b/compat/pygtk2/tools/gen_gtk_consts.py
+new file mode 100644
+index 0000000..519b547
+--- /dev/null
++++ b/compat/pygtk2/tools/gen_gtk_consts.py
+@@ -0,0 +1,49 @@
++#!/usr/bin/env python3
++"""gen_gtk_consts.py -- extract GTK_*/GDK_*/PANGO_* enum constants and simple #define values (stock ids, key symbols, ...) from the GTK 2 headers.
++Enumerator values are evaluated by compiling and running a tiny C program (the AST has no value for enumerators without an initialiser).
++usage: gen_gtk_consts.py <env-prefix> <out.json>"""
++import sys, os, re, json, subprocess, tempfile
++prefix, out = sys.argv[1], sys.argv[2]
++env = dict(os.environ, PKG_CONFIG_PATH=f"{prefix}/lib/pkgconfig:{prefix}/share/pkgconfig")
++cflags = subprocess.run("pkg-config --cflags gtk+-2.0 gdk-pixbuf-2.0 pango", shell=True, capture_output=True, text=True, env=env).stdout.split()
++HEAD = "#include <gtk/gtk.h>\n#include <gdk/gdkkeysyms.h>\n#include <gdk-pixbuf/gdk-pixbuf.h>\n#include <pango/pango.h>\n"
++d = tempfile.mkdtemp(); src = os.path.join(d, "all.c"); open(src, "w").write(HEAD)
++dec = json.JSONDecoder(); names = set()
++for filt in ("GTK_", "GDK_", "PANGO_"):
++    txt = subprocess.run(["clang", "-Xclang", "-ast-dump=json", "-Xclang", f"-ast-dump-filter={filt}", "-fsyntax-only", "-x", "c", src] + cflags, capture_output=True, text=True).stdout
++    i = 0
++    while True:
++        j = txt.find("{", i)
++        if j < 0: break
++        try: o, end = dec.raw_decode(txt, j)
++        except json.JSONDecodeError: i = j + 1; continue
++        i = end
++        if o.get("kind") == "EnumConstantDecl" and re.match(r"^(GTK|GDK|PANGO)_", o.get("name", "")): names.add(o["name"])
++prog = HEAD + "#include <stdio.h>\nint main(void){\n" + "".join(f'printf("%s %lld\\n", "{n}", (long long){n});\n' for n in sorted(names)) + "return 0;}\n"
++cp = os.path.join(d, "ev.c"); open(cp, "w").write(prog)
++r = subprocess.run(["clang", "-w", "-o", os.path.join(d, "ev"), cp] + cflags + ["-Wl,-undefined,dynamic_lookup"], capture_output=True, text=True)
++if r.returncode: sys.exit("evaluation program failed to compile: " + r.stderr[:500])
++consts = {}
++for line in subprocess.run([os.path.join(d, "ev")], capture_output=True, text=True).stdout.splitlines():
++    n, v = line.split(); consts[n] = int(v)
++# macros: string literals, integer literals, and aliases of those (GDK_Up -> GDK_KEY_Up -> 0xff52)
++macros = {}
++for line in subprocess.run(["clang", "-E", "-dM", "-x", "c", src] + cflags, capture_output=True, text=True).stdout.splitlines():
++    m = re.match(r"#define\s+([A-Za-z_][A-Za-z0-9_]*)\s+(.*)$", line)
++    if m and "(" not in m.group(1): macros[m.group(1)] = m.group(2).strip()
++def resolve(v, depth=0):
++    if depth > 6: return None
++    s = re.fullmatch(r'"([^"]*)"', v)
++    if s: return s.group(1)
++    n = re.fullmatch(r"\(?(0[xX][0-9a-fA-F]+|\d+)[uUlL]*\)?", v)
++    if n: return int(n.group(1), 0)
++    if v in macros: return resolve(macros[v], depth + 1)
++    m = re.fullmatch(r"\((\w+)\)", v)
++    if m and m.group(1) in macros: return resolve(macros[m.group(1)], depth + 1)
++    return None
++for n, v in macros.items():
++    if re.match(r"^(GTK|GDK|PANGO)_", n) and n not in consts:
++        r_ = resolve(v)
++        if r_ is not None: consts[n] = r_
++json.dump(dict(sorted(consts.items())), open(out, "w"), separators=(",", ":"))
++print(len(names), "enumerators,", len(consts), "constants ->", out, file=sys.stderr)
+diff --git a/compat/pygtk2/tools/gen_gtk_protos.py b/compat/pygtk2/tools/gen_gtk_protos.py
+new file mode 100644
+index 0000000..69d7897
+--- /dev/null
++++ b/compat/pygtk2/tools/gen_gtk_protos.py
+@@ -0,0 +1,67 @@
++#!/usr/bin/env python3
++"""gen_gtk_protos.py -- extract the C prototypes of the GTK 2 / GDK / GObject / GLib / Pango / gdk-pixbuf functions with clang, as compact type codes.
++usage: gen_gtk_protos.py <env-prefix> <out.json>      (needs clang and pkg-config; env-prefix = the conda env / bundle that has include/gtk-2.0)
++
++Type codes: v void, i int32, u uint32, l int64, U uint64, d double, f float, b _Bool, h int16, H uint16, c int8, C uint8,
++            p pointer ("p:GtkWidget" keeps the pointee's struct name), s const char* argument, S const char* return (borrowed),
++            A char* return (caller must g_free), X by-value struct / unsupported.
++Entry: name -> [return code, [argument codes], variadic(0/1), [parameter names]]
++"""
++import sys, os, re, json, subprocess
++prefix, out = sys.argv[1], sys.argv[2]
++env = dict(os.environ, PKG_CONFIG_PATH=f"{prefix}/lib/pkgconfig:{prefix}/share/pkgconfig")
++cflags = subprocess.run("pkg-config --cflags gtk+-2.0 gdk-pixbuf-2.0 pango", shell=True, capture_output=True, text=True, env=env).stdout.split()
++HEAD = "#include <gtk/gtk.h>\n#include <gdk-pixbuf/gdk-pixbuf.h>\n#include <pango/pango.h>\n"
++src = "/tmp/_gtkall_protos.c"
++open(src, "w").write(HEAD)
++PTR_STRUCT = re.compile(r"(?:const\s+|volatile\s+)*(?:struct|union|enum)?\s*_?([A-Za-z0-9_]+)\s*\*")
++BASE = {"void": "v", "int": "i", "unsigned int": "u", "long": "l", "unsigned long": "U", "long long": "l", "unsigned long long": "U",
++        "double": "d", "float": "f", "_Bool": "b", "short": "h", "unsigned short": "H", "char": "c", "signed char": "c", "unsigned char": "C"}
++def code(spelled, desugared, is_ret=False):
++    s = re.sub(r"\s+", " ", (desugared or spelled).strip())
++    if "*" in s or "[" in s or "(" in s:
++        if re.fullmatch(r"const (char|gchar) \*( const)?", s): return "S" if is_ret else "s"
++        if re.fullmatch(r"(char|gchar) \*", s): return "A" if is_ret else "p:char"
++        m = PTR_STRUCT.search(spelled)
++        tn = m.group(1) if m else ""
++        return "p:" + tn if tn and tn not in ("void", "const") else "p"
++    s = s.replace("const ", "").replace("volatile ", "").strip()
++    if s in BASE: return BASE[s]
++    if s.startswith("enum "): return "i"
++    if re.fullmatch(r"[A-Z][A-Za-z0-9]+", s): return "i"   # typedef'd enum / flags (no by-value structs occur in this API subset; all 264 unknown names are enums)
++    return "X"
++dec = json.JSONDecoder()
++def dump(filt, source):
++    r = subprocess.run(["clang", "-Xclang", "-ast-dump=json", "-Xclang", f"-ast-dump-filter={filt}", "-fsyntax-only", "-x", "c", source] + cflags, capture_output=True, text=True)
++    txt = r.stdout; i = 0
++    while True:
++        j = txt.find("{", i)
++        if j < 0: return
++        try: obj, end = dec.raw_decode(txt, j)
++        except json.JSONDecodeError: i = j + 1; continue
++        i = end
++        if obj.get("kind") == "FunctionDecl" and obj.get("name"): yield obj
++raw = {}
++for f in ("gtk_", "gdk_", "pango_", "g_"):
++    for obj in dump(f, src):
++        name = obj["name"]
++        if re.match(r"^(gtk|gdk|pango|g)_", name) and name not in raw: raw[name] = obj
++# desugar the (non-pointer) return types through probe parameters
++spell = sorted({o["type"]["qualType"][:o["type"]["qualType"].index("(")].strip() for o in raw.values() if "(" in o["type"]["qualType"]})
++probe = HEAD + "".join(f"void __probe{i}({t} x);\n" for i, t in enumerate(spell) if t != "void")
++open("/tmp/_gtkprobe.c", "w").write(probe)
++dsug = {}
++for obj in dump("__probe", "/tmp/_gtkprobe.c"):
++    k = int(obj["name"][len("__probe"):]); p = [q for q in obj.get("inner", []) if q.get("kind") == "ParmVarDecl"]
++    if p: dsug[spell[k]] = p[0]["type"].get("desugaredQualType")
++protos = {}
++for name, obj in raw.items():
++    qt = obj["type"]["qualType"]
++    variadic = qt.rstrip().endswith("...)")
++    rs = qt[:qt.index("(")].strip() if "(" in qt else "int"
++    ret = "v" if rs == "void" else code(rs, dsug.get(rs), True)
++    parms = [p for p in obj.get("inner", []) if p.get("kind") == "ParmVarDecl"]
++    args = [code(p["type"]["qualType"], p["type"].get("desugaredQualType")) for p in parms]
++    protos[name] = [ret, args, 1 if variadic else 0, [p.get("name", "") for p in parms]]
++json.dump(dict(sorted(protos.items())), open(out, "w"), separators=(",", ":"))
++print(len(protos), "prototypes,", len(spell), "return spellings probed ->", out, file=sys.stderr)
+diff --git a/compat/pygtk2/tools/gen_menu_structure.py b/compat/pygtk2/tools/gen_menu_structure.py
+new file mode 100644
+index 0000000..a63aee4
+--- /dev/null
++++ b/compat/pygtk2/tools/gen_menu_structure.py
+@@ -0,0 +1,32 @@
++#!/usr/bin/env python3
++"""gen_menu_structure.py -- the main window's menubar (labels, nesting, item kinds) as JSON, extracted from src/gtk2-interface.c.
++usage: gen_menu_structure.py <gtk2-interface.c> <out.json>"""
++import re, sys, json
++src, out = sys.argv[1], sys.argv[2]
++nodes, children, submenu = {}, {}, {}
++txt = open(src, errors="replace").read()
++for line in txt.splitlines():
++    s = line.strip()
++    m = re.match(r'(\w+) = gtk_menu_bar_new \(\);', s)
++    if m: nodes[m.group(1)] = {"kind": "menubar"}; continue
++    m = re.match(r'(\w+) = gtk_menu_new \(\);', s)
++    if m: nodes[m.group(1)] = {"kind": "menu"}; continue
++    m = re.match(r'(\w+) = gtk_(image_|check_|radio_)?menu_item_new_with_mnemonic \((?:\w+, )?"((?:[^"\\]|\\.)*)"\);', s)
++    if m: nodes[m.group(1)] = {"kind": (m.group(2) or "").strip("_") + "item" if m.group(2) else "item", "label": m.group(3).replace('\\"', '"')}; continue
++    m = re.match(r'(\w+) = gtk_separator_menu_item_new \(\);', s)
++    if m: nodes[m.group(1)] = {"kind": "separator"}; continue
++    m = re.match(r'gtk_container_add \(GTK_CONTAINER \((\w+)\), (\w+)\);', s)
++    if m and m.group(1) in nodes and m.group(2) in nodes and nodes[m.group(1)]["kind"] in ("menu", "menubar"):
++        children.setdefault(m.group(1), []).append(m.group(2)); continue
++    m = re.match(r'gtk_menu_item_set_submenu \(GTK_MENU_ITEM \((\w+)\), (\w+)\);', s)
++    if m: submenu[m.group(1)] = m.group(2)
++bar = next(k for k, v in nodes.items() if v["kind"] == "menubar")
++def build(var):
++    n = dict(nodes[var]); n["var"] = var
++    if var in children: n["children"] = [build(c) for c in children[var]]
++    if var in submenu: n["submenu"] = build(submenu[var])
++    return n
++tree = build(bar)
++def count(n): return 1 + sum(count(c) for c in n.get("children", [])) + (count(n["submenu"]) if "submenu" in n else 0)
++json.dump(tree, open(out, "w"), indent=1)
++print("menubar", bar, "-", count(tree), "nodes ->", out, file=sys.stderr)

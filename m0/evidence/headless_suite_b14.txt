@@ -1,0 +1,21 @@
+# build 14 zip (sha256 2ef5ed6e2ea5342851874cd4244cb49293a856fe4cb7acd568736e12422f3491) extracted with ditto -x -k into a path with spaces, run under env -i
+== headless tests (Wed Nov 11 10:14:18 EST 2026) ==
+python-api                 SUMMARY 19 / 19
+scheme-api                 SUMMARY 27 / 27
+data-and-maps              SUMMARY 32 / 32
+ondemand-read              SUMMARY 3 / 3
+refine-zone                SUMMARY 4 / 4
+process-helpers            SUMMARY 10 / 10
+bundle-python              SUMMARY 18 / 18
+bundle-scheme              SUMMARY 6 / 6
+rdkit-python               SUMMARY 10 / 10
+rdkit-scheme               SUMMARY 3 / 3
+gtk2compat                 SUMMARY 12 / 12
+gui-scripts                SUMMARY 14 / 14
+gui-dialogs                SUMMARY 44 / 44
+gui-glyco                  SUMMARY 14 / 14
+gui-toolbar                SUMMARY 13 / 13
+gui-rcrane                 SUMMARY 21 / 21
+refmac-run                 SUMMARY 8 / 8
+startup-dictionaries       SUMMARY 1 / 1
+full outputs: /private/tmp/<test folder>/Coot-0.9.8.96-arm64/work/headless-tests

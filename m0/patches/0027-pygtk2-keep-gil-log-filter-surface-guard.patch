@@ -1,0 +1,66 @@
+diff --git a/compat/pygtk2/_gtk2core.py b/compat/pygtk2/_gtk2core.py
+index 04446b0..93f9705 100644
+--- a/compat/pygtk2/_gtk2core.py
++++ b/compat/pygtk2/_gtk2core.py
+@@ -19,15 +19,19 @@ HEADLESS = bool(os.environ.get("COOT_GTK2COMPAT_HEADLESS"))     # tests only: wi
+ 
+ # ------------------------------------------------------------------------------------------------ libraries
+ _libs = []
++# PyDLL, not CDLL: PyDLL keeps the GIL while a C function runs.  GTK calls made from Python can run Coot's own C signal handlers
++# synchronously (g_signal_emit -> a Glade callback -> PyRun_SimpleString); with CDLL the GIL is released during the call and
++# those C -> Python call-outs crash inside the interpreter (import_add_module).  Python signal handlers (ctypes callbacks)
++# re-acquire the GIL themselves, which is fine when the same thread already holds it.
+ def _open_libs():
+     if _libs: return
+-    g = ctypes.CDLL(None)                                     # inside coot-bin the GTK libraries are already loaded into the process
++    g = ctypes.PyDLL(None)                                     # inside coot-bin the GTK libraries are already loaded into the process
+     if hasattr(g, "gtk_button_new") and hasattr(g, "g_object_ref"):
+         _libs.append(g); return
+     libdir = os.environ.get("COOT_GTK2_LIBDIR") or os.path.join(os.environ.get("COOT_PREFIX", ""), "lib")
+     for stem in ("libglib-2.0.0", "libgobject-2.0.0", "libgdk_pixbuf-2.0.0", "libpango-1.0.0", "libgdk-quartz-2.0.0", "libgtk-quartz-2.0.0"):
+         p = os.path.join(libdir, stem + ".dylib")
+-        if os.path.exists(p): _libs.append(ctypes.CDLL(p, mode=ctypes.RTLD_GLOBAL))
++        if os.path.exists(p): _libs.append(ctypes.PyDLL(p, mode=ctypes.RTLD_GLOBAL))
+     if not _libs: raise ImportError("the GTK 2 libraries are not loaded in this process and COOT_GTK2_LIBDIR / COOT_PREFIX/lib does not contain them")
+ 
+ # ------------------------------------------------------------------------------------------------ prototypes and calls
+@@ -551,3 +555,25 @@ def gslist_of_strings(ptr, free_strings=True):
+         p = c_void_p.from_address(p + 8).value
+     if ptr: call("g_slist_free", ptr)
+     return out
++
++# ------------------------------------------------------------------------------------------------ log filter
++# GTK 2.24 with a current GLib prints these two messages (hundreds of lines each time a file chooser opens) although nothing is wrong:
++# the chooser asks GIO for a file attribute that this GLib no longer creates by default, and there is no ~/.gtk-bookmarks.
++# Only these two are dropped; every other warning/critical still goes to the default handler.
++_LOG_BENIGN = ("GFileInfo created without standard::is-hidden", "shortcuts_add_bookmark_from_file: assertion 'G_IS_FILE (file)' failed")
++_log_cb = []
++def install_log_filter():
++    if _log_cb: return
++    LOGFUNC = ctypes.CFUNCTYPE(None, ctypes.c_char_p, ctypes.c_int, ctypes.c_char_p, ctypes.c_void_p)
++    def handler(domain, level, message, data):
++        try:
++            m = message.decode("utf-8", "replace") if message else ""
++            if any(b in m for b in _LOG_BENIGN): return
++            call("g_log_default_handler", domain.decode("utf-8", "replace") if domain else None, level, m, None)
++        except BaseException: pass
++    cb = LOGFUNC(handler); _log_cb.append(cb)
++    addr = ctypes.cast(cb, ctypes.c_void_p).value
++    for dom in ("GLib-GIO", "Gtk"):
++        call("g_log_set_handler", dom, 8 | 16, addr, None)         # G_LOG_LEVEL_CRITICAL | G_LOG_LEVEL_WARNING
++try: install_log_filter()
++except BaseException: pass
+diff --git a/python/extensions.py b/python/extensions.py
+index aad7b74..43aa1a0 100644
+--- a/python/extensions.py
++++ b/python/extensions.py
+@@ -1436,6 +1436,9 @@ if (have_coot_python):
+ 
+      def surface_func1(clipped = 0):
+        active_atom = active_residue()
++       if not active_atom:
++         info_dialog("No residue is centred: load a model and centre on a residue first.")
++         return
+        aa_imol      = active_atom[0]
+        aa_chain_id  = active_atom[1]
+        aa_res_no    = active_atom[2]

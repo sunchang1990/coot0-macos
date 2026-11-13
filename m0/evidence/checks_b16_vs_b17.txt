@@ -1,0 +1,61 @@
+# tests/installer_test.sh on build-16 files (no install.sh): expected FAIL
+FAIL install.sh exists and finishes (exit 0)
+FAIL installed into ~/.local/share/coot0/<version> with the marker file
+PASS the installed copy has no download flag (quarantine)
+FAIL the installer said it removed the download flag
+FAIL ~/.local/bin/coot0 exists, is executable and points to the installed copy
+FAIL ~/.zshrc gets one marked PATH line, and the installer printed it
+PASS zsh user without bash files: no ~/.bash_profile or ~/.bashrc created
+FAIL installing again: still one PATH line in ~/.zshrc
+FAIL installing again: the earlier copy is moved aside, not deleted
+FAIL coot0 starts Coot (model, map, Scheme, Python)
+FAIL coot0 works in the folder it is started from
+FAIL logs and preferences go to ~/Library/Application Support/coot0, not into the installed copy
+FAIL launcher finds reduce of a Phenix 2.x in the home folder (bin/reduce)
+FAIL coot0 --diagnose reports the Mac and the installed version
+FAIL --prefix: installed into the chosen folder
+FAIL bash user: PATH line in ~/.bash_profile (login shells) and ~/.bashrc, and in ~/.zshrc
+PASS uninstall: coot0 command and installed copy removed
+FAIL uninstall: PATH line removed from ~/.zshrc, a copy of the old file kept
+FAIL uninstall --yes keeps the preferences and logs
+SUMMARY 3 / 19
+
+# build-17 installer but build-16 run-coot.sh: the launcher checks FAIL
+FAIL coot0 works in the folder it is started from
+FAIL logs and preferences go to ~/Library/Application Support/coot0, not into the installed copy
+FAIL launcher finds reduce of a Phenix 2.x in the home folder (bin/reduce)
+FAIL uninstall --yes keeps the preferences and logs
+SUMMARY 15 / 19
+
+# build 17 (work copy)
+SUMMARY 19 / 19 (all PASS, 2 min)
+# first b17 installer, test under TMPDIR=/tmp
+FAIL ~/.local/bin/coot0 exists, is executable and points to the installed copy
+FAIL --prefix: installed into the chosen folder
+FAIL uninstall: coot0 command and installed copy removed
+FAIL uninstall: PATH line removed from ~/.zshrc, a copy of the old file kept
+SUMMARY 15 / 19
+# fixed
+SUMMARY 19 / 19
+# b17 tarball full verification
+python-api                 SUMMARY 19 / 19
+scheme-api                 SUMMARY 27 / 27
+data-and-maps              SUMMARY 39 / 39
+ondemand-read              SUMMARY 3 / 3
+refine-zone                SUMMARY 7 / 7
+process-helpers            SUMMARY 10 / 10
+bundle-python              SUMMARY 19 / 19
+bundle-scheme              SUMMARY 6 / 6
+rdkit-python               SUMMARY 10 / 10
+rdkit-scheme               SUMMARY 3 / 3
+gtk2compat                 SUMMARY 12 / 12
+gui-scripts                SUMMARY 14 / 14
+gui-dialogs                SUMMARY 45 / 45
+gui-glyco                  SUMMARY 14 / 14
+gui-toolbar                SUMMARY 13 / 13
+gui-rcrane                 SUMMARY 21 / 21
+refmac-run                 SUMMARY 11 / 11
+installer                  SUMMARY 16 / 19
+startup-dictionaries       SUMMARY 1 / 1
+GUI sweep: 248 items ok, 0 items with errors, 0 items without a handler, 5 items whose activation killed the h
+RESULT: OK

@@ -1,0 +1,1761 @@
+diff --git a/compat/coot-python3-compat.hh b/compat/coot-python3-compat.hh
+new file mode 100644
+index 0000000..c77ad4a
+--- /dev/null
++++ b/compat/coot-python3-compat.hh
+@@ -0,0 +1,64 @@
++// compat/coot-python3-compat.hh -- Python 2 C-API names used by Coot 0.9.x, mapped onto Python 3.
++//
++// Semantics (reviewed per name; see the M0 report):
++//  * PyString_* work on Python 3 "str" (unicode).  PyString_AsString also accepts "bytes" and,
++//    as in Python 2, returns NULL with a TypeError set for anything else.
++//  * PyString_FromString decodes UTF-8 with errors="replace", so a stray non-UTF-8 byte
++//    (e.g. Latin-1 in a PDB remark) gives a replacement character instead of a NULL result.
++//  * PyString_Check is true for str and bytes (Python 2 code passed byte strings freely).
++//  * PyInt_* map to PyLong_* (Python 3 has a single integer type).
++#ifndef COOT_PYTHON3_COMPAT_HH
++#define COOT_PYTHON3_COMPAT_HH
++
++#ifdef USE_PYTHON
++#include <Python.h>
++
++#if PY_MAJOR_VERSION >= 3
++
++#include <string.h>   // plain C files include this header too, so no <cstring>/const_cast here
++
++static inline PyObject *coot_py_str_from_cstring(const char *s) {
++   return PyUnicode_DecodeUTF8(s, (Py_ssize_t) strlen(s), "replace");
++}
++
++static inline char *coot_py_cstring_from_str(PyObject *o) {
++   if (PyUnicode_Check(o)) return (char *) PyUnicode_AsUTF8(o);  // NULL + exception on failure
++   if (PyBytes_Check(o))   return PyBytes_AsString(o);
++   PyErr_SetString(PyExc_TypeError, "expected str or bytes");
++   return NULL;
++}
++
++static inline int coot_py_is_string(PyObject *o) { return PyUnicode_Check(o) || PyBytes_Check(o); }
++
++// Python 3.11 deprecates PySys_SetArgv (needs wchar_t**) -- set sys.argv directly, as str objects.
++// (PySys_SetArgv also prepended the script directory to sys.path; Coot does not rely on that.)
++static inline void coot_PySys_SetArgv(int argc, char **argv) {
++   PyObject *list = PyList_New(0);
++   if (!list) return;
++   for (int i = 0; i < argc; i++) {
++      PyObject *s = PyUnicode_DecodeFSDefault(argv[i]);
++      if (s) { PyList_Append(list, s); Py_DECREF(s); }
++   }
++   PySys_SetObject("argv", list);
++   Py_DECREF(list);
++}
++
++#define PyString_FromString(s)   coot_py_str_from_cstring(s)
++#define PyString_AsString(o)     coot_py_cstring_from_str(o)
++#define PyString_Check(o)        coot_py_is_string(o)
++#define PyString_Format(f, a)    PyUnicode_Format((f), (a))
++#define PyString_FromFormat      PyUnicode_FromFormat
++
++#define PyInt_Check(o)           PyLong_Check(o)
++#define PyInt_AsLong(o)          PyLong_AsLong(o)
++#define PyInt_FromLong(l)        PyLong_FromLong(l)
++#define PyInt_FromSize_t(n)      PyLong_FromSize_t(n)
++#define PyInt_Type               PyLong_Type
++
++// Python 3 dropped the 2nd (end-pointer) argument of PyFloat_FromString
++#define PyFloat_FromString(s, pend) PyFloat_FromString(s)
++#define PySys_SetArgv(argc, argv)   coot_PySys_SetArgv((argc), (argv))
++
++#endif // PY_MAJOR_VERSION >= 3
++#endif // USE_PYTHON
++#endif // COOT_PYTHON3_COMPAT_HH
+diff --git a/lbg/alerts-list.cc b/lbg/alerts-list.cc
+index 76a7889..6926959 100644
+--- a/lbg/alerts-list.cc
++++ b/lbg/alerts-list.cc
+@@ -5,6 +5,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include <Python.h>
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "lbg.hh"
+diff --git a/lbg/lbg-callbacks.cc b/lbg/lbg-callbacks.cc
+index af1c6c2..1fdb048 100644
+--- a/lbg/lbg-callbacks.cc
++++ b/lbg/lbg-callbacks.cc
+@@ -24,6 +24,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include <Python.h>
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include <gtk/gtk.h>
+diff --git a/lbg/lbg-drag-and-drop.cc b/lbg/lbg-drag-and-drop.cc
+index 165fb7b..a05ab99 100644
+--- a/lbg/lbg-drag-and-drop.cc
++++ b/lbg/lbg-drag-and-drop.cc
+@@ -23,6 +23,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include <Python.h>
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include <iostream>
+diff --git a/lbg/lbg-flev.cc b/lbg/lbg-flev.cc
+index bc39675..faca222 100644
+--- a/lbg/lbg-flev.cc
++++ b/lbg/lbg-flev.cc
+@@ -23,6 +23,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include <Python.h> // this is here get round header warnings
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include <sys/types.h>  // for stating
+diff --git a/lbg/lbg-search.cc b/lbg/lbg-search.cc
+index 532715c..f248d29 100644
+--- a/lbg/lbg-search.cc
++++ b/lbg/lbg-search.cc
+@@ -22,6 +22,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include <Python.h>
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include <fstream>
+diff --git a/lbg/lbg.cc b/lbg/lbg.cc
+index 69f6436..acc93c1 100644
+--- a/lbg/lbg.cc
++++ b/lbg/lbg.cc
+@@ -23,6 +23,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include <Python.h> // this is here get round header warnings
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include <sys/types.h>  // for stating
+diff --git a/lbg/lbg.hh b/lbg/lbg.hh
+index fc0e869..c0a9b5c 100644
+--- a/lbg/lbg.hh
++++ b/lbg/lbg.hh
+@@ -30,6 +30,7 @@ n * This program is distributed in the hope that it will be useful, but
+ #ifndef HAVE_INCLUDED_PYTHON
+ #define HAVE_INCLUDED_PYTHON
+ #include <Python.h>
++#include "compat/coot-python3-compat.hh"
+ #endif
+ #endif 
+ 
+diff --git a/lbg/lidia-main.cc b/lbg/lidia-main.cc
+index 658a4a6..da151c5 100644
+--- a/lbg/lidia-main.cc
++++ b/lbg/lidia-main.cc
+@@ -21,6 +21,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include <Python.h>
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include <iostream>
+diff --git a/lbg/residue-circles.cc b/lbg/residue-circles.cc
+index bbc092f..28b5164 100644
+--- a/lbg/residue-circles.cc
++++ b/lbg/residue-circles.cc
+@@ -23,6 +23,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include <Python.h>
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "lbg.hh"
+diff --git a/lbg/wmolecule.cc b/lbg/wmolecule.cc
+index da45916..0f6eddb 100644
+--- a/lbg/wmolecule.cc
++++ b/lbg/wmolecule.cc
+@@ -24,6 +24,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include <Python.h>
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include <stdexcept>
+diff --git a/src/atom-overlaps.cc b/src/atom-overlaps.cc
+index 8420baf..8eb4e48 100644
+--- a/src/atom-overlaps.cc
++++ b/src/atom-overlaps.cc
+@@ -22,6 +22,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include <Python.h>
++#include "compat/coot-python3-compat.hh"
+ #endif // USE_PYTHON
+ 
+ // #include <stdio.h>
+diff --git a/src/boot-python.cc b/src/boot-python.cc
+index 8dcebb5..4666f35 100644
+--- a/src/boot-python.cc
++++ b/src/boot-python.cc
+@@ -1,6 +1,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before guile includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "boot-python.hh"
+@@ -10,7 +11,7 @@ void start_command_line_python_maybe(char **argv) {
+ #ifdef USE_PYTHON
+    
+ #if PY_MAJOR_VERSION > 2 
+-   Py_Main(0, argv);
++   Py_BytesMain(0, argv); // Python 3: Py_Main takes wchar_t**; Py_BytesMain takes char** (3.8+)
+ #else
+ #if PY_MINOR_VERSION > 2 
+    Py_Main(0, argv);
+diff --git a/src/c-interface-analysis.cc b/src/c-interface-analysis.cc
+index 964339e..a964172 100644
+--- a/src/c-interface-analysis.cc
++++ b/src/c-interface-analysis.cc
+@@ -19,6 +19,7 @@
+ 
+ #if defined (USE_PYTHON)
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include <iomanip> 
+diff --git a/src/c-interface-bonds.cc b/src/c-interface-bonds.cc
+index 17f957a..008ac52 100644
+--- a/src/c-interface-bonds.cc
++++ b/src/c-interface-bonds.cc
+@@ -1,5 +1,6 @@
+ #ifdef USE_PYTHON
+ #include <Python.h>  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ // #include "compat/coot-sysdep.h"
+diff --git a/src/c-interface-build-gui.cc b/src/c-interface-build-gui.cc
+index 5233e55..3a0a84b 100644
+--- a/src/c-interface-build-gui.cc
++++ b/src/c-interface-build-gui.cc
+@@ -26,6 +26,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include <Python.h>  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/c-interface-build-main-chain.cc b/src/c-interface-build-main-chain.cc
+index 10e4cea..7d43275 100644
+--- a/src/c-interface-build-main-chain.cc
++++ b/src/c-interface-build-main-chain.cc
+@@ -26,6 +26,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include <Python.h>  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/c-interface-build-morph.cc b/src/c-interface-build-morph.cc
+index b1ada2e..0864b47 100644
+--- a/src/c-interface-build-morph.cc
++++ b/src/c-interface-build-morph.cc
+@@ -26,6 +26,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include <Python.h>  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/c-interface-build-side-chain.cc b/src/c-interface-build-side-chain.cc
+index 479d164..b093084 100644
+--- a/src/c-interface-build-side-chain.cc
++++ b/src/c-interface-build-side-chain.cc
+@@ -26,6 +26,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include <Python.h>  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/c-interface-build-symmetry.cc b/src/c-interface-build-symmetry.cc
+index 7513685..5ee88f6 100644
+--- a/src/c-interface-build-symmetry.cc
++++ b/src/c-interface-build-symmetry.cc
+@@ -26,6 +26,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include <Python.h>  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/c-interface-build.cc b/src/c-interface-build.cc
+index 0924f4d..1689730 100644
+--- a/src/c-interface-build.cc
++++ b/src/c-interface-build.cc
+@@ -26,6 +26,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include <Python.h>  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/c-interface-curlew.cc b/src/c-interface-curlew.cc
+index ca108c2..6602743 100644
+--- a/src/c-interface-curlew.cc
++++ b/src/c-interface-curlew.cc
+@@ -1,6 +1,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"
++#include "compat/coot-python3-compat.hh"
+ #endif // USE_PYTHON // for std::ptrdiff_t
+ #include <string>
+ #include <cstddef>
+diff --git a/src/c-interface-gtk2.cc b/src/c-interface-gtk2.cc
+index 14fe207..a94e74a 100644
+--- a/src/c-interface-gtk2.cc
++++ b/src/c-interface-gtk2.cc
+@@ -21,6 +21,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include <Python.h>  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/c-interface-gui.cc b/src/c-interface-gui.cc
+index 83949fa..3dc2be0 100644
+--- a/src/c-interface-gui.cc
++++ b/src/c-interface-gui.cc
+@@ -26,6 +26,7 @@
+ #ifdef USE_PYTHON
+ #ifndef PYTHONH
+ #include <Python.h>
++#include "compat/coot-python3-compat.hh"
+ #endif
+ #endif
+ 
+diff --git a/src/c-interface-image.cc b/src/c-interface-image.cc
+index 491270e..602c31f 100644
+--- a/src/c-interface-image.cc
++++ b/src/c-interface-image.cc
+@@ -1,6 +1,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include <Python.h>  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ // #define RDKIT_HAS_CAIRO_SUPPORT
+diff --git a/src/c-interface-info.cc b/src/c-interface-info.cc
+index 2edf8ce..34087fe 100644
+--- a/src/c-interface-info.cc
++++ b/src/c-interface-info.cc
+@@ -28,6 +28,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include <Python.h>  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/c-interface-kk.cc b/src/c-interface-kk.cc
+index 360e19e..ffd3980 100644
+--- a/src/c-interface-kk.cc
++++ b/src/c-interface-kk.cc
+@@ -22,6 +22,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include <Python.h>  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ 
+diff --git a/src/c-interface-ligands-gui.cc b/src/c-interface-ligands-gui.cc
+index b947eb8..248cd5d 100644
+--- a/src/c-interface-ligands-gui.cc
++++ b/src/c-interface-ligands-gui.cc
+@@ -22,6 +22,7 @@
+ 
+ #if defined (USE_PYTHON)
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #ifdef USE_SQLITE3
+diff --git a/src/c-interface-ligands-swig.hh b/src/c-interface-ligands-swig.hh
+index e27a0b1..549b63a 100644
+--- a/src/c-interface-ligands-swig.hh
++++ b/src/c-interface-ligands-swig.hh
+@@ -5,6 +5,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "probe-clash-score.hh"
+diff --git a/src/c-interface-ligands.cc b/src/c-interface-ligands.cc
+index a745809..1b14398 100644
+--- a/src/c-interface-ligands.cc
++++ b/src/c-interface-ligands.cc
+@@ -21,6 +21,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include <Python.h>  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/c-interface-maps.cc b/src/c-interface-maps.cc
+index 0d89471..44db1e1 100644
+--- a/src/c-interface-maps.cc
++++ b/src/c-interface-maps.cc
+@@ -21,6 +21,7 @@
+ 
+ #if defined (USE_PYTHON)
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/c-interface-mmdb.cc b/src/c-interface-mmdb.cc
+index 08d2cd4..a59a388 100644
+--- a/src/c-interface-mmdb.cc
++++ b/src/c-interface-mmdb.cc
+@@ -23,6 +23,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include <iostream>
+diff --git a/src/c-interface-mogul-scripting.cc b/src/c-interface-mogul-scripting.cc
+index 39b58a0..73d6025 100644
+--- a/src/c-interface-mogul-scripting.cc
++++ b/src/c-interface-mogul-scripting.cc
+@@ -21,6 +21,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include <Python.h>  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "utils/coot-utils.hh"
+diff --git a/src/c-interface-mogul.cc b/src/c-interface-mogul.cc
+index 886a26e..9273b73 100644
+--- a/src/c-interface-mogul.cc
++++ b/src/c-interface-mogul.cc
+@@ -22,6 +22,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include <Python.h>  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/c-interface-mutate.cc b/src/c-interface-mutate.cc
+index d2f92ef..2184898 100644
+--- a/src/c-interface-mutate.cc
++++ b/src/c-interface-mutate.cc
+@@ -24,6 +24,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/c-interface-ncs.cc b/src/c-interface-ncs.cc
+index 13a36cb..653978c 100644
+--- a/src/c-interface-ncs.cc
++++ b/src/c-interface-ncs.cc
+@@ -23,6 +23,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/c-interface-network.cc b/src/c-interface-network.cc
+index d19b13f..cb06817 100644
+--- a/src/c-interface-network.cc
++++ b/src/c-interface-network.cc
+@@ -21,6 +21,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/c-interface-nucleotides.cc b/src/c-interface-nucleotides.cc
+index f070f18..cf56ed3 100644
+--- a/src/c-interface-nucleotides.cc
++++ b/src/c-interface-nucleotides.cc
+@@ -22,6 +22,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/c-interface-pisa-gui.cc b/src/c-interface-pisa-gui.cc
+index a57705f..ad2b7de 100644
+--- a/src/c-interface-pisa-gui.cc
++++ b/src/c-interface-pisa-gui.cc
+@@ -20,6 +20,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include <Python.h>  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/c-interface-pisa.cc b/src/c-interface-pisa.cc
+index 2b10afe..4e7ae2d 100644
+--- a/src/c-interface-pisa.cc
++++ b/src/c-interface-pisa.cc
+@@ -20,6 +20,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include <Python.h>  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/c-interface-preferences.cc b/src/c-interface-preferences.cc
+index 31e4422..aa0422b 100644
+--- a/src/c-interface-preferences.cc
++++ b/src/c-interface-preferences.cc
+@@ -24,6 +24,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/c-interface-python.cc b/src/c-interface-python.cc
+index 269f71d..4b6e908 100644
+--- a/src/c-interface-python.cc
++++ b/src/c-interface-python.cc
+@@ -23,6 +23,7 @@
+ #ifdef USE_PYTHON
+ #define PYTHONH
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/c-interface-refine.cc b/src/c-interface-refine.cc
+index 89d6fa0..4abcdf0 100644
+--- a/src/c-interface-refine.cc
++++ b/src/c-interface-refine.cc
+@@ -27,6 +27,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include <stdlib.h>
+diff --git a/src/c-interface-refmac.cc b/src/c-interface-refmac.cc
+index ced1182..ffbec71 100644
+--- a/src/c-interface-refmac.cc
++++ b/src/c-interface-refmac.cc
+@@ -26,6 +26,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include <Python.h>  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/c-interface-residues.cc b/src/c-interface-residues.cc
+index 211050b..7fc126b 100644
+--- a/src/c-interface-residues.cc
++++ b/src/c-interface-residues.cc
+@@ -21,6 +21,7 @@
+ 
+ #if defined (USE_PYTHON)
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/c-interface-scm.cc b/src/c-interface-scm.cc
+index f95834e..fd6bbcd 100644
+--- a/src/c-interface-scm.cc
++++ b/src/c-interface-scm.cc
+@@ -22,6 +22,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/c-interface-sequence.cc b/src/c-interface-sequence.cc
+index af5146d..cd3ef5c 100644
+--- a/src/c-interface-sequence.cc
++++ b/src/c-interface-sequence.cc
+@@ -21,6 +21,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/c-interface-sfs.cc b/src/c-interface-sfs.cc
+index 87ad031..bd9ae54 100644
+--- a/src/c-interface-sfs.cc
++++ b/src/c-interface-sfs.cc
+@@ -20,6 +20,7 @@
+ 
+ #if defined (USE_PYTHON)
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include <iostream>
+diff --git a/src/c-interface-sharpen.cc b/src/c-interface-sharpen.cc
+index 8232746..6af8516 100644
+--- a/src/c-interface-sharpen.cc
++++ b/src/c-interface-sharpen.cc
+@@ -23,6 +23,7 @@
+ #ifndef PYTHONH
+ #define PYTHONH
+ #include <Python.h>
++#include "compat/coot-python3-compat.hh"
+ #endif
+ #endif
+ 
+diff --git a/src/c-interface-superpose.cc b/src/c-interface-superpose.cc
+index d45b6dd..01cc759 100644
+--- a/src/c-interface-superpose.cc
++++ b/src/c-interface-superpose.cc
+@@ -26,6 +26,7 @@
+ 
+ #if defined (USE_PYTHON)
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/c-interface-test.cc b/src/c-interface-test.cc
+index 9526107..40a04f5 100644
+--- a/src/c-interface-test.cc
++++ b/src/c-interface-test.cc
+@@ -30,6 +30,7 @@
+ #ifndef PYTHONH
+ #define PYTHONH
+ #include <Python.h>
++#include "compat/coot-python3-compat.hh"
+ #endif
+ #endif
+ 
+diff --git a/src/c-interface-validate.cc b/src/c-interface-validate.cc
+index cefdd59..6524cfb 100644
+--- a/src/c-interface-validate.cc
++++ b/src/c-interface-validate.cc
+@@ -24,6 +24,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/c-interface-view.cc b/src/c-interface-view.cc
+index b77bc94..1cf48ac 100644
+--- a/src/c-interface-view.cc
++++ b/src/c-interface-view.cc
+@@ -21,6 +21,7 @@
+ 
+ #if defined (USE_PYTHON)
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/c-interface-waters-gui.cc b/src/c-interface-waters-gui.cc
+index 10c6f5b..643ce7c 100644
+--- a/src/c-interface-waters-gui.cc
++++ b/src/c-interface-waters-gui.cc
+@@ -24,6 +24,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/c-interface-waters.cc b/src/c-interface-waters.cc
+index 40b3b16..b70def8 100644
+--- a/src/c-interface-waters.cc
++++ b/src/c-interface-waters.cc
+@@ -23,6 +23,7 @@
+  
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/c-interface-widgets.cc b/src/c-interface-widgets.cc
+index 39211f2..7e333a1 100644
+--- a/src/c-interface-widgets.cc
++++ b/src/c-interface-widgets.cc
+@@ -24,6 +24,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/c-interface.cc b/src/c-interface.cc
+index e54d3da..befe028 100644
+--- a/src/c-interface.cc
++++ b/src/c-interface.cc
+@@ -29,6 +29,7 @@
+ #ifndef PYTHONH
+ #define PYTHONH
+ #include <Python.h>
++#include "compat/coot-python3-compat.hh"
+ #endif
+ #endif
+ 
+diff --git a/src/c-interface.h b/src/c-interface.h
+index 33e5261..0d1af12 100644
+--- a/src/c-interface.h
++++ b/src/c-interface.h
+@@ -73,6 +73,7 @@ p  So we need to have this function external for c++ linking.
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include <gtk/gtk.h>
+diff --git a/src/cc-interface-alignment.cc b/src/cc-interface-alignment.cc
+index 26b63d9..14799f1 100644
+--- a/src/cc-interface-alignment.cc
++++ b/src/cc-interface-alignment.cc
+@@ -5,6 +5,7 @@
+ // --------------------------------------------
+ #ifdef USE_PYTHON
+ #include <Python.h> // add first for _XOPEN_SOURCE order issues
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include <cstddef> // define std::ptrdiff_t
+diff --git a/src/cc-interface-map-utils.cc b/src/cc-interface-map-utils.cc
+index 5d1fc22..4c0b517 100644
+--- a/src/cc-interface-map-utils.cc
++++ b/src/cc-interface-map-utils.cc
+@@ -1,6 +1,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include <Python.h>
++#include "compat/coot-python3-compat.hh"
+ #endif
+ #include "rama_plot.hh"
+ #include "graphics-info.h"
+diff --git a/src/cc-interface-merge.cc b/src/cc-interface-merge.cc
+index 04c72be..e25dd81 100644
+--- a/src/cc-interface-merge.cc
++++ b/src/cc-interface-merge.cc
+@@ -2,6 +2,7 @@
+ // --------------------------------------------
+ #ifdef USE_PYTHON
+ #include <Python.h> // add first for _XOPEN_SOURCE order issues
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include <cstddef> // define std::ptrdiff_t
+diff --git a/src/cc-interface-molecular-representation.cc b/src/cc-interface-molecular-representation.cc
+index 2ba1911..7ec2927 100644
+--- a/src/cc-interface-molecular-representation.cc
++++ b/src/cc-interface-molecular-representation.cc
+@@ -4,6 +4,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include <Python.h>  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include <cstddef>
+diff --git a/src/cc-interface-molecular-symmetry.cc b/src/cc-interface-molecular-symmetry.cc
+index 192d358..d9f2e31 100644
+--- a/src/cc-interface-molecular-symmetry.cc
++++ b/src/cc-interface-molecular-symmetry.cc
+@@ -4,6 +4,7 @@
+ 
+ #ifdef USE_PYTHON  // fixes Python include file order problems
+ #include "Python.h"
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "cc-interface.hh"
+diff --git a/src/cc-interface-png.cc b/src/cc-interface-png.cc
+index 0709073..01750b6 100644
+--- a/src/cc-interface-png.cc
++++ b/src/cc-interface-png.cc
+@@ -1,6 +1,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include <Python.h>
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #ifdef HAVE_CXX11
+diff --git a/src/cc-interface-user-defined-atom-colours.hh b/src/cc-interface-user-defined-atom-colours.hh
+index 4008cb3..8f1390b 100644
+--- a/src/cc-interface-user-defined-atom-colours.hh
++++ b/src/cc-interface-user-defined-atom-colours.hh
+@@ -1,6 +1,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #ifdef USE_GUILE
+diff --git a/src/cc-interface.hh b/src/cc-interface.hh
+index 88ea292..f6d2cd4 100644
+--- a/src/cc-interface.hh
++++ b/src/cc-interface.hh
+@@ -32,6 +32,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "utils/coot-utils.hh"
+diff --git a/src/cfc.cc b/src/cfc.cc
+index 602628c..1ecec50 100644
+--- a/src/cfc.cc
++++ b/src/cfc.cc
+@@ -25,6 +25,7 @@
+ #ifdef USE_PYTHON
+ 
+ #include "Python.h" // _XOPEN_SOURCE definition - python one before /usr/include/features.h
++#include "compat/coot-python3-compat.hh"
+ 
+ #include "compat/coot-sysdep.h"
+ #include <cstddef>
+diff --git a/src/cfc.hh b/src/cfc.hh
+index 447572a..6e356ae 100644
+--- a/src/cfc.hh
++++ b/src/cfc.hh
+@@ -26,6 +26,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"
++#include "compat/coot-python3-compat.hh"
+ 
+ #include <map>
+ #include <algorithm>
+diff --git a/src/cmtz-interface.cc b/src/cmtz-interface.cc
+index 1eb033d..914f587 100644
+--- a/src/cmtz-interface.cc
++++ b/src/cmtz-interface.cc
+@@ -22,6 +22,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/command-line-extern.cc b/src/command-line-extern.cc
+index e6107cd..3a2d54e 100644
+--- a/src/command-line-extern.cc
++++ b/src/command-line-extern.cc
+@@ -22,6 +22,7 @@
+ 
+ #if defined USE_PYTHON 
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ // BL says:: need to exclude in Windows as conflicting getopt definitions.
+ //           do we need python here at all?!
+ #endif
+diff --git a/src/command-line.cc b/src/command-line.cc
+index eb289bf..4ab1244 100644
+--- a/src/command-line.cc
++++ b/src/command-line.cc
+@@ -22,6 +22,7 @@
+ 
+ #if defined USE_PYTHON && !defined WINDOWS_MINGW
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ // BL says:: need to exclude in Windows as conflicting getopt definitions.
+ //           do we need python here at all?!
+ #endif
+diff --git a/src/coot-setup-python.cc b/src/coot-setup-python.cc
+index bc1a717..f7ddd3d 100644
+--- a/src/coot-setup-python.cc
++++ b/src/coot-setup-python.cc
+@@ -22,6 +22,7 @@
+ 
+ #if defined (USE_PYTHON)
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include <cstring>
+diff --git a/src/coot-setup-python.hh b/src/coot-setup-python.hh
+index 8a7a7b4..f1189b4 100644
+--- a/src/coot-setup-python.hh
++++ b/src/coot-setup-python.hh
+@@ -1,6 +1,7 @@
+ 
+ #if defined (USE_PYTHON)
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include <string>
+diff --git a/src/coot_pythonmodule.cc b/src/coot_pythonmodule.cc
+index fca48e7..5badb97 100644
+--- a/src/coot_pythonmodule.cc
++++ b/src/coot_pythonmodule.cc
+@@ -21,6 +21,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #ifdef USE_PYGTK
+diff --git a/src/drag-and-drop.cc b/src/drag-and-drop.cc
+index d64d175..bb01648 100644
+--- a/src/drag-and-drop.cc
++++ b/src/drag-and-drop.cc
+@@ -22,6 +22,7 @@
+ 
+ #if defined (USE_PYTHON)
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include <iostream>
+diff --git a/src/draw-generic-display-objects.cc b/src/draw-generic-display-objects.cc
+index 577899a..a83cd6e 100644
+--- a/src/draw-generic-display-objects.cc
++++ b/src/draw-generic-display-objects.cc
+@@ -1,6 +1,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/draw.cc b/src/draw.cc
+index 5467cae..cfbea2b 100644
+--- a/src/draw.cc
++++ b/src/draw.cc
+@@ -1,6 +1,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include <Python.h>
++#include "compat/coot-python3-compat.hh"
+ #endif // USE_PYTHON
+ 
+ #include "globjects.h"
+diff --git a/src/flev.cc b/src/flev.cc
+index 070fcc6..ae62d83 100644
+--- a/src/flev.cc
++++ b/src/flev.cc
+@@ -24,6 +24,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/generic-display-object.cc b/src/generic-display-object.cc
+index 722cf9e..154f8c0 100644
+--- a/src/generic-display-object.cc
++++ b/src/generic-display-object.cc
+@@ -2,6 +2,7 @@
+ 
+ #if defined (USE_PYTHON)
+ #include "Python.h"
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "graphics-info.h"
+diff --git a/src/generic-objects.cc b/src/generic-objects.cc
+index 9bc1f40..9f94b60 100644
+--- a/src/generic-objects.cc
++++ b/src/generic-objects.cc
+@@ -22,6 +22,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/geometry-graphs.cc b/src/geometry-graphs.cc
+index 4ff0a9b..6ce59c2 100644
+--- a/src/geometry-graphs.cc
++++ b/src/geometry-graphs.cc
+@@ -21,6 +21,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+  
+ #include "coot-utils/coot-coord-utils.hh" // compilation error on MacOSX if this
+diff --git a/src/get-monomer.cc b/src/get-monomer.cc
+index 18f0889..d4aa168 100644
+--- a/src/get-monomer.cc
++++ b/src/get-monomer.cc
+@@ -23,6 +23,7 @@
+ 
+ #if defined (USE_PYTHON)
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "utils/coot-utils.hh"
+diff --git a/src/get-residue.cc b/src/get-residue.cc
+index 2d594bf..05950f9 100644
+--- a/src/get-residue.cc
++++ b/src/get-residue.cc
+@@ -1,6 +1,7 @@
+ 
+ #if defined (USE_PYTHON)
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/globjects.cc b/src/globjects.cc
+index a041fd0..8a91147 100644
+--- a/src/globjects.cc
++++ b/src/globjects.cc
+@@ -29,6 +29,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/globularize.cc b/src/globularize.cc
+index 7bce590..6ea64c2 100644
+--- a/src/globularize.cc
++++ b/src/globularize.cc
+@@ -1,6 +1,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "graphics-info.h"
+diff --git a/src/graphics-info-defines.cc b/src/graphics-info-defines.cc
+index 1e33eae..dafb0ae 100644
+--- a/src/graphics-info-defines.cc
++++ b/src/graphics-info-defines.cc
+@@ -22,6 +22,7 @@
+ 
+ #if defined (USE_PYTHON)
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/graphics-info-graphs.cc b/src/graphics-info-graphs.cc
+index bc9e6a8..1110f4e 100644
+--- a/src/graphics-info-graphs.cc
++++ b/src/graphics-info-graphs.cc
+@@ -24,6 +24,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/graphics-info-gui.cc b/src/graphics-info-gui.cc
+index ae683fe..64fa16b 100644
+--- a/src/graphics-info-gui.cc
++++ b/src/graphics-info-gui.cc
+@@ -23,6 +23,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/graphics-info-init.cc b/src/graphics-info-init.cc
+index a638519..7ce14c5 100644
+--- a/src/graphics-info-init.cc
++++ b/src/graphics-info-init.cc
+@@ -1,6 +1,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include <Python.h>
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "graphics-info.h"
+diff --git a/src/graphics-info-intermediate.cc b/src/graphics-info-intermediate.cc
+index 019912b..8e8653b 100644
+--- a/src/graphics-info-intermediate.cc
++++ b/src/graphics-info-intermediate.cc
+@@ -1,5 +1,6 @@
+ 
+ #include "Python.h"
++#include "compat/coot-python3-compat.hh"
+ #include "graphics-info.h"
+ 
+ // static 
+diff --git a/src/graphics-info-lsq.cc b/src/graphics-info-lsq.cc
+index 695a58e..e1a51f7 100644
+--- a/src/graphics-info-lsq.cc
++++ b/src/graphics-info-lsq.cc
+@@ -22,6 +22,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/graphics-info-modelling.cc b/src/graphics-info-modelling.cc
+index fc00dbf..7bccd00 100644
+--- a/src/graphics-info-modelling.cc
++++ b/src/graphics-info-modelling.cc
+@@ -23,6 +23,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/graphics-info-mutate.cc b/src/graphics-info-mutate.cc
+index a7999f6..7a680fe 100644
+--- a/src/graphics-info-mutate.cc
++++ b/src/graphics-info-mutate.cc
+@@ -21,6 +21,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/graphics-info-navigation-gtk2.cc b/src/graphics-info-navigation-gtk2.cc
+index 653aafe..911ac83 100644
+--- a/src/graphics-info-navigation-gtk2.cc
++++ b/src/graphics-info-navigation-gtk2.cc
+@@ -21,6 +21,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"
++#include "compat/coot-python3-compat.hh"
+ #endif // USE_PYTHON
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/graphics-info-navigation.cc b/src/graphics-info-navigation.cc
+index 69aa42e..8e719af 100644
+--- a/src/graphics-info-navigation.cc
++++ b/src/graphics-info-navigation.cc
+@@ -21,6 +21,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/graphics-info-network.cc b/src/graphics-info-network.cc
+index f6e4735..127aab0 100644
+--- a/src/graphics-info-network.cc
++++ b/src/graphics-info-network.cc
+@@ -1,6 +1,7 @@
+ 
+ #if defined (USE_PYTHON)
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/graphics-info-pick.cc b/src/graphics-info-pick.cc
+index e90abec..a8b0925 100644
+--- a/src/graphics-info-pick.cc
++++ b/src/graphics-info-pick.cc
+@@ -21,6 +21,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/graphics-info-preferences.cc b/src/graphics-info-preferences.cc
+index 0ea9656..d86e5de 100644
+--- a/src/graphics-info-preferences.cc
++++ b/src/graphics-info-preferences.cc
+@@ -19,6 +19,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/graphics-info-refine.cc b/src/graphics-info-refine.cc
+index a49afc6..6bd2125 100644
+--- a/src/graphics-info-refine.cc
++++ b/src/graphics-info-refine.cc
+@@ -1,6 +1,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include <Python.h>
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "graphics-info.h"
+diff --git a/src/graphics-info-refmac.cc b/src/graphics-info-refmac.cc
+index 9bc4f92..4eca861 100644
+--- a/src/graphics-info-refmac.cc
++++ b/src/graphics-info-refmac.cc
+@@ -31,6 +31,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/graphics-info-render.cc b/src/graphics-info-render.cc
+index a60e138..3420582 100644
+--- a/src/graphics-info-render.cc
++++ b/src/graphics-info-render.cc
+@@ -20,6 +20,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/graphics-info-residues.cc b/src/graphics-info-residues.cc
+index 65334ab..f573409 100644
+--- a/src/graphics-info-residues.cc
++++ b/src/graphics-info-residues.cc
+@@ -20,6 +20,7 @@
+ 
+ #if defined (USE_PYTHON)
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/graphics-info-scripting.cc b/src/graphics-info-scripting.cc
+index b0d2490..424526d 100644
+--- a/src/graphics-info-scripting.cc
++++ b/src/graphics-info-scripting.cc
+@@ -1,6 +1,7 @@
+ 
+ #if defined (USE_PYTHON)
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/graphics-info-state.cc b/src/graphics-info-state.cc
+index a506c3e..8e61e3d 100644
+--- a/src/graphics-info-state.cc
++++ b/src/graphics-info-state.cc
+@@ -20,6 +20,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/graphics-info-statics.cc b/src/graphics-info-statics.cc
+index b86b232..a13fafc 100644
+--- a/src/graphics-info-statics.cc
++++ b/src/graphics-info-statics.cc
+@@ -1,6 +1,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "graphics-info.h"
+diff --git a/src/graphics-info-superpose.cc b/src/graphics-info-superpose.cc
+index c9d72ec..4a531bc 100644
+--- a/src/graphics-info-superpose.cc
++++ b/src/graphics-info-superpose.cc
+@@ -20,6 +20,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/graphics-info.cc b/src/graphics-info.cc
+index 5d8c734..031e55b 100644
+--- a/src/graphics-info.cc
++++ b/src/graphics-info.cc
+@@ -24,6 +24,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/graphics-info.h b/src/graphics-info.h
+index 01326b2..eeb964b 100644
+--- a/src/graphics-info.h
++++ b/src/graphics-info.h
+@@ -47,6 +47,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include <gdk/gdkglconfig.h>
+diff --git a/src/gtk-manual.cc b/src/gtk-manual.cc
+index 83e985f..febcde2 100644
+--- a/src/gtk-manual.cc
++++ b/src/gtk-manual.cc
+@@ -23,6 +23,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #ifdef _MSC_VER
+diff --git a/src/lbg-interface.cc b/src/lbg-interface.cc
+index e158587..9975d50 100644
+--- a/src/lbg-interface.cc
++++ b/src/lbg-interface.cc
+@@ -20,6 +20,7 @@
+ 
+ #if defined (USE_PYTHON)
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/molecule-class-info-kdc.cc b/src/molecule-class-info-kdc.cc
+index 83690a5..cea2f05 100644
+--- a/src/molecule-class-info-kdc.cc
++++ b/src/molecule-class-info-kdc.cc
+@@ -19,6 +19,7 @@
+  */
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include <string>
+diff --git a/src/molecule-class-info-maps.cc b/src/molecule-class-info-maps.cc
+index 1e3cd68..beb0076 100644
+--- a/src/molecule-class-info-maps.cc
++++ b/src/molecule-class-info-maps.cc
+@@ -25,6 +25,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ 
+diff --git a/src/molecule-class-info-mol-tris.cc b/src/molecule-class-info-mol-tris.cc
+index 959132a..1c6ec89 100644
+--- a/src/molecule-class-info-mol-tris.cc
++++ b/src/molecule-class-info-mol-tris.cc
+@@ -1,5 +1,6 @@
+ 
+ #include "Python.h"
++#include "compat/coot-python3-compat.hh"
+ #include "graphics-info.h"
+ #include "molecule-class-info.h"
+ 
+diff --git a/src/molecule-class-info-mutate.cc b/src/molecule-class-info-mutate.cc
+index 4a9ef90..4b5e30e 100644
+--- a/src/molecule-class-info-mutate.cc
++++ b/src/molecule-class-info-mutate.cc
+@@ -23,6 +23,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/molecule-class-info-ncs.cc b/src/molecule-class-info-ncs.cc
+index 92ab1a5..7bcae08 100644
+--- a/src/molecule-class-info-ncs.cc
++++ b/src/molecule-class-info-ncs.cc
+@@ -25,6 +25,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/molecule-class-info-other.cc b/src/molecule-class-info-other.cc
+index c1d0531..db4c75a 100644
+--- a/src/molecule-class-info-other.cc
++++ b/src/molecule-class-info-other.cc
+@@ -24,6 +24,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include <stdlib.h>
+diff --git a/src/molecule-class-info-patterson.cc b/src/molecule-class-info-patterson.cc
+index d97abbd..a439b65 100644
+--- a/src/molecule-class-info-patterson.cc
++++ b/src/molecule-class-info-patterson.cc
+@@ -25,6 +25,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ 
+diff --git a/src/molecule-class-info-residues.cc b/src/molecule-class-info-residues.cc
+index 24b84dc..dae4cea 100644
+--- a/src/molecule-class-info-residues.cc
++++ b/src/molecule-class-info-residues.cc
+@@ -26,6 +26,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/molecule-class-info-surface.cc b/src/molecule-class-info-surface.cc
+index 4ab0a48..4f00ca1 100644
+--- a/src/molecule-class-info-surface.cc
++++ b/src/molecule-class-info-surface.cc
+@@ -20,6 +20,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/molecule-class-info.cc b/src/molecule-class-info.cc
+index 468a8a6..54b440d 100644
+--- a/src/molecule-class-info.cc
++++ b/src/molecule-class-info.cc
+@@ -24,6 +24,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/nsv.cc b/src/nsv.cc
+index 66b2bb3..f0c304e 100644
+--- a/src/nsv.cc
++++ b/src/nsv.cc
+@@ -22,6 +22,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ 
+diff --git a/src/pick.cc b/src/pick.cc
+index 850783b..df7d7dc 100644
+--- a/src/pick.cc
++++ b/src/pick.cc
+@@ -21,6 +21,7 @@
+  
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/probe-clash-score.cc b/src/probe-clash-score.cc
+index 1c8dda9..91d4019 100644
+--- a/src/probe-clash-score.cc
++++ b/src/probe-clash-score.cc
+@@ -22,6 +22,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include <Python.h>
++#include "compat/coot-python3-compat.hh"
+ #endif // USE_PYTHON
+ 
+ #include <stdio.h>
+diff --git a/src/python-classes.cc b/src/python-classes.cc
+index 437c8c1..364f003 100644
+--- a/src/python-classes.cc
++++ b/src/python-classes.cc
+@@ -4,6 +4,7 @@
+ #include <iostream>
+ 
+ #include <Python.h>
++#include "compat/coot-python3-compat.hh"
+ #include "structmember.h"
+ 
+ typedef struct {
+@@ -20,7 +21,7 @@ PathologyData_dealloc(PathologyData* self)
+ {
+     Py_XDECREF(self->invresolsq_max);
+     Py_XDECREF(self->fp_list);
+-    self->ob_type->tp_free((PyObject*) self);
++    Py_TYPE(self)->tp_free((PyObject*) self);
+ }
+ 
+ 
+@@ -160,8 +161,7 @@ PathologyData_init(PathologyData *self, PyObject *args, PyObject *kwds)
+ 
+ 
+ static PyTypeObject pathology_data_PathologyDataType = {
+-    PyObject_HEAD_INIT(NULL)
+-    0,                         /*ob_size*/
++    PyVarObject_HEAD_INIT(NULL, 0)
+     "pathology_data.PathologyData", /*tp_name*/
+     sizeof(PathologyData),     /*tp_basicsize*/
+     0,                         /*tp_itemsize*/
+@@ -207,6 +207,37 @@ static PyMethodDef pathology_data_methods[] = {
+ 
+ 
+ 
++#if PY_MAJOR_VERSION >= 3
++
++static struct PyModuleDef pathology_data_module = {
++   PyModuleDef_HEAD_INIT,
++   "pathology_data",
++   "Example module.",
++   -1,
++   pathology_data_methods
++};
++
++// Python 3: build the module object ourselves and register it in sys.modules, so that
++// "import pathology_data" works as it did when Py_InitModule3() did the registration.
++PyMODINIT_FUNC
++init_pathology_data() {
++
++    pathology_data_PathologyDataType.tp_new = PyType_GenericNew;
++    if (PyType_Ready(&pathology_data_PathologyDataType) < 0)
++        return NULL;
++
++    PyObject *m = PyModule_Create(&pathology_data_module);
++    if (m == NULL)
++        return NULL;
++
++    Py_INCREF(&pathology_data_PathologyDataType);
++    PyModule_AddObject(m, "PathologyData", (PyObject *)&pathology_data_PathologyDataType);
++    PyDict_SetItemString(PyImport_GetModuleDict(), "pathology_data", m);
++    return m;
++}
++
++#else
++
+ #ifndef PyMODINIT_FUNC	/* declarations for DLL import/export */
+ #define PyMODINIT_FUNC void
+ #endif
+@@ -224,5 +255,7 @@ init_pathology_data() {
+     PyModule_AddObject(m, "PathologyData", (PyObject *)&pathology_data_PathologyDataType);
+ }
+ 
++#endif // PY_MAJOR_VERSION >= 3
++
+ #endif // USE_PYTHON
+ 
+diff --git a/src/rama_mousey.cc b/src/rama_mousey.cc
+index 3137f4b..4461ca2 100644
+--- a/src/rama_mousey.cc
++++ b/src/rama_mousey.cc
+@@ -20,6 +20,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #if defined(HAVE_GTK_CANVAS) || defined(HAVE_GNOME_CANVAS)
+diff --git a/src/rama_plot.cc b/src/rama_plot.cc
+index 528d2a5..d8f8b58 100644
+--- a/src/rama_plot.cc
++++ b/src/rama_plot.cc
+@@ -26,6 +26,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ 
+diff --git a/src/restraints-editor.cc b/src/restraints-editor.cc
+index 5b6bc86..45bcb86 100644
+--- a/src/restraints-editor.cc
++++ b/src/restraints-editor.cc
+@@ -21,6 +21,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/scm-boot-guile.cc b/src/scm-boot-guile.cc
+index 1b62271..a41fe69 100644
+--- a/src/scm-boot-guile.cc
++++ b/src/scm-boot-guile.cc
+@@ -24,6 +24,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before guile includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include <string>
+diff --git a/src/sdf-interface.cc b/src/sdf-interface.cc
+index 93fb88b..9fbd980 100644
+--- a/src/sdf-interface.cc
++++ b/src/sdf-interface.cc
+@@ -21,6 +21,7 @@
+ 
+ #if defined (USE_PYTHON)
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ // We need this high so that dcgettext() so we don't get expected unqualified-id before 'const'
+diff --git a/src/sequence-view.cc b/src/sequence-view.cc
+index 3bfbf72..809f61e 100644
+--- a/src/sequence-view.cc
++++ b/src/sequence-view.cc
+@@ -20,6 +20,7 @@
+  
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/simple-refmac.cc b/src/simple-refmac.cc
+index 6d612e8..bae45f5 100644
+--- a/src/simple-refmac.cc
++++ b/src/simple-refmac.cc
+@@ -1,6 +1,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include <Python.h>  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "globjects.h" //includes gtk/gtk.h
+diff --git a/src/spherical-density.cc b/src/spherical-density.cc
+index a4acd6b..7180bb4 100644
+--- a/src/spherical-density.cc
++++ b/src/spherical-density.cc
+@@ -1,6 +1,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"
++#include "compat/coot-python3-compat.hh"
+ #endif // USE_PYTHON
+ #include "graphics-info.h"
+ #include "c-interface.h" // is_valid_model_molecule()
+diff --git a/src/testing.cc b/src/testing.cc
+index 53e233c..d7a8037 100644
+--- a/src/testing.cc
++++ b/src/testing.cc
+@@ -21,6 +21,7 @@
+ 
+ #if defined (USE_PYTHON)
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include "compat/coot-sysdep.h"
+diff --git a/src/user-mods.cc b/src/user-mods.cc
+index 0992476..9b3ce1f 100644
+--- a/src/user-mods.cc
++++ b/src/user-mods.cc
+@@ -1,6 +1,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"  // before system includes to stop "POSIX_C_SOURCE" redefined problems
++#include "compat/coot-python3-compat.hh"
+ #endif
+ 
+ #include <fstream>
+diff --git a/src/validation.hh b/src/validation.hh
+index f380078..bacd87e 100644
+--- a/src/validation.hh
++++ b/src/validation.hh
+@@ -3,6 +3,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"
++#include "compat/coot-python3-compat.hh"
+ #endif // USE_PYTHON
+ 
+ #ifdef USE_GUILE
+diff --git a/src/view.cc b/src/view.cc
+index 45264f0..e82f8b5 100644
+--- a/src/view.cc
++++ b/src/view.cc
+@@ -22,6 +22,7 @@
+ 
+ #ifdef USE_PYTHON
+ #include "Python.h"
++#include "compat/coot-python3-compat.hh"
+ #endif // USE_PYTHON
+ #include "view.hh"
+ #include "graphics-info.h"
