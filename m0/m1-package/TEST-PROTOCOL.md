@@ -1,4 +1,24 @@
-# Coot 0.9.8.96 on Apple Silicon: test round 18 (build 18 = build 17 + Retina view by default for coot0)
+# Coot 0.9.8.96 on Apple Silicon: test round 19 (build 19 = build 18 + licences; the build for the lab)
+
+**From you** (13 Nov): build 18 works (Retina view by default, `--legacy`). Licensing decided: Coot keeps its own licence (GPL-3.0-or-later, its authors); the coot0 changes are Copyright (C) 2026 Chang Sun under GPL-3.0, stated separately; the package as a whole is GPL-3.0. **No change to Coot itself.**
+
+1. **The package carries its licences**: `LICENSE` (GPL-3.0 text, as shipped with Coot), `LICENSING.md` (Coot, the coot0 changes and the third-party libraries, each with its own copyright and licence), `CORRESPONDING_SOURCE.md` (where the source of every part comes from, and the written offer the GPL requires), `THIRD_PARTY_LICENSES.md` (60 bundled packages + 7 other components with version and licence) and `licenses/` (the licence texts of each of the 60 packages). `README-FIRST.txt` has a short LICENCE section.
+2. **Fixed: the self-test showed macOS's "coot-bin Not Opened" dialog.** The installer test flags a copy of the package with the download quarantine on purpose (to check that the installer removes it); a check added in build 18 then started Coot from that flagged copy. That was the dialog you saw on 13 Nov (12:25 and about 14:00, during my test runs), not a problem of your installation. The test now removes the flag before starting that copy and checks that Coot really started. In build 18 `coot0 --self-test` would still show it once.
+
+**New tests** (`installer` 23 -> 26; build 18 fails 3): the licence files are in the installed copy, every package of the list has its licence text, README-FIRST mentions the licence. Evidence: `evidence/checks_b18_vs_b19.txt`, `evidence/verify_b19.txt`.
+
+## AA. Round 19 checks (about 5 minutes)
+
+| # | Do | Expected |
+|---|---|---|
+| AA1 | `tar -xzf ~/Desktop/test/coot0-0.9.8.96-b19-macos-arm64.tar.gz`, `cd coot0-0.9.8.96-b19`, `./install.sh` (Enter). | Installed into `~/.local/share/coot0/0.9.8.96-b19`; `coot0` starts build 19 (Retina view). |
+| AA2 | Read `README-FIRST.txt` and `LICENSING.md` as a lab member would. | Clear what coot0 is, how to install and run it, who wrote what, whom to ask. |
+| AA3 | (optional) `coot0 --self-test` | 19 lines `N / N` (installer 26), no macOS dialog. |
+| AA4 | **The first lab member** who installs it: `coot0 --self-test` on their Mac, send the 19 lines. | All `N / N`. Why: some libraries contain the folders of the build machine (a conda folder in the build account's home, e.g. GLib's and GTK's default data folders). The launcher points all of them into the package, but on your Macs those folders exist, so only a Mac without them proves that nothing falls back to them. |
+
+---
+
+# Earlier round (confirmed 13 Nov: build 18 works): Coot 0.9.8.96 on Apple Silicon: test round 18 (build 18 = build 17 + Retina view by default for coot0)
 
 **From you** (13 Nov): build 17 installed and `coot0` works; the Gatekeeper dialog seen once at 12:25 could not be reproduced (paused; notes in the answer of 13 Nov). **No change to Coot itself**: the launcher, installer, tests and documents changed.
 

@@ -371,3 +371,9 @@ Round 18: Retina default for coot0 -> build 18  (no patch: package only)
   on that copy first, require INSTALL-CHECK OK, and check that no started copy was flagged (installer 22 -> 23).  Ships with the next build.
   Licensing (user 13 Nov): Coot GPL-3.0-or-later (unchanged, its authors); coot0 modifications Copyright (C) 2026 Chang Sun, GPL-3.0-only,
   stated separately (LICENSING.md); package as a whole GPL-3.0.  Credits: Huilin Li's lab (feedback), Paul Emsley (support).
+
+Round 19: licences in the package -> build 19 (the build for the lab; no patch)
+  LICENSE / LICENSING.md / CORRESPONDING_SOURCE.md (repository root) + m1-package/THIRD_PARTY_LICENSES.md + licenses/ are copied to the package top
+  level (tools/dev_sync.sh).  gen_licenses.py: 60 conda packages + 7 extra components; FFTW 2 text copied from the clipper package, FreeType 2.14.3
+  FTL.TXT/LICENSE.TXT (from its source tag VER-2-14-3) and an SQLite public-domain note in tools/licence-texts/.  LICENSING/CORRESPONDING_SOURCE
+  point lab members to the author (repository private).  installer_test 23 -> 26 (licence files, a text per package, README-FIRST): b18 23/26, b19 26/26.

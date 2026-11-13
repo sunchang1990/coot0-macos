@@ -1,9 +1,10 @@
 # One line per check: PASS / FAIL / PARTIAL and a few words.  (You can also just tell me in chat.)
-# Round 18 (see TEST-PROTOCOL.md, section Z):
-Z1 install build 18 (Enter): installed next to b17, summary mentions coot0 --legacy:
-Z2 coot0 with your data: sharp Retina view, picking OK, log says retina=1:
-Z3 coot0 --legacy: softer view, picking OK, retina=0:
-Z4 anything slow or wrong with the Retina view:
+# Round 19 (see TEST-PROTOCOL.md, section AA):
+AA1 install build 19, coot0 starts it:
+AA2 README-FIRST.txt / LICENSING.md clear for a lab member:
+AA3 (optional) coot0 --self-test: 19 lines N / N, no macOS dialog:
+AA4 first lab member: coot0 --self-test on their Mac (19 lines):
+# Round 18 (section Z): build 18 works (13 Nov).
 # Round 17 (section Y):
 Y1 tar -xzf + ./install.sh (Enter at the folder question): checks, PATH line shown, start test ok:
 Y2 new Terminal window, coot0 in a data folder: Coot opens, coot-backup/ in that folder:

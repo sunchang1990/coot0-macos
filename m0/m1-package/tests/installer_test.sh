@@ -28,6 +28,13 @@ check "~/.local/bin/coot0 exists, is executable and points to the installed copy
 check "~/.zshrc gets one marked PATH line, and the installer printed it" "[ \$(grep -c '^# coot0-install' '$H1/.zshrc') = 1 ] && grep -qF 'export PATH=\"\$HOME/.local/bin:\$PATH\"' '$H1/.zshrc' && grep -q 'added to .*\.zshrc' '$T/install1.txt'"
 check "zsh user without bash files: no ~/.bash_profile or ~/.bashrc created" "[ ! -e '$H1/.bash_profile' ] && [ ! -e '$H1/.bashrc' ]"
 
+# (build 19) the package carries its licences: GPL-3.0 text, the licensing statement, the source offer, the third-party list,
+# and a licence-text folder for every conda package in that list
+check "the package has LICENSE (GPL-3.0), LICENSING.md, CORRESPONDING_SOURCE.md and THIRD_PARTY_LICENSES.md" "grep -q 'GNU GENERAL PUBLIC LICENSE' '$D1/LICENSE' && grep -q 'Version 3, 29 June 2007' '$D1/LICENSE' && grep -q 'Copyright (C) 2026' '$D1/LICENSING.md' && grep -q 'Written offer' '$D1/CORRESPONDING_SOURCE.md' && grep -q '^| rdkit ' '$D1/THIRD_PARTY_LICENSES.md'"
+nmiss=$(awk -F'|' '/^\| [a-z0-9]/ && NF==6 {gsub(/ /,"",$2); print $2}' "$D1/THIRD_PARTY_LICENSES.md" 2>/dev/null | sort -u | while read c; do [ -d "$D1/licenses/$c" ] || echo "$c"; done | wc -l | tr -d ' ')
+check "licence texts in licenses/ for the listed packages (missing: ${nmiss:-?})" "[ -d '$D1/licenses' ] && [ \$(ls '$D1/licenses' | wc -l) -ge 50 ] && [ '${nmiss:-x}' = 0 ]"
+check "README-FIRST.txt says how coot0 is licensed" "grep -q '^LICENCE' '$D1/README-FIRST.txt'"
+
 # ---- second install (an update of the same version): PATH line not repeated, the old copy is kept aside
 ( cd "$PKG" && env -i HOME="$H1" PATH=$SYS TMPDIR="$T" COOT0_LOGIN_SHELL=/bin/zsh ./install.sh --yes --no-self-test ) > "$T/install2.txt" 2>&1
 check "installing again: still one PATH line in ~/.zshrc" "[ \$(grep -c '^# coot0-install' '$H1/.zshrc') = 1 ]"

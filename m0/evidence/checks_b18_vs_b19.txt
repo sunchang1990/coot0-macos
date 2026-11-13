@@ -1,0 +1,8 @@
+# installer suite (26 checks) on build-18 files: the 3 licence checks FAIL
+FAIL the package has LICENSE (GPL-3.0), LICENSING.md, CORRESPONDING_SOURCE.md and THIRD_PARTY_LICENSES.md
+FAIL licence texts in licenses/ for the listed packages (missing: 0)
+FAIL README-FIRST.txt says how coot0 is licensed
+SUMMARY 23 / 26
+
+# build 19 (working copy)
+SUMMARY 26 / 26

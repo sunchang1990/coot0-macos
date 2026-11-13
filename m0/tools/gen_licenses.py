@@ -59,6 +59,16 @@ def main():
         if os.path.isdir(src):
             dst = os.path.join(out, "licenses", name)
             shutil.rmtree(dst, ignore_errors=True); shutil.copytree(src, dst)
+    # packages that ship no info/licenses: FFTW 2 (its text is in the clipper package), FreeType (FTL / GPL-2, files from the
+    # FreeType 2.14.3 source), SQLite (public domain): texts kept in m0/tools/licence-texts/<name>/
+    here = os.path.dirname(os.path.abspath(__file__))
+    fftw_src = os.path.join(out, "licenses", "clipper", "fftw2")
+    if os.path.isdir(fftw_src):
+        dst = os.path.join(out, "licenses", "fftw"); shutil.rmtree(dst, ignore_errors=True); shutil.copytree(fftw_src, dst)
+    for name in ("libfreetype6", "libsqlite"):
+        src = os.path.join(here, "licence-texts", name)
+        if os.path.isdir(src):
+            dst = os.path.join(out, "licenses", name); shutil.rmtree(dst, ignore_errors=True); shutil.copytree(src, dst)
     L += ["", "## Not from conda packages", "", "| Component | Version | Licence (SPDX) | In the package | Source |", "|---|---|---|---|---|"]
     for c in EXTRA:
         L.append("| %s | %s | %s | %s | %s |" % c)

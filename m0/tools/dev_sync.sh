@@ -23,6 +23,13 @@ done < <( (git diff --name-only "$BASE"; git ls-files --others --exclude-standar
 put() { local src=$1 dst=$2; [ -f "$src" ] || return 0; cmp -s "$src" "$dst" 2>/dev/null || { rm -f "$dst"; cp -p "$src" "$dst"; echo "synced ${dst#$B/}"; }; }
 for f in "$HERE"/m1-package/tests/*; do put "$f" "$B/tests/$(basename "$f")"; done
 for f in TEST-PROTOCOL.md CHANGELOG.md collect-results.sh run-coot.sh install.sh uninstall.sh "Install coot0.command" README-FIRST.txt VERSION; do put "$HERE/m1-package/$f" "$B/$f"; done
+# licence files (build 19): LICENSE / LICENSING.md / CORRESPONDING_SOURCE.md from the repository root, the generated list and texts from m1-package
+for f in LICENSE LICENSING.md CORRESPONDING_SOURCE.md; do put "$HERE/../$f" "$B/$f"; done
+put "$HERE/m1-package/THIRD_PARTY_LICENSES.md" "$B/THIRD_PARTY_LICENSES.md"
+if [ -d "$HERE/m1-package/licenses" ]; then
+  out=$(rsync -a --delete --itemize-changes "$HERE/m1-package/licenses/" "$B/licenses/" | wc -l | tr -d ' ')
+  [ "$out" != "0" ] && echo "synced licenses/ ($out changes)"
+fi
 # uncommitted C++ edits are a reminder, nothing more
 if [ -n "$(git status --porcelain | grep -E '\.(cc|c|h|hh|cpp|mm|m)$' || true)" ]; then
   echo "NOTE: uncommitted C++ edits (need a coot-bin rebuild):"; git status --porcelain | grep -E '\.(cc|c|h|hh|cpp|mm|m)$' | sed 's/^/  /'

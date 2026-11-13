@@ -31,8 +31,8 @@ See the GNU General Public License for more details.
 
 GTK 2, Python, Guile, RDKit, Clipper, MMDB2, the CCP4 monomer library and the other bundled libraries and data keep
 their own licences, all of which allow distribution together with GPL-3.0 code. The list with versions and licences is
-[`m0/m1-package/THIRD_PARTY_LICENSES.md`](m0/m1-package/THIRD_PARTY_LICENSES.md); the licence texts are in
-`m0/m1-package/licenses/` (and in `licenses/` of the package).
+`THIRD_PARTY_LICENSES.md` and the licence texts are in `licenses/` (in the package: next to this file; in the source
+repository: in `m0/m1-package/`).
 
 ## The binary package as a whole
 
@@ -43,5 +43,5 @@ permits version 3, the coot0 modifications are version 3, and some bundled libra
 ## Not an official Coot release
 
 coot0 is an independent, unofficial build of Coot 0.9.8.96 for Apple Silicon Macs. It is not made by the Coot
-developers, and they do not provide support for it: please report problems with coot0 in this repository. The name
-"Coot" is used only to say what this program is.
+developers, and they do not provide support for it: please report problems with coot0 to its author (Chang Sun),
+not to the Coot developers. The name "Coot" is used only to say what this program is.
