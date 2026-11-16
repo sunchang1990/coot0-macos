@@ -391,6 +391,20 @@ Round 20: Refine/Improve Ramachandran Plot menu + Fit Protein shown refinement -
   go-to re-contours) - the immediate-replacement state is the real difference.  b19: gui-scripts 14/15, gui-dialogs 46/48; b20 15/15, 48/48.
   User 16 Nov: BB1-BB4 confirmed on screen.
 
+Round 22: alt confs, amino acids only, flip report, Fill Partial Residues list -> build 22  (patch 0038; Python only)
+  User 16 Nov: CC1-3, CC5 ok; flips not tried for residues with alt confs (true: can_flip required no alt confs); keep ligands / non-protein out of
+  both Rama entries; final report; Fill Partial Residues: list of residues fixed, ask for the model only if ambiguous, active map, no H.
+  fitting.py: is_amino_acid_residue (N, CA, C present, not water), peptide_bonded (C-N < 2.5 A), amino_acid_zone; fit_protein_rama_fit_function
+  is now its own (was stepped refine + rama): skips non-amino acids (rama_skipped), refine_zone of the amino-acid zone per alt conf.  Flip: peptide
+  alt confs = alt locs of CA/C/O (i) and N/CA/H (i+1); none -> one decision, both tries refine every alt conf of the zone; some -> per alt conf,
+  pepflip(i, alt) (coot::pepflip moves atoms with that alt loc or blank), score via _rama_regions_of_conformer: Coot's rama classification
+  (get_all_molecule_rama_score) leaves out residues whose phi/psi uses split atoms (A 42-45 missing when A 43 is split), so residues i-1..i+2 with
+  blank + alt atoms are written to a temp PDB, read with handle_read_draw_molecule_with_recentre(path, 0), hidden, classified, closed; go-to
+  molecule restored.  interruptible_fit_protein(..., when_done): called with stopped False at the end / True when Stop ends it.
+  start_rama_flip_run + rama_flip_report (terminal, status bar, info_dialog when graphics).  fill_partial_residues_and_report: missing_atom_info_py
+  before/after, atom names added; choose_model_then (chooser only with > 1 model); several maps and no refinement map -> show_select_map_dialog
+  first.  Coot's fill (missing_atoms(0, ...)) does not add H.  Tests gui-dialogs 61 (b21 53/61).
+
 Round 21: Refine/Improve Ramachandran Plot (try peptide flips) -> build 21  (patch 0037 rama-try-peptide-flips; Python only)
   User request 16 Nov (option a: new entry, original unchanged).  fitting.py fit_protein_rama_flip_function: per residue i (protein i and i+1, no ins
   code, no alt confs): save coords of i-1..i+1; try A refine_zone(i-1, i+1) via refine_and_show with set_refine_ramachandran_angles(1); score =

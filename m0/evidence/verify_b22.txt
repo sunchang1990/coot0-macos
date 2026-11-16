@@ -1,0 +1,38 @@
+Build 22 tarball verification (16 Nov 2026): coot0-0.9.8.96-b22-macos-arm64.tar.gz
+sha256 311c553170353f0f9ff4fc0ad9baed89e2b20845ac20134deab96a674299a512
+Unpacked into a folder with spaces, env -i HOME=<tmp> PATH=/usr/bin:/bin:/usr/sbin:/sbin
+
+== tests/run-headless-tests.sh
+python-api                 SUMMARY 19 / 19
+scheme-api                 SUMMARY 27 / 27
+data-and-maps              SUMMARY 39 / 39
+ondemand-read              SUMMARY 3 / 3
+refine-zone                SUMMARY 7 / 7
+process-helpers            SUMMARY 10 / 10
+bundle-python              SUMMARY 19 / 19
+bundle-scheme              SUMMARY 6 / 6
+rdkit-python               SUMMARY 10 / 10
+rdkit-scheme               SUMMARY 3 / 3
+gtk2compat                 SUMMARY 12 / 12
+gui-scripts                SUMMARY 16 / 16
+gui-dialogs                SUMMARY 61 / 61
+gui-glyco                  SUMMARY 14 / 14
+gui-toolbar                SUMMARY 13 / 13
+gui-rcrane                 SUMMARY 21 / 21
+refmac-run                 SUMMARY 11 / 11
+installer                  SUMMARY 26 / 26
+startup-dictionaries       SUMMARY 1 / 1
+
+== tests/run-gui-sweep.sh
+GUI sweep: 250 items ok, 0 items with errors, 0 items without a handler, 5 items whose activation killed the headless process (OpenGL or screen needed; started but not completed, listed below, checked by the GUI audit), 0 dialog buttons with errors
+Edit > Settings... > Python: Install Template Keybindings button '   X   Edit Chi Angles' | CRASH (process died: OpenGL call without a graphics context, or hang)
+Calculate > Map Tools... > Brighten Maps | CRASH (process died: OpenGL call without a graphics context, or hang)
+Draw > Representation Tools... > Ball & Stick... button '  OK  ' | CRASH (process died: OpenGL call without a graphics context, or hang)
+Draw > Representation Tools... > Highlight Interesting Site (here)... | CRASH (process died: OpenGL call without a graphics context, or hang)
+Ligand > Find Ligands... | CRASH (process died: OpenGL call without a graphics context, or hang)
+
+== bundle_check.py
+Mach-O files checked: 211 | highest minos: 11.0 | dangling symlinks: 0
+RESULT: OK
+
+== setup.sh from the pristine tarball + 38 patches: identical to m0/coot-src (diff -rq)

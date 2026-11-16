@@ -1,0 +1,29 @@
+Build 21 vs build 22: new gui-dialogs tests (patch 0038), run headless with m0/tools/dev_run.sh on 16 Nov 2026.
+Build 21 files (b21 tarball) + the new test file:
+FAIL Ramachandran (try peptide flips): a peptide next to a residue with alt confs (Cys B 72) flipped on purpose is flipped back  'peptide B 71-72 (next to the alt confs of Cys B 72) not flipped back: O 2.87 A from the deposited position'
+FAIL Ramachandran (try peptide flips): with the peptide split into alt confs A / B the flip is tried per conformer (B flipped on purpose is put back, A kept)  "the flip was not tried for each conformer: [('A', 90, 'kept original', (4, 2, 17.524477005004883), (1, 2, 14.330174446105957)), ('A', 43, 'kept original', (4, 2, 19.209662437438965), (2, 2, 16.087327
+FAIL Refine/Improve Ramachandran Plot: a ligand (SO4 numbered after the last amino acid) and a water are not refined, the amino acids are  "moved: ['SO4 A 94', 'HOH A 95']"
+FAIL Ramachandran (try peptide flips): a ligand (SO4 numbered after the last amino acid) and a water are not refined, the amino acids are  "moved: ['SO4 A 94', 'HOH A 95']"
+FAIL Ramachandran (try peptide flips): at the end a report says how many peptides were flipped, and which  EXC AttributeError("module '__main__' has no attribute 'start_rama_flip_run'")
+FAIL Ramachandran (try peptide flips): when the run is stopped, a report says how many peptides were flipped so far  EXC AttributeError("module '__main__' has no attribute 'start_rama_flip_run'")
+FAIL Fill Partial Residues: the terminal lists each residue filled with the atoms added (no hydrogens)  EXC AttributeError("module '__main__' has no attribute 'fill_partial_residues_and_report'")
+FAIL Fill Partial Residues (both menu entries): with one model loaded it is used directly; with several the model chooser opens  EXC AttributeError("module '__main__' has no attribute 'fill_partial_residues_and_report'")
+SUMMARY 53 / 61
+
+Build 22 files:
+SUMMARY 61 / 61
+
+Report lines printed by the build-22 run:
+INFO::   Peptide A 43-44 flipped (Ramachandran 2 -> 4, map fit 16.09 -> 19.21)
+INFO:: Refine/Improve Ramachandran Plot (try peptide flips) finished: 1 peptide flipped (3 peptides tried)
+INFO:: Refine/Improve Ramachandran Plot (try peptide flips) stopped: 1 peptide flipped (1 peptide tried)
+INFO:: Refine/Improve Ramachandran Plot: SO4 A 94 is not an amino acid: not touched
+
+Exploration (build 22 files; explore script: CASE1 = Cys B 72 side-chain alt confs, peptide flipped on purpose; CASE2 = A 43/44 split into A/B, only B flipped; CASE3 = amino-acid test):
+CASE1 res 71 after deliberate flip 3.35 alts []
+CASE1 res 71 after routine 0.05 ('B', 71, '', 'kept flip', (2, 2, 13.579503059387207), (4, 2, 16.770039558410645))
+CASE1 res 72 after deliberate flip 3.6 alts []
+CASE1 res 72 after routine 0.15 ('B', 72, '', 'kept original', (4, 2, 12.52506160736084), (4, 2, 12.529226779937744))
+CASE2 after flip of B: A moved 0.0 B moved 3.39 alts ['A', 'B']
+CASE2 after routine: A 0.19 B 0.18 [('A', 43, 'A', 'kept original', (4, 2, 19.0637189745903), (2, 2, 15.740389198064804)), ('A', 43, 'B', 'kept flip', (2, 2, 15.741649270057678), (4, 2, 18.98507398366928))]
+CASE3 amino acid? [(1, True), (2, True), (124, False), (125, False)] zone A 124 (124, 124)

@@ -1,4 +1,29 @@
-# Coot 0.9.8.96 on Apple Silicon: test round 21 (build 21 = build 20 + Refine/Improve Ramachandran Plot (try peptide flips))
+# Coot 0.9.8.96 on Apple Silicon: test round 22 (build 22 = build 21 + peptide flips with alternate conformations, amino acids only, flip report, Fill Partial Residues list)
+
+**From you** (16 Nov): CC1-CC3 and CC5 confirmed (the new entry is there, both orientations are tried, correct peptides are kept, Fill Partial Residues rebuilt the deleted side chain). Asked for: flips also for residues with alternate conformations; no ligands / non-protein residues touched by either Ramachandran entry; a final report of the flips; a list of the residues Fill Partial Residues fixed; the model asked for only when there is a choice; the active map; no hydrogens.
+
+1. **Alternate conformations** (you were right: build 21 tried no flip at all next to alt confs, it only refined each conformer). Now, if only side chains are split (the peptide atoms are shared), both tries refine every conformer and one decision is made for the shared peptide. If the peptide itself is split (C, O / N in conformers A and B), the flip is tried for each conformer separately and judged on that conformer alone.
+2. **Amino acids only**, in both Refine/Improve Ramachandran Plot entries: ligands, waters and nucleotides are not refined, and they are not part of the zone around an amino acid either (before, a ligand numbered right after the last residue of a chain was refined with it). Skipped ligands are named in the terminal.
+3. **Report** (try peptide flips): when the run finishes, or when you press Stop, a window (and the terminal and status bar) says "... finished: N peptides flipped (M peptides tried)" with the list of flips. After Continue you get another report at the end.
+4. **Fill Partial Residues**: the terminal lists each residue filled ("filled ARG A 40: added CG CD NE CZ NH1 NH2") and those it could not fill (when N, CA or C is missing). With one model loaded it does not ask; with several, the chooser opens (also for Calculate > Modelling... > Fill Partial Residues, which used the molecule at the centre). The map is the refinement map (Coot's "active" map; picked automatically when only one map is loaded); with several maps and none chosen it asks for the map first. No hydrogens are added (that was already so).
+
+**Tested headless** on the tutorial model: the peptide B 71-72 next to Cys B 72 (side-chain alt confs) flipped on purpose was put back; with residues A 43-44 split into conformers A / B and only B flipped on purpose, B was flipped back and A kept; a sulfate numbered after the last amino acid and a water were not moved by either entry; the report after a finished and a stopped run; the Fill Partial Residues list. **On screen: not verified by me.**
+
+**New tests** (`gui-dialogs` 53 -> 61; build 21 fails all 8). Evidence: `evidence/checks_b21_vs_b22.txt`, `evidence/verify_b22.txt`.
+
+## DD. Round 22 checks (about 15 minutes, on a copy of your model)
+
+| # | Do | Expected |
+|---|---|---|
+| DD1 | A residue with alternate conformations: Pep-flip the peptide before or after it, run "(try peptide flips)", Stop after that residue. | The flip is tried and the peptide is back; the report window appears after Stop. |
+| DD2 | (if your model has a ligand or glycan) Run either Ramachandran entry over the residues around it. | The ligand does not move; the terminal says it was not touched. |
+| DD3 | Let "(try peptide flips)" finish (or Stop it). | A report window: number of peptides flipped and tried, the list. |
+| DD4 | Delete a side chain, Calculate > All Molecule... > [Post MR] Fill Partial Residues... (one model loaded). | No chooser; side chain rebuilt; terminal lists "filled <RES> <chain> <no>: added ...". |
+| DD5 | (optional) Load a second model and repeat DD4. | The chooser opens first. |
+
+---
+
+# Earlier round (CC1-CC3, CC5 confirmed 16 Nov): Coot 0.9.8.96 on Apple Silicon: test round 21 (build 21 = build 20 + Refine/Improve Ramachandran Plot (try peptide flips))
 
 **From you** (16 Nov): BB1-BB4 confirmed (Fit Protein and Refine/Improve Ramachandran Plot show the refinement like Stepped Refine; the menu entries are there). Asked for peptide flips in the Ramachandran refinement as a new entry next to the original (your choice (a)). Fill Partial Residues: question answered in chat, your details pending (CC5).
 

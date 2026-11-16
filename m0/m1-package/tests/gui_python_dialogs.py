@@ -508,6 +508,163 @@ check("Ramachandran (try peptide flips): a flip is kept for a better Ramachandra
                and not _m.rama_flip_better((4, 2, 10.0), (4, 2, 10.5)) and _m.rama_flip_better((4, 2, 10.0), (4, 2, 11.5))
                and not _m.rama_flip_better((4, 2, 10.0), (4, 1, 20.0))) or "wrong choice")
 
+# (build 22) Alt confs: build 21 tried no flip when residue i or i+1 had alt confs (it fell back to a plain refinement).  Shared peptide (only side
+# chains split, Cys B 72): one decision with every alt conf refined.  Split peptide (C, O / N with alt confs): a decision per alt conf, scored on
+# that conformer alone.  Then: ligands / waters are not touched by either Ramachandran entry, and a report is given at the end or when stopped.
+def _split_pdb(chain, res_nos):
+    import tempfile
+    out = []
+    for l in open(os.path.join(here, "test-data", "tutorial-modern.pdb")):
+        if l.startswith(("ATOM", "HETATM")) and l[21] == chain and int(l[22:26]) in res_nos and l[16] == " ":
+            out.append(l[:16] + "A" + l[17:54] + "  0.50" + l[60:]); out.append(l[:16] + "B" + l[17:54] + "  0.50" + l[60:])
+        else: out.append(l)
+    p_ = os.path.join(tempfile.mkdtemp(), "split.pdb"); open(p_, "w").writelines(out); return p_
+def _O(imol_, ch, r, alt=""):
+    return [a[2] for a in coot.residue_info_py(imol_, ch, r, "") if a[0][0].strip() == "O" and a[0][1] == alt][0]
+def rama_flip_alt_shared():
+    imol_f, imap_f, O = _flip_setup()
+    o0 = _O(imol_f, "B", 71); coot.pepflip(imol_f, "B", 71, "", "")
+    if _math.dist(o0, _O(imol_f, "B", 71)) < 2.5: return "the deliberate flip of B 71 did not move O"
+    _m.fit_protein_rama_flip_function([imol_f, "B", 71, ""], imap_f)
+    d = _math.dist(o0, _O(imol_f, "B", 71))
+    sg = sorted(a[0][1] for a in coot.residue_info_py(imol_f, "B", 72, "") if a[0][0].strip() == "SG")
+    if sg != ["A", "B"]: return "the alt confs of Cys B 72 were lost: %r" % sg
+    return True if d < 0.5 else "peptide B 71-72 (next to the alt confs of Cys B 72) not flipped back: O %.2f A from the deposited position" % d
+check("Ramachandran (try peptide flips): a peptide next to a residue with alt confs (Cys B 72) flipped on purpose is flipped back", rama_flip_alt_shared)
+def rama_flip_alt_split():
+    imol_f = coot.read_pdb(_split_pdb("A", (43, 44)))
+    imap_f = coot.make_and_draw_map(os.path.join(here, "test-data", "rnasa-1.8-all_refmac1.mtz"), "FWT", "PHWT", "", 0, 0)
+    coot.set_imol_refinement_map(imap_f); _m.continue_multi_refine = True
+    oa, ob = _O(imol_f, "A", 43, "A"), _O(imol_f, "A", 43, "B")
+    coot.pepflip(imol_f, "A", 43, "", "B")                     # only conformer B flipped
+    if _math.dist(ob, _O(imol_f, "A", 43, "B")) < 2.5 or _math.dist(oa, _O(imol_f, "A", 43, "A")) > 0.01: return "the deliberate flip of conformer B failed"
+    n_models = len([i for i in range(coot.graphics_n_molecules()) if coot.is_valid_model_molecule(i)])
+    _m.fit_protein_rama_flip_function([imol_f, "A", 43, ""], imap_f)
+    da, db = _math.dist(oa, _O(imol_f, "A", 43, "A")), _math.dist(ob, _O(imol_f, "A", 43, "B"))
+    if len([i for i in range(coot.graphics_n_molecules()) if coot.is_valid_model_molecule(i)]) != n_models: return "a temporary molecule was left behind"
+    tried = [e[2] for e in _m.rama_flip_log[-2:] if e[1] == 43]
+    if tried != ["A", "B"]: return "the flip was not tried for each conformer: %r" % (_m.rama_flip_log[-2:],)
+    return True if da < 0.5 and db < 0.5 else "conformer A moved %.2f A, conformer B %.2f A from the deposited O (want < 0.5)" % (da, db)
+check("Ramachandran (try peptide flips): with the peptide split into alt confs A / B the flip is tried per conformer (B flipped on purpose is put back, A kept)", rama_flip_alt_split)
+def _ligand_pdb():
+    import tempfile
+    lines = [l for l in open(os.path.join(here, "test-data", "tutorial-modern.pdb")) if not l.startswith("END")]
+    so4 = [(" S  ", 61.0, 6.0, -1.0, "S"), (" O1 ", 62.2, 6.4, -1.0, "O"), (" O2 ", 60.4, 7.6, -1.3, "O"), (" O3 ", 60.6, 5.1, 0.4, "O"), (" O4 ", 60.5, 5.5, -2.0, "O")]
+    for i, (n, x, y, z, e) in enumerate(so4):     # SO4 numbered A 94, after the last amino acid A 93, with a distorted geometry
+        lines.append("HETATM%5d %4s SO4 A  94    %8.3f%8.3f%8.3f  1.00 20.00           %s\n" % (2000 + i, n, x, y, z, e))
+    lines.append("HETATM%5d  O   HOH A  95    %8.3f%8.3f%8.3f  1.00 20.00           O\n" % (2010, 57.0, 8.0, -3.0))
+    p_ = os.path.join(tempfile.mkdtemp(), "with-ligand.pdb"); open(p_, "w").writelines(lines + ["END\n"]); return p_
+def rama_leaves_ligands(fit):
+    imol_l = coot.read_pdb(_ligand_pdb())
+    imap_l = coot.make_and_draw_map(os.path.join(here, "test-data", "rnasa-1.8-all_refmac1.mtz"), "FWT", "PHWT", "", 0, 0)
+    coot.set_imol_refinement_map(imap_l); _m.continue_multi_refine = True
+    xyz = lambda r: sorted(tuple(round(c, 3) for c in a[2][:3]) for a in coot.residue_info_py(imol_l, "A", r, "") or [])
+    het0 = (xyz(94), xyz(95)); a93 = xyz(93)
+    for r in (92, 93, 94, 95): fit([imol_l, "A", r, ""], imap_l)
+    if not het0[0]: return "the test ligand was not read"
+    moved = [n for n, a, b in (("SO4 A 94", het0[0], xyz(94)), ("HOH A 95", het0[1], xyz(95))) if a != b]
+    if moved: return "moved: %s" % moved
+    return True if xyz(93) != a93 else "the amino acid A 93 next to the ligand was not refined"
+check("Refine/Improve Ramachandran Plot: a ligand (SO4 numbered after the last amino acid) and a water are not refined, the amino acids are",
+      lambda: rama_leaves_ligands(_m.fit_protein_rama_fit_function))
+check("Ramachandran (try peptide flips): a ligand (SO4 numbered after the last amino acid) and a water are not refined, the amino acids are",
+      lambda: rama_leaves_ligands(_m.fit_protein_rama_flip_function))
+def rama_flip_report_run(stop_after=None):
+    imol_f, imap_f, O = _flip_setup()
+    coot.pepflip(imol_f, "A", 43, "", "")
+    specs = [[imol_f, "A", 43, ""], [imol_f, "A", 50, ""], [imol_f, "A", 60, ""]]
+    shown = []
+    keep = {n: getattr(_m, n) for n in ("fit_protein_make_specs", "info_dialog", "use_graphics_interface_state", "fit_protein_rama_flip_function")}
+    done = []
+    def counted(spec, imap):
+        keep["fit_protein_rama_flip_function"](spec, imap); done.append(spec[2])
+        if stop_after and len(done) >= stop_after: _m.stop_interruptible_fit_protein()
+    _m.fit_protein_make_specs = lambda imol_, which: [list(s_) for s_ in specs]
+    _m.info_dialog = lambda t: shown.append(t)
+    _m.use_graphics_interface_state = lambda: 1
+    _m.fit_protein_rama_flip_function = counted
+    keep_secs = _m.stepped_refine_show_seconds; _m.stepped_refine_show_seconds = 0
+    try:
+        _m.start_rama_flip_run(imol_f)
+        t0 = _time.time()
+        while _time.time() - t0 < 120 and not shown:
+            while gtk.events_pending(): gtk.main_iteration(False)
+            _time.sleep(0.01)
+    finally:
+        for n, f in keep.items(): setattr(_m, n, f)
+        _m.stepped_refine_show_seconds = keep_secs
+        _m.cancel_interruptible_fit_protein()
+    return done, shown
+def rama_flip_report_end():
+    done, shown = rama_flip_report_run()
+    if done != [43, 50, 60]: return "not all residues were done: %r" % done
+    if len(shown) != 1: return "expected one report window, got %r" % shown
+    t = shown[0]
+    return True if ("finished: 1 peptide flipped" in t and "A 43-44" in t) else "report: %r" % t
+check("Ramachandran (try peptide flips): at the end a report says how many peptides were flipped, and which", rama_flip_report_end)
+def rama_flip_report_stop():
+    done, shown = rama_flip_report_run(stop_after=1)
+    if done != [43]: return "residues done after Stop: %r" % done
+    if len(shown) != 1: return "expected one report window after Stop, got %r" % shown
+    return True if ("stopped: 1 peptide flipped" in shown[0] and "A 43-44" in shown[0]) else "report: %r" % shown[0]
+check("Ramachandran (try peptide flips): when the run is stopped, a report says how many peptides were flipped so far", rama_flip_report_stop)
+
+# (build 22) Fill Partial Residues: the terminal lists the residues that were filled (with the atoms added) and those that could not be; no hydrogens
+# are added; the model is asked for only when more than one is loaded.
+def fill_partial_report():
+    imol_p = coot.read_pdb(os.path.join(here, "test-data", "tutorial-modern.pdb"))
+    imap_p = coot.make_and_draw_map(os.path.join(here, "test-data", "rnasa-1.8-all_refmac1.mtz"), "FWT", "PHWT", "", 0, 0)
+    coot.set_imol_refinement_map(imap_p)
+    for a in coot.residue_info_py(imol_p, "A", 40, "") or []:
+        if a[0][0].strip() not in ("N", "CA", "C", "O"): coot.delete_atom(imol_p, "A", 40, "", a[0][0], a[0][1])
+    import io, contextlib
+    out = io.StringIO()
+    with contextlib.redirect_stdout(out): r = _m.fill_partial_residues_and_report(imol_p)
+    text = out.getvalue()
+    line = [l for l in text.splitlines() if "filled" in l and " A 40" in l and "not filled" not in l]
+    if not line: return "no 'filled ... A 40' line in the terminal: %r" % text[-400:]
+    names = [a[0][0].strip() for a in coot.residue_info_py(imol_p, "A", 40, "")]
+    if any(n.startswith("H") for n in names): return "hydrogens were added: %r" % names
+    return True if ("CB" in line[0] and "CG" in line[0]) else "the line does not list the atoms added: %r" % line[0]
+check("Fill Partial Residues: the terminal lists each residue filled with the atoms added (no hydrogens)", fill_partial_report)
+def fill_partial_menu():
+    called, n_windows = [], len(H.windows)
+    keep = {n: getattr(_m, n) for n in ("fill_partial_residues_and_report", "molecule_number_list")}
+    one = coot.read_pdb(os.path.join(here, "test-data", "tutorial-modern.pdb"))
+    _m.fill_partial_residues_and_report = lambda imol_: called.append(imol_)
+    try:
+        _m.molecule_number_list = lambda: [one]
+        for path in (("All Molecule...", "[Post MR] Fill Partial Residues..."), ("Modelling...", "Fill Partial Residues")):
+            it = _find_menu_item(path)
+            if it is None: return "menu entry %r not found" % (path,)
+            it.activate()
+        if called != [one, one] or len(H.windows) != n_windows:
+            return "with one model: called %r, %d windows opened (want the model used directly, no chooser)" % (called, len(H.windows) - n_windows)
+        _m.molecule_number_list = lambda: [one, imol]
+        _find_menu_item(("All Molecule...", "[Post MR] Fill Partial Residues...")).activate()
+        return True if len(H.windows) > n_windows and called == [one, one] else "with two models no chooser was shown"
+    finally:
+        for n, f in keep.items(): setattr(_m, n, f)
+def _find_menu_item(path):
+    import gtk as _g
+    items = []
+    def walk(menu, depth):
+        for k in menu.get_children():
+            ch = k.get_children()
+            lab = ch[0].get_text() if ch and hasattr(ch[0], "get_text") else None
+            items.append((lab, k))
+            if k.get_submenu() is not None and depth < 4: walk(k.get_submenu(), depth + 1)
+    walk(g["_menubar"], 0)
+    sub = None
+    for lab, k in items:
+        if lab == path[0] and k.get_submenu() is not None: sub = k.get_submenu(); break
+    if sub is None: return None
+    for k in sub.get_children():
+        ch = k.get_children()
+        if ch and hasattr(ch[0], "get_text") and ch[0].get_text() == path[1]: return k
+    return None
+check("Fill Partial Residues (both menu entries): with one model loaded it is used directly; with several the model chooser opens", fill_partial_menu)
+
 # Alt conf occupancy slider (Extensions > Modelling or the toolbar): "OK" did nothing in build 13 (set_alt_conf_occ compared a list with a number: a
 # TypeError in Python 3, silently true in Python 2).  Cys B 72 of tutorial-modern.pdb has SG A (occ 0.7) / SG B (occ 0.3).
 def occ_slider_ok():

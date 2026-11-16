@@ -1,10 +1,11 @@
 # One line per check: PASS / FAIL / PARTIAL and a few words.  (You can also just tell me in chat.)
-# Round 21 (see TEST-PROTOCOL.md, section CC):
-CC1 All Molecule submenu has the new "(try peptide flips)" entry:
-CC2 deliberately flipped peptide is flipped back, status bar says so:
-CC3 correct residues are not flipped:
-CC4 (optional) the original entry does not fix the flip:
-CC5 Fill Partial Residues details (menu used, models loaded, map dialog, hydrogens):
+# Round 22 (see TEST-PROTOCOL.md, section DD):
+DD1 flip tried next to alternate conformations, report after Stop:
+DD2 ligand not moved by either Ramachandran entry:
+DD3 report window at the end (peptides flipped / tried):
+DD4 Fill Partial Residues with one model: no chooser, terminal list:
+DD5 (optional) two models: chooser opens:
+# Round 21 (section CC): CC1-CC3, CC5 confirmed 16 Nov; CC4 optional.
 # Round 20 (see TEST-PROTOCOL.md, section BB): confirmed 16 Nov.
 # Round 19 (see TEST-PROTOCOL.md, section AA):
 AA1 install build 19, coot0 starts it:

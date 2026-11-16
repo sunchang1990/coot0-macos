@@ -1,0 +1,470 @@
+diff --git a/python/extensions.py b/python/extensions.py
+index 0e47441..1fee314 100644
+--- a/python/extensions.py
++++ b/python/extensions.py
+@@ -186,11 +186,13 @@ if (have_coot_python):
+      #
+      #---------------------------------------------------------------------
+ 
++     # macOS port (build 22): asks for the model only when more than one is loaded, and lists the residues it filled (fitting.py:
++     # fill_partial_residues_and_report).  The same for Calculate > Models > Fill Partial Residues (it used the molecule at the centre).
+      add_simple_coot_menu_menuitem(
+        submenu_all_molecule,
+        "[Post MR] Fill Partial Residues...",
+-       lambda func: molecule_chooser_gui("Find and Fill residues with missing atoms",
+-                lambda imol: fill_partial_residues(imol)))
++       lambda func: choose_model_then("Find and Fill residues with missing atoms",
++                lambda imol: fill_partial_residues_and_report(imol)))
+ 
+ 
+      # old style - not interruptable
+@@ -258,6 +260,7 @@ if (have_coot_python):
+        else:
+          global continue_multi_refine
+          continue_multi_refine = True
++         del rama_skipped[:]
+          interruptible_fit_protein(imol, fit_protein_rama_fit_function)
+ 
+      # macOS port (build 20): this entry was indented into fit_protein_func3() above (the same in the 0.9.8.96 source), so it was only
+@@ -273,9 +276,7 @@ if (have_coot_python):
+        if (imol_refinement_map() == -1):
+          add_status_bar_text("oops. Must set a map to fit")
+        else:
+-         global continue_multi_refine
+-         continue_multi_refine = True
+-         interruptible_fit_protein(imol, fit_protein_rama_flip_function)
++         start_rama_flip_run(imol)      # (build 22) with a report of the flips at the end, or when stopped
+ 
+      add_simple_coot_menu_menuitem(
+        submenu_all_molecule,
+@@ -670,9 +671,8 @@ if (have_coot_python):
+                                          "", " Fetch ", lambda comp_id: get_pdbe_ligand_func(comp_id)))
+ 
+      def fpr():
+-         with UsingActiveAtom() as [aa_imol, aa_chain_id, aa_res_no,
+-                                    aa_ins_code, aa_atom_name, aa_alt_conf]:
+-           fill_partial_residues(aa_imol)
++         choose_model_then("Find and Fill residues with missing atoms",
++                           lambda imol: fill_partial_residues_and_report(imol))
+ 
+      add_simple_coot_menu_menuitem(submenu_models, "Fill Partial Residues", lambda m: fpr())
+ 
+diff --git a/python/fitting.py b/python/fitting.py
+index b8f56a4..35f6130 100644
+--- a/python/fitting.py
++++ b/python/fitting.py
+@@ -328,9 +328,89 @@ def fit_protein_stepped_refine_function(res_spec, imol_map, use_rama = False):
+     set_dragged_refinement_steps_per_frame(current_steps_per_frame)
+ 
+     
++# macOS port (build 22): both Refine/Improve Ramachandran Plot entries work on amino acids only.  Ligands, waters, nucleotides and other
++# non-protein residues are not refined, and they are not part of the zone around an amino acid either: the zone is i-1 .. i+1 limited to
++# amino acids that are joined by a peptide bond (before, refine_auto_range took i-1 .. i+1 by number, so a ligand numbered after the last amino
++# acid of a chain was refined with it).
++def _residue_atoms(imol, chain_id, res_no, ins_code=""):
++    """{(atom name, alt conf): [x, y, z]} of a residue ({} if it does not exist)."""
++    d = {}
++    try:
++        for atom in residue_info(imol, chain_id, res_no, ins_code) or []:
++            d[(atom[0][0].strip(), atom[0][1])] = list(atom[2])
++    except Exception:
++        pass
++    return d
++
++def is_amino_acid_residue(imol, chain_id, res_no, ins_code=""):
++    """True for a residue with main-chain N, CA and C (any amino acid, also modified ones such as MSE); False for waters, ligands, nucleotides."""
++    name = residue_name(imol, chain_id, res_no, ins_code)
++    if not isinstance(name, str) or name in ("HOH", "WAT", "DOD"):
++        return False
++    names = set(n for n, a in _residue_atoms(imol, chain_id, res_no, ins_code))
++    return set(["N", "CA", "C"]) <= names
++
++def peptide_bonded(imol, chain_id, res_no):
++    """True if residue res_no and res_no + 1 are amino acids joined by a peptide bond (C - N shorter than 2.5 A, any alt conf)."""
++    if not (is_amino_acid_residue(imol, chain_id, res_no) and is_amino_acid_residue(imol, chain_id, res_no + 1)):
++        return False
++    a = _residue_atoms(imol, chain_id, res_no)
++    b = _residue_atoms(imol, chain_id, res_no + 1)
++    for (n1, _), c in a.items():
++        if n1 != "C":
++            continue
++        for (n2, _), n in b.items():
++            if n2 == "N" and sum((c[i] - n[i]) ** 2 for i in range(3)) < 2.5 * 2.5:
++                return True
++    return False
++
++def amino_acid_zone(imol, chain_id, res_no):
++    """(first, last) residue number of the zone around res_no: res_no - 1 and res_no + 1 where they are peptide-bonded amino acids."""
++    lo = res_no - 1 if peptide_bonded(imol, chain_id, res_no - 1) else res_no
++    hi = res_no + 1 if peptide_bonded(imol, chain_id, res_no) else res_no
++    return lo, hi
++
++def _refine_amino_acid_zone(imol, chain_id, res_no, ins_code, alt_conf):
++    if ins_code:                                   # (insertion codes: just this residue)
++        refine_residues_with_alt_conf_py(imol, [[chain_id, res_no, ins_code]], alt_conf)
++        return
++    lo, hi = amino_acid_zone(imol, chain_id, res_no)
++    refine_zone(imol, chain_id, lo, hi, alt_conf)
++
++rama_skipped = []                  # residues the last Refine/Improve Ramachandran Plot run left alone (not amino acids), waters not listed
++
++def _note_not_amino_acid(imol, chain_id, res_no, ins_code):
++    name = residue_name(imol, chain_id, res_no, ins_code)
++    if name not in ("HOH", "WAT", "DOD"):
++        rama_skipped.append((chain_id, res_no, ins_code, name))
++        print("INFO:: Refine/Improve Ramachandran Plot: %s %s %d%s is not an amino acid: not touched" % (name, chain_id, res_no, ins_code))
++
+ def fit_protein_rama_fit_function(res_spec, imol_map):
+-    # BL says: make it more generic
+-    fit_protein_stepped_refine_function(res_spec, imol_map, True)
++    """Refine/Improve Ramachandran Plot: refine each amino acid (its zone of amino acids) with Ramachandran restraints, shown like Stepped Refine."""
++    imol     = res_spec[0]
++    chain_id = res_spec[1]
++    res_no   = res_spec[2]
++    ins_code = res_spec[3]
++    if not is_amino_acid_residue(imol, chain_id, res_no, ins_code):
++        _note_not_amino_acid(imol, chain_id, res_no, ins_code)
++        return
++    current_steps_per_frame = dragged_refinement_steps_per_frame()
++    current_rama_state = refine_ramachandran_angles_state()
++    set_dragged_refinement_steps_per_frame(400)
++    set_refine_ramachandran_angles(1)
++    try:
++        for alt_conf in residue_alt_confs(imol, chain_id, res_no, ins_code):
++            print("centering on", chain_id, res_no, "CA")
++            set_go_to_atom_chain_residue_atom_name_full(chain_id, res_no, ins_code, "CA", alt_conf)
++            update_maps()
++            rotate_y_scene(10, 0.3)
++            refine_and_show(imol, lambda: _refine_amino_acid_zone(imol, chain_id, res_no, ins_code, alt_conf))
++            rotate_y_scene(10, 0.3)
++            if globals().get("continue_multi_refine", True) is False:
++                break
++    finally:
++        set_refine_ramachandran_angles(current_rama_state)
++        set_dragged_refinement_steps_per_frame(current_steps_per_frame)
+ 
+ # macOS port (build 21): Refine/Improve Ramachandran Plot (try peptide flips).  Ramachandran restraints only nudge phi/psi; a peptide that is flipped
+ # the wrong way round is about 180 degrees away and refinement does not cross that barrier.  For every residue i (with a next residue i+1) this tries
+@@ -338,8 +418,13 @@ def fit_protein_rama_fit_function(res_spec, imol_map):
+ # It keeps B only if it is better: fewer residues of i, i+1 in a worse Ramachandran region (Coot's own classification: outlier < allowed <
+ # favoured), or the same regions and a clearly better fit to the map (density_score_residue of i and i+1, >= rama_flip_density_gain better).
+ # Each try is shown like Stepped Refine.  The original "Refine/Improve Ramachandran Plot..." is unchanged.
++# (build 22) Alternative conformations: build 21 did not try the flip at all when i or i+1 had alt confs.  Now, if the peptide atoms are shared
++# (only side chains split), both tries refine every alt conf and one flip decision is made; if the peptide itself is split (C, O / N with alt
++# confs), the flip is tried for each alt conf separately, scored on that conformer only.  Only amino acids joined by a peptide bond are used,
++# and a report of the flips kept is given when the run ends or is stopped (rama_flip_report).
+ rama_flip_density_gain = 0.10      # relative gain in map fit needed to keep a flip when the Ramachandran regions are the same
+-rama_flip_log = []                 # (chain_id, res_no, "kept flip" / "kept original", score A, score B) of the last runs
++rama_flip_log = []                 # (chain_id, res_no, alt conf, "kept flip" / "kept original", score A, score B) of the last runs
++rama_flip_run = {"tried": 0, "flipped": []}   # the current run (reset by fit_protein_func4); "flipped": (chain_id, res_no, alt conf, text)
+ 
+ def _rama_flip_save(imol, chain_id, res_nos):
+     """Coordinates of every atom of the residues (to restore one try before the other)."""
+@@ -357,18 +442,71 @@ def _rama_flip_restore(imol, saved):
+         with NoBackups(imol):
+             set_atom_attributes(attrs)
+ 
+-def _rama_flip_score(imol, chain_id, res_nos, imol_map):
+-    """(sum of Ramachandran regions 0 outlier / 1 allowed / 2 favoured, number of residues classified, map fit) of the residues."""
++def _rama_regions(imol, chain_id, res_nos):
+     region = {}
+     for item in all_molecule_ramachandran_region_py(imol) or []:
+         spec, reg = item[0], item[1]
+         spec = list(spec)[-3:]                      # [chain, res_no, ins] (older specs carry a leading flag)
+         if spec[0] == chain_id and spec[1] in res_nos:
+             region[spec[1]] = reg if reg in (0, 1, 2) else 1
++    return region
++
++def _rama_regions_of_conformer(imol, chain_id, res_nos, alt):
++    """Ramachandran regions of the residues for alt conf `alt` alone.  Coot does not classify residues whose main chain is split into alt
++    confs, so residues res_nos - 1 .. res_nos + 1 with only that conformer (and the shared atoms) are read into a hidden temporary molecule."""
++    import os, tempfile
++    lines, serial = [], 1
++    for r in range(min(res_nos) - 1, max(res_nos) + 2):
++        rn = residue_name(imol, chain_id, r, "")
++        if not isinstance(rn, str):
++            continue
++        for atom in residue_info(imol, chain_id, r, "") or []:
++            name, a = atom[0][0], atom[0][1]
++            if a not in ("", alt):
++                continue
++            ele = str(atom[1][2]).strip() if len(atom[1]) > 2 else ""
++            x, y, z = atom[2][:3]
++            lines.append("ATOM  %5d %-4s %3s %1s%4d    %8.3f%8.3f%8.3f  1.00 20.00          %2s\n" % (serial, name[:4], rn[:3], chain_id[:1], r, x, y, z, ele[:2]))
++            serial += 1
++    if not lines:
++        return {}
++    fd, path = tempfile.mkstemp(suffix=".pdb", prefix="coot-rama-conformer-")
++    with os.fdopen(fd, "w") as f:
++        f.writelines(lines + ["END\n"])
++    imol_go = go_to_atom_molecule_number()
++    imol_t = handle_read_draw_molecule_with_recentre(path, 0)
++    region = {}
++    try:
++        if valid_model_molecule_qm(imol_t):
++            set_mol_displayed(imol_t, 0)
++            region = _rama_regions(imol_t, chain_id, res_nos)
++    finally:
++        if valid_model_molecule_qm(imol_t):
++            close_molecule(imol_t)
++        set_go_to_atom_molecule(imol_go)
++        try:
++            os.remove(path)
++        except OSError:
++            pass
++    return region
++
++def _rama_flip_score(imol, chain_id, res_nos, imol_map, alt=""):
++    """(sum of Ramachandran regions 0 outlier / 1 allowed / 2 favoured, number of residues classified, map fit) of the residues.
++    alt: score that alt conf only (regions of that conformer alone; map fit = density at the atoms of that conformer and the shared atoms)."""
++    if not alt:
++        region = _rama_regions(imol, chain_id, res_nos)
++        fit = 0.0
++        if valid_map_molecule_qm(imol_map):
++            for r in res_nos:
++                fit += density_score_residue(imol, [chain_id, r, ""], imol_map)
++        return (sum(region.values()), len(region), fit)
++    region = _rama_regions_of_conformer(imol, chain_id, res_nos, alt)
+     fit = 0.0
+     if valid_map_molecule_qm(imol_map):
+         for r in res_nos:
+-            fit += density_score_residue(imol, [chain_id, r, ""], imol_map)
++            for (name, a), xyz in _residue_atoms(imol, chain_id, r).items():
++                if a in ("", alt):
++                    fit += density_at_point(imol_map, xyz[0], xyz[1], xyz[2])
+     return (sum(region.values()), len(region), fit)
+ 
+ def rama_flip_better(score_a, score_b, gain=None):
+@@ -381,22 +519,40 @@ def rama_flip_better(score_a, score_b, gain=None):
+         return score_b[0] > score_a[0]
+     return score_b[2] > score_a[2] + gain * abs(score_a[2]) and score_b[2] > score_a[2]
+ 
++_PEPTIDE_ATOMS_I = ("CA", "C", "O")
++_PEPTIDE_ATOMS_NEXT = ("N", "CA", "H")
++
++def peptide_alt_confs(imol, chain_id, res_no):
++    """Alt confs of the atoms that a flip of peptide res_no / res_no + 1 moves or depends on ([] if they are all shared)."""
++    alts = set()
++    for (name, a) in _residue_atoms(imol, chain_id, res_no):
++        if a and name in _PEPTIDE_ATOMS_I:
++            alts.add(a)
++    for (name, a) in _residue_atoms(imol, chain_id, res_no + 1):
++        if a and name in _PEPTIDE_ATOMS_NEXT:
++            alts.add(a)
++    return sorted(alts)
++
++def _zone_alt_confs(imol, chain_id, res_nos):
++    alts = set()
++    for r in res_nos:
++        for (name, a) in _residue_atoms(imol, chain_id, r):
++            if a:
++                alts.add(a)
++    return sorted(alts)
++
+ def fit_protein_rama_flip_function(res_spec, imol_map):
+ 
+     imol     = res_spec[0]
+     chain_id = res_spec[1]
+     res_no   = res_spec[2]
+     ins_code = res_spec[3]
+-    res_name = residue_name(imol, chain_id, res_no, ins_code)
+-    centre_atom = stepped_refine_centre_atom(imol, chain_id, res_no, ins_code)
++    if not is_amino_acid_residue(imol, chain_id, res_no, ins_code):
++        _note_not_amino_acid(imol, chain_id, res_no, ins_code)          # ligands, waters, nucleotides: not touched
++        return
+     nxt = res_no + 1
+-    can_flip = (ins_code == "" and isinstance(res_name, str) and res_name != "HOH" and centre_atom == "CA"
+-                and residue_exists_qm(imol, chain_id, nxt, "")
+-                and stepped_refine_centre_atom(imol, chain_id, nxt, "") == "CA"
+-                and len(residue_alt_confs(imol, chain_id, res_no, ins_code)) <= 1
+-                and len(residue_alt_confs(imol, chain_id, nxt, "")) <= 1)
+-    if not can_flip:                               # waters, nucleotides, chain ends, insertion codes, alt confs: as before
+-        fit_protein_stepped_refine_function(res_spec, imol_map, True)
++    if ins_code != "" or not peptide_bonded(imol, chain_id, res_no):
++        fit_protein_rama_fit_function(res_spec, imol_map)              # chain ends, breaks, insertion codes: refined without a flip
+         return
+     current_steps_per_frame = dragged_refinement_steps_per_frame()
+     current_rama_state = refine_ramachandran_angles_state()
+@@ -407,33 +563,74 @@ def fit_protein_rama_flip_function(res_spec, imol_map):
+         set_go_to_atom_chain_residue_atom_name_full(chain_id, res_no, ins_code, "CA", "")
+         update_maps()
+         rotate_y_scene(10, 0.3)
+-        lo = res_no - 1 if residue_exists_qm(imol, chain_id, res_no - 1, "") else res_no
+-        zone = list(range(lo, nxt + 1))
+-        original = _rama_flip_save(imol, chain_id, zone)
+-        refine_and_show(imol, lambda: refine_zone(imol, chain_id, lo, nxt, ""))
+-        score_a = _rama_flip_score(imol, chain_id, [res_no, nxt], imol_map)
+-        if globals().get("continue_multi_refine", True) is False:      # Stop pressed: keep try A
+-            return
+-        try_a = _rama_flip_save(imol, chain_id, zone)
+-        _rama_flip_restore(imol, original)
+-        with NoBackups(imol):
+-            pepflip(imol, chain_id, res_no, "", "")
+-        refine_and_show(imol, lambda: refine_zone(imol, chain_id, lo, nxt, ""))
+-        score_b = _rama_flip_score(imol, chain_id, [res_no, nxt], imol_map)
+-        if rama_flip_better(score_a, score_b):
+-            verdict = "kept flip"
+-            add_status_bar_text("Peptide %s %d-%d flipped (Ramachandran %d -> %d, map fit %.2f -> %.2f)"
+-                                % (chain_id, res_no, nxt, score_a[0], score_b[0], score_a[2], score_b[2]))
+-        else:
+-            verdict = "kept original"
+-            _rama_flip_restore(imol, try_a)
+-        print("INFO:: rama flip", chain_id, res_no, verdict, "A", score_a, "B", score_b)
+-        rama_flip_log.append((chain_id, res_no, verdict, score_a, score_b))
++        lo, hi = amino_acid_zone(imol, chain_id, res_no)
++        zone = list(range(lo, hi + 1))
++        split = peptide_alt_confs(imol, chain_id, res_no)
++        if split:                                  # the peptide itself has alt confs: one decision per alt conf
++            decisions = [(a, [a]) for a in split]
++        else:                                      # shared peptide: one decision, every alt conf of the zone refined in both tries
++            decisions = [("", _zone_alt_confs(imol, chain_id, zone) or [""])]
++        for flip_alt, refine_alts in decisions:
++            original = _rama_flip_save(imol, chain_id, zone)
++            for a in refine_alts:
++                refine_and_show(imol, lambda: refine_zone(imol, chain_id, lo, hi, a))
++                if globals().get("continue_multi_refine", True) is False:      # Stop pressed: keep try A
++                    return
++            score_a = _rama_flip_score(imol, chain_id, [res_no, nxt], imol_map, flip_alt)
++            try_a = _rama_flip_save(imol, chain_id, zone)
++            _rama_flip_restore(imol, original)
++            with NoBackups(imol):
++                pepflip(imol, chain_id, res_no, "", flip_alt)
++            for a in refine_alts:
++                refine_and_show(imol, lambda: refine_zone(imol, chain_id, lo, hi, a))
++            score_b = _rama_flip_score(imol, chain_id, [res_no, nxt], imol_map, flip_alt)
++            label = "%s %d-%d%s" % (chain_id, res_no, nxt, (" alt conf " + flip_alt) if flip_alt else "")
++            rama_flip_run["tried"] += 1
++            if rama_flip_better(score_a, score_b):
++                verdict = "kept flip"
++                text = "Peptide %s flipped (Ramachandran %d -> %d, map fit %.2f -> %.2f)" % (label, score_a[0], score_b[0], score_a[2], score_b[2])
++                rama_flip_run["flipped"].append((chain_id, res_no, flip_alt, text))
++                add_status_bar_text(text)
++            else:
++                verdict = "kept original"
++                _rama_flip_restore(imol, try_a)
++            print("INFO:: rama flip", chain_id, res_no, repr(flip_alt), verdict, "A", score_a, "B", score_b)
++            rama_flip_log.append((chain_id, res_no, flip_alt, verdict, score_a, score_b))
+         rotate_y_scene(10, 0.3)
+     finally:
+         set_refine_ramachandran_angles(current_rama_state)
+         set_dragged_refinement_steps_per_frame(current_steps_per_frame)
+ 
++def rama_flip_report(stopped=False):
++    """The report at the end of a Refine/Improve Ramachandran Plot (try peptide flips) run (also when it is stopped): terminal, status bar
++    and a window.  Returns the text."""
++    flipped = rama_flip_run["flipped"]
++    head = "Refine/Improve Ramachandran Plot (try peptide flips) %s: %d peptide%s flipped (%d peptide%s tried)" % (
++        "stopped" if stopped else "finished", len(flipped), "" if len(flipped) == 1 else "s",
++        rama_flip_run["tried"], "" if rama_flip_run["tried"] == 1 else "s")
++    lines = [head] + ["  " + f[3] for f in flipped]
++    if rama_skipped:
++        lines.append("Not touched (not amino acids): " + ", ".join("%s %s %d%s" % (n, c, r, i) for c, r, i, n in rama_skipped[:20])
++                     + (" and %d more" % (len(rama_skipped) - 20) if len(rama_skipped) > 20 else ""))
++    text = "\n".join(lines)
++    print("INFO:: " + text.replace("\n", "\nINFO:: "))
++    add_status_bar_text(head)
++    if use_graphics_interface_state():
++        try:
++            info_dialog(text)
++        except Exception:
++            pass
++    return text
++
++def start_rama_flip_run(imol):
++    """Refine/Improve Ramachandran Plot (try peptide flips) on molecule imol, with a report at the end (or when stopped)."""
++    global continue_multi_refine
++    rama_flip_run["tried"] = 0
++    rama_flip_run["flipped"] = []
++    del rama_skipped[:]
++    continue_multi_refine = True
++    interruptible_fit_protein(imol, fit_protein_rama_flip_function, when_done=rama_flip_report)
++
+ # func is a refinement function that takes 2 args, one a residue
+ # spec, the other the imol_refinement_map.  e.g. fit_protein_fit_function
+ #
+@@ -458,7 +655,9 @@ def _multi_refine_remove(*names):
+                 pass
+         globals()[name] = False
+ 
+-def interruptible_fit_protein(imol, func):
++def interruptible_fit_protein(imol, func, when_done=None):
++    # (macOS port, build 22) when_done(stopped): called when the run has done every residue (stopped=False) or when Stop has ended it
++    # (stopped=True; after Continue it is called again at the end).  Used for the report of Refine/Improve Ramachandran Plot (try peptide flips).
+ 
+     import gobject
+     global multi_refine_spec_list
+@@ -492,6 +691,8 @@ def interruptible_fit_protein(imol, func):
+             if not multi_refine_spec_list:
+                 _multi_refine_remove("multi_refine_stop_button", "multi_refine_cancel_button",
+                                      "multi_refine_continue_button", "multi_refine_separator")
++                if when_done:
++                    when_done(False)
+                 return False
+             if continue_multi_refine:
+                 imol_map = imol_refinement_map()
+@@ -501,6 +702,8 @@ def interruptible_fit_protein(imol, func):
+             else:
+                 # finish what we have been doing first before we stop
+                 accept_regularizement()
++                if when_done:
++                    when_done(True)
+                 return False
+         gobject.idle_add(idle_func)
+         multi_refine_idle_proc = idle_func
+@@ -1154,3 +1357,56 @@ def add_extra_start_pos_restraints(imol, residue_spec, esd):
+ 
+         
+         pass # fill me
++
++# macOS port (build 22): Fill Partial Residues.  Coot fills every residue that misses side-chain atoms of its dictionary (no hydrogens), fits the
++# best rotamer into the refinement map and refines them; it printed only the residues it looked at.  Now the terminal (and the status bar) say
++# which residues were filled, with the atoms added, and which could not be filled (main-chain N, CA or C missing: Coot rebuilds a residue from
++# those).  The model is asked for only when more than one is loaded.  The map is the refinement map (Coot picks it by itself when only one map is
++# loaded); when several maps are loaded and none is chosen, the "select map" window comes first and nothing is changed until a map is chosen.
++def choose_model_then(title, func):
++    """func(imol) on the only model, or on the one the user chooses when several are loaded."""
++    models = [i for i in molecule_number_list() if valid_model_molecule_qm(i)]
++    if not models:
++        add_status_bar_text("No model loaded")
++    elif len(models) == 1:
++        func(models[0])
++    else:
++        molecule_chooser_gui(title, func)
++
++def fill_partial_residues_and_report(imol):
++    """fill_partial_residues(imol) with a list of what was filled.  Returns (filled, not filled): lists of (chain, res_no, ins, name, atoms added)."""
++    missing = [tuple(m) for m in (missing_atom_info_py(imol) or [])]
++    if not missing:
++        msg = "Fill Partial Residues: molecule %d has no residues with missing atoms" % imol
++        print("INFO:: " + msg)
++        add_status_bar_text(msg)
++        return [], []
++    has_maps = [i for i in molecule_number_list() if valid_map_molecule_qm(i)]
++    if imol_refinement_map() == -1 and has_maps:
++        add_status_bar_text("Fill Partial Residues: choose the refinement map first, then run it again")
++        print("INFO:: Fill Partial Residues: several maps and no refinement map chosen: nothing changed; choose the map and run it again")
++        show_select_map_dialog()
++        return [], []
++    before = {}
++    for ch, r, ins in missing:
++        before[(ch, r, ins)] = set(n for n, a in _residue_atoms(imol, ch, r, ins))
++    fill_partial_residues(imol)
++    still = set(tuple(m) for m in (missing_atom_info_py(imol) or []))
++    filled, not_filled = [], []
++    for key in missing:
++        ch, r, ins = key
++        after = set(n for n, a in _residue_atoms(imol, ch, r, ins))
++        added = sorted(after - before[key])
++        item = (ch, r, ins, residue_name(imol, ch, r, ins), added)
++        (not_filled if (key in still or not added) else filled).append(item)
++    print("INFO:: Fill Partial Residues, molecule %d: %d residue%s filled%s" % (
++        imol, len(filled), "" if len(filled) == 1 else "s",
++        "" if imol_refinement_map() >= 0 else " (no map: atoms placed by geometry only, not fitted to density)"))
++    for ch, r, ins, name, added in filled:
++        print("INFO::   filled %s %s %d%s: added %s" % (name, ch, r, ins, " ".join(added)))
++    for ch, r, ins, name, added in not_filled:
++        why = "main-chain N, CA or C missing" if not set(["N", "CA", "C"]) <= before[(ch, r, ins)] else "could not be filled"
++        print("INFO::   not filled %s %s %d%s: %s" % (name, ch, r, ins, why))
++    add_status_bar_text("Fill Partial Residues: %d residue%s filled%s (list in the terminal)" % (
++        len(filled), "" if len(filled) == 1 else "s", (", %d not" % len(not_filled)) if not_filled else ""))
++    return filled, not_filled

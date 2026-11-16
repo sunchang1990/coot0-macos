@@ -33,16 +33,22 @@ some things that did not work in the original 0.9.8.96 release. The changes you 
   restraints alone cannot turn a peptide that is built the wrong way round (it is about 180 degrees away). This entry
   refines every residue twice, once as it is and once with the peptide to the next residue flipped, and keeps the
   flip only if it is better: a better Ramachandran region for the two residues, or the same regions and a clearly
-  (at least 10%) better fit to the map. Flips that were kept are reported in the status bar. The original entry is
-  unchanged. In the tests, four peptides flipped on purpose were all put back and four correct ones left alone.
+  (at least 10%) better fit to the map. Residues with alternate conformations are included: if the peptide itself is
+  split into conformers, the flip is tried for each conformer (build 22). At the end, or when you press Stop, a report
+  says how many peptides were flipped and which. The original entry does not try flips. In the tests, peptides flipped
+  on purpose were all put back and correct ones left alone.
+- Both Refine/Improve Ramachandran Plot entries work on **amino acids only** (build 22): ligands, waters and nucleotides
+  are not refined, also not as neighbours of an amino acid.
+- **Fill Partial Residues** lists in the terminal which residues it filled, with the atoms added, and which it could
+  not fill (build 22). It asks which model to use only when more than one is loaded.
 - **You can watch whole-molecule refinement** (build 20 for Fit Protein; build 14 for Stepped Refine). Fit Protein, Stepped
   Refine and both Refine/Improve Ramachandran Plot entries now show each residue being refined in Coot's usual refinement style (the
   highlighted "intermediate atoms") for a moment before accepting it, instead of the atoms jumping to their result. The
   map is re-contoured around each residue, the **Stop** button on the toolbar works at any time, and no "Accept
   Refinement?" window is left behind. `COOT_STEPPED_REFINE_SHOW=<seconds>` sets how long each residue is shown (default
   0.6; 0 = the old immediate behaviour).
-- Stepped Refine, Refine/Improve Ramachandran Plot and Fit Protein also work on **RNA / DNA** (residues without CA are centred
-  on C1'). Fit Protein's rotamer search itself is for protein side chains.
+- Stepped Refine and Fit Protein also work on **RNA / DNA** (residues without CA are centred on C1'). Fit Protein's rotamer
+  search itself is for protein side chains.
 
 The full list, build by build: [`m0/m1-package/CHANGELOG.md`](m0/m1-package/CHANGELOG.md).
 

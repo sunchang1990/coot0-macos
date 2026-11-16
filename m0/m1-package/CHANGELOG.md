@@ -6,6 +6,26 @@ applied to the pristine tree by `setup.sh`) or a change of the packaged data / s
 round, `TEST-PROTOCOL.md` has the user-facing explanation and the checks for you (newest round first).  A "build" is one delivered zip.
 "Verified" means a headless test (no window server in the build environment); what only a screen can show is marked "on screen: not verified".
 
+## Build 22  (patch 0038 rama-alt-confs-protein-only-report-fill-partial; Python only, `bin/coot-bin` and `lib/` as in build 13)
+- Fixed (user report 16 Nov): **Refine/Improve Ramachandran Plot (try peptide flips)** tried no flip when residue i or i+1 had alternate conformations
+  (it fell back to a plain refinement of each alt conf).  Now: shared peptide atoms (only side chains split) -> both tries refine every alt conf of the
+  zone, one decision; peptide atoms split (CA/C/O of i, N/CA/H of i+1 with alt confs) -> pepflip(i, alt) and the decision per alt conf, scored on that
+  conformer alone (Coot does not classify residues with a split main chain, so the conformer is read into a hidden temporary molecule for the
+  Ramachandran regions, then closed; map fit = density at that conformer's atoms and the shared ones).
+- Changed (user request): both **Refine/Improve Ramachandran Plot** entries touch amino acids only (main-chain N, CA, C; modified ones count).
+  Ligands, waters and nucleotides are skipped (non-water ones are named in the terminal), and the refinement zone is i-1..i+1 limited to amino acids
+  joined by a peptide bond (C-N < 2.5 A).  Before, Coot's refine_auto_range took i-1..i+1 by number, so a ligand numbered after the last amino acid
+  of a chain was refined with it, and ligands themselves were refined.
+- New (user request): a **report at the end of a (try peptide flips) run, or when it is stopped**: number of peptides flipped and tried, the list of
+  flips, the residues not touched; in the terminal, the status bar and a window.  `interruptible_fit_protein(imol, func, when_done=None)`.
+- Changed (user request): **Fill Partial Residues** (Calculate > All Molecule > [Post MR] ..., Calculate > Modelling > ...): the terminal lists each
+  residue filled with the atoms added, and the ones not filled (main chain N/CA/C missing); no hydrogens are added (as before); the model chooser
+  only appears when more than one model is loaded (the Modelling entry used the molecule at the centre); if several maps are loaded and none is the
+  refinement map, the map is asked for first (before: filled, then asked, and the rotamer fit / refinement was skipped).
+- Tests: `gui-dialogs` 53 -> 61 (alt confs shared and split; ligand + water untouched by both entries; report at the end and after Stop; Fill Partial
+  Residues list and menus); build 21 fails all 8.
+- On screen: not verified by me (headless only).
+
 ## Build 21  (patch 0037 rama-try-peptide-flips; Python only, `bin/coot-bin` and `lib/` as in build 13)
 - New: **Calculate > All Molecule... > Refine/Improve Ramachandran Plot (try peptide flips)...** (user request 16 Nov; the original entry is unchanged).
   For each residue i with a protein residue i+1: try A = refine i-1..i+1 with Ramachandran restraints; restore; try B = pepflip(i) + the same refinement.
