@@ -1,0 +1,87 @@
+diff --git a/python/extensions.py b/python/extensions.py
+index 43aa1a0..da2009a 100644
+--- a/python/extensions.py
++++ b/python/extensions.py
+@@ -260,10 +260,12 @@ if (have_coot_python):
+          continue_multi_refine = True
+          interruptible_fit_protein(imol, fit_protein_rama_fit_function)
+ 
+-         add_simple_coot_menu_menuitem(
++     # macOS port (build 20): this entry was indented into fit_protein_func3() above (the same in the 0.9.8.96 source), so it was only
++     # created when that function ran - which needed the menu entry: it never appeared.  Now it is added with the other All Molecule entries.
++     add_simple_coot_menu_menuitem(
+        submenu_all_molecule,
+        "Refine/Improve Ramachandran Plot...",
+-       lambda func: molecule_chooser_gui("Refine Protein with Ramachanran Plot Optimization: ",
++       lambda func: molecule_chooser_gui("Refine Protein with Ramachandran Plot Optimization: ",
+                 lambda imol: fit_protein_func3(imol)))
+ 
+      #---------------------------------------------------------------------
+diff --git a/python/fitting.py b/python/fitting.py
+index 7c9bcdd..7e10b53 100644
+--- a/python/fitting.py
++++ b/python/fitting.py
+@@ -168,12 +168,20 @@ def fit_protein_fit_function(res_spec, imol_map):
+     res_no   = res_spec[2]
+     ins_code = res_spec[3]
+ 
++    # macOS port (build 20): Fit Protein shows its refinement the way Stepped Refine does (refine_and_show below: the refining atoms in
++    # Coot's refinement style for stepped_refine_show_seconds, then accept; Stop works; no "Accept Refinement?" window), centres residues
++    # without CA (RNA/DNA) on C1'/P and re-contours the map at every residue.  Before, the refinement ran with AutoAccept ("immediate
++    # replacement"), which draws nothing: each residue just jumped to its result, and the density stayed around the first residue.
+     res_name = residue_name(imol, chain_id, res_no, ins_code)
+     if isinstance(res_name, str):
+         if (res_name != "HOH"):
++            current_steps_per_frame = dragged_refinement_steps_per_frame()
++            set_dragged_refinement_steps_per_frame(400)
+             for alt_conf in residue_alt_confs(imol, chain_id, res_no, ins_code):
+-                print("centering on", chain_id, res_no, "CA")
+-                set_go_to_atom_chain_residue_atom_name(chain_id, res_no, "CA")
++                centre_atom = stepped_refine_centre_atom(imol, chain_id, res_no, ins_code) or "CA"
++                print("centering on", chain_id, res_no, centre_atom)
++                set_go_to_atom_chain_residue_atom_name_full(chain_id, res_no, ins_code, centre_atom, alt_conf)
++                update_maps()
+                 rotate_y_scene(10, 0.3) # n_frames frame_interval(degrees)        
+                 res_atoms = residue_info(imol, chain_id, res_no, ins_code)
+                 if (len(res_atoms) > 3):
+@@ -184,10 +192,9 @@ def fit_protein_fit_function(res_spec, imol_map):
+                             auto_fit_best_rotamer(res_no, alt_conf, ins_code, chain_id, imol,
+                                                   imol_map, 1, 0.1)
+                     if (valid_map_molecule_qm(imol_map)):
+-                        with NoBackups(imol):
+-                            with AutoAccept():
+-                                refine_zone(imol, chain_id, res_no, res_no, alt_conf)
++                        refine_and_show(imol, lambda: refine_zone(imol, chain_id, res_no, res_no, alt_conf))
+                     rotate_y_scene(10, 0.3)
++            set_dragged_refinement_steps_per_frame(current_steps_per_frame)
+ 
+ 
+ # macOS port: Stepped Refine used to refine each residue with "immediate replacement" (AutoAccept).  In Coot 0.9.8.96 that mode does not
+@@ -259,20 +266,25 @@ def refine_auto_range_any(imol, chain_id, res_no, alt_conf):
+ 
+ def refine_auto_range_and_show(imol, chain_id, res_no, alt_conf, seconds=None, force=False):
+     """Refine the residues around res_no (refine_auto_range), keep the refining atoms on the screen for `seconds`, then accept."""
++    refine_and_show(imol, lambda: refine_auto_range_any(imol, chain_id, res_no, alt_conf), seconds, force)
++
++def refine_and_show(imol, refine, seconds=None, force=False):
++    """Run refine() (a refine_zone / refine_auto_range call) as an ordinary refinement, keep the refining atoms on the screen for `seconds`
++    (Stop ends it early), then accept.  Used by Stepped Refine, Refine/Improve Ramachandran Plot and Fit Protein (build 20)."""
+     import time
+     if seconds is None:
+         seconds = stepped_refine_show_seconds
+     if seconds <= 0 or (not force and use_graphics_interface_state() == 0):
+         with NoBackups(imol):
+             with AutoAccept():
+-                refine_auto_range_any(imol, chain_id, res_no, alt_conf)
++                refine()
+         return
+     if refinement_already_ongoing_p():
+         accept_regularizement()          # (a refinement left over from the user's own work)
+         hide_accept_reject_dialog(destroy=True)
+     import gtk
+     with NoBackups(imol):
+-        refine_auto_range_any(imol, chain_id, res_no, alt_conf)
++        refine()
+         hide_accept_reject_dialog()      # before any event is handled: it is never drawn
+         t0 = time.time()
+         while time.time() - t0 < seconds:

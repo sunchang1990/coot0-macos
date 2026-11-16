@@ -7,7 +7,8 @@ prefix = os.environ["COOT_PREFIX"]
 res = []
 def check(name, fn):
     try:
-        v = fn(); res.append((name, True if v is None else bool(v), "" if v is None or v is True else repr(v)[:120]))
+        # (build 20) only None / True pass: before, any returned text counted as a pass, so the "condition or 'message'" checks below could not fail
+        v = fn(); ok = (v is None or v is True); res.append((name, ok, "" if ok else repr(v)[:120]))
     except BaseException as e: res.append((name, False, "EXC " + repr(e)[:200] + " " + traceback.format_exc()[-300:].replace("\n", " | ")))
 import gtk, _gtk2core as _c
 spec = json.load(open(os.path.join(prefix, "tests", "menubar.json")))
@@ -64,6 +65,17 @@ for want, minimum in (("All Molecule...", 3), ("Modelling...", 30), ("Modules...
 labels = {l for l, it, sub in allitems}
 for want in ("Copy Molecule...", "Copy Fragment...", "SMILES -> 2D", "SMILES -> simple 3D"):
     check("menu item %r exists" % want, lambda w=want: any(w.replace("...", "") in (l or "") for l in labels) or "not found")
+# (build 20) Calculate > All Molecule... > Refine/Improve Ramachandran Plot...: in the 0.9.8.96 source the line that adds this entry is indented into
+# the function the entry calls, so the entry never appeared.  It must be in the All Molecule submenu, and choosing it opens the molecule chooser.
+def rama_menu_entry():
+    am = find("All Molecule...")
+    if am is None or am.get_submenu() is None: return "no All Molecule submenu"
+    kids = [k for k in am.get_submenu().get_children() if k.get_children() and hasattr(k.get_children()[0], "get_text")]
+    it = [k for k in kids if k.get_children()[0].get_text() == "Refine/Improve Ramachandran Plot..."]
+    if not it: return "not in Calculate > All Molecule...: %r" % [k.get_children()[0].get_text() for k in kids]
+    n0 = len(windows); it[0].activate()
+    return True if len(windows) > n0 else "choosing it opened no window"
+check("Calculate > All Molecule... > 'Refine/Improve Ramachandran Plot...' exists and opens the molecule chooser", rama_menu_entry)
 # toolbar: the buttons the user could not find (Sphere Refine ...) are created by coot_toolbar_button()
 check("coot_toolbar_button('Sphere Refine', ...) adds a toolbar button", lambda: (__main__.coot_toolbar_button("Sphere Refine", "sphere_refine()", "reset-view.svg", "RSR around active residue"), len(tb.get_children()) == 1 and tb.get_children()[0] is not None)[1])
 def all_widgets(w, out):

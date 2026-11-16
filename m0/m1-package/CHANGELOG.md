@@ -6,6 +6,19 @@ applied to the pristine tree by `setup.sh`) or a change of the packaged data / s
 round, `TEST-PROTOCOL.md` has the user-facing explanation and the checks for you (newest round first).  A "build" is one delivered zip.
 "Verified" means a headless test (no window server in the build environment); what only a screen can show is marked "on screen: not verified".
 
+## Build 20  (patch 0036 fit-protein-rama-shown-refinement; Python only, `bin/coot-bin` and `lib/` as in build 13)
+- Fixed: **Calculate > All Molecule... > Refine/Improve Ramachandran Plot...** never appeared: in the 0.9.8.96 source the line that creates the entry is
+  indented into the function the entry calls.  Now in the menu (Stepped Refine with Ramachandran restraints on).  Dialog title typo "Ramachanran" fixed.
+- Changed: **Fit Protein** shows its refinement like Stepped Refine: after the rotamer search each residue is refined as an ordinary refinement, its atoms
+  are drawn in the refinement style for `COOT_STEPPED_REFINE_SHOW` seconds (default 0.6), then accepted; Stop works; Coot's "Accept Refinement?" window
+  is hidden.  Before, it used immediate replacement (AutoAccept): nothing drawn, the residue jumped.  Also: centre on C1'/P for residues without CA
+  (RNA/DNA), map re-contoured at every residue, 400 minimiser steps per frame during the run (as Stepped Refine; restored afterwards).
+  The display code is shared: `refine_and_show()` in fitting.py (Stepped Refine and Refine/Improve Ramachandran Plot use it through `refine_auto_range_and_show`).
+- Tests: `gui-scripts` 14 -> 15 (menu entry + opens the molecule chooser; fails on build 19); `gui-dialogs` 45 -> 48 (Fit Protein shown, Fit Protein on
+  RNA 1EHZ, Ramachandran refinement shown with restraints on; build 19 fails the first two).  Test fix: `check()` of gui_python_load.py counted any
+  returned message as a pass, so its "condition or 'message'" checks could not fail (all of them pass on build 19 with the fix).
+- On screen: not verified by me (headless only).
+
 ## Build 19  (no patch: package only; the build for the lab)
 - New: licence files in the package: `LICENSE` (GPL-3.0), `LICENSING.md` (Coot GPL-3.0-or-later by its authors; the coot0 changes Copyright (C) 2026
   Chang Sun, GPL-3.0; third-party components; the package as a whole GPL-3.0), `CORRESPONDING_SOURCE.md` (source of every part, written offer),

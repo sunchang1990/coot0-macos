@@ -1,4 +1,28 @@
-# Coot 0.9.8.96 on Apple Silicon: test round 19 (build 19 = build 18 + licences; the build for the lab)
+# Coot 0.9.8.96 on Apple Silicon: test round 20 (build 20 = build 19 + Refine/Improve Ramachandran Plot in the menu + Fit Protein shows its refinement)
+
+**From you** (16 Nov): asked for the Ramachandran entry, a README note, and the same refinement highlight in Fit Protein and Refine/Improve Ramachandran Plot as in Stepped Refine. AA1-AA4 (round 19) are still open.
+
+1. **Calculate > All Molecule... > Refine/Improve Ramachandran Plot...** is now in the menu. It was in the Coot 0.9.8.96 code but never appeared (one line indented into the wrong function, the same in the original source). It does what Stepped Refine does, with Ramachandran restraints on during each residue's refinement (your own setting is restored afterwards).
+2. **Fit Protein shows its refinement.** For each residue it still does the rotamer search first (protein residues), then refines the residue; that refinement is now drawn in Coot's refinement style (the highlighted intermediate atoms) for 0.6 s and then accepted, exactly as in Stepped Refine. Before, the residue just jumped. The map is re-contoured around each residue, Stop works, no "Accept Refinement?" window. On RNA it now centres on C1' (before: the view did not move).
+3. Refine/Improve Ramachandran Plot uses the Stepped Refine code, so it has the same display.
+4. `README.md` (GitHub page) has a new section "Changes from the original Coot 0.9.8.96".
+
+**On screen: not verified by me.** The headless tests check that the refinement runs as an ordinary (displayed) refinement and stays displayed until it is accepted, the map follows, the menu entry exists and opens its molecule chooser. Whether it looks the same as Stepped Refine is for you to see (BB2, BB3).
+
+**New tests** (`gui-scripts` 14 -> 15, `gui-dialogs` 45 -> 48; build 19 fails 3 of them). Evidence: `evidence/checks_b19_vs_b20.txt`, `evidence/verify_b20.txt`.
+
+## BB. Round 20 checks (about 10 minutes)
+
+| # | Do | Expected |
+|---|---|---|
+| BB1 | Install build 20 (`./install.sh` in the unpacked `coot0-0.9.8.96-b20`), `coot0 --pdb <model> --auto <mtz>`. Calculate > All Molecule... | Four entries: [Post MR] Fill Partial Residues..., Fit Protein..., Stepped Refine..., Refine/Improve Ramachandran Plot... |
+| BB2 | Refine/Improve Ramachandran Plot..., choose the model. Let it do 10-20 residues, then Stop. | Each residue shown in the refinement style for a moment, the view and the density follow; Stop ends it; Cancel / Continue then work as in Stepped Refine. |
+| BB3 | Fit Protein..., choose the model (a copy: it changes side chains). 10-20 residues, Stop. | Same display as Stepped Refine after each rotamer fit; no residue jumps without being shown. |
+| BB4 | (optional) Stepped Refine... as before. | Unchanged from build 19. |
+
+---
+
+# Earlier round (AA1-AA4 still open): Coot 0.9.8.96 on Apple Silicon: test round 19 (build 19 = build 18 + licences; the build for the lab)
 
 **From you** (13 Nov): build 18 works (Retina view by default, `--legacy`). Licensing decided: Coot keeps its own licence (GPL-3.0-or-later, its authors); the coot0 changes are Copyright (C) 2026 Chang Sun under GPL-3.0, stated separately; the package as a whole is GPL-3.0. **No change to Coot itself.**
 

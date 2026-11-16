@@ -1,4 +1,9 @@
 # One line per check: PASS / FAIL / PARTIAL and a few words.  (You can also just tell me in chat.)
+# Round 20 (see TEST-PROTOCOL.md, section BB):
+BB1 All Molecule submenu has Refine/Improve Ramachandran Plot...:
+BB2 Refine/Improve Ramachandran Plot: residues shown while refined, Stop works:
+BB3 Fit Protein: refinement shown after each rotamer fit:
+BB4 (optional) Stepped Refine unchanged:
 # Round 19 (see TEST-PROTOCOL.md, section AA):
 AA1 install build 19, coot0 starts it:
 AA2 README-FIRST.txt / LICENSING.md clear for a lab member:

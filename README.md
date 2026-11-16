@@ -21,6 +21,25 @@ It is not made, endorsed or supported by the Coot developers. Please report prob
   optional.
 - 19 automated test suites (about 300 checks) and a real-window audit of every menu entry and toolbar button.
 
+## Changes from the original Coot 0.9.8.96
+
+Besides what it takes to run on a current Mac (native macOS windows instead of X11, Python 3, Retina drawing), coot0 fixes
+some things that did not work in the original 0.9.8.96 release. The changes you will notice most:
+
+- **Calculate > All Molecule... > Refine/Improve Ramachandran Plot...** is back in the menu (build 20). The code was in
+  Coot 0.9.8.96, but a mis-indented line meant the menu entry was never created. It runs Stepped Refine with Ramachandran
+  restraints switched on, residue by residue over the whole molecule.
+- **You can watch whole-molecule refinement** (build 20 for Fit Protein; build 14 for Stepped Refine). Fit Protein, Stepped
+  Refine and Refine/Improve Ramachandran Plot now show each residue being refined in Coot's usual refinement style (the
+  highlighted "intermediate atoms") for a moment before accepting it, instead of the atoms jumping to their result. The
+  map is re-contoured around each residue, the **Stop** button on the toolbar works at any time, and no "Accept
+  Refinement?" window is left behind. `COOT_STEPPED_REFINE_SHOW=<seconds>` sets how long each residue is shown (default
+  0.6; 0 = the old immediate behaviour).
+- Stepped Refine, Refine/Improve Ramachandran Plot and Fit Protein also work on **RNA / DNA** (residues without CA are centred
+  on C1'). Fit Protein's rotamer search itself is for protein side chains.
+
+The full list, build by build: [`m0/m1-package/CHANGELOG.md`](m0/m1-package/CHANGELOG.md).
+
 ## Install
 
 Download `coot0-<version>-macos-arm64.tar.gz` from [Releases](../../releases), then in Terminal:

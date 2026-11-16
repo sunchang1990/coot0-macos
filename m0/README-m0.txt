@@ -377,3 +377,15 @@ Round 19: licences in the package -> build 19 (the build for the lab; no patch)
   level (tools/dev_sync.sh).  gen_licenses.py: 60 conda packages + 7 extra components; FFTW 2 text copied from the clipper package, FreeType 2.14.3
   FTL.TXT/LICENSE.TXT (from its source tag VER-2-14-3) and an SQLite public-domain note in tools/licence-texts/.  LICENSING/CORRESPONDING_SOURCE
   point lab members to the author (repository private).  installer_test 23 -> 26 (licence files, a text per package, README-FIRST): b18 23/26, b19 26/26.
+
+Round 20: Refine/Improve Ramachandran Plot menu + Fit Protein shown refinement -> build 20  (patch 0036 fit-protein-rama-shown-refinement; Python only)
+  User request 16 Nov.  extensions.py: the add_simple_coot_menu_menuitem for "Refine/Improve Ramachandran Plot..." was indented inside fit_protein_func3
+  (also in the pristine 0.9.8.96 source): dedented.  fitting.py: refine_and_show(imol, refine, seconds, force) = the old body of
+  refine_auto_range_and_show (ordinary refinement, hide "Accept Refinement?", pump events for stepped_refine_show_seconds, Stop, accept);
+  fit_protein_fit_function: refine_zone through refine_and_show (was NoBackups + AutoAccept = immediate replacement), centre atom via
+  stepped_refine_centre_atom + set_go_to_atom_chain_residue_atom_name_full + update_maps, steps/frame 400 during the residue.  Rotamer step unchanged.
+  Tests: gui_python_load.py check(): only None/True pass (any returned message passed before; all old checks still pass on b19);
+  + menu entry in All Molecule and it opens a window.  gui_python_dialogs.py shown_refinement(): spies refine_zone/refine_auto_range (immediate
+  replacement state at the call) and accept_regularizement (refinement_already_ongoing_p, time >= 0.4 s later); use_graphics_interface_state forced to 1.
+  Note: a first version of the tests passed on b19 (AutoAccept also calls accept_regularizement while the refinement counts as ongoing, and the CA
+  go-to re-contours) - the immediate-replacement state is the real difference.  b19: gui-scripts 14/15, gui-dialogs 46/48; b20 15/15, 48/48.

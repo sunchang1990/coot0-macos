@@ -405,6 +405,60 @@ def stepped_refine_maps_follow():
     return True if not miss else "no map re-contouring around residue(s) %r (re-contoured centres: %r)" % (miss, centres[:6])
 check("Stepped Refine: the map is re-contoured around each residue that is refined (density follows the focus)", stepped_refine_maps_follow)
 
+# (build 20) Fit Protein and Refine/Improve Ramachandran Plot show their refinement like Stepped Refine.  Fit Protein refined with AutoAccept before:
+# "immediate replacement" on, so nothing of the refinement was drawn and the residue jumped to its result.  Now every refinement runs with immediate
+# replacement off and its atoms stay displayed (refinement style) for stepped_refine_show_seconds before the script accepts.  The display is only used
+# with graphics, so the test says graphics are on.
+def shown_refinement(fit, pdb="tutorial-modern.pdb", mtz="rnasa-1.8-all_refmac1.mtz", res_nos=(43,)):
+    imol_s = coot.read_pdb(os.path.join(here, "test-data", pdb))
+    imap_s = coot.make_and_draw_map(os.path.join(here, "test-data", mtz), "FWT", "PHWT", "", 0, 0)
+    coot.set_imol_refinement_map(imap_s); coot.set_refinement_immediate_replacement(0); coot.set_go_to_atom_molecule(imol_s)
+    ch = coot.chain_id_py(imol_s, 0)
+    spf, rama = coot.dragged_refinement_steps_per_frame(), coot.refine_ramachandran_angles_state()
+    log = []
+    keep = {n: getattr(_m, n) for n in ("accept_regularizement", "use_graphics_interface_state", "refine_zone", "refine_auto_range")}
+    def spy_refine(f):
+        def g(*a):
+            r = f(*a); log.append(("refine", coot.refinement_immediate_replacement_state(), coot.refine_ramachandran_angles_state(), _time.time())); return r
+        return g
+    def spy_acc(*a):
+        log.append(("accept", bool(coot.refinement_already_ongoing_p()), None, _time.time())); return keep["accept_regularizement"](*a)
+    _m.accept_regularizement, _m.use_graphics_interface_state = spy_acc, (lambda: 1)
+    _m.refine_zone, _m.refine_auto_range = spy_refine(keep["refine_zone"]), spy_refine(keep["refine_auto_range"])
+    _m.continue_multi_refine = True
+    try:
+        for r in res_nos: fit([imol_s, ch, r, ""], imap_s)
+    finally:
+        for n, f in keep.items(): setattr(_m, n, f)
+    refs = [e for e in log if e[0] == "refine"]
+    if not refs: return log, "no refinement was run"
+    if any(e[1] != 0 for e in refs): return log, "refinement ran with immediate replacement on (nothing is drawn): %r" % ([e[:3] for e in log],)
+    for i, e in enumerate(log):          # every refinement: its atoms are displayed for >= 0.4 s, then accepted
+        if e[0] == "refine":
+            nxt = [x for x in log[i+1:] if x[0] == "accept"][:1]
+            if not nxt or not nxt[0][1] or nxt[0][3] - e[3] < 0.4:
+                return log, "refining atoms not displayed until the accept: %r" % ([(x[0], x[1], round(x[3] - log[0][3], 2)) for x in log],)
+    if coot.refinement_already_ongoing_p(): return log, "refinement still displayed after the result was accepted"
+    if coot.dragged_refinement_steps_per_frame() != spf: return log, "steps per frame not restored"
+    if coot.refine_ramachandran_angles_state() != rama: return log, "Ramachandran restraint setting not restored"
+    return log, True
+check("Fit Protein: the refinement is shown (immediate replacement off, refining atoms displayed until the accept), settings restored",
+      lambda: shown_refinement(_m.fit_protein_fit_function)[1])
+def fit_protein_rna_centre():
+    import math
+    log, ok = shown_refinement(_m.fit_protein_fit_function, "1ehz.pdb", "1ehz_map.mtz", (10, 40))
+    if ok is not True: return ok
+    imol_s = coot.graphics_n_molecules() - 2
+    c1 = [a[2][:3] for a in coot.residue_info_py(imol_s, "A", 40, "") if a[0][0].strip() == "C1'"]
+    centre = [coot.rotation_centre_position(i) for i in range(3)]
+    return True if c1 and math.dist(centre, c1[0]) < 2.0 else "view centre %r is not at C1' of A 40 %r" % (centre, c1)
+check("Fit Protein on RNA (1EHZ): the view moves to each nucleotide (C1') and its refinement is shown", fit_protein_rna_centre)
+def rama_shows():
+    log, ok = shown_refinement(_m.fit_protein_rama_fit_function)
+    if ok is not True: return ok
+    return True if all(e[2] == 1 for e in log if e[0] == "refine") else "Ramachandran restraints were off during the refinement: %r" % (log,)
+check("Refine/Improve Ramachandran Plot: the refinement is shown with Ramachandran restraints on, settings restored afterwards", rama_shows)
+
 # Alt conf occupancy slider (Extensions > Modelling or the toolbar): "OK" did nothing in build 13 (set_alt_conf_occ compared a list with a number: a
 # TypeError in Python 3, silently true in Python 2).  Cys B 72 of tutorial-modern.pdb has SG A (occ 0.7) / SG B (occ 0.3).
 def occ_slider_ok():

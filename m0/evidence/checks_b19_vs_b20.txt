@@ -1,0 +1,139 @@
+Build 19 files vs build 20 files, new tests (16 Nov 2026), headless (dev_run.sh)
+
+== build 19 python + new tests: gui-scripts
+PASS coot_load_modules.py runs to the end
+PASS no GUI script failed to load ("couldn't load")
+PASS the scripts add menu items to the main menubar (before 131, after 310; expect >= 280)
+PASS Calculate > All Molecule... gets its submenu from the scripts (>= 3 items)
+PASS Calculate > Modelling... gets its submenu from the scripts (>= 30 items)
+PASS Calculate > Modules... gets its submenu from the scripts (>= 5 items)
+PASS menu item 'Copy Molecule...' exists
+PASS menu item 'Copy Fragment...' exists
+PASS menu item 'SMILES -> 2D' exists
+PASS menu item 'SMILES -> simple 3D' exists
+FAIL Calculate > All Molecule... > 'Refine/Improve Ramachandran Plot...' exists and opens the molecule chooser  "not in Calculate > All Molecule...: ['[Post MR] Fill Partial Residues...', 'Fit Protein...', 'Stepped Refine...']"
+PASS coot_toolbar_button('Sphere Refine', ...) adds a toolbar button
+PASS main toolbar has a button-press handler (right-click menu: Manage Buttons / Add / Remove)
+PASS molecule_chooser_gui builds its dialog (Copy molecule)
+PASS no exception in any GTK signal handler so far
+SUMMARY 14 / 15
+
+== build 19 python + new tests: gui-dialogs
+PASS all GUI scripts load (including rcrane_loader.py)
+PASS no Python-2-only names in the shipped scripts
+PASS Manage Buttons dialog offers Sphere Refine and Sphere Regularization
+PASS dialog_box_of_buttons builds and its buttons run string/list/function callbacks
+PASS molecule_atom_overlaps_gui (ported from Scheme) builds a box of buttons
+PASS pepflips_by_difference_map_gui (ported from Scheme) builds and OK reports 'no difference map'
+PASS copy molecule chooser builds
+PASS generic_chooser_and_entry builds
+PASS smiles_gui builds
+PASS whats_new_dialog builds
+PASS save_dialog_positions_to_init_file is defined
+PASS chain_n_residues is defined
+PASS residue_spec_to_residue_name is defined
+PASS handle_shelx_fcf_file is defined
+PASS molecule_atom_overlaps_gui is defined
+PASS pepflips_by_difference_map_gui is defined
+PASS save_dialog_positions_to_init_file appends whole lines to ~/.coot.py
+PASS RCrane imports and its pre-launch check passes
+PASS Calculate menu has the 'RCrane' sub-menu with 6 entries
+PASS C callback on_edit_copy_molecule1_activate (Edit > Copy Molecule...) runs its Python call-out
+PASS C callback on_edit_copy_fragment1_activate (Edit > Copy Fragment...) runs its Python call-out
+PASS log filter drops the two harmless GTK messages but not other criticals
+PASS a toolbar button with a string callback runs it
+PASS Stop makes Cancel and Continue buttons appear, Cancel removes them again
+PASS Stop, then a new Stepped Refine run: one Stop button, old buttons gone, Cancel/Stop/Continue after the end are harmless
+PASS no str/bytes type tests left in the shipped scripts (2to3 turned types.StringType into bytes)
+PASS Python scripting window opens
+PASS typing 1+1 into the scripting window shows 2 (no gtk.FALSE error)
+PASS a Coot function typed into the scripting window returns its value
+PASS a Python error typed into the scripting window is reported in the window
+PASS gtk.TRUE/FALSE, Alignment, AboutDialog (set_*, action_area) and scrollbars exist in the compatibility layer
+PASS gtk.Adjustment has value, lower, upper, step_increment, page_increment, page_size (settable)
+PASS Nudge Screen Centre with Extras: the zoom slider changes the zoom, the clipping slider runs
+PASS map sharpening slider (Python dialog) runs sharpen() when moved
+PASS Interactive Nudge Residues: moving the slider makes a molecule with the nudged residues
+PASS Stepped Refine: the refining atoms are displayed (refinement_already_ongoing_p) until the result is accepted, and the residues move
+PASS Stepped Refine: pressing Stop ends the display at once and leaves nothing pending
+PASS Stepped Refine: COOT_STEPPED_REFINE_SHOW=0 keeps the old immediate behaviour
+PASS Stepped Refine: Coot's 'Accept Refinement?' window is hidden while the residues are shown and closed after the accept
+PASS Stepped Refine: the map is re-contoured around each residue that is refined (density follows the focus)
+FAIL Fit Protein: the refinement is shown (immediate replacement off, refining atoms displayed until the accept), settings restored       "refinement ran with immediate replacement on (nothing is drawn): [('refine', 1, 0), ('accept', True, None)]"
+FAIL Fit Protein on RNA (1EHZ): the view moves to each nucleotide (C1') and its refinement is shown                                       "refinement ran with immediate replacement on (nothing is drawn): [('refine', 1, 0), ('accept', True, None), ('refine', 1, 0), ('accept', True, None)]"
+PASS Refine/Improve Ramachandran Plot: the refinement is shown with Ramachandran restraints on, settings restored afterwards
+PASS Alt conf occupancy slider: OK sets the occupancies (0.4 / 0.6) and closes the dialog
+PASS rename_alt_confs: swapping alt confs A and B of Cys B 72 works
+PASS coot_utils.py: no list compared with a number (alt_confs > 1) left
+PASS Fit Loop by Database Search: clicked atoms give a Loop Candidates dialog with candidate loops
+PASS no exception in any GTK signal handler
+SUMMARY 46 / 48
+
+== build 20: gui-scripts
+PASS coot_load_modules.py runs to the end
+PASS no GUI script failed to load ("couldn't load")
+PASS the scripts add menu items to the main menubar (before 131, after 311; expect >= 280)
+PASS Calculate > All Molecule... gets its submenu from the scripts (>= 3 items)
+PASS Calculate > Modelling... gets its submenu from the scripts (>= 30 items)
+PASS Calculate > Modules... gets its submenu from the scripts (>= 5 items)
+PASS menu item 'Copy Molecule...' exists
+PASS menu item 'Copy Fragment...' exists
+PASS menu item 'SMILES -> 2D' exists
+PASS menu item 'SMILES -> simple 3D' exists
+PASS Calculate > All Molecule... > 'Refine/Improve Ramachandran Plot...' exists and opens the molecule chooser
+PASS coot_toolbar_button('Sphere Refine', ...) adds a toolbar button
+PASS main toolbar has a button-press handler (right-click menu: Manage Buttons / Add / Remove)
+PASS molecule_chooser_gui builds its dialog (Copy molecule)
+PASS no exception in any GTK signal handler so far
+SUMMARY 15 / 15
+
+== build 20: gui-dialogs
+PASS all GUI scripts load (including rcrane_loader.py)
+PASS no Python-2-only names in the shipped scripts
+PASS Manage Buttons dialog offers Sphere Refine and Sphere Regularization
+PASS dialog_box_of_buttons builds and its buttons run string/list/function callbacks
+PASS molecule_atom_overlaps_gui (ported from Scheme) builds a box of buttons
+PASS pepflips_by_difference_map_gui (ported from Scheme) builds and OK reports 'no difference map'
+PASS copy molecule chooser builds
+PASS generic_chooser_and_entry builds
+PASS smiles_gui builds
+PASS whats_new_dialog builds
+PASS save_dialog_positions_to_init_file is defined
+PASS chain_n_residues is defined
+PASS residue_spec_to_residue_name is defined
+PASS handle_shelx_fcf_file is defined
+PASS molecule_atom_overlaps_gui is defined
+PASS pepflips_by_difference_map_gui is defined
+PASS save_dialog_positions_to_init_file appends whole lines to ~/.coot.py
+PASS RCrane imports and its pre-launch check passes
+PASS Calculate menu has the 'RCrane' sub-menu with 6 entries
+PASS C callback on_edit_copy_molecule1_activate (Edit > Copy Molecule...) runs its Python call-out
+PASS C callback on_edit_copy_fragment1_activate (Edit > Copy Fragment...) runs its Python call-out
+PASS log filter drops the two harmless GTK messages but not other criticals
+PASS a toolbar button with a string callback runs it
+PASS Stop makes Cancel and Continue buttons appear, Cancel removes them again
+PASS Stop, then a new Stepped Refine run: one Stop button, old buttons gone, Cancel/Stop/Continue after the end are harmless
+PASS no str/bytes type tests left in the shipped scripts (2to3 turned types.StringType into bytes)
+PASS Python scripting window opens
+PASS typing 1+1 into the scripting window shows 2 (no gtk.FALSE error)
+PASS a Coot function typed into the scripting window returns its value
+PASS a Python error typed into the scripting window is reported in the window
+PASS gtk.TRUE/FALSE, Alignment, AboutDialog (set_*, action_area) and scrollbars exist in the compatibility layer
+PASS gtk.Adjustment has value, lower, upper, step_increment, page_increment, page_size (settable)
+PASS Nudge Screen Centre with Extras: the zoom slider changes the zoom, the clipping slider runs
+PASS map sharpening slider (Python dialog) runs sharpen() when moved
+PASS Interactive Nudge Residues: moving the slider makes a molecule with the nudged residues
+PASS Stepped Refine: the refining atoms are displayed (refinement_already_ongoing_p) until the result is accepted, and the residues move
+PASS Stepped Refine: pressing Stop ends the display at once and leaves nothing pending
+PASS Stepped Refine: COOT_STEPPED_REFINE_SHOW=0 keeps the old immediate behaviour
+PASS Stepped Refine: Coot's 'Accept Refinement?' window is hidden while the residues are shown and closed after the accept
+PASS Stepped Refine: the map is re-contoured around each residue that is refined (density follows the focus)
+PASS Fit Protein: the refinement is shown (immediate replacement off, refining atoms displayed until the accept), settings restored
+PASS Fit Protein on RNA (1EHZ): the view moves to each nucleotide (C1') and its refinement is shown
+PASS Refine/Improve Ramachandran Plot: the refinement is shown with Ramachandran restraints on, settings restored afterwards
+PASS Alt conf occupancy slider: OK sets the occupancies (0.4 / 0.6) and closes the dialog
+PASS rename_alt_confs: swapping alt confs A and B of Cys B 72 works
+PASS coot_utils.py: no list compared with a number (alt_confs > 1) left
+PASS Fit Loop by Database Search: clicked atoms give a Loop Candidates dialog with candidate loops
+PASS no exception in any GTK signal handler
+SUMMARY 48 / 48
