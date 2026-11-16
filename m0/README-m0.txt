@@ -389,3 +389,16 @@ Round 20: Refine/Improve Ramachandran Plot menu + Fit Protein shown refinement -
   replacement state at the call) and accept_regularizement (refinement_already_ongoing_p, time >= 0.4 s later); use_graphics_interface_state forced to 1.
   Note: a first version of the tests passed on b19 (AutoAccept also calls accept_regularizement while the refinement counts as ongoing, and the CA
   go-to re-contours) - the immediate-replacement state is the real difference.  b19: gui-scripts 14/15, gui-dialogs 46/48; b20 15/15, 48/48.
+  User 16 Nov: BB1-BB4 confirmed on screen.
+
+Round 21: Refine/Improve Ramachandran Plot (try peptide flips) -> build 21  (patch 0037 rama-try-peptide-flips; Python only)
+  User request 16 Nov (option a: new entry, original unchanged).  fitting.py fit_protein_rama_flip_function: per residue i (protein i and i+1, no ins
+  code, no alt confs): save coords of i-1..i+1; try A refine_zone(i-1, i+1) via refine_and_show with set_refine_ramachandran_angles(1); score =
+  (sum of all_molecule_ramachandran_region_py regions of i, i+1 [rama_plot::RAMA_OUTLIER 0 / ALLOWED 1 / PREFERRED 2], n classified,
+  density_score_residue sum); save A; restore original (set_atom_attributes x/y/z); pepflip(i) (flips peptide i/i+1, coot::pepflip on the residue
+  with the CO); try B; rama_flip_better(): higher region sum, or equal and density >= +10% (rama_flip_density_gain); else restore A.  Stop
+  (continue_multi_refine False) after A: keep A.  Note continue_multi_refine is False at load: tests set it True.  density_score_residue in Python
+  takes a residue spec (redefine_functions.py -> density_score_residue_py).  Exploration (tutorial-modern + rnasa map): deliberate flips of
+  A 20/43/60/85 put back (O 0.04-0.15 A), A 30/50/70/90 kept; A 60 by density (+25%).  Tests: gui-scripts 16, gui-dialogs 53; b20 15/16, 48/53.
+  Fill Partial Residues (user question): works headless (Arg A 40 side chain / + CB removed -> 11 atoms, with and without map); a residue missing
+  N/CA/C (tutorial-modern Cys A 72) is listed but not filled (mutate needs the main chain).  User's case pending details (CC5).

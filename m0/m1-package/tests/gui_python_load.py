@@ -76,6 +76,18 @@ def rama_menu_entry():
     n0 = len(windows); it[0].activate()
     return True if len(windows) > n0 else "choosing it opened no window"
 check("Calculate > All Molecule... > 'Refine/Improve Ramachandran Plot...' exists and opens the molecule chooser", rama_menu_entry)
+# (build 21) the new entry that also tries the flipped orientation of every peptide
+def rama_flip_menu_entry():
+    am = find("All Molecule...")
+    if am is None or am.get_submenu() is None: return "no All Molecule submenu"
+    kids = [k for k in am.get_submenu().get_children() if k.get_children() and hasattr(k.get_children()[0], "get_text")]
+    labels_ = [k.get_children()[0].get_text() for k in kids]
+    it = [k for k in kids if k.get_children()[0].get_text() == "Refine/Improve Ramachandran Plot (try peptide flips)..."]
+    if not it: return "not in Calculate > All Molecule...: %r" % labels_
+    if "Refine/Improve Ramachandran Plot..." not in labels_: return "the original entry is gone: %r" % labels_
+    n0 = len(windows); it[0].activate()
+    return True if len(windows) > n0 else "choosing it opened no window"
+check("Calculate > All Molecule... > 'Refine/Improve Ramachandran Plot (try peptide flips)...' exists next to the original and opens the molecule chooser", rama_flip_menu_entry)
 # toolbar: the buttons the user could not find (Sphere Refine ...) are created by coot_toolbar_button()
 check("coot_toolbar_button('Sphere Refine', ...) adds a toolbar button", lambda: (__main__.coot_toolbar_button("Sphere Refine", "sphere_refine()", "reset-view.svg", "RSR around active residue"), len(tb.get_children()) == 1 and tb.get_children()[0] is not None)[1])
 def all_widgets(w, out):

@@ -1,0 +1,139 @@
+diff --git a/python/extensions.py b/python/extensions.py
+index da2009a..0e47441 100644
+--- a/python/extensions.py
++++ b/python/extensions.py
+@@ -268,6 +268,21 @@ if (have_coot_python):
+        lambda func: molecule_chooser_gui("Refine Protein with Ramachandran Plot Optimization: ",
+                 lambda imol: fit_protein_func3(imol)))
+ 
++     # macOS port (build 21): the same with both orientations of every peptide tried (fitting.py: fit_protein_rama_flip_function)
++     def fit_protein_func4(imol):
++       if (imol_refinement_map() == -1):
++         add_status_bar_text("oops. Must set a map to fit")
++       else:
++         global continue_multi_refine
++         continue_multi_refine = True
++         interruptible_fit_protein(imol, fit_protein_rama_flip_function)
++
++     add_simple_coot_menu_menuitem(
++       submenu_all_molecule,
++       "Refine/Improve Ramachandran Plot (try peptide flips)...",
++       lambda func: molecule_chooser_gui("Refine Protein with Ramachandran Plot Optimization, trying peptide flips: ",
++                lambda imol: fit_protein_func4(imol)))
++
+      #---------------------------------------------------------------------
+      #     Map functions
+      #
+diff --git a/python/fitting.py b/python/fitting.py
+index 7e10b53..b8f56a4 100644
+--- a/python/fitting.py
++++ b/python/fitting.py
+@@ -332,6 +332,108 @@ def fit_protein_rama_fit_function(res_spec, imol_map):
+     # BL says: make it more generic
+     fit_protein_stepped_refine_function(res_spec, imol_map, True)
+ 
++# macOS port (build 21): Refine/Improve Ramachandran Plot (try peptide flips).  Ramachandran restraints only nudge phi/psi; a peptide that is flipped
++# the wrong way round is about 180 degrees away and refinement does not cross that barrier.  For every residue i (with a next residue i+1) this tries
++# both orientations of the peptide i / i+1: (A) refine residues i-1 .. i+1 with Ramachandran restraints as it is, (B) the same after pepflip(i).
++# It keeps B only if it is better: fewer residues of i, i+1 in a worse Ramachandran region (Coot's own classification: outlier < allowed <
++# favoured), or the same regions and a clearly better fit to the map (density_score_residue of i and i+1, >= rama_flip_density_gain better).
++# Each try is shown like Stepped Refine.  The original "Refine/Improve Ramachandran Plot..." is unchanged.
++rama_flip_density_gain = 0.10      # relative gain in map fit needed to keep a flip when the Ramachandran regions are the same
++rama_flip_log = []                 # (chain_id, res_no, "kept flip" / "kept original", score A, score B) of the last runs
++
++def _rama_flip_save(imol, chain_id, res_nos):
++    """Coordinates of every atom of the residues (to restore one try before the other)."""
++    saved = []
++    for r in res_nos:
++        for atom in residue_info(imol, chain_id, r, "") or []:
++            saved.append([imol, chain_id, r, "", atom[0][0], atom[0][1], atom[2][0], atom[2][1], atom[2][2]])
++    return saved
++
++def _rama_flip_restore(imol, saved):
++    attrs = []
++    for imol_, ch, r, ins, name, alt, x, y, z in saved:
++        attrs += [[imol_, ch, r, ins, name, alt, "x", x], [imol_, ch, r, ins, name, alt, "y", y], [imol_, ch, r, ins, name, alt, "z", z]]
++    if attrs:
++        with NoBackups(imol):
++            set_atom_attributes(attrs)
++
++def _rama_flip_score(imol, chain_id, res_nos, imol_map):
++    """(sum of Ramachandran regions 0 outlier / 1 allowed / 2 favoured, number of residues classified, map fit) of the residues."""
++    region = {}
++    for item in all_molecule_ramachandran_region_py(imol) or []:
++        spec, reg = item[0], item[1]
++        spec = list(spec)[-3:]                      # [chain, res_no, ins] (older specs carry a leading flag)
++        if spec[0] == chain_id and spec[1] in res_nos:
++            region[spec[1]] = reg if reg in (0, 1, 2) else 1
++    fit = 0.0
++    if valid_map_molecule_qm(imol_map):
++        for r in res_nos:
++            fit += density_score_residue(imol, [chain_id, r, ""], imol_map)
++    return (sum(region.values()), len(region), fit)
++
++def rama_flip_better(score_a, score_b, gain=None):
++    """True if try B (flipped) is better than try A (as it was)."""
++    if gain is None:
++        gain = rama_flip_density_gain
++    if score_b[1] < score_a[1]:                   # B lost a classified residue (should not happen): keep A
++        return False
++    if score_b[0] != score_a[0]:
++        return score_b[0] > score_a[0]
++    return score_b[2] > score_a[2] + gain * abs(score_a[2]) and score_b[2] > score_a[2]
++
++def fit_protein_rama_flip_function(res_spec, imol_map):
++
++    imol     = res_spec[0]
++    chain_id = res_spec[1]
++    res_no   = res_spec[2]
++    ins_code = res_spec[3]
++    res_name = residue_name(imol, chain_id, res_no, ins_code)
++    centre_atom = stepped_refine_centre_atom(imol, chain_id, res_no, ins_code)
++    nxt = res_no + 1
++    can_flip = (ins_code == "" and isinstance(res_name, str) and res_name != "HOH" and centre_atom == "CA"
++                and residue_exists_qm(imol, chain_id, nxt, "")
++                and stepped_refine_centre_atom(imol, chain_id, nxt, "") == "CA"
++                and len(residue_alt_confs(imol, chain_id, res_no, ins_code)) <= 1
++                and len(residue_alt_confs(imol, chain_id, nxt, "")) <= 1)
++    if not can_flip:                               # waters, nucleotides, chain ends, insertion codes, alt confs: as before
++        fit_protein_stepped_refine_function(res_spec, imol_map, True)
++        return
++    current_steps_per_frame = dragged_refinement_steps_per_frame()
++    current_rama_state = refine_ramachandran_angles_state()
++    set_dragged_refinement_steps_per_frame(400)
++    set_refine_ramachandran_angles(1)
++    try:
++        print("centering on", chain_id, res_no, "CA")
++        set_go_to_atom_chain_residue_atom_name_full(chain_id, res_no, ins_code, "CA", "")
++        update_maps()
++        rotate_y_scene(10, 0.3)
++        lo = res_no - 1 if residue_exists_qm(imol, chain_id, res_no - 1, "") else res_no
++        zone = list(range(lo, nxt + 1))
++        original = _rama_flip_save(imol, chain_id, zone)
++        refine_and_show(imol, lambda: refine_zone(imol, chain_id, lo, nxt, ""))
++        score_a = _rama_flip_score(imol, chain_id, [res_no, nxt], imol_map)
++        if globals().get("continue_multi_refine", True) is False:      # Stop pressed: keep try A
++            return
++        try_a = _rama_flip_save(imol, chain_id, zone)
++        _rama_flip_restore(imol, original)
++        with NoBackups(imol):
++            pepflip(imol, chain_id, res_no, "", "")
++        refine_and_show(imol, lambda: refine_zone(imol, chain_id, lo, nxt, ""))
++        score_b = _rama_flip_score(imol, chain_id, [res_no, nxt], imol_map)
++        if rama_flip_better(score_a, score_b):
++            verdict = "kept flip"
++            add_status_bar_text("Peptide %s %d-%d flipped (Ramachandran %d -> %d, map fit %.2f -> %.2f)"
++                                % (chain_id, res_no, nxt, score_a[0], score_b[0], score_a[2], score_b[2]))
++        else:
++            verdict = "kept original"
++            _rama_flip_restore(imol, try_a)
++        print("INFO:: rama flip", chain_id, res_no, verdict, "A", score_a, "B", score_b)
++        rama_flip_log.append((chain_id, res_no, verdict, score_a, score_b))
++        rotate_y_scene(10, 0.3)
++    finally:
++        set_refine_ramachandran_angles(current_rama_state)
++        set_dragged_refinement_steps_per_frame(current_steps_per_frame)
++
+ # func is a refinement function that takes 2 args, one a residue
+ # spec, the other the imol_refinement_map.  e.g. fit_protein_fit_function
+ #

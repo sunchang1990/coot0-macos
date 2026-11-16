@@ -6,6 +6,17 @@ applied to the pristine tree by `setup.sh`) or a change of the packaged data / s
 round, `TEST-PROTOCOL.md` has the user-facing explanation and the checks for you (newest round first).  A "build" is one delivered zip.
 "Verified" means a headless test (no window server in the build environment); what only a screen can show is marked "on screen: not verified".
 
+## Build 21  (patch 0037 rama-try-peptide-flips; Python only, `bin/coot-bin` and `lib/` as in build 13)
+- New: **Calculate > All Molecule... > Refine/Improve Ramachandran Plot (try peptide flips)...** (user request 16 Nov; the original entry is unchanged).
+  For each residue i with a protein residue i+1: try A = refine i-1..i+1 with Ramachandran restraints; restore; try B = pepflip(i) + the same refinement.
+  B is kept if the Ramachandran regions of i, i+1 (Coot's own outlier 0 / allowed 1 / favoured 2) sum higher, or are equal and the map fit
+  (density_score_residue of i, i+1) is at least 10% better (`rama_flip_density_gain`); otherwise A is restored.  Both tries are shown like Stepped
+  Refine; Stop after try A keeps A.  Waters, nucleotides, chain ends, insertion codes and alt confs: refined as in the original entry (no flip tried).
+  Kept flips go to the status bar and the log ("INFO:: rama flip"); `rama_flip_log` has every decision.
+- Tests: `gui-scripts` 15 -> 16, `gui-dialogs` 48 -> 53 (4 peptides of tutorial-modern flipped on purpose are put back, O within 0.5 A; 4 correct
+  ones kept; both tries shown with Ramachandran restraints on; Stop; the decision rule); build 20 fails all 6.
+- On screen: not verified by me (headless only).
+
 ## Build 20  (patch 0036 fit-protein-rama-shown-refinement; Python only, `bin/coot-bin` and `lib/` as in build 13)
 - Fixed: **Calculate > All Molecule... > Refine/Improve Ramachandran Plot...** never appeared: in the 0.9.8.96 source the line that creates the entry is
   indented into the function the entry calls.  Now in the menu (Stepped Refine with Ramachandran restraints on).  Dialog title typo "Ramachanran" fixed.

@@ -1,9 +1,11 @@
 # One line per check: PASS / FAIL / PARTIAL and a few words.  (You can also just tell me in chat.)
-# Round 20 (see TEST-PROTOCOL.md, section BB):
-BB1 All Molecule submenu has Refine/Improve Ramachandran Plot...:
-BB2 Refine/Improve Ramachandran Plot: residues shown while refined, Stop works:
-BB3 Fit Protein: refinement shown after each rotamer fit:
-BB4 (optional) Stepped Refine unchanged:
+# Round 21 (see TEST-PROTOCOL.md, section CC):
+CC1 All Molecule submenu has the new "(try peptide flips)" entry:
+CC2 deliberately flipped peptide is flipped back, status bar says so:
+CC3 correct residues are not flipped:
+CC4 (optional) the original entry does not fix the flip:
+CC5 Fill Partial Residues details (menu used, models loaded, map dialog, hydrogens):
+# Round 20 (see TEST-PROTOCOL.md, section BB): confirmed 16 Nov.
 # Round 19 (see TEST-PROTOCOL.md, section AA):
 AA1 install build 19, coot0 starts it:
 AA2 README-FIRST.txt / LICENSING.md clear for a lab member:

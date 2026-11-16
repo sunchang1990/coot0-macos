@@ -1,4 +1,28 @@
-# Coot 0.9.8.96 on Apple Silicon: test round 20 (build 20 = build 19 + Refine/Improve Ramachandran Plot in the menu + Fit Protein shows its refinement)
+# Coot 0.9.8.96 on Apple Silicon: test round 21 (build 21 = build 20 + Refine/Improve Ramachandran Plot (try peptide flips))
+
+**From you** (16 Nov): BB1-BB4 confirmed (Fit Protein and Refine/Improve Ramachandran Plot show the refinement like Stepped Refine; the menu entries are there). Asked for peptide flips in the Ramachandran refinement as a new entry next to the original (your choice (a)). Fill Partial Residues: question answered in chat, your details pending (CC5).
+
+1. **New entry Calculate > All Molecule... > Refine/Improve Ramachandran Plot (try peptide flips)...** For every residue it refines twice: as it is, and with the peptide to the next residue flipped (Coot's Pep-flip). It keeps the flip only if it is better: a better Ramachandran region for the two residues (outlier < allowed < favoured, Coot's own classification), or the same regions and at least 10% better fit to the map. Otherwise the first result is kept. Both tries are shown like Stepped Refine (so a residue takes about twice as long). Kept flips are reported in the status bar ("Peptide A 43-44 flipped ...") and in the terminal log ("INFO:: rama flip").
+2. Residues where no flip is tried (refined as in the original entry): waters, nucleotides, the last residue of a chain, residues with insertion codes or alternate conformations.
+3. The original **Refine/Improve Ramachandran Plot...** is unchanged.
+
+**Tested headless** on the tutorial model: 4 peptides flipped on purpose (A 20, 43, 60, 85) were all flipped back (carbonyl O within 0.15 A of the deposited position); 4 correct ones (A 30, 50, 70, 90) were left alone. A 60 was decided by the map fit (both orientations in the same Ramachandran regions). **On screen: not verified by me.**
+
+**New tests** (`gui-scripts` 15 -> 16, `gui-dialogs` 48 -> 53; build 20 fails all 6). Evidence: `evidence/checks_b20_vs_b21.txt`, `evidence/verify_b21.txt`.
+
+## CC. Round 21 checks (about 15 minutes)
+
+| # | Do | Expected |
+|---|---|---|
+| CC1 | Install build 21, Calculate > All Molecule... | Five entries; the new one is "Refine/Improve Ramachandran Plot (try peptide flips)...". |
+| CC2 | On a copy of your model, flip one peptide on purpose (Pep-flip button), then run the new entry; Stop after that residue has been done. | Both tries are shown; the status bar says that peptide was flipped; it is back in its original orientation. |
+| CC3 | Let it run over 20-30 correct residues. | No flips reported (or only ones you agree with). |
+| CC4 | (optional) The original entry on the same deliberately flipped peptide. | It does not fix it (as before). |
+| CC5 | Fill Partial Residues: tell me how you removed the atoms, how many models were loaded (and which one the chooser showed), whether a "select map" window appeared, whether the model has hydrogens. | Your answers. |
+
+---
+
+# Earlier round (BB1-BB4 confirmed 16 Nov): Coot 0.9.8.96 on Apple Silicon: test round 20 (build 20 = build 19 + Refine/Improve Ramachandran Plot in the menu + Fit Protein shows its refinement)
 
 **From you** (16 Nov): asked for the Ramachandran entry, a README note, and the same refinement highlight in Fit Protein and Refine/Improve Ramachandran Plot as in Stepped Refine. AA1-AA4 (round 19) are still open.
 

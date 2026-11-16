@@ -459,6 +459,55 @@ def rama_shows():
     return True if all(e[2] == 1 for e in log if e[0] == "refine") else "Ramachandran restraints were off during the refinement: %r" % (log,)
 check("Refine/Improve Ramachandran Plot: the refinement is shown with Ramachandran restraints on, settings restored afterwards", rama_shows)
 
+# (build 21) Refine/Improve Ramachandran Plot (try peptide flips): for every residue both orientations of the peptide to the next residue are refined
+# (with Ramachandran restraints) and the better one is kept (Ramachandran regions first, then map fit).  Peptides of tutorial-modern.pdb are flipped on
+# purpose (pepflip moves the carbonyl O by ~3.4 A); the routine must put them back (O within 0.5 A of the deposited position) and leave correct ones.
+import math as _math
+def _flip_setup():
+    imol_f = coot.read_pdb(os.path.join(here, "test-data", "tutorial-modern.pdb"))
+    imap_f = coot.make_and_draw_map(os.path.join(here, "test-data", "rnasa-1.8-all_refmac1.mtz"), "FWT", "PHWT", "", 0, 0)
+    coot.set_imol_refinement_map(imap_f); _m.continue_multi_refine = True
+    O = lambda r: [a[2] for a in coot.residue_info_py(imol_f, "A", r, "") if a[0][0].strip() == "O"][0]
+    return imol_f, imap_f, O
+def rama_flip_corrects():
+    imol_f, imap_f, O = _flip_setup()
+    bad = []
+    for r in (20, 43, 60, 85):
+        o0 = O(r); coot.pepflip(imol_f, "A", r, "", "")
+        if _math.dist(o0, O(r)) < 2.5: return "the deliberate flip of A %d did not move O" % r
+        _m.fit_protein_rama_flip_function([imol_f, "A", r, ""], imap_f)
+        if _math.dist(o0, O(r)) > 0.5: bad.append((r, round(_math.dist(o0, O(r)), 2)))
+    return True if not bad else "flipped peptides not put back (residue, O distance from the deposited position): %r" % bad
+check("Ramachandran (try peptide flips): 4 peptides flipped on purpose are flipped back (O within 0.5 A of the deposited model)", rama_flip_corrects)
+def rama_flip_keeps_correct():
+    imol_f, imap_f, O = _flip_setup()
+    bad = []
+    for r in (30, 50, 70, 90):
+        o0 = O(r); _m.fit_protein_rama_flip_function([imol_f, "A", r, ""], imap_f)
+        if _math.dist(o0, O(r)) > 0.5: bad.append((r, round(_math.dist(o0, O(r)), 2), _m.rama_flip_log[-1][2:]))
+    return True if not bad else "correct peptides were flipped: %r" % bad
+check("Ramachandran (try peptide flips): 4 correct peptides are left as they are", rama_flip_keeps_correct)
+def rama_flip_shows():
+    log, ok = shown_refinement(_m.fit_protein_rama_flip_function)
+    if ok is not True: return ok
+    refs = [e for e in log if e[0] == "refine"]
+    if len(refs) != 2: return "expected 2 shown refinements (as it is, flipped), got %d" % len(refs)
+    return True if all(e[2] == 1 for e in refs) else "Ramachandran restraints were off during a try: %r" % (refs,)
+check("Ramachandran (try peptide flips): both tries are shown like Stepped Refine, with Ramachandran restraints on, settings restored", rama_flip_shows)
+def rama_flip_stop():
+    imol_f, imap_f, O = _flip_setup()
+    o0 = O(43); coot.pepflip(imol_f, "A", 43, "", ""); n_log = len(_m.rama_flip_log)
+    _m.continue_multi_refine = False                 # Stop pressed: the first try (refinement as it is) is kept, no flip is tried
+    try: _m.fit_protein_rama_flip_function([imol_f, "A", 43, ""], imap_f)
+    finally: _m.continue_multi_refine = True
+    if len(_m.rama_flip_log) != n_log: return "a flip was tried after Stop: %r" % (_m.rama_flip_log[-1],)
+    return True if _math.dist(o0, O(43)) > 2.0 else "after Stop the peptide was flipped back anyway (O %.2f A from the deposited position)" % _math.dist(o0, O(43))
+check("Ramachandran (try peptide flips): after Stop the current try is kept and no flip is made", rama_flip_stop)
+check("Ramachandran (try peptide flips): a flip is kept for a better Ramachandran region, or the same regions and >= 10% better map fit only",
+      lambda: (_m.rama_flip_better((2, 2, 10.0), (3, 2, 9.0)) and not _m.rama_flip_better((3, 2, 10.0), (2, 2, 30.0))
+               and not _m.rama_flip_better((4, 2, 10.0), (4, 2, 10.5)) and _m.rama_flip_better((4, 2, 10.0), (4, 2, 11.5))
+               and not _m.rama_flip_better((4, 2, 10.0), (4, 1, 20.0))) or "wrong choice")
+
 # Alt conf occupancy slider (Extensions > Modelling or the toolbar): "OK" did nothing in build 13 (set_alt_conf_occ compared a list with a number: a
 # TypeError in Python 3, silently true in Python 2).  Cys B 72 of tutorial-modern.pdb has SG A (occ 0.7) / SG B (occ 0.3).
 def occ_slider_ok():

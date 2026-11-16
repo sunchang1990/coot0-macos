@@ -29,8 +29,14 @@ some things that did not work in the original 0.9.8.96 release. The changes you 
 - **Calculate > All Molecule... > Refine/Improve Ramachandran Plot...** is back in the menu (build 20). The code was in
   Coot 0.9.8.96, but a mis-indented line meant the menu entry was never created. It runs Stepped Refine with Ramachandran
   restraints switched on, residue by residue over the whole molecule.
+- **New: Calculate > All Molecule... > Refine/Improve Ramachandran Plot (try peptide flips)...** (build 21). Ramachandran
+  restraints alone cannot turn a peptide that is built the wrong way round (it is about 180 degrees away). This entry
+  refines every residue twice, once as it is and once with the peptide to the next residue flipped, and keeps the
+  flip only if it is better: a better Ramachandran region for the two residues, or the same regions and a clearly
+  (at least 10%) better fit to the map. Flips that were kept are reported in the status bar. The original entry is
+  unchanged. In the tests, four peptides flipped on purpose were all put back and four correct ones left alone.
 - **You can watch whole-molecule refinement** (build 20 for Fit Protein; build 14 for Stepped Refine). Fit Protein, Stepped
-  Refine and Refine/Improve Ramachandran Plot now show each residue being refined in Coot's usual refinement style (the
+  Refine and both Refine/Improve Ramachandran Plot entries now show each residue being refined in Coot's usual refinement style (the
   highlighted "intermediate atoms") for a moment before accepting it, instead of the atoms jumping to their result. The
   map is re-contoured around each residue, the **Stop** button on the toolbar works at any time, and no "Accept
   Refinement?" window is left behind. `COOT_STEPPED_REFINE_SHOW=<seconds>` sets how long each residue is shown (default
