@@ -1,4 +1,26 @@
-# Coot 0.9.8.96 on Apple Silicon: test round 23 (build 23 = build 22 + the map decides peptide flips, no blank menu bar)
+# Coot 0.9.8.96 on Apple Silicon: test round 24 (build 24 = build 23 + a clear list of turned peptides, no blank menu bar in the plain entry)
+
+**From you** (17 Nov): EE1, EE2 confirmed. EE3: of 4 peptides flipped on purpose, all were put back, but the report named only 2; the plain entry turned back 2 of them; the menu bar went blank in the plain entry. Asked for: the limits visible in the README, an explanation of "the carbonyl O left the density" with equations, and a clear definition of a flipped peptide.
+
+1. **What counts as flipped.** A badly flipped peptide is often put back by the ordinary refinement (try A) already; then the flip try (B) is worse and is not kept, so build 23 did not count it. Now the report compares every peptide with the start of the run: a peptide has **turned** when its carbonyl O ends up more than 90 degrees from where it was (round the CA(i) - CA(i+1) axis). The report lists them in two groups: "Flipped by the flip try" and "Turned by the refinement itself". The plain entry lists the peptides it turned in the terminal and the status bar.
+2. **Blank menu bar in the plain entry.** The redraw that cured EE2 in the (try peptide flips) entry now follows every shown refinement (also Stepped Refine and Fit Protein).
+3. **README**: the formulas and the limit variables, with how to change them (section "How (try peptide flips) decides").
+
+**Tested headless on your model** (local, not in git): your 4 deliberate flips (EE3): all put back; the report lists 1 flipped by the flip try and 3 turned by the refinement itself (in a run over residues around them only, so the split between the two lists can differ from a whole-model run). **On screen: not verified by me.**
+
+**New tests** (`gui-dialogs` 66 -> 70; build 23 fails all 4). Evidence: `evidence/checks_b23_vs_b24.txt`, `evidence/verify_b24.txt`.
+
+## FF. Round 24 checks (about 15 minutes, on a copy of your model)
+
+| # | Do | Expected |
+|---|---|---|
+| FF1 | Pep-flip 3-4 good peptides on purpose, run "(try peptide flips)" over the model. | The report lists every one of them, either under "Flipped by the flip try" or "Turned by the refinement itself"; nothing else turned that should not. |
+| FF2 | The same with the plain "Refine/Improve Ramachandran Plot..." and watch the menu bar. | The menu bar stays drawn; at the end the terminal / status bar say which peptides turned. |
+| FF3 | Read the README section "How (try peptide flips) decides". | Clear enough; tell me if a limit should change. |
+
+---
+
+# Earlier round (EE1, EE2 confirmed 17 Nov; EE3 led to round 24): Coot 0.9.8.96 on Apple Silicon: test round 23 (build 23 = build 22 + the map decides peptide flips, no blank menu bar)
 
 **From you** (17 Nov): DD1-DD5 confirmed. Found: (1) part of the window (the menu bar) went blank during a run until the mouse went over it; (2) "(try peptide flips)" kept flips that were clearly wrong but gave a slightly better Ramachandran plot (two screenshots).
 

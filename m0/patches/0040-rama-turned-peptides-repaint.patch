@@ -1,0 +1,170 @@
+diff --git a/python/extensions.py b/python/extensions.py
+index 1fee314..36eba80 100644
+--- a/python/extensions.py
++++ b/python/extensions.py
+@@ -258,10 +258,7 @@ if (have_coot_python):
+        if (imol_refinement_map() == -1):
+          add_status_bar_text("oops. Must set a map to fit")
+        else:
+-         global continue_multi_refine
+-         continue_multi_refine = True
+-         del rama_skipped[:]
+-         interruptible_fit_protein(imol, fit_protein_rama_fit_function)
++         start_rama_run(imol)           # (build 24) the terminal lists the peptides the refinement turned
+ 
+      # macOS port (build 20): this entry was indented into fit_protein_func3() above (the same in the 0.9.8.96 source), so it was only
+      # created when that function ran - which needed the menu entry: it never appeared.  Now it is added with the other All Molecule entries.
+diff --git a/python/fitting.py b/python/fitting.py
+index ce6a6fe..a86eae7 100644
+--- a/python/fitting.py
++++ b/python/fitting.py
+@@ -271,6 +271,12 @@ def refine_auto_range_and_show(imol, chain_id, res_no, alt_conf, seconds=None, f
+ def refine_and_show(imol, refine, seconds=None, force=False):
+     """Run refine() (a refine_zone / refine_auto_range call) as an ordinary refinement, keep the refining atoms on the screen for `seconds`
+     (Stop ends it early), then accept.  Used by Stepped Refine, Refine/Improve Ramachandran Plot and Fit Protein (build 20)."""
++    try:
++        _refine_and_show(imol, refine, seconds, force)
++    finally:
++        repaint_main_window()      # (build 24) the user saw the menu bar go blank during a run of the plain Ramachandran entry too
++
++def _refine_and_show(imol, refine, seconds=None, force=False):
+     import time
+     if seconds is None:
+         seconds = stepped_refine_show_seconds
+@@ -678,16 +684,125 @@ def repaint_main_window():
+     except Exception:
+         pass
+ 
++# (build 24) What counts as a flipped peptide.  The user flipped four peptides on purpose (17 Nov): the report named two as flipped, but all four
++# were put back, two of them by the refinement as it is (try A) without any flip try.  The report now compares every peptide with the start of
++# the run: a peptide has turned when its carbonyl O ends up more than rama_flip_turn_angle degrees round the CA(i) - CA(i+1) axis from where it
++# was.  Turned peptides are listed in two groups: flipped by the flip try (try B kept), and turned by the refinement itself.
++rama_flip_turn_angle = 90.0
++
++def peptide_orientations(imol):
++    """{(chain, res_no, alt conf): (CA i, O i, CA i+1)} for every peptide i / i+1 of amino acids joined by a peptide bond."""
++    out = {}
++    if not valid_model_molecule_qm(imol):
++        return out
++    for chain_id in chain_ids(imol) or []:
++        residues = {}
++        for serial in range(chain_n_residues(chain_id, imol)):
++            r = seqnum_from_serial_number(imol, chain_id, serial)
++            if insertion_code_from_serial_number(imol, chain_id, serial) == "":
++                residues[r] = _residue_atoms(imol, chain_id, r)
++        for r, a in residues.items():
++            b = residues.get(r + 1)
++            if not b:
++                continue
++            def get(atoms, name, alt):        # that alt conf, else the shared atom, else the first conformer (a shared O next to a split N)
++                xyz = atoms.get((name, alt)) or atoms.get((name, ""))
++                if xyz:
++                    return xyz
++                others = sorted(k for k in atoms if k[0] == name)
++                return atoms[others[0]] if others else None
++            for (name, alt), o in a.items():
++                if name != "O":
++                    continue
++                ca1, c = get(a, "CA", alt), get(a, "C", alt)
++                ca2, n = get(b, "CA", alt), get(b, "N", alt)
++                if ca1 and ca2 and c and n and sum((c[i] - n[i]) ** 2 for i in range(3)) < 2.5 * 2.5:
++                    out[(chain_id, r, alt)] = (ca1, o, ca2)
++    return out
++
++def peptide_turn_angle(before, after):
++    """Angle (degrees) by which the carbonyl O turned round the CA(i) - CA(i+1) axis between two (CA i, O i, CA i+1) triples."""
++    import math
++    def perp(t):
++        ca1, o, ca2 = t
++        u = [ca2[i] - ca1[i] for i in range(3)]
++        lu = math.sqrt(sum(x * x for x in u)) or 1.0
++        u = [x / lu for x in u]
++        v = [o[i] - ca1[i] for i in range(3)]
++        d = sum(v[i] * u[i] for i in range(3))
++        return [v[i] - d * u[i] for i in range(3)]
++    p, q = perp(before), perp(after)
++    lp, lq = math.sqrt(sum(x * x for x in p)), math.sqrt(sum(x * x for x in q))
++    if lp == 0 or lq == 0:
++        return 0.0
++    c = max(-1.0, min(1.0, sum(p[i] * q[i] for i in range(3)) / (lp * lq)))
++    return math.degrees(math.acos(c))
++
++def peptides_turned(imol, start):
++    """[(chain, res_no, alt conf, angle)] of the peptides whose carbonyl O turned more than rama_flip_turn_angle since `start`."""
++    now = peptide_orientations(imol)
++    out = []
++    for key in sorted(start, key=lambda k: (k[0], k[1], k[2])):
++        if key in now:
++            ang = peptide_turn_angle(start[key], now[key])
++            if ang > rama_flip_turn_angle:
++                out.append(key + (ang,))
++    return out
++
++def rama_run_begin(imol):
++    """Remember the peptide orientations at the start of a Refine/Improve Ramachandran Plot run (for the list of turned peptides)."""
++    rama_flip_run["imol"] = imol
++    rama_flip_run["start"] = peptide_orientations(imol)
++
++def _peptide_label(chain_id, res_no, alt):
++    return "%s %d-%d%s" % (chain_id, res_no, res_no + 1, (" alt conf " + alt) if alt else "")
++
++def rama_turned_by_refinement():
++    """Peptides turned by more than rama_flip_turn_angle since rama_run_begin, other than those flipped by a flip try."""
++    start = rama_flip_run.get("start") or {}
++    imol = rama_flip_run.get("imol", -1)
++    flipped = set((c, r) for c, r, a, t in rama_flip_run["flipped"])
++    return [t for t in peptides_turned(imol, start) if (t[0], t[1]) not in flipped]
++
++def rama_plain_report(stopped=False):
++    """(build 24) The end of a plain Refine/Improve Ramachandran Plot run: the peptides that the refinement turned (terminal, status bar)."""
++    repaint_main_window()
++    turned = rama_turned_by_refinement()
++    head = "Refine/Improve Ramachandran Plot %s: %d peptide%s turned by more than %d degrees" % (
++        "stopped" if stopped else "finished", len(turned), "" if len(turned) == 1 else "s", int(rama_flip_turn_angle))
++    lines = [head] + ["  %s (carbonyl O turned %d degrees)" % (_peptide_label(c, r, a), round(ang)) for c, r, a, ang in turned]
++    text = "\n".join(lines)
++    print("INFO:: " + text.replace("\n", "\nINFO:: "))
++    add_status_bar_text(head)
++    return text
++
++def start_rama_run(imol):
++    """Refine/Improve Ramachandran Plot (no flip tries) on molecule imol; the terminal lists the peptides that turned."""
++    global continue_multi_refine
++    rama_flip_run["tried"] = 0
++    rama_flip_run["flipped"] = []
++    del rama_skipped[:]
++    rama_run_begin(imol)
++    continue_multi_refine = True
++    interruptible_fit_protein(imol, fit_protein_rama_fit_function, when_done=rama_plain_report)
++
+ def rama_flip_report(stopped=False):
+     """The report at the end of a Refine/Improve Ramachandran Plot (try peptide flips) run (also when it is stopped): terminal, status bar
+     and a window.  Returns the text."""
+     _rama_scratch_close()
+     repaint_main_window()
+     flipped = rama_flip_run["flipped"]
+-    head = "Refine/Improve Ramachandran Plot (try peptide flips) %s: %d peptide%s flipped (%d peptide%s tried)" % (
++    turned = rama_turned_by_refinement()
++    head = "Refine/Improve Ramachandran Plot (try peptide flips) %s: %d peptide%s flipped (%d peptide%s tried); %d more turned by the refinement itself" % (
+         "stopped" if stopped else "finished", len(flipped), "" if len(flipped) == 1 else "s",
+-        rama_flip_run["tried"], "" if rama_flip_run["tried"] == 1 else "s")
+-    lines = [head] + ["  " + f[3] for f in flipped]
++        rama_flip_run["tried"], "" if rama_flip_run["tried"] == 1 else "s", len(turned))
++    lines = [head]
++    if flipped:
++        lines.append("Flipped by the flip try (the peptide was turned 180 degrees, refined, and that result was kept):")
++        lines += ["  " + f[3] for f in flipped]
++    if turned:
++        lines.append("Turned by the refinement itself (no flip try needed: the carbonyl O ended up more than %d degrees from where it was):" % int(rama_flip_turn_angle))
++        lines += ["  %s (carbonyl O turned %d degrees)" % (_peptide_label(c, r, a), round(ang)) for c, r, a, ang in turned]
+     if rama_skipped:
+         lines.append("Not touched (not amino acids): " + ", ".join("%s %s %d%s" % (n, c, r, i) for c, r, i, n in rama_skipped[:20])
+                      + (" and %d more" % (len(rama_skipped) - 20) if len(rama_skipped) > 20 else ""))
+@@ -707,6 +822,7 @@ def start_rama_flip_run(imol):
+     rama_flip_run["tried"] = 0
+     rama_flip_run["flipped"] = []
+     del rama_skipped[:]
++    rama_run_begin(imol)
+     continue_multi_refine = True
+     interruptible_fit_protein(imol, fit_protein_rama_flip_function, when_done=rama_flip_report)
+ 

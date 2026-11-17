@@ -1,8 +1,9 @@
 # One line per check: PASS / FAIL / PARTIAL and a few words.  (You can also just tell me in chat.)
-# Round 23 (see TEST-PROTOCOL.md, section EE):
-EE1 the three wrong flips of last time not made; report lists only flips with better carbonyl density:
-EE2 menu bar stays drawn during the run; no coot-rama-conformer message; no extra molecule:
-EE3 deliberate flips are put back:
+# Round 24 (see TEST-PROTOCOL.md, section FF):
+FF1 deliberate flips all listed (flipped by the flip try / turned by the refinement itself):
+FF2 plain entry: menu bar stays drawn; turned peptides listed at the end:
+FF3 README section on the flip decision clear; limits to change:
+# Round 23 (section EE): EE1, EE2 confirmed 17 Nov; EE3 -> round 24.
 # Round 22 (section DD): DD1-DD5 confirmed 17 Nov.
 # Round 21 (section CC): CC1-CC3, CC5 confirmed 16 Nov; CC4 optional.
 # Round 20 (see TEST-PROTOCOL.md, section BB): confirmed 16 Nov.

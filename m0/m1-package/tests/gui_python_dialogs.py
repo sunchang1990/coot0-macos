@@ -538,6 +538,57 @@ def rama_flip_repaints():
     return True if calls else "the main window (menu bar) is not redrawn at the end of the run"
 check("Ramachandran (try peptide flips): the main window and its menu bar are redrawn when the run ends", rama_flip_repaints)
 
+# (build 24) The user saw the menu bar go blank during the plain Refine/Improve Ramachandran Plot too: every shown refinement (Stepped Refine,
+# Fit Protein, both Ramachandran entries) now asks for a redraw of the main window.  And the report says what counts as a flipped peptide: every
+# peptide is compared with the start of the run (carbonyl O turned > 90 degrees round the CA - CA axis); those turned by the flip try and those
+# turned by the refinement itself are listed apart (the user flipped 4 on purpose: 2 were reported, all 4 were put back).
+def rama_plain_repaints():
+    imol_f, imap_f, O = _flip_setup()
+    calls = []; orig = _c.call
+    def spy(name, *a, **k):
+        if name == "gtk_widget_queue_draw": calls.append(name)
+        return orig(name, *a, **k)
+    _c.call = spy
+    try: _m.fit_protein_rama_fit_function([imol_f, "A", 30, ""], imap_f)
+    finally: _c.call = orig
+    return True if calls else "the main window (menu bar) is not redrawn after a residue of the plain Ramachandran run"
+check("Refine/Improve Ramachandran Plot: the main window and its menu bar are redrawn after each residue", rama_plain_repaints)
+def rama_turned_listed():
+    imol_f, imap_f, O = _flip_setup()
+    _m.rama_flip_run["tried"] = 0; _m.rama_flip_run["flipped"] = []
+    _m.rama_run_begin(imol_f)
+    coot.pepflip(imol_f, "A", 60, "", "")          # (as if the refinement had turned it)
+    coot.pepflip(imol_f, "A", 43, "", ""); _m.rama_flip_run["flipped"].append(("A", 43, "", "Peptide A 43-44 flipped (test)"))
+    keep = _m.use_graphics_interface_state; _m.use_graphics_interface_state = lambda: 0
+    try: t = _m.rama_flip_report(False)
+    finally: _m.use_graphics_interface_state = keep
+    turned = t.split("Turned by the refinement itself")[-1] if "Turned by the refinement itself" in t else ""
+    if "1 peptide flipped" not in t or "1 more turned by the refinement itself" not in t: return "report: %r" % t
+    if "A 60-61" not in turned or "A 43-44" in turned: return "turned list: %r" % turned
+    a = _m.peptide_turn_angle(((0, 0, 0), (1, 1, 0), (3.8, 0, 0)), ((0, 0, 0), (1, -1, 0), (3.8, 0, 0)))
+    return True if abs(a - 180) < 0.1 else "turn angle of an O turned 180 degrees: %r" % a
+check("Ramachandran (try peptide flips): the report lists the peptides turned by the refinement itself apart from those flipped by the flip try", rama_turned_listed)
+def rama_plain_report_run():
+    imol_f, imap_f, O = _flip_setup()
+    coot.pepflip(imol_f, "A", 60, "", "")
+    status = []
+    keep = {n: getattr(_m, n) for n in ("fit_protein_make_specs", "add_status_bar_text")}
+    _m.fit_protein_make_specs = lambda imol_, which: [[imol_f, "A", r, ""] for r in (59, 60, 61)]
+    _m.add_status_bar_text = lambda t: status.append(t)
+    keep_secs = _m.stepped_refine_show_seconds; _m.stepped_refine_show_seconds = 0
+    try:
+        _m.start_rama_run(imol_f)
+        t0 = _time.time()
+        while _time.time() - t0 < 120 and not any("Refine/Improve Ramachandran Plot finished" in x for x in status):
+            while gtk.events_pending(): gtk.main_iteration(False)
+            _time.sleep(0.01)
+    finally:
+        for n, f in keep.items(): setattr(_m, n, f)
+        _m.stepped_refine_show_seconds = keep_secs
+        _m.cancel_interruptible_fit_protein()
+    return True if any("peptide" in x and "turned" in x for x in status) else "no report of turned peptides at the end of the plain run: %r" % status[-3:]
+check("Refine/Improve Ramachandran Plot: at the end the status bar and terminal say how many peptides the refinement turned", rama_plain_report_run)
+
 # (build 22) Alt confs: build 21 tried no flip when residue i or i+1 had alt confs (it fell back to a plain refinement).  Shared peptide (only side
 # chains split, Cys B 72): one decision with every alt conf refined.  Split peptide (C, O / N with alt confs): a decision per alt conf, scored on
 # that conformer alone.  Then: ligands / waters are not touched by either Ramachandran entry, and a report is given at the end or when stopped.
@@ -594,6 +645,15 @@ def rama_flip_scratch_molecule():
     finally: _m.use_graphics_interface_state = keep
     return True if valid() == v0 else "the scratch molecule was left open after the run"
 check("Ramachandran (try peptide flips): split conformers are checked in one scratch molecule, closed at the end of the run", rama_flip_scratch_molecule)
+def rama_turned_next_split():
+    imol_f = coot.read_pdb(_split_pdb("A", (44,)))     # O of A 43 shared, N / CA of A 44 split into A / B (as in the user's model)
+    _m.rama_flip_run["tried"] = 0; _m.rama_flip_run["flipped"] = []
+    _m.rama_run_begin(imol_f)
+    if ("A", 43, "") not in _m.rama_flip_run["start"]: return "peptide A 43-44 (shared O, split N) is not followed"
+    coot.pepflip(imol_f, "A", 43, "", "")
+    t = [x[:3] for x in _m.rama_turned_by_refinement()]
+    return True if ("A", 43, "") in t else "turned: %r" % t
+check("Ramachandran: a peptide with a shared O next to a residue split into alt confs is followed too (listed when it turns)", rama_turned_next_split)
 def _ligand_pdb():
     import tempfile
     lines = [l for l in open(os.path.join(here, "test-data", "tutorial-modern.pdb")) if not l.startswith("END")]

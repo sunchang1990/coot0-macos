@@ -6,6 +6,22 @@ applied to the pristine tree by `setup.sh`) or a change of the packaged data / s
 round, `TEST-PROTOCOL.md` has the user-facing explanation and the checks for you (newest round first).  A "build" is one delivered zip.
 "Verified" means a headless test (no window server in the build environment); what only a screen can show is marked "on screen: not verified".
 
+## Build 24  (patch 0040 rama-turned-peptides-repaint; Python only, `bin/coot-bin` and `lib/` as in build 13)
+- Fixed (user report 17 Nov, EE2 / plain entry): the menu bar also went blank during the plain **Refine/Improve Ramachandran Plot**.  Every shown
+  refinement (refine_and_show: Stepped Refine, Fit Protein, both Ramachandran entries) now asks for a redraw of the main window afterwards (build 23
+  did this only in the (try peptide flips) entry, where EE2 then passed).
+- Clearer (user report 17 Nov, EE3): the user flipped 4 peptides on purpose; all 4 were put back but the report named only 2, because the other 2
+  were already turned back by the refinement as it is (try A) and so were not "flipped by the flip try".  The report now compares every peptide
+  with the start of the run: a peptide counts as turned when its carbonyl O ends up more than `rama_flip_turn_angle` (90) degrees from where it was,
+  round the CA(i) - CA(i+1) axis.  Two lists: "Flipped by the flip try" and "Turned by the refinement itself".  The plain entry lists the peptides
+  its refinement turned in the terminal and status bar.  A peptide whose O is shared but whose next residue is split into alt confs is followed too.
+- README: how the flip is decided (the formulas: density at the O, the peptide C + O + N, map fit, Ramachandran regions), the limit variables with
+  their defaults, and how to change them (Python scripting window or a file in coot0's `.coot-preferences`).
+- Tests: `gui-dialogs` 66 -> 70 (redraw in the plain entry; the turned list apart from the flips; the plain-run report; shared O next to a split
+  residue); build 23 fails all 4.  Headless on the user's model (local only): the 4 deliberate flips of EE3 all put back, the report lists 1
+  flipped by the try and 3 turned by the refinement.
+- On screen: not verified by me (headless only).
+
 ## Build 23  (patch 0039 rama-flip-map-veto-scratch-molecule; Python only, `bin/coot-bin` and `lib/` as in build 13)
 - Fixed (user report 17 Nov): **Refine/Improve Ramachandran Plot (try peptide flips)** kept wrong flips: a flip that moved a residue from allowed to
   favoured was kept although the flipped carbonyl O pointed out of the density (build 22 ranked the Ramachandran regions above the map).  On the

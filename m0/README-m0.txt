@@ -391,6 +391,17 @@ Round 20: Refine/Improve Ramachandran Plot menu + Fit Protein shown refinement -
   go-to re-contours) - the immediate-replacement state is the real difference.  b19: gui-scripts 14/15, gui-dialogs 46/48; b20 15/15, 48/48.
   User 16 Nov: BB1-BB4 confirmed on screen.
 
+Round 24: turned peptides listed, redraw after every shown refinement -> build 24  (patch 0040 rama-turned-peptides-repaint; Python only)
+  User 17 Nov: EE1, EE2 ok; EE3: 4 deliberate flips all put back but the report named 2 (the others were turned back by try A, so B lost); menu bar
+  blank in the plain entry too.  refine_and_show -> _refine_and_show + repaint_main_window in finally (covers Stepped Refine, Fit Protein, both
+  Rama entries).  peptide_orientations(imol): {(chain, i, alt of O): (CA i, O i, CA i+1)} for C-N < 2.5 A (missing alt -> shared -> first
+  conformer: the user's model has a shared O next to a split N/CA); peptide_turn_angle = angle between the O - CA(i) vectors projected
+  perpendicular to CA(i)-CA(i+1); rama_run_begin at start (start_rama_flip_run, new start_rama_run for the plain entry, extensions.py
+  fit_protein_func3); report: flipped by the try + turned by the refinement (> rama_flip_turn_angle 90); rama_plain_report: terminal + status.
+  README: formulas + variables; a .py in $STATE/home/.coot-preferences sets them (checked headless: rama_flip_o_gain 1.5 read).
+  Headless on the user's model (EE3 residues, zone runs r-2..r+2): all 4 back; report 1 flipped (117) + 3 turned; plain entry: 3 turned, 1 not
+  back.  Tests gui-dialogs 70 (b23 66/70).
+
 Round 23: map veto for peptide flips, one scratch molecule -> build 23  (patch 0039 rama-flip-map-veto-scratch-molecule; Python only)
   User 17 Nov: DD1-DD5 ok; (1) menu bar blank during a run until hovered; (2) wrong flips kept for a slightly better Ramachandran plot.
   Log of the user's run: the three wrong flips were Rama 3 -> 4 with map fit -10..-20%, and rama_flip_better ranked regions first.  Diagnosis

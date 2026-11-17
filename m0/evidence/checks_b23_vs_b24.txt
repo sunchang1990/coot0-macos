@@ -1,0 +1,14 @@
+Build 24 regression proof (gui_python_dialogs.py of build 24, headless, 17 Nov 2026)
+
+== with build 23 fitting.py / extensions.py ==
+FAIL Refine/Improve Ramachandran Plot: the main window and its menu bar are redrawn after each residue                                                                 'th
+FAIL Ramachandran (try peptide flips): the report lists the peptides turned by the refinement itself apart from those flipped by the flip try                          EXC
+FAIL Refine/Improve Ramachandran Plot: at the end the status bar and terminal say how many peptides the refinement turned                                              EXC
+FAIL Ramachandran: a peptide with a shared O next to a residue split into alt confs is followed too (listed when it turns)                                             EXC
+SUMMARY 66 / 70
+
+== with build 24 files ==
+SUMMARY 70 / 70
+
+Patch series: setup.sh with 40 patches rebuilds a tree identical to m0/coot-src (diff -rq -x .git -x __pycache__).
+Preferences: a .py in $STATE/home/.coot-preferences setting rama_flip_o_gain = 1.5 is read (headless check: value 1.5, rule follows it).

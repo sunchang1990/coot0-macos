@@ -36,8 +36,11 @@ some things that did not work in the original 0.9.8.96 release. The changes you 
   not lose density, and then either a Ramachandran region gets better, or (same regions) the carbonyl O sits at least
   1 sigma deeper in the density. A better Ramachandran plot alone never makes a flip. Residues with alternate conformations are included: if the peptide itself is
   split into conformers, the flip is tried for each conformer (build 22). At the end, or when you press Stop, a report
-  says how many peptides were flipped and which. The original entry does not try flips. In the tests, peptides flipped
-  on purpose were all put back and correct ones left alone.
+  lists the peptides that turned, in two groups (build 24): those **flipped by the flip try**, and those **turned by the
+  refinement itself** (a badly flipped peptide is often put back by ordinary refinement already, before the flip is
+  tried). The original entry does not try flips; at its end the terminal and status bar list the peptides its refinement
+  turned (build 24). In the tests, peptides flipped on purpose were all put back and correct ones left alone. How the
+  decision is made, and how to change it: [below](#how-try-peptide-flips-decides).
 - Both Refine/Improve Ramachandran Plot entries work on **amino acids only** (build 22): ligands, waters and nucleotides
   are not refined, also not as neighbours of an amino acid.
 - **Fill Partial Residues** lists in the terminal which residues it filled, with the atoms added, and which it could
@@ -52,6 +55,55 @@ some things that did not work in the original 0.9.8.96 release. The changes you 
   search itself is for protein side chains.
 
 The full list, build by build: [`m0/m1-package/CHANGELOG.md`](m0/m1-package/CHANGELOG.md).
+
+### How (try peptide flips) decides
+
+For each residue *i* that is joined to *i*+1 by a peptide bond, the zone *i*-1 .. *i*+1 is refined twice with
+Ramachandran restraints: **A** as it is, and **B** after Coot's Pep-flip of the peptide *i* / *i*+1 (the C=O of *i*
+turned 180 degrees round the CA(*i*)-CA(*i*+1) axis). Each result is scored with numbers Coot itself provides:
+
+```
+rho(x)     = density of the refinement map at point x (Coot's density_at_point, linear interpolation), in map units
+sigma      = r.m.s. deviation of the map from its mean (Coot's map_sigma)
+O          = rho(O_i) / sigma                                     carbonyl O of residue i, in sigma
+P          = ( rho(C_i) + rho(O_i) + rho(N_i+1) ) / sigma         the peptide C, O, N together, in sigma
+F          = sum over the atoms a of residues i and i+1 of  rho(a) * occupancy(a)     (Coot's density_score_residue)
+R          = sum over residues i and i+1 of their Ramachandran region (outlier 0, allowed 1, favoured 2; Coot's own classification)
+```
+
+(With alternate conformations each conformer is scored on its own atoms plus the shared ones.) Flip B is kept over A
+only if all of these hold:
+
+```
+R_B >= R_A                                    (no residue goes to a worse Ramachandran region)
+O_B >= O_A - rama_flip_max_o_loss             (default 0.3 sigma)
+P_B >= P_A - rama_flip_max_peptide_loss       (default 0.6 sigma)
+F_B >= F_A - rama_flip_max_fit_loss * |F_A|   (default 0.02, i.e. 2 %)
+```
+
+and then either `R_B > R_A`, or (same regions) `O_B >= O_A + rama_flip_o_gain` and `P_B >= P_A + rama_flip_o_gain`
+(default 1.0 sigma) and `F_B > F_A + rama_flip_density_gain * |F_A|` (default 0). Without a map nothing is flipped. So
+"the carbonyl O left the density" means: after the flip, the map value at the O position dropped (for example from 7.3
+to -0.8 sigma), which the old rule (Ramachandran first) accepted and this one does not.
+
+The report counts a peptide as **turned** when its carbonyl O ends up more than `rama_flip_turn_angle` (default 90)
+degrees from where it was at the start of the run, measured round the CA(*i*)-CA(*i*+1) axis. The terminal shows both
+scores of every try (`INFO:: rama flip A 43 '' kept original A (R, n, F, O, P) B (...)`).
+
+**Changing the limits.** They are Python variables. Type the new value in Calculate > Scripting > Python... before the
+run, for example `rama_flip_o_gain = 1.5` (stricter: a flip with the same regions needs 1.5 sigma more at the O) or
+`rama_flip_max_o_loss = 0.0`. To keep them, put such lines in a `.py` file in coot0's preferences folder, which is
+`~/Library/Application Support/coot0/home/.coot-preferences/` when installed with `install.sh` (coot0 uses its own
+home, so your `~/.coot-preferences` is not read unless you start it with `COOT_USE_HOME=1`).
+
+| Variable | Default | Meaning |
+|---|---|---|
+| `rama_flip_max_o_loss` | 0.3 | the flipped carbonyl O may lose at most this much density (sigma) |
+| `rama_flip_max_peptide_loss` | 0.6 | the peptide C + O + N may lose at most this much (sigma, sum) |
+| `rama_flip_max_fit_loss` | 0.02 | the map fit of residues *i*, *i*+1 may drop at most this fraction |
+| `rama_flip_o_gain` | 1.0 | same Ramachandran regions: O and C + O + N must each gain this much (sigma) |
+| `rama_flip_density_gain` | 0.0 | same regions: extra fraction by which the map fit must improve |
+| `rama_flip_turn_angle` | 90 | degrees the carbonyl O must turn for the report to count a peptide as turned |
 
 ## Install
 

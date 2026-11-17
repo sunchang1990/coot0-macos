@@ -1,0 +1,33 @@
+Build 24 tarball verification (17 Nov 2026), coot0-0.9.8.96-b24-macos-arm64.tar.gz
+15c94b2654b50f0af9b17657e2d51b0df67a93860c9bdb83afadc15a1cc5a076
+unpacked into a folder with a space; env -i, private HOME
+
+python-api                 SUMMARY 19 / 19
+scheme-api                 SUMMARY 27 / 27
+data-and-maps              SUMMARY 39 / 39
+ondemand-read              SUMMARY 3 / 3
+refine-zone                SUMMARY 7 / 7
+process-helpers            SUMMARY 10 / 10
+bundle-python              SUMMARY 19 / 19
+bundle-scheme              SUMMARY 6 / 6
+rdkit-python               SUMMARY 10 / 10
+rdkit-scheme               SUMMARY 3 / 3
+gtk2compat                 SUMMARY 12 / 12
+gui-scripts                SUMMARY 16 / 16
+gui-dialogs                SUMMARY 70 / 70
+gui-glyco                  SUMMARY 14 / 14
+gui-toolbar                SUMMARY 13 / 13
+gui-rcrane                 SUMMARY 21 / 21
+refmac-run                 SUMMARY 11 / 11
+installer                  SUMMARY 26 / 26
+startup-dictionaries       SUMMARY 1 / 1
+
+GUI sweep: 250 items ok, 0 items with errors, 0 items without a handler, 5 items whose activation killed the headless process (OpenGL or screen needed; started but not completed, listed below, checked by the GUI audit), 0 dialog buttons with errors
+  SWEEP 21 | Edit > Settings... > Python: Install Template Keybindings button '   X   Edit Chi Angles' | CRASH (process died: OpenGL call without a graphics context, or hang)
+  SWEEP 36 | Calculate > Map Tools... > Brighten Maps | CRASH (process died: OpenGL call without a graphics context, or hang)
+  SWEEP 108 | Draw > Representation Tools... > Ball & Stick... button '  OK  ' | CRASH (process died: OpenGL call without a graphics context, or hang)
+  SWEEP 117 | Draw > Representation Tools... > Highlight Interesting Site (here)... | CRASH (process died: OpenGL call without a graphics context, or hang)
+  SWEEP 151 | Ligand > Find Ligands... | CRASH (process died: OpenGL call without a graphics context, or hang)
+
+Mach-O files checked: 211 | highest minos: 11.0 | dangling symlinks: 0
+RESULT: OK
