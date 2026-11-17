@@ -391,6 +391,19 @@ Round 20: Refine/Improve Ramachandran Plot menu + Fit Protein shown refinement -
   go-to re-contours) - the immediate-replacement state is the real difference.  b19: gui-scripts 14/15, gui-dialogs 46/48; b20 15/15, 48/48.
   User 16 Nov: BB1-BB4 confirmed on screen.
 
+Round 23: map veto for peptide flips, one scratch molecule -> build 23  (patch 0039 rama-flip-map-veto-scratch-molecule; Python only)
+  User 17 Nov: DD1-DD5 ok; (1) menu bar blank during a run until hovered; (2) wrong flips kept for a slightly better Ramachandran plot.
+  Log of the user's run: the three wrong flips were Rama 3 -> 4 with map fit -10..-20%, and rama_flip_better ranked regions first.  Diagnosis
+  headless on the user's model (scripts in the scratchpad, evidence local only): carbonyl O density 5.3/7.3/5.6 -> 3.7/-0.8/0.1 sigma; scan of
+  all 232 chain-A peptides: old rule 3 flips (exactly those), new 0; 21 deliberate flips (every 11th residue): new rule 21/21 put back; a first
+  version with the 10% fit gain kept from build 21 for equal regions missed one (Tyr, O +4.4 sigma, fit +6.8%) -> equal regions now need
+  O and C+O+N each >= +1 sigma and fit better.  _rama_flip_score returns (rama sum, n, fit, O sigma, C+O+N sigma) (map_sigma_py; None without a
+  map -> never flip).  Limits rama_flip_max_o_loss 0.3, rama_flip_max_peptide_loss 0.6, rama_flip_max_fit_loss 0.02, rama_flip_o_gain 1.0.
+  Blank menu bar: not reproduced (no screen used).  Build 22 read a new temp molecule per split-conformer check (status bar "Molecule number 10
+  created" in the user's screenshot): now one scratch molecule (_rama_scratch, refilled with clear_and_update_model_molecule_from_file, inactive,
+  hidden), closed by rama_flip_report (end and Stop); repaint_main_window() (queue_draw of menu bar + toplevel) after each residue and at the end.
+  Tests gui-dialogs 66 (b22 61/66).
+
 Round 22: alt confs, amino acids only, flip report, Fill Partial Residues list -> build 22  (patch 0038; Python only)
   User 16 Nov: CC1-3, CC5 ok; flips not tried for residues with alt confs (true: can_flip required no alt confs); keep ligands / non-protein out of
   both Rama entries; final report; Fill Partial Residues: list of residues fixed, ask for the model only if ambiguous, active map, no H.

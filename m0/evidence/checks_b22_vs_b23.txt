@@ -1,0 +1,27 @@
+Build 22 vs build 23: new gui-dialogs tests (patch 0039), run headless with m0/tools/dev_run.sh on 17 Nov 2026.
+Build 22 files + the new test file:
+FAIL Ramachandran (try peptide flips): a flip that improves the Ramachandran region but takes the carbonyl O out of the density is NOT kept                            'a wrong flip would be kept'
+FAIL Ramachandran (try peptide flips): a wrongly flipped peptide (same regions, carbonyl +4.4 sigma, map fit +6.8%) is flipped back; without a map nothing is flipped  'wrong choice'
+FAIL Ramachandran (try peptide flips): the score measures the carbonyl O density in sigma (lower after a deliberate flip)                                              'the score has no carbonyl density: (4, 2, 19.31767463684082)'
+FAIL Ramachandran (try peptide flips): the main window and its menu bar are redrawn when the run ends                                                                  'the main window (menu bar) is not redrawn at the end of the run'
+FAIL Ramachandran (try peptide flips): split conformers are checked in one scratch molecule, closed at the end of the run                                              '12 molecules were created for the conformer checks (want at most one scratch molecule)'
+SUMMARY 61 / 66
+
+Build 23 files:
+SUMMARY 66 / 66
+
+Report / decision lines printed by the build-23 run:
+INFO::   Peptide A 20-21 flipped (Ramachandran 2 -> 4, carbonyl O 1.5 -> 4.3 sigma, map fit 17.53 -> 20.15)
+INFO::   Peptide A 43-44 alt conf B flipped (Ramachandran 2 -> 4, carbonyl O -0.8 -> 3.8 sigma, map fit 15.74 -> 18.98)
+INFO::   Peptide A 43-44 flipped (Ramachandran 2 -> 4, carbonyl O -0.7 -> 3.9 sigma, map fit 16.09 -> 19.21)
+INFO::   Peptide A 60-61 flipped (Ramachandran 4 -> 4, carbonyl O -0.5 -> 3.4 sigma, map fit 9.38 -> 11.75)
+INFO::   Peptide A 85-86 flipped (Ramachandran 2 -> 3, carbonyl O -0.2 -> 3.6 sigma, map fit 20.14 -> 22.65)
+INFO::   Peptide B 71-72 flipped (Ramachandran 2 -> 4, carbonyl O -0.1 -> 5.1 sigma, map fit 13.58 -> 16.77)
+INFO:: rama flip A 43 '' kept flip A (2, 2, 16.086953163146973, -0.7158802258520159, 4.8557594546128) B (4, 2, 19.209729194641113, 3.8760143863284875, 12.557661252935779)
+INFO:: rama flip A 43 '' kept flip A (2, 2, 16.086959838867188, -0.7158625916360835, 4.855743735424842) B (4, 2, 19.20969295501709, 3.8759578930032377, 12.557619760662995)
+INFO:: rama flip A 43 '' kept flip A (2, 2, 16.087000370025635, -0.7157828785966419, 4.855513533103732) B (4, 2, 19.20971393585205, 3.8759601272025415, 12.557621037348312)
+INFO:: rama flip A 43 '' kept original A (4, 2, 19.207648277282715, 3.877535876054283, 12.558695048870717) B (2, 2, 16.086992263793945, -0.7158897211990565, 4.855775333386422)
+INFO:: rama flip A 43 'A' kept original A (4, 2, 18.988589763641357, 3.813579048444941, 12.483546797777993) B (2, 2, 15.740156292915344, -0.7599095915293206, 4.7373872666917425)
+INFO:: rama flip A 43 'A' kept original A (4, 2, 19.224044144153595, 4.01882600167533, 12.67386770380326) B (2, 2, 15.680214524269104, -0.7968938086666825, 4.620636708500985)
+
+On the user's own model (details local only, m0/evidence/local/rama_flip_diag_b23.txt): 232 peptides of chain A, old rule 3 flips (the wrong ones), new rule 0; 21 deliberate flips, 21 put back.

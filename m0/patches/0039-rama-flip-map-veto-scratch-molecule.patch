@@ -1,0 +1,199 @@
+diff --git a/python/fitting.py b/python/fitting.py
+index 35f6130..ce6a6fe 100644
+--- a/python/fitting.py
++++ b/python/fitting.py
+@@ -417,12 +417,13 @@ def fit_protein_rama_fit_function(res_spec, imol_map):
+ # both orientations of the peptide i / i+1: (A) refine residues i-1 .. i+1 with Ramachandran restraints as it is, (B) the same after pepflip(i).
+ # It keeps B only if it is better: fewer residues of i, i+1 in a worse Ramachandran region (Coot's own classification: outlier < allowed <
+ # favoured), or the same regions and a clearly better fit to the map (density_score_residue of i and i+1, >= rama_flip_density_gain better).
++# (Build 23: the map now has a veto over the Ramachandran gain, see rama_flip_better.)
+ # Each try is shown like Stepped Refine.  The original "Refine/Improve Ramachandran Plot..." is unchanged.
+ # (build 22) Alternative conformations: build 21 did not try the flip at all when i or i+1 had alt confs.  Now, if the peptide atoms are shared
+ # (only side chains split), both tries refine every alt conf and one flip decision is made; if the peptide itself is split (C, O / N with alt
+ # confs), the flip is tried for each alt conf separately, scored on that conformer only.  Only amino acids joined by a peptide bond are used,
+ # and a report of the flips kept is given when the run ends or is stopped (rama_flip_report).
+-rama_flip_density_gain = 0.10      # relative gain in map fit needed to keep a flip when the Ramachandran regions are the same
++rama_flip_density_gain = 0.0       # (build 23: was 0.10) extra relative gain in map fit needed when the Ramachandran regions are the same
+ rama_flip_log = []                 # (chain_id, res_no, alt conf, "kept flip" / "kept original", score A, score B) of the last runs
+ rama_flip_run = {"tried": 0, "flipped": []}   # the current run (reset by fit_protein_func4); "flipped": (chain_id, res_no, alt conf, text)
+ 
+@@ -451,9 +452,21 @@ def _rama_regions(imol, chain_id, res_nos):
+             region[spec[1]] = reg if reg in (0, 1, 2) else 1
+     return region
+ 
++# (build 23) The conformer is scored in ONE hidden scratch molecule per run, refilled for each residue (clear_and_update_model_molecule_from_file)
++# and closed when the run ends.  Build 22 read and closed a new molecule for every split residue: each one wrote "Successfully read coordinates
++# file ... Molecule number N created" to the status bar and made Coot update its molecule lists, and the user saw parts of the window (the menu
++# bar) go blank during a run (17 Nov).
++_rama_scratch = {"imol": -1}
++
++def _rama_scratch_close():
++    imol_t = _rama_scratch["imol"]
++    _rama_scratch["imol"] = -1
++    if imol_t >= 0 and valid_model_molecule_qm(imol_t):
++        close_molecule(imol_t)
++
+ def _rama_regions_of_conformer(imol, chain_id, res_nos, alt):
+     """Ramachandran regions of the residues for alt conf `alt` alone.  Coot does not classify residues whose main chain is split into alt
+-    confs, so residues res_nos - 1 .. res_nos + 1 with only that conformer (and the shared atoms) are read into a hidden temporary molecule."""
++    confs, so residues res_nos - 1 .. res_nos + 1 with only that conformer (and the shared atoms) are put into a hidden scratch molecule."""
+     import os, tempfile
+     lines, serial = [], 1
+     for r in range(min(res_nos) - 1, max(res_nos) + 2):
+@@ -474,15 +487,22 @@ def _rama_regions_of_conformer(imol, chain_id, res_nos, alt):
+     with os.fdopen(fd, "w") as f:
+         f.writelines(lines + ["END\n"])
+     imol_go = go_to_atom_molecule_number()
+-    imol_t = handle_read_draw_molecule_with_recentre(path, 0)
+     region = {}
+     try:
++        imol_t = _rama_scratch["imol"]
++        if imol_t >= 0 and valid_model_molecule_qm(imol_t):
++            clear_and_update_model_molecule_from_file(imol_t, path)
++        else:
++            imol_t = handle_read_draw_molecule_with_recentre(path, 0)
++            if valid_model_molecule_qm(imol_t):
++                set_mol_displayed(imol_t, 0)
++                set_mol_active(imol_t, 0)
++                set_molecule_name(imol_t, "(scratch: Ramachandran check of a conformer)")
++                _rama_scratch["imol"] = imol_t
++                add_status_bar_text("Refine/Improve Ramachandran Plot (try peptide flips): checking alt conf %s of %s %d" % (alt, chain_id, min(res_nos)))
+         if valid_model_molecule_qm(imol_t):
+-            set_mol_displayed(imol_t, 0)
+             region = _rama_regions(imol_t, chain_id, res_nos)
+     finally:
+-        if valid_model_molecule_qm(imol_t):
+-            close_molecule(imol_t)
+         set_go_to_atom_molecule(imol_go)
+         try:
+             os.remove(path)
+@@ -490,34 +510,77 @@ def _rama_regions_of_conformer(imol, chain_id, res_nos, alt):
+             pass
+     return region
+ 
++def _map_sigma(imol_map):
++    try:
++        s = map_sigma_py(imol_map)
++    except Exception:
++        s = None
++    return s if isinstance(s, float) and s > 0 else 1.0
++
+ def _rama_flip_score(imol, chain_id, res_nos, imol_map, alt=""):
+-    """(sum of Ramachandran regions 0 outlier / 1 allowed / 2 favoured, number of residues classified, map fit) of the residues.
++    """(sum of Ramachandran regions 0 outlier / 1 allowed / 2 favoured, number of residues classified, map fit of the residues,
++        density at the carbonyl O of the first residue in sigma, density at the peptide C, O, N in sigma)  (the last three None without a map).
+     alt: score that alt conf only (regions of that conformer alone; map fit = density at the atoms of that conformer and the shared atoms)."""
+-    if not alt:
+-        region = _rama_regions(imol, chain_id, res_nos)
+-        fit = 0.0
+-        if valid_map_molecule_qm(imol_map):
+-            for r in res_nos:
+-                fit += density_score_residue(imol, [chain_id, r, ""], imol_map)
+-        return (sum(region.values()), len(region), fit)
+-    region = _rama_regions_of_conformer(imol, chain_id, res_nos, alt)
++    region = _rama_regions_of_conformer(imol, chain_id, res_nos, alt) if alt else _rama_regions(imol, chain_id, res_nos)
++    if not valid_map_molecule_qm(imol_map):
++        return (sum(region.values()), len(region), None, None, None)
++    sigma = _map_sigma(imol_map)
+     fit = 0.0
+-    if valid_map_molecule_qm(imol_map):
++    if alt:
+         for r in res_nos:
+             for (name, a), xyz in _residue_atoms(imol, chain_id, r).items():
+                 if a in ("", alt):
+                     fit += density_at_point(imol_map, xyz[0], xyz[1], xyz[2])
+-    return (sum(region.values()), len(region), fit)
++    else:
++        for r in res_nos:
++            fit += density_score_residue(imol, [chain_id, r, ""], imol_map)
++    def rho(r, name):
++        vals = [density_at_point(imol_map, *xyz) for (n, a), xyz in _residue_atoms(imol, chain_id, r).items() if n == name and a in ("", alt)]
++        return (sum(vals) / len(vals)) / sigma if vals else 0.0
++    i = res_nos[0]
++    o = rho(i, "O")
++    peptide = rho(i, "C") + o + rho(i + 1, "N")
++    return (sum(region.values()), len(region), fit, o, peptide)
++
++# (build 23) The user found wrong flips that build 22 kept (17 Nov): the flipped carbonyl O pointed out of the density, but the Ramachandran
++# region of i or i+1 got better, and build 22 ranked the Ramachandran regions above the map.  On the user's data the three wrong flips took the
++# carbonyl O from 5.3 / 7.3 / 5.6 sigma down to 3.7 / -0.8 / 0.1 sigma.  Now the map has a veto: a flip is kept only if
++#   - no residue moves to a worse Ramachandran region and none is lost from the classification,
++#   - the carbonyl O does not lose more than rama_flip_max_o_loss sigma of density, the peptide C + O + N not more than
++#     rama_flip_max_peptide_loss sigma (sum), and the map fit of the two residues not more than rama_flip_max_fit_loss (relative),
++#   - and then either a Ramachandran region gets better, or (regions the same) the carbonyl O and the peptide C + O + N each gain at least
++#     rama_flip_o_gain sigma and the map fit of the two residues gets better (build 22 asked for 10% better map fit: on the user's data a
++#     peptide flipped on purpose with +4.4 sigma at the O and +6.8% map fit was not put back).
++# Without a map nothing is flipped (there is nothing to check a flip against).
++rama_flip_max_o_loss = 0.3
++rama_flip_max_peptide_loss = 0.6
++rama_flip_max_fit_loss = 0.02
++rama_flip_o_gain = 1.0
+ 
+ def rama_flip_better(score_a, score_b, gain=None):
+-    """True if try B (flipped) is better than try A (as it was)."""
++    """True if try B (flipped) is better than try A (as it was).  Scores from _rama_flip_score."""
+     if gain is None:
+         gain = rama_flip_density_gain
+-    if score_b[1] < score_a[1]:                   # B lost a classified residue (should not happen): keep A
++    if len(score_a) < 5 or len(score_b) < 5 or score_a[2] is None or score_b[2] is None:
++        return False                              # no map: never flip
++    rama_a, n_a, fit_a, o_a, pep_a = score_a[:5]
++    rama_b, n_b, fit_b, o_b, pep_b = score_b[:5]
++    if n_b < n_a or rama_b < rama_a:
++        return False
++    if o_b < o_a - rama_flip_max_o_loss or pep_b < pep_a - rama_flip_max_peptide_loss:
+         return False
+-    if score_b[0] != score_a[0]:
+-        return score_b[0] > score_a[0]
+-    return score_b[2] > score_a[2] + gain * abs(score_a[2]) and score_b[2] > score_a[2]
++    if fit_b < fit_a - rama_flip_max_fit_loss * abs(fit_a):
++        return False
++    if rama_b > rama_a:
++        return True
++    return o_b >= o_a + rama_flip_o_gain and pep_b >= pep_a + rama_flip_o_gain and fit_b > fit_a + gain * abs(fit_a)
++
++def rama_flip_reason(score_a, score_b):
++    """Why a flip was not kept, or what made it better (for the terminal and the report)."""
++    if score_a[2] is None:
++        return "no map"
++    return "Ramachandran %d -> %d, carbonyl O %.1f -> %.1f sigma, map fit %.2f -> %.2f" % (
++        score_a[0], score_b[0], score_a[3], score_b[3], score_a[2], score_b[2])
+ 
+ _PEPTIDE_ATOMS_I = ("CA", "C", "O")
+ _PEPTIDE_ATOMS_NEXT = ("N", "CA", "H")
+@@ -588,7 +651,7 @@ def fit_protein_rama_flip_function(res_spec, imol_map):
+             rama_flip_run["tried"] += 1
+             if rama_flip_better(score_a, score_b):
+                 verdict = "kept flip"
+-                text = "Peptide %s flipped (Ramachandran %d -> %d, map fit %.2f -> %.2f)" % (label, score_a[0], score_b[0], score_a[2], score_b[2])
++                text = "Peptide %s flipped (%s)" % (label, rama_flip_reason(score_a, score_b))
+                 rama_flip_run["flipped"].append((chain_id, res_no, flip_alt, text))
+                 add_status_bar_text(text)
+             else:
+@@ -600,10 +663,26 @@ def fit_protein_rama_flip_function(res_spec, imol_map):
+     finally:
+         set_refine_ramachandran_angles(current_rama_state)
+         set_dragged_refinement_steps_per_frame(current_steps_per_frame)
++        repaint_main_window()
++
++def repaint_main_window():
++    """(build 23) Ask GTK to redraw the whole main window (the user saw the menu bar stay blank during a run until the mouse went over it)."""
++    try:
++        import coot_python
++        bar = coot_python.main_menubar()
++        if bar:
++            bar.queue_draw()
++            top = bar.get_toplevel()
++            if top:
++                top.queue_draw()
++    except Exception:
++        pass
+ 
+ def rama_flip_report(stopped=False):
+     """The report at the end of a Refine/Improve Ramachandran Plot (try peptide flips) run (also when it is stopped): terminal, status bar
+     and a window.  Returns the text."""
++    _rama_scratch_close()
++    repaint_main_window()
+     flipped = rama_flip_run["flipped"]
+     head = "Refine/Improve Ramachandran Plot (try peptide flips) %s: %d peptide%s flipped (%d peptide%s tried)" % (
+         "stopped" if stopped else "finished", len(flipped), "" if len(flipped) == 1 else "s",

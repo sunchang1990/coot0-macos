@@ -1,4 +1,28 @@
-# Coot 0.9.8.96 on Apple Silicon: test round 22 (build 22 = build 21 + peptide flips with alternate conformations, amino acids only, flip report, Fill Partial Residues list)
+# Coot 0.9.8.96 on Apple Silicon: test round 23 (build 23 = build 22 + the map decides peptide flips, no blank menu bar)
+
+**From you** (17 Nov): DD1-DD5 confirmed. Found: (1) part of the window (the menu bar) went blank during a run until the mouse went over it; (2) "(try peptide flips)" kept flips that were clearly wrong but gave a slightly better Ramachandran plot (two screenshots).
+
+1. **Wrong flips.** Build 22 ranked the Ramachandran regions above the map: a flip that moved a residue from allowed to favoured was kept whatever the density said. On your model there were three such flips (the residue numbers are in chat): the flipped carbonyl O went from 5.3 / 7.3 / 5.6 sigma to 3.7 / -0.8 / 0.1 sigma. Now **the map has a veto**. A flip is kept only if
+   - no residue moves to a worse Ramachandran region, and the carbonyl O does not lose density (at most 0.3 sigma), nor the peptide C, O, N together (0.6 sigma), nor the two residues as a whole (2%);
+   - and then either a Ramachandran region gets better, or (same regions) the carbonyl O and the peptide each gain at least 1 sigma.
+   The report and the terminal now give the carbonyl density before and after each flip ("Peptide A 43-44 flipped (Ramachandran 2 -> 4, carbonyl O -0.6 -> 4.2 sigma, ...)"). The limits are variables (`rama_flip_max_o_loss` etc. in `fitting.py`) if they need tuning.
+2. **Blank menu bar.** Not reproduced by me (I did not use your screen). The likely cause: build 22 opened and closed a hidden molecule for every Ramachandran check of a split conformer (your status bar showed "Successfully read coordinates file .../coot-rama-conformer-....pdb. Molecule number 10 created"), and each time Coot updated its molecule lists. Now one hidden scratch molecule is reused and closed when the run ends, and the window is redrawn after every residue.
+
+**Tested headless on your model** (local, not in git): all 232 peptides of chain A scored both ways: the old rule flips 3 (the wrong ones), the new rule none. 21 peptides flipped on purpose (every 11th, A 15-235): all 21 put back (the old 10% map rule missed one). On the tutorial model the earlier flip checks still pass. **On screen: not verified by me.**
+
+**New tests** (`gui-dialogs` 61 -> 66; build 22 fails all 5). Evidence: `evidence/checks_b22_vs_b23.txt`, `evidence/verify_b23.txt`.
+
+## EE. Round 23 checks (about 20 minutes, on a copy of your model)
+
+| # | Do | Expected |
+|---|---|---|
+| EE1 | Run "(try peptide flips)" over the three residues that were wrongly flipped last time (or the whole model). | None of the three is flipped; the report lists only flips whose carbonyl density went up. |
+| EE2 | During that run (residues with alternate conformations included), watch the menu bar and the status bar. | The menu bar stays drawn; no "coot-rama-conformer" message; the Display Manager has no extra molecule after the run. |
+| EE3 | Pep-flip two or three good peptides on purpose, then run "(try peptide flips)" over them. | They are flipped back; the report shows the carbonyl density going up. |
+
+---
+
+# Earlier round (DD1-DD5 confirmed 17 Nov): Coot 0.9.8.96 on Apple Silicon: test round 22 (build 22 = build 21 + peptide flips with alternate conformations, amino acids only, flip report, Fill Partial Residues list)
 
 **From you** (16 Nov): CC1-CC3 and CC5 confirmed (the new entry is there, both orientations are tried, correct peptides are kept, Fill Partial Residues rebuilt the deleted side chain). Asked for: flips also for residues with alternate conformations; no ligands / non-protein residues touched by either Ramachandran entry; a final report of the flips; a list of the residues Fill Partial Residues fixed; the model asked for only when there is a choice; the active map; no hydrogens.
 

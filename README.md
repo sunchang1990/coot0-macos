@@ -32,8 +32,9 @@ some things that did not work in the original 0.9.8.96 release. The changes you 
 - **New: Calculate > All Molecule... > Refine/Improve Ramachandran Plot (try peptide flips)...** (build 21). Ramachandran
   restraints alone cannot turn a peptide that is built the wrong way round (it is about 180 degrees away). This entry
   refines every residue twice, once as it is and once with the peptide to the next residue flipped, and keeps the
-  flip only if it is better: a better Ramachandran region for the two residues, or the same regions and a clearly
-  (at least 10%) better fit to the map. Residues with alternate conformations are included: if the peptide itself is
+  flip only if it is better, and the map has the last word (build 23): the flipped carbonyl O and the peptide must
+  not lose density, and then either a Ramachandran region gets better, or (same regions) the carbonyl O sits at least
+  1 sigma deeper in the density. A better Ramachandran plot alone never makes a flip. Residues with alternate conformations are included: if the peptide itself is
   split into conformers, the flip is tried for each conformer (build 22). At the end, or when you press Stop, a report
   says how many peptides were flipped and which. The original entry does not try flips. In the tests, peptides flipped
   on purpose were all put back and correct ones left alone.

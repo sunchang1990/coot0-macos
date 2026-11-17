@@ -503,10 +503,40 @@ def rama_flip_stop():
     if len(_m.rama_flip_log) != n_log: return "a flip was tried after Stop: %r" % (_m.rama_flip_log[-1],)
     return True if _math.dist(o0, O(43)) > 2.0 else "after Stop the peptide was flipped back anyway (O %.2f A from the deposited position)" % _math.dist(o0, O(43))
 check("Ramachandran (try peptide flips): after Stop the current try is kept and no flip is made", rama_flip_stop)
-check("Ramachandran (try peptide flips): a flip is kept for a better Ramachandran region, or the same regions and >= 10% better map fit only",
-      lambda: (_m.rama_flip_better((2, 2, 10.0), (3, 2, 9.0)) and not _m.rama_flip_better((3, 2, 10.0), (2, 2, 30.0))
-               and not _m.rama_flip_better((4, 2, 10.0), (4, 2, 10.5)) and _m.rama_flip_better((4, 2, 10.0), (4, 2, 11.5))
-               and not _m.rama_flip_better((4, 2, 10.0), (4, 1, 20.0))) or "wrong choice")
+# scores: (Ramachandran sum, residues classified, map fit, carbonyl O in sigma, peptide C + O + N in sigma)
+check("Ramachandran (try peptide flips): a flip is kept for a better Ramachandran region with the map no worse, or the same regions and a clearly better carbonyl",
+      lambda: (_m.rama_flip_better((2, 2, 10.0, 4.0, 12.0), (3, 2, 10.0, 4.0, 12.0)) and not _m.rama_flip_better((3, 2, 10.0, 1.0, 5.0), (2, 2, 30.0, 6.0, 15.0))
+               and not _m.rama_flip_better((4, 2, 10.0, 4.0, 12.0), (4, 2, 10.5, 4.5, 12.5)) and _m.rama_flip_better((4, 2, 10.0, 1.0, 6.0), (4, 2, 11.5, 4.0, 12.0))
+               and not _m.rama_flip_better((4, 2, 10.0, 1.0, 6.0), (4, 1, 20.0, 6.0, 15.0))) or "wrong choice")
+
+# (build 23) The user found wrong flips kept by build 22 (17 Nov): the Ramachandran region got better (allowed -> favoured) but the flipped carbonyl O
+# pointed out of the density (on their data 7.3 -> -0.8 sigma, 5.6 -> 0.1, 5.3 -> 3.7).  Now the map has a veto.  Scores below are those numbers.
+check("Ramachandran (try peptide flips): a flip that improves the Ramachandran region but takes the carbonyl O out of the density is NOT kept",
+      lambda: (not _m.rama_flip_better((3, 2, 26.6, 7.3, 18.2), (4, 2, 21.2, -0.8, 4.8))
+               and not _m.rama_flip_better((3, 2, 26.9, 5.6, 14.8), (4, 2, 23.2, 0.1, 5.1))
+               and not _m.rama_flip_better((3, 2, 23.7, 5.3, 15.1), (4, 2, 21.4, 3.7, 9.9))) or "a wrong flip would be kept")
+check("Ramachandran (try peptide flips): a wrongly flipped peptide (same regions, carbonyl +4.4 sigma, map fit +6.8%) is flipped back; without a map nothing is flipped",
+      lambda: (_m.rama_flip_better((4, 2, 30.0, 1.76, 12.2), (4, 2, 32.0, 6.14, 16.96))
+               and not _m.rama_flip_better((3, 2, None, None, None), (4, 2, None, None, None))) or "wrong choice")
+def rama_flip_score_has_carbonyl():
+    imol_f, imap_f, O = _flip_setup()
+    s_ok = _m._rama_flip_score(imol_f, "A", [43, 44], imap_f)
+    coot.pepflip(imol_f, "A", 43, "", "")
+    s_flip = _m._rama_flip_score(imol_f, "A", [43, 44], imap_f)
+    if len(s_ok) < 5: return "the score has no carbonyl density: %r" % (s_ok,)
+    return True if s_ok[3] > 1.0 and s_flip[3] < s_ok[3] - 1.0 else "carbonyl O density deposited %.2f, flipped %.2f sigma" % (s_ok[3], s_flip[3])
+check("Ramachandran (try peptide flips): the score measures the carbonyl O density in sigma (lower after a deliberate flip)", rama_flip_score_has_carbonyl)
+def rama_flip_repaints():
+    calls = []; orig = _c.call
+    def spy(name, *a, **k):
+        if name == "gtk_widget_queue_draw": calls.append(name)
+        return orig(name, *a, **k)
+    _c.call = spy
+    keep = _m.use_graphics_interface_state; _m.use_graphics_interface_state = lambda: 0
+    try: _m.rama_flip_report(False)
+    finally: _c.call = orig; _m.use_graphics_interface_state = keep
+    return True if calls else "the main window (menu bar) is not redrawn at the end of the run"
+check("Ramachandran (try peptide flips): the main window and its menu bar are redrawn when the run ends", rama_flip_repaints)
 
 # (build 22) Alt confs: build 21 tried no flip when residue i or i+1 had alt confs (it fell back to a plain refinement).  Shared peptide (only side
 # chains split, Cys B 72): one decision with every alt conf refined.  Split peptide (C, O / N with alt confs): a decision per alt conf, scored on
@@ -541,11 +571,29 @@ def rama_flip_alt_split():
     n_models = len([i for i in range(coot.graphics_n_molecules()) if coot.is_valid_model_molecule(i)])
     _m.fit_protein_rama_flip_function([imol_f, "A", 43, ""], imap_f)
     da, db = _math.dist(oa, _O(imol_f, "A", 43, "A")), _math.dist(ob, _O(imol_f, "A", 43, "B"))
-    if len([i for i in range(coot.graphics_n_molecules()) if coot.is_valid_model_molecule(i)]) != n_models: return "a temporary molecule was left behind"
+    scratch = 1 if (hasattr(_m, "_rama_scratch") and coot.is_valid_model_molecule(_m._rama_scratch["imol"])) else 0   # (build 23: closed at the end of the run)
+    if len([i for i in range(coot.graphics_n_molecules()) if coot.is_valid_model_molecule(i)]) - scratch != n_models: return "a temporary molecule was left behind"
     tried = [e[2] for e in _m.rama_flip_log[-2:] if e[1] == 43]
     if tried != ["A", "B"]: return "the flip was not tried for each conformer: %r" % (_m.rama_flip_log[-2:],)
     return True if da < 0.5 and db < 0.5 else "conformer A moved %.2f A, conformer B %.2f A from the deposited O (want < 0.5)" % (da, db)
 check("Ramachandran (try peptide flips): with the peptide split into alt confs A / B the flip is tried per conformer (B flipped on purpose is put back, A kept)", rama_flip_alt_split)
+def rama_flip_scratch_molecule():
+    imol_f = coot.read_pdb(_split_pdb("A", (43, 44)))
+    imap_f = coot.make_and_draw_map(os.path.join(here, "test-data", "rnasa-1.8-all_refmac1.mtz"), "FWT", "PHWT", "", 0, 0)
+    coot.set_imol_refinement_map(imap_f); _m.continue_multi_refine = True
+    if hasattr(_m, "_rama_scratch_close"): _m._rama_scratch_close()        # (one left by an earlier test)
+    n0 = coot.graphics_n_molecules()
+    valid = lambda: len([i for i in range(coot.graphics_n_molecules()) if coot.is_valid_model_molecule(i)])
+    v0 = valid()
+    for r in (42, 43, 44):
+        _m.fit_protein_rama_flip_function([imol_f, "A", r, ""], imap_f)
+    made = coot.graphics_n_molecules() - n0
+    if made > 1: return "%d molecules were created for the conformer checks (want at most one scratch molecule)" % made
+    keep = _m.use_graphics_interface_state; _m.use_graphics_interface_state = lambda: 0
+    try: _m.rama_flip_report(False)
+    finally: _m.use_graphics_interface_state = keep
+    return True if valid() == v0 else "the scratch molecule was left open after the run"
+check("Ramachandran (try peptide flips): split conformers are checked in one scratch molecule, closed at the end of the run", rama_flip_scratch_molecule)
 def _ligand_pdb():
     import tempfile
     lines = [l for l in open(os.path.join(here, "test-data", "tutorial-modern.pdb")) if not l.startswith("END")]

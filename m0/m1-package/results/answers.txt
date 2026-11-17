@@ -1,10 +1,9 @@
 # One line per check: PASS / FAIL / PARTIAL and a few words.  (You can also just tell me in chat.)
-# Round 22 (see TEST-PROTOCOL.md, section DD):
-DD1 flip tried next to alternate conformations, report after Stop:
-DD2 ligand not moved by either Ramachandran entry:
-DD3 report window at the end (peptides flipped / tried):
-DD4 Fill Partial Residues with one model: no chooser, terminal list:
-DD5 (optional) two models: chooser opens:
+# Round 23 (see TEST-PROTOCOL.md, section EE):
+EE1 the three wrong flips of last time not made; report lists only flips with better carbonyl density:
+EE2 menu bar stays drawn during the run; no coot-rama-conformer message; no extra molecule:
+EE3 deliberate flips are put back:
+# Round 22 (section DD): DD1-DD5 confirmed 17 Nov.
 # Round 21 (section CC): CC1-CC3, CC5 confirmed 16 Nov; CC4 optional.
 # Round 20 (see TEST-PROTOCOL.md, section BB): confirmed 16 Nov.
 # Round 19 (see TEST-PROTOCOL.md, section AA):

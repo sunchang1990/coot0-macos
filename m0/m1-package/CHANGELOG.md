@@ -6,6 +6,24 @@ applied to the pristine tree by `setup.sh`) or a change of the packaged data / s
 round, `TEST-PROTOCOL.md` has the user-facing explanation and the checks for you (newest round first).  A "build" is one delivered zip.
 "Verified" means a headless test (no window server in the build environment); what only a screen can show is marked "on screen: not verified".
 
+## Build 23  (patch 0039 rama-flip-map-veto-scratch-molecule; Python only, `bin/coot-bin` and `lib/` as in build 13)
+- Fixed (user report 17 Nov): **Refine/Improve Ramachandran Plot (try peptide flips)** kept wrong flips: a flip that moved a residue from allowed to
+  favoured was kept although the flipped carbonyl O pointed out of the density (build 22 ranked the Ramachandran regions above the map).  On the
+  user's data the three wrong flips took the carbonyl O from 5.3 / 7.3 / 5.6 sigma to 3.7 / -0.8 / 0.1 sigma.  Now the map has a veto: a flip is kept
+  only if no Ramachandran region gets worse, the carbonyl O loses at most 0.3 sigma, the peptide C + O + N at most 0.6 sigma (sum), the map fit of
+  the two residues at most 2%; and then either a region gets better, or (same regions) the carbonyl O and the peptide each gain >= 1 sigma and the
+  map fit gets better (the build-21/22 "10% better map fit" missed a deliberate flip with +4.4 sigma at the O and +6.8% fit).  No map: no flip.
+  Checked headless on the user's model (local only): of the 232 peptides of chain A the old rule flipped 3 (the wrong ones), the new rule 0;
+  21 peptides flipped on purpose: 21 put back (20 with the 10% rule).  The report and terminal give the carbonyl density before and after.
+- Fixed (user report 17 Nov): during a (try peptide flips) run part of the main window (the menu bar) stayed blank until the mouse went over it, and
+  the status bar showed "Successfully read coordinates file .../coot-rama-conformer-....pdb. Molecule number N created".  Build 22 read and closed a
+  new hidden molecule for every Ramachandran check of a split conformer; now one hidden scratch molecule is reused (refilled with
+  clear_and_update_model_molecule_from_file) and closed when the run ends or is stopped, and the main window is redrawn after every residue and at
+  the end.  The blank menu bar itself was not reproduced by me (no screen used); whether this cures it: check EE2.
+- Tests: `gui-dialogs` 61 -> 66 (map veto with the user's three cases; a deliberate flip with the same regions is put back; carbonyl density in the
+  score; one scratch molecule, closed at the end; the main window redrawn); build 22 fails all 5.
+- On screen: not verified by me (headless only).
+
 ## Build 22  (patch 0038 rama-alt-confs-protein-only-report-fill-partial; Python only, `bin/coot-bin` and `lib/` as in build 13)
 - Fixed (user report 16 Nov): **Refine/Improve Ramachandran Plot (try peptide flips)** tried no flip when residue i or i+1 had alternate conformations
   (it fell back to a plain refinement of each alt conf).  Now: shared peptide atoms (only side chains split) -> both tries refine every alt conf of the
