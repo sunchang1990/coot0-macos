@@ -6,6 +6,22 @@ applied to the pristine tree by `setup.sh`) or a change of the packaged data / s
 round, `TEST-PROTOCOL.md` has the user-facing explanation and the checks for you (newest round first).  A "build" is one delivered zip.
 "Verified" means a headless test (no window server in the build environment); what only a screen can show is marked "on screen: not verified".
 
+## Build 25  (patch 0041 scheme-scripting-window; Python / Scheme only, `bin/coot-bin` and `lib/` as in build 13)
+- Fixed (user report 18 Nov): **Calculate > Scripting > Scheme...** opened 0.9.8.96's "simple" Scheme window (C++, used when the guile-gtk Scheme
+  GUI is not loaded), which said "For now this is a placeholder only! Don't expect anything to happen here!" and threw the result of every command
+  away.  Now the entry opens a new window (Python, `coot_gui.py`: `scheme_scripting_window`) that passes the text unchanged to Coot's Guile
+  (`coot0-console-eval` in `python-gui-bridge.scm`) and shows the command, its printed output, its result and errors; Up / Down recall earlier
+  commands; Enter with brackets still open waits for the rest of the expression; everything is also written to the terminal.
+- Fixed: output printed by Scheme (`display`, `format #t`, also in `--script file.scm`) did not reach the terminal while Coot ran: the launcher
+  copies the terminal into `logs/` through a pipe, and Guile then buffered its output (often until Coot quit).  Guile's output is now line-buffered.
+  Checked: a script that prints a line and waits: build 24 had not shown the line after 90 s, build 25 showed it after 6 s.
+- Known, cosmetic: Coot's C++ echoes every Scheme call it is given ("debug:: g.safe_scheme_command() with command (coot0-console-eval ...)") in
+  the terminal; removing that needs a C++ rebuild.
+- `README.md` is now in the package; README: the trackpad two-finger click (works as the middle click), the Scheme window.
+- Tests: `gui-dialogs` 70 -> 74 (the menu entry opens the new window, the old one is hidden; command / output / result / error / several lines /
+  history; line-buffered output; open brackets recognised); build 24 fails all 4.
+- On screen: not verified by me (headless only).
+
 ## Build 24  (patch 0040 rama-turned-peptides-repaint; Python only, `bin/coot-bin` and `lib/` as in build 13)
 - Fixed (user report 17 Nov, EE2 / plain entry): the menu bar also went blank during the plain **Refine/Improve Ramachandran Plot**.  Every shown
   refinement (refine_and_show: Stepped Refine, Fit Protein, both Ramachandran entries) now asks for a redraw of the main window afterwards (build 23

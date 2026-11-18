@@ -14,7 +14,7 @@ It is not made, endorsed or supported by the Coot developers. Please report prob
 - **Coot's Python scripting and its Python GUI** (Python 3.11): the extension menus and dialogs that Coot 0.9 builds
   in Python (Glyco, NCS, PISA, PDB-REDO, Fit Loop, the various sliders, RCrane for RNA, ...) run as written, on a
   replacement for the old PyGTK 2 library. Your own PyGTK-based Coot 0.9 scripts should work too.
-- **Scheme scripting** (Guile 3): Calculate > Scripting > Scheme, `--script file.scm`, start-up scripts. (Coot's
+- **Scheme scripting** (Guile 3): Calculate > Scripting > Scheme..., `--script file.scm`, start-up scripts. (Coot's
   Scheme *GUI* scripts, written for guile-gtk, are not available; their functions are provided by the Python versions.)
 - RDKit-based ligand tools (Lidia, SMILES import), the CCP4 monomer library, reference structures, Ramachandran data.
 - CCP4 (refmac5, acedrg, ...) and Phenix/CCP4 reduce + probe are found automatically when installed; they are
@@ -45,6 +45,14 @@ some things that did not work in the original 0.9.8.96 release. The changes you 
   are not refined, also not as neighbours of an amino acid.
 - **Fill Partial Residues** lists in the terminal which residues it filled, with the atoms added, and which it could
   not fill (build 22). It asks which model to use only when more than one is loaded.
+- **The Scheme scripting window works** (build 25). In Coot 0.9.8.96 without the guile-gtk Scheme GUI (as here), Calculate >
+  Scripting > Scheme... opened a window that said "For now this is a placeholder only!": it ran what you typed but showed
+  nothing. Now the window shows each command, what it printed, its result (`=> "HIS"`) and errors, keeps a history (Up /
+  Down) and accepts an expression over several lines. What Scheme prints (`display`, `format #t`) also reaches the
+  terminal at once (before, coot0's log copy made Guile hold it back, often until Coot quit).
+- **Trackpads and the Magic Mouse have no middle button.** A two-finger click on a trackpad (a right-click without
+  dragging) works as Coot's middle-click: it re-centres the view on the atom under the pointer. Right-button drags still
+  zoom as before. `COOT_RIGHT_CLICK_CENTRE=0` turns this off.
 - **You can watch whole-molecule refinement** (build 20 for Fit Protein; build 14 for Stepped Refine). Fit Protein, Stepped
   Refine and both Refine/Improve Ramachandran Plot entries now show each residue being refined in Coot's usual refinement style (the
   highlighted "intermediate atoms") for a moment before accepting it, instead of the atoms jumping to their result. The
@@ -54,7 +62,7 @@ some things that did not work in the original 0.9.8.96 release. The changes you 
 - Stepped Refine and Fit Protein also work on **RNA / DNA** (residues without CA are centred on C1'). Fit Protein's rotamer
   search itself is for protein side chains.
 
-The full list, build by build: [`m0/m1-package/CHANGELOG.md`](m0/m1-package/CHANGELOG.md).
+The full list, build by build: [`m0/m1-package/CHANGELOG.md`](m0/m1-package/CHANGELOG.md) (in the package: `CHANGELOG.md`).
 
 ### How (try peptide flips) decides
 

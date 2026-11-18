@@ -853,6 +853,71 @@ def fit_loop_db_search():
     return True if cands else "dialog has no candidate buttons: %r" % (labels,)
 check("Fit Loop by Database Search: clicked atoms give a Loop Candidates dialog with candidate loops", fit_loop_db_search)
 
+# (build 25) The Scheme scripting window.  The 0.9.8.96 C++ window said "For now this is a placeholder only!" and threw every result
+# away (the user, 18 Nov: nothing in the window or the terminal).  Now Calculate > Scripting > Scheme... opens a window that shows the
+# command, its printed output, its result and errors; Scheme's terminal output is line-buffered (it was held back behind the launcher's tee).
+def _scheme_menu_items():
+    bar = H.coot_python.main_menubar() if hasattr(H, "coot_python") else __import__("coot_python").main_menubar()
+    lab = lambda i: (i.get_children()[0].get_text().replace("_", "") if i.get_children() else "")
+    calc = [i for i in bar.get_children() if lab(i) == "Calculate"][0]
+    scr = [i for i in calc.get_submenu().get_children() if lab(i).startswith("Scripting")][0]
+    return [i for i in scr.get_submenu().get_children() if lab(i) == "Scheme..."]
+def scheme_window_menu():
+    items = _scheme_menu_items()               # (headless, show() is a no-op: the new entry is recognised by its name, the old one must be hidden)
+    shown = [i for i in items if i.get_name() == "coot0_scheme_window"]
+    old = [i for i in items if i.get_name() != "coot0_scheme_window"]
+    if len(shown) != 1: return "%d new 'Scheme...' entries (want 1)" % len(shown)
+    menu = gtk.Menu()                          # the swap itself, on a menu like Calculate > Scripting: the old entry is hidden
+    for l in ("Python...", "Scheme..."): menu.append(gtk.MenuItem(l))
+    hidden = []; orig = _c.call
+    def spy(name, *a, **k):
+        if name == "gtk_widget_hide": hidden.append(a[0])
+        return orig(name, *a, **k)
+    _c.call = spy
+    try: new = _m.install_scheme_scripting_window(menu)
+    finally: _c.call = orig
+    kids = menu.get_children()
+    if not new or [k.get_name() for k in kids][1] != "coot0_scheme_window": return "the new entry is not in the place of the old one: %r" % [k.get_name() for k in kids]
+    if not any(h == kids[2] for h in hidden): return "the old entry was not hidden"
+    _m.scheme_console_last.clear() if hasattr(_m, "scheme_console_last") else None
+    shown[0].activate()
+    last = getattr(_m, "scheme_console_last", {})
+    if not last.get("window"): return "Calculate > Scripting > Scheme... did not open the new Scheme window"
+    b = last["buffer"]; t = b.get_text(b.get_start_iter(), b.get_end_iter())
+    if "placeholder" in t: return "the window still says it is a placeholder"
+    return True if last["window"].get_title() == "Coot Scheme Scripting" else "title %r" % last["window"].get_title()
+check("Scheme window: Calculate > Scripting > Scheme... opens the new window (no 'placeholder only' text)", scheme_window_menu)
+def _scheme_type(*lines):
+    last = _m.scheme_console_last
+    b = last["buffer"]; n0 = len(b.get_text(b.get_start_iter(), b.get_end_iter()))
+    for l in lines:
+        last["entry"].set_text(l); last["entry"].emit("activate")
+    return b.get_text(b.get_start_iter(), b.get_end_iter())[n0:]
+def scheme_window_results():
+    if not getattr(_m, "scheme_console_last", {}).get("window"): _m.scheme_scripting_window()
+    imol = coot.read_pdb(os.path.join(here, "test-data", "tutorial-modern.pdb"))
+    want = coot.residue_name(imol, "A", 41, "")
+    t = _scheme_type('(residue-name %d "A" 41 "")' % imol)
+    if '(residue-name %d "A" 41 "")' % imol not in t: return "the command is not shown: %r" % t
+    if '=> "%s"' % want not in t: return "the result (%s) is not shown: %r" % (want, t)
+    t = _scheme_type('(display "hello from scheme") (newline) (* 6 7)')
+    if "hello from scheme" not in t or "=> 42" not in t: return "printed output / result not shown: %r" % t
+    t = _scheme_type("(car 1)")
+    if "Error:" not in t or "Wrong type" not in t: return "the error is not shown: %r" % t
+    t = _scheme_type("(+ 1", "2)")
+    if "=> 3" not in t: return "an expression over two lines was not evaluated: %r" % t
+    t = _scheme_type("(define coot0-test-x 5)", "(* coot0-test-x 2)")
+    if "=> 10" not in t: return "a definition was not kept for the next command: %r" % t
+    h = _m.scheme_console_history
+    return True if h[-1] == "(* coot0-test-x 2)" and "(+ 1\n2)" in h else "history: %r" % h[-4:]
+check("Scheme window: command, printed output, result, errors, expressions over several lines and the history are shown / kept", scheme_window_results)
+check("Scheme: output printed by Scheme (display) is line-buffered, so it reaches the terminal at once",
+      lambda: True if coot.run_scheme_command("coot0-stdout-line-buffered") is True else "Guile's output port is not line-buffered")
+check("Scheme window: open brackets / strings are recognised (Enter waits for the rest)",
+      lambda: (_m.scheme_text_incomplete("(+ 1") and not _m.scheme_text_incomplete("(+ 1 2)") and _m.scheme_text_incomplete('(display "a)')
+               and not _m.scheme_text_incomplete('(display "(")') and not _m.scheme_text_incomplete("(char->integer #\\()")
+               and not _m.scheme_text_incomplete("(+ 1 2) ; (")) or "wrong")
+
 check("no exception in any GTK signal handler", lambda: True if not _c.CALLBACK_ERRORS else [e[1][-300:] for e in _c.CALLBACK_ERRORS][:2])
 w = max(len(r[0]) for r in res)
 for n, ok, v in res: print(("PASS " if ok else "FAIL ") + n.ljust(w) + (("  " + v) if v else ""))

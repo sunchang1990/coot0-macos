@@ -391,6 +391,18 @@ Round 20: Refine/Improve Ramachandran Plot menu + Fit Protein shown refinement -
   go-to re-contours) - the immediate-replacement state is the real difference.  b19: gui-scripts 14/15, gui-dialogs 46/48; b20 15/15, 48/48.
   User 16 Nov: BB1-BB4 confirmed on screen.
 
+Round 25: Scheme scripting window -> build 25  (patch 0041 scheme-scripting-window; Python / Scheme only)
+  User 18 Nov: FF1-3 ok; README.md not in the package; Scheme window = 0.9.8.96 "simple" C++ window (post_scheme_scripting_window, used when
+  guile_gui_loaded_flag is false): fixed placeholder text, guile_window_enter_callback evaluates (lambda () text) and drops the value; nothing
+  in the terminal either.  Cause of the terminal part: run-coot.sh `exec > >(tee -a LOG)` makes stdout a pipe; Python is unbuffered
+  (PYTHONUNBUFFERED) but Guile block-buffers (checked: display + sleep, b24 nothing after 90 s, b25 after 6 s).  python-gui-bridge.scm:
+  coot0-console-eval (eval-string in (guile-user), output/error ports captured, catch #t + print-exception; returns out US ok|error US value)
+  and setvbuf line/none (coot0-stdout-line-buffered).  coot_gui.py: scheme_scripting_window (TextView with tags, Entry, history, multi-line via
+  scheme_text_incomplete), install_scheme_scripting_window(menu=None): hides the C++ "Scheme..." item and inserts a named
+  (coot0_scheme_window) MenuItem at its place; run at the end of coot_gui.py (no use_gui_qm: RCrane's loader execs coot_gui.py without it).
+  Headless: show() is a no-op and get_visible is 0 for every item, so the swap is tested on a test-made menu with a gtk_widget_hide spy.
+  safe_scheme_command still echoes each call (C++, cosmetic).  dev_sync also copies README.md.  Tests gui-dialogs 74 (b24 70/74).
+
 Round 24: turned peptides listed, redraw after every shown refinement -> build 24  (patch 0040 rama-turned-peptides-repaint; Python only)
   User 17 Nov: EE1, EE2 ok; EE3: 4 deliberate flips all put back but the report named 2 (the others were turned back by try A, so B lost); menu bar
   blank in the plain entry too.  refine_and_show -> _refine_and_show + repaint_main_window in finally (covers Stepped Refine, Fit Protein, both

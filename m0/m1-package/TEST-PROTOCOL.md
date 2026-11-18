@@ -1,4 +1,27 @@
-# Coot 0.9.8.96 on Apple Silicon: test round 24 (build 24 = build 23 + a clear list of turned peptides, no blank menu bar in the plain entry)
+# Coot 0.9.8.96 on Apple Silicon: test round 25 (build 25 = build 24 + a working Scheme scripting window)
+
+**From you** (18 Nov): FF1 (A 117 was flipped back by the flip try), FF2, FF3 confirmed; README.md was not in the package; add the two-finger click to the README. The Scheme window said "For now this is a placeholder only!" and nothing appeared in it or in the terminal (only `set-graphics-window-size` worked, and its message comes from the C++ code).
+
+1. **Scheme window.** Calculate > Scripting > Scheme... now opens a new window, "Coot Scheme Scripting". It does not translate anything: your text goes unchanged to Coot's Scheme (Guile), and the window shows the command (green), what it printed (black), its result (blue, `=> "HIS"`) and errors (red). Up / Down bring back earlier commands; an expression over several lines works (Enter with brackets still open waits for the rest); Clear empties the window. Everything is also written to the terminal.
+2. **Terminal output of Scheme.** The launcher copies the terminal into `logs/`, and Guile then held back what Scheme printed, often until Coot quit. Now each line appears at once (checked with a script that prints and waits: build 24 had not shown it after 90 s, build 25 after 6 s). Cosmetic: Coot also prints a long "debug:: g.safe_scheme_command() with command (coot0-console-eval ...)" line for each command; that is in the C++ code and goes at the next C++ rebuild.
+3. `README.md` is in the package; the two-finger click is in its "Changes" list.
+
+**On screen: not verified by me** (the window was tested headless: menu entry, commands, output, results, errors, several lines, history).
+
+**New tests** (`gui-dialogs` 70 -> 74; build 24 fails all 4). Evidence: `evidence/checks_b24_vs_b25.txt`, `evidence/verify_b25.txt`.
+
+## GG. Round 25 checks (about 10 minutes): GG1-GG4 confirmed 18 Nov (ClustalW2 entry opens on screen)
+
+| # | Do | Expected |
+|---|---|---|
+| GG1 | Calculate > Scripting > Scheme... | A window "Coot Scheme Scripting" with a short help text; no "placeholder" message. |
+| GG2 | Load a model, type `(residue-name 0 "A" 41 "")` (your molecule number / chain / residue), Enter; then `(display "hello") (newline) (+ 1 2)`; then `(car 1)`. | The command, then `=> "..."`; then `hello` and `=> 3`; then a red error. The same in the terminal. |
+| GG3 | Type `(+ 1` Enter, then `2)` Enter; then press Up twice. | `=> 3`; Up brings back earlier commands. |
+| GG4 | Something you use, e.g. `(set-graphics-window-size 800 600)` or a function from your own scripts. | It runs; nothing missing in the window or the terminal. |
+
+---
+
+# Earlier round (FF1-FF3 confirmed 18 Nov): Coot 0.9.8.96 on Apple Silicon: test round 24 (build 24 = build 23 + a clear list of turned peptides, no blank menu bar in the plain entry)
 
 **From you** (17 Nov): EE1, EE2 confirmed. EE3: of 4 peptides flipped on purpose, all were put back, but the report named only 2; the plain entry turned back 2 of them; the menu bar went blank in the plain entry. Asked for: the limits visible in the README, an explanation of "the carbonyl O left the density" with equations, and a clear definition of a flipped peptide.
 

@@ -1,0 +1,256 @@
+diff --git a/python/coot_gui.py b/python/coot_gui.py
+index d1d0486..f46f8d0 100644
+--- a/python/coot_gui.py
++++ b/python/coot_gui.py
+@@ -6263,6 +6263,207 @@ def molecule_atom_overlaps_gui(imol):
+     return dialog_box_of_buttons(title, [350, 200], buttons, " Close ")
+ 
+ 
++# macOS port (build 25): the Scheme scripting window (Calculate > Scripting > Scheme...).  The 0.9.8.96 "simple" Scheme
++# window (C++, used when the guile-gtk Scheme GUI is not loaded, as in coot0) showed a fixed text "For now this is a
++# placeholder only! ..." and threw the result of every command away, so nothing appeared (the user, 18 Nov).  This
++# window sends the text to Coot's Guile unchanged (no translation; coot0-console-eval in python-gui-bridge.scm) and
++# shows the command, what it printed, its result and any error, also in the terminal.  Up / Down: earlier commands.
++# An expression may span several lines: while brackets are open, Enter adds the line and waits for the rest.
++scheme_console_history = []
++scheme_console_last = {}
++
++def scheme_text_incomplete(text):
++    """True while text has an unclosed bracket or string (outside comments and character literals such as #\\( )."""
++    depth, i, n, in_str = 0, 0, len(text), False
++    while i < n:
++        c = text[i]
++        if in_str:
++            if c == "\\":
++                i += 1
++            elif c == '"':
++                in_str = False
++        elif c == '"':
++            in_str = True
++        elif c == ";":
++            while i < n and text[i] != "\n":
++                i += 1
++        elif c == "#" and text[i + 1:i + 2] == "\\":
++            i += 2                                  # a character literal: #\( is not a bracket
++        elif c in "([":
++            depth += 1
++        elif c in ")]":
++            depth -= 1
++        i += 1
++    return in_str or depth > 0
++
++def scheme_console_eval(text):
++    """Evaluate Scheme text in Coot's Guile: (printed output, "ok" or "error", result text or error message)."""
++    lit = '"' + text.replace("\\", "\\\\").replace('"', '\\"') + '"'
++    r = run_scheme_command("(coot0-console-eval %s)" % lit)
++    if not isinstance(r, str) or r.count("\x1f") < 2:
++        return ("", "error", "Scheme is not available in this Coot (no result: %r)" % (r,))
++    out, status, value = r.split("\x1f", 2)
++    return (out, status, value)
++
++def scheme_scripting_window():
++    """The Scheme scripting window (see above).  Returns the window."""
++    window = gtk.Window(gtk.WINDOW_TOPLEVEL)
++    window.set_title("Coot Scheme Scripting")
++    window.set_default_size(620, 360)
++    vbox = gtk.VBox(False, 4)
++    vbox.set_border_width(6)
++    window.add(vbox)
++    text = gtk.TextView()
++    text.set_editable(False)
++    text.set_cursor_visible(False)
++    text.set_wrap_mode(gtk.WRAP_WORD_CHAR)
++    try:
++        text.modify_font(pango.FontDescription("Monospace 12"))
++    except Exception:
++        pass
++    buf = text.get_buffer()
++    tags = {"cmd": buf.create_tag("cmd", foreground="#1b5e20", weight=pango.WEIGHT_BOLD),
++            "out": buf.create_tag("out", foreground="black"),
++            "res": buf.create_tag("res", foreground="#0d47a1"),
++            "err": buf.create_tag("err", foreground="#b71c1c"),
++            "help": buf.create_tag("help", foreground="#555555")}
++    scrolled = gtk.ScrolledWindow()
++    scrolled.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_ALWAYS)
++    scrolled.add(text)
++    vbox.pack_start(scrolled, True, True, 0)
++    hbox = gtk.HBox(False, 4)
++    prompt = gtk.Label("scheme> ")
++    entry = gtk.Entry()
++    hbox.pack_start(prompt, False, False, 0)
++    hbox.pack_start(entry, True, True, 0)
++    vbox.pack_start(hbox, False, False, 0)
++    bbox = gtk.HBox(False, 4)
++    clear_button = gtk.Button("  Clear  ")
++    close_button = gtk.Button("  Close  ")
++    bbox.pack_end(close_button, False, False, 0)
++    bbox.pack_end(clear_button, False, False, 0)
++    vbox.pack_start(bbox, False, False, 0)
++    state = {"pending": "", "pos": len(scheme_console_history)}
++
++    def put(s, tag):
++        if not s:
++            return
++        end = buf.get_end_iter()
++        buf.insert_with_tags(end, s, tags[tag])
++        mark = buf.get_insert()
++        buf.place_cursor(buf.get_end_iter())
++        try:
++            text.scroll_mark_onscreen(mark)
++        except Exception:
++            pass
++
++    def intro():
++        put("Type a Scheme expression and press Enter, for example\n"
++            "   (residue-name 0 \"A\" 41 \"\")      (set-graphics-window-size 800 600)      (+ 1 2)\n"
++            "Results, printed output and errors appear here and in the terminal.  Up / Down: earlier commands.\n\n", "help")
++
++    def run(cmd):
++        put("scheme> " + cmd.replace("\n", "\n        ") + "\n", "cmd")
++        print("scheme> " + cmd)
++        out, status, value = scheme_console_eval(cmd)
++        if out:
++            put(out if out.endswith("\n") else out + "\n", "out")
++            print(out.rstrip("\n"))
++        if status == "ok":
++            if value:
++                put("=> " + value.replace("\n", "\n=> ") + "\n", "res")
++                print("=> " + value.replace("\n", "\n=> "))
++        else:
++            put("Error: " + value.rstrip("\n") + "\n", "err")
++            print("Scheme error: " + value.rstrip("\n"))
++
++    def on_activate(*args):
++        line = entry.get_text()
++        entry.set_text("")
++        cmd = (state["pending"] + "\n" + line) if state["pending"] else line
++        if not cmd.strip():
++            return
++        if scheme_text_incomplete(cmd):
++            state["pending"] = cmd
++            prompt.set_text("    ... ")
++            return
++        state["pending"] = ""
++        prompt.set_text("scheme> ")
++        if not scheme_console_history or scheme_console_history[-1] != cmd:
++            scheme_console_history.append(cmd)
++        state["pos"] = len(scheme_console_history)
++        run(cmd)
++
++    def on_key(widget, event):
++        k = event.keyval
++        if k in (gtk.keysyms.Up, gtk.keysyms.KP_Up) and scheme_console_history:
++            state["pos"] = max(0, state["pos"] - 1)
++        elif k in (gtk.keysyms.Down, gtk.keysyms.KP_Down) and scheme_console_history:
++            state["pos"] = min(len(scheme_console_history), state["pos"] + 1)
++        else:
++            return False
++        entry.set_text(scheme_console_history[state["pos"]].replace("\n", " ") if state["pos"] < len(scheme_console_history) else "")
++        entry.set_position(-1)
++        return True
++
++    def on_clear(*args):
++        buf.set_text("")
++        state["pending"] = ""
++        prompt.set_text("scheme> ")
++
++    entry.connect("activate", on_activate)
++    entry.connect("key_press_event", on_key)
++    clear_button.connect("clicked", on_clear)
++    close_button.connect("clicked", lambda *a: window.destroy())
++    scheme_console_last.update(window=window, run=run, entry=entry, buffer=buf, prompt=prompt)     # (for the tests)
++    intro()
++    window.show_all()
++    entry.grab_focus()
++    return window
++
++def install_scheme_scripting_window(menu=None):
++    """Point Calculate > Scripting > Scheme... at scheme_scripting_window (the C++ entry is hidden, a new one put in its place).
++    menu: the Scripting sub-menu (default: found in the main menu bar)."""
++    def label(item):
++        try:
++            return item.get_children()[0].get_text().replace("_", "")
++        except Exception:
++            return ""
++    def find(shell, name):
++        for item in shell.get_children():
++            if label(item) == name:
++                return item
++        return None
++    if menu is None:
++        try:
++            import coot_python
++            bar = coot_python.main_menubar()
++        except Exception:
++            bar = None
++        if not bar:
++            return None
++        calc = find(bar, "Calculate")
++        sub = calc and calc.get_submenu()
++        scripting = sub and (find(sub, "Scripting...") or find(sub, "Scripting"))
++        menu = scripting and scripting.get_submenu()
++    if not menu:
++        return None
++    items = menu.get_children()
++    for pos, item in enumerate(items):
++        if label(item) == "Scheme..." and item.get_name() != "coot0_scheme_window":
++            if any(i.get_name() == "coot0_scheme_window" for i in items):
++                return None                      # (already installed)
++            new = gtk.MenuItem("Scheme...")
++            new.set_name("coot0_scheme_window")
++            new.connect("activate", lambda *a: scheme_scripting_window())
++            menu.insert(new, pos)
++            new.show()
++            item.hide()
++            return new
++    return None
++
++install_scheme_scripting_window()        # (does nothing without the main menu bar; installs once)
++
+ # let the c++ part of mapview know that this file was loaded:
+ 
+ # print "From coot_gui.py calling set_found_coot_python_gui()" - called from rcrane loader
+diff --git a/scheme/python-gui-bridge.scm b/scheme/python-gui-bridge.scm
+index 3844109..7a20a68 100644
+--- a/scheme/python-gui-bridge.scm
++++ b/scheme/python-gui-bridge.scm
+@@ -51,3 +51,39 @@
+ ;; back to <id>_final.cif and shows the guided tour with the Python window.
+ (define (get-pdb-redo text)
+   (coot-call-python "get_pdb_redo" text))
++
++;; macOS port (build 25): the Scheme scripting window.  The C++ "simple" Scheme window of 0.9.8.96 showed a fixed
++;; placeholder text and threw the result of a command away; coot0 replaces it with a window written in Python
++;; (coot_gui.py: scheme_scripting_window) that sends what you type here and shows what comes back.
++;; (coot0-console-eval "text"): evaluate every expression in text in the user module; returns one string:
++;;   <printed output> US ok|error US <values, one per line, written as Scheme would read them | the error message>
++;; (US = the ASCII unit separator, character 31).
++(use-modules (ice-9 eval-string))
++(define (coot0-console-eval text)
++  (let* ((out (open-output-string))
++         (sep (string (integer->char 31)))
++         (res (catch #t
++                (lambda ()
++                  (with-output-to-port out
++                    (lambda ()
++                      (with-error-to-port out
++                        (lambda ()
++                          (call-with-values
++                              (lambda () (eval-string text #:module (resolve-module '(guile-user))))
++                            (lambda vals (cons 'ok vals))))))))
++                (lambda (key . args)
++                  (cons 'error (call-with-output-string
++                                 (lambda (p) (print-exception p #f key args))))))))
++    (string-append (get-output-string out) sep (symbol->string (car res)) sep
++                   (if (eq? (car res) 'ok)
++                       (string-join (map (lambda (v) (if (unspecified? v) "" (object->string v)))
++                                         (cdr res)) "\n")
++                       (cdr res)))))
++
++;; macOS port (build 25): coot0's launcher copies the terminal output into logs/ (through a pipe), and Guile then
++;; held back what Scheme printed (display, format #t) in a large buffer, often until Coot quit.  Line buffering
++;; makes each line appear at once, as Python's output does (PYTHONUNBUFFERED in run-coot.sh).
++(define coot0-stdout-line-buffered
++  (catch #t
++    (lambda () (setvbuf (current-output-port) 'line) (setvbuf (current-error-port) 'none) #t)
++    (lambda args #f)))

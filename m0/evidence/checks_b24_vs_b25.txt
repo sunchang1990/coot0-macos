@@ -1,0 +1,17 @@
+Build 25 regression proof (gui_python_dialogs.py of build 25, headless, 18 Nov 2026)
+
+== with build 24 coot_gui.py / python-gui-bridge.scm ==
+FAIL Scheme window: Calculate > Scripting > Scheme... opens the new window (no 'placeholder only' text)                                                                "0 
+FAIL Scheme window: command, printed output, result, errors, expressions over several lines and the history are shown / kept                                           EXC
+FAIL Scheme: output printed by Scheme (display) is line-buffered, so it reaches the terminal at once                                                                   "Gu
+FAIL Scheme window: open brackets / strings are recognised (Enter waits for the rest)                                                                                  EXC
+SUMMARY 70 / 74
+
+== with build 25 files ==
+SUMMARY 74 / 74
+
+Terminal output of Scheme behind the launcher's tee: a --script file.scm that displays a line and then sleeps:
+  build 24 files: the line had not reached the log after 90 s (Coot still running)
+  build 25 files: the line was in the log after 6 s
+
+Patch series: setup.sh with 41 patches rebuilds a tree identical to m0/coot-src (diff -rq -x .git -x __pycache__).
