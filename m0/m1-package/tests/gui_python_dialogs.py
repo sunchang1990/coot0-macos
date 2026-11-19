@@ -236,7 +236,8 @@ def sw_coot_call():
     shown, errs_ = typed(_sw["entry"], _sw["tv"], "graphics_n_molecules()")
     if errs_: return "callback error: %r" % errs_
     answers = [l.strip() for l in shown.splitlines() if l.strip() and not l.strip().startswith("coot >>")]
-    return True if (answers and answers[-1].isdigit()) else "window text: %r" % shown[-120:]
+    last = answers[-1][3:] if answers and answers[-1].startswith("=> ") else (answers[-1] if answers else "")   # (build 26: "=> 3")
+    return True if last.isdigit() else "window text: %r" % shown[-120:]
 check("a Coot function typed into the scripting window returns its value", sw_coot_call)
 def sw_error():
     shown, errs_ = typed(_sw["entry"], _sw["tv"], "1/0")
@@ -307,6 +308,10 @@ check("Interactive Nudge Residues: moving the slider makes a molecule with the n
 # atoms) and the result is accepted afterwards.  Before build 13 the refinement ran in "immediate replacement" mode, in which nothing of it is drawn.
 import time as _time
 def stepped_refine_shows():
+    # (build 26) finish what earlier checks left in GTK's queue (an idle of the "Stop, then a new run" check), as the running program
+    # would have long before; the old Python window happened to do this when a command was typed into it, the new one does not.
+    with contextlib.redirect_stdout(io.StringIO()):
+        while gtk.events_pending(): gtk.main_iteration(False)
     imol_s = coot.read_pdb(os.path.join(here, "test-data", "tutorial-modern.pdb"))
     imap_s = coot.make_and_draw_map(os.path.join(here, "test-data", "rnasa-1.8-all_refmac1.mtz"), "FWT", "PHWT", "", 0, 0)
     coot.set_imol_refinement_map(imap_s); coot.set_refinement_immediate_replacement(0)
@@ -917,6 +922,78 @@ check("Scheme window: open brackets / strings are recognised (Enter waits for th
       lambda: (_m.scheme_text_incomplete("(+ 1") and not _m.scheme_text_incomplete("(+ 1 2)") and _m.scheme_text_incomplete('(display "a)')
                and not _m.scheme_text_incomplete('(display "(")') and not _m.scheme_text_incomplete("(char->integer #\\()")
                and not _m.scheme_text_incomplete("(+ 1 2) ; (")) or "wrong")
+
+def auto_recontour_entries():              # (build 26) the Cryo-EM Auto-Recontour entries report the new mode in the terminal
+    bar = __import__("coot_python").main_menubar()
+    lab = lambda i: (i.get_children()[0].get_text().replace("_", "") if i.get_children() else "")
+    def items():
+        m = [i for i in bar.get_children() if lab(i) == "Cryo-EM"]
+        return {lab(i): i for i in m[0].get_submenu().get_children()} if m else {}
+    if "Enable Auto-Recontour Map Mode" not in items():
+        with contextlib.redirect_stdout(io.StringIO()): _m.add_module_cryo_em_gui()
+    it = items()
+    out = {}
+    for name, want in (("No Auto-Recontour Map Mode", 0), ("Enable Auto-Recontour Map Mode", 1)):
+        if name not in it: return "Cryo-EM > %s not found" % name
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf): it[name].activate()
+        if coot.get_auto_recontour_map() != want: return "%s: mode is %r" % (name, coot.get_auto_recontour_map())
+        out[want] = buf.getvalue()
+    if "Auto-recontour map mode: OFF" not in out[0]: return "nothing printed for No Auto-Recontour: %r" % out[0]
+    if "Auto-recontour map mode: ON" not in out[1]: return "nothing printed for Enable Auto-Recontour: %r" % out[1]
+    return True
+check("Cryo-EM > No/Enable Auto-Recontour Map Mode set the mode and print it in the terminal", auto_recontour_entries)
+
+def scheme_quiet_terminal():             # (build 26, C++) no "debug:: g.safe_scheme_command()" line; the Scheme window's own calls are not echoed
+    import tempfile
+    sys.stdout.flush(); fd = os.dup(1); tf = tempfile.TemporaryFile()
+    os.dup2(tf.fileno(), 1)
+    try:
+        coot.run_scheme_command('(coot0-console-eval "(+ 1 2)")')
+        coot.run_scheme_command("(+ 2 3)")
+        sys.stdout.flush()
+    finally:
+        os.dup2(fd, 1); os.close(fd)
+    tf.seek(0); t = tf.read().decode("utf-8", "replace")
+    if "debug:: g.safe_scheme_command()" in t: return "the debug line is still printed: %r" % t[-200:]
+    if "coot0-console-eval" in t: return "the Scheme window's internal call is echoed: %r" % t[-200:]
+    return True if "(+ 2 3)" in t else "an ordinary Scheme command is no longer shown in the terminal: %r" % t[-200:]
+check("Scheme: no debug line per Scheme call in the terminal; the Scheme window's own calls are not echoed", scheme_quiet_terminal)
+
+def _py_type(*lines):                       # (build 26) the new Python scripting window
+    last = _m.python_console_last
+    b = last["buffer"]; n0 = len(b.get_text(b.get_start_iter(), b.get_end_iter()))
+    for l in lines:
+        last["entry"].set_text(l)
+        with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()): last["entry"].emit("activate")
+    return b.get_text(b.get_start_iter(), b.get_end_iter())[n0:]
+def python_window_results():
+    if not getattr(_m, "python_console_last", None): return "no new Python window (python_console_last missing)"
+    if not _m.python_console_last.get("window"):
+        with contextlib.redirect_stdout(io.StringIO()): _m.coot_gui()
+    w = _m.python_console_last.get("window")
+    if not w or w.get_title() != "Coot Python Scripting": return "Calculate > Scripting > Python... did not open the new window"
+    imol = coot.read_pdb(os.path.join(here, "test-data", "tutorial-modern.pdb"))
+    t = _py_type('residue_name(%d, "A", 41, "")' % imol)
+    if "=> 'GLU'" not in t: return "result not shown: %r" % t
+    t = _py_type('print("hello from python")')
+    if "hello from python" not in t: return "printed output not shown in the window: %r" % t
+    t = _py_type("for i in range(3):", "    print('line', i)", "")
+    if "line 2" not in t: return "a block over several lines did not run: %r" % t
+    t = _py_type("def coot0_twice(x):", "    return 2 * x", "", "coot0_twice(21)")
+    if "=> 42" not in t: return "a function defined in the window is not kept: %r" % t
+    t = _py_type("1/0")
+    if "Error:" not in t or "ZeroDivisionError" not in t: return "the error is not shown: %r" % t
+    t = _py_type('(residue-name 0 "A" 41 "")')
+    if "Scheme..." not in t: return "no hint for Scheme typed into the Python window: %r" % t
+    h = _m.python_console_history
+    return True if "for i in range(3):\n    print('line', i)" in h and h[-1] == '(residue-name 0 "A" 41 "")' else "history: %r" % h[-4:]
+check("Python window: result, printed output, blocks over several lines, definitions, errors and history are shown / kept", python_window_results)
+check("Python window: unfinished statements are recognised (Enter waits for the rest)",
+      lambda: (_m.python_text_incomplete("for i in range(3):") and _m.python_text_incomplete("f(1,") and not _m.python_text_incomplete("1 + 2")
+               and _m.python_text_incomplete("x = (") and not _m.python_text_incomplete("1 +* 2")) or "wrong")
+check("Python window: the remote-control listener still gets the 0.9.8.96 window",
+      lambda: True if callable(getattr(_m, "coot_gui_classic", None)) else "coot_gui_classic missing")
 
 check("no exception in any GTK signal handler", lambda: True if not _c.CALLBACK_ERRORS else [e[1][-300:] for e in _c.CALLBACK_ERRORS][:2])
 w = max(len(r[0]) for r in res)

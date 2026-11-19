@@ -1,0 +1,211 @@
+diff --git a/python/coot_gui.py b/python/coot_gui.py
+index 7375d09..81ee22b 100644
+--- a/python/coot_gui.py
++++ b/python/coot_gui.py
+@@ -6481,6 +6481,206 @@ def install_scheme_scripting_window(menu=None):
+ 
+ install_scheme_scripting_window()        # (does nothing without the main menu bar; installs once)
+ 
++
++# macOS port (build 26): the Python scripting window (Calculate > Scripting > Python...) on the same design as the Scheme
++# window: the command, what it printed (print output used to go to the terminal only), its result (=> ...) and errors
++# with their traceback, also in the terminal; Up / Down: earlier commands.  Several lines like the Python prompt: a
++# line ending in ":" (for, def, if ...) or with open brackets continues ("..."); an empty line ends the block.
++# The 0.9.8.96 window stays available as coot_gui_classic() (and is used by the remote-control socket listener).
++python_console_history = []
++python_console_last = {}
++
++def python_text_incomplete(text):
++    """True while text is an unfinished Python statement (needs more lines), as at the Python prompt."""
++    import codeop
++    try:
++        return codeop.compile_command(text, "<coot>", "single") is None
++    except (SyntaxError, OverflowError, ValueError):
++        return False                                # a real error: run it and show the message
++
++def python_console_eval(text):
++    """Run Python text in Coot's main namespace: (printed output, "ok" or "error", result text or error message)."""
++    import io, sys, traceback, __main__
++    g = __main__.__dict__
++    out = io.StringIO()
++
++    class _Tee(object):
++        def __init__(self, a, b): self.a, self.b = a, b
++        def write(self, s):
++            self.b.write(s)
++            try: self.a.write(s)
++            except Exception: pass
++            return len(s)
++        def flush(self):
++            try: self.a.flush()
++            except Exception: pass
++
++    old_out, old_err = sys.stdout, sys.stderr
++    sys.stdout, sys.stderr = _Tee(old_out, out), _Tee(old_err, out)
++    try:
++        try:
++            code = compile(text, "<coot>", "eval")
++        except SyntaxError:
++            code = None
++        if code is not None:
++            v = eval(code, g)
++            if v is not None:
++                g["_"] = v
++            return (out.getvalue(), "ok", "" if v is None else repr(v))
++        exec(compile(text, "<coot>", "exec"), g)
++        return (out.getvalue(), "ok", "")
++    except SystemExit:
++        return (out.getvalue(), "error", "SystemExit: use Coot's File > Exit (or coot_real_exit(0)) to quit")
++    except BaseException as e:
++        tb = e.__traceback__.tb_next if e.__traceback__ is not None else None     # (skip this function's own frame)
++        msg = "".join(traceback.format_exception(type(e), e, tb)).rstrip("\n")
++        if msg.startswith("Traceback (most recent call last):\n") and msg.count("\n") <= 2:
++            msg = msg.split("\n", 1)[1].strip()
++        if isinstance(e, SyntaxError) and text.lstrip().startswith("("):
++            msg += "\n(This looks like Scheme: use Calculate > Scripting > Scheme... for Scheme.)"
++        return (out.getvalue(), "error", msg)
++    finally:
++        sys.stdout, sys.stderr = old_out, old_err
++
++def python_scripting_window():
++    """The Python scripting window (see above).  Returns the window."""
++    window = gtk.Window(gtk.WINDOW_TOPLEVEL)
++    window.set_title("Coot Python Scripting")
++    window.set_default_size(620, 360)
++    vbox = gtk.VBox(False, 4)
++    vbox.set_border_width(6)
++    window.add(vbox)
++    text = gtk.TextView()
++    text.set_editable(False)
++    text.set_cursor_visible(False)
++    text.set_wrap_mode(gtk.WRAP_WORD_CHAR)
++    try:
++        text.modify_font(pango.FontDescription("Monospace 12"))
++    except Exception:
++        pass
++    buf = text.get_buffer()
++    tags = {"cmd": buf.create_tag("cmd", foreground="#1b5e20", weight=pango.WEIGHT_BOLD),
++            "out": buf.create_tag("out", foreground="black"),
++            "res": buf.create_tag("res", foreground="#0d47a1"),
++            "err": buf.create_tag("err", foreground="#b71c1c"),
++            "help": buf.create_tag("help", foreground="#555555")}
++    scrolled = gtk.ScrolledWindow()
++    scrolled.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_ALWAYS)
++    scrolled.add(text)
++    vbox.pack_start(scrolled, True, True, 0)
++    hbox = gtk.HBox(False, 4)
++    prompt = gtk.Label("python> ")
++    entry = gtk.Entry()
++    hbox.pack_start(prompt, False, False, 0)
++    hbox.pack_start(entry, True, True, 0)
++    vbox.pack_start(hbox, False, False, 0)
++    bbox = gtk.HBox(False, 4)
++    clear_button = gtk.Button("  Clear  ")
++    close_button = gtk.Button("  Close  ")
++    bbox.pack_end(close_button, False, False, 0)
++    bbox.pack_end(clear_button, False, False, 0)
++    vbox.pack_start(bbox, False, False, 0)
++    state = {"pending": "", "pos": len(python_console_history)}
++
++    def put(s, tag):
++        if not s:
++            return
++        buf.insert_with_tags(buf.get_end_iter(), s, tags[tag])
++        buf.place_cursor(buf.get_end_iter())
++        try:
++            text.scroll_mark_onscreen(buf.get_insert())
++        except Exception:
++            pass
++
++    def intro():
++        put("Type a Python command and press Enter, for example\n"
++            "   residue_name(0, \"A\", 41, \"\")      set_graphics_window_size(800, 600)      1 + 2\n"
++            "Results, printed output and errors appear here and in the terminal.  Up / Down: earlier commands.\n"
++            "Several lines: a line ending in \":\" (for, def, if) continues; an empty line runs the block.\n\n", "help")
++
++    def run(cmd):
++        put("python> " + cmd.replace("\n", "\n    ... ") + "\n", "cmd")
++        print("python> " + cmd.replace("\n", "\n    ... "))
++        out, status, value = python_console_eval(cmd)          # (printed output reaches the terminal as it is printed)
++        if out:
++            put(out if out.endswith("\n") else out + "\n", "out")
++        if status == "ok":
++            if value:
++                put("=> " + value + "\n", "res")
++                print("=> " + value)
++        else:
++            put("Error: " + value + "\n", "err")
++            print("Python error: " + value)
++
++    def on_activate(*args):
++        line = entry.get_text()
++        entry.set_text("")
++        if state["pending"]:
++            cmd = state["pending"] + "\n" + line
++            block_ends = (line.strip() == "")
++        else:
++            cmd = line
++            block_ends = False
++        if not cmd.strip():
++            return
++        if python_text_incomplete(cmd) and not (block_ends and not python_text_incomplete(cmd + "\n")):
++            state["pending"] = cmd
++            prompt.set_text("    ... ")
++            last = cmd.split("\n")[-1]                       # keep the indentation; 4 more after a ":"
++            indent = len(last) - len(last.lstrip(" "))
++            if last.rstrip().endswith(":"):
++                indent += 4
++            entry.set_text(" " * indent)
++            entry.set_position(-1)
++            return
++        cmd = cmd.rstrip("\n")
++        state["pending"] = ""
++        prompt.set_text("python> ")
++        if not python_console_history or python_console_history[-1] != cmd:
++            python_console_history.append(cmd)
++        state["pos"] = len(python_console_history)
++        run(cmd)
++
++    def on_key(widget, event):
++        k = event.keyval
++        if k in (gtk.keysyms.Up, gtk.keysyms.KP_Up) and python_console_history:
++            state["pos"] = max(0, state["pos"] - 1)
++        elif k in (gtk.keysyms.Down, gtk.keysyms.KP_Down) and python_console_history:
++            state["pos"] = min(len(python_console_history), state["pos"] + 1)
++        else:
++            return False
++        h = python_console_history[state["pos"]] if state["pos"] < len(python_console_history) else ""
++        entry.set_text(h if "\n" not in h else h.split("\n")[0])
++        entry.set_position(-1)
++        return True
++
++    def on_clear(*args):
++        buf.set_text("")
++        state["pending"] = ""
++        prompt.set_text("python> ")
++
++    entry.connect("activate", on_activate)
++    entry.connect("key_press_event", on_key)
++    clear_button.connect("clicked", on_clear)
++    close_button.connect("clicked", lambda *a: window.destroy())
++    python_console_last.update(window=window, run=run, entry=entry, buffer=buf, prompt=prompt)     # (for the tests)
++    intro()
++    window.show_all()
++    entry.grab_focus()
++    return window
++
++coot_gui_classic = coot_gui
++def coot_gui(own_gtk_main=False):
++    """Calculate > Scripting > Python... (called by Coot's C++).  The remote-control listener keeps the 0.9.8.96 window."""
++    import os
++    try:
++        listener = coot_listener_socket
++    except NameError:
++        listener = False
++    if listener or own_gtk_main or os.environ.get("COOT0_CLASSIC_PYTHON_WINDOW"):
++        return coot_gui_classic(own_gtk_main)
++    return python_scripting_window()
++
+ # let the c++ part of mapview know that this file was loaded:
+ 
+ # print "From coot_gui.py calling set_found_coot_python_gui()" - called from rcrane loader

@@ -1,0 +1,41 @@
+diff --git a/src/c-interface.cc b/src/c-interface.cc
+index 5a2945a..0a621dc 100644
+--- a/src/c-interface.cc
++++ b/src/c-interface.cc
+@@ -6182,10 +6182,16 @@ int dragged_refinement_steps_per_frame() {
+ 
+ #ifdef USE_GUILE
+ SCM safe_scheme_command(const std::string &scheme_command) {
+-   std::vector<std::string> cs;
+-   cs.push_back(DIRECT_SCM_STRING);
+-   cs.push_back(scheme_command);
+-   add_to_history(cs);
++   // coot0 (build 26): coot0's own internal calls (the Scheme window, "(coot0-..." and
++   // "coot0-...") are not added to the history, so they are not echoed in the terminal
++   // (the Scheme window prints the user's command itself).
++   bool internal = (scheme_command.rfind("(coot0-", 0) == 0 || scheme_command.rfind("coot0-", 0) == 0);
++   if (! internal) {
++      std::vector<std::string> cs;
++      cs.push_back(DIRECT_SCM_STRING);
++      cs.push_back(scheme_command);
++      add_to_history(cs);
++   }
+    return graphics_info_t::safe_scheme_command(scheme_command);
+ }
+ #endif // USE_GUILE
+diff --git a/src/graphics-info.cc b/src/graphics-info.cc
+index c2e0a3a..f015127 100644
+--- a/src/graphics-info.cc
++++ b/src/graphics-info.cc
+@@ -6334,7 +6334,10 @@ graphics_info_t::checked_waters_next_baddie(int dir) {
+ SCM
+ graphics_info_t::safe_scheme_command(const std::string &scheme_command) {
+ 
+-   std::cout << "debug:: g.safe_scheme_command() with command " << scheme_command << std::endl;
++   // coot0 (build 26): this unconditional debug echo of every Scheme call is muted;
++   // COOT_DEBUG_SCHEME=1 brings it back.
++   if (getenv("COOT_DEBUG_SCHEME"))
++      std::cout << "debug:: g.safe_scheme_command() with command " << scheme_command << std::endl;
+ 
+    if (scheme_command.empty()) {
+       std::cout << "ERROR:: in safe_scheme_command() empty scheme_command" << std::endl;

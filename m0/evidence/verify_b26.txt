@@ -1,0 +1,48 @@
+Build 26 tarball verification (19 Nov 2026), coot0-0.9.8.96-b26-macos-arm64.tar.gz
+624bcddfddab8ccd79589b8c1ffb69ef8f165188c09dd79ed0ca338d386f0cf4
+unpacked into a folder with a space; env -i, private HOME
+(the suites ran on the first b26 tarball, a88a5f6c...; the delivered one differs from it in tests/run-api-examples.sh only
+ (diff -rq): a hung call now kills Coot itself, not only the subshell; checked with a sub-shell + grandchild, no leftover)
+
+python-api                 SUMMARY 19 / 19
+scheme-api                 SUMMARY 27 / 27
+data-and-maps              SUMMARY 39 / 39
+ondemand-read              SUMMARY 3 / 3
+refine-zone                SUMMARY 7 / 7
+process-helpers            SUMMARY 10 / 10
+api-docs                   SUMMARY 5 / 5
+bundle-python              SUMMARY 19 / 19
+bundle-scheme              SUMMARY 6 / 6
+rdkit-python               SUMMARY 10 / 10
+rdkit-scheme               SUMMARY 3 / 3
+gtk2compat                 SUMMARY 12 / 12
+gui-scripts                SUMMARY 16 / 16
+gui-dialogs                SUMMARY 79 / 79
+gui-glyco                  SUMMARY 14 / 14
+gui-toolbar                SUMMARY 13 / 13
+gui-rcrane                 SUMMARY 21 / 21
+refmac-run                 SUMMARY 11 / 11
+cookbook                   SUMMARY 166 / 166
+installer                  SUMMARY 26 / 26
+startup-dictionaries       SUMMARY 1 / 1
+total: 507 checks
+
+GUI sweep: 250 items ok, 0 items with errors, 0 items without a handler, 5 items whose activation killed the headless process (OpenGL or screen needed; started but not completed, listed below, checked by the GUI audit), 0 dialog buttons with errors
+  SWEEP 21 | Edit > Settings... > Python: Install Template Keybindings button '   X   Edit Chi Angles' | CRASH (process died: OpenGL call without a graphics context, or hang)
+  SWEEP 36 | Calculate > Map Tools... > Brighten Maps | CRASH (process died: OpenGL call without a graphics context, or hang)
+  SWEEP 108 | Draw > Representation Tools... > Ball & Stick... button '  OK  ' | CRASH (process died: OpenGL call without a graphics context, or hang)
+  SWEEP 117 | Draw > Representation Tools... > Highlight Interesting Site (here)... | CRASH (process died: OpenGL call without a graphics context, or hang)
+  SWEEP 151 | Ligand > Find Ligands... | CRASH (process died: OpenGL call without a graphics context, or hang)
+  Same result with the build-25 coot-bin in a second copy of the same tarball, run at the same time (250 ok / 5 crash, same items):
+  the new coot-bin changes nothing in the sweep. Item 192 (ClustalW2) did not crash this time; Edit Chi Angles (21) did (flaky).
+  A first sweep run gave 247 ok / 9 crash (also PE8 solvent button, Atoms with Zero Occupancies, HOLE Calculate, ClustalW2) while six
+  stray headless Coot processes from the API-examples run were using the CPU (the bug fixed above); after killing them: as above.
+
+Mach-O files checked: 211 | highest minos: 11.0 | dangling symlinks: 0
+RESULT: OK
+
+Patch series 0001-0044 rebuilt from the pristine tree: IDENTICAL to m0/coot-src (diff -rq, no .git/__pycache__).
+gui-dialogs with the build-25 files: 74 / 79 (exactly the 5 new checks fail); build 26: 79 / 79.
+API examples (tests/run-api-examples.sh, 1735 functions x 2 languages where present): 1033 ran, 13 error, 35 stopped Coot
+  without a screen, 6 hung, 164 not run automatically (quit/network/external program/widget argument).
+Nothing of build 26 has been seen on a screen yet (round 26 checks HH1-HH5).

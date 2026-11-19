@@ -34,6 +34,7 @@ run ondemand-make  "--python" "$HERE/tests/ondemand_make.py" 120 > /dev/null
 run ondemand-read  "--python" "$HERE/tests/ondemand_read.py"
 run refine-zone    "--python" "$HERE/tests/refine_python.py"
 run process-helpers ""         "$HERE/tests/process_scheme.scm"
+run api-docs       "--python" "$HERE/tests/api_docs_check.py"          # (build 26) docs/api matches this Coot
 if [ -f "$HERE/lib/libgtk-quartz-2.0.0.dylib" ]; then   # self-contained bundle only
   run bundle-python   "--python" "$HERE/tests/bundle_python.py"
   run bundle-scheme   ""         "$HERE/tests/bundle_scheme.scm"
@@ -50,6 +51,7 @@ if [ -f "$HERE/share/coot/python/_gtk2core.py" ]; then   # scripted GUI layer (P
   run gui-toolbar     "--python" "$HERE/tests/gui_toolbar_defaults.py" 240
   run gui-rcrane      "--python" "$HERE/tests/gui_rcrane.py" 900      # RCrane: trace / extend chain / rotamerize on tRNA 1EHZ (about 3-8 minutes)
   run refmac-run      "--python" "$HERE/tests/refmac_run_python.py" 480
+  run cookbook        "--python" "$HERE/tests/cookbook_run.py" 900       # (build 26) every recipe of docs/cookbook, Python and Scheme
 fi
 # (build 17) install.sh / coot0 / uninstall.sh in throw-away home folders
 if [ -x "$HERE/tests/installer_test.sh" ]; then

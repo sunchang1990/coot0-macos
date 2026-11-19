@@ -1,0 +1,613 @@
+# Delete Residues
+
+[Scripting reference](../README.md) > Delete Residues (46 functions)
+
+Examples use the test data: molecule 0 = `tutorial-modern.pdb`, molecule 1 = the map made from `rnasa-1.8-all_refmac1.mtz` (FWT/PHWT). See [How to read this reference](../README.md#how-to-read-it).
+
+### cis_peptides
+
+Python: `cis_peptides(imol)`  
+Scheme: `(cis-peptides imol)`
+
+return cis_peptide info for imol.
+
+Return a Python list object of [residue1, residue2, omega]
+
+Arguments: imol (a whole number). Returns: a value (see the result of the example).
+Also available in Python as `cis_peptides_py`.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `cis_peptides(0)` | ran, returned `[[[True, 'A', 26, ''], [True, 'A', 27, ''], 6.120067119598389], [[True, 'A', 40, ''], [True, 'A', 41, ''], 47.1598320007 ...` |
+| Scheme | `(cis-peptides 0)` | ran, returned `(((#t "A" 26 "") (#t "A" 27 "") 6.120067119598389) ((#t "A" 40 "") (#t "A" 41 "") 47.15983200073242) ((#t "B" 26 "") (#t ...` |
+
+### cis_trans_convert
+
+Python: `cis_trans_convert(imol, chain_id, resno, altconf)`  
+Scheme: `(cis-trans-convert imol chain-id resno altconf)`
+
+Arguments: imol (a whole number), chain_id (text), resno (a whole number), altconf (text). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `cis_trans_convert(0, "A", 41, "")` | ran (no return value) |
+| Scheme | `(cis-trans-convert 0 "A" 41 "")` | ran (no return value) |
+
+### cis_trans_convert_intermediate_atoms
+
+Python: `cis_trans_convert_intermediate_atoms()`  
+Scheme: `(cis-trans-convert-intermediate-atoms)`
+
+cis-trans convert the active residue of the active atom in the
+ inermediate atoms, and continue with the refinement
+
+Arguments: none. Returns: a whole number.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `cis_trans_convert_intermediate_atoms()` | ran, returned `0` |
+| Scheme | `(cis-trans-convert-intermediate-atoms)` | ran, returned `0` |
+
+### clear_delete_item_widget
+
+Python: `clear_delete_item_widget()`  
+Scheme: `(clear-delete-item-widget)`
+
+for when we cancel with picking an atom
+
+Arguments: none. Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `clear_delete_item_widget()` | ran (no return value) |
+| Scheme | `(clear-delete-item-widget)` | ran (no return value) |
+
+### clear_pending_delete_item
+
+Python: `clear_pending_delete_item()`  
+Scheme: `(clear-pending-delete-item)`
+
+Arguments: none. Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `clear_pending_delete_item()` | ran (no return value) |
+| Scheme | `(clear-pending-delete-item)` | ran (no return value) |
+
+### delete_atom
+
+Python: `delete_atom(imol, chain_id, resno, ins_code, at_name, altloc)`  
+Scheme: `(delete-atom imol chain-id resno ins-code at-name altloc)`
+
+delete atom in residue
+
+Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_code (text), at_name (text), altloc (text). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `delete_atom(0, "A", 41, "", " CA ", "")` | ran (no return value) |
+| Scheme | `(delete-atom 0 "A" 41 "" " CA " "")` | ran (no return value) |
+
+### delete_atom_by_atom_index
+
+Python: `delete_atom_by_atom_index(imol, index, do_delete_dialog)`  
+Scheme: `(delete-atom-by-atom-index imol index do-delete-dialog)`
+
+Arguments: imol (a whole number), index (a whole number), do_delete_dialog (a whole number). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `delete_atom_by_atom_index(0, 1, 1)` | ran (no return value) |
+| Scheme | `(delete-atom-by-atom-index 0 1 1)` | ran (no return value) |
+
+### delete_chain
+
+Python: `delete_chain(imol, chain_id)`  
+Scheme: `(delete-chain imol chain-id)`
+
+delete the chain
+
+Arguments: imol (a whole number), chain_id (text). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `delete_chain(0, "A")` | ran (no return value) |
+| Scheme | `(delete-chain 0 "A")` | ran (no return value) |
+
+### delete_hydrogen_atoms
+
+Python: `delete_hydrogen_atoms(imol)`  
+Scheme: `(delete-hydrogen-atoms imol)`
+
+delete all hydrogens in molecule,
+
+ Returns number of hydrogens deleted.
+
+Arguments: imol (a whole number). Returns: a whole number.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `delete_hydrogen_atoms(0)` | ran, returned `0` |
+| Scheme | `(delete-hydrogen-atoms 0)` | ran, returned `0` |
+
+### delete_hydrogens
+
+Python: `delete_hydrogens(imol)`  
+Scheme: `(delete-hydrogens imol)`
+
+delete all hydrogens in molecule,
+
+ Returns number of hydrogens deleted.
+
+Arguments: imol (a whole number). Returns: a whole number.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `delete_hydrogens(0)` | ran, returned `0` |
+| Scheme | `(delete-hydrogens 0)` | ran, returned `0` |
+
+### delete_item_mode_is_atom_p
+
+Python: `delete_item_mode_is_atom_p()`  
+Scheme: `(delete-item-mode-is-atom-p)`
+
+Arguments: none. Returns: a whole number.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `delete_item_mode_is_atom_p()` | ran, returned `0` |
+| Scheme | `(delete-item-mode-is-atom-p)` | ran, returned `0` |
+
+### delete_item_mode_is_chain_p
+
+Python: `delete_item_mode_is_chain_p()`  
+Scheme: `(delete-item-mode-is-chain-p)`
+
+Arguments: none. Returns: a whole number.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `delete_item_mode_is_chain_p()` | ran, returned `0` |
+| Scheme | `(delete-item-mode-is-chain-p)` | ran, returned `0` |
+
+### delete_item_mode_is_residue_p
+
+Python: `delete_item_mode_is_residue_p()`  
+Scheme: `(delete-item-mode-is-residue-p)`
+
+(predicate) a boolean
+
+Arguments: none. Returns: a whole number.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `delete_item_mode_is_residue_p()` | ran, returned `1` |
+| Scheme | `(delete-item-mode-is-residue-p)` | ran, returned `1` |
+
+### delete_item_mode_is_sidechain_p
+
+Python: `delete_item_mode_is_sidechain_p()`  
+Scheme: `(delete-item-mode-is-sidechain-p)`
+
+Arguments: none. Returns: a whole number.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `delete_item_mode_is_sidechain_p()` | ran, returned `0` |
+| Scheme | `(delete-item-mode-is-sidechain-p)` | ran, returned `0` |
+
+### delete_item_mode_is_sidechain_range_p
+
+Python: `delete_item_mode_is_sidechain_range_p()`  
+Scheme: `(delete-item-mode-is-sidechain-range-p)`
+
+Arguments: none. Returns: a whole number.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `delete_item_mode_is_sidechain_range_p()` | ran, returned `0` |
+| Scheme | `(delete-item-mode-is-sidechain-range-p)` | ran, returned `0` |
+
+### delete_item_mode_is_water_p
+
+Python: `delete_item_mode_is_water_p()`  
+Scheme: `(delete-item-mode-is-water-p)`
+
+predicate again
+
+Arguments: none. Returns: a whole number.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `delete_item_mode_is_water_p()` | ran, returned `0` |
+| Scheme | `(delete-item-mode-is-water-p)` | ran, returned `0` |
+
+### delete_item_widget_is_being_shown
+
+Python: `delete_item_widget_is_being_shown()`  
+Scheme: `(delete-item-widget-is-being-shown)`
+
+Arguments: none. Returns: a whole number.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `delete_item_widget_is_being_shown()` | ran, returned `0` |
+| Scheme | `(delete-item-widget-is-being-shown)` | ran, returned `0` |
+
+### delete_item_widget_keep_active_on
+
+Python: `delete_item_widget_keep_active_on()`  
+Scheme: `(delete-item-widget-keep-active-on)`
+
+Arguments: none. Returns: a whole number.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `delete_item_widget_keep_active_on()` | ran, returned `0` |
+| Scheme | `(delete-item-widget-keep-active-on)` | ran, returned `0` |
+
+### delete_object_handle_delete_dialog
+
+Python: `delete_object_handle_delete_dialog(do_delete_dialog)`  
+Scheme: `(delete-object-handle-delete-dialog do-delete-dialog)`
+
+utility function, moving widget work out of c-interface-build.cc
+
+Arguments: do_delete_dialog (a whole number). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `delete_object_handle_delete_dialog(1)` | ran (no return value) |
+| Scheme | `(delete-object-handle-delete-dialog 1)` | ran (no return value) |
+
+### delete_residue
+
+Python: `delete_residue(imol, chain_id, resno, inscode)`  
+Scheme: `(delete-residue imol chain-id resno inscode)`
+
+delete residue
+
+Arguments: imol (a whole number), chain_id (text), resno (a whole number), inscode (text). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `delete_residue(0, "A", 41, "")` | ran (no return value) |
+| Scheme | `(delete-residue 0 "A" 41 "")` | ran (no return value) |
+
+### delete_residue_by_atom_index
+
+Python: `delete_residue_by_atom_index(imol, index, do_delete_dialog)`  
+Scheme: `(delete-residue-by-atom-index imol index do-delete-dialog)`
+
+Arguments: imol (a whole number), index (a whole number), do_delete_dialog (a whole number). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `delete_residue_by_atom_index(0, 1, 1)` | ran (no return value) |
+| Scheme | `(delete-residue-by-atom-index 0 1 1)` | ran (no return value) |
+
+### delete_residue_hydrogens
+
+Python: `delete_residue_hydrogens(imol, chain_id, resno, inscode, altloc)`  
+Scheme: `(delete-residue-hydrogens imol chain-id resno inscode altloc)`
+
+delete hydrogen atoms in residue
+
+Arguments: imol (a whole number), chain_id (text), resno (a whole number), inscode (text), altloc (text). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `delete_residue_hydrogens(0, "A", 41, "", "")` | ran (no return value) |
+| Scheme | `(delete-residue-hydrogens 0 "A" 41 "" "")` | ran (no return value) |
+
+### delete_residue_hydrogens_by_atom_index
+
+Python: `delete_residue_hydrogens_by_atom_index(imol, index, do_delete_dialog)`  
+Scheme: `(delete-residue-hydrogens-by-atom-index imol index do-delete-dialog)`
+
+Arguments: imol (a whole number), index (a whole number), do_delete_dialog (a whole number). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `delete_residue_hydrogens_by_atom_index(0, 1, 1)` | ran (no return value) |
+| Scheme | `(delete-residue-hydrogens-by-atom-index 0 1 1)` | ran (no return value) |
+
+### delete_residue_range
+
+Python: `delete_residue_range(imol, chain_id, resno_start, end_resno)`  
+Scheme: `(delete-residue-range imol chain-id resno-start end-resno)`
+
+delete residue range
+
+Arguments: imol (a whole number), chain_id (text), resno_start (a whole number), end_resno (a whole number). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `delete_residue_range(0, "A", 41, 45)` | ran (no return value) |
+| Scheme | `(delete-residue-range 0 "A" 41 45)` | ran (no return value) |
+
+### delete_residue_sidechain
+
+Python: `delete_residue_sidechain(imol, chain_id, resno, ins_code, do_delete_dialog)`  
+Scheme: `(delete-residue-sidechain imol chain-id resno ins-code do-delete-dialog)`
+
+delete all atoms in residue that are not main chain or CB
+
+Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_code (text), do_delete_dialog (a whole number). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `delete_residue_sidechain(0, "A", 41, "", 1)` | ran (no return value) |
+| Scheme | `(delete-residue-sidechain 0 "A" 41 "" 1)` | ran (no return value) |
+
+### delete_residue_with_full_spec
+
+Python: `delete_residue_with_full_spec(imol, imodel, chain_id, resno, inscode, altloc)`  
+Scheme: `(delete-residue-with-full-spec imol imodel chain-id resno inscode altloc)`
+
+delete residue with altconf
+
+Arguments: imol (a whole number), imodel (a whole number), chain_id (text), resno (a whole number), inscode (text), altloc (text). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `delete_residue_with_full_spec(0, 1, "A", 41, "", "")` | ran (no return value) |
+| Scheme | `(delete-residue-with-full-spec 0 1 "A" 41 "" "")` | ran (no return value) |
+
+### delete_residues
+
+Python: `delete_residues(imol, residue_specs_py)`  
+Scheme: `(delete-residues imol residue-specs-scm)`
+
+delete residues in the residue spec list
+
+Arguments: imol (a whole number), residue_specs_py (a list or value). Returns: nothing.
+Also available in Python as `delete_residues_py`.
+Also available in Scheme as `delete-residues-scm`.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `delete_residues(0, [["A", 41, ""], ["A", 42, ""]])` | ran (no return value) |
+| Scheme | `(delete-residues 0 (list (list "A" 41 "") (list "A" 42 "")))` | ran (no return value) |
+
+### delete_sidechains_for_chain
+
+Python: `delete_sidechains_for_chain(imol, chain_id)`  
+Scheme: `(delete-sidechains-for-chain imol chain-id)`
+
+delete the side chains in the chain
+
+Arguments: imol (a whole number), chain_id (text). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `delete_sidechains_for_chain(0, "A")` | ran (no return value) |
+| Scheme | `(delete-sidechains-for-chain 0 "A")` | ran (no return value) |
+
+### delete_waters
+
+Python: `delete_waters(imol)`  
+Scheme: `(delete-waters imol)`
+
+delete all waters in molecule,
+
+ Returns number of waters deleted.
+
+Arguments: imol (a whole number). Returns: a whole number.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `delete_waters(0)` | ran, returned `0` |
+| Scheme | `(delete-waters 0)` | ran, returned `0` |
+
+### do_cis_trans_conversion_setup
+
+Python: `do_cis_trans_conversion_setup(istate)`  
+Scheme: `(do-cis-trans-conversion-setup istate)`
+
+Arguments: istate (a whole number). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `do_cis_trans_conversion_setup(1)` | ran (no return value) |
+| Scheme | `(do-cis-trans-conversion-setup 1)` | ran (no return value) |
+
+### do_rot_trans_setup
+
+Python: `do_rot_trans_setup(state)`  
+Scheme: `(do-rot-trans-setup state)`
+
+sets flag for atom selection clicks
+
+Arguments: state (a whole number). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `do_rot_trans_setup(1)` | ran (no return value) |
+| Scheme | `(do-rot-trans-setup 1)` | ran (no return value) |
+
+### get_rot_trans_object_type
+
+Python: `get_rot_trans_object_type()`  
+Scheme: `(get-rot-trans-object-type)`
+
+zone, chain, mol
+
+Arguments: none. Returns: a whole number.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `get_rot_trans_object_type()` | ran, returned `12` |
+| Scheme | `(get-rot-trans-object-type)` | ran, returned `12` |
+
+### post_delete_item_dialog
+
+Python: `post_delete_item_dialog()`  
+Scheme: `(post-delete-item-dialog)`
+
+Arguments: none. Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `post_delete_item_dialog()` | not tried |
+| Scheme | `(post-delete-item-dialog)` | not tried |
+
+### rot_trans_reset_previous
+
+Python: `rot_trans_reset_previous()`  
+Scheme: `(rot-trans-reset-previous)`
+
+Arguments: none. Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `rot_trans_reset_previous()` | not tried |
+| Scheme | `(rot-trans-reset-previous)` | not tried |
+
+### set_delete_atom_mode
+
+Python: `set_delete_atom_mode()`  
+Scheme: `(set-delete-atom-mode)`
+
+toggle callbacks
+
+Arguments: none. Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `set_delete_atom_mode()` | not tried |
+| Scheme | `(set-delete-atom-mode)` | not tried |
+
+### set_delete_chain_mode
+
+Python: `set_delete_chain_mode()`  
+Scheme: `(set-delete-chain-mode)`
+
+Arguments: none. Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `set_delete_chain_mode()` | not tried |
+| Scheme | `(set-delete-chain-mode)` | not tried |
+
+### set_delete_residue_hydrogens_mode
+
+Python: `set_delete_residue_hydrogens_mode()`  
+Scheme: `(set-delete-residue-hydrogens-mode)`
+
+Arguments: none. Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `set_delete_residue_hydrogens_mode()` | not tried |
+| Scheme | `(set-delete-residue-hydrogens-mode)` | not tried |
+
+### set_delete_residue_mode
+
+Python: `set_delete_residue_mode()`  
+Scheme: `(set-delete-residue-mode)`
+
+Arguments: none. Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `set_delete_residue_mode()` | not tried |
+| Scheme | `(set-delete-residue-mode)` | not tried |
+
+### set_delete_residue_zone_mode
+
+Python: `set_delete_residue_zone_mode()`  
+Scheme: `(set-delete-residue-zone-mode)`
+
+Arguments: none. Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `set_delete_residue_zone_mode()` | not tried |
+| Scheme | `(set-delete-residue-zone-mode)` | not tried |
+
+### set_delete_sidechain_mode
+
+Python: `set_delete_sidechain_mode()`  
+Scheme: `(set-delete-sidechain-mode)`
+
+Arguments: none. Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `set_delete_sidechain_mode()` | not tried |
+| Scheme | `(set-delete-sidechain-mode)` | not tried |
+
+### set_delete_sidechain_range_mode
+
+Python: `set_delete_sidechain_range_mode()`  
+Scheme: `(set-delete-sidechain-range-mode)`
+
+Arguments: none. Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `set_delete_sidechain_range_mode()` | not tried |
+| Scheme | `(set-delete-sidechain-range-mode)` | not tried |
+
+### set_delete_water_mode
+
+Python: `set_delete_water_mode()`  
+Scheme: `(set-delete-water-mode)`
+
+Arguments: none. Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `set_delete_water_mode()` | not tried |
+| Scheme | `(set-delete-water-mode)` | not tried |
+
+### set_rot_trans_object_type
+
+Python: `set_rot_trans_object_type(rt_type)`  
+Scheme: `(set-rot-trans-object-type rt-type)`
+
+Arguments: rt_type (a whole number). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `set_rot_trans_object_type(1)` | not tried |
+| Scheme | `(set-rot-trans-object-type 1)` | not tried |
+
+### set_rotate_translate_zone_rotates_about_zone_centre
+
+Python: `set_rotate_translate_zone_rotates_about_zone_centre(istate)`  
+Scheme: `(set-rotate-translate-zone-rotates-about-zone-centre istate)`
+
+Arguments: istate (a whole number). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `set_rotate_translate_zone_rotates_about_zone_centre(1)` | not tried |
+| Scheme | `(set-rotate-translate-zone-rotates-about-zone-centre 1)` | not tried |
+
+### store_delete_item_widget_position
+
+Python: `store_delete_item_widget_position()`  
+Scheme: `(store-delete-item-widget-position)`
+
+Arguments: none. Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `store_delete_item_widget_position()` | not tried |
+| Scheme | `(store-delete-item-widget-position)` | not tried |
+
+### twisted_trans_peptides
+
+Python: `twisted_trans_peptides(imol)`  
+Scheme: `(twisted-trans-peptides imol)`
+
+Arguments: imol (a whole number). Returns: a value (see the result of the example).
+Also available in Python as `twisted_trans_peptides_py`.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `twisted_trans_peptides(0)` | not tried |
+| Scheme | `(twisted-trans-peptides 0)` | not tried |
+

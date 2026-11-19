@@ -391,6 +391,25 @@ Round 20: Refine/Improve Ramachandran Plot menu + Fit Protein shown refinement -
   go-to re-contours) - the immediate-replacement state is the real difference.  b19: gui-scripts 14/15, gui-dialogs 46/48; b20 15/15, 48/48.
   User 16 Nov: BB1-BB4 confirmed on screen.
 
+Round 26: Python window, quiet Scheme calls, scripting docs -> build 26  (patches 0042 auto-recontour-report, 0043 quiet-scheme-calls (C++),
+  0044 python-scripting-window)
+  User 18 Nov: GG1-4 ok; ClustalW2 entry fine on screen (sweep item 192 crash = headless only); asked: Auto-Recontour entries silent; mute the
+  per-call debug line; docs + cookbook overnight.  C++ rebuild (first since build 13, in Claude Code): conda envs at ~/.claude-science/conda/envs,
+  m0_build.py compile 412/412 in 2:53, m0_link.py ok; relocation by hand because the canvas install names still carry the OLD workspace path
+  while the link rpath is canvas/prefix/lib (relocate_coot_bin.sh assumes one directory): install_name_tool -change OLD/lib<x> @rpath/lib<x>,
+  -delete_rpath for the three build rpaths, -add_rpath @executable_path/../lib, codesign -s -.  graphics-info.cc: debug echo only with
+  COOT_DEBUG_SCHEME; c-interface.cc safe_scheme_command: commands starting "(coot0-" / "coot0-" skip add_to_history (no bold echo).
+  coot_gui.py: python_scripting_window (python_console_eval: eval else exec in __main__, stdout/stderr teed into the window, traceback without
+  its own frame; python_text_incomplete = codeop.compile_command(...,"single") is None; empty line ends a block; auto-indent), coot_gui()
+  redefined at the end (classic kept as coot_gui_classic for the listener / COOT0_CLASSIC_PYTHON_WINDOW).  set_auto_recontour_map_and_report.
+  Test note: the old Python window pumped GTK events per command, which flushed an idle left by the "Stop, then a new run" check; with the new
+  window that idle ran inside the Stepped Refine check (accept log [True, False]): the check now drains pending events first.
+  Docs: tools/gen_api_index.py (SWIG method tables + guile gsubr list; _rest wrappers; constants dropped; class members dropped; headers via
+  coot.i %include with \name sections; redefine_functions.py / redefine-functions.scm + coot-utils.scm aliases switch the example to the
+  redefinition's signature; argument-name rules for concrete values) -> tests/run-api-examples.sh (bash driver: JSON lines, restart on crash /
+  60 s hang / changed molecule 0-1 fingerprint, own HOME) + api_examples_run.py; tools/gen_api_docs.py (scrubs machine paths).  Cookbook:
+  docs/cookbook/*.md, hidden <!-- check-py/check-scm/not-run --> comments, tests/cookbook_run.py (own HOME: recipe 6.8 writes preferences).
+
 Round 25: Scheme scripting window -> build 25  (patch 0041 scheme-scripting-window; Python / Scheme only)
   User 18 Nov: FF1-3 ok; README.md not in the package; Scheme window = 0.9.8.96 "simple" C++ window (post_scheme_scripting_window, used when
   guile_gui_loaded_flag is false): fixed placeholder text, guile_window_enter_callback evaluates (lambda () text) and drops the value; nothing

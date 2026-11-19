@@ -16,10 +16,17 @@ It is not made, endorsed or supported by the Coot developers. Please report prob
   replacement for the old PyGTK 2 library. Your own PyGTK-based Coot 0.9 scripts should work too.
 - **Scheme scripting** (Guile 3): Calculate > Scripting > Scheme..., `--script file.scm`, start-up scripts. (Coot's
   Scheme *GUI* scripts, written for guile-gtk, are not available; their functions are provided by the Python versions.)
+- **Documentation for scripting** (build 26), in the package folder `docs/` (here: [`m0/m1-package/docs`](m0/m1-package/docs/README.md)):
+  a [cookbook](m0/m1-package/docs/cookbook/README.md) of about 85 recipes for everyday tasks (files and maps, the view,
+  selections, refinement, editing, your own toolbar buttons / menus / keys, batch scripts and hooks, validation, NCS,
+  ligands), each in Python and Scheme and all run by the test suite; and a
+  [scripting reference](m0/m1-package/docs/api/README.md) of every Python and Scheme function (about 1,700), each with a
+  concrete example on the test data and what happened when it was tried, plus the
+  [functions that exist in only one language](m0/m1-package/docs/api/one-language-only.md).
 - RDKit-based ligand tools (Lidia, SMILES import), the CCP4 monomer library, reference structures, Ramachandran data.
 - CCP4 (refmac5, acedrg, ...) and Phenix/CCP4 reduce + probe are found automatically when installed; they are
   optional.
-- 19 automated test suites (about 300 checks) and a real-window audit of every menu entry and toolbar button.
+- 21 automated test suites (about 500 checks) and a real-window audit of every menu entry and toolbar button.
 
 ## Changes from the original Coot 0.9.8.96
 
@@ -50,6 +57,11 @@ some things that did not work in the original 0.9.8.96 release. The changes you 
   nothing. Now the window shows each command, what it printed, its result (`=> "HIS"`) and errors, keeps a history (Up /
   Down) and accepts an expression over several lines. What Scheme prints (`display`, `format #t`) also reaches the
   terminal at once (before, coot0's log copy made Guile hold it back, often until Coot quit).
+- **The Python scripting window shows what your commands print** (build 26). Calculate > Scripting > Python... now looks
+  and works like the Scheme window: the command, what it printed (before: only in the terminal), its result (`=> 'GLU'`)
+  and errors with their traceback, Up / Down history, and blocks over several lines as at the Python prompt (a line
+  ending in `:` continues, an empty line runs the block). Coot's extra line for each Scheme command
+  ("debug:: g.safe_scheme_command() ...") is gone from the terminal (`COOT_DEBUG_SCHEME=1` shows it again).
 - **Trackpads and the Magic Mouse have no middle button.** A two-finger click on a trackpad (a right-click without
   dragging) works as Coot's middle-click: it re-centres the view on the atom under the pointer. Right-button drags still
   zoom as before. `COOT_RIGHT_CLICK_CENTRE=0` turns this off.

@@ -1,4 +1,31 @@
-# Coot 0.9.8.96 on Apple Silicon: test round 25 (build 25 = build 24 + a working Scheme scripting window)
+# Coot 0.9.8.96 on Apple Silicon: test round 26 (build 26 = build 25 + a new Python window, a quiet terminal, the scripting documentation)
+
+**From you** (18 Nov): GG1-GG4 confirmed (you liked the new Scheme window); Cryo-EM > Align and Mutate using ClustalW2 opens fine on screen. Asked for: the Auto-Recontour entries to say something in the terminal; the debug line for each Scheme command to go; the documentation of the functions and the cookbook.
+
+1. **Python window.** Calculate > Scripting > Python... now looks and works like the Scheme window: the command (green), what it printed (black; before, `print` went to the terminal only), its result (blue, `=> 'GLU'`), errors with their traceback (red); Up / Down; Clear. Several lines as at the Python prompt: after a line ending in `:` the prompt shows `...` and the next line is indented for you; an empty line runs the block. If you type Scheme into it, it says so.
+2. **Quiet terminal.** The "debug:: g.safe_scheme_command() with command ..." line is gone (this needed the first C++ rebuild since build 13; everything else in `bin/coot-bin` is unchanged). Commands you type into the Scheme window appear once in the terminal (`scheme> ...` and `=> ...`).
+3. **Auto-Recontour.** Cryo-EM > No / Enable Auto-Recontour Map Mode print e.g. "Auto-recontour map mode: OFF. Maps keep their current contours ..." in the terminal and the status bar.
+4. **Documentation** in the package folder `docs/` (start at `docs/README.md`; on GitHub under `m0/m1-package/docs/`):
+   - `docs/cookbook/`: 85 recipes in 10 topics (files and maps, view, selections, refinement, editing, customizing toolbar / menus / keys / colours / preferences, batch scripts and hooks, validation, NCS, ligands), each in Python and Scheme. The test suite runs every recipe in both languages (83 of them; 6.4 map colour and 7.6 timer need the window).
+   - `docs/api/`: every scripting function (1,735), with a concrete example on the test data (`residue_name(0, "A", 41, "")`, molecule 0 = tutorial-modern.pdb, molecule 1 = its map) and what happened when it was tried without a window. `docs/api/one-language-only.md` is the list of functions that exist only in Python or only in Scheme, with their counterparts.
+
+**On screen: not verified by me** (all headless). In particular: the Python window, the status-bar text, and the cookbook recipes that make buttons, menus and keys (6.1-6.3) or set the map colour (6.4).
+
+**New tests** (`gui-dialogs` 74 -> 79, build 25 fails the 5 new ones; new suites `api-docs` 5 and `cookbook` 166). Evidence: `evidence/checks_b25_vs_b26.txt`, `evidence/verify_b26.txt`.
+
+## HH. Round 26 checks (about 15 minutes)
+
+| # | Do | Expected |
+|---|---|---|
+| HH1 | Calculate > Scripting > Python...; load a model; type `residue_name(0, "A", 41, "")` (your molecule / chain / residue), then `print("hello")`, then `for i in range(3):` Enter, `print(i)` Enter, Enter; then `1/0`; then Up a few times. | `=> '...'`; `hello`; `0 1 2`; a red error with the traceback; earlier commands come back. The same in the terminal. |
+| HH2 | Calculate > Scripting > Scheme...; type `(+ 1 2)`. Look at the terminal. | `scheme> (+ 1 2)` and `=> 3`; no "debug:: g.safe_scheme_command" line. |
+| HH3 | Cryo-EM > No Auto-Recontour Map Mode, then Enable Auto-Recontour Map Mode (the Cryo-EM menu appears after Calculate > Modules... > Cryo-EM). | A line "Auto-recontour map mode: OFF/ON ..." in the terminal each time, and the same in the status bar. |
+| HH4 | Cookbook 6.1 (toolbar button "Refine here"), 6.3 (F5 key) and 6.4 (map colour): paste the Python of each into the Python window, with a model and its map loaded; press the new button / F5 near a residue. | The button and the key refine around the centre; the map turns light blue. |
+| HH5 | Open `docs/README.md` (or on GitHub) and look at a recipe or a function you know. | Readable and useful? Tell me what is missing or wrong. |
+
+---
+
+# Earlier round (GG1-GG4 confirmed 18 Nov): Coot 0.9.8.96 on Apple Silicon: test round 25 (build 25 = build 24 + a working Scheme scripting window)
 
 **From you** (18 Nov): FF1 (A 117 was flipped back by the flip try), FF2, FF3 confirmed; README.md was not in the package; add the two-finger click to the README. The Scheme window said "For now this is a placeholder only!" and nothing appeared in it or in the terminal (only `set-graphics-window-size` worked, and its message comes from the C++ code).
 

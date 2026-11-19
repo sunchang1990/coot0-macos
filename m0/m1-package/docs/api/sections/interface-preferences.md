@@ -1,0 +1,842 @@
+# Interface Preferences
+
+[Scripting reference](../README.md) > Interface Preferences (62 functions)
+
+Examples use the test data: molecule 0 = `tutorial-modern.pdb`, molecule 1 = the map made from `rnasa-1.8-all_refmac1.mtz` (FWT/PHWT). See [How to read this reference](../README.md#how-to-read-it).
+
+### accept_reject_dialog_docked_show_state
+
+Python: `accept_reject_dialog_docked_show_state()`  
+Scheme: `(accept-reject-dialog-docked-show-state)`
+
+what is the accept/reject dialog docked show state?
+
+Arguments: none. Returns: a whole number.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `accept_reject_dialog_docked_show_state()` | ran, returned `1` |
+| Scheme | `(accept-reject-dialog-docked-show-state)` | ran, returned `1` |
+
+### accept_reject_dialog_docked_state
+
+Python: `accept_reject_dialog_docked_state()`  
+Scheme: `(accept-reject-dialog-docked-state)`
+
+the accept/reject dialog docked state
+
+Arguments: none. Returns: a whole number.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `accept_reject_dialog_docked_state()` | ran, returned `0` |
+| Scheme | `(accept-reject-dialog-docked-state)` | ran, returned `0` |
+
+### add_status_bar_text
+
+Python: `add_status_bar_text(s)`  
+Scheme: `(add-status-bar-text s)`
+
+Put text s into the status bar.
+
+ use this to put info for the user in the statusbar (less intrusive
+ than popup).
+
+Arguments: s (text). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `add_status_bar_text("hello")` | ran (no return value) |
+| Scheme | `(add-status-bar-text "hello")` | ran (no return value) |
+
+### apply_ncs_to_view_orientation
+
+Python: `apply_ncs_to_view_orientation(imol, current_chain, next_ncs_chain)`  
+Scheme: `(apply-ncs-to-view-orientation imol current-chain next-ncs-chain)`
+
+Given that we are in chain current_chain, apply the NCS
+ operator that maps current_chain on to next_ncs_chain, so that the
+ relative view is preserved. For NCS skipping.
+
+Arguments: imol (a whole number), current_chain (text), next_ncs_chain (text). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `apply_ncs_to_view_orientation(0, "A", "A")` | ran (no return value) |
+| Scheme | `(apply-ncs-to-view-orientation 0 "A" "A")` | ran (no return value) |
+
+### apply_ncs_to_view_orientation_and_screen_centre
+
+Python: `apply_ncs_to_view_orientation_and_screen_centre(imol, current_chain, next_ncs_chain, forward_flag)`  
+Scheme: `(apply-ncs-to-view-orientation-and-screen-centre imol current-chain next-ncs-chain forward-flag)`
+
+as above, but shift the screen centre also.
+
+Arguments: imol (a whole number), current_chain (text), next_ncs_chain (text), forward_flag (a whole number). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `apply_ncs_to_view_orientation_and_screen_centre(0, "A", "A", 1)` | ran (no return value) |
+| Scheme | `(apply-ncs-to-view-orientation-and-screen-centre 0 "A" "A" 1)` | ran (no return value) |
+
+### clear_preferences
+
+Python: `clear_preferences()`  
+Scheme: `(clear-preferences)`
+
+Arguments: none. Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `clear_preferences()` | ran (no return value) |
+| Scheme | `(clear-preferences)` | ran (no return value) |
+
+### fill_preferences_main_toolbar_icons
+
+Python: `fill_preferences_main_toolbar_icons(preferences, scrolled_window)`  
+Scheme: `(fill-preferences-main-toolbar-icons preferences scrolled-window)`
+
+Arguments: preferences (`GtkWidget *`), scrolled_window (`GtkWidget *`). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+
+### fill_preferences_model_toolbar_icons
+
+Python: `fill_preferences_model_toolbar_icons(preferences, scrolled_window)`  
+Scheme: `(fill-preferences-model-toolbar-icons preferences scrolled-window)`
+
+Arguments: preferences (`GtkWidget *`), scrolled_window (`GtkWidget *`). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+
+### get_auto_recontour_map
+
+Python: `get_auto_recontour_map()`  
+Scheme: `(get-auto-recontour-map)`
+
+return the auto-recontour state
+
+Arguments: none. Returns: a whole number.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `get_auto_recontour_map()` | ran, returned `1` |
+| Scheme | `(get-auto-recontour-map)` | ran, returned `1` |
+
+### get_fps_flag
+
+Python: `get_fps_flag()`  
+Scheme: `(get-fps-flag)`
+
+set the state of show frames-per-second flag
+
+Arguments: none. Returns: a whole number.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `get_fps_flag()` | ran, returned `0` |
+| Scheme | `(get-fps-flag)` | ran, returned `0` |
+
+### get_view_matrix_element
+
+Python: `get_view_matrix_element(row, col)`  
+Scheme: `(get-view-matrix-element row col)`
+
+print the view matrix
+
+Arguments: row (a whole number), col (a whole number). Returns: a number.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `get_view_matrix_element(1, 1)` | ran, returned `1.0` |
+| Scheme | `(get-view-matrix-element 1 1)` | ran, returned `1.0` |
+
+### get_view_quaternion_internal
+
+Python: `get_view_quaternion_internal(element)`  
+Scheme: `(get-view-quaternion-internal element)`
+
+internal function to get an element of the view quaternion.
+ The whole quaternion is returned by the scheme function
+ view-quaternion
+
+Arguments: element (a whole number). Returns: a number.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `get_view_quaternion_internal(1)` | ran, returned `0.0` |
+| Scheme | `(get-view-quaternion-internal 1)` | ran, returned `0.0` |
+
+### hide_main_toolbar
+
+Python: `hide_main_toolbar()`  
+Scheme: `(hide-main-toolbar)`
+
+hide the horizontal main toolbar in the GTK2 version
+
+Arguments: none. Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `hide_main_toolbar()` | ran (no return value) |
+| Scheme | `(hide-main-toolbar)` | ran (no return value) |
+
+### hide_main_toolbar_icon
+
+Python: `hide_main_toolbar_icon(pos)`  
+Scheme: `(hide-main-toolbar-icon pos)`
+
+Arguments: pos (a whole number). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `hide_main_toolbar_icon(1)` | ran (no return value) |
+| Scheme | `(hide-main-toolbar-icon 1)` | ran (no return value) |
+
+### hide_model_toolbar_icon
+
+Python: `hide_model_toolbar_icon(pos)`  
+Scheme: `(hide-model-toolbar-icon pos)`
+
+Arguments: pos (a whole number). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `hide_model_toolbar_icon(1)` | ran (no return value) |
+| Scheme | `(hide-model-toolbar-icon 1)` | ran (no return value) |
+
+### hide_modelling_toolbar
+
+Python: `hide_modelling_toolbar()`  
+Scheme: `(hide-modelling-toolbar)`
+
+hide the vertical modelling toolbar in the GTK2 version
+
+Arguments: none. Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `hide_modelling_toolbar()` | ran (no return value) |
+| Scheme | `(hide-modelling-toolbar)` | ran (no return value) |
+
+### main_toolbar_style_state
+
+Python: `main_toolbar_style_state()`  
+Scheme: `(main-toolbar-style-state)`
+
+Arguments: none. Returns: a whole number.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `main_toolbar_style_state()` | not tried |
+| Scheme | `(main-toolbar-style-state)` | not tried |
+
+### make_preferences_internal
+
+Python: `make_preferences_internal()`  
+Scheme: `(make-preferences-internal)`
+
+Arguments: none. Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `make_preferences_internal()` | not tried |
+| Scheme | `(make-preferences-internal)` | not tried |
+
+### make_preferences_internal_default
+
+Python: `make_preferences_internal_default()`  
+Scheme: `(make-preferences-internal-default)`
+
+Arguments: none. Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `make_preferences_internal_default()` | not tried |
+| Scheme | `(make-preferences-internal-default)` | not tried |
+
+### model_fit_refine_dialog_stays_on_top_state
+
+Python: `model_fit_refine_dialog_stays_on_top_state()`  
+Scheme: `(model-fit-refine-dialog-stays-on-top-state)`
+
+return the state model-fit-refine dialog stays on top
+
+Arguments: none. Returns: a whole number.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `model_fit_refine_dialog_stays_on_top_state()` | not tried |
+| Scheme | `(model-fit-refine-dialog-stays-on-top-state)` | not tried |
+
+### model_toolbar_style_state
+
+Python: `model_toolbar_style_state()`  
+Scheme: `(model-toolbar-style-state)`
+
+Arguments: none. Returns: a whole number.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `model_toolbar_style_state()` | not tried |
+| Scheme | `(model-toolbar-style-state)` | not tried |
+
+### preferences
+
+Python: `preferences()`  
+Scheme: `(preferences)`
+
+section Preferences
+
+Arguments: none. Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `preferences()` | not tried |
+| Scheme | `(preferences)` | not tried |
+
+### preferences_internal_change_value_float
+
+Python: `preferences_internal_change_value_float(preference_type, fvalue)`  
+Scheme: `(preferences-internal-change-value-float preference-type fvalue)`
+
+Arguments: preference_type (a whole number), fvalue (a number). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `preferences_internal_change_value_float(1, 1.0)` | not tried |
+| Scheme | `(preferences-internal-change-value-float 1 1.0)` | not tried |
+
+### preferences_internal_change_value_float3
+
+Python: `preferences_internal_change_value_float3(preference_type, fvalue1, fvalue2, fvalue3)`  
+Scheme: `(preferences-internal-change-value-float3 preference-type fvalue1 fvalue2 fvalue3)`
+
+Arguments: preference_type (a whole number), fvalue1 (a number), fvalue2 (a number), fvalue3 (a number). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `preferences_internal_change_value_float3(1, 1.0, 1.0, 1.0)` | not tried |
+| Scheme | `(preferences-internal-change-value-float3 1 1.0 1.0 1.0)` | not tried |
+
+### preferences_internal_change_value_int
+
+Python: `preferences_internal_change_value_int(preference_type, ivalue)`  
+Scheme: `(preferences-internal-change-value-int preference-type ivalue)`
+
+Arguments: preference_type (a whole number), ivalue (a whole number). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `preferences_internal_change_value_int(1, 1)` | not tried |
+| Scheme | `(preferences-internal-change-value-int 1 1)` | not tried |
+
+### preferences_internal_change_value_int2
+
+Python: `preferences_internal_change_value_int2(preference_type, ivalue1, ivalue2)`  
+Scheme: `(preferences-internal-change-value-int2 preference-type ivalue1 ivalue2)`
+
+Arguments: preference_type (a whole number), ivalue1 (a whole number), ivalue2 (a whole number). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `preferences_internal_change_value_int2(1, 1, 1)` | not tried |
+| Scheme | `(preferences-internal-change-value-int2 1 1 1)` | not tried |
+
+### preferences_internal_font_own_colour_flag
+
+Python: `preferences_internal_font_own_colour_flag()`  
+Scheme: `(preferences-internal-font-own-colour-flag)`
+
+Arguments: none. Returns: a whole number.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `preferences_internal_font_own_colour_flag()` | not tried |
+| Scheme | `(preferences-internal-font-own-colour-flag)` | not tried |
+
+### print_view_matrix
+
+Python: `print_view_matrix()`  
+Scheme: `(print-view-matrix)`
+
+print the view matrix to the console, useful for molscript,
+ perhaps
+
+Arguments: none. Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `print_view_matrix()` | not tried |
+| Scheme | `(print-view-matrix)` | not tried |
+
+### reattach_modelling_toolbar
+
+Python: `reattach_modelling_toolbar()`  
+Scheme: `(reattach-modelling-toolbar)`
+
+reattach the modelling toolbar to the last attached position
+
+Arguments: none. Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `reattach_modelling_toolbar()` | not tried |
+| Scheme | `(reattach-modelling-toolbar)` | not tried |
+
+### reset_preferences
+
+Python: `reset_preferences()`  
+Scheme: `(reset-preferences)`
+
+Arguments: none. Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `reset_preferences()` | not tried |
+| Scheme | `(reset-preferences)` | not tried |
+
+### save_preferences
+
+Python: `save_preferences()`  
+Scheme: `(save-preferences)`
+
+Arguments: none. Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `save_preferences()` | not tried |
+| Scheme | `(save-preferences)` | not tried |
+
+### scroll_by_wheel_mouse_state
+
+Python: `scroll_by_wheel_mouse_state()`  
+Scheme: `(scroll-by-wheel-mouse-state)`
+
+return the internal state of the scroll-wheel map contouring
+
+Arguments: none. Returns: a whole number.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `scroll_by_wheel_mouse_state()` | not tried |
+| Scheme | `(scroll-by-wheel-mouse-state)` | not tried |
+
+### set_accept_reject_dialog_docked
+
+Python: `set_accept_reject_dialog_docked(state)`  
+Scheme: `(set-accept-reject-dialog-docked state)`
+
+functions to dock the accept/reject dialog to the toolbar
+
+Arguments: state (a whole number). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `set_accept_reject_dialog_docked(1)` | not tried |
+| Scheme | `(set-accept-reject-dialog-docked 1)` | not tried |
+
+### set_accept_reject_dialog_docked_show
+
+Python: `set_accept_reject_dialog_docked_show(state)`  
+Scheme: `(set-accept-reject-dialog-docked-show state)`
+
+set the accept/reject dialog docked show state
+
+Arguments: state (a whole number). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `set_accept_reject_dialog_docked_show(1)` | not tried |
+| Scheme | `(set-accept-reject-dialog-docked-show 1)` | not tried |
+
+### set_auto_recontour_map
+
+Python: `set_auto_recontour_map(state)`  
+Scheme: `(set-auto-recontour-map state)`
+
+turn off (0) or on (1) auto recontouring (on screen centre change) (default it on)
+
+Arguments: state (a whole number). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `set_auto_recontour_map(1)` | not tried |
+| Scheme | `(set-auto-recontour-map 1)` | not tried |
+
+### set_default_initial_contour_level_for_difference_map
+
+Python: `set_default_initial_contour_level_for_difference_map(n_sigma)`  
+Scheme: `(set-default-initial-contour-level-for-difference-map n-sigma)`
+
+set the default inital contour for FoFc-style map
+
+in sigma
+
+Arguments: n_sigma (a number). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `set_default_initial_contour_level_for_difference_map(1.5)` | not tried |
+| Scheme | `(set-default-initial-contour-level-for-difference-map 1.5)` | not tried |
+
+### set_default_initial_contour_level_for_map
+
+Python: `set_default_initial_contour_level_for_map(n_sigma)`  
+Scheme: `(set-default-initial-contour-level-for-map n-sigma)`
+
+set the default inital contour for 2FoFc-style map
+
+in sigma
+
+Arguments: n_sigma (a number). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `set_default_initial_contour_level_for_map(1.5)` | not tried |
+| Scheme | `(set-default-initial-contour-level-for-map 1.5)` | not tried |
+
+### set_fps_flag
+
+Python: `set_fps_flag(t)`  
+Scheme: `(set-fps-flag t)`
+
+set show frame-per-second flag
+
+Arguments: t (a whole number). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `set_fps_flag(1)` | not tried |
+| Scheme | `(set-fps-flag 1)` | not tried |
+
+### set_main_toolbar_style
+
+Python: `set_main_toolbar_style(state)`  
+Scheme: `(set-main-toolbar-style state)`
+
+functions for the main toolbar style
+
+Arguments: state (a whole number). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `set_main_toolbar_style(1)` | not tried |
+| Scheme | `(set-main-toolbar-style 1)` | not tried |
+
+### set_mark_cis_peptides_as_bad
+
+Python: `set_mark_cis_peptides_as_bad(istate)`  
+Scheme: `(set-mark-cis-peptides-as-bad istate)`
+
+Arguments: istate (a whole number). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `set_mark_cis_peptides_as_bad(1)` | not tried |
+| Scheme | `(set-mark-cis-peptides-as-bad 1)` | not tried |
+
+### set_model_fit_refine_dialog_stays_on_top
+
+Python: `set_model_fit_refine_dialog_stays_on_top(istate)`  
+Scheme: `(set-model-fit-refine-dialog-stays-on-top istate)`
+
+model-fit-refine dialog stays on top
+
+Arguments: istate (a whole number). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `set_model_fit_refine_dialog_stays_on_top(1)` | not tried |
+| Scheme | `(set-model-fit-refine-dialog-stays-on-top 1)` | not tried |
+
+### set_model_toolbar_docked_position
+
+Python: `set_model_toolbar_docked_position(state)`  
+Scheme: `(set-model-toolbar-docked-position state)`
+
+to swap sides of the Model/Fit/Refine toolbar
+ 0 (default) is right, 1 is left, 2 is top, 3 is bottom
+
+Arguments: state (a whole number). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `set_model_toolbar_docked_position(1)` | not tried |
+| Scheme | `(set-model-toolbar-docked-position 1)` | not tried |
+
+### set_model_toolbar_style
+
+Python: `set_model_toolbar_style(state)`  
+Scheme: `(set-model-toolbar-style state)`
+
+functions for the refinement toolbar style
+
+Arguments: state (a whole number). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `set_model_toolbar_style(1)` | not tried |
+| Scheme | `(set-model-toolbar-style 1)` | not tried |
+
+### set_scroll_by_wheel_mouse
+
+Python: `set_scroll_by_wheel_mouse(istate)`  
+Scheme: `(set-scroll-by-wheel-mouse istate)`
+
+Some people (like Phil Evans) don't want to scroll their
+ map with the mouse-wheel.
+
+ To turn off mouse wheel recontouring call this with istate value of 0
+
+Arguments: istate (a whole number). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `set_scroll_by_wheel_mouse(1)` | not tried |
+| Scheme | `(set-scroll-by-wheel-mouse 1)` | not tried |
+
+### set_show_origin_marker
+
+Python: `set_show_origin_marker(istate)`  
+Scheme: `(set-show-origin-marker istate)`
+
+set a flag: is the origin marker to be shown? 1 for yes, 0
+ for no.
+
+Arguments: istate (a whole number). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `set_show_origin_marker(1)` | not tried |
+| Scheme | `(set-show-origin-marker 1)` | not tried |
+
+### set_view_quaternion
+
+Python: `set_view_quaternion(i, j, k, l)`  
+Scheme: `(set-view-quaternion i j k l)`
+
+Set the view quaternion
+
+Arguments: i (a number), j (a number), k (a number), l (a number). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `set_view_quaternion(1.0, 1.0, 1.0, 1.0)` | not tried |
+| Scheme | `(set-view-quaternion 1.0 1.0 1.0 1.0)` | not tried |
+
+### show_hide_preferences_tabs
+
+Python: `show_hide_preferences_tabs(toggletoolbutton, preference_type)`  
+Scheme: `(show-hide-preferences-tabs toggletoolbutton preference-type)`
+
+Arguments: toggletoolbutton (`GtkToggleToolButton *`), preference_type (a whole number). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | (no automatic example) | not tried |
+| Scheme | (no automatic example) | not tried |
+
+### show_main_toolbar
+
+Python: `show_main_toolbar()`  
+Scheme: `(show-main-toolbar)`
+
+show the horizontal main toolbar in the GTK2 version
+ (the toolbar is shown by default)
+
+Arguments: none. Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `show_main_toolbar()` | not tried |
+| Scheme | `(show-main-toolbar)` | not tried |
+
+### show_main_toolbar_icon
+
+Python: `show_main_toolbar_icon(pos)`  
+Scheme: `(show-main-toolbar-icon pos)`
+
+Arguments: pos (a whole number). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `show_main_toolbar_icon(1)` | not tried |
+| Scheme | `(show-main-toolbar-icon 1)` | not tried |
+
+### show_mark_cis_peptides_as_bad_state
+
+Python: `show_mark_cis_peptides_as_bad_state()`  
+Scheme: `(show-mark-cis-peptides-as-bad-state)`
+
+in geometry graph
+
+Arguments: none. Returns: a whole number.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `show_mark_cis_peptides_as_bad_state()` | not tried |
+| Scheme | `(show-mark-cis-peptides-as-bad-state)` | not tried |
+
+### show_model_toolbar_all_icons
+
+Python: `show_model_toolbar_all_icons()`  
+Scheme: `(show-model-toolbar-all-icons)`
+
+show all available icons in the modelling toolbar (same as MFR dialog)
+
+Arguments: none. Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `show_model_toolbar_all_icons()` | not tried |
+| Scheme | `(show-model-toolbar-all-icons)` | not tried |
+
+### show_model_toolbar_icon
+
+Python: `show_model_toolbar_icon(pos)`  
+Scheme: `(show-model-toolbar-icon pos)`
+
+Arguments: pos (a whole number). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `show_model_toolbar_icon(1)` | not tried |
+| Scheme | `(show-model-toolbar-icon 1)` | not tried |
+
+### show_model_toolbar_main_icons
+
+Python: `show_model_toolbar_main_icons()`  
+Scheme: `(show-model-toolbar-main-icons)`
+
+show only a selection of icons in the modelling toolbar
+
+Arguments: none. Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `show_model_toolbar_main_icons()` | not tried |
+| Scheme | `(show-model-toolbar-main-icons)` | not tried |
+
+### show_modelling_toolbar
+
+Python: `show_modelling_toolbar()`  
+Scheme: `(show-modelling-toolbar)`
+
+show the vertical modelling toolbar in the GTK2 version
+ (the toolbar is shown by default)
+
+Arguments: none. Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `show_modelling_toolbar()` | not tried |
+| Scheme | `(show-modelling-toolbar)` | not tried |
+
+### show_origin_marker_state
+
+Python: `show_origin_marker_state()`  
+Scheme: `(show-origin-marker-state)`
+
+return the origin marker shown? state
+
+Arguments: none. Returns: a whole number.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `show_origin_marker_state()` | not tried |
+| Scheme | `(show-origin-marker-state)` | not tried |
+
+### show_preferences
+
+Python: `show_preferences()`  
+Scheme: `(show-preferences)`
+
+Arguments: none. Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `show_preferences()` | not tried |
+| Scheme | `(show-preferences)` | not tried |
+
+### suck_model_fit_dialog
+
+Python: `suck_model_fit_dialog()`  
+Scheme: `(suck-model-fit-dialog)`
+
+reparent the Model/Fit/Refine dialog so that it becomes
+ part of the main window, next to the GL graphics context
+
+Arguments: none. Returns: a whole number.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `suck_model_fit_dialog()` | not tried |
+| Scheme | `(suck-model-fit-dialog)` | not tried |
+
+### suck_model_fit_dialog_bl
+
+Python: `suck_model_fit_dialog_bl()`  
+Scheme: `(suck-model-fit-dialog-bl)`
+
+Arguments: none. Returns: a whole number.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `suck_model_fit_dialog_bl()` | not tried |
+| Scheme | `(suck-model-fit-dialog-bl)` | not tried |
+
+### update_main_toolbar_icons_menu
+
+Python: `update_main_toolbar_icons_menu()`  
+Scheme: `(update-main-toolbar-icons-menu)`
+
+Arguments: none. Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `update_main_toolbar_icons_menu()` | not tried |
+| Scheme | `(update-main-toolbar-icons-menu)` | not tried |
+
+### update_model_toolbar_icons_menu
+
+Python: `update_model_toolbar_icons_menu()`  
+Scheme: `(update-model-toolbar-icons-menu)`
+
+Arguments: none. Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `update_model_toolbar_icons_menu()` | not tried |
+| Scheme | `(update-model-toolbar-icons-menu)` | not tried |
+
+### update_preference_gui
+
+Python: `update_preference_gui()`  
+Scheme: `(update-preference-gui)`
+
+Arguments: none. Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `update_preference_gui()` | not tried |
+| Scheme | `(update-preference-gui)` | not tried |
+
+### update_toolbar_icons_menu
+
+Python: `update_toolbar_icons_menu(toolbar_index)`  
+Scheme: `(update-toolbar-icons-menu toolbar-index)`
+
+Arguments: toolbar_index (a whole number). Returns: nothing.
+
+| | Example | When tried (test data, no window) |
+|---|---|---|
+| Python | `update_toolbar_icons_menu(1)` | not tried |
+| Scheme | `(update-toolbar-icons-menu 1)` | not tried |
+

@@ -1,0 +1,38 @@
+Build 26 regression tests: tests/gui_python_dialogs.py (79 checks), run headless (tools/dev_run.sh) in the same bundle
+
+== with build 25 files (bin/coot-bin of build 13, coot_gui.py of build 25):
+FAIL Cryo-EM > No/Enable Auto-Recontour Map Mode set the mode and print it in the terminal                                                                             "nothing printed for No Auto-Recontour: ''"
+FAIL Scheme: no debug line per Scheme call in the terminal; the Scheme window's own calls are not echoed                                                               'the debug line is still printed: \'\\x1b[1m(coot0-console-eval
+FAIL Python window: result, printed output, blocks over several lines, definitions, errors and history are shown / kept                                                'no new Python window (python_console_last missing)'
+FAIL Python window: unfinished statements are recognised (Enter waits for the rest)                                                                                    EXC AttributeError("module '__main__' has no attribute 'python_
+FAIL Python window: the remote-control listener still gets the 0.9.8.96 window                                                                                         'coot_gui_classic missing'
+SUMMARY 74 / 79
+
+== with build 26 files:
+PASS Cryo-EM > No/Enable Auto-Recontour Map Mode set the mode and print it in the terminal                                                                           
+PASS Scheme: no debug line per Scheme call in the terminal; the Scheme window's own calls are not echoed                                                             
+PASS Python window: result, printed output, blocks over several lines, definitions, errors and history are shown / kept                                              
+PASS Python window: unfinished statements are recognised (Enter waits for the rest)                                                                                  
+PASS Python window: the remote-control listener still gets the 0.9.8.96 window                                                                                       
+SUMMARY 79 / 79
+
+Note: with the new Python window, the Stepped Refine check first failed (accept log [True, False]): an idle callback left by the earlier
+'Stop, then a new Stepped Refine run' check ran inside it. The old Python window pumped GTK events per typed command and so flushed it.
+Shown by: earlier coot_gui.py -> pass; COOT0_CLASSIC_PYTHON_WINDOW=1 -> pass; a stack of each accept_regularizement call (fitting.py idle_func).
+The check now drains pending GTK events first.
+
+== api-docs suite (docs/api matches this Coot):
+PASS docs/api: more than 1600 functions in each language                                        
+PASS docs/api: README, A-Z, one-language-only and the section pages are there                   
+PASS docs/api: every Python name in the reference exists in this Coot                           
+PASS docs/api: every Scheme name in the reference exists in this Coot                           
+PASS docs/api: every Python example is valid Python                                             
+SUMMARY 5 / 5
+
+== cookbook suite (every recipe, Python and Scheme):
+recipes: 85, skipped (not run): 2
+SUMMARY 166 / 166
+PASS lines: 166
+
+== scripting reference: every example tried (tests/run-api-examples.sh, 18 Nov):
+api examples: 1033 ran, 13 gave an error, 35 stopped Coot (no screen), 8 hung, 164 not run automatically; Coot started 141 times

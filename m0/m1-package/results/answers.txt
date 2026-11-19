@@ -1,4 +1,10 @@
 # One line per check: PASS / FAIL / PARTIAL and a few words.  (You can also just tell me in chat.)
+# Round 26 (see TEST-PROTOCOL.md, section HH):
+HH1 Python window: result / print / block / error / history:
+HH2 no debug line in the terminal for Scheme commands:
+HH3 Auto-Recontour entries print the mode:
+HH4 cookbook 6.1 button, 6.3 F5 key, 6.4 map colour:
+HH5 docs readable / useful (what is missing?):
 # Round 25 (section GG): GG1-GG4 confirmed 18 Nov.
 # Round 24 (section FF): FF1-FF3 confirmed 18 Nov.
 # Round 23 (section EE): EE1, EE2 confirmed 17 Nov; EE3 -> round 24.

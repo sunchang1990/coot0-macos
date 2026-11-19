@@ -1,0 +1,41 @@
+diff --git a/python/coot_gui.py b/python/coot_gui.py
+index f46f8d0..7375d09 100644
+--- a/python/coot_gui.py
++++ b/python/coot_gui.py
+@@ -5509,6 +5509,23 @@ def add_module_pdbe():
+    if coot_python.main_menubar():
+       add_module_pdbe_gui()
+ 
++# coot0 (build 26): the two Auto-Recontour entries (Cryo-EM menu) said nothing; now they
++# report the new mode in the terminal and in the status bar.
++def set_auto_recontour_map_and_report(state):
++   set_auto_recontour_map(state)
++   if get_auto_recontour_map():
++      msg = ("Auto-recontour map mode: ON. Maps are contoured again around the new centre "
++             "whenever the view centre moves.")
++   else:
++      msg = ("Auto-recontour map mode: OFF. Maps keep their current contours when the view "
++             "centre moves (turn on again: Cryo-EM > Enable Auto-Recontour Map Mode).")
++   print("INFO:: " + msg + "  [script: set_auto_recontour_map(%d)]" % state)
++   try:
++      add_status_bar_text(msg)
++   except Exception:
++      pass
++   return msg
++
+ def add_module_cryo_em_gui():
+    if coot_python.main_menubar():
+       menu = coot_menubar_menu("Cryo-EM")
+@@ -5576,10 +5593,10 @@ def add_module_cryo_em_gui():
+                                     lambda func: auto_assign_sequence_from_map())
+ 
+       add_simple_coot_menu_menuitem(menu, "No Auto-Recontour Map Mode",
+-                                    lambda func: set_auto_recontour_map(0))
++                                    lambda func: set_auto_recontour_map_and_report(0))
+ 
+       add_simple_coot_menu_menuitem(menu, "Enable Auto-Recontour Map Mode",
+-                                    lambda func: set_auto_recontour_map(1))
++                                    lambda func: set_auto_recontour_map_and_report(1))
+ 
+       add_simple_coot_menu_menuitem(menu, "Interactive Nudge Residues...",
+                                     lambda func: interactive_nudge_func())

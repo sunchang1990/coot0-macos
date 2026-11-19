@@ -6,6 +6,34 @@ applied to the pristine tree by `setup.sh`) or a change of the packaged data / s
 round, `TEST-PROTOCOL.md` has the user-facing explanation and the checks for you (newest round first).  A "build" is one delivered zip.
 "Verified" means a headless test (no window server in the build environment); what only a screen can show is marked "on screen: not verified".
 
+## Build 26  (patches 0042 auto-recontour-report, 0043 quiet-scheme-calls (C++), 0044 python-scripting-window; new `bin/coot-bin`)
+- **First C++ rebuild since build 13** (only for 0043; all 412 files compiled from the patched tree, same compiler and libraries; `lib/` unchanged).
+- Fixed (user, 18 Nov): Coot printed "debug:: g.safe_scheme_command() with command ..." in the terminal for every Scheme call, and the Scheme
+  window's own calls were echoed as `(coot0-console-eval "...")`.  Both are gone; ordinary Scheme commands are still shown as before.
+  `COOT_DEBUG_SCHEME=1` brings the debug line back.
+- New (user, 18 Nov): Cryo-EM > **No Auto-Recontour Map Mode** / **Enable Auto-Recontour Map Mode** said nothing; now they print the new mode
+  in the terminal (with the script command) and in the status bar.
+- New: the **Python scripting window** (Calculate > Scripting > Python...) works like the Scheme window of build 25: command, printed output
+  (before: only in the terminal), result (`=> 'GLU'`), errors with their traceback, Up / Down history, blocks over several lines (a line ending
+  in ":" continues and indents, an empty line runs the block), a hint when Scheme is typed into it.  The 0.9.8.96 window stays as
+  `coot_gui_classic()` (used by the remote-control socket; `COOT0_CLASSIC_PYTHON_WINDOW=1` makes the menu open it).
+- New: **documentation** in `docs/` (also on GitHub): `docs/cookbook/` (85 recipes in 10 topics, Python and Scheme; all run by the new
+  `cookbook` suite) and `docs/api/` (the scripting reference: 1,735 functions, 1,717 in Python and 1,689 in Scheme, each with a concrete example
+  on the test data and the result of trying it; A-Z list; the functions that exist in only one language).  Made by `m0/tools/gen_api_index.py`
+  (SWIG wrappers + headers + the script layers' redefinitions) and `m0/tools/gen_api_docs.py`; `tests/run-api-examples.sh` tries every example
+  (about 75 minutes): 1,033 ran, 13 errors (internal functions or placeholder values), 35 stopped Coot without a window (windows, OpenGL),
+  6 gave no answer within 60 s, 164 not run on purpose (quit, network, external programs, widgets).
+- Found while writing the cookbook (not changed, documented): `set_map_colour` stops Coot when there is no window; `density_score_residue` and
+  `residues_distortions` in the script layers take a residue spec (and the latter needs a refinement map); `all_molecule_ramachandran_region`
+  exists only in Python; `run-python-command` evaluates one Python expression (use `run-python-script` for several lines).
+- Tests: `gui-dialogs` 74 -> 79 (Auto-Recontour messages; no debug line / no echo of the window's calls; the new Python window: results,
+  printed output, blocks, definitions, errors, history; unfinished statements; the classic window kept); build 25 fails the 5 new ones.  The
+  Stepped Refine check now lets GTK finish what earlier checks queued first (the old Python window used to do that by chance).  New suites
+  `api-docs` (5: the reference matches this Coot) and `cookbook` (166: every recipe in both languages).
+- `tests/run-api-examples.sh`: when a call hung, only the helper shell was stopped and Coot kept running (found the next morning: six
+  such Coot processes at full CPU); it now stops Coot itself.
+- On screen: not verified by me (headless only).
+
 ## Build 25  (patch 0041 scheme-scripting-window; Python / Scheme only, `bin/coot-bin` and `lib/` as in build 13)
 - Fixed (user report 18 Nov): **Calculate > Scripting > Scheme...** opened 0.9.8.96's "simple" Scheme window (C++, used when the guile-gtk Scheme
   GUI is not loaded), which said "For now this is a placeholder only! Don't expect anything to happen here!" and threw the result of every command

@@ -27,6 +27,11 @@ for f in TEST-PROTOCOL.md CHANGELOG.md collect-results.sh run-coot.sh install.sh
 # (build 25) README.md too: the user looked for it in the package
 for f in LICENSE LICENSING.md CORRESPONDING_SOURCE.md README.md; do put "$HERE/../$f" "$B/$f"; done
 put "$HERE/m1-package/THIRD_PARTY_LICENSES.md" "$B/THIRD_PARTY_LICENSES.md"
+# (build 26) docs/: cookbook and scripting reference
+if [ -d "$HERE/m1-package/docs" ]; then
+  out=$(rsync -a --itemize-changes "$HERE/m1-package/docs/" "$B/docs/" | wc -l | tr -d ' ')
+  [ "$out" != "0" ] && echo "synced docs/ ($out changes)"
+fi
 if [ -d "$HERE/m1-package/licenses" ]; then
   out=$(rsync -a --delete --itemize-changes "$HERE/m1-package/licenses/" "$B/licenses/" | wc -l | tr -d ' ')
   [ "$out" != "0" ] && echo "synced licenses/ ($out changes)"
