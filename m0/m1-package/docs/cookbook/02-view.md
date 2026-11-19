@@ -1,5 +1,8 @@
 # 2. The view
 
+*Each recipe stands alone and loads its own copy of the test files (run recipe 1.1 once first; with your own data use
+your molecule numbers instead: [How to use a recipe](README.md#how-to-use-a-recipe)).*
+
 These recipes change what you see. Without a window (the automatic test) they run but nothing is drawn.
 
 ### 2.1 Go to a residue

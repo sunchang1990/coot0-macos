@@ -1,4 +1,4 @@
-# cookbook_run.py  (build 26) -- runs every recipe of docs/cookbook/*.md inside Coot, without a window.
+# cookbook_run.py  (build 26; key and refinement-mode checks build 27) -- runs every recipe of docs/cookbook/*.md inside Coot, without a window.
 # A recipe is a "### " heading followed by a ```python block and a ```scheme block.  Optional hidden checks:
 #   <!-- check-py: EXPRESSION -->    evaluated after the Python block, must be true
 #   <!-- check-scm: EXPRESSION -->   evaluated after the Scheme block, must give #t
@@ -50,6 +50,13 @@ def fresh():
 def coot_utils_model_list():
     return [i for i in range(coot.graphics_n_molecules()) if coot.is_valid_model_molecule(i) or coot.is_valid_map_molecule(i)]
 
+# (build 27) keys that Coot's own key handler takes before any script binding sees them (globjects.cc): a recipe must not
+# bind these (build 26 bound F5, which opens Model/Fit/Refine instead)
+TAKEN_KEYS = set("F5 F6 F7 F8 i u d f n m l space Return Escape period comma minus plus equal Left Right Up Down".split()) \
+    | set("0123456789") | {"Control_" + c for c in "grszy"}
+def bound_keys(blocks):
+    return re.findall(r'add[_-]key[_-]binding\s*\(?\s*"[^"]*"\s*,?\s*"([^"]+)"', "\n".join(blocks))
+
 res = []
 n_rec = 0
 for fname, title, py, scm, cpy, cscm, nr in recipes():
@@ -62,6 +69,9 @@ for fname, title, py, scm, cpy, cscm, nr in recipes():
         if not blocks:
             res.append(("FAIL", "%s [%s]" % (name, lang), "no %s block" % lang)); continue
         fresh(); out = io.StringIO(); why = ""
+        taken = [k for k in bound_keys(blocks) if k in TAKEN_KEYS]
+        if taken:
+            res.append(("FAIL", "%s [%s]" % (name, lang), "binds %s, a key Coot itself uses (the binding never runs)" % taken)); continue
         try:
             with contextlib.redirect_stdout(out):
                 if lang == "python":
@@ -78,6 +88,13 @@ for fname, title, py, scm, cpy, cscm, nr in recipes():
                             if st != "ok" or val.strip() != "#t": why = "check failed: %s -> %s" % (c, val.strip()[:200]); break
         except BaseException as e:
             why = "%s: %s | %s" % (type(e).__name__, str(e)[:200], traceback.format_exc()[-300:].replace("\n", " | "))
+        # (build 27) a recipe must not leave "immediate replacement" on: afterwards every refinement made with the mouse
+        # gets no Accept/Reject window and its moving atoms stay on the screen (user report 19 Nov)
+        try:
+            if not why and coot.refinement_immediate_replacement_state() != 0:
+                why = "leaves set_refinement_immediate_replacement on (later refinements get no Accept window)"
+            coot.set_refinement_immediate_replacement(0)
+        except Exception: pass
         try:
             with contextlib.redirect_stdout(io.StringIO()):
                 coot.clear_up_moving_atoms()

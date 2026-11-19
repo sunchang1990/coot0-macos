@@ -1,5 +1,8 @@
 # 8. Validation
 
+*Each recipe stands alone and loads its own copy of the test files (run recipe 1.1 once first; with your own data use
+your molecule numbers instead: [How to use a recipe](README.md#how-to-use-a-recipe)).*
+
 ### 8.1 Ramachandran: residues outside the allowed regions
 
 `all_molecule_ramachandran_region` gives every residue with a region number: 2 = preferred, 1 = allowed, 0 = outlier.

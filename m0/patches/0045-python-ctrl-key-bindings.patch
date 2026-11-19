@@ -1,0 +1,34 @@
+diff --git a/python/coot_utils.py b/python/coot_utils.py
+index 0a0ae35..d8d3ece 100644
+--- a/python/coot_utils.py
++++ b/python/coot_utils.py
+@@ -2056,8 +2056,28 @@ def add_key_binding(name, key, thunk):
+ 
+ # general key press hook, not for public use!!
+ #
+-def graphics_general_key_press_hook(key, control_flag = 0):
++def _coot0_control_pressed():
++    # (coot0) With Guile built in, Coot sends unhandled keys to the Scheme hook, which passes only the key on to this
++    # function: the Ctrl state was lost and "Control_..." bindings made in Python never ran.  Ask GDK instead.
++    try:
++        import ctypes
++        g = ctypes.PyDLL(None)
++        g.gdk_display_get_default.restype = ctypes.c_void_p
++        d = g.gdk_display_get_default()
++        if not d:
++            return 0
++        mask = ctypes.c_uint(0)
++        g.gdk_display_get_pointer.argtypes = [ctypes.c_void_p] * 4 + [ctypes.POINTER(ctypes.c_uint)]
++        g.gdk_display_get_pointer.restype = None
++        g.gdk_display_get_pointer(d, None, None, None, ctypes.byref(mask))
++        return 1 if (mask.value & 4) else 0     # GDK_CONTROL_MASK
++    except Exception:
++        return 0
++
++def graphics_general_key_press_hook(key, control_flag = None):
+     global key_bindings
++    if control_flag is None:
++        control_flag = _coot0_control_pressed()
+     # print "graphics_general_key_press_hook(): Key %s was pressed" %key
+     if control_flag:
+         codes = [elem[0] for elem in key_bindings if "Control_" in elem[1]]

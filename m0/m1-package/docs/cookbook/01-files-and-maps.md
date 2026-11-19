@@ -1,5 +1,8 @@
 # 1. Files and maps
 
+*Each recipe stands alone and loads its own copy of the test files (run recipe 1.1 once first; with your own data use
+your molecule numbers instead: [How to use a recipe](README.md#how-to-use-a-recipe)).*
+
 Every recipe works on the test files that come with coot0 (`test-data/` in the package): `tutorial-modern.pdb`
 (chains A and B, residues A1-A93 and B1-B96, space group P 2<sub>1</sub>2<sub>1</sub>2<sub>1</sub>) and
 `rnasa-1.8-all_refmac1.mtz` (map coefficients `FWT`/`PHWT` and difference map `DELFWT`/`PHDELWT`).

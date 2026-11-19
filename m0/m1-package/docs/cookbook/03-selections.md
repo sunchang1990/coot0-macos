@@ -1,5 +1,8 @@
 # 3. Selections and information
 
+*Each recipe stands alone and loads its own copy of the test files (run recipe 1.1 once first; with your own data use
+your molecule numbers instead: [How to use a recipe](README.md#how-to-use-a-recipe)).*
+
 A residue is named by a *residue spec*: chain, residue number and insertion code, for example `["A", 41, ""]`
 (Python) or `(list "A" 41 "")` (Scheme). Some functions return specs with a leading `True` / `#t`:
 `[True, "A", 41, ""]`. Atom selections use the MMDB syntax `"//A/30-45"` (chain A, residues 30 to 45),

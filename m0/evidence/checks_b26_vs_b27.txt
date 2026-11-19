@@ -1,0 +1,36 @@
+Build 27 regression tests, run headless (tools/dev_run.sh) in the same bundle
+
+== tests/cookbook_run.py (new checks: no recipe binds a key Coot itself uses; no recipe leaves immediate replacement on)
+-- with the build 26 cookbook:
+FAIL 04-refinement: 4.1 Refine a range of residues against the map [python]                                         leaves set_refinement_immediate_replacement on (later refinements get no Accept wind
+FAIL 04-refinement: 4.1 Refine a range of residues against the map [scheme]                                         leaves set_refinement_immediate_replacement on (later refinements get no Accept wind
+FAIL 04-refinement: 4.2 Refine a list of residues (they need not be next to each other) [python]                    leaves set_refinement_immediate_replacement on (later refinements get no Accept wind
+FAIL 04-refinement: 4.2 Refine a list of residues (they need not be next to each other) [scheme]                    leaves set_refinement_immediate_replacement on (later refinements get no Accept wind
+FAIL 04-refinement: 4.3 Sphere refine: a residue and everything around it [python]                                  leaves set_refinement_immediate_replacement on (later refinements get no Accept wind
+FAIL 04-refinement: 4.3 Sphere refine: a residue and everything around it [scheme]                                  leaves set_refinement_immediate_replacement on (later refinements get no Accept wind
+FAIL 04-refinement: 4.4 Geometry only (regularize, no map) [python]                                                 leaves set_refinement_immediate_replacement on (later refinements get no Accept wind
+FAIL 04-refinement: 4.4 Geometry only (regularize, no map) [scheme]                                                 leaves set_refinement_immediate_replacement on (later refinements get no Accept wind
+FAIL 04-refinement: 4.6 Rigid-body fit of a range [python]                                                          leaves set_refinement_immediate_replacement on (later refinements get no Accept wind
+FAIL 04-refinement: 4.6 Rigid-body fit of a range [scheme]                                                          leaves set_refinement_immediate_replacement on (later refinements get no Accept wind
+FAIL 04-refinement: 4.9 Refine every chain in pieces (a whole model) [python]                                       leaves set_refinement_immediate_replacement on (later refinements get no Accept wind
+FAIL 04-refinement: 4.9 Refine every chain in pieces (a whole model) [scheme]                                       leaves set_refinement_immediate_replacement on (later refinements get no Accept wind
+FAIL 06-customize: 6.3 A key that runs your code [python]                                                           binds ['F5'], a key Coot itself uses (the binding never runs)
+FAIL 06-customize: 6.3 A key that runs your code [scheme]                                                           binds ['F5'], a key Coot itself uses (the binding never runs)
+FAIL 06-customize: 6.7 Preferences you can set from a script [python]                                               leaves set_refinement_immediate_replacement on (later refinements get no Accept wind
+FAIL 06-customize: 6.7 Preferences you can set from a script [scheme]                                               leaves set_refinement_immediate_replacement on (later refinements get no Accept wind
+FAIL 07-automation: 7.1 Run a script without the window (batch) [python]                                            leaves set_refinement_immediate_replacement on (later refinements get no Accept wind
+FAIL 07-automation: 7.1 Run a script without the window (batch) [scheme]                                            leaves set_refinement_immediate_replacement on (later refinements get no Accept wind
+SUMMARY 148 / 166
+-- with the build 27 cookbook:
+SUMMARY 166 / 166
+
+== tests/gui_python_dialogs.py (new check 80: Python key bindings, also Ctrl, run through Scheme's key hook)
+-- with the build 26 coot_utils.py:
+FAIL key bindings made in Python run, also with Ctrl (keys reach Python through Scheme's key hook)                                                                     "a Ctrl key bound in Python did not run through Scheme's key ho
+SUMMARY 79 / 80
+-- with the build 27 coot_utils.py (patch 0045):
+PASS key bindings made in Python run, also with Ctrl (keys reach Python through Scheme's key hook)                      
+SUMMARY 80 / 80
+
+The Ctrl test sets _coot0_control_pressed to 1 (as if Ctrl were held); the real GDK query is only checked to answer 0 or 1 headless.
+Whether GDK reports Ctrl on screen on macOS is not verified (round 27 check II2).

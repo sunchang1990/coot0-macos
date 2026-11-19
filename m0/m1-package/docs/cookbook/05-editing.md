@@ -1,5 +1,8 @@
 # 5. Editing a model
 
+*Each recipe stands alone and loads its own copy of the test files (run recipe 1.1 once first; with your own data use
+your molecule numbers instead: [How to use a recipe](README.md#how-to-use-a-recipe)).*
+
 Every edit can be undone with Edit > Undo, or `apply_undo()` from a script (see 5.12).
 Save your model first (recipe 1.7).
 

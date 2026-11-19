@@ -1,5 +1,8 @@
 # 7. Automatic workflows: scripts, loops, hooks
 
+*Each recipe stands alone and loads its own copy of the test files (run recipe 1.1 once first; with your own data use
+your molecule numbers instead: [How to use a recipe](README.md#how-to-use-a-recipe)).*
+
 ### 7.1 Run a script without the window (batch)
 
 Write the commands into a file and give it to coot0 with `--script`. `--no-graphics` runs without a window;
@@ -21,6 +24,7 @@ set_refinement_immediate_replacement(1)
 refine_zone(imol, "A", 40, 45, "")
 accept_regularizement()
 write_pdb_file(imol, "refined.pdb")
+set_refinement_immediate_replacement(0)      # back to normal: the Accept window again
 # coot_real_exit(0)        <- at the end of a batch script
 ```
 
@@ -32,6 +36,7 @@ write_pdb_file(imol, "refined.pdb")
 (refine-zone imol "A" 40 45 "")
 (accept-regularizement)
 (write-pdb-file imol "refined.pdb")
+(set-refinement-immediate-replacement 0)   ; back to normal
 ; (coot-real-exit 0)       <- at the end of a batch script
 ```
 <!-- check-py: os.path.getsize("refined.pdb") > 100000 -->

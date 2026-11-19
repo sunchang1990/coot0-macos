@@ -1,7 +1,14 @@
 # 4. Refinement
 
+*Each recipe stands alone and loads its own copy of the test files (run recipe 1.1 once first; with your own data use
+your molecule numbers instead: [How to use a recipe](README.md#how-to-use-a-recipe)).*
+
 Refinement needs a map (recipe 1.5 chooses it). From a script you usually want the result accepted at once,
-without the "Accept Refinement?" window: `set_refinement_immediate_replacement(1)` and `accept_regularizement()`.
+without the "Accept Refinement?" window: `set_refinement_immediate_replacement(1)`, then the refinement, then
+`accept_regularizement()`. **Switch it off again at the end** with `set_refinement_immediate_replacement(0)`, as every
+recipe here does: while it is on, refinements you start with the mouse or a key get no Accept window either, and their
+moving atoms stay on the screen. (If that happened: type `accept_regularizement()` or `clear_up_moving_atoms()`, then
+`set_refinement_immediate_replacement(0)`.)
 
 ### 4.1 Refine a range of residues against the map
 
@@ -13,6 +20,7 @@ set_refinement_immediate_replacement(1)
 refine_zone(imol, "A", 40, 45, "")          # chain A, residues 40-45, no alt conf
 accept_regularizement()
 print("fit of A41 to the map: %.3f" % density_score_residue(imol, ["A", 41, ""], imol_map))
+set_refinement_immediate_replacement(0)      # back to normal: the Accept window again
 ```
 
 ```scheme
@@ -23,6 +31,7 @@ print("fit of A41 to the map: %.3f" % density_score_residue(imol, ["A", 41, ""],
 (refine-zone imol "A" 40 45 "")
 (accept-regularizement)
 (format #t "fit of A41 to the map: ~a~%" (density-score-residue imol (list "A" 41 "") imol-map))
+(set-refinement-immediate-replacement 0)   ; back to normal
 ```
 <!-- check-py: density_score_residue(imol, ["A", 41, ""], imol_map) > 0 -->
 <!-- check-scm: (> (density-score-residue imol (list "A" 41 "") imol-map) 0) -->
@@ -36,6 +45,7 @@ set_imol_refinement_map(imol_map)
 set_refinement_immediate_replacement(1)
 refine_residues(imol, [["A", 41, ""], ["A", 42, ""], ["A", 85, ""]])
 accept_regularizement()
+set_refinement_immediate_replacement(0)      # back to normal: the Accept window again
 ```
 
 ```scheme
@@ -45,6 +55,7 @@ accept_regularizement()
 (set-refinement-immediate-replacement 1)
 (refine-residues imol (list (list "A" 41 "") (list "A" 42 "") (list "A" 85 "")))
 (accept-regularizement)
+(set-refinement-immediate-replacement 0)   ; back to normal
 ```
 
 ### 4.3 Sphere refine: a residue and everything around it
@@ -59,6 +70,7 @@ residues = [centre] + residues_near_residue(imol, centre, 4.0)
 refine_residues(imol, residues)
 accept_regularizement()
 print("refined", len(residues), "residues")
+set_refinement_immediate_replacement(0)      # back to normal: the Accept window again
 ```
 
 ```scheme
@@ -71,6 +83,7 @@ print("refined", len(residues), "residues")
 (refine-residues imol residues)
 (accept-regularizement)
 (format #t "refined ~a residues~%" (length residues))
+(set-refinement-immediate-replacement 0)   ; back to normal
 ```
 <!-- check-py: len(residues) > 4 -->
 <!-- check-scm: (> (length residues) 4) -->
@@ -82,6 +95,7 @@ imol = read_pdb("tutorial-modern.pdb")
 set_refinement_immediate_replacement(1)
 regularize_zone(imol, "A", 40, 45, "")
 accept_regularizement()
+set_refinement_immediate_replacement(0)      # back to normal: the Accept window again
 ```
 
 ```scheme
@@ -89,6 +103,7 @@ accept_regularizement()
 (set-refinement-immediate-replacement 1)
 (regularize-zone imol "A" 40 45 "")
 (accept-regularizement)
+(set-refinement-immediate-replacement 0)   ; back to normal
 ```
 
 ### 4.5 Map weight and restraints
@@ -122,6 +137,7 @@ set_imol_refinement_map(imol_map)
 set_refinement_immediate_replacement(1)
 rigid_body_refine_zone(30, 45, "A", imol)
 accept_regularizement()
+set_refinement_immediate_replacement(0)      # back to normal: the Accept window again
 ```
 
 ```scheme
@@ -131,6 +147,7 @@ accept_regularizement()
 (set-refinement-immediate-replacement 1)
 (rigid-body-refine-zone 30 45 "A" imol)
 (accept-regularizement)
+(set-refinement-immediate-replacement 0)   ; back to normal
 ```
 
 ### 4.7 Best rotamer for a side chain
@@ -189,6 +206,7 @@ for ch in chain_ids(imol):
         refine_zone(imol, ch, start, min(start + 5, last), "")
         accept_regularizement()
 print("done")
+set_refinement_immediate_replacement(0)      # back to normal: the Accept window again
 ```
 
 ```scheme
@@ -206,4 +224,5 @@ print("done")
                    (accept-regularizement)
                    (loop (+ start 5)))))))
   (chain-ids imol))
+(set-refinement-immediate-replacement 0)   ; back to normal
 ```

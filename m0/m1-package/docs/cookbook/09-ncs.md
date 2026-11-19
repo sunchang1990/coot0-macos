@@ -1,5 +1,8 @@
 # 9. NCS (non-crystallographic symmetry)
 
+*Each recipe stands alone and loads its own copy of the test files (run recipe 1.1 once first; with your own data use
+your molecule numbers instead: [How to use a recipe](README.md#how-to-use-a-recipe)).*
+
 Chains A and B of the test model are two copies of the same protein, so Coot finds NCS between them by itself.
 
 ### 9.1 Which chains are NCS copies

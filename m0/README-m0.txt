@@ -471,3 +471,14 @@ Round 21: Refine/Improve Ramachandran Plot (try peptide flips) -> build 21  (pat
   A 20/43/60/85 put back (O 0.04-0.15 A), A 30/50/70/90 kept; A 60 by density (+25%).  Tests: gui-scripts 16, gui-dialogs 53; b20 15/16, 48/53.
   Fill Partial Residues (user question): works headless (Arg A 40 side chain / + CB removed -> 11 atoms, with and without map); a residue missing
   N/CA/C (tutorial-modern Cys A 72) is listed but not filled (mutate needs the main chain).  User's case pending details (CC5).
+
+Round 27: cookbook fixes, Ctrl key bindings from Python -> build 27  (patch 0045 python-ctrl-key-bindings; Python/docs only)
+  User 19 Nov: HH1-HH3 ok; HH4 6.3 F5 never ran (globjects.cc key handler takes F5-F8, digits, arrows, d f i l m n u, Space/Return/Escape,
+  Ctrl-G/R/S/Y/Z before any binding), 6.4 make_and_draw_map -1 (test files not in cwd: recipe 1.1 not run), recipe 4.1 left
+  set_refinement_immediate_replacement(1) -> later sphere refine had no Accept window, moving atoms stayed (log: intermediate atoms, no accept).
+  Key path with USE_GUILE: C++ -> (graphics-general-key-press-hook key) -> run-python-command graphics_general_key_press_hook(key): no control
+  flag, so Python "Control_" bindings never matched.  coot_utils.py: control_flag default None -> _coot0_control_pressed() (ctypes
+  gdk_display_get_pointer mask & GDK_CONTROL_MASK; 0 without a display).  cookbook_run.py: TAKEN_KEYS check + refinement_immediate_replacement_state()
+  must be 0 after each recipe (reset afterwards).  Docs: restore line in 8 recipes x 2 languages; 6.3 key o; 6.7/6.8 no immediate replacement;
+  "each recipe stands alone" in README + every chapter.  run-api-examples.sh: killtree (build 26 delivery morning).
+

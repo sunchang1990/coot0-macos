@@ -1,5 +1,8 @@
 # 6. Customize Coot: toolbar, menus, keys, colours, preferences
 
+*Each recipe stands alone and loads its own copy of the test files (run recipe 1.1 once first; with your own data use
+your molecule numbers instead: [How to use a recipe](README.md#how-to-use-a-recipe)).*
+
 Put the lines you want every time into a startup file (recipe 6.8). In coot0 the windows, menus and toolbar
 are made by Python, so buttons and menus are added with Python functions; from Scheme you call them with
 `run-python-script` (the Scheme GUI library of the original Coot is not part of coot0).
@@ -59,8 +62,7 @@ add_simple_coot_menu_menuitem(menu, 'White background', lambda item: set_backgro
 
 ### 6.3 A key that runs your code
 
-Press `F5` in the graphics window to refine 3 residues on each side of the centre.
-(Use `"Control_r"` for Ctrl-R. Keys that Coot already uses cannot be taken.)
+Press `o` in the graphics window to refine 3 residues on each side of the centre.
 
 ```python
 def refine_triple():
@@ -68,31 +70,42 @@ def refine_triple():
     if ar:
         refine_zone(ar[0], ar[1], ar[2] - 3, ar[2] + 3, ar[5])
 
-add_key_binding("Refine 7 residues", "F5", refine_triple)
+add_key_binding("Refine 7 residues", "o", refine_triple)
 ```
 
 ```scheme
-(add-key-binding "Refine 7 residues" "F5"
+(add-key-binding "Refine 7 residues" "o"
   (lambda ()
     (let ((ar (active-residue)))
       (if ar (refine-zone (list-ref ar 0) (list-ref ar 1) (- (list-ref ar 2) 3) (+ (list-ref ar 2) 3) (list-ref ar 5))))))
 ```
 <!-- check-py: "Refine 7 residues" in [k[2] for k in key_bindings] -->
-<!-- check-scm: (if (assoc (key-sym-code "F5") *key-bindings*) #t #f) -->
+<!-- check-scm: (if (assoc (key-sym-code "o") *key-bindings*) #t #f) -->
+
+Keys Coot already uses cannot be taken: the binding is made but never runs. Coot's own keys include F5 (Model/Fit/Refine),
+F6 (Go To Atom), F7 (Display Manager), F8 (screenshot), the digits, arrows, `.` `,` `-` `+` `=`, Space, Return, Escape,
+`d f i l m n u`, and Ctrl with G, R, S, Y, Z. Keys from Calculate > ... > Install Template Keybindings (if you installed them)
+are taken as well. Free letters include `o`, `p` and `v`.
+
+- **Ctrl keys** (Python): `add_key_binding("Refine 7 residues", "Control_t", refine_triple)` for Ctrl-T (build 27 or later).
+- **Function keys on a Mac**: F1-F12 control the Mac (brightness, sound, ...); press `fn` with them to send F9 etc. to Coot,
+  or switch it in System Settings > Keyboard > Keyboard Shortcuts > Function Keys.
 
 ### 6.4 Colours: map, background, symmetry
 
-Red, green, blue from 0 to 1. The map colour can only be set while Coot has its window (it is not run in the automatic test).
+Red, green, blue from 0 to 1. Like every recipe, this one loads what it needs (here the test map, so it has a map to
+colour). For a map you already have, use its number from the Display Manager instead, e.g. `imol_map = 1`.
+The map colour can only be set while Coot has its window (it is not run in the automatic test).
 
 ```python
-imol_map = make_and_draw_map("rnasa-1.8-all_refmac1.mtz", "FWT", "PHWT", "", 0, 0)
+imol_map = make_and_draw_map("rnasa-1.8-all_refmac1.mtz", "FWT", "PHWT", "", 0, 0)   # or: imol_map = 1
 set_map_colour(imol_map, 0.3, 0.6, 1.0)     # light blue map
 set_background_colour(1.0, 1.0, 1.0)        # white background
 set_symmetry_colour(0.8, 0.8, 0.2)          # yellow symmetry copies
 ```
 
 ```scheme
-(define imol-map (make-and-draw-map "rnasa-1.8-all_refmac1.mtz" "FWT" "PHWT" "" 0 0))
+(define imol-map (make-and-draw-map "rnasa-1.8-all_refmac1.mtz" "FWT" "PHWT" "" 0 0))   ; or: (define imol-map 1)
 (set-map-colour imol-map 0.3 0.6 1.0)
 (set-background-colour 1.0 1.0 1.0)
 (set-symmetry-colour 0.8 0.8 0.2)
@@ -132,9 +145,10 @@ info_dialog("Chain A: 93 residues checked, nothing found.")
 ### 6.7 Preferences you can set from a script
 
 A few that people often change (all are remembered only for the session unless they are in a startup file):
+(Not `set_refinement_immediate_replacement(1)`: as a lasting setting it takes away the Accept window of every
+refinement you make with the mouse; it belongs in scripts, switched off again at the end, chapter 4.)
 
 ```python
-set_refinement_immediate_replacement(1)    # accept refinements without the "Accept?" window
 set_map_radius(12)                          # draw maps 12 A around the centre
 set_auto_recontour_map(1)                   # re-contour maps when the centre moves
 set_smooth_scroll_flag(0)                   # jump instead of slide when going to an atom
@@ -143,15 +157,14 @@ set_add_terminal_residue_do_post_refine(1)  # refine new terminal residues
 ```
 
 ```scheme
-(set-refinement-immediate-replacement 1)
 (set-map-radius 12)
 (set-auto-recontour-map 1)
 (set-smooth-scroll-flag 0)
 (set-default-bond-thickness 4)
 (set-add-terminal-residue-do-post-refine 1)
 ```
-<!-- check-py: refinement_immediate_replacement_state() == 1 and get_auto_recontour_map() == 1 -->
-<!-- check-scm: (= (refinement-immediate-replacement-state) 1) -->
+<!-- check-py: get_auto_recontour_map() == 1 -->
+<!-- check-scm: (= (get-auto-recontour-map) 1) -->
 
 ### 6.8 Run your settings every time Coot starts
 
@@ -164,7 +177,7 @@ import os
 prefs = os.path.join(os.environ["HOME"], ".coot-preferences")
 os.makedirs(prefs, exist_ok=True)
 with open(os.path.join(prefs, "my-settings.py"), "w") as f:
-    f.write("set_refinement_immediate_replacement(1)\n")
+    f.write("set_default_bond_thickness(4)\n")
     f.write("set_map_radius(12)\n")
 print("written to", prefs)
 ```
@@ -174,7 +187,7 @@ print("written to", prefs)
   (if (not (file-exists? prefs)) (mkdir prefs))
   (call-with-output-file (string-append prefs "/my-settings.scm")
     (lambda (port)
-      (display "(set-refinement-immediate-replacement 1)\n" port)
+      (display "(set-default-bond-thickness 4)\n" port)
       (display "(set-map-radius 12)\n" port)))
   (format #t "written to ~a~%" prefs))
 ```

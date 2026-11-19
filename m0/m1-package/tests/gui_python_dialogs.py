@@ -995,6 +995,27 @@ check("Python window: unfinished statements are recognised (Enter waits for the 
 check("Python window: the remote-control listener still gets the 0.9.8.96 window",
       lambda: True if callable(getattr(_m, "coot_gui_classic", None)) else "coot_gui_classic missing")
 
+# (build 27) keys Coot does not use itself go C++ -> Scheme's graphics-general-key-press-hook -> Python's hook; the Scheme hook
+# passes only the key, so Python "Control_..." bindings never ran (user report 19 Nov: cookbook 6.3 suggested Ctrl keys)
+def key_bindings_reach_python():
+    fired = []
+    with contextlib.redirect_stdout(io.StringIO()):
+        g["add_key_binding"]("coot0 test plain key", "o", lambda: fired.append("o"))
+        g["add_key_binding"]("coot0 test ctrl key", "Control_t", lambda: fired.append("ctrl-t"))
+        coot.run_scheme_command("(graphics-general-key-press-hook %d)" % g["decode_key"]("o"))
+    if fired != ["o"]: return "a plain key bound in Python did not run: %r" % fired
+    real = g.get("_coot0_control_pressed")
+    if real is not None and real() not in (0, 1): return "_coot0_control_pressed() gave %r" % real()
+    g["_coot0_control_pressed"] = lambda: 1          # as if Ctrl were held down
+    try:
+        with contextlib.redirect_stdout(io.StringIO()):
+            coot.run_scheme_command("(graphics-general-key-press-hook %d)" % g["decode_key"]("t"))
+    finally:
+        if real is not None: g["_coot0_control_pressed"] = real
+        else: g.pop("_coot0_control_pressed", None)
+    return True if fired == ["o", "ctrl-t"] else "a Ctrl key bound in Python did not run through Scheme's key hook: %r" % fired
+check("key bindings made in Python run, also with Ctrl (keys reach Python through Scheme's key hook)", key_bindings_reach_python)
+
 check("no exception in any GTK signal handler", lambda: True if not _c.CALLBACK_ERRORS else [e[1][-300:] for e in _c.CALLBACK_ERRORS][:2])
 w = max(len(r[0]) for r in res)
 for n, ok, v in res: print(("PASS " if ok else "FAIL ") + n.ljust(w) + (("  " + v) if v else ""))

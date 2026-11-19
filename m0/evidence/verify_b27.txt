@@ -1,0 +1,45 @@
+Build 27 tarball verification (19 Nov 2026), coot0-0.9.8.96-b27-macos-arm64.tar.gz
+a92a1a8b3a14c47fa217c647108ccc576e72dc5cbe25426617543748c76ba0b0
+unpacked into a folder with a space; env -i, private HOME
+differs from the build 26 tarball in: CHANGELOG, TEST-PROTOCOL, VERSION, results/answers.txt, docs/cookbook/*, share/coot/python/coot_utils.py,
+tests/cookbook_run.py, tests/gui_python_dialogs.py, tests/run-api-examples.sh (diff -rq); bin/ and lib/ unchanged
+
+python-api                 SUMMARY 19 / 19
+scheme-api                 SUMMARY 27 / 27
+data-and-maps              SUMMARY 39 / 39
+ondemand-read              SUMMARY 3 / 3
+refine-zone                SUMMARY 7 / 7
+process-helpers            SUMMARY 10 / 10
+api-docs                   SUMMARY 5 / 5
+bundle-python              SUMMARY 19 / 19
+bundle-scheme              SUMMARY 6 / 6
+rdkit-python               SUMMARY 10 / 10
+rdkit-scheme               SUMMARY 3 / 3
+gtk2compat                 SUMMARY 12 / 12
+gui-scripts                SUMMARY 16 / 16
+gui-dialogs                SUMMARY 80 / 80
+gui-glyco                  SUMMARY 14 / 14
+gui-toolbar                SUMMARY 13 / 13
+gui-rcrane                 SUMMARY 21 / 21
+refmac-run                 SUMMARY 11 / 11
+cookbook                   SUMMARY 166 / 166
+installer                  SUMMARY 26 / 26
+startup-dictionaries       SUMMARY 1 / 1
+total: 508 checks
+
+GUI sweep: 249 items ok, 0 items with errors, 0 items without a handler, 6 items whose activation killed the headless process (OpenGL or screen needed; started but not completed, listed below, checked by the GUI audit), 0 dialog buttons with errors
+  SWEEP 21 | Edit > Settings... > Python: Install Template Keybindings button '   X   Edit Chi Angles' | CRASH (process died: OpenGL call without a graphics context, or hang)
+  SWEEP 36 | Calculate > Map Tools... > Brighten Maps | CRASH (process died: OpenGL call without a graphics context, or hang)
+  SWEEP 108 | Draw > Representation Tools... > Ball & Stick... button '  OK  ' | CRASH (process died: OpenGL call without a graphics context, or hang)
+  SWEEP 117 | Draw > Representation Tools... > Highlight Interesting Site (here)... | CRASH (process died: OpenGL call without a graphics context, or hang)
+  SWEEP 151 | Ligand > Find Ligands... | CRASH (process died: OpenGL call without a graphics context, or hang)
+  SWEEP 192 | Cryo-EM > Align and Mutate using ClustalW2 | CRASH (process died: OpenGL call without a graphics context, or hang)
+  Items 21 (Edit Chi Angles) and 192 (ClustalW2) crash headless in some runs and not others (build 25 and 26 runs too); build 27 does not
+  touch them (only coot_utils.py key hook + docs + tests changed).
+
+Mach-O files checked: 211 | highest minos: 11.0 | dangling symlinks: 0
+RESULT: OK
+
+Patch series 0001-0045 rebuilt from the pristine tree: IDENTICAL to m0/coot-src (diff -rq, no .git/__pycache__).
+Regression tests b26 vs b27: evidence/checks_b26_vs_b27.txt (cookbook 148/166 -> 166/166, gui-dialogs 79/80 -> 80/80).
+Nothing of build 27 has been seen on a screen yet (round 27 checks II1-II4).

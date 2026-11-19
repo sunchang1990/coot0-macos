@@ -1,3 +1,34 @@
+# Coot 0.9.8.96 on Apple Silicon: test round 27 (build 27 = build 26 + cookbook fixes + Ctrl key bindings from Python)
+
+**From you** (19 Nov): HH1, HH2, HH3 pass; HH4: 6.1 ok, 6.3 F5 did nothing (fn+F5 opened Model/Fit/Refine), 6.4 did not load the map and
+"changed another map"; HH5 useful, but the recipes repeat the loading lines (following them in order loads many copies), and after recipe 4.1
+the next refinement had no Accept window and the view stayed in a strange state.
+
+1. **F5 belongs to Coot** (Model/Fit/Refine); a binding of a key Coot uses is made but never runs. Recipe 6.3 now uses `o` and lists Coot's own
+   keys; on a Mac, F-keys need `fn`. Its old tip `Control_r` is Coot's Ctrl-R (rock) and is gone too.
+2. **Ctrl keys from Python now work** (they never did in coot0: the key reached Python without the Ctrl state). Not seen on a screen yet.
+3. **The refinement recipes switched off the Accept window and left it off** (`set_refinement_immediate_replacement(1)`). Then your sphere
+   refine had nothing to accept it, and its moving atoms stayed on the screen. Every recipe now switches it back with
+   `set_refinement_immediate_replacement(0)`; to get out of that state in an open Coot: `accept_regularizement()` (or `clear_up_moving_atoms()`),
+   then `set_refinement_immediate_replacement(0)`.
+4. **6.4** could not find the test map because recipe 1.1 (which copies the test files) had not run: `make_and_draw_map` gave -1 and
+   `set_map_colour(-1, ...)` did nothing; what you saw change was the white background from the same recipe. The cookbook now says at the top
+   of every chapter that each recipe stands alone, to run 1.1 first, and how to use your own model and map (`imol = 0`, `imol_map = 1`).
+5. "Refine here" (6.1) is like Coot's Sphere Refine: the residue at the centre plus every residue within 4 A (Coot's own uses 4.5 A and also
+   handles alternate conformations).
+
+**On screen: not verified by me** (headless only). **New tests**: `cookbook` (no recipe binds a key Coot uses; none leaves immediate
+replacement on; the build 26 cookbook fails 18 of 166), `gui-dialogs` 79 -> 80 (build 26 fails the new one). Evidence: `evidence/checks_b26_vs_b27.txt`.
+
+## II. Round 27 checks (about 10 minutes)
+
+| # | Do | Expected |
+|---|---|---|
+| II1 | With a model and map loaded: paste the Python of recipe 6.3 into the Python window, close it, click in the graphics window, press `o` near a residue. | The 7 residues around the centre refine (Accept window as usual). |
+| II2 | Python window: `add_key_binding("Ctrl test", "Control_t", lambda: add_status_bar_text("Ctrl-T works"))`; then Ctrl-T in the graphics window. Then plain `t`. | Ctrl-T: "Ctrl-T works" in the status bar. Plain `t`: nothing from this binding. |
+| II3 | Run recipe 4.1 (after 1.1), then sphere refine (R key or toolbar) somewhere. | The usual Accept window appears; the view is normal after Accept. |
+| II4 | Read the top of `docs/cookbook/README.md` ("How to use a recipe") and one chapter's first lines. | Clear that recipes stand alone and how to use your own data? |
+
 # Coot 0.9.8.96 on Apple Silicon: test round 26 (build 26 = build 25 + a new Python window, a quiet terminal, the scripting documentation)
 
 **From you** (18 Nov): GG1-GG4 confirmed (you liked the new Scheme window); Cryo-EM > Align and Mutate using ClustalW2 opens fine on screen. Asked for: the Auto-Recontour entries to say something in the terminal; the debug line for each Scheme command to go; the documentation of the functions and the cookbook.

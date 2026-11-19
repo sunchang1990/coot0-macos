@@ -11,9 +11,20 @@ marked so (6.4 and 7.6); they are not run by the test.
 - **Save it in a file** (`my-recipe.py` / `my-recipe.scm`) and open it with Calculate > Run Script...; or
 - **Run it without a window**: `coot0 --no-graphics --script my-recipe.py` (recipe 7.1).
 
+**Each recipe stands alone.** It loads the files it needs itself, so you can run the recipes in any order; but
+running several in a row loads several copies of the model and the map (close them with File > Close Molecule).
+They are examples to copy from, not one tutorial to run from start to end.
+
 The recipes read the test files `tutorial-modern.pdb` and `rnasa-1.8-all_refmac1.mtz` from the folder Coot works
-in; recipe 1.1 copies them there. Replace them with your own files (full paths work everywhere). Molecule numbers
-are kept in variables (`imol`, `imol_map`): Coot gives every new molecule the next free number.
+in; **run recipe 1.1 once first**, it copies them there (without them `read_pdb` gives -1 and
+`make_and_draw_map` says "Can't find file", and the lines after it do nothing useful). Molecule numbers are kept in
+variables (`imol`, `imol_map`): Coot gives every new molecule the next free number.
+
+**With your own model and map**, replace the loading lines with the molecule numbers shown in the Display Manager,
+e.g. `imol = 0` and `imol_map = 1`, or with your own files (full paths work everywhere).
+
+Scripts that switch on `set_refinement_immediate_replacement(1)` (no Accept window) must switch it off again at the
+end, as every recipe here does (chapter 4).
 
 Each function used here is described, with an example, in the [scripting reference](../api/README.md).
 

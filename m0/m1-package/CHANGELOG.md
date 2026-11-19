@@ -6,6 +6,24 @@ applied to the pristine tree by `setup.sh`) or a change of the packaged data / s
 round, `TEST-PROTOCOL.md` has the user-facing explanation and the checks for you (newest round first).  A "build" is one delivered zip.
 "Verified" means a headless test (no window server in the build environment); what only a screen can show is marked "on screen: not verified".
 
+## Build 27  (patch 0045 python-ctrl-key-bindings; cookbook fixes; Python / docs only, `bin/coot-bin` as in build 26)
+- Fixed (user, 19 Nov, round 26 HH4): cookbook **6.3** bound F5, which Coot itself uses (F5 opens Model/Fit/Refine), so the binding never
+  ran; its tip "Control_r" is Coot's Ctrl-R (rock).  Now the recipe uses `o` and lists the keys Coot keeps for itself, with a note on F-keys
+  on a Mac (they need `fn`).
+- Fixed (user, 19 Nov, HH5): **refinement recipes left `set_refinement_immediate_replacement(1)` on**, so every refinement made afterwards
+  with the mouse or a key had no Accept window and its moving atoms stayed on the screen.  All 8 recipes (4.1-4.4, 4.6, 4.9, 7.1, and 6.7
+  where it was a "preference") now switch it off again; chapter 4 says how to get out of it; 6.7/6.8 no longer suggest it as a setting.
+- Fixed: **Ctrl key bindings made in Python never ran** in coot0 (and in any Coot 0.9 built with both Guile and Python): Coot hands keys
+  it does not use to Scheme's key hook, which passes only the key on to Python, so the Ctrl state was lost.  Python now asks GDK whether
+  Ctrl is held (`_coot0_control_pressed` in `coot_utils.py`).
+- Docs (user, HH5): the cookbook says plainly that **each recipe stands alone** (it loads its own copy of the test files; several in a row
+  give several copies), that recipe 1.1 must run first, and how to use a recipe on your own model and map (molecule numbers instead of the
+  loading lines); 6.4 explains why it loads a map.  When the test file is missing, `make_and_draw_map` gives -1 and `set_map_colour(-1, ...)`
+  does nothing: in round 26 only the background (white) changed.
+- Tests: `cookbook` checks that no recipe binds a key Coot uses and that none leaves immediate replacement on (build 26 docs: 148 / 166);
+  `gui-dialogs` 79 -> 80 (Python key bindings, plain and Ctrl, through Scheme's key hook; build 26 fails it).
+- On screen: not verified by me (headless only); in particular whether Ctrl reaches the Python binding on macOS (round 27 II2).
+
 ## Build 26  (patches 0042 auto-recontour-report, 0043 quiet-scheme-calls (C++), 0044 python-scripting-window; new `bin/coot-bin`)
 - **First C++ rebuild since build 13** (only for 0043; all 412 files compiled from the patched tree, same compiler and libraries; `lib/` unchanged).
 - Fixed (user, 18 Nov): Coot printed "debug:: g.safe_scheme_command() with command ..." in the terminal for every Scheme call, and the Scheme

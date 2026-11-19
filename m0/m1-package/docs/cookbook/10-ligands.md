@@ -1,5 +1,8 @@
 # 10. Ligands
 
+*Each recipe stands alone and loads its own copy of the test files (run recipe 1.1 once first; with your own data use
+your molecule numbers instead: [How to use a recipe](README.md#how-to-use-a-recipe)).*
+
 coot0 includes the CCP4 monomer library, so any three-letter code it knows (ATP, NAG, HEM, ...) can be made
 from its dictionary.
 
