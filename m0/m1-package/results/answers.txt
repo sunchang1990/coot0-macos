@@ -2,7 +2,7 @@
 # Round 30 (see TEST-PROTOCOL.md, section LL):
 LL1 Help search map_peaks: reference page shows both results and whether Python and Scheme agreed:
 LL2 Scripting reference: every function has a result:
-LL3 Scheme ncs-chain-differences shows residue numbers ((1 "") (1 "") 0.5):
+LL3 Scheme ncs-chain-differences shows residue numbers ((1 "") (1 "") 0.4997...):
 # Round 29 (section KK): KK1, KK2 confirmed 20 Nov.
 # Round 28 (section JJ): JJ1, JJ2, JJ4, JJ5 confirmed 20 Nov; JJ3 (double-click / Enter) -> build 29.
 # Round 27 (section II): II3, II4 confirmed 20 Nov; II1 (key o is Coot's) and II2 (Ctrl-T) -> build 28.

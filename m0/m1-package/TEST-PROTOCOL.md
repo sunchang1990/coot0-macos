@@ -22,7 +22,7 @@ tried with one. **New tests**: `python-api` 19 -> 21, `scheme-api` 27 -> 30 (bui
 |---|---|---|
 | LL1 | Help > Search Menus and Docs...: type `map_peaks`, double-click the `map_peaks` line. | The reference opens at `map_peaks`: both examples have a result ("ran, returned ..."), and a line says whether Python and Scheme agreed. |
 | LL2 | Help > Scripting Reference (all functions): look at "Results of trying the examples". | Every function has a result; few or no "not tried". |
-| LL3 | Calculate > Scripting > Scheme...: `(define imol (read-pdb "<coot0>/test-data/tutorial-modern.pdb"))` then `(list-ref (list-ref (ncs-chain-differences imol "A") 2) 0)` (use the coot0 folder path; in the installed copy: `~/.local/share/coot0/0.9.8.96-b30/test-data/...`). | Shows `((1 "") (1 "") 0.5)` (residue, master residue, difference); build 29 showed `(0.5)`. |
+| LL3 | Calculate > Scripting > Scheme...: `(define imol (read-pdb "/Users/<you>/.local/share/coot0/0.9.8.96-b30/test-data/tutorial-modern.pdb"))` (the full path written out: `~` and placeholders are not expanded; `imol` must be 0 or more, -1 means the file was not found and the next line then fails with `list-ref ... #f`) then `(list-ref (list-ref (ncs-chain-differences imol "A") 2) 0)` (use the coot0 folder path; in the installed copy: `~/.local/share/coot0/0.9.8.96-b30/test-data/...`). | Shows `((1 "") (1 "") 0.4996705651283264)` (residue, master residue, difference); build 29 showed `(0.5)`. |
 
 # Earlier round (KK1, KK2 confirmed 20 Nov): Coot 0.9.8.96 on Apple Silicon: test round 29 (build 29 = build 28 + Help search opens what you pick + contact dots off)
 
