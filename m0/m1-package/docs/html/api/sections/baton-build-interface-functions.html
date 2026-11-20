@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="c97d452d11f7f7d17411815765d0d07d3b05e6f4">
+<title>Baton Build Interface Functions - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="baton-build-interface-functions">Baton Build Interface Functions</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Baton Build Interface Functions (11 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="accept_baton_position">accept_baton_position</h3>
+<p>Python: <code>accept_baton_position()</code><br>
+Scheme: <code>(accept-baton-position)</code></p>
+<p>accept the baton tip position - a prime candidate for a key binding</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>accept_baton_position()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(accept-baton-position)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="baton_build_delete_last_residue">baton_build_delete_last_residue</h3>
+<p>Python: <code>baton_build_delete_last_residue()</code><br>
+Scheme: <code>(baton-build-delete-last-residue)</code></p>
+<p>delete the most recently build CA position</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>baton_build_delete_last_residue()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(baton-build-delete-last-residue)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="baton_tip_previous">baton_tip_previous</h3>
+<p>Python: <code>baton_tip_previous()</code><br>
+Scheme: <code>(baton-tip-previous)</code></p>
+<p>move the baton tip to the previous position</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>baton_tip_previous()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(baton-tip-previous)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="baton_tip_try_another">baton_tip_try_another</h3>
+<p>Python: <code>baton_tip_try_another()</code><br>
+Scheme: <code>(baton-tip-try-another)</code></p>
+<p>move the baton tip position - another prime candidate for a key binding</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>baton_tip_try_another()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(baton-tip-try-another)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="lengthen_baton">lengthen_baton</h3>
+<p>Python: <code>lengthen_baton()</code><br>
+Scheme: <code>(lengthen-baton)</code></p>
+<p>lengthen the baton</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>lengthen_baton()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(lengthen-baton)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="reverse_direction_of_fragment">reverse_direction_of_fragment</h3>
+<p>Python: <code>reverse_direction_of_fragment(imol, chain_id, resno)</code><br>
+Scheme: <code>(reverse-direction-of-fragment imol chain-id resno)</code></p>
+<p>Reverse the direction of a the fragment of the clicked on
+ atom/residue.</p>
+<p> A fragment is a consecutive range of residues -
+ where there is a gap in the numbering, that marks breaks between
+ fragments in a chain. There also needs to be a distance break - if
+ the CA of the next/previous residue is more than 5A away, that also
+ marks a break. Throw away all atoms in fragment other than CAs.</p>
+<p>Arguments: imol (a whole number), chain_id (text), resno (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>reverse_direction_of_fragment(0, "A", 41)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(reverse-direction-of-fragment 0 "A" 41)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_baton_build_params">set_baton_build_params</h3>
+<p>Python: <code>set_baton_build_params(istart_resno, chain_id, direction)</code><br>
+Scheme: <code>(set-baton-build-params istart-resno chain-id direction)</code></p>
+<p>set the parameters for the start of a new baton-built fragment. direction can either
+ be "forwards" or "backwards"</p>
+<p>Arguments: istart_resno (a whole number), chain_id (text), direction (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_baton_build_params(41, "A", ".")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-baton-build-params 41 "A" ".")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_baton_mode">set_baton_mode</h3>
+<p>Python: <code>set_baton_mode(i)</code><br>
+Scheme: <code>(set-baton-mode i)</code></p>
+<p>toggle so that mouse movement moves the baton not rotates the view.</p>
+<p>Arguments: i (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_baton_mode(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-baton-mode 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="setup_reverse_direction">setup_reverse_direction</h3>
+<p>Python: <code>setup_reverse_direction(i)</code><br>
+Scheme: <code>(setup-reverse-direction i)</code></p>
+<p>Arguments: i (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>setup_reverse_direction(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(setup-reverse-direction 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="shorten_baton">shorten_baton</h3>
+<p>Python: <code>shorten_baton()</code><br>
+Scheme: <code>(shorten-baton)</code></p>
+<p>shorten the baton length</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>shorten_baton()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(shorten-baton)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="try_set_draw_baton">try_set_draw_baton</h3>
+<p>Python: <code>try_set_draw_baton(i)</code><br>
+Scheme: <code>(try-set-draw-baton i)</code></p>
+<p>draw the baton or not</p>
+<p>Arguments: i (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>try_set_draw_baton(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(try-set-draw-baton 1)</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

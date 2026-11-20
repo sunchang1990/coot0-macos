@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="b0c472b0ec67c920215c8f1d3ec5b7713c5095e2">
+<title>1. Files and maps - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../README.html">coot0 documentation</a></div>
+<h1 id="1-files-and-maps">1. Files and maps</h1>
+<p>*Each recipe stands alone and loads its own copy of the test files (run recipe 1.1 once first; with your own data use
+your molecule numbers instead: <a href="README.html#how-to-use-a-recipe">How to use a recipe</a>).*</p>
+<p>Every recipe works on the test files that come with coot0 (<code>test-data/</code> in the package): <code>tutorial-modern.pdb</code>
+(chains A and B, residues A1-A93 and B1-B96, space group P 2&lt;sub&gt;1&lt;/sub&gt;2&lt;sub&gt;1&lt;/sub&gt;2&lt;sub&gt;1&lt;/sub&gt;) and
+<code>rnasa-1.8-all_refmac1.mtz</code> (map coefficients <code>FWT</code>/<code>PHWT</code> and difference map <code>DELFWT</code>/<code>PHDELWT</code>).
+Replace the file names with your own; use the full path (for example <code>"/Users/me/data/model.pdb"</code>) when the file is
+not in the folder Coot works in.</p>
+<h3 id="11-copy-the-test-files-into-the-folder-coot-works-in">1.1 Copy the test files into the folder Coot works in</h3>
+<p>Run this once, then the file names of the other recipes work as they are.</p>
+<pre class="python"><code>import os, shutil
+test_data = os.path.join(os.environ["COOT_PREFIX"], "test-data")
+for f in ["tutorial-modern.pdb", "rnasa-1.8-all_refmac1.mtz"]:
+    shutil.copy(os.path.join(test_data, f), f)
+print("Coot works in", os.getcwd())</code></pre>
+<pre class="scheme"><code>(let ((test-data (string-append (getenv "COOT_PREFIX") "/test-data")))
+  (for-each (lambda (f) (copy-file (string-append test-data "/" f) f))
+            (list "tutorial-modern.pdb" "rnasa-1.8-all_refmac1.mtz")))
+(display (getcwd)) (newline)</code></pre>
+<h3 id="12-read-a-model-and-keep-its-molecule-number">1.2 Read a model and keep its molecule number</h3>
+<p><code>read_pdb</code> reads PDB and mmCIF files and returns the new molecule number (-1 if the file could not be read).
+Keep it in a variable: molecule numbers are never reused within a session.</p>
+<pre class="python"><code>imol = read_pdb("tutorial-modern.pdb")
+print("molecule", imol, "chains", chain_ids(imol))</code></pre>
+<pre class="scheme"><code>(define imol (read-pdb "tutorial-modern.pdb"))
+(format #t "molecule ~a chains ~a~%" imol (chain-ids imol))</code></pre>
+<h3 id="13-make-the-2fo-fc-and-the-difference-map-from-an-mtz-file">1.3 Make the 2Fo-Fc and the difference map from an MTZ file</h3>
+<p>The last two numbers: use the weight column (0 = no), and is it a difference map (1 = yes).</p>
+<pre class="python"><code>imol_map = make_and_draw_map("rnasa-1.8-all_refmac1.mtz", "FWT", "PHWT", "", 0, 0)
+imol_diff = make_and_draw_map("rnasa-1.8-all_refmac1.mtz", "DELFWT", "PHDELWT", "", 0, 1)
+print("maps", imol_map, imol_diff, "rmsd of the 2Fo-Fc map", map_sigma(imol_map))</code></pre>
+<pre class="scheme"><code>(define imol-map (make-and-draw-map "rnasa-1.8-all_refmac1.mtz" "FWT" "PHWT" "" 0 0))
+(define imol-diff (make-and-draw-map "rnasa-1.8-all_refmac1.mtz" "DELFWT" "PHDELWT" "" 0 1))
+(format #t "maps ~a ~a rmsd ~a~%" imol-map imol-diff (map-sigma imol-map))</code></pre>
+<h3 id="14-read-all-maps-of-an-mtz-file-at-once">1.4 Read all maps of an MTZ file at once</h3>
+<p>Finds the usual column pairs (FWT/PHWT, DELFWT/PHDELWT, ...) by itself and returns the new map numbers
+(a list in Python, a vector such as <code>#(1 2)</code> in Scheme).</p>
+<pre class="python"><code>maps = auto_read_make_and_draw_maps("rnasa-1.8-all_refmac1.mtz")
+print("new maps:", maps)</code></pre>
+<pre class="scheme"><code>(define maps (auto-read-make-and-draw-maps "rnasa-1.8-all_refmac1.mtz"))
+(format #t "new maps: ~a~%" maps)</code></pre>
+<h3 id="15-choose-the-map-that-refinement-uses">1.5 Choose the map that refinement uses</h3>
+<pre class="python"><code>imol_map = make_and_draw_map("rnasa-1.8-all_refmac1.mtz", "FWT", "PHWT", "", 0, 0)
+set_imol_refinement_map(imol_map)
+print("refinement map:", imol_refinement_map())</code></pre>
+<pre class="scheme"><code>(define imol-map (make-and-draw-map "rnasa-1.8-all_refmac1.mtz" "FWT" "PHWT" "" 0 0))
+(set-imol-refinement-map imol-map)
+(format #t "refinement map: ~a~%" (imol-refinement-map))</code></pre>
+<h3 id="16-contour-level-and-map-radius">1.6 Contour level and map radius</h3>
+<p>Contour at 1.5 rmsd ("sigma") and draw the map 15 Å around the centre. (Map colour: recipe 6.4.)</p>
+<pre class="python"><code>imol_map = make_and_draw_map("rnasa-1.8-all_refmac1.mtz", "FWT", "PHWT", "", 0, 0)
+set_contour_level_in_sigma(imol_map, 1.5)
+set_map_radius(15)
+print("contour level:", get_contour_level_in_sigma(imol_map), "sigma")</code></pre>
+<pre class="scheme"><code>(define imol-map (make-and-draw-map "rnasa-1.8-all_refmac1.mtz" "FWT" "PHWT" "" 0 0))
+(set-contour-level-in-sigma imol-map 1.5)
+(set-map-radius 15)
+(format #t "contour level: ~a sigma~%" (get-contour-level-in-sigma imol-map))</code></pre>
+<h3 id="17-save-a-model-pdb-or-mmcif-and-part-of-it">1.7 Save a model (PDB or mmCIF) and part of it</h3>
+<pre class="python"><code>imol = read_pdb("tutorial-modern.pdb")
+write_pdb_file(imol, "model-saved.pdb")
+write_cif_file(imol, "model-saved.cif")
+write_residue_range_to_pdb_file(imol, "A", 30, 45, "chainA-30-45.pdb")</code></pre>
+<pre class="scheme"><code>(define imol (read-pdb "tutorial-modern.pdb"))
+(write-pdb-file imol "model-saved.pdb")
+(write-cif-file imol "model-saved.cif")
+(write-residue-range-to-pdb-file imol "A" 30 45 "chainA-30-45.pdb")</code></pre>
+<h3 id="18-save-a-map-to-a-file-and-read-it-back">1.8 Save a map to a file and read it back</h3>
+<p><code>export_map</code> writes a CCP4/MRC map; <code>handle_read_ccp4_map</code> reads one (second argument: 1 for a difference map).</p>
+<pre class="python"><code>imol_map = make_and_draw_map("rnasa-1.8-all_refmac1.mtz", "FWT", "PHWT", "", 0, 0)
+export_map(imol_map, "rnasa-2fofc.map")
+imol_again = handle_read_ccp4_map("rnasa-2fofc.map", 0)
+print("map read back as molecule", imol_again)</code></pre>
+<pre class="scheme"><code>(define imol-map (make-and-draw-map "rnasa-1.8-all_refmac1.mtz" "FWT" "PHWT" "" 0 0))
+(export-map imol-map "rnasa-2fofc.map")
+(define imol-again (handle-read-ccp4-map "rnasa-2fofc.map" 0))
+(format #t "map read back as molecule ~a~%" imol-again)</code></pre>
+<h3 id="19-list-what-is-loaded">1.9 List what is loaded</h3>
+<pre class="python"><code>read_pdb("tutorial-modern.pdb")
+make_and_draw_map("rnasa-1.8-all_refmac1.mtz", "FWT", "PHWT", "", 0, 0)
+for i in model_molecule_list():
+    print("model", i, molecule_name(i))
+for i in map_molecule_list():
+    print("map  ", i, molecule_name(i))</code></pre>
+<pre class="scheme"><code>(read-pdb "tutorial-modern.pdb")
+(make-and-draw-map "rnasa-1.8-all_refmac1.mtz" "FWT" "PHWT" "" 0 0)
+(for-each (lambda (i) (format #t "model ~a ~a~%" i (molecule-name i))) (model-molecule-list))
+(for-each (lambda (i) (format #t "map   ~a ~a~%" i (molecule-name i))) (map-molecule-list))</code></pre>
+<h3 id="110-cell-space-group-and-close-a-molecule">1.10 Cell, space group and close a molecule</h3>
+<pre class="python"><code>imol = read_pdb("tutorial-modern.pdb")
+print("cell", cell(imol), "space group", show_spacegroup(imol))
+close_molecule(imol)
+print("still valid?", is_valid_model_molecule(imol))</code></pre>
+<pre class="scheme"><code>(define imol (read-pdb "tutorial-modern.pdb"))
+(format #t "cell ~a space group ~a~%" (cell imol) (show-spacegroup imol))
+(close-molecule imol)
+(format #t "still valid? ~a~%" (valid-model-molecule? imol))</code></pre>
+</body></html>

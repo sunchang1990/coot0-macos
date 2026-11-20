@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="1a0f173faaa3cd3f0ca1c95d0f628c6dc8f35739">
+<title>Map Sharpening Interface - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="map-sharpening-interface">Map Sharpening Interface</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Map Sharpening Interface (4 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="optimal_b_kurtosis">optimal_B_kurtosis</h3>
+<p>Python: <code>optimal_B_kurtosis(imol)</code><br>
+Scheme: <code>(optimal-B-kurtosis imol)</code></p>
+<p>Arguments: imol (a whole number). Returns: a number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>optimal_B_kurtosis(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(optimal-B-kurtosis 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_map_sharpening_scale_limit">set_map_sharpening_scale_limit</h3>
+<p>Python: <code>set_map_sharpening_scale_limit(f)</code><br>
+Scheme: <code>(set-map-sharpening-scale-limit f)</code></p>
+<p>set the limit of the b-factor map sharpening slider (default 30)</p>
+<p>Arguments: f (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_map_sharpening_scale_limit(1.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-map-sharpening-scale-limit 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="sharpen">sharpen</h3>
+<p>Python: <code>sharpen(imol, b_factor)</code><br>
+Scheme: <code>(sharpen imol b-factor)</code></p>
+<p>Sharpen map imol by b_factor (note (of course) that positive numbers
+ blur the map).</p>
+<p>Arguments: imol (a whole number), b_factor (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>sharpen(0, 20.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(sharpen 0 20.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="sharpen_with_gompertz_scaling">sharpen_with_gompertz_scaling</h3>
+<p>Python: <code>sharpen_with_gompertz_scaling(imol, b_factor, try_gompertz, gompertz_factor)</code><br>
+Scheme: <code>(sharpen-with-gompertz-scaling imol b-factor try-gompertz gompertz-factor)</code></p>
+<p>Arguments: imol (a whole number), b_factor (a number), try_gompertz (a whole number), gompertz_factor (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>sharpen_with_gompertz_scaling(0, 20.0, 1, 1.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(sharpen-with-gompertz-scaling 0 20.0 1 1.0)</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

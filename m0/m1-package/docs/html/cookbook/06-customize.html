@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="85df143340c579cdd3db0709a199d3839024a99e">
+<title>6. Customize Coot: toolbar, menus, keys, colours, preferences - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../README.html">coot0 documentation</a></div>
+<h1 id="6-customize-coot-toolbar-menus-keys-colours-preferences">6. Customize Coot: toolbar, menus, keys, colours, preferences</h1>
+<p>*Each recipe stands alone and loads its own copy of the test files (run recipe 1.1 once first; with your own data use
+your molecule numbers instead: <a href="README.html#how-to-use-a-recipe">How to use a recipe</a>).*</p>
+<p>Put the lines you want every time into a startup file (recipe 6.8). In coot0 the windows, menus and toolbar
+are made by Python, so buttons and menus are added with Python functions; from Scheme you call them with
+<code>run-python-script</code> (the Scheme GUI library of the original Coot is not part of coot0).
+<code>run-python-command</code> evaluates one Python expression and returns its value; for several lines, write them to a
+<code>.py</code> file and run it with <code>run-python-script</code>, as below.</p>
+<h3 id="61-a-toolbar-button-that-runs-your-code">6.1 A toolbar button that runs your code</h3>
+<p>The function runs when the button is pressed. Here: refine the residue at the centre of the screen and its neighbours.</p>
+<pre class="python"><code>def refine_here():
+    ar = active_residue()                       # [imol, chain, resno, ins, atom, alt] of the residue in the centre
+    if ar:
+        imol, spec = ar[0], [ar[1], ar[2], ar[3]]
+        refine_residues(imol, [spec] + residues_near_residue(imol, spec, 4.0))
+
+coot_toolbar_button("Refine here", refine_here, tooltip="Sphere refine around the centre")</code></pre>
+<pre class="scheme"><code>(call-with-output-file "my-button.py"
+  (lambda (port) (display "
+def refine_here():
+    ar = active_residue()
+    if ar:
+        imol, spec = ar[0], [ar[1], ar[2], ar[3]]
+        refine_residues(imol, [spec] + residues_near_residue(imol, spec, 4.0))
+coot_toolbar_button('Refine here', refine_here, tooltip='Sphere refine around the centre')
+" port)))
+(run-python-script "my-button.py")</code></pre>
+<h3 id="62-a-menu-of-your-own">6.2 A menu of your own</h3>
+<p>A new menu "My tools" in the menu bar with two entries.</p>
+<pre class="python"><code>menu = coot_menubar_menu("My tools")
+add_simple_coot_menu_menuitem(menu, "Go to A41", lambda item: set_go_to_atom_chain_residue_atom_name("A", 41, " CA "))
+add_simple_coot_menu_menuitem(menu, "White background", lambda item: set_background_colour(1, 1, 1))</code></pre>
+<pre class="scheme"><code>(call-with-output-file "my-menu.py"
+  (lambda (port) (display "
+menu = coot_menubar_menu('My tools')
+add_simple_coot_menu_menuitem(menu, 'Go to A41', lambda item: set_go_to_atom_chain_residue_atom_name('A', 41, ' CA '))
+add_simple_coot_menu_menuitem(menu, 'White background', lambda item: set_background_colour(1, 1, 1))
+" port)))
+(run-python-script "my-menu.py")</code></pre>
+<h3 id="63-a-key-that-runs-your-code">6.3 A key that runs your code</h3>
+<p>Press <code>v</code> in the graphics window to refine 3 residues on each side of the centre.</p>
+<pre class="python"><code>def refine_triple():
+    ar = active_residue()
+    if ar:
+        refine_zone(ar[0], ar[1], ar[2] - 3, ar[2] + 3, ar[5])
+
+add_key_binding("Refine 7 residues", "v", refine_triple)</code></pre>
+<pre class="scheme"><code>(add-key-binding "Refine 7 residues" "v"
+  (lambda ()
+    (let ((ar (active-residue)))
+      (if ar (refine-zone (list-ref ar 0) (list-ref ar 1) (- (list-ref ar 2) 3) (+ (list-ref ar 2) 3) (list-ref ar 5))))))</code></pre>
+<p>Keys Coot already uses cannot be taken: the binding is made but never runs, or Coot does its own thing as well. Coot's own keys:
+F5 (Model/Fit/Refine), F6 (Go To Atom), F7 (Display Manager), F8 (screenshot), the digits, arrows, <code>.</code> <code>,</code> <code>-</code> <code>+</code> <code>=</code>, Space,
+Return, Escape, <code>c</code> (crosshairs), <code>d</code> <code>f</code> (clipping), <code>i</code> (spin), <code>l</code> (label), <code>m</code> <code>n</code> (zoom), <code>o</code> <code>O</code> (next / previous NCS chain),
+<code>p</code> (update Go To Atom), <code>s</code> (re-contour), <code>u</code> (undo move), and Ctrl with C, D, G, I, L, R, S, X, Y, Z. Keys from Calculate &gt; ... &gt;
+Install Template Keybindings (if you installed them) are taken as well; they use most other letters except <code>v</code>. Help &gt; Keyboard
+Shortcuts (build 28) lists all keys and your own bindings.</p>
+<ul><li><strong>Ctrl keys</strong> (Python): <code>add_key_binding("Refine 7 residues", "Control_t", refine_triple)</code> for Ctrl-T (build 28 or later). A key and its Ctrl- version are separate bindings.</li><li><strong>Function keys on a Mac</strong>: F1-F12 control the Mac (brightness, sound, ...); press <code>fn</code> with them to send F9 etc. to Coot, or switch it in System Settings &gt; Keyboard &gt; Keyboard Shortcuts &gt; Function Keys.</li></ul>
+<h3 id="64-colours-map-background-symmetry">6.4 Colours: map, background, symmetry</h3>
+<p>Red, green, blue from 0 to 1. Like every recipe, this one loads what it needs (here the test map, so it has a map to
+colour). For a map you already have, use its number from the Display Manager instead, e.g. <code>imol_map = 1</code>.
+The map colour can only be set while Coot has its window (it is not run in the automatic test).</p>
+<pre class="python"><code>imol_map = make_and_draw_map("rnasa-1.8-all_refmac1.mtz", "FWT", "PHWT", "", 0, 0)   # or: imol_map = 1
+set_map_colour(imol_map, 0.3, 0.6, 1.0)     # light blue map
+set_background_colour(1.0, 1.0, 1.0)        # white background
+set_symmetry_colour(0.8, 0.8, 0.2)          # yellow symmetry copies</code></pre>
+<pre class="scheme"><code>(define imol-map (make-and-draw-map "rnasa-1.8-all_refmac1.mtz" "FWT" "PHWT" "" 0 0))   ; or: (define imol-map 1)
+(set-map-colour imol-map 0.3 0.6 1.0)
+(set-background-colour 1.0 1.0 1.0)
+(set-symmetry-colour 0.8 0.8 0.2)</code></pre>
+<h3 id="65-thicker-bonds-bigger-labels-colour-by-chain">6.5 Thicker bonds, bigger labels, colour by chain</h3>
+<pre class="python"><code>imol = read_pdb("tutorial-modern.pdb")
+set_bond_thickness(imol, 5)                 # default 3
+set_font_size(3)                            # 1 small, 2 medium, 3 large
+set_colour_by_chain(imol)</code></pre>
+<pre class="scheme"><code>(define imol (read-pdb "tutorial-modern.pdb"))
+(set-bond-thickness imol 5)
+(set-font-size 3)
+(set-colour-by-chain imol)</code></pre>
+<h3 id="66-messages-for-the-user">6.6 Messages for the user</h3>
+<p>A line in the status bar (bottom of the window), and a small window with a message.</p>
+<pre class="python"><code>add_status_bar_text("Refinement finished")
+info_dialog("Chain A: 93 residues checked, nothing found.")</code></pre>
+<pre class="scheme"><code>(add-status-bar-text "Refinement finished")
+(info-dialog "Chain A: 93 residues checked, nothing found.")</code></pre>
+<h3 id="67-preferences-you-can-set-from-a-script">6.7 Preferences you can set from a script</h3>
+<p>A few that people often change (all are remembered only for the session unless they are in a startup file):
+(Not <code>set_refinement_immediate_replacement(1)</code>: as a lasting setting it takes away the Accept window of every
+refinement you make with the mouse; it belongs in scripts, switched off again at the end, chapter 4.)</p>
+<pre class="python"><code>set_map_radius(12)                          # draw maps 12 A around the centre
+set_auto_recontour_map(1)                   # re-contour maps when the centre moves
+set_smooth_scroll_flag(0)                   # jump instead of slide when going to an atom
+set_default_bond_thickness(4)               # bond width of models read from now on
+set_add_terminal_residue_do_post_refine(1)  # refine new terminal residues</code></pre>
+<pre class="scheme"><code>(set-map-radius 12)
+(set-auto-recontour-map 1)
+(set-smooth-scroll-flag 0)
+(set-default-bond-thickness 4)
+(set-add-terminal-residue-do-post-refine 1)</code></pre>
+<h3 id="68-run-your-settings-every-time-coot-starts">6.8 Run your settings every time Coot starts</h3>
+<p>coot0 keeps its own home folder: <code>~/Library/Application Support/coot0/home/</code> (installed with <code>install.sh</code>; in a
+folder you unpacked yourself it is <code>home/</code> inside that folder). Python and Scheme files in
+<code>home/.coot-preferences/</code> are run at every start, in alphabetical order. This recipe writes such a file.</p>
+<pre class="python"><code>import os
+prefs = os.path.join(os.environ["HOME"], ".coot-preferences")
+os.makedirs(prefs, exist_ok=True)
+with open(os.path.join(prefs, "my-settings.py"), "w") as f:
+    f.write("set_default_bond_thickness(4)\n")
+    f.write("set_map_radius(12)\n")
+print("written to", prefs)</code></pre>
+<pre class="scheme"><code>(let ((prefs (string-append (getenv "HOME") "/.coot-preferences")))
+  (if (not (file-exists? prefs)) (mkdir prefs))
+  (call-with-output-file (string-append prefs "/my-settings.scm")
+    (lambda (port)
+      (display "(set-default-bond-thickness 4)\n" port)
+      (display "(set-map-radius 12)\n" port)))
+  (format #t "written to ~a~%" prefs))</code></pre>
+<p>Inside Coot, <code>HOME</code> is coot0's own home folder (not your Mac home folder), so the file lands in the right place.
+Delete the file to go back to the defaults.</p>
+</body></html>

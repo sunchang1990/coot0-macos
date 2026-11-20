@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="e50ac500a2b5cbc60ffdc02d99e729dfd5026d05">
+<title>Scripting Interface - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="scripting-interface">Scripting Interface</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Scripting Interface (9 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="post_python_scripting_window">post_python_scripting_window</h3>
+<p>Python: <code>post_python_scripting_window()</code><br>
+Scheme: <code>(post-python-scripting-window)</code></p>
+<p>pop-up a scripting window for pythoning</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>post_python_scripting_window()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(post-python-scripting-window)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="post_scheme_scripting_window">post_scheme_scripting_window</h3>
+<p>Python: <code>post_scheme_scripting_window()</code><br>
+Scheme: <code>(post-scheme-scripting-window)</code></p>
+<p>pop-up a scripting window for scheming</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>post_scheme_scripting_window()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(post-scheme-scripting-window)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="post_scripting_window">post_scripting_window</h3>
+<p>Python: <code>post_scripting_window()</code><br>
+Scheme: <code>(post-scripting-window)</code></p>
+<p>do nothing - compatibility function</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>post_scripting_window()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(post-scripting-window)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="probe_available_p">probe_available_p</h3>
+<p>Python: <code>probe_available_p()</code><br>
+Scheme: <code>(probe-available-p)</code></p>
+<p>Can we run probe (was the executable variable set
+ properly?) (predicate).</p>
+<p>Returns 1 for yes, 2 for no</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>probe_available_p()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(probe-available-p)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="run_command_line_scripts">run_command_line_scripts</h3>
+<p>Python: <code>run_command_line_scripts()</code><br>
+Scheme: <code>(run-command-line-scripts)</code></p>
+<p>called from c-inner-main</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>run_command_line_scripts()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(run-command-line-scripts)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_found_coot_gui">set_found_coot_gui</h3>
+<p>Python: <code>set_found_coot_gui()</code><br>
+Scheme: <code>(set-found-coot-gui)</code></p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_found_coot_gui()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-found-coot-gui)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_found_coot_python_gui">set_found_coot_python_gui</h3>
+<p>Python: <code>set_found_coot_python_gui()</code><br>
+Scheme: <code>(set-found-coot-python-gui)</code></p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_found_coot_python_gui()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-found-coot-python-gui)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_guile_gui_loaded_flag">set_guile_gui_loaded_flag</h3>
+<p>Python: <code>set_guile_gui_loaded_flag()</code><br>
+Scheme: <code>(set-guile-gui-loaded-flag)</code></p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_guile_gui_loaded_flag()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-guile-gui-loaded-flag)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_python_gui_loaded_flag">set_python_gui_loaded_flag</h3>
+<p>Python: <code>set_python_gui_loaded_flag()</code><br>
+Scheme: <code>(set-python-gui-loaded-flag)</code></p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_python_gui_loaded_flag()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-python-gui-loaded-flag)</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

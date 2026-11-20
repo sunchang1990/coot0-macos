@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="5bccb170b1020c5fdc9f240b03ec5cb332415d28">
+<title>Unit Cell interface - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="unit-cell-interface">Unit Cell interface</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Unit Cell interface (4 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="get_show_unit_cell">get_show_unit_cell</h3>
+<p>Python: <code>get_show_unit_cell(imol)</code><br>
+Scheme: <code>(get-show-unit-cell imol)</code></p>
+<p>return the stage of show unit cell for molecule number imol</p>
+<p>Arguments: imol (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>get_show_unit_cell(0)</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-show-unit-cell 0)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<h3 id="set_show_unit_cell">set_show_unit_cell</h3>
+<p>Python: <code>set_show_unit_cell(imol, istate)</code><br>
+Scheme: <code>(set-show-unit-cell imol istate)</code></p>
+<p>set the state of show unit cell for the particular molecule number imol</p>
+<p>1 for displayed
+0 for undisplayed</p>
+<p>Arguments: imol (a whole number), istate (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_show_unit_cell(0, 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-show-unit-cell 0 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_show_unit_cells_all">set_show_unit_cells_all</h3>
+<p>Python: <code>set_show_unit_cells_all(istate)</code><br>
+Scheme: <code>(set-show-unit-cells-all istate)</code></p>
+<p>set the state of show unit cell for all molecules</p>
+<p>1 for displayed
+0 for undisplayed</p>
+<p>Arguments: istate (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_show_unit_cells_all(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-show-unit-cells-all 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_unit_cell_colour">set_unit_cell_colour</h3>
+<p>Python: <code>set_unit_cell_colour(red, green, blue)</code><br>
+Scheme: <code>(set-unit-cell-colour red green blue)</code></p>
+<p>Arguments: red (a number), green (a number), blue (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_unit_cell_colour(0.5, 0.5, 0.5)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-unit-cell-colour 0.5 0.5 0.5)</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

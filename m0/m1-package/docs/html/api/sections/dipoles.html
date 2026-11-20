@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="1d17b01b5740cbb4aa7e2cb63f50e9f81843e1a5">
+<title>Dipoles - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="dipoles">Dipoles</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Dipoles (5 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="add_dipole">add_dipole</h3>
+<p>Python: <code>add_dipole(imol, chain_id, res_no, ins_code)</code><br>
+Scheme: <code>(add-dipole imol chain-id res-no ins-code)</code></p>
+<p>generate a dipole from all atoms in the given residues.</p>
+<p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text). Returns: a value (see the result of the example).
+Also available in Python as <code>add_dipole_py</code>.
+Also available in Scheme as <code>add-dipole-scm</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>add_dipole(0, "A", 41, "")</code></td><td>ran, returned <code>[-1, [2.3836891226e-314, 3.0428733255e-314, 2.1617066947e-314]]</code></td></tr>
+<tr><td>Scheme</td><td><code>(add-dipole 0 "A" 41 "")</code></td><td>ran, returned <code>(-1 (5.0e-323 2.1584990723e-314 2.3856689583e-314))</code></td></tr></tbody></table>
+<h3 id="add_dipole_for_residues">add_dipole_for_residues</h3>
+<p>Python: <code>add_dipole_for_residues(imol, residue_specs)</code><br>
+Scheme: <code>(add-dipole-for-residues imol residue-specs)</code></p>
+<p>add a dipole given a set of residues. Return a dipole
+ description.</p>
+<p>Arguments: imol (a whole number), residue_specs (a list or value). Returns: a value (see the result of the example).
+Also available in Python as <code>add_dipole_for_residues_py</code>.
+Also available in Scheme as <code>add-dipole-for-residues-scm</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>add_dipole_for_residues(0, [["A", 41, ""], ["A", 42, ""]])</code></td><td>ran, returned <code>[-1, [1e-323, 2.46527736567e-313, 2.46477814396e-313]]</code></td></tr>
+<tr><td>Scheme</td><td><code>(add-dipole-for-residues 0 (list (list "A" 41 "") (list "A" 42 "")))</code></td><td>ran, returned <code>(-1 (1.0e-323 2.4652773064e-313 2.46477814396e-313))</code></td></tr></tbody></table>
+<h3 id="delete_dipole">delete_dipole</h3>
+<p>Python: <code>delete_dipole(imol, dipole_number)</code><br>
+Scheme: <code>(delete-dipole imol dipole-number)</code></p>
+<p>Arguments: imol (a whole number), dipole_number (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>delete_dipole(0, 1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(delete-dipole 0 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="make_and_draw_patterson">make_and_draw_patterson</h3>
+<p>Python: <code>make_and_draw_patterson(mtz_file_name, f_col, sigf_col)</code><br>
+Scheme: <code>(make-and-draw-patterson mtz-file-name f-col sigf-col)</code></p>
+<p>Make a patterson molecule</p>
+<p>Returns a new molecule number or -1 on failure</p>
+<p>Arguments: mtz_file_name (text), f_col (text), sigf_col (text). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>make_and_draw_patterson("rnasa-1.8-all_refmac1.mtz", "FWT", "hello")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(make-and-draw-patterson "rnasa-1.8-all_refmac1.mtz" "FWT" "hello")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="make_and_draw_patterson_using_intensities">make_and_draw_patterson_using_intensities</h3>
+<p>Python: <code>make_and_draw_patterson_using_intensities(mtz_file_name, i_col, sigi_col)</code><br>
+Scheme: <code>(make-and-draw-patterson-using-intensities mtz-file-name i-col sigi-col)</code></p>
+<p>Make a patterson molecule</p>
+<p>Returns a new molecule number or -1 on failure</p>
+<p>Arguments: mtz_file_name (text), i_col (text), sigi_col (text). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>make_and_draw_patterson_using_intensities("rnasa-1.8-all_refmac1.mtz", "hello", "hello")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(make-and-draw-patterson-using-intensities "rnasa-1.8-all_refmac1.mtz" "hello" "hello")</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

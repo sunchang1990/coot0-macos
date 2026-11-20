@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="00ff8895503fb067032424277e62a4abdb2e6bd5">
+<title>Mutate Functions - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="mutate-functions">Mutate Functions</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Mutate Functions (17 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="do_base_mutation">do_base_mutation</h3>
+<p>Python: <code>do_base_mutation(type)</code><br>
+Scheme: <code>(do-base-mutation type)</code></p>
+<p>an internal function - not useful for scripting:</p>
+<p>Arguments: type (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>do_base_mutation("ALA")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(do-base-mutation "ALA")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="do_mutation">do_mutation</h3>
+<p>Python: <code>do_mutation(type, is_stub_flag)</code><br>
+Scheme: <code>(do-mutation type is-stub-flag)</code></p>
+<p>Arguments: type (text), is_stub_flag (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>do_mutation("ALA", 1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(do-mutation "ALA" 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="handle_residue_type_chooser_entry_chose_type">handle_residue_type_chooser_entry_chose_type</h3>
+<p>Python: <code>handle_residue_type_chooser_entry_chose_type(entry_text, stub_mode)</code><br>
+Scheme: <code>(handle-residue-type-chooser-entry-chose-type entry-text stub-mode)</code></p>
+<p>Arguments: entry_text (text), stub_mode (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>handle_residue_type_chooser_entry_chose_type("hello", 1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(handle-residue-type-chooser-entry-chose-type "hello" 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="mutate">mutate</h3>
+<p>Python: <code>mutate(imol, chain_id, ires, inscode, target_res_type)</code><br>
+Scheme: <code>(mutate imol chain-id ires inscode target-res-type)</code></p>
+<p>mutate a given residue</p>
+<p>target_res_type is a three-letter-code.</p>
+<p>Return 1 on a good mutate.</p>
+<p>Arguments: imol (a whole number), chain_id (text), ires (a whole number), inscode (text), target_res_type (text). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>mutate(0, "A", 41, "", "ALA")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(mutate 0 "A" 41 "" "ALA")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="mutate_active_residue">mutate_active_residue</h3>
+<p>Python: <code>mutate_active_residue()</code><br>
+Scheme: <code>(mutate-active-residue)</code></p>
+<p>display a dialog that allows the choice of residue type to which to mutate</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>mutate_active_residue()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(mutate-active-residue)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="mutate_auto_fit_do_post_refine_state">mutate_auto_fit_do_post_refine_state</h3>
+<p>Python: <code>mutate_auto_fit_do_post_refine_state()</code><br>
+Scheme: <code>(mutate-auto-fit-do-post-refine-state)</code></p>
+<p>what is the value of the previous flag?</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>mutate_auto_fit_do_post_refine_state()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(mutate-auto-fit-do-post-refine-state)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="mutate_base">mutate_base</h3>
+<p>Python: <code>mutate_base(imol, chain_id, res_no, ins_code, res_type)</code><br>
+Scheme: <code>(mutate-base imol chain-id res-no ins-code res-type)</code></p>
+<p>mutate a base. return success status, 1 for a good mutate.</p>
+<p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text), res_type (text). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>mutate_base(0, "A", 41, "", "ALA")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(mutate-base 0 "A" 41 "" "ALA")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="mutate_single_residue_by_seqno">mutate_single_residue_by_seqno</h3>
+<p>Python: <code>mutate_single_residue_by_seqno(ires, inscode, chain_id, imol, target_res_type)</code><br>
+Scheme: <code>(mutate-single-residue-by-seqno ires inscode chain-id imol target-res-type)</code></p>
+<p>ires is the seqnum of the residue (conventional)</p>
+<p>Arguments: ires (a whole number), inscode (text), chain_id (text), imol (a whole number), target_res_type (text). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<h3 id="mutate_single_residue_by_serial_number">mutate_single_residue_by_serial_number</h3>
+<p>Python: <code>mutate_single_residue_by_serial_number(ires_ser, chain_id, imol, target_res_type)</code><br>
+Scheme: <code>(mutate-single-residue-by-serial-number ires-ser chain-id imol target-res-type)</code></p>
+<p>an alternate interface to mutation of a singe residue.</p>
+<p> Returns 1 on success, 0 on failure</p>
+<p> ires-ser is the serial number of the residue, not the seqnum
+ There 2 functions don't make backups, but mutate() does - CHECKME
+ Hence mutate() is for use as a "one-by-one" type and the following
+ 2 by wrappers that muate either a residue range or a whole chain</p>
+<p> Note that the target_res_type is a char, not a string (or a char *).
+ So from the scheme interface you'd use (for example) hash
+ backslash A for ALA.</p>
+<p>Arguments: ires_ser (a whole number), chain_id (text), imol (a whole number), target_res_type (text). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<h3 id="nudge_residue_sequence">nudge_residue_sequence</h3>
+<p>Python: <code>nudge_residue_sequence(imol, chain_id, res_no_range_start, res_no_range_end, nudge_by, nudge_residue_numbers_also)</code><br>
+Scheme: <code>(nudge-residue-sequence imol chain-id res-no-range-start res-no-range-end nudge-by nudge-residue-numbers-also)</code></p>
+<p>push the residues along a bit</p>
+<p>e.g. if nudge_by is 1, then the sidechain of residue 20 is moved up
+onto what is currently residue 21. The mainchain numbering and atoms is not changed.</p>
+<p>Returns 0 for failure to nudge (becauese not all the residues were in the range)
+ and 1 for success.</p>
+<p>Arguments: imol (a whole number), chain_id (text), res_no_range_start (a whole number), res_no_range_end (a whole number), nudge_by (a whole number), nudge_residue_numbers_also (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>nudge_residue_sequence(0, "A", 41, 45, 1, 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(nudge-residue-sequence 0 "A" 41 45 1 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="progressive_residues_in_chain_check">progressive_residues_in_chain_check</h3>
+<p>Python: <code>progressive_residues_in_chain_check(chain_id, imol)</code><br>
+Scheme: <code>(progressive-residues-in-chain-check chain-id imol)</code></p>
+<p>auto-mutate stuff</p>
+<p>Arguments: chain_id (text), imol (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>progressive_residues_in_chain_check("A", 0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(progressive-residues-in-chain-check "A" 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="rotamer_auto_fit_do_post_refine_state">rotamer_auto_fit_do_post_refine_state</h3>
+<p>Python: <code>rotamer_auto_fit_do_post_refine_state()</code><br>
+Scheme: <code>(rotamer-auto-fit-do-post-refine-state)</code></p>
+<p>what is the value of the previous flag?</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>rotamer_auto_fit_do_post_refine_state()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(rotamer-auto-fit-do-post-refine-state)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_mutate_auto_fit_do_post_refine">set_mutate_auto_fit_do_post_refine</h3>
+<p>Python: <code>set_mutate_auto_fit_do_post_refine(istate)</code><br>
+Scheme: <code>(set-mutate-auto-fit-do-post-refine istate)</code></p>
+<p>Do you want Coot to automatically run a refinement after
+ every mutate and autofit?</p>
+<p> 1 for yes, 0 for no.</p>
+<p>Arguments: istate (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_mutate_auto_fit_do_post_refine(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-mutate-auto-fit-do-post-refine 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_residue_type_chooser_stub_state">set_residue_type_chooser_stub_state</h3>
+<p>Python: <code>set_residue_type_chooser_stub_state(istat)</code><br>
+Scheme: <code>(set-residue-type-chooser-stub-state istat)</code></p>
+<p>set a flag saying that the residue chosen by mutate or
+ auto-fit mutate should only be added as a stub (mainchain + CB)</p>
+<p>Arguments: istat (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_residue_type_chooser_stub_state(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-residue-type-chooser-stub-state 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_rotamer_auto_fit_do_post_refine">set_rotamer_auto_fit_do_post_refine</h3>
+<p>Python: <code>set_rotamer_auto_fit_do_post_refine(istate)</code><br>
+Scheme: <code>(set-rotamer-auto-fit-do-post-refine istate)</code></p>
+<p>Do you want Coot to automatically run a refinement after
+ every rotamer autofit?</p>
+<p> 1 for yes, 0 for no.</p>
+<p>Arguments: istate (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_rotamer_auto_fit_do_post_refine(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-rotamer-auto-fit-do-post-refine 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="setup_mutate">setup_mutate</h3>
+<p>Python: <code>setup_mutate(state)</code><br>
+Scheme: <code>(setup-mutate state)</code></p>
+<p>c-interface-build</p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>setup_mutate(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(setup-mutate 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="setup_mutate_auto_fit">setup_mutate_auto_fit</h3>
+<p>Python: <code>setup_mutate_auto_fit(state)</code><br>
+Scheme: <code>(setup-mutate-auto-fit state)</code></p>
+<p>Mutate then fit to map</p>
+<p> that we have a map define is checked first</p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>setup_mutate_auto_fit(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(setup-mutate-auto-fit 1)</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="ab4937ba8c19f6514c492a3eb90045eb98633694">
+<title>Display Functions - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="display-functions">Display Functions</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Display Functions (24 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="graphics_draw">graphics_draw</h3>
+<p>Python: <code>graphics_draw()</code><br>
+Scheme: <code>(graphics-draw)</code></p>
+<p>draw a frame</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>graphics_draw()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(graphics-draw)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="graphics_window_size_and_position_to_preferences">graphics_window_size_and_position_to_preferences</h3>
+<p>Python: <code>graphics_window_size_and_position_to_preferences()</code><br>
+Scheme: <code>(graphics-window-size-and-position-to-preferences)</code></p>
+<p>store the graphics window position and size to zenops-graphics-window-size-and-postion.scm in
+ the preferences directory.</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>graphics_window_size_and_position_to_preferences()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(graphics-window-size-and-position-to-preferences)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="hardware_stereo_angle_factor_state">hardware_stereo_angle_factor_state</h3>
+<p>Python: <code>hardware_stereo_angle_factor_state()</code><br>
+Scheme: <code>(hardware-stereo-angle-factor-state)</code></p>
+<p>return the hardware stereo angle factor</p>
+<p>Arguments: none. Returns: a number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>hardware_stereo_angle_factor_state()</code></td><td>ran, returned <code>1.0</code></td></tr>
+<tr><td>Scheme</td><td><code>(hardware-stereo-angle-factor-state)</code></td><td>ran, returned <code>1.0</code></td></tr></tbody></table>
+<h3 id="hardware_stereo_mode">hardware_stereo_mode</h3>
+<p>Python: <code>hardware_stereo_mode()</code><br>
+Scheme: <code>(hardware-stereo-mode)</code></p>
+<p>try to turn on stereo mode</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>hardware_stereo_mode()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(hardware-stereo-mode)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="mono_mode">mono_mode</h3>
+<p>Python: <code>mono_mode()</code><br>
+Scheme: <code>(mono-mode)</code></p>
+<p>try to turn on mono mode</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>mono_mode()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(mono-mode)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_accept_reject_dialog_position">set_accept_reject_dialog_position</h3>
+<p>Python: <code>set_accept_reject_dialog_position(x_pos, y_pos)</code><br>
+Scheme: <code>(set-accept-reject-dialog-position x-pos y-pos)</code></p>
+<p>set position of the Accept/Reject dialog</p>
+<p>Arguments: x_pos (a whole number), y_pos (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_accept_reject_dialog_position(1, 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-accept-reject-dialog-position 1 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_delete_dialog_position">set_delete_dialog_position</h3>
+<p>Python: <code>set_delete_dialog_position(x_pos, y_pos)</code><br>
+Scheme: <code>(set-delete-dialog-position x-pos y-pos)</code></p>
+<p>set position of Delete dialog</p>
+<p>Arguments: x_pos (a whole number), y_pos (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_delete_dialog_position(1, 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-delete-dialog-position 1 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_display_control_dialog_position">set_display_control_dialog_position</h3>
+<p>Python: <code>set_display_control_dialog_position(x_pos, y_pos)</code><br>
+Scheme: <code>(set-display-control-dialog-position x-pos y-pos)</code></p>
+<p>set position of Display Control dialog</p>
+<p>Arguments: x_pos (a whole number), y_pos (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_display_control_dialog_position(1, 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-display-control-dialog-position 1 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_dti_stereo_mode">set_dti_stereo_mode</h3>
+<p>Python: <code>set_dti_stereo_mode(state)</code><br>
+Scheme: <code>(set-dti-stereo-mode state)</code></p>
+<p>when it works, call it dti_side_by_side_stereo_mode()</p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_dti_stereo_mode(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-dti-stereo-mode 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_edit_chi_angles_dialog_position">set_edit_chi_angles_dialog_position</h3>
+<p>Python: <code>set_edit_chi_angles_dialog_position(x_pos, y_pos)</code><br>
+Scheme: <code>(set-edit-chi-angles-dialog-position x-pos y-pos)</code></p>
+<p>set edit chi angles dialog position</p>
+<p>Arguments: x_pos (a whole number), y_pos (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_edit_chi_angles_dialog_position(1, 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-edit-chi-angles-dialog-position 1 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_go_to_atom_window_position">set_go_to_atom_window_position</h3>
+<p>Python: <code>set_go_to_atom_window_position(x_pos, y_pos)</code><br>
+Scheme: <code>(set-go-to-atom-window-position x-pos y-pos)</code></p>
+<p>set position of Go To Atom dialog</p>
+<p>Arguments: x_pos (a whole number), y_pos (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_go_to_atom_window_position(1, 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-go-to-atom-window-position 1 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_graphics_window_position">set_graphics_window_position</h3>
+<p>Python: <code>set_graphics_window_position(x_pos, y_pos)</code><br>
+Scheme: <code>(set-graphics-window-position x-pos y-pos)</code></p>
+<p>set the graphics window position</p>
+<p>Arguments: x_pos (a whole number), y_pos (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_graphics_window_position(1, 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-graphics-window-position 1 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_graphics_window_size">set_graphics_window_size</h3>
+<p>Python: <code>set_graphics_window_size(x_size, y_size)</code><br>
+Scheme: <code>(set-graphics-window-size x-size y-size)</code></p>
+<p>set the window size</p>
+<p>Arguments: x_size (a whole number), y_size (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_graphics_window_size(10, 10)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-graphics-window-size 10 10)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_hardware_stereo_angle_factor">set_hardware_stereo_angle_factor</h3>
+<p>Python: <code>set_hardware_stereo_angle_factor(f)</code><br>
+Scheme: <code>(set-hardware-stereo-angle-factor f)</code></p>
+<p>how much should the eyes be separated in stereo mode?</p>
+<p> @param f the angular difference (in multiples of 4.5 degrees)</p>
+<p>Arguments: f (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_hardware_stereo_angle_factor(1.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-hardware-stereo-angle-factor 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_model_display_radius">set_model_display_radius</h3>
+<p>Python: <code>set_model_display_radius(state, radius)</code><br>
+Scheme: <code>(set-model-display-radius state radius)</code></p>
+<p>Arguments: state (a whole number), radius (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_model_display_radius(1, 5.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-model-display-radius 1 5.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_model_fit_refine_dialog_position">set_model_fit_refine_dialog_position</h3>
+<p>Python: <code>set_model_fit_refine_dialog_position(x_pos, y_pos)</code><br>
+Scheme: <code>(set-model-fit-refine-dialog-position x-pos y-pos)</code></p>
+<p>set position of Model/Fit/Refine dialog</p>
+<p>Arguments: x_pos (a whole number), y_pos (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_model_fit_refine_dialog_position(1, 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-model-fit-refine-dialog-position 1 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_ramachandran_plot_dialog_position">set_ramachandran_plot_dialog_position</h3>
+<p>Python: <code>set_ramachandran_plot_dialog_position(x_pos, y_pos)</code><br>
+Scheme: <code>(set-ramachandran-plot-dialog-position x-pos y-pos)</code></p>
+<p>set position of the Ramachadran Plot dialog</p>
+<p>Arguments: x_pos (a whole number), y_pos (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_ramachandran_plot_dialog_position(1, 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-ramachandran-plot-dialog-position 1 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_rotamer_selection_dialog_position">set_rotamer_selection_dialog_position</h3>
+<p>Python: <code>set_rotamer_selection_dialog_position(x_pos, y_pos)</code><br>
+Scheme: <code>(set-rotamer-selection-dialog-position x-pos y-pos)</code></p>
+<p>set rotamer selection dialog position</p>
+<p>Arguments: x_pos (a whole number), y_pos (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_rotamer_selection_dialog_position(1, 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-rotamer-selection-dialog-position 1 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_rotate_translate_dialog_position">set_rotate_translate_dialog_position</h3>
+<p>Python: <code>set_rotate_translate_dialog_position(x_pos, y_pos)</code><br>
+Scheme: <code>(set-rotate-translate-dialog-position x-pos y-pos)</code></p>
+<p>set position of the Rotate/Translate Residue Range dialog</p>
+<p>Arguments: x_pos (a whole number), y_pos (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_rotate_translate_dialog_position(1, 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-rotate-translate-dialog-position 1 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_stereo_style">set_stereo_style</h3>
+<p>Python: <code>set_stereo_style(mode)</code><br>
+Scheme: <code>(set-stereo-style mode)</code></p>
+<p>set the stereo mode (the relative view of the eyes)</p>
+<p>0 is 2010-mode
+1 is modern mode</p>
+<p>Arguments: mode (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_stereo_style(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-stereo-style 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="side_by_side_stereo_mode">side_by_side_stereo_mode</h3>
+<p>Python: <code>side_by_side_stereo_mode(use_wall_eye_mode)</code><br>
+Scheme: <code>(side-by-side-stereo-mode use-wall-eye-mode)</code></p>
+<p>turn on side bye side stereo mode</p>
+<p>Arguments: use_wall_eye_mode (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>side_by_side_stereo_mode(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(side-by-side-stereo-mode 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="stereo_mode_state">stereo_mode_state</h3>
+<p>Python: <code>stereo_mode_state()</code><br>
+Scheme: <code>(stereo-mode-state)</code></p>
+<p>what is the stero state?</p>
+<p> Returns 1 for in hardware stereo, 2 for side by side stereo, else return 0.</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>stereo_mode_state()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(stereo-mode-state)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="store_graphics_window_position">store_graphics_window_position</h3>
+<p>Python: <code>store_graphics_window_position(x_pos, y_pos)</code><br>
+Scheme: <code>(store-graphics-window-position x-pos y-pos)</code></p>
+<p>store the graphics window position</p>
+<p>Arguments: x_pos (a whole number), y_pos (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>store_graphics_window_position(1, 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(store-graphics-window-position 1 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="zalman_stereo_mode">zalman_stereo_mode</h3>
+<p>Python: <code>zalman_stereo_mode()</code><br>
+Scheme: <code>(zalman-stereo-mode)</code></p>
+<p>try to turn on Zalman stereo mode</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>zalman_stereo_mode()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(zalman-stereo-mode)</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="4c8b7028e63db8030a3afe5d5d19c690bbadb3a3">
+<title>Marking Fixed Atom Interface - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="marking-fixed-atom-interface">Marking Fixed Atom Interface</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Marking Fixed Atom Interface (6 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="clear_all_fixed_atoms">clear_all_fixed_atoms</h3>
+<p>Python: <code>clear_all_fixed_atoms(imol)</code><br>
+Scheme: <code>(clear-all-fixed-atoms imol)</code></p>
+<p>clear all fixed atoms</p>
+<p>Arguments: imol (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>clear_all_fixed_atoms(0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(clear-all-fixed-atoms 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="clear_fixed_atoms_all">clear_fixed_atoms_all</h3>
+<p>Python: <code>clear_fixed_atoms_all()</code><br>
+Scheme: <code>(clear-fixed-atoms-all)</code></p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>clear_fixed_atoms_all()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(clear-fixed-atoms-all)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="mark_atom_as_fixed">mark_atom_as_fixed</h3>
+<p>Python: <code>mark_atom_as_fixed(imol, atom_spec, state)</code><br>
+Scheme: <code>(mark-atom-as-fixed imol atom-spec state)</code></p>
+<p>Arguments: imol (a whole number), atom_spec (a list or value), state (a whole number). Returns: a value (see the result of the example).
+Also available in Python as <code>mark_atom_as_fixed_py</code>.
+Also available in Scheme as <code>mark-atom-as-fixed-scm</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>mark_atom_as_fixed(0, ["A", 41, "", " CA ", ""], 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(mark-atom-as-fixed 0 (list "A" 41 "" " CA " "") 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="mark_multiple_atoms_as_fixed">mark_multiple_atoms_as_fixed</h3>
+<p>Python: <code>mark_multiple_atoms_as_fixed(imol, atom_spec_list, state)</code><br>
+Scheme: <code>(mark-multiple-atoms-as-fixed-scm imol atom-spec-list state)</code></p>
+<p>Arguments: imol (a whole number), atom_spec_list (a list or value), state (a whole number). Returns: a whole number.
+Also available in Python as <code>mark_multiple_atoms_as_fixed_py</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>mark_multiple_atoms_as_fixed(0, ["A", 41, "", " CA ", ""], 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(mark-multiple-atoms-as-fixed-scm 0 (list "A" 41 "" " CA " "") 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_debug_atom_picking">set_debug_atom_picking</h3>
+<p>Python: <code>set_debug_atom_picking(istate)</code><br>
+Scheme: <code>(set-debug-atom-picking istate)</code></p>
+<p>produce debugging output from problematic atom picking</p>
+<p>Arguments: istate (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_debug_atom_picking(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-debug-atom-picking 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="setup_fixed_atom_pick">setup_fixed_atom_pick</h3>
+<p>Python: <code>setup_fixed_atom_pick(ipick, is_unpick)</code><br>
+Scheme: <code>(setup-fixed-atom-pick ipick is-unpick)</code></p>
+<p>Arguments: ipick (a whole number), is_unpick (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>setup_fixed_atom_pick(1, 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(setup-fixed-atom-pick 1 1)</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

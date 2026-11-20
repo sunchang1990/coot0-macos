@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="05f65888fc7dcfc0a8d1cff9cefb9af48e6ca273">
+<title>Jiggle Fit - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="jiggle-fit">Jiggle Fit</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Jiggle Fit (5 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="fit_chain_to_map_by_random_jiggle">fit_chain_to_map_by_random_jiggle</h3>
+<p>Python: <code>fit_chain_to_map_by_random_jiggle(imol, chain_id, n_trials, jiggle_scale_factor)</code><br>
+Scheme: <code>(fit-chain-to-map-by-random-jiggle imol chain-id n-trials jiggle-scale-factor)</code></p>
+<p>jiggle fit the chain to the current refinment map. return &lt; -100 if
+ not possible, else return the new best fit for this chain.</p>
+<p>Arguments: imol (a whole number), chain_id (text), n_trials (a whole number), jiggle_scale_factor (a number). Returns: a number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>fit_chain_to_map_by_random_jiggle(0, "A", 1, 1.0)</code></td><td>ran, returned <code>-999.0</code></td></tr>
+<tr><td>Scheme</td><td><code>(fit-chain-to-map-by-random-jiggle 0 "A" 1 1.0)</code></td><td>ran, returned <code>-999.0</code></td></tr></tbody></table>
+<h3 id="fit_chain_to_map_by_random_jiggle_and_blur">fit_chain_to_map_by_random_jiggle_and_blur</h3>
+<p>Python: <code>fit_chain_to_map_by_random_jiggle_and_blur(imol, chain_id, n_trials, jiggle_scale_factor, map_blur_factor)</code><br>
+Scheme: <code>(fit-chain-to-map-by-random-jiggle-and-blur imol chain-id n-trials jiggle-scale-factor map-blur-factor)</code></p>
+<p>jiggle fit the chain to the current refinment map
+Use a map that is blurred by the give factor for fitting.
+Returns &lt; -100 if not possible, else return the new best fit for this chain.</p>
+<p>Arguments: imol (a whole number), chain_id (text), n_trials (a whole number), jiggle_scale_factor (a number), map_blur_factor (a number). Returns: a number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>fit_chain_to_map_by_random_jiggle_and_blur(0, "A", 1, 1.0, 1.0)</code></td><td>ran, returned <code>-100.0</code></td></tr>
+<tr><td>Scheme</td><td><code>(fit-chain-to-map-by-random-jiggle-and-blur 0 "A" 1 1.0 1.0)</code></td><td>ran, returned <code>-100.0</code></td></tr></tbody></table>
+<h3 id="fit_molecule_to_map_by_random_jiggle">fit_molecule_to_map_by_random_jiggle</h3>
+<p>Python: <code>fit_molecule_to_map_by_random_jiggle(imol, n_trials, jiggle_scale_factor)</code><br>
+Scheme: <code>(fit-molecule-to-map-by-random-jiggle imol n-trials jiggle-scale-factor)</code></p>
+<p>jiggle fit the molecule to the current refinment map. return &lt; -100 if
+ not possible, else return the new best fit for this molecule.</p>
+<p>Arguments: imol (a whole number), n_trials (a whole number), jiggle_scale_factor (a number). Returns: a number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>fit_molecule_to_map_by_random_jiggle(0, 1, 1.0)</code></td><td>ran, returned <code>0.0</code></td></tr>
+<tr><td>Scheme</td><td><code>(fit-molecule-to-map-by-random-jiggle 0 1 1.0)</code></td><td>ran, returned <code>0.0</code></td></tr></tbody></table>
+<h3 id="fit_molecule_to_map_by_random_jiggle_and_blur">fit_molecule_to_map_by_random_jiggle_and_blur</h3>
+<p>Python: <code>fit_molecule_to_map_by_random_jiggle_and_blur(imol, n_trials, jiggle_scale_factor, map_blur_factor)</code><br>
+Scheme: <code>(fit-molecule-to-map-by-random-jiggle-and-blur imol n-trials jiggle-scale-factor map-blur-factor)</code></p>
+<p>jiggle fit the molecule to the current refinment map. return &lt; -100 if
+ not possible, else return the new best fit for this molecule - create a map that is blurred
+ by the given factor for fitting</p>
+<p>Arguments: imol (a whole number), n_trials (a whole number), jiggle_scale_factor (a number), map_blur_factor (a number). Returns: a number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>fit_molecule_to_map_by_random_jiggle_and_blur(0, 1, 1.0, 1.0)</code></td><td>ran, returned <code>0.0</code></td></tr>
+<tr><td>Scheme</td><td><code>(fit-molecule-to-map-by-random-jiggle-and-blur 0 1 1.0 1.0)</code></td><td>ran, returned <code>0.0</code></td></tr></tbody></table>
+<h3 id="fit_to_map_by_random_jiggle">fit_to_map_by_random_jiggle</h3>
+<p>Python: <code>fit_to_map_by_random_jiggle(imol, chain_id, resno, ins_code, n_trials, jiggle_scale_factor)</code><br>
+Scheme: <code>(fit-to-map-by-random-jiggle imol chain-id resno ins-code n-trials jiggle-scale-factor)</code></p>
+<p>jiggle fit to the current refinment map. return &lt; -100 if
+ not possible, else return the new best fit for this residue.</p>
+<p>Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_code (text), n_trials (a whole number), jiggle_scale_factor (a number). Returns: a number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>fit_to_map_by_random_jiggle(0, "A", 41, "", 1, 1.0)</code></td><td>ran, returned <code>19.296470642089844</code></td></tr>
+<tr><td>Scheme</td><td><code>(fit-to-map-by-random-jiggle 0 "A" 41 "" 1 1.0)</code></td><td>ran, returned <code>19.296470642089844</code></td></tr></tbody></table>
+</body></html>

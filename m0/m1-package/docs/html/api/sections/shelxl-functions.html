@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="83f7be201bfbdba02d356ed52ccade5e80e08025">
+<title>SHELXL Functions - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="shelxl-functions">SHELXL Functions</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; SHELXL Functions (6 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="add_shelx_string_to_molecule">add_shelx_string_to_molecule</h3>
+<p>Python: <code>add_shelx_string_to_molecule(imol, string)</code><br>
+Scheme: <code>(add-shelx-string-to-molecule imol string)</code></p>
+<p>Arguments: imol (a whole number), string (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>add_shelx_string_to_molecule(0, "hello")</code></td><td>not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(add-shelx-string-to-molecule 0 "hello")</code></td><td>not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<h3 id="chain_id_for_shelxl_residue_number">chain_id_for_shelxl_residue_number</h3>
+<p>Python: <code>chain_id_for_shelxl_residue_number(imol, resno)</code><br>
+Scheme: <code>(chain-id-for-shelxl-residue-number imol resno)</code></p>
+<p>Returns the chain id for the given residue. Return Py_False if
+ can't do it/fail.</p>
+<p>Arguments: imol (a whole number), resno (a whole number). Returns: a value (see the result of the example).
+Also available in Python as <code>chain_id_for_shelxl_residue_number_py</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>chain_id_for_shelxl_residue_number(0, 41)</code></td><td>not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(chain-id-for-shelxl-residue-number 0 41)</code></td><td>not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<h3 id="handle_shelx_fcf_file_internal">handle_shelx_fcf_file_internal</h3>
+<p>Python: <code>handle_shelx_fcf_file_internal(filename)</code><br>
+Scheme: <code>(handle-shelx-fcf-file-internal filename)</code></p>
+<p>for shelx fcf file that needs to be filtered:</p>
+<p>Arguments: filename (text). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>handle_shelx_fcf_file_internal("tutorial-modern.pdb")</code></td><td>not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(handle-shelx-fcf-file-internal "tutorial-modern.pdb")</code></td><td>not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<h3 id="is_shelx_molecule">is_shelx_molecule</h3>
+<p>Python: <code>is_shelx_molecule(imol)</code><br>
+Scheme: <code>(is-shelx-molecule imol)</code></p>
+<p>return 1 for yes, 0 for invalid imol or no.</p>
+<p>Arguments: imol (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>is_shelx_molecule(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(is-shelx-molecule 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="read_shelx_ins_file">read_shelx_ins_file</h3>
+<p>Python: <code>read_shelx_ins_file(filename, recentre_flag)</code><br>
+Scheme: <code>(read-shelx-ins-file filename recentre-flag)</code></p>
+<p>read a SHELXL .ins file</p>
+<p>Arguments: filename (text), recentre_flag (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>read_shelx_ins_file("tutorial-modern.pdb", 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(read-shelx-ins-file "tutorial-modern.pdb" 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="write_shelx_ins_file">write_shelx_ins_file</h3>
+<p>Python: <code>write_shelx_ins_file(imol, filename)</code><br>
+Scheme: <code>(write-shelx-ins-file imol filename)</code></p>
+<p>write a SHELXL .ins file for molecule number imol</p>
+<p>Arguments: imol (a whole number), filename (text). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>write_shelx_ins_file(0, "tutorial-modern.pdb")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(write-shelx-ins-file 0 "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

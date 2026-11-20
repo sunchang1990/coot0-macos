@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="5dd526fc4428fb24588218bf410f90c8d8754b12">
+<title>single-model view - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="single-model-view">single-model view</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; single-model view (7 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="handle_go_to_residue_keyboarding_mode">handle_go_to_residue_keyboarding_mode</h3>
+<p>Python: <code>handle_go_to_residue_keyboarding_mode(text)</code><br>
+Scheme: <code>(handle-go-to-residue-keyboarding-mode text)</code></p>
+<p>Arguments: text (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>handle_go_to_residue_keyboarding_mode("hello")</code></td><td>error: TypeError: in method 'handle_go_to_residue_keyboarding_mode', argument 1 of type 'gchar const *'</td></tr>
+<tr><td>Scheme</td><td><code>(handle-go-to-residue-keyboarding-mode "hello")</code></td><td>error: In procedure handle-go-to-residue-keyboarding-mode: Wrong type argument in position 1: "hello"</td></tr></tbody></table>
+<h3 id="run_update_self_maybe">run_update_self_maybe</h3>
+<p>Python: <code>run_update_self_maybe()</code><br>
+Scheme: <code>(run-update-self-maybe)</code></p>
+<p>this function is here because it is called by c_inner_main() (ie. need a c interface).</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>run_update_self_maybe()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(run-update-self-maybe)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="show_go_to_residue_keyboarding_mode_window">show_go_to_residue_keyboarding_mode_window</h3>
+<p>Python: <code>show_go_to_residue_keyboarding_mode_window()</code><br>
+Scheme: <code>(show-go-to-residue-keyboarding-mode-window)</code></p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>show_go_to_residue_keyboarding_mode_window()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(show-go-to-residue-keyboarding-mode-window)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="single_model_view_model_number">single_model_view_model_number</h3>
+<p>Python: <code>single_model_view_model_number(imol, imodel)</code><br>
+Scheme: <code>(single-model-view-model-number imol imodel)</code></p>
+<p>put molecule number imol to display only model number imodel</p>
+<p>Arguments: imol (a whole number), imodel (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>single_model_view_model_number(0, 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(single-model-view-model-number 0 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="single_model_view_next_model_number">single_model_view_next_model_number</h3>
+<p>Python: <code>single_model_view_next_model_number(imol)</code><br>
+Scheme: <code>(single-model-view-next-model-number imol)</code></p>
+<p>change the representation to the next model number to be displayed</p>
+<p>return 0 on non-multimodel-molecule.</p>
+<p>Arguments: imol (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>single_model_view_next_model_number(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(single-model-view-next-model-number 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="single_model_view_prev_model_number">single_model_view_prev_model_number</h3>
+<p>Python: <code>single_model_view_prev_model_number(imol)</code><br>
+Scheme: <code>(single-model-view-prev-model-number imol)</code></p>
+<p>change the representation to the previous model number to be displayed</p>
+<p>return 0 on non-multimodel-molecule.</p>
+<p>Arguments: imol (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>single_model_view_prev_model_number(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(single-model-view-prev-model-number 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="single_model_view_this_model_number">single_model_view_this_model_number</h3>
+<p>Python: <code>single_model_view_this_model_number(imol)</code><br>
+Scheme: <code>(single-model-view-this-model-number imol)</code></p>
+<p>the current model number being displayed</p>
+<p>return 0 on non-multimodel-molecule.</p>
+<p>Arguments: imol (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>single_model_view_this_model_number(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(single-model-view-this-model-number 0)</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

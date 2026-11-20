@@ -6,6 +6,7 @@
 #     COOT_AUDIT_BUTTONS=0 ./tests/run-gui-audit.sh             (do not click the buttons inside dialogs)
 #     COOT_AUDIT_HANG=120 ./tests/run-gui-audit.sh              (seconds without progress before Coot is killed and the entry is noted as HANG; default 300)
 HERE="$(cd "$(dirname "$0")/.." && pwd)"
+export COOT0_NO_BROWSER=1   # (build 28) Help entries that open documents only print what they would open
 if [ -n "$COOT_STATE_DIR" ]; then STATE="$COOT_STATE_DIR"                                    # (build 17) explicit
 elif [ -f "$HERE/.coot0-installed" ]; then STATE="$HOME/Library/Application Support/coot0"   # installed by install.sh: per user
 elif [ -w "$HERE" ]; then STATE="$HERE"; else STATE="$HOME/Library/Application Support/Coot-0.9.8.96"; fi

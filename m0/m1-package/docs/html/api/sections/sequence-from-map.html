@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="acbd8330600ff3a5cab5f565193df462ebda783d">
+<title>Sequence from Map - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="sequence-from-map">Sequence from Map</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Sequence from Map (36 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="add_generic_object_bond">add_generic_object_bond</h3>
+<p>Python: <code>add_generic_object_bond(imol1, imol2, atom_spec_1, atom_spec_2, generic_object_number, colour)</code><br>
+Scheme: <code>(add-generic-object-bond imol1 imol2 atom-spec-1 atom-spec-2 generic-object-number colour)</code></p>
+<p>PyObject *symbol_value_from_record(PyObject *record_1, const std::string &amp;symbol);</p>
+<p>Arguments: imol1 (a whole number), imol2 (a whole number), atom_spec_1 (<code>coot::atom_spec_t</code>), atom_spec_2 (<code>coot::atom_spec_t</code>), generic_object_number (a whole number), colour (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<h3 id="apply_sequence_to_fragment">apply_sequence_to_fragment</h3>
+<p>Python: <code>apply_sequence_to_fragment(imol, chain_id, resno_start, resno_end, imol_map, file_name_for_sequences)</code><br>
+Scheme: <code>(apply-sequence-to-fragment imol chain-id resno-start resno-end imol-map file-name-for-sequences)</code></p>
+<p>Arguments: imol (a whole number), chain_id (text), resno_start (a whole number), resno_end (a whole number), imol_map (a whole number), file_name_for_sequences (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>apply_sequence_to_fragment(0, "A", 41, 45, 1, "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(apply-sequence-to-fragment 0 "A" 41 45 1 "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="assign_sequence_to_active_fragment">assign_sequence_to_active_fragment</h3>
+<p>Python: <code>assign_sequence_to_active_fragment()</code><br>
+Scheme: <code>(assign-sequence-to-active-fragment)</code></p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>assign_sequence_to_active_fragment()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(assign-sequence-to-active-fragment)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="atom_spec_from_python_expression">atom_spec_from_python_expression</h3>
+<p>Python: <code>atom_spec_from_python_expression(expr)</code></p>
+<p>Arguments: expr (a list or value). Returns: <code>coot::atom_spec_t</code>.
+<strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<h3 id="atom-spec-from-scm-expression">atom-spec-from-scm-expression</h3>
+<p>Scheme: <code>(atom-spec-from-scm-expression expr)</code></p>
+<p>expects an expr of length 5, ie: (list chain-id res-no ins-cod atom-name alt-conf)</p>
+<p>Arguments: expr (a list or value). Returns: <code>coot::atom_spec_t</code>.
+<strong>Scheme only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<h3 id="atom_spec_to_py">atom_spec_to_py</h3>
+<p>Python: <code>atom_spec_to_py(spec)</code><br>
+Scheme: <code>(atom-spec-to-scm spec)</code></p>
+<p>Arguments: spec (<code>coot::atom_spec_t</code>). Returns: a value (see the result of the example).</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<h3 id="coot_get_url">coot_get_url</h3>
+<p>Python: <code>coot_get_url(url, file_name)</code><br>
+Scheme: <code>(coot-get-url url file-name)</code></p>
+<p>return 0 on success.</p>
+<p>Arguments: url (text), file_name (text). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>coot_get_url("hello", "tutorial-modern.pdb")</code></td><td>not run: not run automatically (url: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(coot-get-url "hello" "tutorial-modern.pdb")</code></td><td>not run: not run automatically (url: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<h3 id="coot_get_url_and_activate_curl_hook">coot_get_url_and_activate_curl_hook</h3>
+<p>Python: <code>coot_get_url_and_activate_curl_hook(url, file_name, do_hook_flag)</code><br>
+Scheme: <code>(coot-get-url-and-activate-curl-hook url file-name do-hook-flag)</code></p>
+<p>Arguments: url (text), file_name (text), do_hook_flag (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>coot_get_url_and_activate_curl_hook("hello", "tutorial-modern.pdb", 1)</code></td><td>not run: not run automatically (curl: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(coot-get-url-and-activate-curl-hook "hello" "tutorial-modern.pdb" 1)</code></td><td>not run: not run automatically (curl: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<h3 id="coot_get_url_as_string">coot_get_url_as_string</h3>
+<p>Python: <code>coot_get_url_as_string(url)</code><br>
+Scheme: <code>(coot-get-url-as-string url)</code></p>
+<p>this handles URLs that are strings, not binaries.</p>
+<p>Arguments: url (text). Returns: a value (see the result of the example).
+Also available in Python as <code>coot_get_url_as_string_py</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>coot_get_url_as_string("hello")</code></td><td>not run: not run automatically (url: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(coot-get-url-as-string "hello")</code></td><td>not run: not run automatically (url: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<h3 id="coot_get_url_as_string_internal">coot_get_url_as_string_internal</h3>
+<p>Python: <code>coot_get_url_as_string_internal(url)</code><br>
+Scheme: <code>(coot-get-url-as-string-internal url)</code></p>
+<p>internal use (strings, not binaries).</p>
+<p>Arguments: url (text). Returns: text.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>coot_get_url_as_string_internal("hello")</code></td><td>not run: not run automatically (url: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(coot-get-url-as-string-internal "hello")</code></td><td>not run: not run automatically (url: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<h3 id="curl_progress_info">curl_progress_info</h3>
+<p>Python: <code>curl_progress_info(file_name)</code><br>
+Scheme: <code>(curl-progress-info file-name)</code></p>
+<p>for the callback of the update binary progress bar. How much done
+is the file that I am downloading? Not absolutely required for python</p>
+<p>Arguments: file_name (text). Returns: a value (see the result of the example).
+Also available in Python as <code>curl_progress_info_py</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>curl_progress_info("tutorial-modern.pdb")</code></td><td>not run: not run automatically (curl: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(curl-progress-info "tutorial-modern.pdb")</code></td><td>not run: not run automatically (curl: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<h3 id="fetch_alphafold_model_for_uniprot_id">fetch_alphafold_model_for_uniprot_id</h3>
+<p>Python: <code>fetch_alphafold_model_for_uniprot_id(uniprot_id)</code><br>
+Scheme: <code>(fetch-alphafold-model-for-uniprot-id uniprot-id)</code></p>
+<p>return the model number</p>
+<p>Arguments: uniprot_id (text). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>fetch_alphafold_model_for_uniprot_id("hello")</code></td><td>not run: not run automatically (fetch: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(fetch-alphafold-model-for-uniprot-id "hello")</code></td><td>not run: not run automatically (fetch: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<h3 id="fetch_and_superpose_alphafold_models">fetch_and_superpose_alphafold_models</h3>
+<p>Python: <code>fetch_and_superpose_alphafold_models(imol)</code><br>
+Scheme: <code>(fetch-and-superpose-alphafold-models imol)</code></p>
+<p>fetch and superpose AlphaFold models corresponding to model
+model must have Uniprot DBREF info in the header.</p>
+<p>Arguments: imol (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>fetch_and_superpose_alphafold_models(0)</code></td><td>not run: not run automatically (fetch: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(fetch-and-superpose-alphafold-models 0)</code></td><td>not run: not run automatically (fetch: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<h3 id="generic_int_vector_to_list_internal">generic_int_vector_to_list_internal</h3>
+<p>Python: <code>generic_int_vector_to_list_internal(v)</code><br>
+Scheme: <code>(generic-int-vector-to-list-internal v)</code></p>
+<p>Arguments: v (a list). Returns: a value (see the result of the example).
+Also available in Python as <code>generic_int_vector_to_list_internal_py</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<h3 id="generic_list_to_string_vector_internal">generic_list_to_string_vector_internal</h3>
+<p>Python: <code>generic_list_to_string_vector_internal(l)</code><br>
+Scheme: <code>(generic-list-to-string-vector-internal l)</code></p>
+<p>Arguments: l (a list or value). Returns: a list.
+Also available in Python as <code>generic_list_to_string_vector_internal_py</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<h3 id="generic_string_vector_to_list_internal">generic_string_vector_to_list_internal</h3>
+<p>Python: <code>generic_string_vector_to_list_internal(v)</code><br>
+Scheme: <code>(generic-string-vector-to-list-internal v)</code></p>
+<p>Arguments: v (a list). Returns: a value (see the result of the example).
+Also available in Python as <code>generic_string_vector_to_list_internal_py</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>generic_string_vector_to_list_internal("hello")</code></td><td>ran, returned <code>['h', 'e', 'l', 'l', 'o']</code></td></tr>
+<tr><td>Scheme</td><td><code>(generic-string-vector-to-list-internal "hello")</code></td><td>error: In procedure generic-string-vector-to-list-internal: Wrong type argument in position 1: "hello"</td></tr></tbody></table>
+<h3 id="get_coords_for_accession_code">get_coords_for_accession_code</h3>
+<p>Python: <code>get_coords_for_accession_code(code)</code><br>
+Scheme: <code>(get-coords-for-accession-code code)</code></p>
+<p>if possible, read in the new coords getting coords via web.</p>
+<p>(no return value because get-url-str does not return one).</p>
+<p>Arguments: code (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>get_coords_for_accession_code("hello")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(get-coords-for-accession-code "hello")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="get_drug_mdl_via_wikipedia_and_drugbank">get_drug_mdl_via_wikipedia_and_drugbank</h3>
+<p>Python: <code>get_drug_mdl_via_wikipedia_and_drugbank(drugname)</code><br>
+Scheme: <code>(get-drug-mdl-via-wikipedia-and-drugbank drugname)</code></p>
+<p>Arguments: drugname (text). Returns: text.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>get_drug_mdl_via_wikipedia_and_drugbank("my-name")</code></td><td>ran, returned <code>''</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-drug-mdl-via-wikipedia-and-drugbank "my-name")</code></td><td>ran, returned <code>""</code></td></tr></tbody></table>
+<h3 id="inverse_rtop">inverse_rtop</h3>
+<p>Python: <code>inverse_rtop(rtop_py)</code><br>
+Scheme: <code>(inverse-rtop rtop-scm)</code></p>
+<p>Arguments: rtop_py (a list or value). Returns: a value (see the result of the example).
+Also available in Python as <code>inverse_rtop_py</code>.
+Also available in Scheme as <code>inverse-rtop-scm</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<h3 id="is_interesting_dots_object_next_p">is_interesting_dots_object_next_p</h3>
+<p>Python: <code>is_interesting_dots_object_next_p(vs)</code><br>
+Scheme: <code>(is-interesting-dots-object-next-p vs)</code></p>
+<p>return a clean name and a flag to say that this was something that
+we were interested to make a graphics object from (rather than just
+header info)</p>
+<p>Arguments: vs (a list). Returns: text.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>is_interesting_dots_object_next_p("hello")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(is-interesting-dots-object-next-p "hello")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="make_complementary_dotted_surfaces">make_complementary_dotted_surfaces</h3>
+<p>Python: <code>make_complementary_dotted_surfaces(imol_1, imol_2, r1, r2)</code><br>
+Scheme: <code>(make-complementary-dotted-surfaces imol-1 imol-2 r1 r2)</code></p>
+<p>Arguments: imol_1 (a whole number), imol_2 (a whole number), r1 (a list), r2 (a list). Returns: <code>clipper::Coord_orth</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<h3 id="orient_view">orient_view</h3>
+<p>Python: <code>orient_view(imol, central_residue_spec, neighbour_residue_spec)</code><br>
+Scheme: <code>(orient-view imol central-residue-spec neighbour-residue-spec)</code></p>
+<p>orient the graphics somehow so that the interaction between
+central_residue and neighbour_residue is perpendicular to screen z.</p>
+<p>Arguments: imol (a whole number), central_residue_spec (<code>coot::residue_spec_t</code>), neighbour_residue_spec (<code>// ligand typically  coot::residue_spec_t</code>). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<h3 id="pisa_interfaces_display_only">pisa_interfaces_display_only</h3>
+<p>Python: <code>pisa_interfaces_display_only(imol_1, imol_2, centre_pt)</code><br>
+Scheme: <code>(pisa-interfaces-display-only imol-1 imol-2 centre-pt)</code></p>
+<p>Arguments: imol_1 (a whole number), imol_2 (a whole number), centre_pt (<code>clipper::Coord_orth</code>). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<h3 id="residue_records_list_py_to_residue_specs">residue_records_list_py_to_residue_specs</h3>
+<p>Python: <code>residue_records_list_py_to_residue_specs(mol_1_residue_records, chain_id)</code></p>
+<p>Arguments: mol_1_residue_records (a list or value), chain_id (text). Returns: a list.
+<strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<h3 id="residue-records-list-scm-to-residue-specs">residue-records-list-scm-to-residue-specs</h3>
+<p>Scheme: <code>(residue-records-list-scm-to-residue-specs mol-1-residue-records chain-id)</code></p>
+<p>Arguments: mol-1-residue-records (a list or value), chain-id (text). Returns: a list.
+<strong>Scheme only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<h3 id="rtop-to-scm">rtop-to-scm</h3>
+<p>Scheme: <code>(rtop-to-scm rtop)</code></p>
+<p>Arguments: rtop (<code>clipper::RTop_orth</code>). Returns: a value (see the result of the example).
+<strong>Scheme only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<h3 id="rtop_to_python">rtop_to_python</h3>
+<p>Python: <code>rtop_to_python(rtop)</code></p>
+<p>Arguments: rtop (<code>clipper::RTop_orth</code>). Returns: a value (see the result of the example).
+<strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<h3 id="sequence_from_map">sequence_from_map</h3>
+<p>Python: <code>sequence_from_map(imol, chain_id, resno_start, resno_end, imol_map)</code><br>
+Scheme: <code>(sequence-from-map imol chain-id resno-start resno-end imol-map)</code></p>
+<p>Arguments: imol (a whole number), chain_id (text), resno_start (a whole number), resno_end (a whole number), imol_map (a whole number). Returns: text.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>sequence_from_map(0, "A", 41, 45, 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(sequence-from-map 0 "A" 41 45 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_display_control_button_state">set_display_control_button_state</h3>
+<p>Python: <code>set_display_control_button_state(imol, button_type, state)</code><br>
+Scheme: <code>(set-display-control-button-state imol button-type state)</code></p>
+<p>Arguments: imol (a whole number), button_type (text), state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_display_control_button_state(0, "hello", 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-display-control-button-state 0 "hello" 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="stop_curl_download">stop_curl_download</h3>
+<p>Python: <code>stop_curl_download(file_name)</code><br>
+Scheme: <code>(stop-curl-download file-name)</code></p>
+<p>Arguments: file_name (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>stop_curl_download("tutorial-modern.pdb")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(stop-curl-download "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="symbol-value-from-record">symbol-value-from-record</h3>
+<p>Scheme: <code>(symbol-value-from-record record-1 symbol)</code></p>
+<p>Arguments: record-1 (a list or value), symbol (text). Returns: a value (see the result of the example).
+<strong>Scheme only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<h3 id="topological_equivalence_chiral_centres">topological_equivalence_chiral_centres</h3>
+<p>Python: <code>topological_equivalence_chiral_centres(residue_type)</code><br>
+Scheme: <code>(topological-equivalence-chiral-centres residue-type)</code></p>
+<p>return a list of chiral centre ids as determined from topological
+ equivalence analysis based on the bond info (and element names).</p>
+<p>Arguments: residue_type (text). Returns: a list.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>topological_equivalence_chiral_centres("ALA")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(topological-equivalence-chiral-centres "ALA")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="untangle_mmdb_chain_id_string">untangle_mmdb_chain_id_string</h3>
+<p>Python: <code>untangle_mmdb_chain_id_string(mmdb_chain_id_in)</code><br>
+Scheme: <code>(untangle-mmdb-chain-id-string mmdb-chain-id-in)</code></p>
+<p>Arguments: mmdb_chain_id_in (text). Returns: text.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>untangle_mmdb_chain_id_string("A")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(untangle-mmdb-chain-id-string "A")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="wrapped_curl_easy_perform">wrapped_curl_easy_perform</h3>
+<p>Python: <code>wrapped_curl_easy_perform(data)</code><br>
+Scheme: <code>(wrapped-curl-easy-perform data)</code></p>
+<p>Arguments: data (<code>void *</code>). Returns: <code>void *</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<h3 id="write_coot_curl_data">write_coot_curl_data</h3>
+<p>Python: <code>write_coot_curl_data(buffer, size, nmemb, userp)</code><br>
+Scheme: <code>(write-coot-curl-data buffer size nmemb userp)</code></p>
+<p>internal use</p>
+<p>Arguments: buffer (<code>void *</code>), size (a whole number), nmemb (a whole number), userp (<code>void *</code>). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<h3 id="write_coot_curl_data_to_file">write_coot_curl_data_to_file</h3>
+<p>Python: <code>write_coot_curl_data_to_file(buffer, size, nmemb, userp)</code><br>
+Scheme: <code>(write-coot-curl-data-to-file buffer size nmemb userp)</code></p>
+<p>internal use</p>
+<p>Arguments: buffer (<code>void *</code>), size (a whole number), nmemb (a whole number), userp (<code>void *</code>). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+</body></html>

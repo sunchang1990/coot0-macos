@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="5e458e5cf4a6e03368fd9f2262c333b1357ad8bb">
+<title>Residue Environment Functions - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="residue-environment-functions">Residue Environment Functions</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Residue Environment Functions (11 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="add_atom_geometry_distance">add_atom_geometry_distance</h3>
+<p>Python: <code>add_atom_geometry_distance(imol_1, atom_spec_1, imol_2, atom_spec_2)</code><br>
+Scheme: <code>(add-atom-geometry-distance-scm imol-1 atom-spec-1 imol-2 atom-spec-2)</code></p>
+<p>Arguments: imol_1 (a whole number), atom_spec_1 (a list or value), imol_2 (a whole number), atom_spec_2 (a list or value). Returns: a number.
+Also available in Python as <code>add_atom_geometry_distance_py</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>add_atom_geometry_distance(0, ["A", 41, "", " CA ", ""], 0, ["A", 41, "", " CA ", ""])</code></td><td>ran, returned <code>0.0</code></td></tr>
+<tr><td>Scheme</td><td><code>(add-atom-geometry-distance-scm 0 (list "A" 41 "" " CA " "") 0 (list "A" 41 "" " CA " ""))</code></td><td>ran, returned <code>0.0</code></td></tr></tbody></table>
+<h3 id="add_geometry_distance">add_geometry_distance</h3>
+<p>Python: <code>add_geometry_distance(imol_1, x_1, y_1, z_1, imol_2, x_2, y_2, z_2)</code><br>
+Scheme: <code>(add-geometry-distance imol-1 x-1 y-1 z-1 imol-2 x-2 y-2 z-2)</code></p>
+<p>Add a geometry distance between points in a given molecule</p>
+<p>Returns the distance between the points</p>
+<p>Arguments: imol_1 (a whole number), x_1 (a number), y_1 (a number), z_1 (a number), imol_2 (a whole number), x_2 (a number), y_2 (a number), z_2 (a number). Returns: a number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>add_geometry_distance(0, 1.0, 1.0, 1.0, 0, 1.0, 1.0, 1.0)</code></td><td>ran, returned <code>0.0</code></td></tr>
+<tr><td>Scheme</td><td><code>(add-geometry-distance 0 1.0 1.0 1.0 0 1.0 1.0 1.0)</code></td><td>ran, returned <code>0.0</code></td></tr></tbody></table>
+<h3 id="label_atoms_in_residue">label_atoms_in_residue</h3>
+<p>Python: <code>label_atoms_in_residue()</code><br>
+Scheme: <code>(label-atoms-in-residue)</code></p>
+<p>Label the atoms in the central residue</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>label_atoms_in_residue()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(label-atoms-in-residue)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="label_neighbours">label_neighbours</h3>
+<p>Python: <code>label_neighbours()</code><br>
+Scheme: <code>(label-neighbours)</code></p>
+<p>Label the atoms in the residues around the central residue</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>label_neighbours()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(label-neighbours)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_environment_distances_distance_limits">set_environment_distances_distance_limits</h3>
+<p>Python: <code>set_environment_distances_distance_limits(min_dist, max_dist)</code><br>
+Scheme: <code>(set-environment-distances-distance-limits min-dist max-dist)</code></p>
+<p>min and max distances for the environment distances</p>
+<p>Arguments: min_dist (a number), max_dist (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_environment_distances_distance_limits(1.0, 1.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-environment-distances-distance-limits 1.0 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_environment_distances_label_atom">set_environment_distances_label_atom</h3>
+<p>Python: <code>set_environment_distances_label_atom(state)</code><br>
+Scheme: <code>(set-environment-distances-label-atom state)</code></p>
+<p>Label the atom on Environment Distances start/change</p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_environment_distances_label_atom(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-environment-distances-label-atom 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_show_environment_distances">set_show_environment_distances</h3>
+<p>Python: <code>set_show_environment_distances(state)</code><br>
+Scheme: <code>(set-show-environment-distances state)</code></p>
+<p>show environment distances. If state is 0, distances are
+ turned off, otherwise distances are turned on.</p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_show_environment_distances(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-show-environment-distances 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_show_environment_distances_as_solid">set_show_environment_distances_as_solid</h3>
+<p>Python: <code>set_show_environment_distances_as_solid(state)</code><br>
+Scheme: <code>(set-show-environment-distances-as-solid state)</code></p>
+<p>show the environment distances with solid modelling</p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_show_environment_distances_as_solid(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-show-environment-distances-as-solid 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_show_environment_distances_bumps">set_show_environment_distances_bumps</h3>
+<p>Python: <code>set_show_environment_distances_bumps(state)</code><br>
+Scheme: <code>(set-show-environment-distances-bumps state)</code></p>
+<p>show bumps environment distances. If state is 0, bump distances are
+ turned off, otherwise bump distances are turned on.</p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_show_environment_distances_bumps(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-show-environment-distances-bumps 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_show_environment_distances_h_bonds">set_show_environment_distances_h_bonds</h3>
+<p>Python: <code>set_show_environment_distances_h_bonds(state)</code><br>
+Scheme: <code>(set-show-environment-distances-h-bonds state)</code></p>
+<p>show H-bond environment distances. If state is 0, bump distances are
+ turned off, otherwise H-bond distances are turned on.</p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_show_environment_distances_h_bonds(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-show-environment-distances-h-bonds 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="show_environment_distances_state">show_environment_distances_state</h3>
+<p>Python: <code>show_environment_distances_state()</code><br>
+Scheme: <code>(show-environment-distances-state)</code></p>
+<p>show the state of display of the environment distances</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>show_environment_distances_state()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(show-environment-distances-state)</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

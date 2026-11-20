@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="a76d541e70d6b7900afbda1c6c372bd2bc997d4b">
+<title>Masks - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="masks">Masks</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Masks (5 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="make_masked_maps_split_by_chain">make_masked_maps_split_by_chain</h3>
+<p>Python: <code>make_masked_maps_split_by_chain(imol, imol_map)</code><br>
+Scheme: <code>(make-masked-maps-split-by-chain imol imol-map)</code></p>
+<p>make chain masked maps</p>
+<p> needs to return a list of values</p>
+<p>Arguments: imol (a whole number), imol_map (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>make_masked_maps_split_by_chain(0, 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(make-masked-maps-split-by-chain 0 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="map_mask_atom_radius">map_mask_atom_radius</h3>
+<p>Python: <code>map_mask_atom_radius()</code><br>
+Scheme: <code>(map-mask-atom-radius)</code></p>
+<p>get the atom radius for map masking</p>
+<p>Arguments: none. Returns: a number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>map_mask_atom_radius()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(map-mask-atom-radius)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="mask_map_by_atom_selection">mask_map_by_atom_selection</h3>
+<p>Python: <code>mask_map_by_atom_selection(map_mol_no, coords_mol_no, mmdb_atom_selection, invert_flag)</code><br>
+Scheme: <code>(mask-map-by-atom-selection map-mol-no coords-mol-no mmdb-atom-selection invert-flag)</code></p>
+<p>mask map by atom selection</p>
+<p>Arguments: map_mol_no (a whole number), coords_mol_no (a whole number), mmdb_atom_selection (text), invert_flag (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>mask_map_by_atom_selection(1, 1, "//A/41-45", 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(mask-map-by-atom-selection 1 1 "//A/41-45" 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="mask_map_by_molecule">mask_map_by_molecule</h3>
+<p>Python: <code>mask_map_by_molecule(map_mol_no, coord_mol_no, invert_flag)</code><br>
+Scheme: <code>(mask-map-by-molecule map-mol-no coord-mol-no invert-flag)</code></p>
+<p>generate a new map that has been masked by some coordinates</p>
+<p> (mask-map-by-molecule map-no mol-no invert?) creates and
+ displays a masked map, cuts down density where the coordinates
+ are (invert is 0). If invert? is 1, cut the density down
+ where there are no atoms atoms.</p>
+<p>Arguments: map_mol_no (a whole number), coord_mol_no (a whole number), invert_flag (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>mask_map_by_molecule(1, 1, 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(mask-map-by-molecule 1 1 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_map_mask_atom_radius">set_map_mask_atom_radius</h3>
+<p>Python: <code>set_map_mask_atom_radius(rad)</code><br>
+Scheme: <code>(set-map-mask-atom-radius rad)</code></p>
+<p>set the atom radius for map masking</p>
+<p>Arguments: rad (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_map_mask_atom_radius(5.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-map-mask-atom-radius 5.0)</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

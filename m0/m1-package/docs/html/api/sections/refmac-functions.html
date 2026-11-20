@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="d53fb120c90b4f43709a5c4506ef80ae64f44c28">
+<title>Refmac Functions - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="refmac-functions">Refmac Functions</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Refmac Functions (6 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="get_refmac_sad_atom_info">get_refmac_sad_atom_info</h3>
+<p>Python: <code>get_refmac_sad_atom_info()</code><br>
+Scheme: <code>(get-refmac-sad-atom-info)</code></p>
+<p>Arguments: none. Returns: a value (see the result of the example).
+Also available in Python as <code>get_refmac_sad_atom_info_py</code>.
+Also available in Scheme as <code>get-refmac-sad-atom-info-scm</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>get_refmac_sad_atom_info()</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(get-refmac-sad-atom-info)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<h3 id="keep_map_colour_after_refmac_state">keep_map_colour_after_refmac_state</h3>
+<p>Python: <code>keep_map_colour_after_refmac_state()</code><br>
+Scheme: <code>(keep-map-colour-after-refmac-state)</code></p>
+<p>the keep-map-colour-after-refmac internal state</p>
+<p> Returns 1 for "yes", 0 for "no"</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>keep_map_colour_after_refmac_state()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(keep-map-colour-after-refmac-state)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="refmac_runs_with_nolabels">refmac_runs_with_nolabels</h3>
+<p>Python: <code>refmac_runs_with_nolabels()</code><br>
+Scheme: <code>(refmac-runs-with-nolabels)</code></p>
+<p>refmac vresion testing, returns 1 for new refmac (&gt;5.3) otherwise 0</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>refmac_runs_with_nolabels()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(refmac-runs-with-nolabels)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_keep_map_colour_after_refmac">set_keep_map_colour_after_refmac</h3>
+<p>Python: <code>set_keep_map_colour_after_refmac(istate)</code><br>
+Scheme: <code>(set-keep-map-colour-after-refmac istate)</code></p>
+<p>flag to enable above</p>
+<p>call this with istate=1</p>
+<p>Arguments: istate (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_keep_map_colour_after_refmac(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-keep-map-colour-after-refmac 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_refmac_counter">set_refmac_counter</h3>
+<p>Python: <code>set_refmac_counter(imol, refmac_count)</code><br>
+Scheme: <code>(set-refmac-counter imol refmac-count)</code></p>
+<p>set counter for runs of refmac so that this can be used to
+ construct a unique filename for new output</p>
+<p>Arguments: imol (a whole number), refmac_count (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_refmac_counter(0, 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-refmac-counter 0 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="swap_map_colours">swap_map_colours</h3>
+<p>Python: <code>swap_map_colours(imol1, imol2)</code><br>
+Scheme: <code>(swap-map-colours imol1 imol2)</code></p>
+<p>swap the colours of maps</p>
+<p> swap the colour of maps imol1 and imol2. Useful to some after
+ running refmac, so that the map to be build into is always the same
+ colour</p>
+<p>Arguments: imol1 (a whole number), imol2 (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>swap_map_colours(0, 0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(swap-map-colours 0 0)</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

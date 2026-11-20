@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="915ad7703a67c69cb6d3d0756030d9752ef0ade7">
+<title>Add Terminal Residue Functions - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="add-terminal-residue-functions">Add Terminal Residue Functions</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Add Terminal Residue Functions (15 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="add_nucleotide">add_nucleotide</h3>
+<p>Python: <code>add_nucleotide(imol, chain_id, res_no)</code><br>
+Scheme: <code>(add-nucleotide imol chain-id res-no)</code></p>
+<p>Add a terminal nucleotide</p>
+<p>No fitting is done</p>
+<p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>add_nucleotide(0, "A", 41)</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(add-nucleotide 0 "A" 41)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<h3 id="add_terminal_residue">add_terminal_residue</h3>
+<p>Python: <code>add_terminal_residue(imol, chain_id, residue_number, residue_type, immediate_add)</code><br>
+Scheme: <code>(add-terminal-residue imol chain-id residue-number residue-type immediate-add)</code></p>
+<p>Add a terminal residue</p>
+<p>residue type can be "auto" and immediate_add is recommended to be 1.</p>
+<p>Returns 0 on failure, 1 on success</p>
+<p>Arguments: imol (a whole number), chain_id (text), residue_number (a whole number), residue_type (text), immediate_add (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>add_terminal_residue(0, "A", 41, "ALA", 1)</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(add-terminal-residue 0 "A" 41 "ALA" 1)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<h3 id="add_terminal_residue_do_post_refine_state">add_terminal_residue_do_post_refine_state</h3>
+<p>Python: <code>add_terminal_residue_do_post_refine_state()</code><br>
+Scheme: <code>(add-terminal-residue-do-post-refine-state)</code></p>
+<p>what is the value of the previous flag?</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>add_terminal_residue_do_post_refine_state()</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(add-terminal-residue-do-post-refine-state)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<h3 id="add_terminal_residue_immediate_addition_state">add_terminal_residue_immediate_addition_state</h3>
+<p>Python: <code>add_terminal_residue_immediate_addition_state()</code><br>
+Scheme: <code>(add-terminal-residue-immediate-addition-state)</code></p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>add_terminal_residue_immediate_addition_state()</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(add-terminal-residue-immediate-addition-state)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<h3 id="add_terminal_residue_using_phi_psi">add_terminal_residue_using_phi_psi</h3>
+<p>Python: <code>add_terminal_residue_using_phi_psi(imol, chain_id, res_no, residue_type, phi, psi)</code><br>
+Scheme: <code>(add-terminal-residue-using-phi-psi imol chain-id res-no residue-type phi psi)</code></p>
+<p>Add a terminal residue using given phi and psi angles</p>
+<p>Returns the success status, 0 on failure, 1 on success</p>
+<p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), residue_type (text), phi (a number), psi (a number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>add_terminal_residue_using_phi_psi(0, "A", 41, "ALA", 10.0, 10.0)</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(add-terminal-residue-using-phi-psi 0 "A" 41 "ALA" 10.0 10.0)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<h3 id="do_add_terminal_residue">do_add_terminal_residue</h3>
+<p>Python: <code>do_add_terminal_residue(state)</code><br>
+Scheme: <code>(do-add-terminal-residue state)</code></p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>do_add_terminal_residue(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(do-add-terminal-residue 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="find_terminal_residue_type">find_terminal_residue_type</h3>
+<p>Python: <code>find_terminal_residue_type(imol, chain_id, resno)</code><br>
+Scheme: <code>(find-terminal-residue-type imol chain-id resno)</code></p>
+<p>Arguments: imol (a whole number), chain_id (text), resno (a whole number). Returns: a value (see the result of the example).
+Also available in Python as <code>find_terminal_residue_type_py</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>find_terminal_residue_type(0, "A", 41)</code></td><td>ran, returned <code>False</code></td></tr>
+<tr><td>Scheme</td><td><code>(find-terminal-residue-type 0 "A" 41)</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<h3 id="set_add_terminal_residue_add_other_residue_flag">set_add_terminal_residue_add_other_residue_flag</h3>
+<p>Python: <code>set_add_terminal_residue_add_other_residue_flag(i)</code><br>
+Scheme: <code>(set-add-terminal-residue-add-other-residue-flag i)</code></p>
+<p>Add Terminal Residues actually build 2 residues, this allows us to
+ see both residues - default is 0 (off).</p>
+<p>Arguments: i (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_add_terminal_residue_add_other_residue_flag(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-add-terminal-residue-add-other-residue-flag 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_add_terminal_residue_debug_trials">set_add_terminal_residue_debug_trials</h3>
+<p>Python: <code>set_add_terminal_residue_debug_trials(debug_state)</code><br>
+Scheme: <code>(set-add-terminal-residue-debug-trials debug-state)</code></p>
+<p>remove this for 0.9, wraps above</p>
+<p>Arguments: debug_state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_add_terminal_residue_debug_trials(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-add-terminal-residue-debug-trials 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_add_terminal_residue_default_residue_type">set_add_terminal_residue_default_residue_type</h3>
+<p>Python: <code>set_add_terminal_residue_default_residue_type(type)</code><br>
+Scheme: <code>(set-add-terminal-residue-default-residue-type type)</code></p>
+<p>set the residue type of an added terminal residue.</p>
+<p>Arguments: type (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_add_terminal_residue_default_residue_type("ALA")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-add-terminal-residue-default-residue-type "ALA")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_add_terminal_residue_do_post_refine">set_add_terminal_residue_do_post_refine</h3>
+<p>Python: <code>set_add_terminal_residue_do_post_refine(istat)</code><br>
+Scheme: <code>(set-add-terminal-residue-do-post-refine istat)</code></p>
+<p>set a flag to run refine zone on terminal residues after an
+ addition.</p>
+<p>Arguments: istat (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_add_terminal_residue_do_post_refine(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-add-terminal-residue-do-post-refine 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_add_terminal_residue_do_rigid_body_refine">set_add_terminal_residue_do_rigid_body_refine</h3>
+<p>Python: <code>set_add_terminal_residue_do_rigid_body_refine(v)</code><br>
+Scheme: <code>(set-add-terminal-residue-do-rigid-body-refine v)</code></p>
+<p>Arguments: v (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_add_terminal_residue_do_rigid_body_refine(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-add-terminal-residue-do-rigid-body-refine 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_add_terminal_residue_immediate_addition">set_add_terminal_residue_immediate_addition</h3>
+<p>Python: <code>set_add_terminal_residue_immediate_addition(i)</code><br>
+Scheme: <code>(set-add-terminal-residue-immediate-addition i)</code></p>
+<p>set immediate addition of terminal residue</p>
+<p>call with i=1 for immediate addtion</p>
+<p>Arguments: i (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_add_terminal_residue_immediate_addition(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-add-terminal-residue-immediate-addition 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_add_terminal_residue_n_phi_psi_trials">set_add_terminal_residue_n_phi_psi_trials</h3>
+<p>Python: <code>set_add_terminal_residue_n_phi_psi_trials(n)</code><br>
+Scheme: <code>(set-add-terminal-residue-n-phi-psi-trials n)</code></p>
+<p>mmdb_manager.h)</p>
+<p>Arguments: n (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_add_terminal_residue_n_phi_psi_trials(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-add-terminal-residue-n-phi-psi-trials 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_terminal_residue_do_rigid_body_refine">set_terminal_residue_do_rigid_body_refine</h3>
+<p>Python: <code>set_terminal_residue_do_rigid_body_refine(v)</code><br>
+Scheme: <code>(set-terminal-residue-do-rigid-body-refine v)</code></p>
+<p>Arguments: v (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_terminal_residue_do_rigid_body_refine(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-terminal-residue-do-rigid-body-refine 1)</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

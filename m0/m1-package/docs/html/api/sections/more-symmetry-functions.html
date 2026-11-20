@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="9e15e33f66b9d94bd5edefbf31a9a1f7035b2e04">
+<title>More Symmetry Functions - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="more-symmetry-functions">More Symmetry Functions</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; More Symmetry Functions (5 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="add_molecular_symmetry">add_molecular_symmetry</h3>
+<p>Python: <code>add_molecular_symmetry(imol, r_00, r_01, r_02, r_10, r_11, r_12, r_20, r_21, r_22, about_origin_x, about_origin_y, about_origin_z)</code><br>
+Scheme: <code>(add-molecular-symmetry imol r-00 r-01 r-02 r-10 r-11 r-12 r-20 r-21 r-22 about-origin-x about-origin-y about-origin-z)</code></p>
+<p>Arguments: imol (a whole number), r_00 (a number), r_01 (a number), r_02 (a number), r_10 (a number), r_11 (a number), r_12 (a number), r_20 (a number), r_21 (a number), r_22 (a number), about_origin_x (a number), about_origin_y (a number), about_origin_z (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>add_molecular_symmetry(0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(add-molecular-symmetry 0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="add_molecular_symmetry_from_mtrix_from_file">add_molecular_symmetry_from_mtrix_from_file</h3>
+<p>Python: <code>add_molecular_symmetry_from_mtrix_from_file(imol, file_name)</code><br>
+Scheme: <code>(add-molecular-symmetry-from-mtrix-from-file imol file-name)</code></p>
+<p>Arguments: imol (a whole number), file_name (text). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>add_molecular_symmetry_from_mtrix_from_file(0, "tutorial-modern.pdb")</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(add-molecular-symmetry-from-mtrix-from-file 0 "tutorial-modern.pdb")</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<h3 id="add_molecular_symmetry_from_mtrix_from_self_file">add_molecular_symmetry_from_mtrix_from_self_file</h3>
+<p>Python: <code>add_molecular_symmetry_from_mtrix_from_self_file(imol)</code><br>
+Scheme: <code>(add-molecular-symmetry-from-mtrix-from-self-file imol)</code></p>
+<p>Arguments: imol (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>add_molecular_symmetry_from_mtrix_from_self_file(0)</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(add-molecular-symmetry-from-mtrix-from-self-file 0)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<h3 id="clashes_with_symmetry">clashes_with_symmetry</h3>
+<p>Python: <code>clashes_with_symmetry(imol, chain_id, res_no, ins_code, clash_dist)</code><br>
+Scheme: <code>(clashes-with-symmetry imol chain-id res-no ins-code clash-dist)</code></p>
+<p>return 1 if this residue clashes with the symmetry-related
+ atoms of the same molecule.
+0 means that it did not clash,
+-1 means that the residue or molecule could not be found or that there
+ was no cell and symmetry.</p>
+<p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text), clash_dist (a number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>clashes_with_symmetry(0, "A", 41, "", 1.0)</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(clashes-with-symmetry 0 "A" 41 "" 1.0)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<h3 id="get_symmetry">get_symmetry</h3>
+<p>Python: <code>get_symmetry(imol)</code><br>
+Scheme: <code>(get-symmetry imol)</code></p>
+<p>return a python object as a list (or some other python container)</p>
+<p>Arguments: imol (a whole number). Returns: a value (see the result of the example).
+Also available in Python as <code>get_symmetry_py</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>get_symmetry(0)</code></td><td>ran, returned <code>['x,y,z', '-x+1/2,-y,z+1/2', 'x+1/2,-y+1/2,-z', '-x,y+1/2,-z+1/2']</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-symmetry 0)</code></td><td>ran, returned <code>("x,y,z" "-x+1/2,-y,z+1/2" "x+1/2,-y+1/2,-z" "-x,y+1/2,-z+1/2")</code></td></tr></tbody></table>
+</body></html>

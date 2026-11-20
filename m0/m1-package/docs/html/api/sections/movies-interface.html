@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="103085ae1164bfc19d9e3aa7247ffa207537c833">
+<title>Movies Interface - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="movies-interface">Movies Interface</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Movies Interface (5 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="movie_file_name_prefix">movie_file_name_prefix</h3>
+<p>Python: <code>movie_file_name_prefix()</code><br>
+Scheme: <code>(movie-file-name-prefix)</code></p>
+<p>Arguments: none. Returns: a value (see the result of the example).
+Also available in Python as <code>movie_file_name_prefix_py</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>movie_file_name_prefix()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(movie-file-name-prefix)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="movie_frame_number">movie_frame_number</h3>
+<p>Python: <code>movie_frame_number()</code><br>
+Scheme: <code>(movie-frame-number)</code></p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>movie_frame_number()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(movie-frame-number)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_make_movie_mode">set_make_movie_mode</h3>
+<p>Python: <code>set_make_movie_mode(make_movies_flag)</code><br>
+Scheme: <code>(set-make-movie-mode make-movies-flag)</code></p>
+<p>Arguments: make_movies_flag (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_make_movie_mode(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-make-movie-mode 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_movie_file_name_prefix">set_movie_file_name_prefix</h3>
+<p>Python: <code>set_movie_file_name_prefix(file_name)</code><br>
+Scheme: <code>(set-movie-file-name-prefix file-name)</code></p>
+<p>Arguments: file_name (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_movie_file_name_prefix("tutorial-modern.pdb")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-movie-file-name-prefix "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_movie_frame_number">set_movie_frame_number</h3>
+<p>Python: <code>set_movie_frame_number(frame_number)</code><br>
+Scheme: <code>(set-movie-frame-number frame-number)</code></p>
+<p>Arguments: frame_number (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_movie_frame_number(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-movie-frame-number 1)</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

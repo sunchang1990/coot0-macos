@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="52e0a1484967c336b1e349771a3723371a2f137c">
+<title>curlew - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="curlew">curlew</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; curlew (3 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="register_extension">register_extension</h3>
+<p>Python: <code>register_extension(name, version)</code><br>
+Scheme: <code>(register-extension name version)</code></p>
+<p>register an extension</p>
+<p>Arguments: name (text), version (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>register_extension("my-name", "hello")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(register-extension "my-name" "hello")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="remove_file_curlew_menu_item_maybe">remove_file_curlew_menu_item_maybe</h3>
+<p>Python: <code>remove_file_curlew_menu_item_maybe()</code><br>
+Scheme: <code>(remove-file-curlew-menu-item-maybe)</code></p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>remove_file_curlew_menu_item_maybe()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(remove-file-curlew-menu-item-maybe)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="version_for_extension">version_for_extension</h3>
+<p>Python: <code>version_for_extension(name)</code><br>
+Scheme: <code>(version-for-extension name)</code></p>
+<p>Arguments: name (text). Returns: text.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>version_for_extension("my-name")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(version-for-extension "my-name")</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

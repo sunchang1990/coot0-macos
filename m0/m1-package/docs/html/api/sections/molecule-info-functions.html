@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="36656e51224e94435f7326270e4f7f65a3324538">
+<title>Molecule Info Functions - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="molecule-info-functions">Molecule Info Functions</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Molecule Info Functions (26 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="add_header_secondary_structure_info">add_header_secondary_structure_info</h3>
+<p>Python: <code>add_header_secondary_structure_info(imol)</code><br>
+Scheme: <code>(add-header-secondary-structure-info imol)</code></p>
+<p>add secondary structure info to the
+ internal representation of the model</p>
+<p>Arguments: imol (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>add_header_secondary_structure_info(0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(add-header-secondary-structure-info 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="add_ligand_delete_residue_copy_molecule">add_ligand_delete_residue_copy_molecule</h3>
+<p>Python: <code>add_ligand_delete_residue_copy_molecule(imol_ligand_new, chain_id_ligand_new, resno_ligand_new, imol_current, chain_id_ligand_current, resno_ligand_current)</code><br>
+Scheme: <code>(add-ligand-delete-residue-copy-molecule imol-ligand-new chain-id-ligand-new resno-ligand-new imol-current chain-id-ligand-current resno-ligand-current)</code></p>
+<p>Copy a molecule with addition of a ligand and a deletion of
+ current ligand.</p>
+<p> This function is used when adding a new (modified) ligand to a
+ structure. It creates a new molecule that is a copy of the current
+ molecule except that the new ligand is added and the current
+ ligand/residue is deleted.</p>
+<p>Arguments: imol_ligand_new (a whole number), chain_id_ligand_new (text), resno_ligand_new (a whole number), imol_current (a whole number), chain_id_ligand_current (text), resno_ligand_current (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>add_ligand_delete_residue_copy_molecule(0, "B", 41, 0, "A", 41)</code></td><td>ran, returned <code>2</code></td></tr>
+<tr><td>Scheme</td><td><code>(add-ligand-delete-residue-copy-molecule 0 "B" 41 0 "A" 41)</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<h3 id="chain_id">chain_id</h3>
+<p>Python: <code>chain_id(imol, ichain)</code><br>
+Scheme: <code>(chain-id imol ichain)</code></p>
+<p>Arguments: imol (a whole number), ichain (a whole number). Returns: a value (see the result of the example).
+Also available in Python as <code>chain_id_py</code>.
+Also available in Scheme as <code>chain-id-scm</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>chain_id(0, 1)</code></td><td>ran, returned <code>'B'</code></td></tr>
+<tr><td>Scheme</td><td><code>(chain-id 0 1)</code></td><td>ran, returned <code>"B"</code></td></tr></tbody></table>
+<h3 id="chain_n_residues">chain_n_residues</h3>
+<p>Python: <code>chain_n_residues(chain_id, imol)</code><br>
+Scheme: <code>(chain-n-residues chain-id imol)</code></p>
+<p>the number of residues in chain chain_id and molecule number imol
+ Returns the number of residues</p>
+<p>Arguments: chain_id (text), imol (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>chain_n_residues("A", 0)</code></td><td>ran, returned <code>93</code></td></tr>
+<tr><td>Scheme</td><td><code>(chain-n-residues "A" 0)</code></td><td>ran, returned <code>93</code></td></tr></tbody></table>
+<h3 id="copy_molecule">copy_molecule</h3>
+<p>Python: <code>copy_molecule(imol)</code><br>
+Scheme: <code>(copy-molecule imol)</code></p>
+<p>copy molecule imol</p>
+<p>Returns the new molecule number.
+Return -1 on failure to copy molecule (out of range, or molecule is
+closed)</p>
+<p>Arguments: imol (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>copy_molecule(0)</code></td><td>ran, returned <code>2</code></td></tr>
+<tr><td>Scheme</td><td><code>(copy-molecule 0)</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<h3 id="exchange_chain_ids_for_seg_ids">exchange_chain_ids_for_seg_ids</h3>
+<p>Python: <code>exchange_chain_ids_for_seg_ids(imol)</code><br>
+Scheme: <code>(exchange-chain-ids-for-seg-ids imol)</code></p>
+<p>Experimental interface for Ribosome People.</p>
+<p>Ribosome People have many chains in their pdb file, they prefer segids
+to chainids (chainids are only 1 character). But coot uses the
+concept of chain ids and not seg-ids. mmdb allow us to use more than
+one char in the chainid, so after we read in a pdb, let's replace the
+chain ids with the segids. Will that help?</p>
+<p>Arguments: imol (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>exchange_chain_ids_for_seg_ids(0)</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(exchange-chain-ids-for-seg-ids 0)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<h3 id="insertion_code_from_serial_number">insertion_code_from_serial_number</h3>
+<p>Python: <code>insertion_code_from_serial_number(imol, chain_id, serial_num)</code><br>
+Scheme: <code>(insertion-code-from-serial-number imol chain-id serial-num)</code></p>
+<p>the insertion code of the residue.</p>
+<p> Returns NULL (scheme False) on failure.</p>
+<p>Arguments: imol (a whole number), chain_id (text), serial_num (a whole number). Returns: text.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>insertion_code_from_serial_number(0, "A", 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(insertion-code-from-serial-number 0 "A" 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="is_nucleotide_chain_p">is_nucleotide_chain_p</h3>
+<p>Python: <code>is_nucleotide_chain_p(imol, chain_id)</code><br>
+Scheme: <code>(is-nucleotide-chain-p imol chain-id)</code></p>
+<p>is this a nucleic acid chain? [Raw function]</p>
+<p> This is a raw interface function, you should generally not use
+ this, but instead use (is-nucleicacid-chain? imol chain-id)</p>
+<p> Returns -1 on error, 0 for no, 1 for is "a nucleicacid chain". We
+ wouldn't want to be doing rotamer searches and the like on such a
+ chain.</p>
+<p> This wraps the mmdb function isNucleotideChain().
+ For completeness.</p>
+<p>Arguments: imol (a whole number), chain_id (text). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>is_nucleotide_chain_p(0, "A")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(is-nucleotide-chain-p 0 "A")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="is_protein_chain_p">is_protein_chain_p</h3>
+<p>Python: <code>is_protein_chain_p(imol, chain_id)</code><br>
+Scheme: <code>(is-protein-chain-p imol chain-id)</code></p>
+<p>is this a protein chain? [Raw function]</p>
+<p> This is a raw interface function, you should generally not use
+ this, but instead use (is-protein-chain? imol chain-id)</p>
+<p> Returns -1 on error, 0 for no, 1 for is "a protein chain". We
+ wouldn't want to be doing rotamer searches and the like on such a
+ chain.</p>
+<p> This wraps the mmdb function isAminoacidChain().</p>
+<p>Arguments: imol (a whole number), chain_id (text). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>is_protein_chain_p(0, "A")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(is-protein-chain-p 0 "A")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="is_solvent_chain_p">is_solvent_chain_p</h3>
+<p>Python: <code>is_solvent_chain_p(imol, chain_id)</code><br>
+Scheme: <code>(is-solvent-chain-p imol chain-id)</code></p>
+<p>is this a solvent chain? [Raw function]</p>
+<p> This is a raw interface function, you should generally not use
+ this, but instead use (is-solvent-chain? imol chain-id)</p>
+<p> Returns -1 on error, 0 for no, 1 for is "a solvent chain". We
+ wouldn't want to be doing rotamer searches and the like on such a
+ chain.</p>
+<p> This wraps the mmdb function isSolventChain().</p>
+<p>Arguments: imol (a whole number), chain_id (text). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>is_solvent_chain_p(0, "A")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(is-solvent-chain-p 0 "A")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="model_composition_statistics_py">model_composition_statistics_py</h3>
+<p>Python: <code>model_composition_statistics_py(imol)</code><br>
+Scheme: <code>(model-composition-statistics-scm imol)</code></p>
+<p>Arguments: imol (a whole number). Returns: a value (see the result of the example).</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>model_composition_statistics_py(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(model-composition-statistics-scm 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="molecule_centre_internal">molecule_centre_internal</h3>
+<p>Python: <code>molecule_centre_internal(imol, iaxis)</code><br>
+Scheme: <code>(molecule-centre-internal imol iaxis)</code></p>
+<p>internal function for molecule centre</p>
+<p>Returns status, less than -9999 is for failure (eg. bad imol);</p>
+<p>Arguments: imol (a whole number), iaxis (a whole number). Returns: a number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>molecule_centre_internal(0, 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(molecule-centre-internal 0 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="n_atoms">n_atoms</h3>
+<p>Python: <code>n_atoms(imol)</code><br>
+Scheme: <code>(n-atoms imol)</code></p>
+<p>return the ATOMs of residues in the molecule,</p>
+<p>return -1 if this is a map or closed. HETATMs are not counted.</p>
+<p>Arguments: imol (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>n_atoms(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(n-atoms 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="n_chains">n_chains</h3>
+<p>Python: <code>n_chains(imol)</code><br>
+Scheme: <code>(n-chains imol)</code></p>
+<p>number of chains in molecule number imol</p>
+<p> Returns the number of chains</p>
+<p>Arguments: imol (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>n_chains(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(n-chains 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="n_models">n_models</h3>
+<p>Python: <code>n_models(imol)</code><br>
+Scheme: <code>(n-models imol)</code></p>
+<p>return the number of models in molecule number imol</p>
+<p>useful for NMR or other such multi-model molecules.</p>
+<p>return the number of models or -1 if there was a problem with the
+given molecule.</p>
+<p>Arguments: imol (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>n_models(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(n-models 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="n_residues">n_residues</h3>
+<p>Python: <code>n_residues(imol)</code><br>
+Scheme: <code>(n-residues imol)</code></p>
+<p>return the number of residues in the molecule,</p>
+<p>return -1 if this is a map or closed.</p>
+<p>Arguments: imol (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>n_residues(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(n-residues 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="print_header_secondary_structure_info">print_header_secondary_structure_info</h3>
+<p>Python: <code>print_header_secondary_structure_info(imol)</code><br>
+Scheme: <code>(print-header-secondary-structure-info imol)</code></p>
+<p>simply print secondary structure info to the
+ terminal/console. In future, this could/should return the info.</p>
+<p>Arguments: imol (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>print_header_secondary_structure_info(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(print-header-secondary-structure-info 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="python_representation_kk">python_representation_kk</h3>
+<p>Python: <code>python_representation_kk(imol)</code></p>
+<p>Arguments: imol (a whole number). Returns: a value (see the result of the example).
+<strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>python_representation_kk(0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="remarks">remarks</h3>
+<p>Python: <code>remarks(imol)</code><br>
+Scheme: <code>(remarks imol)</code></p>
+<p>return a list or python false</p>
+<p>Arguments: imol (a whole number). Returns: a value (see the result of the example).
+Also available in Python as <code>remarks_py</code>.
+Also available in Scheme as <code>remarks-scm</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>remarks(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(remarks 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="remarks_dialog">remarks_dialog</h3>
+<p>Python: <code>remarks_dialog(imol)</code><br>
+Scheme: <code>(remarks-dialog imol)</code></p>
+<p>a gui dialog showing remarks header info (for a model molecule).</p>
+<p>Arguments: imol (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>remarks_dialog(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(remarks-dialog 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="residue_centre">residue_centre</h3>
+<p>Python: <code>residue_centre(imol, chain_id, resno, ins_code)</code><br>
+Scheme: <code>(residue-centre imol chain-id resno ins-code)</code></p>
+<p>Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_code (text). Returns: a value (see the result of the example).
+Also available in Python as <code>residue_centre_py</code>.
+Also available in Scheme as <code>residue-centre-scm</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>residue_centre(0, "A", 41, "")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(residue-centre 0 "A" 41 "")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="seqnum_from_serial_number">seqnum_from_serial_number</h3>
+<p>Python: <code>seqnum_from_serial_number(imol, chain_id, serial_num)</code><br>
+Scheme: <code>(seqnum-from-serial-number imol chain-id serial-num)</code></p>
+<p>a residue seqnum (normal residue number) from a residue
+ serial number</p>
+<p> Returns &lt; -9999 on failure</p>
+<p>Arguments: imol (a whole number), chain_id (text), serial_num (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>seqnum_from_serial_number(0, "A", 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(seqnum-from-serial-number 0 "A" 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="show_remarks_browswer">show_remarks_browswer</h3>
+<p>Python: <code>show_remarks_browswer()</code><br>
+Scheme: <code>(show-remarks-browswer)</code></p>
+<p>show the remarks browser</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>show_remarks_browswer()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(show-remarks-browswer)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="sort_chains">sort_chains</h3>
+<p>Python: <code>sort_chains(imol)</code><br>
+Scheme: <code>(sort-chains imol)</code></p>
+<p>sort the chain ids of the imol-th molecule in lexographical order</p>
+<p>Arguments: imol (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>sort_chains(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(sort-chains 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="sort_residues">sort_residues</h3>
+<p>Python: <code>sort_residues(imol)</code><br>
+Scheme: <code>(sort-residues imol)</code></p>
+<p>sort the residues of the imol-th molecule</p>
+<p>Arguments: imol (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>sort_residues(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(sort-residues 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="write_header_secondary_structure_info">write_header_secondary_structure_info</h3>
+<p>Python: <code>write_header_secondary_structure_info(imol, file_name)</code><br>
+Scheme: <code>(write-header-secondary-structure-info imol file-name)</code></p>
+<p>Placeholder only.</p>
+<p> not documented, it doesn't work yet, because CalcSecStructure()
+ creates SS type on the residues, it does not build and store
+ CHelix, CStrand, CSheet records.</p>
+<p>Arguments: imol (a whole number), file_name (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>write_header_secondary_structure_info(0, "tutorial-modern.pdb")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(write-header-secondary-structure-info 0 "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

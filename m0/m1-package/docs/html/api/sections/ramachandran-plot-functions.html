@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="02bd02524e18d0fea191f2e57583a547579230e6">
+<title>Ramachandran Plot Functions - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="ramachandran-plot-functions">Ramachandran Plot Functions</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Ramachandran Plot Functions (14 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="accept_phi_psi_moving_atoms">accept_phi_psi_moving_atoms</h3>
+<p>Python: <code>accept_phi_psi_moving_atoms()</code><br>
+Scheme: <code>(accept-phi-psi-moving-atoms)</code></p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>accept_phi_psi_moving_atoms()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(accept-phi-psi-moving-atoms)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="add_on_rama_choices">add_on_rama_choices</h3>
+<p>Python: <code>add_on_rama_choices()</code><br>
+Scheme: <code>(add-on-rama-choices)</code></p>
+<p>the the menu</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>add_on_rama_choices()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(add-on-rama-choices)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="destroy_edit_backbone_rama_plot">destroy_edit_backbone_rama_plot</h3>
+<p>Python: <code>destroy_edit_backbone_rama_plot()</code><br>
+Scheme: <code>(destroy-edit-backbone-rama-plot)</code></p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>destroy_edit_backbone_rama_plot()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(destroy-edit-backbone-rama-plot)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="do_ramachandran_plot">do_ramachandran_plot</h3>
+<p>Python: <code>do_ramachandran_plot(imol)</code><br>
+Scheme: <code>(do-ramachandran-plot imol)</code></p>
+<p>Ramachandran plot for molecule number imol</p>
+<p>Arguments: imol (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>do_ramachandran_plot(0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
+<tr><td>Scheme</td><td><code>(do-ramachandran-plot 0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+<h3 id="ramachandran_plot_differences">ramachandran_plot_differences</h3>
+<p>Python: <code>ramachandran_plot_differences(imol1, imol2)</code><br>
+Scheme: <code>(ramachandran-plot-differences imol1 imol2)</code></p>
+<p>2 molecule ramachandran plot (NCS differences) a.k.a. A Kleywegt Plot.</p>
+<p>Arguments: imol1 (a whole number), imol2 (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>ramachandran_plot_differences(0, 0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(ramachandran-plot-differences 0 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="ramachandran_plot_differences_by_chain">ramachandran_plot_differences_by_chain</h3>
+<p>Python: <code>ramachandran_plot_differences_by_chain(imol1, imol2, a_chain, b_chain)</code><br>
+Scheme: <code>(ramachandran-plot-differences-by-chain imol1 imol2 a-chain b-chain)</code></p>
+<p>A chain-specific Kleywegt Plot.</p>
+<p>Arguments: imol1 (a whole number), imol2 (a whole number), a_chain (text), b_chain (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>ramachandran_plot_differences_by_chain(0, 0, "A", "A")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(ramachandran-plot-differences-by-chain 0 0 "A" "A")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="ramachandran_psi_axis_mode">ramachandran_psi_axis_mode</h3>
+<p>Python: <code>ramachandran_psi_axis_mode()</code><br>
+Scheme: <code>(ramachandran-psi-axis-mode)</code></p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>ramachandran_psi_axis_mode()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(ramachandran-psi-axis-mode)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_kleywegt_plot_n_diffs">set_kleywegt_plot_n_diffs</h3>
+<p>Python: <code>set_kleywegt_plot_n_diffs(n_diffs)</code><br>
+Scheme: <code>(set-kleywegt-plot-n-diffs n-diffs)</code></p>
+<p>set the number of biggest difference arrows on the Kleywegt
+ plot.</p>
+<p>Arguments: n_diffs (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_kleywegt_plot_n_diffs(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-kleywegt-plot-n-diffs 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_moving_atoms">set_moving_atoms</h3>
+<p>Python: <code>set_moving_atoms(phi, psi)</code><br>
+Scheme: <code>(set-moving-atoms phi psi)</code></p>
+<p>Arguments: phi (a number), psi (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_moving_atoms(10.0, 10.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-moving-atoms 10.0 10.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_ramachandran_plot_background_block_size">set_ramachandran_plot_background_block_size</h3>
+<p>Python: <code>set_ramachandran_plot_background_block_size(blocksize)</code><br>
+Scheme: <code>(set-ramachandran-plot-background-block-size blocksize)</code></p>
+<p>set the ramachandran plot background block size.</p>
+<p> Smaller is smoother but slower. Should be divisible exactly into
+ 360. Default value is 10.</p>
+<p>Arguments: blocksize (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_ramachandran_plot_background_block_size(1.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-ramachandran-plot-background-block-size 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_ramachandran_plot_contour_levels">set_ramachandran_plot_contour_levels</h3>
+<p>Python: <code>set_ramachandran_plot_contour_levels(level_prefered, level_allowed)</code><br>
+Scheme: <code>(set-ramachandran-plot-contour-levels level-prefered level-allowed)</code></p>
+<p>set the contour levels for the ramachandran plot, default
+ values are 0.02 (prefered) 0.002 (allowed)</p>
+<p>Arguments: level_prefered (a number), level_allowed (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_ramachandran_plot_contour_levels(1.5, 1.5)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-ramachandran-plot-contour-levels 1.5 1.5)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_ramachandran_psi_axis_mode">set_ramachandran_psi_axis_mode</h3>
+<p>Python: <code>set_ramachandran_psi_axis_mode(mode)</code><br>
+Scheme: <code>(set-ramachandran-psi-axis-mode mode)</code></p>
+<p>set the psi axis for the ramachandran plot. Default (0) from -180
+ to 180. Alternative (1) from -120 to 240.</p>
+<p>Arguments: mode (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_ramachandran_psi_axis_mode(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-ramachandran-psi-axis-mode 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="setup_dynamic_distances">setup_dynamic_distances</h3>
+<p>Python: <code>setup_dynamic_distances(state)</code><br>
+Scheme: <code>(setup-dynamic-distances state)</code></p>
+<p>no need to export this to scripting interface</p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>setup_dynamic_distances(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(setup-dynamic-distances 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="setup_edit_phi_psi">setup_edit_phi_psi</h3>
+<p>Python: <code>setup_edit_phi_psi(state)</code><br>
+Scheme: <code>(setup-edit-phi-psi state)</code></p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>setup_edit_phi_psi(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(setup-edit-phi-psi 1)</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

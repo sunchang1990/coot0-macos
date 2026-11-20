@@ -6,6 +6,35 @@ applied to the pristine tree by `setup.sh`) or a change of the packaged data / s
 round, `TEST-PROTOCOL.md` has the user-facing explanation and the checks for you (newest round first).  A "build" is one delivered zip.
 "Verified" means a headless test (no window server in the build environment); what only a screen can show is marked "on screen: not verified".
 
+## Build 28  (patch 0046 help-menu-ctrl-key-state (C++ + Python + Scheme); new `bin/coot-bin`; docs as web pages)
+- Fixed (user, 20 Nov, round 27 II1): cookbook **6.3 used `o`, which Coot uses itself** (next NCS chain: the terminal showed `(n-chains 2)`
+  ...).  The list of Coot's own keys in 6.3 was written from memory and incomplete; it is now taken from Coot's key handler
+  (`globjects.cc`): also `c` `p` `s` `O`, Ctrl with C D I L X.  The recipe uses `v` (free also when the template key bindings are installed).
+- Fixed (user, 20 Nov, II2): **Ctrl-T still did not run a `"Control_t"` binding.**  Build 27 asked GDK whether Ctrl was held; that could
+  not be tested and did not work for you.  Now Coot's C++ key handler passes its own Ctrl state (the one Ctrl-S, Ctrl-Z use) to Scheme's
+  key hook, which passes it to Python (`globjects.cc`, `coot-utils.scm`; one C++ line, so a new `bin/coot-bin`, otherwise as build 26/27).
+  When a key binding runs, the terminal says so (`INFO:: key Ctrl-116: running key binding "Ctrl test"`).
+- Fixed: binding a plain key (e.g. `"k"`) silently **removed a Ctrl binding of the same letter** (`"Control_k"`) in `add_key_binding`
+  (Coot 0.9.8.96 bug, found by the new tests).
+- New (user, 20 Nov): **Help menu** (Coot's "About" menu, renamed, stays the last menu):
+  - **Search Menus and Docs...**: type a few words; it lists matching menu entries (all menus, also those added later, e.g. by Modules;
+    entries coot0 removed are left out), cookbook recipes, scripting functions and documentation sections. Double-click or Enter: a menu
+    entry runs, a document opens in your web browser at that recipe / function.
+  - **Keyboard Shortcuts...**: Coot's own keys (from its key handler) and your key bindings (Python and Scheme); a binding to one of
+    Coot's keys is marked "never runs".
+  - Cookbook, Scripting Reference, Documentation Overview, coot0 README, What's New (this file), Coot Website (online); then Coot's
+    Header/Remarks Browser, Hints, About as before.
+  - The documents are web pages in `docs/html/` (made from the Markdown in `docs/` by `m0/tools/gen_docs_html.py`, with a search index).
+- Tests: `gui-dialogs` 80 -> 88 (Ctrl state through the key hook; Help menu, last menu, search of menus and documents, opening at the right
+  heading, the search window, Keyboard Shortcuts; build 27 fails all 8); `api-docs` 5 -> 8 (a page for every Markdown file, made from its
+  current text; no broken link or heading between the pages; search index complete; build 27 fails 2, the links check has nothing to check);
+  `cookbook` checks the corrected list of Coot's keys (build 27's 6.3 fails it).  New **real-window test** `tests/run-real-window-checks.sh`
+  (opens Coot for ~10 s, sends key presses to the graphics window through GTK, so through Coot's own C++ key handler): plain key, Ctrl-T,
+  plain t, Coot's `o`, and the Help menu on the real menus; build 28: 10 / 10, build 27: Ctrl-T fails.
+- Test scripts set `COOT0_NO_BROWSER=1` so that the menu sweep / audit do not open web pages.
+- On screen: windows opened (the test checks they are mapped), but I did not look at them, and the key presses were synthetic GTK events,
+  not your keyboard.
+
 ## Build 27  (patch 0045 python-ctrl-key-bindings; cookbook fixes; Python / docs only, `bin/coot-bin` as in build 26)
 - Fixed (user, 19 Nov, round 26 HH4): cookbook **6.3** bound F5, which Coot itself uses (F5 opens Model/Fit/Refine), so the binding never
   ran; its tip "Control_r" is Coot's Ctrl-R (rock).  Now the recipe uses `o` and lists the keys Coot keeps for itself, with a note on F-keys

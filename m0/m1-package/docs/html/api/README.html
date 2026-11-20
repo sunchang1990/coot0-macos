@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="9d31eca49396dd64f6768be81aba5d1d6118c9fe">
+<title>Coot scripting reference (coot0 0.9.8.96-b26) - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../README.html">coot0 documentation</a></div>
+<h1 id="coot-scripting-reference-coot0-09896-b26">Coot scripting reference (coot0 0.9.8.96-b26)</h1>
+<p>Every function that Coot 0.9.8.96 offers to Python and Scheme scripts: 1735 functions, 1717 in Python and 1689 in Scheme. For each one: its Python and Scheme names, what Coot's own source says about it, a concrete example on the test data, and what happened when the example was tried.</p>
+<p>For recipes that do whole tasks (refine, edit, customize the toolbar, batch scripts...), see the <a href="../cookbook/README.html">cookbook</a>.</p>
+<h2 id="how-to-read-it">How to read it</h2>
+<ul><li><strong>Names.</strong> Python uses <code>_</code>, Scheme uses <code>-</code>: Python <code>residue_name(0, "A", 41, "")</code> is Scheme <code>(residue-name 0 "A" 41 "")</code>.</li><li><strong>Examples</strong> use the test data in the package (<code>test-data/</code>): molecule <strong>0</strong> is <code>tutorial-modern.pdb</code> (chains A and B, residues 1-93 and 1-96; residue A41 is a glutamate), molecule <strong>1</strong> is the 2Fo-Fc map made from <code>rnasa-1.8-all_refmac1.mtz</code> (<code>make_and_draw_map("rnasa-1.8-all_refmac1.mtz", "FWT", "PHWT", "", 0, 0)</code>). Load them in this order in a new Coot and every example runs as written. With your own data, change the molecule number, chain, residue number and file names.</li><li><strong>Residue specs</strong> are lists: <code>["A", 41, ""]</code> in Python, <code>(list "A" 41 "")</code> in Scheme (chain, residue number, insertion code). <strong>Atom names</strong> have 4 characters as in a PDB file: <code>" CA "</code>.</li><li><strong>The examples were made by a program</strong> from the argument names (a chain gets <code>"A"</code>, a residue number 41, a flag 1, ...). For most functions that gives a sensible call; for some the values are only placeholders (<code>"hello"</code> for a text, 1 for a number) that you should replace.</li><li><strong>"When tried"</strong> is what happened when the example was run on the test data by <code>tests/run-api-examples.sh</code>, without a window: <em>ran</em> (with the value it returned), <em>error</em> (with Coot's message; usually the example needs other values), <em>stopped Coot (no window)</em> (the function needs the graphics window; it was not checked with one), <em>not run</em> (it would quit Coot, use the network, run an external program, or needs a widget). <em>Ran</em> means only that Coot accepted the call; the result was not checked.</li></ul>
+<h2 id="results-of-trying-the-examples">Results of trying the examples</h2>
+<table><thead><tr><th></th><th>Ran</th><th>Error</th><th>Stopped Coot (no window)</th><th>No answer in 60 s</th><th>Not run</th></tr></thead><tbody>
+<tr><td>Python</td><td>522</td><td>6</td><td>18</td><td>3</td><td>84</td></tr>
+<tr><td>Scheme</td><td>511</td><td>7</td><td>17</td><td>3</td><td>80</td></tr></tbody></table>
+<h2 id="sections">Sections</h2>
+<p>Coot's own section names, in alphabetical order. Also: <a href="A-Z.html">all functions A-Z</a>, <a href="one-language-only.html">functions in only one language</a>.</p>
+<table><thead><tr><th>Section</th><th>Functions</th></tr></thead><tbody>
+<tr><td><a href="sections/180-flip-side-chain.html">180 Flip Side chain</a></td><td>3</td></tr>
+<tr><td><a href="sections/add-a-residue-functions.html">Add A Residue Functions</a></td><td>1</td></tr>
+<tr><td><a href="sections/add-terminal-residue-functions.html">Add Terminal Residue Functions</a></td><td>15</td></tr>
+<tr><td><a href="sections/align-and-mutate.html">Align and Mutate</a></td><td>4</td></tr>
+<tr><td><a href="sections/alternative-conformation.html">Alternative Conformation</a></td><td>15</td></tr>
+<tr><td><a href="sections/anisotropic-atoms-interface.html">Anisotropic Atoms Interface</a></td><td>9</td></tr>
+<tr><td><a href="sections/atom-info-interface.html">Atom Info Interface</a></td><td>1</td></tr>
+<tr><td><a href="sections/atom-information-functions.html">Atom Information functions</a></td><td>17</td></tr>
+<tr><td><a href="sections/atom-labelling.html">Atom Labelling</a></td><td>8</td></tr>
+<tr><td><a href="sections/atom-selection-utilities.html">Atom Selection Utilities</a></td><td>18</td></tr>
+<tr><td><a href="sections/aux-functions.html">Aux functions</a></td><td>1</td></tr>
+<tr><td><a href="sections/background-colour.html">Background Colour</a></td><td>3</td></tr>
+<tr><td><a href="sections/backrubbing-function.html">Backrubbing function</a></td><td>2</td></tr>
+<tr><td><a href="sections/backup-functions.html">Backup Functions</a></td><td>16</td></tr>
+<tr><td><a href="sections/baton-build-interface-functions.html">Baton Build Interface Functions</a></td><td>11</td></tr>
+<tr><td><a href="sections/bond-representation.html">Bond Representation</a></td><td>46</td></tr>
+<tr><td><a href="sections/browser-interface.html">Browser Interface</a></td><td>3</td></tr>
+<tr><td><a href="sections/ccp4mg-interface.html">CCP4mg Interface</a></td><td>3</td></tr>
+<tr><td><a href="sections/change-chain-id.html">Change Chain ID</a></td><td>2</td></tr>
+<tr><td><a href="sections/check-waters-interface.html">check Waters Interface</a></td><td>10</td></tr>
+<tr><td><a href="sections/clipping-functions.html">Clipping Functions</a></td><td>2</td></tr>
+<tr><td><a href="sections/close-molecule-functions.html">Close Molecule Functions</a></td><td>1</td></tr>
+<tr><td><a href="sections/cns-data-functions.html">CNS Data Functions</a></td><td>2</td></tr>
+<tr><td><a href="sections/colour.html">Colour</a></td><td>13</td></tr>
+<tr><td><a href="sections/coot-s-hole-implementation.html">Coot's Hole implementation</a></td><td>7</td></tr>
+<tr><td><a href="sections/crosshairs-interface.html">Crosshairs Interface</a></td><td>2</td></tr>
+<tr><td><a href="sections/curlew.html">curlew</a></td><td>3</td></tr>
+<tr><td><a href="sections/cursor-function.html">Cursor Function</a></td><td>5</td></tr>
+<tr><td><a href="sections/delete-residues.html">Delete Residues</a></td><td>46</td></tr>
+<tr><td><a href="sections/density-functions.html">Density Functions</a></td><td>37</td></tr>
+<tr><td><a href="sections/density-increment.html">Density Increment</a></td><td>20</td></tr>
+<tr><td><a href="sections/dictionary-functions.html">Dictionary Functions</a></td><td>5</td></tr>
+<tr><td><a href="sections/dipoles.html">Dipoles</a></td><td>5</td></tr>
+<tr><td><a href="sections/display-functions.html">Display Functions</a></td><td>24</td></tr>
+<tr><td><a href="sections/display-lists-for-maps.html">Display Lists for Maps</a></td><td>3</td></tr>
+<tr><td><a href="sections/dock-sidechains.html">Dock Sidechains</a></td><td>1</td></tr>
+<tr><td><a href="sections/dots-representation.html">Dots Representation</a></td><td>6</td></tr>
+<tr><td><a href="sections/drag-and-drop-functions.html">Drag and Drop Functions</a></td><td>1</td></tr>
+<tr><td><a href="sections/dynamic-map.html">Dynamic Map</a></td><td>9</td></tr>
+<tr><td><a href="sections/edit-chi-angles.html">Edit Chi Angles</a></td><td>12</td></tr>
+<tr><td><a href="sections/edit-fuctions.html">Edit Fuctions</a></td><td>4</td></tr>
+<tr><td><a href="sections/em-interface.html">EM interface</a></td><td>5</td></tr>
+<tr><td><a href="sections/execute-refmac.html">Execute Refmac</a></td><td>43</td></tr>
+<tr><td><a href="sections/experimental.html">Experimental</a></td><td>9</td></tr>
+<tr><td><a href="sections/external-ray-tracing.html">External Ray-Tracing</a></td><td>15</td></tr>
+<tr><td><a href="sections/extra-ligand-functions.html">Extra Ligand Functions</a></td><td>4</td></tr>
+<tr><td><a href="sections/extra-map-functions.html">Extra Map Functions</a></td><td>18</td></tr>
+<tr><td><a href="sections/fffearing.html">FFFearing</a></td><td>3</td></tr>
+<tr><td><a href="sections/file-selection-functions.html">File Selection Functions</a></td><td>1</td></tr>
+<tr><td><a href="sections/file-system-functions.html">File System Functions</a></td><td>22</td></tr>
+<tr><td><a href="sections/fle-view.html">FLE-View</a></td><td>9</td></tr>
+<tr><td><a href="sections/font-parameters.html">Font Parameters</a></td><td>4</td></tr>
+<tr><td><a href="sections/general-cc-interface.html">General (cc-interface)</a></td><td>21</td></tr>
+<tr><td><a href="sections/generic-objects.html">Generic Objects</a></td><td>21</td></tr>
+<tr><td><a href="sections/get-sequence.html">Get Sequence</a></td><td>22</td></tr>
+<tr><td><a href="sections/glyco-tools.html">Glyco Tools</a></td><td>1</td></tr>
+<tr><td><a href="sections/go-to-atom-widget-functions.html">Go To Atom Widget Functions</a></td><td>31</td></tr>
+<tr><td><a href="sections/graphics-2d-ligand-view.html">graphics 2D ligand view</a></td><td>1</td></tr>
+<tr><td><a href="sections/graphics-move.html">Graphics Move</a></td><td>4</td></tr>
+<tr><td><a href="sections/graphics-text.html">Graphics Text</a></td><td>4</td></tr>
+<tr><td><a href="sections/graphics-utility-functions.html">Graphics Utility Functions</a></td><td>45</td></tr>
+<tr><td><a href="sections/helices-and-strands.html">Helices and Strands</a></td><td>8</td></tr>
+<tr><td><a href="sections/history-functions.html">History Functions</a></td><td>4</td></tr>
+<tr><td><a href="sections/images.html">Images</a></td><td>1</td></tr>
+<tr><td><a href="sections/info-dialog.html">Info Dialog</a></td><td>3</td></tr>
+<tr><td><a href="sections/interface-preferences.html">Interface Preferences</a></td><td>62</td></tr>
+<tr><td><a href="sections/intermediate-atom-manipulation-interface.html">Intermediate Atom Manipulation Interface</a></td><td>3</td></tr>
+<tr><td><a href="sections/jiggle-fit.html">Jiggle Fit</a></td><td>5</td></tr>
+<tr><td><a href="sections/least-squares-matching.html">Least-Squares matching</a></td><td>10</td></tr>
+<tr><td><a href="sections/library-and-utility-functions.html">Library and Utility Functions</a></td><td>16</td></tr>
+<tr><td><a href="sections/ligand-builder-lidia.html">Ligand Builder (Lidia)</a></td><td>2</td></tr>
+<tr><td><a href="sections/ligand-fitting-functions.html">Ligand Fitting Functions</a></td><td>26</td></tr>
+<tr><td><a href="sections/ligands.html">Ligands</a></td><td>36</td></tr>
+<tr><td><a href="sections/lsq-improve.html">LSQ-improve</a></td><td>9</td></tr>
+<tr><td><a href="sections/mainchain-building-functions.html">Mainchain Building Functions</a></td><td>3</td></tr>
+<tr><td><a href="sections/map-and-molecule-control.html">Map and Molecule Control</a></td><td>24</td></tr>
+<tr><td><a href="sections/map-colour.html">Map colour</a></td><td>3</td></tr>
+<tr><td><a href="sections/map-contouring-functions.html">Map Contouring Functions</a></td><td>6</td></tr>
+<tr><td><a href="sections/map-functions.html">Map Functions</a></td><td>35</td></tr>
+<tr><td><a href="sections/map-sharpening-interface.html">Map Sharpening Interface</a></td><td>4</td></tr>
+<tr><td><a href="sections/map-to-model-correlation.html">Map to Model Correlation</a></td><td>11</td></tr>
+<tr><td><a href="sections/marking-fixed-atom-interface.html">Marking Fixed Atom Interface</a></td><td>6</td></tr>
+<tr><td><a href="sections/masks.html">Masks</a></td><td>5</td></tr>
+<tr><td><a href="sections/merge-fragments.html">Merge Fragments</a></td><td>1</td></tr>
+<tr><td><a href="sections/mmcif-functions.html">mmCIF Functions</a></td><td>20</td></tr>
+<tr><td><a href="sections/model-fit-refine-functions.html">Model/Fit/Refine Functions</a></td><td>9</td></tr>
+<tr><td><a href="sections/mogul.html">Mogul</a></td><td>6</td></tr>
+<tr><td><a href="sections/molecule-info-functions.html">Molecule Info Functions</a></td><td>26</td></tr>
+<tr><td><a href="sections/molprobity-interface.html">Molprobity Interface</a></td><td>11</td></tr>
+<tr><td><a href="sections/monomer.html">Monomer</a></td><td>14</td></tr>
+<tr><td><a href="sections/more-refinement-functions.html">More Refinement Functions</a></td><td>8</td></tr>
+<tr><td><a href="sections/more-symmetry-functions.html">More Symmetry Functions</a></td><td>5</td></tr>
+<tr><td><a href="sections/mouse-buttons.html">Mouse Buttons</a></td><td>6</td></tr>
+<tr><td><a href="sections/movies-interface.html">Movies Interface</a></td><td>5</td></tr>
+<tr><td><a href="sections/mtz-and-data-handling-utilities.html">MTZ and data handling utilities</a></td><td>9</td></tr>
+<tr><td><a href="sections/multi-residue-torsion.html">Multi-Residue Torsion</a></td><td>1</td></tr>
+<tr><td><a href="sections/mutate-functions.html">Mutate Functions</a></td><td>17</td></tr>
+<tr><td><a href="sections/ncs.html">NCS</a></td><td>29</td></tr>
+<tr><td><a href="sections/new-molecule-by-section-interface.html">New Molecule by Section Interface</a></td><td>2</td></tr>
+<tr><td><a href="sections/nomenclature-errors.html">Nomenclature Errors</a></td><td>2</td></tr>
+<tr><td><a href="sections/nucleotides.html">Nucleotides</a></td><td>1</td></tr>
+<tr><td><a href="sections/orthogonal-axes.html">Orthogonal Axes</a></td><td>1</td></tr>
+<tr><td><a href="sections/other-functions.html">Other functions</a></td><td>11</td></tr>
+<tr><td><a href="sections/parameters-from-map.html">Parameters from map</a></td><td>7</td></tr>
+<tr><td><a href="sections/partial-charges.html">Partial Charges</a></td><td>1</td></tr>
+<tr><td><a href="sections/pdb-functions.html">PDB Functions</a></td><td>7</td></tr>
+<tr><td><a href="sections/pep-flip-interface.html">Pep-flip Interface</a></td><td>5</td></tr>
+<tr><td><a href="sections/phenix-support.html">PHENIX Support</a></td><td>1</td></tr>
+<tr><td><a href="sections/pisa-interaction.html">PISA Interaction</a></td><td>6</td></tr>
+<tr><td><a href="sections/pkgdatadir.html">PKGDATADIR</a></td><td>1</td></tr>
+<tr><td><a href="sections/pointer-atom-functions.html">Pointer Atom Functions</a></td><td>8</td></tr>
+<tr><td><a href="sections/pointer-functions.html">Pointer Functions</a></td><td>2</td></tr>
+<tr><td><a href="sections/pointer-position-function.html">Pointer Position Function</a></td><td>1</td></tr>
+<tr><td><a href="sections/protein-db.html">protein-db</a></td><td>2</td></tr>
+<tr><td><a href="sections/ramachandran-plot-functions.html">Ramachandran Plot Functions</a></td><td>14</td></tr>
+<tr><td><a href="sections/read-phases-file-functions.html">Read Phases File Functions</a></td><td>9</td></tr>
+<tr><td><a href="sections/recover-session-function.html">Recover Session Function</a></td><td>1</td></tr>
+<tr><td><a href="sections/refinement-with-specs.html">Refinement with specs</a></td><td>20</td></tr>
+<tr><td><a href="sections/refmac-functions.html">Refmac Functions</a></td><td>6</td></tr>
+<tr><td><a href="sections/regularization-and-refinement.html">Regularization and Refinement</a></td><td>113</td></tr>
+<tr><td><a href="sections/remote-control.html">Remote Control</a></td><td>7</td></tr>
+<tr><td><a href="sections/renumber-residue-range.html">Renumber Residue Range</a></td><td>2</td></tr>
+<tr><td><a href="sections/residue-environment-functions.html">Residue Environment Functions</a></td><td>11</td></tr>
+<tr><td><a href="sections/residue-info.html">Residue Info</a></td><td>13</td></tr>
+<tr><td><a href="sections/restraints-interface.html">Restraints Interface</a></td><td>16</td></tr>
+<tr><td><a href="sections/rigid-body-refinement-interface.html">Rigid Body Refinement Interface</a></td><td>6</td></tr>
+<tr><td><a href="sections/rna-dna.html">RNA/DNA</a></td><td>5</td></tr>
+<tr><td><a href="sections/rotamer-functions.html">Rotamer Functions</a></td><td>20</td></tr>
+<tr><td><a href="sections/rotamer-scoring.html">Rotamer Scoring</a></td><td>1</td></tr>
+<tr><td><a href="sections/rotation-centre.html">Rotation Centre</a></td><td>11</td></tr>
+<tr><td><a href="sections/save-coordinates.html">Save Coordinates</a></td><td>4</td></tr>
+<tr><td><a href="sections/sbase-interface.html">SBase interface</a></td><td>5</td></tr>
+<tr><td><a href="sections/screen-rotation.html">Screen Rotation</a></td><td>4</td></tr>
+<tr><td><a href="sections/screen-translation.html">Screen Translation</a></td><td>3</td></tr>
+<tr><td><a href="sections/scripting.html">Scripting</a></td><td>14</td></tr>
+<tr><td><a href="sections/scripting-interface.html">Scripting Interface</a></td><td>9</td></tr>
+<tr><td><a href="sections/sequence.html">Sequence</a></td><td>7</td></tr>
+<tr><td><a href="sections/sequence-file-assignment-association.html">Sequence File (Assignment/Association)</a></td><td>12</td></tr>
+<tr><td><a href="sections/sequence-from-map.html">Sequence from Map</a></td><td>36</td></tr>
+<tr><td><a href="sections/sequence-view-interface.html">Sequence View Interface</a></td><td>15</td></tr>
+<tr><td><a href="sections/shelxl-functions.html">SHELXL Functions</a></td><td>6</td></tr>
+<tr><td><a href="sections/simplex-refinement-interface.html">Simplex Refinement Interface</a></td><td>2</td></tr>
+<tr><td><a href="sections/single-model-view.html">single-model view</a></td><td>7</td></tr>
+<tr><td><a href="sections/skeletonization-interface.html">Skeletonization Interface</a></td><td>11</td></tr>
+<tr><td><a href="sections/smiles.html">SMILES</a></td><td>2</td></tr>
+<tr><td><a href="sections/smooth-scrolling.html">Smooth Scrolling</a></td><td>8</td></tr>
+<tr><td><a href="sections/spin-search-functions.html">Spin Search Functions</a></td><td>9</td></tr>
+<tr><td><a href="sections/startup-functions.html">Startup Functions</a></td><td>2</td></tr>
+<tr><td><a href="sections/state-functions.html">State Functions</a></td><td>8</td></tr>
+<tr><td><a href="sections/status-bar-string-functions.html">status bar string functions</a></td><td>1</td></tr>
+<tr><td><a href="sections/superposition-ssm.html">Superposition (SSM)</a></td><td>3</td></tr>
+<tr><td><a href="sections/surface-interface.html">Surface Interface</a></td><td>7</td></tr>
+<tr><td><a href="sections/symmetry-functions.html">Symmetry Functions</a></td><td>27</td></tr>
+<tr><td><a href="sections/terminal-oxt-atom.html">Terminal OXT Atom</a></td><td>1</td></tr>
+<tr><td><a href="sections/the-virtual-trackball.html">The Virtual Trackball</a></td><td>2</td></tr>
+<tr><td><a href="sections/trim.html">Trim</a></td><td>3</td></tr>
+<tr><td><a href="sections/unit-cell-interface.html">Unit Cell interface</a></td><td>4</td></tr>
+<tr><td><a href="sections/using-s-expression-molecules.html">Using S-expression molecules</a></td><td>10</td></tr>
+<tr><td><a href="sections/validation-functions.html">Validation Functions</a></td><td>24</td></tr>
+<tr><td><a href="sections/variance-map.html">Variance Map</a></td><td>1</td></tr>
+<tr><td><a href="sections/views-interface.html">Views Interface</a></td><td>20</td></tr>
+<tr><td><a href="sections/water-chain-functions.html">Water Chain Functions</a></td><td>2</td></tr>
+<tr><td><a href="sections/water-fitting-functions.html">Water Fitting Functions</a></td><td>15</td></tr>
+<tr><td><a href="sections/widget-utilities.html">Widget Utilities</a></td><td>2</td></tr>
+<tr><td><a href="sections/zoom-functions.html">Zoom Functions</a></td><td>8</td></tr></tbody></table>
+<h2 id="how-this-reference-is-made">How this reference is made</h2>
+<p><code>m0/tools/gen_api_index.py</code> reads Coot's SWIG wrappers (the functions really available) and its headers (signatures and descriptions); <code>tests/run-api-examples.sh</code> tries every example in Python and Scheme; <code>m0/tools/gen_api_docs.py</code> writes these pages. To check your own installation run <code>tests/run-api-examples.sh</code> (30-90 minutes).</p>
+</body></html>

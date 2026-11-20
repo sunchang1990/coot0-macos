@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="b495374b47d5e561c19252749beee66b60772df1">
+<title>Sequence - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="sequence">Sequence</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Sequence (7 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="apply_fasta_multi_to_fragment">apply_fasta_multi_to_fragment</h3>
+<p>Python: <code>apply_fasta_multi_to_fragment(imol, chain_id, resno_start, resno_end, imol_map, fam)</code><br>
+Scheme: <code>(apply-fasta-multi-to-fragment imol chain-id resno-start resno-end imol-map fam)</code></p>
+<p>Arguments: imol (a whole number), chain_id (text), resno_start (a whole number), resno_end (a whole number), imol_map (a whole number), fam (<code>coot::fasta_multi</code>). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<h3 id="apply_pir_alignment">apply_pir_alignment</h3>
+<p>Python: <code>apply_pir_alignment(imol, chain_id)</code><br>
+Scheme: <code>(apply-pir-alignment imol chain-id)</code></p>
+<p>apply the mutations of the associated alignment</p>
+<p>Arguments: imol (a whole number), chain_id (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>apply_pir_alignment(0, "A")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(apply-pir-alignment 0 "A")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="assign_sequence_to_best_matching_chain">assign_sequence_to_best_matching_chain</h3>
+<p>Python: <code>assign_sequence_to_best_matching_chain(sequence)</code><br>
+Scheme: <code>(assign-sequence-to-best-matching-chain sequence)</code></p>
+<p>Arguments: sequence (text). Returns: true or false.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>assign_sequence_to_best_matching_chain("ACDEFGHIKLMNPQRSTVWY")</code></td><td>ran, returned <code>False</code></td></tr>
+<tr><td>Scheme</td><td><code>(assign-sequence-to-best-matching-chain "ACDEFGHIKLMNPQRSTVWY")</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<h3 id="assign_sequences_to_best_matching_chain_from_fasta">assign_sequences_to_best_matching_chain_from_fasta</h3>
+<p>Python: <code>assign_sequences_to_best_matching_chain_from_fasta(fasta_file_name)</code><br>
+Scheme: <code>(assign-sequences-to-best-matching-chain-from-fasta fasta-file-name)</code></p>
+<p>Arguments: fasta_file_name (text). Returns: true or false.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>assign_sequences_to_best_matching_chain_from_fasta("tutorial-modern.pdb")</code></td><td>ran, returned <code>False</code></td></tr>
+<tr><td>Scheme</td><td><code>(assign-sequences-to-best-matching-chain-from-fasta "tutorial-modern.pdb")</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<h3 id="associate_pir_alignment">associate_pir_alignment</h3>
+<p>Python: <code>associate_pir_alignment(imol, chain_id, pir_alignment)</code><br>
+Scheme: <code>(associate-pir-alignment imol chain-id pir-alignment)</code></p>
+<p>associate an alignment with a chain in a model molecule
+The pir_alignment is a string (with newlines)</p>
+<p>Arguments: imol (a whole number), chain_id (text), pir_alignment (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>associate_pir_alignment(0, "A", "hello")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(associate-pir-alignment 0 "A" "hello")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="associate_pir_alignment_from_file">associate_pir_alignment_from_file</h3>
+<p>Python: <code>associate_pir_alignment_from_file(imol, chain_id, pir_alignment_file_name)</code><br>
+Scheme: <code>(associate-pir-alignment-from-file imol chain-id pir-alignment-file-name)</code></p>
+<p>associate an alignment in a file with a chain in a model molecule</p>
+<p>Arguments: imol (a whole number), chain_id (text), pir_alignment_file_name (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>associate_pir_alignment_from_file(0, "A", "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(associate-pir-alignment-from-file 0 "A" "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="sequence_comparison_to_chains">sequence_comparison_to_chains</h3>
+<p>Python: <code>sequence_comparison_to_chains(imol, sequence)</code><br>
+Scheme: <code>(sequence-comparison-to-chains imol sequence)</code></p>
+<p>Arguments: imol (a whole number), sequence (text). Returns: a list.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>sequence_comparison_to_chains(0, "ACDEFGHIKLMNPQRSTVWY")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(sequence-comparison-to-chains 0 "ACDEFGHIKLMNPQRSTVWY")</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

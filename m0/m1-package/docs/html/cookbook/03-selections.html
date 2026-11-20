@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="2a86ff394cad0556989f0e354706e3a78617d772">
+<title>3. Selections and information - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../README.html">coot0 documentation</a></div>
+<h1 id="3-selections-and-information">3. Selections and information</h1>
+<p>*Each recipe stands alone and loads its own copy of the test files (run recipe 1.1 once first; with your own data use
+your molecule numbers instead: <a href="README.html#how-to-use-a-recipe">How to use a recipe</a>).*</p>
+<p>A residue is named by a <em>residue spec</em>: chain, residue number and insertion code, for example <code>["A", 41, ""]</code>
+(Python) or <code>(list "A" 41 "")</code> (Scheme). Some functions return specs with a leading <code>True</code> / <code>#t</code>:
+<code>[True, "A", 41, ""]</code>. Atom selections use the MMDB syntax <code>"//A/30-45"</code> (chain A, residues 30 to 45),
+<code>"//A/41/CA"</code> (one atom), <code>"//B"</code> (a whole chain).</p>
+<h3 id="31-chains-residues-and-the-sequence">3.1 Chains, residues and the sequence</h3>
+<pre class="python"><code>imol = read_pdb("tutorial-modern.pdb")
+for ch in chain_ids(imol):
+    print("chain", ch, chain_n_residues(ch, imol), "residues")
+print(get_sequence_as_fasta_for_chain(imol, "A"))</code></pre>
+<pre class="scheme"><code>(define imol (read-pdb "tutorial-modern.pdb"))
+(for-each (lambda (ch) (format #t "chain ~a ~a residues~%" ch (chain-n-residues ch imol))) (chain-ids imol))
+(display (get-sequence-as-fasta-for-chain imol "A"))</code></pre>
+<h3 id="32-name-and-atoms-of-one-residue">3.2 Name and atoms of one residue</h3>
+<p><code>residue_info</code> gives one entry per atom: <code>[[name, alt-conf], [occupancy, B-factor, element, segid], [x, y, z], atom index]</code>.</p>
+<pre class="python"><code>imol = read_pdb("tutorial-modern.pdb")
+print(residue_name(imol, "A", 41, ""))           # GLU
+for atom in residue_info(imol, "A", 41, ""):
+    name, alt = atom[0]
+    occ, b = atom[1][0], atom[1][1]
+    x, y, z = atom[2]
+    print("%s  occ %.2f  B %5.1f  at %.2f %.2f %.2f" % (name, occ, b, x, y, z))</code></pre>
+<pre class="scheme"><code>(define imol (read-pdb "tutorial-modern.pdb"))
+(display (residue-name imol "A" 41 "")) (newline)
+(for-each (lambda (atom)
+            (format #t "~a  occ ~a  B ~a  at ~a~%"
+                    (car (car atom)) (car (cadr atom)) (cadr (cadr atom)) (caddr atom)))
+          (residue-info imol "A" 41 ""))</code></pre>
+<h3 id="33-find-all-residues-of-one-type">3.3 Find all residues of one type</h3>
+<pre class="python"><code>imol = read_pdb("tutorial-modern.pdb")
+tyrosines = [r for r in all_residues(imol) if residue_name(imol, r[1], r[2], r[3]) == "TYR"]
+print(len(tyrosines), "TYR:", [(r[1], r[2]) for r in tyrosines])</code></pre>
+<pre class="scheme"><code>(define imol (read-pdb "tutorial-modern.pdb"))
+(define tyrosines
+  (filter (lambda (r) (string=? (residue-name imol (list-ref r 1) (list-ref r 2) (list-ref r 3)) "TYR"))
+          (all-residues imol)))
+(format #t "~a TYR~%" (length tyrosines))</code></pre>
+<h3 id="34-residues-near-a-residue">3.4 Residues near a residue</h3>
+<p>All residues with an atom within 5 Å of residue A41.</p>
+<pre class="python"><code>imol = read_pdb("tutorial-modern.pdb")
+near = residues_near_residue(imol, ["A", 41, ""], 5.0)
+print(len(near), "residues:", near)</code></pre>
+<pre class="scheme"><code>(define imol (read-pdb "tutorial-modern.pdb"))
+(define near (residues-near-residue imol (list "A" 41 "") 5.0))
+(format #t "~a residues: ~a~%" (length near) near)</code></pre>
+<h3 id="35-distance-between-two-atoms">3.5 Distance between two atoms</h3>
+<pre class="python"><code>import math
+imol = read_pdb("tutorial-modern.pdb")
+a = atom_info_string(imol, "A", 41, "", " CA ", "")   # [occ, B, element, x, y, z]
+b = atom_info_string(imol, "B", 41, "", " CA ", "")
+d = math.sqrt(sum((a[i] - b[i]) ** 2 for i in (3, 4, 5)))
+print("CA A41 - CA B41: %.2f A" % d)</code></pre>
+<pre class="scheme"><code>(define imol (read-pdb "tutorial-modern.pdb"))
+(define (xyz chain) (list-tail (atom-info-string imol chain 41 "" " CA " "") 3))
+(define d (sqrt (apply + (map (lambda (p q) (* (- p q) (- p q))) (xyz "A") (xyz "B")))))
+(format #t "CA A41 - CA B41: ~,2f A~%" d)</code></pre>
+<h3 id="36-make-a-new-molecule-from-a-selection">3.6 Make a new molecule from a selection</h3>
+<pre class="python"><code>imol = read_pdb("tutorial-modern.pdb")
+imol_part = new_molecule_by_atom_selection(imol, "//A/30-45")
+print("new molecule", imol_part, "with", chain_n_residues("A", imol_part), "residues")</code></pre>
+<pre class="scheme"><code>(define imol (read-pdb "tutorial-modern.pdb"))
+(define imol-part (new-molecule-by-atom-selection imol "//A/30-45"))
+(format #t "new molecule ~a with ~a residues~%" imol-part (chain-n-residues "A" imol-part))</code></pre>
+<h3 id="37-residues-with-alternative-conformations-or-missing-atoms">3.7 Residues with alternative conformations or missing atoms</h3>
+<pre class="python"><code>imol = read_pdb("tutorial-modern.pdb")
+print("alt confs:", residues_with_alt_confs(imol))
+print("missing atoms:", missing_atom_info(imol))</code></pre>
+<pre class="scheme"><code>(define imol (read-pdb "tutorial-modern.pdb"))
+(format #t "alt confs: ~a~%" (residues-with-alt-confs imol))
+(format #t "missing atoms: ~a~%" (missing-atom-info-scm imol))</code></pre>
+<h3 id="38-average-and-median-b-factor">3.8 Average and median B-factor</h3>
+<pre class="python"><code>imol = read_pdb("tutorial-modern.pdb")
+print("average B %.1f, median B %.1f" % (average_temperature_factor(imol), median_temperature_factor(imol)))</code></pre>
+<pre class="scheme"><code>(define imol (read-pdb "tutorial-modern.pdb"))
+(format #t "average B ~,1f, median B ~,1f~%" (average-temperature-factor imol) (median-temperature-factor imol))</code></pre>
+</body></html>

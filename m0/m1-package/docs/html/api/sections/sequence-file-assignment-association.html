@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="0d70644204a8d0058ca7a86677880cf4a0a35b00">
+<title>Sequence File (Assignment/Association) - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="sequence-file-assignmentassociation">Sequence File (Assignment/Association)</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Sequence File (Assignment/Association) (12 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="alignment_mismatches">alignment_mismatches</h3>
+<p>Python: <code>alignment_mismatches(imol)</code><br>
+Scheme: <code>(alignment-mismatches imol)</code></p>
+<p>do a internal alignment of all the assigned sequences,
+ return a list of mismatches that need to be made to model number
+ imol to match the input sequence.</p>
+<p>Return a list of mutations deletions insetions.
+Return False on failure to align (e.g. not assigned sequence)
+and the empty list on no alignment mismatches.</p>
+<p>Arguments: imol (a whole number). Returns: a value (see the result of the example).
+Also available in Python as <code>alignment_mismatches_py</code>.
+Also available in Scheme as <code>alignment-mismatches-scm</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>alignment_mismatches(0)</code></td><td>ran, returned <code>False</code></td></tr>
+<tr><td>Scheme</td><td><code>(alignment-mismatches 0)</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<h3 id="assign_fasta_sequence">assign_fasta_sequence</h3>
+<p>Python: <code>assign_fasta_sequence(imol, chain_id_in, seq)</code><br>
+Scheme: <code>(assign-fasta-sequence imol chain-id-in seq)</code></p>
+<p>Assign a FASTA sequence to a given chain in the molecule</p>
+<p>Arguments: imol (a whole number), chain_id_in (text), seq (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>assign_fasta_sequence(0, "A", "ACDEFGHIKLMNPQRSTVWY")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(assign-fasta-sequence 0 "A" "ACDEFGHIKLMNPQRSTVWY")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="assign_pir_sequence">assign_pir_sequence</h3>
+<p>Python: <code>assign_pir_sequence(imol, chain_id_in, seq)</code><br>
+Scheme: <code>(assign-pir-sequence imol chain-id-in seq)</code></p>
+<p>Assign a PIR sequence to a given chain in the molecule. If
+ the chain of the molecule already had a chain assigned to it, then
+ this will overwrite that old assignment with the new one.</p>
+<p>Arguments: imol (a whole number), chain_id_in (text), seq (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>assign_pir_sequence(0, "A", "ACDEFGHIKLMNPQRSTVWY")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(assign-pir-sequence 0 "A" "ACDEFGHIKLMNPQRSTVWY")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="assign_sequence">assign_sequence</h3>
+<p>Python: <code>assign_sequence(imol_model, imol_map, chain_id)</code><br>
+Scheme: <code>(assign-sequence imol-model imol-map chain-id)</code></p>
+<p>I don't know what this does.</p>
+<p>Arguments: imol_model (a whole number), imol_map (a whole number), chain_id (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>assign_sequence(0, 1, "A")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(assign-sequence 0 1 "A")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="assign_sequence_from_file">assign_sequence_from_file</h3>
+<p>Python: <code>assign_sequence_from_file(imol, file)</code><br>
+Scheme: <code>(assign-sequence-from-file imol file)</code></p>
+<p>Assign a sequence to a given molecule from (whatever) sequence
+ file by alignment.</p>
+<p>Arguments: imol (a whole number), file (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>assign_sequence_from_file(0, "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(assign-sequence-from-file 0 "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="assign_sequence_from_string">assign_sequence_from_string</h3>
+<p>Python: <code>assign_sequence_from_string(imol, chain_id_in, seq)</code><br>
+Scheme: <code>(assign-sequence-from-string imol chain-id-in seq)</code></p>
+<p>Assign a sequence to a given molecule from a simple string</p>
+<p>Arguments: imol (a whole number), chain_id_in (text), seq (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>assign_sequence_from_string(0, "A", "ACDEFGHIKLMNPQRSTVWY")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(assign-sequence-from-string 0 "A" "ACDEFGHIKLMNPQRSTVWY")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="associate_sequence_from_file">associate_sequence_from_file</h3>
+<p>Python: <code>associate_sequence_from_file(imol, file_name)</code><br>
+Scheme: <code>(associate-sequence-from-file imol file-name)</code></p>
+<p>Associate the sequence to the molecule - to be used later for sequence assignment (.c.f assign_pir_sequence)</p>
+<p>Arguments: imol (a whole number), file_name (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>associate_sequence_from_file(0, "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(associate-sequence-from-file 0 "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="delete_all_sequences_from_molecule">delete_all_sequences_from_molecule</h3>
+<p>Python: <code>delete_all_sequences_from_molecule(imol)</code><br>
+Scheme: <code>(delete-all-sequences-from-molecule imol)</code></p>
+<p>Delete all the sequences from a given molecule</p>
+<p>Arguments: imol (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>delete_all_sequences_from_molecule(0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(delete-all-sequences-from-molecule 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="delete_sequence_by_chain_id">delete_sequence_by_chain_id</h3>
+<p>Python: <code>delete_sequence_by_chain_id(imol, chain_id_in)</code><br>
+Scheme: <code>(delete-sequence-by-chain-id imol chain-id-in)</code></p>
+<p>Delete the sequence for a given chain_id from a given molecule</p>
+<p>Arguments: imol (a whole number), chain_id_in (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>delete_sequence_by_chain_id(0, "A")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(delete-sequence-by-chain-id 0 "A")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="print_sequence_chain">print_sequence_chain</h3>
+<p>Python: <code>print_sequence_chain(imol, chain_id)</code><br>
+Scheme: <code>(print-sequence-chain imol chain-id)</code></p>
+<p>Print the sequence to the console of the given molecule</p>
+<p>Arguments: imol (a whole number), chain_id (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>print_sequence_chain(0, "A")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(print-sequence-chain 0 "A")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="print_sequence_chain_general">print_sequence_chain_general</h3>
+<p>Python: <code>print_sequence_chain_general(imol, chain_id, pir_format, file_output, file_name)</code><br>
+Scheme: <code>(print-sequence-chain-general imol chain-id pir-format file-output file-name)</code></p>
+<p>optionally write the sequence to the file for the given molecule,
+ optionally in PIR format</p>
+<p>Arguments: imol (a whole number), chain_id (text), pir_format (a whole number), file_output (a whole number), file_name (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>print_sequence_chain_general(0, "A", 1, 1, "tutorial-modern.pdb")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(print-sequence-chain-general 0 "A" 1 1 "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="sequence_info">sequence_info</h3>
+<p>Python: <code>sequence_info(imol)</code><br>
+Scheme: <code>(sequence-info imol)</code></p>
+<p>return the sequence info that has been assigned to molecule
+ number imol. return as a list of dotted pairs [[chain-id, seq]]. To
+ be used in constructing the cootaneer gui. Return False when no
+ sequence has been assigned.</p>
+<p>Arguments: imol (a whole number). Returns: a value (see the result of the example).
+Also available in Python as <code>sequence_info_py</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>sequence_info(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(sequence-info 0)</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

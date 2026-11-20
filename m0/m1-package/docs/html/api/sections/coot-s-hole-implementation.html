@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="77469016f5732fff458ccbe7d48fc00ef37d0559">
+<title>Coot&#x27;s Hole implementation - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="coots-hole-implementation">Coot's Hole implementation</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Coot's Hole implementation (7 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="hole">hole</h3>
+<p>Python: <code>hole(imol, start_x, start_y, start_z, end_x, end_y, end_z, colour_map_multiplier, colour_map_offset, n_runs, show_probe_radius_graph_flag, export_surface_dots_file_name)</code><br>
+Scheme: <code>(hole imol start-x start-y start-z end-x end-y end-z colour-map-multiplier colour-map-offset n-runs show-probe-radius-graph-flag export-surface-dots-file-name)</code></p>
+<p>starting piont and end point, colour map multiplier and
+ shall the probe radius graph be shown (dummy value currently).</p>
+<p>if export_dots_file_name string length is zero, then don't try to
+export the surface dots.</p>
+<p>Arguments: imol (a whole number), start_x (a number), start_y (a number), start_z (a number), end_x (a number), end_y (a number), end_z (a number), colour_map_multiplier (a number), colour_map_offset (a number), n_runs (a whole number), show_probe_radius_graph_flag (true or false), export_surface_dots_file_name (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>hole(0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1, 1, "tutorial-modern.pdb")</code></td><td>error: TypeError: in method 'hole', argument 11 of type 'bool'</td></tr>
+<tr><td>Scheme</td><td><code>(hole 0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1 1 "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="link_info">link_info</h3>
+<p>Python: <code>link_info(imol)</code><br>
+Scheme: <code>(link-info imol)</code></p>
+<p>return a list of the links in the given molecule.
+will return an empty list for non-valid (i.e. non-model) molecules</p>
+<p>Arguments: imol (a whole number). Returns: a value (see the result of the example).
+Also available in Python as <code>link_info_py</code>.
+Also available in Scheme as <code>link-info-scm</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>link_info(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(link-info 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="make_link">make_link</h3>
+<p>Python: <code>make_link(imol, spec_1, spec_2, link_name, length)</code><br>
+Scheme: <code>(make-link imol spec-1 spec-2 link-name length)</code></p>
+<p>make a link between the specified atoms</p>
+<p>Arguments: imol (a whole number), spec_1 (a list or value), spec_2 (a list or value), link_name (text), length (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>make_link(0, ["A", 41, ""], ["A", 41, ""], "my-name", 1.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(make-link 0 (list "A" 41 "") (list "A" 41 "") "my-name" 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="probe_radius_graph_close_callback">probe_radius_graph_close_callback</h3>
+<p>Python: <code>probe_radius_graph_close_callback(button, dialog)</code><br>
+Scheme: <code>(probe-radius-graph-close-callback button dialog)</code></p>
+<p>GUI stuff</p>
+<p>Arguments: button (<code>GtkWidget *</code>), dialog (<code>GtkWidget *</code>). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<h3 id="show_hole_probe_radius_graph">show_hole_probe_radius_graph</h3>
+<p>Python: <code>show_hole_probe_radius_graph(hole_path, path_length)</code><br>
+Scheme: <code>(show-hole-probe-radius-graph hole-path path-length)</code></p>
+<p>Arguments: hole_path (a list), path_length (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<h3 id="show_hole_probe_radius_graph_basic">show_hole_probe_radius_graph_basic</h3>
+<p>Python: <code>show_hole_probe_radius_graph_basic(hole_path, path_length)</code><br>
+Scheme: <code>(show-hole-probe-radius-graph-basic hole-path path-length)</code></p>
+<p>Arguments: hole_path (a list), path_length (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<h3 id="show_hole_probe_radius_graph_goocanvas">show_hole_probe_radius_graph_goocanvas</h3>
+<p>Python: <code>show_hole_probe_radius_graph_goocanvas(hole_path, path_length)</code><br>
+Scheme: <code>(show-hole-probe-radius-graph-goocanvas hole-path path-length)</code></p>
+<p>Arguments: hole_path (a list), path_length (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+</body></html>

@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="898d15af22665e6a9417352c02c227ac001b2315">
+<title>LSQ-improve - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="lsq-improve">LSQ-improve</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; LSQ-improve (9 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="load_tutorial_model_and_data">load_tutorial_model_and_data</h3>
+<p>Python: <code>load_tutorial_model_and_data()</code><br>
+Scheme: <code>(load-tutorial-model-and-data)</code></p>
+<p>load tutorial model and data</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>load_tutorial_model_and_data()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(load-tutorial-model-and-data)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="lsq_improve">lsq_improve</h3>
+<p>Python: <code>lsq_improve(imol_ref, ref_selection, imol_moving, moving_selection, n_res, dist_crit)</code><br>
+Scheme: <code>(lsq-improve imol-ref ref-selection imol-moving moving-selection n-res dist-crit)</code></p>
+<p>an slightly-modified implementation of the "lsq_improve"
+ algorithm of Kleywegt and Jones (1997).</p>
+<p> Note that if a residue selection is specified in the residue
+ selection(s), then the first residue of the given range must exist
+ in the molecule (if not, then mmdb will not select any atoms from
+ that molecule).</p>
+<p> Kleywegt and Jones set n_res to 4 and dist_crit to 6.0.</p>
+<p>Arguments: imol_ref (a whole number), ref_selection (text), imol_moving (a whole number), moving_selection (text), n_res (a whole number), dist_crit (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>lsq_improve(0, "//A/41-45", 0, "//A/41-45", 1, 1.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(lsq-improve 0 "//A/41-45" 0 "//A/41-45" 1 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_visible_toolbar_multi_refine_cancel_button">set_visible_toolbar_multi_refine_cancel_button</h3>
+<p>Python: <code>set_visible_toolbar_multi_refine_cancel_button(state)</code><br>
+Scheme: <code>(set-visible-toolbar-multi-refine-cancel-button state)</code></p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_visible_toolbar_multi_refine_cancel_button(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-visible-toolbar-multi-refine-cancel-button 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_visible_toolbar_multi_refine_continue_button">set_visible_toolbar_multi_refine_continue_button</h3>
+<p>Python: <code>set_visible_toolbar_multi_refine_continue_button(state)</code><br>
+Scheme: <code>(set-visible-toolbar-multi-refine-continue-button state)</code></p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_visible_toolbar_multi_refine_continue_button(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-visible-toolbar-multi-refine-continue-button 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_visible_toolbar_multi_refine_stop_button">set_visible_toolbar_multi_refine_stop_button</h3>
+<p>Python: <code>set_visible_toolbar_multi_refine_stop_button(state)</code><br>
+Scheme: <code>(set-visible-toolbar-multi-refine-stop-button state)</code></p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_visible_toolbar_multi_refine_stop_button(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-visible-toolbar-multi-refine-stop-button 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="toolbar_multi_refine_button_set_sensitive">toolbar_multi_refine_button_set_sensitive</h3>
+<p>Python: <code>toolbar_multi_refine_button_set_sensitive(button_type, state)</code><br>
+Scheme: <code>(toolbar-multi-refine-button-set-sensitive button-type state)</code></p>
+<p>button_type is one of "stop", "continue", "cancel"
+ state is 1 for on, 0 for off.</p>
+<p>Arguments: button_type (text), state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>toolbar_multi_refine_button_set_sensitive("hello", 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(toolbar-multi-refine-button-set-sensitive "hello" 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="toolbar_multi_refine_cancel">toolbar_multi_refine_cancel</h3>
+<p>Python: <code>toolbar_multi_refine_cancel()</code><br>
+Scheme: <code>(toolbar-multi-refine-cancel)</code></p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>toolbar_multi_refine_cancel()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(toolbar-multi-refine-cancel)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="toolbar_multi_refine_continue">toolbar_multi_refine_continue</h3>
+<p>Python: <code>toolbar_multi_refine_continue()</code><br>
+Scheme: <code>(toolbar-multi-refine-continue)</code></p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>toolbar_multi_refine_continue()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(toolbar-multi-refine-continue)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="toolbar_multi_refine_stop">toolbar_multi_refine_stop</h3>
+<p>Python: <code>toolbar_multi_refine_stop()</code><br>
+Scheme: <code>(toolbar-multi-refine-stop)</code></p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>toolbar_multi_refine_stop()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(toolbar-multi-refine-stop)</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

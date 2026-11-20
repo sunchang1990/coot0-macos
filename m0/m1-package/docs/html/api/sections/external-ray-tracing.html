@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="02cb4b9085df36ec7942e4b2bec3153b8aaf9a91">
+<title>External Ray-Tracing - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="external-ray-tracing">External Ray-Tracing</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; External Ray-Tracing (15 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="citation_notice_off">citation_notice_off</h3>
+<p>Python: <code>citation_notice_off()</code><br>
+Scheme: <code>(citation-notice-off)</code></p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>citation_notice_off()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(citation-notice-off)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="make_image_povray">make_image_povray</h3>
+<p>Python: <code>make_image_povray(filename)</code><br>
+Scheme: <code>(make-image-povray filename)</code></p>
+<p>Arguments: filename (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>make_image_povray("tutorial-modern.pdb")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(make-image-povray "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="make_image_raster3d">make_image_raster3d</h3>
+<p>Python: <code>make_image_raster3d(filename)</code><br>
+Scheme: <code>(make-image-raster3d filename)</code></p>
+<p>a wrapper for the (scheme) function that makes the image, callable
+ from callbacks.c</p>
+<p>Arguments: filename (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>make_image_raster3d("tutorial-modern.pdb")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(make-image-raster3d "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="povray">povray</h3>
+<p>Python: <code>povray(filename)</code><br>
+Scheme: <code>(povray filename)</code></p>
+<p>Arguments: filename (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>povray("tutorial-modern.pdb")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(povray "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="raster3d">raster3d</h3>
+<p>Python: <code>raster3d(rd3_filename)</code><br>
+Scheme: <code>(raster3d rd3-filename)</code></p>
+<p>create a r3d file for the current view</p>
+<p>Arguments: rd3_filename (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>raster3d("tutorial-modern.pdb")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(raster3d "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="raster_screen_shot">raster_screen_shot</h3>
+<p>Python: <code>raster_screen_shot()</code><br>
+Scheme: <code>(raster-screen-shot)</code></p>
+<p>script to render and display image</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>raster_screen_shot()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(raster-screen-shot)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="renderman">renderman</h3>
+<p>Python: <code>renderman(rib_filename)</code><br>
+Scheme: <code>(renderman rib-filename)</code></p>
+<p>Arguments: rib_filename (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>renderman("tutorial-modern.pdb")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(renderman "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_raster3d_atom_radius">set_raster3d_atom_radius</h3>
+<p>Python: <code>set_raster3d_atom_radius(f)</code><br>
+Scheme: <code>(set-raster3d-atom-radius f)</code></p>
+<p>set the atom radius for the Raster3D representation</p>
+<p>Arguments: f (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_raster3d_atom_radius(1.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-raster3d-atom-radius 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_raster3d_bond_thickness">set_raster3d_bond_thickness</h3>
+<p>Python: <code>set_raster3d_bond_thickness(f)</code><br>
+Scheme: <code>(set-raster3d-bond-thickness f)</code></p>
+<p>set the bond thickness for the Raster3D representation</p>
+<p>Arguments: f (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_raster3d_bond_thickness(1.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-raster3d-bond-thickness 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_raster3d_bone_thickness">set_raster3d_bone_thickness</h3>
+<p>Python: <code>set_raster3d_bone_thickness(f)</code><br>
+Scheme: <code>(set-raster3d-bone-thickness f)</code></p>
+<p>set the bone (skeleton) thickness for the Raster3D representation</p>
+<p>Arguments: f (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_raster3d_bone_thickness(1.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-raster3d-bone-thickness 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_raster3d_density_thickness">set_raster3d_density_thickness</h3>
+<p>Python: <code>set_raster3d_density_thickness(f)</code><br>
+Scheme: <code>(set-raster3d-density-thickness f)</code></p>
+<p>set the density line thickness for the Raster3D representation</p>
+<p>Arguments: f (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_raster3d_density_thickness(1.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-raster3d-density-thickness 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_raster3d_font_size">set_raster3d_font_size</h3>
+<p>Python: <code>set_raster3d_font_size(size_in)</code><br>
+Scheme: <code>(set-raster3d-font-size size-in)</code></p>
+<p>set the font size (as a string) for raster3d</p>
+<p>Arguments: size_in (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_raster3d_font_size("hello")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-raster3d-font-size "hello")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_raster3d_shadows_enabled">set_raster3d_shadows_enabled</h3>
+<p>Python: <code>set_raster3d_shadows_enabled(state)</code><br>
+Scheme: <code>(set-raster3d-shadows-enabled state)</code></p>
+<p>turn off shadows for raster3d output - give argument 0 to turn off</p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_raster3d_shadows_enabled(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-raster3d-shadows-enabled 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_raster3d_water_sphere">set_raster3d_water_sphere</h3>
+<p>Python: <code>set_raster3d_water_sphere(istate)</code><br>
+Scheme: <code>(set-raster3d-water-sphere istate)</code></p>
+<p>set the flag to show waters as spheres for the Raster3D
+representation. 1 show as spheres, 0 the usual stars.</p>
+<p>Arguments: istate (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_raster3d_water_sphere(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-raster3d-water-sphere 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_renderer_show_atoms">set_renderer_show_atoms</h3>
+<p>Python: <code>set_renderer_show_atoms(istate)</code><br>
+Scheme: <code>(set-renderer-show-atoms istate)</code></p>
+<p>set the flag to show atoms for the Raster3D representation</p>
+<p>Arguments: istate (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_renderer_show_atoms(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-renderer-show-atoms 1)</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

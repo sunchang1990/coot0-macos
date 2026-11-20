@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="4be3a7d3337bf28df840dcfeacd0723ade438f76">
+<title>10. Ligands - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../README.html">coot0 documentation</a></div>
+<h1 id="10-ligands">10. Ligands</h1>
+<p>*Each recipe stands alone and loads its own copy of the test files (run recipe 1.1 once first; with your own data use
+your molecule numbers instead: <a href="README.html#how-to-use-a-recipe">How to use a recipe</a>).*</p>
+<p>coot0 includes the CCP4 monomer library, so any three-letter code it knows (ATP, NAG, HEM, ...) can be made
+from its dictionary.</p>
+<h3 id="101-make-a-ligand-from-the-dictionary">10.1 Make a ligand from the dictionary</h3>
+<p>The new molecule is placed at the centre of the screen.</p>
+<pre class="python"><code>imol_lig = get_monomer("ATP")
+print("ATP is molecule", imol_lig, "with residues", het_group_residues(imol_lig))</code></pre>
+<pre class="scheme"><code>(define imol-lig (get-monomer "ATP"))
+(format #t "ATP is molecule ~a~%" imol-lig)</code></pre>
+<h3 id="102-read-your-own-dictionary-from-acedrg-grade-elbow">10.2 Read your own dictionary (from acedrg, grade, eLBOW...)</h3>
+<pre class="python"><code># write a dictionary for the test first: the library's own NAG file
+import os, shutil
+lib = os.path.join(os.environ["COOT_PREFIX"], "monomers", "n", "NAG.cif")
+shutil.copy(lib, "my-ligand.cif")
+
+read_cif_dictionary("my-ligand.cif")
+imol_lig = get_monomer("NAG")</code></pre>
+<pre class="scheme"><code>(copy-file (string-append (getenv "COOT_PREFIX") "/monomers/n/NAG.cif") "my-ligand.cif")
+(read-cif-dictionary "my-ligand.cif")
+(define imol-lig (get-monomer "NAG"))</code></pre>
+<h3 id="103-put-a-ligand-at-a-place-and-add-it-to-the-protein">10.3 Put a ligand at a place and add it to the protein</h3>
+<p>Move the ligand to a point (here: next to residue A41), then merge it into the protein model.</p>
+<pre class="python"><code>imol = read_pdb("tutorial-modern.pdb")
+imol_lig = get_monomer("NAG")
+set_go_to_atom_molecule(imol)
+set_go_to_atom_chain_residue_atom_name("A", 41, " CA ")
+move_molecule_to_screen_centre(imol_lig)
+merge_molecules([imol_lig], imol)
+print("ligands in the model:", het_group_residues(imol))</code></pre>
+<pre class="scheme"><code>(define imol (read-pdb "tutorial-modern.pdb"))
+(define imol-lig (get-monomer "NAG"))
+(set-go-to-atom-molecule imol)
+(set-go-to-atom-chain-residue-atom-name "A" 41 " CA ")
+(move-molecule-to-screen-centre imol-lig)
+(merge-molecules (list imol-lig) imol)
+(format #t "ligands in the model: ~a~%" (het-group-residues imol))</code></pre>
+<h3 id="104-residues-around-a-ligand">10.4 Residues around a ligand</h3>
+<pre class="python"><code>imol = read_pdb("tutorial-modern.pdb")
+imol_lig = get_monomer("NAG")
+set_go_to_atom_molecule(imol)
+set_go_to_atom_chain_residue_atom_name("A", 41, " CA ")
+move_molecule_to_screen_centre(imol_lig)
+merge_molecules([imol_lig], imol)
+lig = het_group_residues(imol)[0][1:]          # [chain, resno, ins]
+print("ligand", lig, "contacts:", residues_near_residue(imol, lig, 4.0))</code></pre>
+<pre class="scheme"><code>(define imol (read-pdb "tutorial-modern.pdb"))
+(define imol-lig (get-monomer "NAG"))
+(set-go-to-atom-molecule imol)
+(set-go-to-atom-chain-residue-atom-name "A" 41 " CA ")
+(move-molecule-to-screen-centre imol-lig)
+(merge-molecules (list imol-lig) imol)
+(define lig (cdr (car (het-group-residues imol))))
+(format #t "ligand ~a contacts: ~a~%" lig (residues-near-residue imol lig 4.0))</code></pre>
+<h3 id="105-fit-a-ligand-into-the-density-find-ligands-from-a-script">10.5 Fit a ligand into the density (Find Ligands from a script)</h3>
+<p>Searches the map for places where the ligand fits, away from the model, and makes a new molecule per solution.</p>
+<pre class="python"><code>imol = read_pdb("tutorial-modern.pdb")
+imol_map = make_and_draw_map("rnasa-1.8-all_refmac1.mtz", "FWT", "PHWT", "", 0, 0)
+imol_lig = get_monomer("NAG")
+add_ligand_clear_ligands()
+set_ligand_search_protein_molecule(imol)
+set_ligand_search_map_molecule(imol_map)
+add_ligand_search_ligand_molecule(imol_lig)
+set_find_ligand_n_top_ligands(3)
+n_before = graphics_n_molecules()
+execute_ligand_search()
+print("solutions:", list(range(n_before, graphics_n_molecules())))</code></pre>
+<pre class="scheme"><code>(define imol (read-pdb "tutorial-modern.pdb"))
+(define imol-map (make-and-draw-map "rnasa-1.8-all_refmac1.mtz" "FWT" "PHWT" "" 0 0))
+(define imol-lig (get-monomer "NAG"))
+(add-ligand-clear-ligands)
+(set-ligand-search-protein-molecule imol)
+(set-ligand-search-map-molecule imol-map)
+(add-ligand-search-ligand-molecule imol-lig)
+(set-find-ligand-n-top-ligands 3)
+(execute-ligand-search)</code></pre>
+<h3 id="106-geometry-of-a-ligand">10.6 Geometry of a ligand</h3>
+<p>How well the ligand matches its dictionary (bonds, angles...). Needs a refinement map.</p>
+<pre class="python"><code>set_imol_refinement_map(make_and_draw_map("rnasa-1.8-all_refmac1.mtz", "FWT", "PHWT", "", 0, 0))
+imol_lig = get_monomer("ATP")
+d = residues_distortions(imol_lig, [het_group_residues(imol_lig)[0][1:]])
+print(len(d), "restraints; worst:", max(x["distortion_score"] for x in d))</code></pre>
+<pre class="scheme"><code>(set-imol-refinement-map (make-and-draw-map "rnasa-1.8-all_refmac1.mtz" "FWT" "PHWT" "" 0 0))
+(define imol-lig (get-monomer "ATP"))
+(format #t "~a restraints~%" (length (residues-distortions-scm imol-lig (list (cdr (car (het-group-residues imol-lig)))))))</code></pre>
+</body></html>

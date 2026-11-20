@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="2a8308f06a9ea3a189f3706afcc2983d47affd45">
+<title>Font Parameters - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="font-parameters">Font Parameters</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Font Parameters (4 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="get_font_size">get_font_size</h3>
+<p>Python: <code>get_font_size()</code><br>
+Scheme: <code>(get-font-size)</code></p>
+<p>return the font size</p>
+<p> Returns 1 (small) 2 (medium, default) 3 (large)</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>get_font_size()</code></td><td>ran, returned <code>2</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-font-size)</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<h3 id="set_font_colour">set_font_colour</h3>
+<p>Python: <code>set_font_colour(red, green, blue)</code><br>
+Scheme: <code>(set-font-colour red green blue)</code></p>
+<p>set the colour of the atom label font - the arguments are
+ in the range 0-&gt;1</p>
+<p>Arguments: red (a number), green (a number), blue (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_font_colour(0.5, 0.5, 0.5)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-font-colour 0.5 0.5 0.5)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_font_size">set_font_size</h3>
+<p>Python: <code>set_font_size(i)</code><br>
+Scheme: <code>(set-font-size i)</code></p>
+<p>set the font size</p>
+<p> @param i 1 (small) 2 (medium, default) 3 (large)</p>
+<p>Arguments: i (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_font_size(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-font-size 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_use_stroke_characters">set_use_stroke_characters</h3>
+<p>Python: <code>set_use_stroke_characters(state)</code><br>
+Scheme: <code>(set-use-stroke-characters state)</code></p>
+<p>set use stroke characters</p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_use_stroke_characters(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-use-stroke-characters 1)</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

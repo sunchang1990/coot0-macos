@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="78961e9823c821cb54dbdce4a50442564c5bf691">
+<title>Superposition (SSM) - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="superposition-ssm">Superposition (SSM)</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Superposition (SSM) (3 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="superpose">superpose</h3>
+<p>Python: <code>superpose(imol1, imol2, move_imol2_flag)</code><br>
+Scheme: <code>(superpose imol1 imol2 move-imol2-flag)</code></p>
+<p>simple interface to superposition.</p>
+<p>Superpose all residues of imol2 onto imol1. imol1 is reference, we
+can either move imol2 or copy it to generate a new molecule depending
+on the vaule of move_imol2_flag (1 for copy 0 for move).</p>
+<p>Arguments: imol1 (a whole number), imol2 (a whole number), move_imol2_flag (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>superpose(0, 0, 0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(superpose 0 0 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="superpose_with_atom_selection">superpose_with_atom_selection</h3>
+<p>Python: <code>superpose_with_atom_selection(imol1, imol2, mmdb_atom_sel_str_1, mmdb_atom_sel_str_2, move_imol2_copy_flag)</code><br>
+Scheme: <code>(superpose-with-atom-selection imol1 imol2 mmdb-atom-sel-str-1 mmdb-atom-sel-str-2 move-imol2-copy-flag)</code></p>
+<p>detailed interface to superposition.</p>
+<p>Superpose the given atom selection (specified by the mmdb atom
+selection strings) of imol2 onto imol1. imol1 is reference, we can
+either move imol2 or copy it to generate a new molecule depending on
+the vaule of move_imol2_flag (1 for move 0 for copy).</p>
+<p>Returns the index of the superposed molecule - which could either be a
+new molecule (if move_imol2_flag was 1) or the imol2 or -1 (signifying
+failure to do the SMM superposition).</p>
+<p>Arguments: imol1 (a whole number), imol2 (a whole number), mmdb_atom_sel_str_1 (text), mmdb_atom_sel_str_2 (text), move_imol2_copy_flag (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>superpose_with_atom_selection(0, 0, "//A/41-45", "//A/41-45", 0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(superpose-with-atom-selection 0 0 "//A/41-45" "//A/41-45" 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="superpose_with_chain_selection">superpose_with_chain_selection</h3>
+<p>Python: <code>superpose_with_chain_selection(imol1, imol2, chain_imol1, chain_imol2, chain_used_flag_imol1, chain_used_flag_imol2, move_imol2_copy_flag)</code><br>
+Scheme: <code>(superpose-with-chain-selection imol1 imol2 chain-imol1 chain-imol2 chain-used-flag-imol1 chain-used-flag-imol2 move-imol2-copy-flag)</code></p>
+<p>chain-based interface to superposition.</p>
+<p>Superpose the given chains of imol2 onto imol1. imol1 is reference,
+we can either move imol2 or copy it to generate a new molecule
+depending on the vaule of move_imol2_flag (1 for move 0 for copy).</p>
+<p>Arguments: imol1 (a whole number), imol2 (a whole number), chain_imol1 (text), chain_imol2 (text), chain_used_flag_imol1 (a whole number), chain_used_flag_imol2 (a whole number), move_imol2_copy_flag (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>superpose_with_chain_selection(0, 0, "A", "B", 0, 0, 0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(superpose-with-chain-selection 0 0 "A" "B" 0 0 0)</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

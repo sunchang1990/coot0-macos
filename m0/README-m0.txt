@@ -482,3 +482,17 @@ Round 27: cookbook fixes, Ctrl key bindings from Python -> build 27  (patch 0045
   must be 0 after each recipe (reset afterwards).  Docs: restore line in 8 recipes x 2 languages; 6.3 key o; 6.7/6.8 no immediate replacement;
   "each recipe stands alone" in README + every chapter.  run-api-examples.sh: killtree (build 26 delivery morning).
 
+Round 28: Help menu, Ctrl state from the C++, recipe 6.3 key v -> build 28  (patch 0046 help-menu-ctrl-key-state: C++ + Python + Scheme)
+  User 20 Nov: II1 fail (o = ncs_next_chain_skip_key, globjects.cc 1375: GDK_o / GDK_O / p = update_go_to_atom key; my TAKEN list was from
+  memory), II2 fail (log: with Ctrl the Python "not found" line was missing, i.e. the GDK query said Ctrl, yet nothing visible; cause not
+  certain - the in-process path works in a real window and the status bar shows the text), II3/II4 ok; asked for a VS-Code-like Help menu.
+  C++: globjects.cc USE_GUILE branch now sends "(graphics-general-key-press-hook KEY CTRL)" (control_is_pressed); coot-utils.scm hook takes
+  an optional ctrl arg -> graphics_general_key_press_hook(key, ctrl); Python prints "INFO:: key ...: running key binding ..."; GDK query only
+  a fall-back.  add_key_binding: plain k no longer pops Control_k (same code).  Incremental rebuild: cp -Rp obj_b26 obj_b28, m0_build.py
+  --only globjects (7 s; NOTE: it rewrites out.json with only that TU: link with obj_b26/out.json copied back), link, manual relocation as
+  round 26.  coot0_help.py (post_list last): renames C++ "About" to Help, inserts entries, coot0_help_menu_to_end (also called from
+  coot_menubar_menu); search walks the live menubar (visibility check skipped when COOT_GTK2COMPAT_HEADLESS), docs/html/search-index.json;
+  file#anchor via a forwarding page (macOS open drops fragments); COOT0_NO_BROWSER=1 in the test runners.  tools/gen_docs_html.py (own
+  Markdown subset; GitHub slugs; sha1 of the source in a meta tag; run it before packaging, CHANGELOG.html comes from CHANGELOG.md).
+  Real-window test tests/run-real-window-checks.sh: GdkEventKey via gtk_widget_event on the GtkDrawingArea of the "Coot" window (CGEventPostToPid
+  did not arrive: no Accessibility permission).

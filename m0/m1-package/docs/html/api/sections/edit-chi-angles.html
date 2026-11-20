@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="910758664a8804855d261fa2d3ea926a54395fed">
+<title>Edit Chi Angles - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="edit-chi-angles">Edit Chi Angles</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Edit Chi Angles (12 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="edit_chi_angles">edit_chi_angles</h3>
+<p>Python: <code>edit_chi_angles(imol, chain_id, resno, ins_code, altconf)</code><br>
+Scheme: <code>(edit-chi-angles imol chain-id resno ins-code altconf)</code></p>
+<p>display the edit chi angles gui for the given residue</p>
+<p> return a status of 0 if it failed to fined the residue,
+ return a value of 1 if it worked.</p>
+<p>Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_code (text), altconf (text). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>edit_chi_angles(0, "A", 41, "", "")</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
+<tr><td>Scheme</td><td><code>(edit-chi-angles 0 "A" 41 "" "")</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+<h3 id="rotate_chi">rotate_chi</h3>
+<p>Python: <code>rotate_chi(am)</code><br>
+Scheme: <code>(rotate-chi am)</code></p>
+<p>Arguments: am (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>rotate_chi(1.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(rotate-chi 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_edit_chi_angles_reverse_fragment_state">set_edit_chi_angles_reverse_fragment_state</h3>
+<p>Python: <code>set_edit_chi_angles_reverse_fragment_state(istate)</code><br>
+Scheme: <code>(set-edit-chi-angles-reverse-fragment-state istate)</code></p>
+<p>a callback from the callbacks.c, setting the state of
+ graphics_info_t::edit_chi_angles_reverse_fragment flag</p>
+<p>Arguments: istate (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_edit_chi_angles_reverse_fragment_state(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-edit-chi-angles-reverse-fragment-state 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_find_hydrogen_torsion">set_find_hydrogen_torsion</h3>
+<p>Python: <code>set_find_hydrogen_torsion(state)</code><br>
+Scheme: <code>(set-find-hydrogen-torsions state)</code></p>
+<p>show torsions that rotate hydrogens in the torsion angle
+ manipulation dialog. Note that this may be needed if, in the
+ dictionary cif file torsion which have as a 4th atom both a hydrogen
+ and a heavier atom bonding to the 3rd atom, but list the 4th atom as
+ a hydrogen (not a heavier atom).</p>
+<p>Arguments: state (a whole number). Returns: nothing.
+Also available in Python as <code>set_find_hydrogen_torsions</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_find_hydrogen_torsion(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-find-hydrogen-torsions 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_graphics_edit_current_chi">set_graphics_edit_current_chi</h3>
+<p>Python: <code>set_graphics_edit_current_chi(ichi)</code><br>
+Scheme: <code>(set-graphics-edit-current-chi ichi)</code></p>
+<p>Arguments: ichi (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_graphics_edit_current_chi(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-graphics-edit-current-chi 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_moving_atom_move_chis">set_moving_atom_move_chis</h3>
+<p>Python: <code>set_moving_atom_move_chis()</code><br>
+Scheme: <code>(set-moving-atom-move-chis)</code></p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_moving_atom_move_chis()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-moving-atom-move-chis)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_show_chi_angle_bond">set_show_chi_angle_bond</h3>
+<p>Python: <code>set_show_chi_angle_bond(imode)</code><br>
+Scheme: <code>(set-show-chi-angle-bond imode)</code></p>
+<p>Arguments: imode (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_show_chi_angle_bond(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-show-chi-angle-bond 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="setup_edit_chi_angles">setup_edit_chi_angles</h3>
+<p>Python: <code>setup_edit_chi_angles(state)</code><br>
+Scheme: <code>(setup-edit-chi-angles state)</code></p>
+<p>c-interface-build functions</p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>setup_edit_chi_angles(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(setup-edit-chi-angles 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="setup_residue_partial_alt_locs">setup_residue_partial_alt_locs</h3>
+<p>Python: <code>setup_residue_partial_alt_locs(state)</code><br>
+Scheme: <code>(setup-residue-partial-alt-locs state)</code></p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>setup_residue_partial_alt_locs(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(setup-residue-partial-alt-locs 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="setup_torsion_general">setup_torsion_general</h3>
+<p>Python: <code>setup_torsion_general(state)</code><br>
+Scheme: <code>(setup-torsion-general state)</code></p>
+<p>beloved torsion general at last makes an entrance onto the
+ Coot scene...</p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>setup_torsion_general(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(setup-torsion-general 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="toggle_torsion_general_reverse">toggle_torsion_general_reverse</h3>
+<p>Python: <code>toggle_torsion_general_reverse()</code><br>
+Scheme: <code>(toggle-torsion-general-reverse)</code></p>
+<p>No need for this to be exported to scripting</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>toggle_torsion_general_reverse()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(toggle-torsion-general-reverse)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="unset_moving_atom_move_chis">unset_moving_atom_move_chis</h3>
+<p>Python: <code>unset_moving_atom_move_chis()</code><br>
+Scheme: <code>(unset-moving-atom-move-chis)</code></p>
+<p>button callback</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>unset_moving_atom_move_chis()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(unset-moving-atom-move-chis)</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

@@ -1,0 +1,986 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="f6efedc1c4248344157640ebb4dbd079cab7e8fd">
+<title>Regularization and Refinement - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="regularization-and-refinement">Regularization and Refinement</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Regularization and Refinement (113 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="accept_regularizement">accept_regularizement</h3>
+<p>Python: <code>accept_regularizement()</code><br>
+Scheme: <code>(accept-regularizement)</code></p>
+<p>a hideous alias for the above</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>accept_regularizement()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(accept-regularizement)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="add_extra_angle_restraint">add_extra_angle_restraint</h3>
+<p>Python: <code>add_extra_angle_restraint(imol, chain_id_1, res_no_1, ins_code_1, atom_name_1, alt_conf_1, chain_id_2, res_no_2, ins_code_2, atom_name_2, alt_conf_2, chain_id_3, res_no_3, ins_code_3, atom_name_3, alt_conf_3, torsion_angle, esd)</code><br>
+Scheme: <code>(add-extra-angle-restraint imol chain-id-1 res-no-1 ins-code-1 atom-name-1 alt-conf-1 chain-id-2 res-no-2 ins-code-2 atom-name-2 alt-conf-2 chain-id-3 res-no-3 ins-code-3 atom-name-3 alt-conf-3 torsion-angle esd)</code></p>
+<p>Arguments: imol (a whole number), chain_id_1 (text), res_no_1 (a whole number), ins_code_1 (text), atom_name_1 (text), alt_conf_1 (text), chain_id_2 (text), res_no_2 (a whole number), ins_code_2 (text), atom_name_2 (text), alt_conf_2 (text), chain_id_3 (text), res_no_3 (a whole number), ins_code_3 (text), atom_name_3 (text), alt_conf_3 (text), torsion_angle (a number), esd (a number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>add_extra_angle_restraint(0, "A", 41, "", " CA ", "", "B", 45, "", " CA ", "", "A", 41, "", " CA ", "", 10.0, 1.0)</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(add-extra-angle-restraint 0 "A" 41 "" " CA " "" "B" 45 "" " CA " "" "A" 41 "" " CA " "" 10.0 1.0)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<h3 id="add_extra_bond_restraint">add_extra_bond_restraint</h3>
+<p>Python: <code>add_extra_bond_restraint(imol, chain_id_1, res_no_1, ins_code_1, atom_name_1, alt_conf_1, chain_id_2, res_no_2, ins_code_2, atom_name_2, alt_conf_2, bond_dist, esd)</code><br>
+Scheme: <code>(add-extra-bond-restraint imol chain-id-1 res-no-1 ins-code-1 atom-name-1 alt-conf-1 chain-id-2 res-no-2 ins-code-2 atom-name-2 alt-conf-2 bond-dist esd)</code></p>
+<p>add a user-define bond restraint</p>
+<p> this extra restraint is used when the given atoms are selected in
+ refinement or regularization.</p>
+<p> Returns the index of the new restraint.</p>
+<p> Returns -1 when the atoms were not found and no extra bond
+ restraint was stored.</p>
+<p>Arguments: imol (a whole number), chain_id_1 (text), res_no_1 (a whole number), ins_code_1 (text), atom_name_1 (text), alt_conf_1 (text), chain_id_2 (text), res_no_2 (a whole number), ins_code_2 (text), atom_name_2 (text), alt_conf_2 (text), bond_dist (a number), esd (a number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>add_extra_bond_restraint(0, "A", 41, "", " CA ", "", "B", 45, "", " CA ", "", 1.0, 1.0)</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(add-extra-bond-restraint 0 "A" 41 "" " CA " "" "B" 45 "" " CA " "" 1.0 1.0)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<h3 id="add_extra_bond_restraints">add_extra_bond_restraints</h3>
+<p>Python: <code>add_extra_bond_restraints(imol, extra_bond_restraints_py)</code><br>
+Scheme: <code>(add-extra-bond-restraints imol extra-bond-restraints-scm)</code></p>
+<p>Arguments: imol (a whole number), extra_bond_restraints_py (a list or value). Returns: a whole number.
+Also available in Python as <code>add_extra_bond_restraints_py</code>.
+Also available in Scheme as <code>add-extra-bond-restraints-scm</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<h3 id="add_extra_geman_mcclure_restraint">add_extra_geman_mcclure_restraint</h3>
+<p>Python: <code>add_extra_geman_mcclure_restraint(imol, chain_id_1, res_no_1, ins_code_1, atom_name_1, alt_conf_1, chain_id_2, res_no_2, ins_code_2, atom_name_2, alt_conf_2, bond_dist, esd)</code><br>
+Scheme: <code>(add-extra-geman-mcclure-restraint imol chain-id-1 res-no-1 ins-code-1 atom-name-1 alt-conf-1 chain-id-2 res-no-2 ins-code-2 atom-name-2 alt-conf-2 bond-dist esd)</code></p>
+<p>add a user-define GM distance restraint</p>
+<p> this extra restraint is used when the given atoms are selected in
+ refinement or regularization.</p>
+<p> Returns the index of the new restraint.</p>
+<p> Returns -1 when the atoms were not found and no extra bond
+ restraint was stored.</p>
+<p>Arguments: imol (a whole number), chain_id_1 (text), res_no_1 (a whole number), ins_code_1 (text), atom_name_1 (text), alt_conf_1 (text), chain_id_2 (text), res_no_2 (a whole number), ins_code_2 (text), atom_name_2 (text), alt_conf_2 (text), bond_dist (a number), esd (a number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>add_extra_geman_mcclure_restraint(0, "A", 41, "", " CA ", "", "B", 45, "", " CA ", "", 1.0, 1.0)</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(add-extra-geman-mcclure-restraint 0 "A" 41 "" " CA " "" "B" 45 "" " CA " "" 1.0 1.0)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<h3 id="add_extra_start_pos_restraint">add_extra_start_pos_restraint</h3>
+<p>Python: <code>add_extra_start_pos_restraint(imol, chain_id_1, res_no_1, ins_code_1, atom_name_1, alt_conf_1, esd)</code><br>
+Scheme: <code>(add-extra-start-pos-restraint imol chain-id-1 res-no-1 ins-code-1 atom-name-1 alt-conf-1 esd)</code></p>
+<p>Arguments: imol (a whole number), chain_id_1 (text), res_no_1 (a whole number), ins_code_1 (text), atom_name_1 (text), alt_conf_1 (text), esd (a number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>add_extra_start_pos_restraint(0, "A", 41, "", " CA ", "", 1.0)</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(add-extra-start-pos-restraint 0 "A" 41 "" " CA " "" 1.0)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<h3 id="add_extra_target_position_restraint">add_extra_target_position_restraint</h3>
+<p>Python: <code>add_extra_target_position_restraint(imol, chain_id, res_no, ins_code, atom_name, alt_conf, x, y, z, weight)</code><br>
+Scheme: <code>(add-extra-target-position-restraint imol chain-id res-no ins-code atom-name alt-conf x y z weight)</code></p>
+<p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text), atom_name (text), alt_conf (text), x (a number), y (a number), z (a number), weight (a number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>add_extra_target_position_restraint(0, "A", 41, "", " CA ", "", 54.5, 9.4, 12.3, 1.0)</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(add-extra-target-position-restraint 0 "A" 41 "" " CA " "" 54.5 9.4 12.3 1.0)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<h3 id="add_extra_torsion_restraint">add_extra_torsion_restraint</h3>
+<p>Python: <code>add_extra_torsion_restraint(imol, chain_id_1, res_no_1, ins_code_1, atom_name_1, alt_conf_1, chain_id_2, res_no_2, ins_code_2, atom_name_2, alt_conf_2, chain_id_3, res_no_3, ins_code_3, atom_name_3, alt_conf_3, chain_id_4, res_no_4, ins_code_4, atom_name_4, alt_conf_4, torsion_angle, esd, period)</code><br>
+Scheme: <code>(add-extra-torsion-restraint imol chain-id-1 res-no-1 ins-code-1 atom-name-1 alt-conf-1 chain-id-2 res-no-2 ins-code-2 atom-name-2 alt-conf-2 chain-id-3 res-no-3 ins-code-3 atom-name-3 alt-conf-3 chain-id-4 res-no-4 ins-code-4 atom-name-4 alt-conf-4 torsion-angle esd period)</code></p>
+<p>Arguments: imol (a whole number), chain_id_1 (text), res_no_1 (a whole number), ins_code_1 (text), atom_name_1 (text), alt_conf_1 (text), chain_id_2 (text), res_no_2 (a whole number), ins_code_2 (text), atom_name_2 (text), alt_conf_2 (text), chain_id_3 (text), res_no_3 (a whole number), ins_code_3 (text), atom_name_3 (text), alt_conf_3 (text), chain_id_4 (text), res_no_4 (a whole number), ins_code_4 (text), atom_name_4 (text), alt_conf_4 (text), torsion_angle (a number), esd (a number), period (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>add_extra_torsion_restraint(0, "A", 41, "", " CA ", "", "B", 45, "", " CA ", "", "A", 41, "", " CA ", "", "A", 41, "", " CA ", "", 10.0, 1.0, 1)</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(add-extra-torsion-restraint 0 "A" 41 "" " CA " "" "B" 45 "" " CA " "" "A" 41 "" " CA " "" "A" 41 "" " CA " "" 10.0 1.0 1)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<h3 id="add_initial_position_restraints">add_initial_position_restraints</h3>
+<p>Python: <code>add_initial_position_restraints(imol, residue_specs, weight)</code><br>
+Scheme: <code>(add-initial-position-restraints imol residue-specs weight)</code></p>
+<p>\file
+ Coot Scripting Interface - Refinement utilities</p>
+<p>Arguments: imol (a whole number), residue_specs (a list), weight (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<h3 id="add_omega_torsion_restriants">add_omega_torsion_restriants</h3>
+<p>Python: <code>add_omega_torsion_restriants()</code><br>
+Scheme: <code>(add-omega-torsion-restriants)</code></p>
+<p>add restraints on the omega angle of the peptides</p>
+<p> (that is the torsion round the peptide bond). Omega angles that are
+ closer to 0 than to 180 will be refined as cis peptides (and of
+ course if omega is greater than 90 then the peptide will be refined
+ as a trans peptide (this is the normal case).</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>add_omega_torsion_restriants()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(add-omega-torsion-restriants)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="add_parallel_plane_restraint">add_parallel_plane_restraint</h3>
+<p>Python: <code>add_parallel_plane_restraint(imol, chain_id_1, re_no_1, ins_code_1, chain_id_2, re_no_2, ins_code_2)</code><br>
+Scheme: <code>(add-parallel-plane-restraint imol chain-id-1 re-no-1 ins-code-1 chain-id-2 re-no-2 ins-code-2)</code></p>
+<p>Arguments: imol (a whole number), chain_id_1 (text), re_no_1 (a whole number), ins_code_1 (text), chain_id_2 (text), re_no_2 (a whole number), ins_code_2 (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>add_parallel_plane_restraint(0, "A", 1, "", "B", 1, "")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(add-parallel-plane-restraint 0 "A" 1 "" "B" 1 "")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="add_planar_peptide_restraints">add_planar_peptide_restraints</h3>
+<p>Python: <code>add_planar_peptide_restraints()</code><br>
+Scheme: <code>(add-planar-peptide-restraints)</code></p>
+<p>add a restraint on peptides to make them planar</p>
+<p> This adds a 5 atom restraint that includes both CA atoms of the
+ peptide. Use this rather than editting the mon_lib_list.cif file.</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>add_planar_peptide_restraints()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(add-planar-peptide-restraints)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="add_refmac_extra_restraints">add_refmac_extra_restraints</h3>
+<p>Python: <code>add_refmac_extra_restraints(imol, file_name)</code><br>
+Scheme: <code>(add-refmac-extra-restraints imol file-name)</code></p>
+<p>read in prosmart (typically) extra restraints</p>
+<p>Arguments: imol (a whole number), file_name (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>add_refmac_extra_restraints(0, "tutorial-modern.pdb")</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(add-refmac-extra-restraints 0 "tutorial-modern.pdb")</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<h3 id="c_accept_moving_atoms">c_accept_moving_atoms</h3>
+<p>Python: <code>c_accept_moving_atoms()</code><br>
+Scheme: <code>(c-accept-moving-atoms)</code></p>
+<p>accept the new positions of the regularized or refined residues</p>
+<p> If you are scripting refinement and/or regularization, this is the
+ function that you need to call after refine-zone or regularize-zone.</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>c_accept_moving_atoms()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(c-accept-moving-atoms)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="check_chiral_volumes">check_chiral_volumes</h3>
+<p>Python: <code>check_chiral_volumes(imol)</code><br>
+Scheme: <code>(check-chiral-volumes imol)</code></p>
+<p>query the state of the above option</p>
+<p>Arguments: imol (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>check_chiral_volumes(0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
+<tr><td>Scheme</td><td><code>(check-chiral-volumes 0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+<h3 id="chiral_volume_errors">chiral_volume_errors</h3>
+<p>Python: <code>chiral_volume_errors(imol)</code><br>
+Scheme: <code>(chiral-volume-errors imol)</code></p>
+<p>Arguments: imol (a whole number). Returns: a value (see the result of the example).
+Also available in Python as <code>chiral_volume_errors_py</code>.
+Also available in Scheme as <code>chiral-volume-errors-scm</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>chiral_volume_errors(0)</code></td><td>ran, returned <code>[[-1, 'A', 41, '', ' CA ', '']]</code></td></tr>
+<tr><td>Scheme</td><td><code>(chiral-volume-errors 0)</code></td><td>ran, returned <code>((-1 "A" 41 "" " CA " ""))</code></td></tr></tbody></table>
+<h3 id="clear_all_atom_pull_restraints">clear_all_atom_pull_restraints</h3>
+<p>Python: <code>clear_all_atom_pull_restraints()</code><br>
+Scheme: <code>(clear-all-atom-pull-restraints)</code></p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>clear_all_atom_pull_restraints()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(clear-all-atom-pull-restraints)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="clear_moving_atoms_object">clear_moving_atoms_object</h3>
+<p>Python: <code>clear_moving_atoms_object()</code><br>
+Scheme: <code>(clear-moving-atoms-object)</code></p>
+<p>remove the molecule and bonds</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>clear_moving_atoms_object()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(clear-moving-atoms-object)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="clear_up_moving_atoms">clear_up_moving_atoms</h3>
+<p>Python: <code>clear_up_moving_atoms()</code><br>
+Scheme: <code>(clear-up-moving-atoms)</code></p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>clear_up_moving_atoms()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(clear-up-moving-atoms)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="crankshaft_peptide_rotation_optimization_intermediate_atoms">crankshaft_peptide_rotation_optimization_intermediate_atoms</h3>
+<p>Python: <code>crankshaft_peptide_rotation_optimization_intermediate_atoms()</code><br>
+Scheme: <code>(crankshaft-peptide-rotation-optimization-intermediate-atoms)</code></p>
+<p>functions used in callbacks.c</p>
+<p>Arguments: none. Returns: <code>BEGIN_C_DECLS int</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>crankshaft_peptide_rotation_optimization_intermediate_atoms()</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(crankshaft-peptide-rotation-optimization-intermediate-atoms)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<h3 id="curlew">curlew</h3>
+<p>Python: <code>curlew()</code><br>
+Scheme: <code>(curlew)</code></p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>curlew()</code></td><td>not run: not run automatically (curl: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(curlew)</code></td><td>not run: not run automatically (curl: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<h3 id="decrease_proportional_editing_radius">decrease_proportional_editing_radius</h3>
+<p>Python: <code>decrease_proportional_editing_radius()</code><br>
+Scheme: <code>(decrease-proportional-editing-radius)</code></p>
+<p>descrease the proportional editing radius</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>decrease_proportional_editing_radius()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(decrease-proportional-editing-radius)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="delete_all_extra_restraints">delete_all_extra_restraints</h3>
+<p>Python: <code>delete_all_extra_restraints(imol)</code><br>
+Scheme: <code>(delete-all-extra-restraints imol)</code></p>
+<p>clear out all the extra/user-defined restraints for molecule number imol</p>
+<p>Arguments: imol (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>delete_all_extra_restraints(0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(delete-all-extra-restraints 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="delete_extra_restraint">delete_extra_restraint</h3>
+<p>Python: <code>delete_extra_restraint(imol, restraint_spec)</code><br>
+Scheme: <code>(delete-extra-restraint imol restraint-spec)</code></p>
+<p>restraint_spec is something like ['bond', spec_1, spec_2]</p>
+<p> spec_1 and spec_2 do not have to be in the order that the bond was created.</p>
+<p>Arguments: imol (a whole number), restraint_spec (a list or value). Returns: nothing.
+Also available in Python as <code>delete_extra_restraint_py</code>.
+Also available in Scheme as <code>delete-extra-restraint-scm</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>delete_extra_restraint(0, ["A", 41, ""])</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(delete-extra-restraint 0 (list "A" 41 ""))</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="delete_extra_restraints_for_residue">delete_extra_restraints_for_residue</h3>
+<p>Python: <code>delete_extra_restraints_for_residue(imol, chain_id, res_no, ins_code)</code><br>
+Scheme: <code>(delete-extra-restraints-for-residue imol chain-id res-no ins-code)</code></p>
+<p>clear out all the extra/user-defined restraints for this residue in molecule number imol</p>
+<p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>delete_extra_restraints_for_residue(0, "A", 41, "")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(delete-extra-restraints-for-residue 0 "A" 41 "")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="delete_extra_restraints_for_residue_spec">delete_extra_restraints_for_residue_spec</h3>
+<p>Python: <code>delete_extra_restraints_for_residue_spec(imol, residue_spec_in_py)</code><br>
+Scheme: <code>(delete-extra-restraints-for-residue-spec imol residue-spec-in)</code></p>
+<p>Arguments: imol (a whole number), residue_spec_in_py (a list or value). Returns: nothing.
+Also available in Python as <code>delete_extra_restraints_for_residue_spec_py</code>.
+Also available in Scheme as <code>delete-extra-restraints-for-residue-spec-scm</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>delete_extra_restraints_for_residue_spec(0, ["A", 41, ""])</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(delete-extra-restraints-for-residue-spec 0 (list "A" 41 ""))</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="delete_extra_restraints_worse_than">delete_extra_restraints_worse_than</h3>
+<p>Python: <code>delete_extra_restraints_worse_than(imol, n_sigma)</code><br>
+Scheme: <code>(delete-extra-restraints-worse-than imol n-sigma)</code></p>
+<p>Arguments: imol (a whole number), n_sigma (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>delete_extra_restraints_worse_than(0, 1.5)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(delete-extra-restraints-worse-than 0 1.5)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="delete_restraints">delete_restraints</h3>
+<p>Python: <code>delete_restraints(comp_id)</code><br>
+Scheme: <code>(delete-restraints comp-id)</code></p>
+<p>delete the restraints for the given comp_id (i.e. residue name)</p>
+<p>Returns success status (0 is failed, 1 is success)</p>
+<p>Arguments: comp_id (text). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>delete_restraints("ALA")</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(delete-restraints "ALA")</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<h3 id="do_refine">do_refine</h3>
+<p>Python: <code>do_refine(state)</code><br>
+Scheme: <code>(do-refine state)</code></p>
+<p>pass 0 for off (unclick togglebutton)</p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>do_refine(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(do-refine 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="do_regularize">do_regularize</h3>
+<p>Python: <code>do_regularize(state)</code><br>
+Scheme: <code>(do-regularize state)</code></p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>do_regularize(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(do-regularize 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="do_regularize_kill_delete_dialog">do_regularize_kill_delete_dialog</h3>
+<p>Python: <code>do_regularize_kill_delete_dialog()</code><br>
+Scheme: <code>(do-regularize-kill-delete-dialog)</code></p>
+<p>and a gui function used by those functions</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>do_regularize_kill_delete_dialog()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(do-regularize-kill-delete-dialog)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="does_residue_exist_p">does_residue_exist_p</h3>
+<p>Python: <code>does_residue_exist_p(imol, chain_id, resno, inscode)</code><br>
+Scheme: <code>(does-residue-exist-p imol chain-id resno inscode)</code></p>
+<p>Does the residue exist? (Raw function)</p>
+<p> Returns 0 on not-exist, 1 on does exist.</p>
+<p>Arguments: imol (a whole number), chain_id (text), resno (a whole number), inscode (text). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>does_residue_exist_p(0, "A", 41, "")</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(does-residue-exist-p 0 "A" 41 "")</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<h3 id="dragged_refinement_steps_per_frame">dragged_refinement_steps_per_frame</h3>
+<p>Python: <code>dragged_refinement_steps_per_frame()</code><br>
+Scheme: <code>(dragged-refinement-steps-per-frame)</code></p>
+<p>return the number of steps per frame in dragged refinement</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>dragged_refinement_steps_per_frame()</code></td><td>ran, returned <code>10</code></td></tr>
+<tr><td>Scheme</td><td><code>(dragged-refinement-steps-per-frame)</code></td><td>ran, returned <code>10</code></td></tr></tbody></table>
+<h3 id="estimate_map_weight">estimate_map_weight</h3>
+<p>Python: <code>estimate_map_weight(imol_map)</code><br>
+Scheme: <code>(estimate-map-weight imol-map)</code></p>
+<p>Arguments: imol_map (a whole number). Returns: a number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>estimate_map_weight(1)</code></td><td>ran, returned <code>40.161048889160156</code></td></tr>
+<tr><td>Scheme</td><td><code>(estimate-map-weight 1)</code></td><td>ran, returned <code>40.161048889160156</code></td></tr></tbody></table>
+<h3 id="extra_restraints_are_shown">extra_restraints_are_shown</h3>
+<p>Python: <code>extra_restraints_are_shown(imol)</code><br>
+Scheme: <code>(extra-restraints-are-shown imol)</code></p>
+<p>Arguments: imol (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>extra_restraints_are_shown(0)</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(extra-restraints-are-shown 0)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<h3 id="generate_local_self_restraints">generate_local_self_restraints</h3>
+<p>Python: <code>generate_local_self_restraints(imol, chain_id, local_dist_max)</code><br>
+Scheme: <code>(generate-local-self-restraints imol chain-id local-dist-max)</code></p>
+<p>generate external distance local self restraints</p>
+<p>Arguments: imol (a whole number), chain_id (text), local_dist_max (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>generate_local_self_restraints(0, "A", 1.0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(generate-local-self-restraints 0 "A" 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="generate_local_self_restraints_by_residues">generate_local_self_restraints_by_residues</h3>
+<p>Python: <code>generate_local_self_restraints_by_residues(imol, residue_specs, local_dist_max)</code><br>
+Scheme: <code>(generate-local-self-restraints-by-residues imol residue-specs local-dist-max)</code></p>
+<p>Arguments: imol (a whole number), residue_specs (a list or value), local_dist_max (a number). Returns: nothing.
+Also available in Python as <code>generate_local_self_restraints_by_residues_py</code>.
+Also available in Scheme as <code>generate-local-self-restraints-by-residues-scm</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>generate_local_self_restraints_by_residues(0, [["A", 41, ""], ["A", 42, ""]], 1.0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(generate-local-self-restraints-by-residues 0 (list (list "A" 41 "") (list "A" 42 "")) 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="generate_self_restraints">generate_self_restraints</h3>
+<p>Python: <code>generate_self_restraints(imol, local_dist_max)</code><br>
+Scheme: <code>(generate-self-restraints imol local-dist-max)</code></p>
+<p>generate external distance all-molecule self restraints</p>
+<p>Arguments: imol (a whole number), local_dist_max (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>generate_self_restraints(0, 1.0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(generate-self-restraints 0 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="get_auto_clear_atom_pull_restraint_state">get_auto_clear_atom_pull_restraint_state</h3>
+<p>Python: <code>get_auto_clear_atom_pull_restraint_state()</code><br>
+Scheme: <code>(get-auto-clear-atom-pull-restraint-state)</code></p>
+<p>get auto-clear atom pull restraint state</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>get_auto_clear_atom_pull_restraint_state()</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-auto-clear-atom-pull-restraint-state)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<h3 id="get_map_weight">get_map_weight</h3>
+<p>Python: <code>get_map_weight()</code><br>
+Scheme: <code>(get-map-weight)</code></p>
+<p>return the relative weight of the geometric terms to the map terms.</p>
+<p>A more sensible name for the matrix_state() function)</p>
+<p>Arguments: none. Returns: a number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>get_map_weight()</code></td><td>ran, returned <code>60.0</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-map-weight)</code></td><td>ran, returned <code>60.0</code></td></tr></tbody></table>
+<h3 id="imol_refinement_map">imol_refinement_map</h3>
+<p>Python: <code>imol_refinement_map()</code><br>
+Scheme: <code>(imol-refinement-map)</code></p>
+<p>the molecule number of the map used for refinement</p>
+<p> Returns the map number, if it has been set or there is only one
+ map, return -1 on no map set (ambiguous) or no maps.</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>imol_refinement_map()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(imol-refinement-map)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="increase_proportional_editing_radius">increase_proportional_editing_radius</h3>
+<p>Python: <code>increase_proportional_editing_radius()</code><br>
+Scheme: <code>(increase-proportional-editing-radius)</code></p>
+<p>iscrease the proportional editing radius</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>increase_proportional_editing_radius()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(increase-proportional-editing-radius)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="list_extra_restraints">list_extra_restraints</h3>
+<p>Python: <code>list_extra_restraints(imol)</code><br>
+Scheme: <code>(list-extra-restraints imol)</code></p>
+<p>Arguments: imol (a whole number). Returns: a value (see the result of the example).
+Also available in Python as <code>list_extra_restraints_py</code>.
+Also available in Scheme as <code>list-extra-restraints-scm</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>list_extra_restraints(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(list-extra-restraints 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="make_tight_planar_peptide_restraints">make_tight_planar_peptide_restraints</h3>
+<p>Python: <code>make_tight_planar_peptide_restraints()</code><br>
+Scheme: <code>(make-tight-planar-peptide-restraints)</code></p>
+<p>make the planar peptide restraints tight</p>
+<p>Useful when refining models with cryo-EM maps</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>make_tight_planar_peptide_restraints()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(make-tight-planar-peptide-restraints)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="matrix_state">matrix_state</h3>
+<p>Python: <code>matrix_state()</code><br>
+Scheme: <code>(matrix-state)</code></p>
+<p>return the relative weight of the geometric terms to the map terms.</p>
+<p>Arguments: none. Returns: a number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>matrix_state()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(matrix-state)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="parallel_plane_restraints_are_shown">parallel_plane_restraints_are_shown</h3>
+<p>Python: <code>parallel_plane_restraints_are_shown(imol)</code><br>
+Scheme: <code>(parallel-plane-restraints-are-shown imol)</code></p>
+<p>Arguments: imol (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>parallel_plane_restraints_are_shown(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(parallel-plane-restraints-are-shown 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="planar_peptide_restraints_state">planar_peptide_restraints_state</h3>
+<p>Python: <code>planar_peptide_restraints_state()</code><br>
+Scheme: <code>(planar-peptide-restraints-state)</code></p>
+<p>return 1 if planar peptide restraints are on, 0 if off</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>planar_peptide_restraints_state()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(planar-peptide-restraints-state)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="refine_auto_range">refine_auto_range</h3>
+<p>Python: <code>refine_auto_range(imol, chain_id, resno1, altconf)</code><br>
+Scheme: <code>(refine-auto-range imol chain-id resno1 altconf)</code></p>
+<p>refine a zone using auto-range</p>
+<p> presumes that imol_Refinement_Map has been set</p>
+<p>Arguments: imol (a whole number), chain_id (text), resno1 (a whole number), altconf (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>refine_auto_range(0, "A", 41, "")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(refine-auto-range 0 "A" 41 "")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="refine_ramachandran_angles_state">refine_ramachandran_angles_state</h3>
+<p>Python: <code>refine_ramachandran_angles_state()</code><br>
+Scheme: <code>(refine-ramachandran-angles-state)</code></p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>refine_ramachandran_angles_state()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(refine-ramachandran-angles-state)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="refine_ramachandran_restraints_weight">refine_ramachandran_restraints_weight</h3>
+<p>Python: <code>refine_ramachandran_restraints_weight()</code><br>
+Scheme: <code>(refine-ramachandran-restraints-weight)</code></p>
+<p>ramachandran restraints weight</p>
+<p>Returns weight as a float</p>
+<p>Arguments: none. Returns: a number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>refine_ramachandran_restraints_weight()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(refine-ramachandran-restraints-weight)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="refine_residues">refine_residues</h3>
+<p>Python: <code>refine_residues(imol, r)</code><br>
+Scheme: <code>(refine-residues imol r)</code></p>
+<p>refine the residues in the given residue spec list</p>
+<p>Returns the refinement summary statistics</p>
+<p>Arguments: imol (a whole number), r (a list or value). Returns: a value (see the result of the example).
+Also available in Python as <code>refine_residues_py</code>.
+Also available in Scheme as <code>refine-residues-scm</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>refine_residues(0, [["A", 41, ""], ["A", 42, ""]])</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(refine-residues 0 (list (list "A" 41 "") (list "A" 42 "")))</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="refine_residues_with_alt_conf">refine_residues_with_alt_conf</h3>
+<p>Python: <code>refine_residues_with_alt_conf(imol, r, alt_conf)</code><br>
+Scheme: <code>(refine-residues-with-alt-conf imol r alt-conf)</code></p>
+<p>Arguments: imol (a whole number), r (a list or value), alt_conf (text). Returns: a value (see the result of the example).
+Also available in Python as <code>refine_residues_with_alt_conf_py</code>.
+Also available in Scheme as <code>refine-residues-with-alt-conf-scm</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>refine_residues_with_alt_conf(0, [["A", 41, ""], ["A", 42, ""]], "")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(refine-residues-with-alt-conf 0 (list (list "A" 41 "") (list "A" 42 "")) "")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="refine_residues_with_modes_with_alt_conf">refine_residues_with_modes_with_alt_conf</h3>
+<p>Python: <code>refine_residues_with_modes_with_alt_conf(imol, r, alt_conf, mode_1, mode_2, mode_3)</code><br>
+Scheme: <code>(refine-residues-with-modes-with-alt-conf-scm imol residues-spec-list-scm alt-conf mode-1 mode-2 mode-3)</code></p>
+<p>presumes the alt_conf is "".</p>
+<p>Arguments: imol (a whole number), r (a list or value), alt_conf (text), mode_1 (a list or value), mode_2 (a list or value), mode_3 (a list or value). Returns: a value (see the result of the example).
+Also available in Python as <code>refine_residues_with_modes_with_alt_conf_py</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<h3 id="refine_with_torsion_restraints_state">refine_with_torsion_restraints_state</h3>
+<p>Python: <code>refine_with_torsion_restraints_state()</code><br>
+Scheme: <code>(refine-with-torsion-restraints-state)</code></p>
+<p>return the state of above</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>refine_with_torsion_restraints_state()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(refine-with-torsion-restraints-state)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="refine_zone">refine_zone</h3>
+<p>Python: <code>refine_zone(imol, chain_id, resno1, resno2, altconf)</code><br>
+Scheme: <code>(refine-zone imol chain-id resno1 resno2 altconf)</code></p>
+<p>refine a zone</p>
+<p> presumes that imol_Refinement_Map has been set</p>
+<p>Arguments: imol (a whole number), chain_id (text), resno1 (a whole number), resno2 (a whole number), altconf (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>refine_zone(0, "A", 41, 45, "")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(refine-zone 0 "A" 41 45 "")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="refine_zone_atom_index_define">refine_zone_atom_index_define</h3>
+<p>Python: <code>refine_zone_atom_index_define(imol, ind1, ind2)</code><br>
+Scheme: <code>(refine-zone-atom-index-define imol ind1 ind2)</code></p>
+<p>refine a zone based on atom indexing</p>
+<p>Arguments: imol (a whole number), ind1 (a whole number), ind2 (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>refine_zone_atom_index_define(0, 1, 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(refine-zone-atom-index-define 0 1 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="refine_zone_with_score">refine_zone_with_score</h3>
+<p>Python: <code>refine_zone_with_score(imol, chain_id, resno1, resno2, altconf)</code><br>
+Scheme: <code>(refine-zone-with-score imol chain-id resno1 resno2 altconf)</code></p>
+<p>Arguments: imol (a whole number), chain_id (text), resno1 (a whole number), resno2 (a whole number), altconf (text). Returns: a value (see the result of the example).
+Also available in Python as <code>refine_zone_with_score_py</code>.
+Also available in Scheme as <code>refine-zone-with-score-scm</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>refine_zone_with_score(0, "A", 41, 45, "")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(refine-zone-with-score 0 "A" 41 45 "")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="refinement_already_ongoing_p">refinement_already_ongoing_p</h3>
+<p>Python: <code>refinement_already_ongoing_p()</code><br>
+Scheme: <code>(refinement-already-ongoing-p)</code></p>
+<p>If there is a refinement on-going already, we don't want to start a new one</p>
+<p>The is the means to ask if that is the case. This needs a scheme wrapper to provide refinement-already-ongoing?
+The question is translated to "are the intermediate atoms being displayed?" so that might be a more
+accurate function name than the current one.</p>
+<p>Returns 1 for yes, 0 for no.</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>refinement_already_ongoing_p()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(refinement-already-ongoing-p)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="refinement_immediate_replacement_state">refinement_immediate_replacement_state</h3>
+<p>Python: <code>refinement_immediate_replacement_state()</code><br>
+Scheme: <code>(refinement-immediate-replacement-state)</code></p>
+<p>query the state of the immediate replacement mode</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>refinement_immediate_replacement_state()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(refinement-immediate-replacement-state)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="refinement_refine_per_frame_state">refinement_refine_per_frame_state</h3>
+<p>Python: <code>refinement_refine_per_frame_state()</code><br>
+Scheme: <code>(refinement-refine-per-frame-state)</code></p>
+<p>query the state of the above option</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>refinement_refine_per_frame_state()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(refinement-refine-per-frame-state)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="regularize_residues_with_alt_conf">regularize_residues_with_alt_conf</h3>
+<p>Python: <code>regularize_residues_with_alt_conf(imol, r, alt_conf)</code><br>
+Scheme: <code>(regularize-residues-with-alt-conf-scm imol r alt-conf)</code></p>
+<p>presumes the alt_conf is "".</p>
+<p>Arguments: imol (a whole number), r (a list or value), alt_conf (text). Returns: a value (see the result of the example).
+Also available in Python as <code>regularize_residues_with_alt_conf_py</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>regularize_residues_with_alt_conf(0, [["A", 41, ""], ["A", 42, ""]], "")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(regularize-residues-with-alt-conf-scm 0 (list (list "A" 41 "") (list "A" 42 "")) "")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="regularize_zone">regularize_zone</h3>
+<p>Python: <code>regularize_zone(imol, chain_id, resno1, resno2, altconf)</code><br>
+Scheme: <code>(regularize-zone imol chain-id resno1 resno2 altconf)</code></p>
+<p>regularize a zone</p>
+<p>Returns a status, whether the regularisation was done or not. 0 for no, 1 for yes.</p>
+<p>Arguments: imol (a whole number), chain_id (text), resno1 (a whole number), resno2 (a whole number), altconf (text). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>regularize_zone(0, "A", 41, 45, "")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(regularize-zone 0 "A" 41 45 "")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="regularize_zone_with_score">regularize_zone_with_score</h3>
+<p>Python: <code>regularize_zone_with_score(imol, chain_id, resno1, resno2, altconf)</code><br>
+Scheme: <code>(regularize-zone-with-score imol chain-id resno1 resno2 altconf)</code></p>
+<p>Arguments: imol (a whole number), chain_id (text), resno1 (a whole number), resno2 (a whole number), altconf (text). Returns: a value (see the result of the example).
+Also available in Python as <code>regularize_zone_with_score_py</code>.
+Also available in Scheme as <code>regularize-zone-with-score-scm</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>regularize_zone_with_score(0, "A", 41, 45, "")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(regularize-zone-with-score 0 "A" 41 45 "")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="remove_initial_position_restraints">remove_initial_position_restraints</h3>
+<p>Python: <code>remove_initial_position_restraints(imol, residue_specs)</code><br>
+Scheme: <code>(remove-initial-position-restraints imol residue-specs)</code></p>
+<p>this removed all initial position restraints, not just those listed.</p>
+<p>Arguments: imol (a whole number), residue_specs (a list). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<h3 id="remove_omega_torsion_restriants">remove_omega_torsion_restriants</h3>
+<p>Python: <code>remove_omega_torsion_restriants()</code><br>
+Scheme: <code>(remove-omega-torsion-restriants)</code></p>
+<p>remove omega restraints on CIS and TRANS linked residues.</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>remove_omega_torsion_restriants()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(remove-omega-torsion-restriants)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="remove_planar_peptide_restraints">remove_planar_peptide_restraints</h3>
+<p>Python: <code>remove_planar_peptide_restraints()</code><br>
+Scheme: <code>(remove-planar-peptide-restraints)</code></p>
+<p>remove restraints on peptides to make them planar.</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>remove_planar_peptide_restraints()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(remove-planar-peptide-restraints)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="repeat_refine_zone">repeat_refine_zone</h3>
+<p>Python: <code>repeat_refine_zone()</code><br>
+Scheme: <code>(repeat-refine-zone)</code></p>
+<p>repeat the previous (user-selected) refine zone</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>repeat_refine_zone()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(repeat-refine-zone)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="secondary_structure_restraints_type">secondary_structure_restraints_type</h3>
+<p>Python: <code>secondary_structure_restraints_type()</code><br>
+Scheme: <code>(secondary-structure-restraints-type)</code></p>
+<p>return the secondary structure restraints type</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>secondary_structure_restraints_type()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(secondary-structure-restraints-type)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_auto_clear_atom_pull_restraint">set_auto_clear_atom_pull_restraint</h3>
+<p>Python: <code>set_auto_clear_atom_pull_restraint(state)</code><br>
+Scheme: <code>(set-auto-clear-atom-pull-restraint state)</code></p>
+<p>set auto-clear atom pull restraint</p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_auto_clear_atom_pull_restraint(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-auto-clear-atom-pull-restraint 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_debug_refinement">set_debug_refinement</h3>
+<p>Python: <code>set_debug_refinement(state)</code><br>
+Scheme: <code>(set-debug-refinement state)</code></p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_debug_refinement(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-debug-refinement 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_dragged_refinement_steps_per_frame">set_dragged_refinement_steps_per_frame</h3>
+<p>Python: <code>set_dragged_refinement_steps_per_frame(v)</code><br>
+Scheme: <code>(set-dragged-refinement-steps-per-frame v)</code></p>
+<p>set the number of refinement steps applied to the
+ intermediate atoms each frame of graphics.</p>
+<p> smaller numbers make the movement of the intermediate atoms slower,
+ smoother, more elegant.</p>
+<p> Default: 80.</p>
+<p>Arguments: v (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_dragged_refinement_steps_per_frame(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-dragged-refinement-steps-per-frame 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_extra_restraints_prosmart_sigma_limits">set_extra_restraints_prosmart_sigma_limits</h3>
+<p>Python: <code>set_extra_restraints_prosmart_sigma_limits(imol, limit_high, limit_low)</code><br>
+Scheme: <code>(set-extra-restraints-prosmart-sigma-limits imol limit-high limit-low)</code></p>
+<p>often we don't want to see all prosmart restraints, just the (big) violations</p>
+<p>Arguments: imol (a whole number), limit_high (a number), limit_low (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_extra_restraints_prosmart_sigma_limits(0, 1.0, 1.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-extra-restraints-prosmart-sigma-limits 0 1.0 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_extra_restraints_representation_for_bonds_go_to_ca">set_extra_restraints_representation_for_bonds_go_to_CA</h3>
+<p>Python: <code>set_extra_restraints_representation_for_bonds_go_to_CA(imol, state)</code><br>
+Scheme: <code>(set-extra-restraints-representation-for-bonds-go-to-CA imol state)</code></p>
+<p>Arguments: imol (a whole number), state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_extra_restraints_representation_for_bonds_go_to_CA(0, 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-extra-restraints-representation-for-bonds-go-to-CA 0 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_fix_chiral_volumes_before_refinement">set_fix_chiral_volumes_before_refinement</h3>
+<p>Python: <code>set_fix_chiral_volumes_before_refinement(istate)</code><br>
+Scheme: <code>(set-fix-chiral-volumes-before-refinement istate)</code></p>
+<p>correct the sign of chiral volumes before commencing refinement?</p>
+<p> Do we want to fix chiral volumes (by moving the chiral atom to the
+ other side of the chiral plane if necessary). Default yes
+ (1). Note: doesn't work currently.</p>
+<p>Arguments: istate (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_fix_chiral_volumes_before_refinement(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-fix-chiral-volumes-before-refinement 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_imol_refinement_map">set_imol_refinement_map</h3>
+<p>Python: <code>set_imol_refinement_map(imol)</code><br>
+Scheme: <code>(set-imol-refinement-map imol)</code></p>
+<p>set the molecule number of the map to be used for
+ refinement/fitting.</p>
+<p> Returns imol on success, -1 on failure</p>
+<p>Arguments: imol (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_imol_refinement_map(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-imol-refinement-map 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_matrix">set_matrix</h3>
+<p>Python: <code>set_matrix(f)</code><br>
+Scheme: <code>(set-matrix f)</code></p>
+<p>set the relative weight of the geometric terms to the map terms</p>
+<p> The default is 60.</p>
+<p> The higher the number the more weight that is given to the map terms
+ but the resulting chi squared values are higher). This will be
+ needed for maps generated from data not on (or close to) the absolute
+ scale or maps that have been scaled (for example so that the sigma
+ level has been scaled to 1.0).</p>
+<p>Arguments: f (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_matrix(1.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-matrix 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_numerical_gradients">set_numerical_gradients</h3>
+<p>Python: <code>set_numerical_gradients(istate)</code><br>
+Scheme: <code>(set-numerical-gradients istate)</code></p>
+<p>Arguments: istate (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_numerical_gradients(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-numerical-gradients 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_refine_auto_range_step">set_refine_auto_range_step</h3>
+<p>Python: <code>set_refine_auto_range_step(i)</code><br>
+Scheme: <code>(set-refine-auto-range-step i)</code></p>
+<p>change the +/- step for autoranging (default is 1)</p>
+<p>Auto-ranging alow you to select a range from one button press, this
+allows you to set the number of residues either side of the clicked
+residue that becomes the selected zone</p>
+<p>Arguments: i (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_refine_auto_range_step(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-refine-auto-range-step 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_refine_hydrogen_bonds">set_refine_hydrogen_bonds</h3>
+<p>Python: <code>set_refine_hydrogen_bonds(state)</code><br>
+Scheme: <code>(set-refine-hydrogen-bonds state)</code></p>
+<p>add or remove auto H-bond restraints</p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_refine_hydrogen_bonds(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-refine-hydrogen-bonds 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_refine_max_residues">set_refine_max_residues</h3>
+<p>Python: <code>set_refine_max_residues(n)</code><br>
+Scheme: <code>(set-refine-max-residues n)</code></p>
+<p>set the heuristic fencepost for the maximum number of
+ residues in the refinement/regularization residue range</p>
+<p> Default is 20</p>
+<p>Arguments: n (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_refine_max_residues(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-refine-max-residues 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_refine_params_dialog_more_control_frame_is_active">set_refine_params_dialog_more_control_frame_is_active</h3>
+<p>Python: <code>set_refine_params_dialog_more_control_frame_is_active(state)</code><br>
+Scheme: <code>(set-refine-params-dialog-more-control-frame-is-active state)</code></p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_refine_params_dialog_more_control_frame_is_active(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-refine-params-dialog-more-control-frame-is-active 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_refine_ramachandran_angles">set_refine_ramachandran_angles</h3>
+<p>Python: <code>set_refine_ramachandran_angles(state)</code><br>
+Scheme: <code>(set-refine-ramachandran-angles state)</code></p>
+<p>name consistent with set_refine_with_torsion_restraints() !?</p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_refine_ramachandran_angles(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-refine-ramachandran-angles 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_refine_ramachandran_restraints_type">set_refine_ramachandran_restraints_type</h3>
+<p>Python: <code>set_refine_ramachandran_restraints_type(type)</code><br>
+Scheme: <code>(set-refine-ramachandran-restraints-type type)</code></p>
+<p>change the target function type</p>
+<p>Arguments: type (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_refine_ramachandran_restraints_type(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-refine-ramachandran-restraints-type 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_refine_ramachandran_restraints_weight">set_refine_ramachandran_restraints_weight</h3>
+<p>Python: <code>set_refine_ramachandran_restraints_weight(w)</code><br>
+Scheme: <code>(set-refine-ramachandran-restraints-weight w)</code></p>
+<p>change the target function weight</p>
+<p>a big number means bad things</p>
+<p>Arguments: w (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_refine_ramachandran_restraints_weight(1.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-refine-ramachandran-restraints-weight 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_refine_ramachandran_torsion_angles">set_refine_ramachandran_torsion_angles</h3>
+<p>Python: <code>set_refine_ramachandran_torsion_angles(state)</code><br>
+Scheme: <code>(set-refine-ramachandran-torsion-angles state)</code></p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_refine_ramachandran_torsion_angles(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-refine-ramachandran-torsion-angles 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_refine_rotamers">set_refine_rotamers</h3>
+<p>Python: <code>set_refine_rotamers(state)</code><br>
+Scheme: <code>(set-refine-rotamers state)</code></p>
+<p>set the state for using rotamer restraints "drive" mode</p>
+<p>1 in on, 0 is off (off by default)</p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_refine_rotamers(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-refine-rotamers 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_refine_with_torsion_restraints">set_refine_with_torsion_restraints</h3>
+<p>Python: <code>set_refine_with_torsion_restraints(istate)</code><br>
+Scheme: <code>(set-refine-with-torsion-restraints istate)</code></p>
+<p>turn on (or off) torsion restraints</p>
+<p> Pass with istate=1 for on, istate=0 for off.</p>
+<p>Arguments: istate (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_refine_with_torsion_restraints(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-refine-with-torsion-restraints 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_refinement_drag_elasticity">set_refinement_drag_elasticity</h3>
+<p>Python: <code>set_refinement_drag_elasticity(e)</code><br>
+Scheme: <code>(set-refinement-drag-elasticity e)</code></p>
+<ul><li>the elasticity of the dragged atom in refinement mode.</li></ul>
+<p>Default 0.33</p>
+<p> Bigger numbers mean bigger movement of the other atoms.</p>
+<p>Arguments: e (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_refinement_drag_elasticity(1.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-refinement-drag-elasticity 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_refinement_geman_mcclure_alpha_from_text">set_refinement_geman_mcclure_alpha_from_text</h3>
+<p>Python: <code>set_refinement_geman_mcclure_alpha_from_text(combobox_item_idx, t)</code><br>
+Scheme: <code>(set-refinement-geman-mcclure-alpha-from-text combobox-item-idx t)</code></p>
+<p>Arguments: combobox_item_idx (a whole number), t (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_refinement_geman_mcclure_alpha_from_text(1, "hello")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-refinement-geman-mcclure-alpha-from-text 1 "hello")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_refinement_immediate_replacement">set_refinement_immediate_replacement</h3>
+<p>Python: <code>set_refinement_immediate_replacement(istate)</code><br>
+Scheme: <code>(set-refinement-immediate-replacement istate)</code></p>
+<p>set immediate replacement mode for refinement and
+ regularization. You need this (call with istate=1) if you are
+ scripting refinement/regularization</p>
+<p>Arguments: istate (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_refinement_immediate_replacement(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-refinement-immediate-replacement 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_refinement_lennard_jones_epsilon_from_text">set_refinement_lennard_jones_epsilon_from_text</h3>
+<p>Python: <code>set_refinement_lennard_jones_epsilon_from_text(combobox_item_idx, t)</code><br>
+Scheme: <code>(set-refinement-lennard-jones-epsilon-from-text combobox-item-idx t)</code></p>
+<p>Arguments: combobox_item_idx (a whole number), t (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_refinement_lennard_jones_epsilon_from_text(1, "hello")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-refinement-lennard-jones-epsilon-from-text 1 "hello")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_refinement_overall_weight_from_text">set_refinement_overall_weight_from_text</h3>
+<p>Python: <code>set_refinement_overall_weight_from_text(t)</code><br>
+Scheme: <code>(set-refinement-overall-weight-from-text t)</code></p>
+<p>Arguments: t (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_refinement_overall_weight_from_text("hello")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-refinement-overall-weight-from-text "hello")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_refinement_ramachandran_restraints_weight_from_text">set_refinement_ramachandran_restraints_weight_from_text</h3>
+<p>Python: <code>set_refinement_ramachandran_restraints_weight_from_text(combobox_item_idx, t)</code><br>
+Scheme: <code>(set-refinement-ramachandran-restraints-weight-from-text combobox-item-idx t)</code></p>
+<p>Arguments: combobox_item_idx (a whole number), t (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_refinement_ramachandran_restraints_weight_from_text(1, "hello")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-refinement-ramachandran-restraints-weight-from-text 1 "hello")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_refinement_refine_per_frame">set_refinement_refine_per_frame</h3>
+<p>Python: <code>set_refinement_refine_per_frame(istate)</code><br>
+Scheme: <code>(set-refinement-refine-per-frame istate)</code></p>
+<p>allow refinement of intermediate atoms after dragging,
+ before displaying (default: 0, off).</p>
+<p> An attempt to do something like xfit does, at the request of Frank
+ von Delft.</p>
+<p> Pass with istate=1 to enable this option.</p>
+<p>Arguments: istate (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_refinement_refine_per_frame(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-refinement-refine-per-frame 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_refinement_torsion_weight_from_text">set_refinement_torsion_weight_from_text</h3>
+<p>Python: <code>set_refinement_torsion_weight_from_text(combobox_item_index, t)</code><br>
+Scheme: <code>(set-refinement-torsion-weight-from-text combobox-item-index t)</code></p>
+<p>Arguments: combobox_item_index (a whole number), t (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_refinement_torsion_weight_from_text(1, "hello")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-refinement-torsion-weight-from-text 1 "hello")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_refinement_use_soft_mode_nbc_restraints">set_refinement_use_soft_mode_nbc_restraints</h3>
+<p>Python: <code>set_refinement_use_soft_mode_nbc_restraints(flag)</code><br>
+Scheme: <code>(set-refinement-use-soft-mode-nbc-restraints flag)</code></p>
+<p>Arguments: flag (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_refinement_use_soft_mode_nbc_restraints(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-refinement-use-soft-mode-nbc-restraints 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_residue_selection_flash_frames_number">set_residue_selection_flash_frames_number</h3>
+<p>Python: <code>set_residue_selection_flash_frames_number(i)</code><br>
+Scheme: <code>(set-residue-selection-flash-frames-number i)</code></p>
+<p>set the number of frames for which the selected residue
+ range flashes</p>
+<p> On fast computers, this can be set to higher than the default for
+ more aesthetic appeal.</p>
+<p>Arguments: i (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_residue_selection_flash_frames_number(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-residue-selection-flash-frames-number 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_secondary_structure_restraints_type">set_secondary_structure_restraints_type</h3>
+<p>Python: <code>set_secondary_structure_restraints_type(itype)</code><br>
+Scheme: <code>(set-secondary-structure-restraints-type itype)</code></p>
+<p>set the type of secondary structure restraints</p>
+<p>0 no sec str restraints</p>
+<p>1 alpha helix restraints</p>
+<p>2 beta strand restraints</p>
+<p>Arguments: itype (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_secondary_structure_restraints_type(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-secondary-structure-restraints-type 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_show_chiral_volume_errors_dialog">set_show_chiral_volume_errors_dialog</h3>
+<p>Python: <code>set_show_chiral_volume_errors_dialog(istate)</code><br>
+Scheme: <code>(set-show-chiral-volume-errors-dialog istate)</code></p>
+<p>For experienced Cooters who don't like Coot nannying about
+ chiral volumes during refinement.</p>
+<p>Arguments: istate (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_show_chiral_volume_errors_dialog(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-show-chiral-volume-errors-dialog 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_show_extra_restraints">set_show_extra_restraints</h3>
+<p>Python: <code>set_show_extra_restraints(imol, state)</code><br>
+Scheme: <code>(set-show-extra-restraints imol state)</code></p>
+<p>Arguments: imol (a whole number), state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_show_extra_restraints(0, 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-show-extra-restraints 0 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_show_parallel_plane_restraints">set_show_parallel_plane_restraints</h3>
+<p>Python: <code>set_show_parallel_plane_restraints(imol, state)</code><br>
+Scheme: <code>(set-show-parallel-plane-restraints imol state)</code></p>
+<p>Arguments: imol (a whole number), state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_show_parallel_plane_restraints(0, 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-show-parallel-plane-restraints 0 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_torsion_restraints_weight">set_torsion_restraints_weight</h3>
+<p>Python: <code>set_torsion_restraints_weight(w)</code><br>
+Scheme: <code>(set-torsion-restraints-weight w)</code></p>
+<p>not ready yet set the weight for torsion restraints (default 1.0)</p>
+<p>Arguments: w (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_torsion_restraints_weight(1.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-torsion-restraints-weight 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_use_only_extra_torsion_restraints_for_torsions">set_use_only_extra_torsion_restraints_for_torsions</h3>
+<p>Python: <code>set_use_only_extra_torsion_restraints_for_torsions(state)</code><br>
+Scheme: <code>(set-use-only-extra-torsion-restraints-for-torsions state)</code></p>
+<p>set use only extra torsion restraints for torsions</p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_use_only_extra_torsion_restraints_for_torsions(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-use-only-extra-torsion-restraints-for-torsions 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_use_trans_peptide_restraints">set_use_trans_peptide_restraints</h3>
+<p>Python: <code>set_use_trans_peptide_restraints(on_off_state)</code><br>
+Scheme: <code>(set-use-trans-peptide-restraints on-off-state)</code></p>
+<p>add a restraint on peptides to keep trans peptides trans</p>
+<p>i.e. omega in trans-peptides is restraints to 180 degrees.</p>
+<p>Arguments: on_off_state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_use_trans_peptide_restraints(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-use-trans-peptide-restraints 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="shiftfield_b_factor_refinement">shiftfield_b_factor_refinement</h3>
+<p>Python: <code>shiftfield_b_factor_refinement(imol)</code><br>
+Scheme: <code>(shiftfield-b-factor-refinement imol)</code></p>
+<p>shiftfield B-factor refinement</p>
+<p>Arguments: imol (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>shiftfield_b_factor_refinement(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(shiftfield-b-factor-refinement 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="shiftfield_xyz_factor_refinement">shiftfield_xyz_factor_refinement</h3>
+<p>Python: <code>shiftfield_xyz_factor_refinement(imol)</code><br>
+Scheme: <code>(shiftfield-xyz-factor-refinement imol)</code></p>
+<p>shiftfield xyz refinement</p>
+<p>Arguments: imol (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>shiftfield_xyz_factor_refinement(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(shiftfield-xyz-factor-refinement 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="show_restraints_editor">show_restraints_editor</h3>
+<p>Python: <code>show_restraints_editor(monomer_type)</code><br>
+Scheme: <code>(show-restraints-editor monomer-type)</code></p>
+<p>show restraints editor</p>
+<p>Arguments: monomer_type (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>show_restraints_editor("ALA")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(show-restraints-editor "ALA")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="show_restraints_editor_by_index">show_restraints_editor_by_index</h3>
+<p>Python: <code>show_restraints_editor_by_index(menu_item_index)</code><br>
+Scheme: <code>(show-restraints-editor-by-index menu-item-index)</code></p>
+<p>show restraints editor using residue type index</p>
+<p>Arguments: menu_item_index (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>show_restraints_editor_by_index(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(show-restraints-editor-by-index 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="stop_refinement_internal">stop_refinement_internal</h3>
+<p>Python: <code>stop_refinement_internal()</code><br>
+Scheme: <code>(stop-refinement-internal)</code></p>
+<p>Used by on_accept_reject_refinement_reject_button_clicked()</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>stop_refinement_internal()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(stop-refinement-internal)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="use_only_extra_torsion_restraints_for_torsions_state">use_only_extra_torsion_restraints_for_torsions_state</h3>
+<p>Python: <code>use_only_extra_torsion_restraints_for_torsions_state()</code><br>
+Scheme: <code>(use-only-extra-torsion-restraints-for-torsions-state)</code></p>
+<p>return only-use-extra-torsion-restraints-for-torsions state</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>use_only_extra_torsion_restraints_for_torsions_state()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(use-only-extra-torsion-restraints-for-torsions-state)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="write_interpolated_extra_restraints">write_interpolated_extra_restraints</h3>
+<p>Python: <code>write_interpolated_extra_restraints(imol_1, imol_2, n_steps, file_name_stub)</code><br>
+Scheme: <code>(write-interpolated-extra-restraints imol-1 imol-2 n-steps file-name-stub)</code></p>
+<p>proSMART interpolated restraints for model morphing</p>
+<p>Arguments: imol_1 (a whole number), imol_2 (a whole number), n_steps (a whole number), file_name_stub (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>write_interpolated_extra_restraints(0, 0, 1, "tutorial-modern.pdb")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(write-interpolated-extra-restraints 0 0 1 "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="write_interpolated_models_and_extra_restraints">write_interpolated_models_and_extra_restraints</h3>
+<p>Python: <code>write_interpolated_models_and_extra_restraints(imol_1, imol_2, n_steps, file_name_stub, interpolation_mode)</code><br>
+Scheme: <code>(write-interpolated-models-and-extra-restraints imol-1 imol-2 n-steps file-name-stub interpolation-mode)</code></p>
+<p>proSMART interpolated restraints for model morphing and write interpolated model</p>
+<p>interpolation_mode is currently dummy - in due course I will addd torion angle interpolation.</p>
+<p>Arguments: imol_1 (a whole number), imol_2 (a whole number), n_steps (a whole number), file_name_stub (text), interpolation_mode (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>write_interpolated_models_and_extra_restraints(0, 0, 1, "tutorial-modern.pdb", 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(write-interpolated-models-and-extra-restraints 0 0 1 "tutorial-modern.pdb" 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="write_restraints_cif_dictionary">write_restraints_cif_dictionary</h3>
+<p>Python: <code>write_restraints_cif_dictionary(monomer_type, file_name)</code><br>
+Scheme: <code>(write-restraints-cif-dictionary monomer-type file-name)</code></p>
+<p>write cif restraints for monomer</p>
+<p>Arguments: monomer_type (text), file_name (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>write_restraints_cif_dictionary("ALA", "tutorial-modern.pdb")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(write-restraints-cif-dictionary "ALA" "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

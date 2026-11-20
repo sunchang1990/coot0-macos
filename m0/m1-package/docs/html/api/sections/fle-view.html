@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="810416f3e81472fbbec5fb4d10b4ba33bae5ae6b">
+<title>FLE-View - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="fle-view">FLE-View</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; FLE-View (9 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="fle_view_internal">fle_view_internal</h3>
+<p>Python: <code>fle_view_internal(imol, chain_id, res_no, ins_code, imol_ligand_fragment, prodrg_output_flat_mol_file_name, prodrg_output_flat_pdb_file_name, prodrg_output_3d_pdb_file_name, prodrg_output_dict_cif_file_name)</code><br>
+Scheme: <code>(fle-view-internal imol chain-id res-no ins-code imol-ligand-fragment prodrg-output-flat-mol-file-name prodrg-output-flat-pdb-file-name prodrg-output-3d-pdb-file-name prodrg-output-dict-cif-file-name)</code></p>
+<p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text), imol_ligand_fragment (a whole number), prodrg_output_flat_mol_file_name (text), prodrg_output_flat_pdb_file_name (text), prodrg_output_3d_pdb_file_name (text), prodrg_output_dict_cif_file_name (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>fle_view_internal(0, "A", 41, "", 0, "tutorial-modern.pdb", "tutorial-modern.pdb", "tutorial-modern.pdb", "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(fle-view-internal 0 "A" 41 "" 0 "tutorial-modern.pdb" "tutorial-modern.pdb" "tutorial-modern.pdb" "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="fle_view_internal_to_png">fle_view_internal_to_png</h3>
+<p>Python: <code>fle_view_internal_to_png(imol, chain_id, res_no, ins_code, imol_ligand_fragment, prodrg_output_flat_mol_file_name, prodrg_output_flat_pdb_file_name, prodrg_output_3d_pdb_file_name, prodrg_output_dict_cif_file_name, output_to_png_file_flag, png_file_name)</code><br>
+Scheme: <code>(fle-view-internal-to-png imol chain-id res-no ins-code imol-ligand-fragment prodrg-output-flat-mol-file-name prodrg-output-flat-pdb-file-name prodrg-output-3d-pdb-file-name prodrg-output-dict-cif-file-name output-to-png-file-flag png-file-name)</code></p>
+<p>for command-line operation</p>
+<p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text), imol_ligand_fragment (a whole number), prodrg_output_flat_mol_file_name (text), prodrg_output_flat_pdb_file_name (text), prodrg_output_3d_pdb_file_name (text), prodrg_output_dict_cif_file_name (text), output_to_png_file_flag (a whole number), png_file_name (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>fle_view_internal_to_png(0, "A", 41, "", 0, "tutorial-modern.pdb", "tutorial-modern.pdb", "tutorial-modern.pdb", "tutorial-modern.pdb", 1, "tutorial-modern.pdb")</code></td><td>not run: not run automatically (png: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(fle-view-internal-to-png 0 "A" 41 "" 0 "tutorial-modern.pdb" "tutorial-modern.pdb" "tutorial-modern.pdb" "tutorial-modern.pdb" 1 "tutorial-modern.pdb")</code></td><td>not run: not run automatically (png: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<h3 id="fle_view_set_h_bond_dist_max">fle_view_set_h_bond_dist_max</h3>
+<p>Python: <code>fle_view_set_h_bond_dist_max(h_bond_dist_max)</code><br>
+Scheme: <code>(fle-view-set-h-bond-dist-max h-bond-dist-max)</code></p>
+<p>set the maximum considered hydrogen bond distance</p>
+<p>default 3.9 A.</p>
+<p>Arguments: h_bond_dist_max (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>fle_view_set_h_bond_dist_max(1.0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(fle-view-set-h-bond-dist-max 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="fle_view_set_water_dist_max">fle_view_set_water_dist_max</h3>
+<p>Python: <code>fle_view_set_water_dist_max(dist_max)</code><br>
+Scheme: <code>(fle-view-set-water-dist-max dist-max)</code></p>
+<p>set the maximum considered distance to water</p>
+<p>default 3.25 A.</p>
+<p>Arguments: dist_max (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>fle_view_set_water_dist_max(1.0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(fle-view-set-water-dist-max 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="fle_view_with_rdkit">fle_view_with_rdkit</h3>
+<p>Python: <code>fle_view_with_rdkit(imol, chain_id, res_no, ins_code, residues_near_radius)</code><br>
+Scheme: <code>(fle-view-with-rdkit imol chain-id res-no ins-code residues-near-radius)</code></p>
+<p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text), residues_near_radius (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>fle_view_with_rdkit(0, "A", 41, "", 5.0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(fle-view-with-rdkit 0 "A" 41 "" 5.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="fle_view_with_rdkit_internal">fle_view_with_rdkit_internal</h3>
+<p>Python: <code>fle_view_with_rdkit_internal(imol, chain_id, res_no, ins_code, residues_near_radius, file_format, file_name)</code><br>
+Scheme: <code>(fle-view-with-rdkit-internal imol chain-id res-no ins-code residues-near-radius file-format file-name)</code></p>
+<p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text), residues_near_radius (a number), file_format (text), file_name (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>fle_view_with_rdkit_internal(0, "A", 41, "", 5.0, "tutorial-modern.pdb", "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(fle-view-with-rdkit-internal 0 "A" 41 "" 5.0 "tutorial-modern.pdb" "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="fle_view_with_rdkit_to_png">fle_view_with_rdkit_to_png</h3>
+<p>Python: <code>fle_view_with_rdkit_to_png(imol, chain_id, res_no, ins_code, residues_near_radius, png_file_name)</code><br>
+Scheme: <code>(fle-view-with-rdkit-to-png imol chain-id res-no ins-code residues-near-radius png-file-name)</code></p>
+<p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text), residues_near_radius (a number), png_file_name (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>fle_view_with_rdkit_to_png(0, "A", 41, "", 5.0, "tutorial-modern.pdb")</code></td><td>not run: not run automatically (png: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(fle-view-with-rdkit-to-png 0 "A" 41 "" 5.0 "tutorial-modern.pdb")</code></td><td>not run: not run automatically (png: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<h3 id="fle_view_with_rdkit_to_svg">fle_view_with_rdkit_to_svg</h3>
+<p>Python: <code>fle_view_with_rdkit_to_svg(imol, chain_id, res_no, ins_code, residues_near_radius, svg_file_name)</code><br>
+Scheme: <code>(fle-view-with-rdkit-to-svg imol chain-id res-no ins-code residues-near-radius svg-file-name)</code></p>
+<p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text), residues_near_radius (a number), svg_file_name (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>fle_view_with_rdkit_to_svg(0, "A", 41, "", 5.0, "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(fle-view-with-rdkit-to-svg 0 "A" 41 "" 5.0 "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="sprout_hydrogens">sprout_hydrogens</h3>
+<p>Python: <code>sprout_hydrogens(imol, chain_id, res_no, ins_code)</code><br>
+Scheme: <code>(sprout-hydrogens imol chain-id res-no ins-code)</code></p>
+<p>Add hydrogens to specificied residue</p>
+<p>Returns success status.</p>
+<p>use RDKit for enterprise version</p>
+<p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>sprout_hydrogens(0, "A", 41, "")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(sprout-hydrogens 0 "A" 41 "")</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

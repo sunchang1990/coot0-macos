@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="bab0279768a36ca05c013c6a2347af826915f3f6">
+<title>Density Increment - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="density-increment">Density Increment</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Density Increment (20 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="change_contour_level">change_contour_level</h3>
+<p>Python: <code>change_contour_level(is_increment)</code><br>
+Scheme: <code>(change-contour-level is-increment)</code></p>
+<p>change the contour level of the current map by a step</p>
+<p>if is_increment=1 the contour level is increased. If is_increment=0
+the map contour level is decreased.</p>
+<p>Arguments: is_increment (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>change_contour_level(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(change-contour-level 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="get_diff_map_iso_level_increment">get_diff_map_iso_level_increment</h3>
+<p>Python: <code>get_diff_map_iso_level_increment()</code><br>
+Scheme: <code>(get-diff-map-iso-level-increment)</code></p>
+<p>return difference maps iso-map level increment</p>
+<p>Arguments: none. Returns: a number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>get_diff_map_iso_level_increment()</code></td><td>ran, returned <code>0.004999999888241291</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-diff-map-iso-level-increment)</code></td><td>ran, returned <code>0.004999999888241291</code></td></tr></tbody></table>
+<h3 id="get_iso_level_increment">get_iso_level_increment</h3>
+<p>Python: <code>get_iso_level_increment()</code><br>
+Scheme: <code>(get-iso-level-increment)</code></p>
+<p>Arguments: none. Returns: a number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>get_iso_level_increment()</code></td><td>ran, returned <code>0.05000000074505806</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-iso-level-increment)</code></td><td>ran, returned <code>0.05000000074505806</code></td></tr></tbody></table>
+<h3 id="get_map_sampling_rate">get_map_sampling_rate</h3>
+<p>Python: <code>get_map_sampling_rate()</code><br>
+Scheme: <code>(get-map-sampling-rate)</code></p>
+<p>return the map sampling rate</p>
+<p>Arguments: none. Returns: a number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>get_map_sampling_rate()</code></td><td>ran, returned <code>1.7999999523162842</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-map-sampling-rate)</code></td><td>ran, returned <code>1.7999999523162842</code></td></tr></tbody></table>
+<h3 id="get_text_for_diff_map_iso_level_increment_entry">get_text_for_diff_map_iso_level_increment_entry</h3>
+<p>Python: <code>get_text_for_diff_map_iso_level_increment_entry(imol)</code><br>
+Scheme: <code>(get-text-for-diff-map-iso-level-increment-entry imol)</code></p>
+<p>const gchar *text</p>
+<p>Arguments: imol (a whole number). Returns: text.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>get_text_for_diff_map_iso_level_increment_entry(0)</code></td><td>ran, returned <code>'0.0050'</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-text-for-diff-map-iso-level-increment-entry 0)</code></td><td>ran, returned <code>"0.0050"</code></td></tr></tbody></table>
+<h3 id="get_text_for_iso_level_increment_entry">get_text_for_iso_level_increment_entry</h3>
+<p>Python: <code>get_text_for_iso_level_increment_entry(imol)</code><br>
+Scheme: <code>(get-text-for-iso-level-increment-entry imol)</code></p>
+<p>Arguments: imol (a whole number). Returns: text.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>get_text_for_iso_level_increment_entry(0)</code></td><td>ran, returned <code>'0.0500'</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-text-for-iso-level-increment-entry 0)</code></td><td>ran, returned <code>"0.0500"</code></td></tr></tbody></table>
+<h3 id="get_text_for_map_sampling_rate_text">get_text_for_map_sampling_rate_text</h3>
+<p>Python: <code>get_text_for_map_sampling_rate_text()</code><br>
+Scheme: <code>(get-text-for-map-sampling-rate-text)</code></p>
+<p>MOVE-ME to c-interface-gtk-widgets.h</p>
+<p>Arguments: none. Returns: text.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>get_text_for_map_sampling_rate_text()</code></td><td>ran, returned <code>'1.8000'</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-text-for-map-sampling-rate-text)</code></td><td>ran, returned <code>"1.8000"</code></td></tr></tbody></table>
+<h3 id="set_diff_map_iso_level_increment">set_diff_map_iso_level_increment</h3>
+<p>Python: <code>set_diff_map_iso_level_increment(val)</code><br>
+Scheme: <code>(set-diff-map-iso-level-increment val)</code></p>
+<p>set the contour scroll step for difference map (in absolute
+ e/A3) to val</p>
+<p>The is only activated when scrolling by sigma is turned off</p>
+<p>Arguments: val (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_diff_map_iso_level_increment(1.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-diff-map-iso-level-increment 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_diff_map_iso_level_increment_from_text">set_diff_map_iso_level_increment_from_text</h3>
+<p>Python: <code>set_diff_map_iso_level_increment_from_text(text, imol)</code><br>
+Scheme: <code>(set-diff-map-iso-level-increment-from-text text imol)</code></p>
+<p>set the difference maps iso-map level increment</p>
+<p>Arguments: text (text), imol (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_diff_map_iso_level_increment_from_text("hello", 0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-diff-map-iso-level-increment-from-text "hello" 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_iso_level_increment">set_iso_level_increment</h3>
+<p>Python: <code>set_iso_level_increment(val)</code><br>
+Scheme: <code>(set-iso-level-increment val)</code></p>
+<p>set the contour scroll step (in absolute e/A3) for
+ 2Fo-Fc-style maps to val</p>
+<p>The is only activated when scrolling by sigma is turned off</p>
+<p>Arguments: val (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_iso_level_increment(1.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-iso-level-increment 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_iso_level_increment_from_text">set_iso_level_increment_from_text</h3>
+<p>Python: <code>set_iso_level_increment_from_text(text, imol)</code><br>
+Scheme: <code>(set-iso-level-increment-from-text text imol)</code></p>
+<p>Arguments: text (text), imol (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_iso_level_increment_from_text("hello", 0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-iso-level-increment-from-text "hello" 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_last_map_contour_level">set_last_map_contour_level</h3>
+<p>Python: <code>set_last_map_contour_level(level)</code><br>
+Scheme: <code>(set-last-map-contour-level level)</code></p>
+<p>set the contour level of the map with the highest molecule
+ number to level</p>
+<p>Arguments: level (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_last_map_contour_level(1.5)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-last-map-contour-level 1.5)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_last_map_contour_level_by_sigma">set_last_map_contour_level_by_sigma</h3>
+<p>Python: <code>set_last_map_contour_level_by_sigma(n_sigma)</code><br>
+Scheme: <code>(set-last-map-contour-level-by-sigma n-sigma)</code></p>
+<p>set the contour level of the map with the highest molecule
+ number to n_sigma sigma</p>
+<p>Arguments: n_sigma (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_last_map_contour_level_by_sigma(1.5)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-last-map-contour-level-by-sigma 1.5)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_map_sampling_rate">set_map_sampling_rate</h3>
+<p>Python: <code>set_map_sampling_rate(r)</code><br>
+Scheme: <code>(set-map-sampling-rate r)</code></p>
+<p>set the map sampling rate (default 1.5)</p>
+<p>Set to something like 2.0 or 2.5 for more finely sampled maps. Useful
+for baton-building low resolution maps.</p>
+<p>Arguments: r (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_map_sampling_rate(0.5)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-map-sampling-rate 0.5)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_map_sampling_rate_text">set_map_sampling_rate_text</h3>
+<p>Python: <code>set_map_sampling_rate_text(text)</code><br>
+Scheme: <code>(set-map-sampling-rate-text text)</code></p>
+<p>sampling rate</p>
+<p>find the molecule for which the single map dialog applies and set
+ the contour level and redraw</p>
+<p>Arguments: text (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_map_sampling_rate_text("hello")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-map-sampling-rate-text "hello")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_residue_density_fit_scale_factor">set_residue_density_fit_scale_factor</h3>
+<p>Python: <code>set_residue_density_fit_scale_factor(f)</code><br>
+Scheme: <code>(set-residue-density-fit-scale-factor f)</code></p>
+<p>set the scale factor for the Residue Density fit analysis</p>
+<p>Arguments: f (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_residue_density_fit_scale_factor(1.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-residue-density-fit-scale-factor 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_stop_scroll_diff_map">set_stop_scroll_diff_map</h3>
+<p>Python: <code>set_stop_scroll_diff_map(i)</code><br>
+Scheme: <code>(set-stop-scroll-diff-map i)</code></p>
+<p>create a lower limit to the "Fo-Fc-style" map contour level changing</p>
+<p> (default 1 on)</p>
+<p>Arguments: i (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_stop_scroll_diff_map(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-stop-scroll-diff-map 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_stop_scroll_diff_map_level">set_stop_scroll_diff_map_level</h3>
+<p>Python: <code>set_stop_scroll_diff_map_level(f)</code><br>
+Scheme: <code>(set-stop-scroll-diff-map-level f)</code></p>
+<p>set the actual difference map level changing limit</p>
+<p> (default 0.0)</p>
+<p>Arguments: f (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_stop_scroll_diff_map_level(1.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-stop-scroll-diff-map-level 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_stop_scroll_iso_map">set_stop_scroll_iso_map</h3>
+<p>Python: <code>set_stop_scroll_iso_map(i)</code><br>
+Scheme: <code>(set-stop-scroll-iso-map i)</code></p>
+<p>create a lower limit to the "2Fo-Fc-style" map contour level changing</p>
+<p> (default 1 on)</p>
+<p>Arguments: i (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_stop_scroll_iso_map(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-stop-scroll-iso-map 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_stop_scroll_iso_map_level">set_stop_scroll_iso_map_level</h3>
+<p>Python: <code>set_stop_scroll_iso_map_level(f)</code><br>
+Scheme: <code>(set-stop-scroll-iso-map-level f)</code></p>
+<p>set the actual map level changing limit</p>
+<p> (default 0.0)</p>
+<p>Arguments: f (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_stop_scroll_iso_map_level(1.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-stop-scroll-iso-map-level 1.0)</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

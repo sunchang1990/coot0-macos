@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="9dec5bcdce355abb02e8b88a25aec4ae59a4da6b">
+<title>9. NCS (non-crystallographic symmetry) - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../README.html">coot0 documentation</a></div>
+<h1 id="9-ncs-non-crystallographic-symmetry">9. NCS (non-crystallographic symmetry)</h1>
+<p>*Each recipe stands alone and loads its own copy of the test files (run recipe 1.1 once first; with your own data use
+your molecule numbers instead: <a href="README.html#how-to-use-a-recipe">How to use a recipe</a>).*</p>
+<p>Chains A and B of the test model are two copies of the same protein, so Coot finds NCS between them by itself.</p>
+<h3 id="91-which-chains-are-ncs-copies">9.1 Which chains are NCS copies</h3>
+<pre class="python"><code>imol = read_pdb("tutorial-modern.pdb")
+print("NCS groups:", ncs_chain_ids(imol), "master:", ncs_master_chains(imol))</code></pre>
+<pre class="scheme"><code>(define imol (read-pdb "tutorial-modern.pdb"))
+(format #t "NCS groups: ~a master: ~a~%" (ncs-chain-ids imol) (ncs-master-chains imol))</code></pre>
+<h3 id="92-how-different-are-the-copies-per-residue">9.2 How different are the copies (per residue)</h3>
+<pre class="python"><code>imol = read_pdb("tutorial-modern.pdb")
+moving, master, diffs = ncs_chain_differences(imol, "A")
+worst = sorted(diffs, key=lambda d: -d[2])[:5]
+for (res_master, ins1), (res_moving, ins2), rmsd in worst:
+    print("residue %d: %.2f A" % (res_master, rmsd))</code></pre>
+<pre class="scheme"><code>(define imol (read-pdb "tutorial-modern.pdb"))
+(define diffs (list-ref (ncs-chain-differences imol "A") 2))
+(format #t "~a residues compared~%" (length diffs))</code></pre>
+<h3 id="93-show-the-ncs-copies-as-ghosts">9.3 Show the NCS copies as ghosts</h3>
+<pre class="python"><code>imol = read_pdb("tutorial-modern.pdb")
+make_ncs_ghosts_maybe(imol)
+set_draw_ncs_ghosts(imol, 1)
+print("ghosts shown:", draw_ncs_ghosts_state(imol))</code></pre>
+<pre class="scheme"><code>(define imol (read-pdb "tutorial-modern.pdb"))
+(make-ncs-ghosts-maybe imol)
+(set-draw-ncs-ghosts imol 1)
+(format #t "ghosts shown: ~a~%" (draw-ncs-ghosts-state imol))</code></pre>
+<h3 id="94-copy-the-master-chain-onto-the-other-copies">9.4 Copy the master chain onto the other copies</h3>
+<p>After rebuilding chain A, make chain B the same (B keeps its own position).
+Here: mutate A41 and copy it to B41.</p>
+<pre class="python"><code>imol = read_pdb("tutorial-modern.pdb")
+mutate(imol, "A", 41, "", "ALA")
+copy_residue_range_from_ncs_master_to_others(imol, "A", 41, 41)
+print("B41 is now", residue_name(imol, "B", 41, ""))</code></pre>
+<pre class="scheme"><code>(define imol (read-pdb "tutorial-modern.pdb"))
+(mutate imol "A" 41 "" "ALA")
+(copy-residue-range-from-ncs-master-to-others imol "A" 41 41)
+(format #t "B41 is now ~a~%" (residue-name imol "B" 41 ""))</code></pre>
+<p>The whole chain: <code>copy_from_ncs_master_to_others(imol, "A")</code>.</p>
+<h3 id="95-superpose-one-chain-onto-another">9.5 Superpose one chain onto another</h3>
+<p>Copy chain B and superpose the copy onto chain A by sequence alignment (SSM). The superposed copy is a new molecule.</p>
+<pre class="python"><code>imol = read_pdb("tutorial-modern.pdb")
+n_before = graphics_n_molecules()
+superpose_with_chain_selection(imol, imol, "A", "B", 1, 1, 1)
+print("new molecule(s):", list(range(n_before, graphics_n_molecules())))</code></pre>
+<pre class="scheme"><code>(define imol (read-pdb "tutorial-modern.pdb"))
+(define n-before (graphics-n-molecules))
+(superpose-with-chain-selection imol imol "A" "B" 1 1 1)
+(format #t "molecules now: ~a (before ~a)~%" (graphics-n-molecules) n-before)</code></pre>
+<h3 id="96-least-squares-fit-on-chosen-residues">9.6 Least-squares fit on chosen residues</h3>
+<p>Fit residues B10-B60 onto A10-A60 (main-chain atoms: match type 1; 0 = CA only, 2 = all atoms).</p>
+<pre class="python"><code>imol = read_pdb("tutorial-modern.pdb")
+imol_b = new_molecule_by_atom_selection(imol, "//B")
+clear_lsq_matches()
+add_lsq_match(10, 60, "A", 10, 60, "B", 1)
+result = apply_lsq_matches(imol, imol_b)
+print("moved; result:", result)</code></pre>
+<pre class="scheme"><code>(define imol (read-pdb "tutorial-modern.pdb"))
+(define imol-b (new-molecule-by-atom-selection imol "//B"))
+(clear-lsq-matches)
+(add-lsq-match 10 60 "A" 10 60 "B" 1)
+(format #t "result: ~a~%" (apply-lsq-matches imol imol-b))</code></pre>
+</body></html>

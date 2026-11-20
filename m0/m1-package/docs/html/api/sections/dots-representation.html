@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="bffabb64db26fab0eb7adb2dd54198ece12ee804">
+<title>Dots Representation - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="dots-representation">Dots Representation</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Dots Representation (6 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="clear_dots">clear_dots</h3>
+<p>Python: <code>clear_dots(imol, dots_handle)</code><br>
+Scheme: <code>(clear-dots imol dots-handle)</code></p>
+<p>clear dots in imol with dots_handle</p>
+<p>Arguments: imol (a whole number), dots_handle (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>clear_dots(0, 1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(clear-dots 0 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="clear_dots_by_name">clear_dots_by_name</h3>
+<p>Python: <code>clear_dots_by_name(imol, dots_object_name)</code><br>
+Scheme: <code>(clear-dots-by-name imol dots-object-name)</code></p>
+<p>clear the first dots object for imol with given name</p>
+<p>Arguments: imol (a whole number), dots_object_name (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>clear_dots_by_name(0, "my-name")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(clear-dots-by-name 0 "my-name")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="dots">dots</h3>
+<p>Python: <code>dots(imol, atom_selection_str, dots_object_name, dot_density, sphere_size_scale)</code><br>
+Scheme: <code>(dots imol atom-selection-str dots-object-name dot-density sphere-size-scale)</code></p>
+<p>display dotted surface</p>
+<p>return a generic objects handle (which can be used to remove later)</p>
+<p>Arguments: imol (a whole number), atom_selection_str (text), dots_object_name (text), dot_density (a number), sphere_size_scale (a number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>dots(0, "//A/41-45", "my-name", 1.0, 1.0)</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(dots 0 "//A/41-45" "my-name" 1.0 1.0)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<h3 id="n_dots_sets">n_dots_sets</h3>
+<p>Python: <code>n_dots_sets(imol)</code><br>
+Scheme: <code>(n-dots-sets imol)</code></p>
+<p>return the number of dots sets for molecule number imol</p>
+<p>Arguments: imol (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>n_dots_sets(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(n-dots-sets 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_dots_colour">set_dots_colour</h3>
+<p>Python: <code>set_dots_colour(imol, r, g, b)</code><br>
+Scheme: <code>(set-dots-colour imol r g b)</code></p>
+<p>set the colour of the surface dots of the imol-th molecule
+ to be the given single colour</p>
+<p> r,g,b are values between 0.0 and 1.0</p>
+<p>Arguments: imol (a whole number), r (a number), g (a number), b (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_dots_colour(0, 0.5, 0.5, 0.5)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-dots-colour 0 0.5 0.5 0.5)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="unset_dots_colour">unset_dots_colour</h3>
+<p>Python: <code>unset_dots_colour(imol)</code><br>
+Scheme: <code>(unset-dots-colour imol)</code></p>
+<p>no longer set the dots of molecule imol to a single colour</p>
+<p>i.e. go back to element-based colours.</p>
+<p>Arguments: imol (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>unset_dots_colour(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(unset-dots-colour 0)</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

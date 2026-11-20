@@ -1,9 +1,11 @@
 # One line per check: PASS / FAIL / PARTIAL and a few words.  (You can also just tell me in chat.)
-# Round 27 (see TEST-PROTOCOL.md, section II):
-II1 cookbook 6.3: key o refines 7 residues:
-II2 Ctrl-T binding made in Python works; plain t does not trigger it:
-II3 after recipe 4.1, sphere refine shows the Accept window:
-II4 cookbook says clearly that recipes stand alone / how to use own data:
+# Round 28 (see TEST-PROTOCOL.md, section JJ):
+JJ1 Ctrl-T binding shows "Ctrl-T works"; plain t does not:
+JJ2 cookbook 6.3: key v refines 7 residues:
+JJ3 Help > Search: Brighten Maps runs; cookbook 4.3 and refine_zone open in the browser:
+JJ4 Help > Keyboard Shortcuts lists Coot's keys and "Ctrl test":
+JJ5 Help documents open; the menu as you had in mind / what to add:
+# Round 27 (section II): II3, II4 confirmed 20 Nov; II1 (key o is Coot's) and II2 (Ctrl-T) -> build 28.
 # Round 26 (section HH): HH1-HH3 confirmed 19 Nov; HH4 (6.3 F5, 6.4) and HH5 remarks -> build 27.
 # Round 25 (section GG): GG1-GG4 confirmed 18 Nov.
 # Round 24 (section FF): FF1-FF3 confirmed 18 Nov.

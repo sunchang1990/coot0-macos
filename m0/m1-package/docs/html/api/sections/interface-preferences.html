@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="384ece50468658292747d68f525219613e9f05db">
+<title>Interface Preferences - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="interface-preferences">Interface Preferences</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Interface Preferences (62 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="accept_reject_dialog_docked_show_state">accept_reject_dialog_docked_show_state</h3>
+<p>Python: <code>accept_reject_dialog_docked_show_state()</code><br>
+Scheme: <code>(accept-reject-dialog-docked-show-state)</code></p>
+<p>what is the accept/reject dialog docked show state?</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>accept_reject_dialog_docked_show_state()</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(accept-reject-dialog-docked-show-state)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<h3 id="accept_reject_dialog_docked_state">accept_reject_dialog_docked_state</h3>
+<p>Python: <code>accept_reject_dialog_docked_state()</code><br>
+Scheme: <code>(accept-reject-dialog-docked-state)</code></p>
+<p>the accept/reject dialog docked state</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>accept_reject_dialog_docked_state()</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(accept-reject-dialog-docked-state)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<h3 id="add_status_bar_text">add_status_bar_text</h3>
+<p>Python: <code>add_status_bar_text(s)</code><br>
+Scheme: <code>(add-status-bar-text s)</code></p>
+<p>Put text s into the status bar.</p>
+<p> use this to put info for the user in the statusbar (less intrusive
+ than popup).</p>
+<p>Arguments: s (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>add_status_bar_text("hello")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(add-status-bar-text "hello")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="apply_ncs_to_view_orientation">apply_ncs_to_view_orientation</h3>
+<p>Python: <code>apply_ncs_to_view_orientation(imol, current_chain, next_ncs_chain)</code><br>
+Scheme: <code>(apply-ncs-to-view-orientation imol current-chain next-ncs-chain)</code></p>
+<p>Given that we are in chain current_chain, apply the NCS
+ operator that maps current_chain on to next_ncs_chain, so that the
+ relative view is preserved. For NCS skipping.</p>
+<p>Arguments: imol (a whole number), current_chain (text), next_ncs_chain (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>apply_ncs_to_view_orientation(0, "A", "A")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(apply-ncs-to-view-orientation 0 "A" "A")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="apply_ncs_to_view_orientation_and_screen_centre">apply_ncs_to_view_orientation_and_screen_centre</h3>
+<p>Python: <code>apply_ncs_to_view_orientation_and_screen_centre(imol, current_chain, next_ncs_chain, forward_flag)</code><br>
+Scheme: <code>(apply-ncs-to-view-orientation-and-screen-centre imol current-chain next-ncs-chain forward-flag)</code></p>
+<p>as above, but shift the screen centre also.</p>
+<p>Arguments: imol (a whole number), current_chain (text), next_ncs_chain (text), forward_flag (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>apply_ncs_to_view_orientation_and_screen_centre(0, "A", "A", 1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(apply-ncs-to-view-orientation-and-screen-centre 0 "A" "A" 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="clear_preferences">clear_preferences</h3>
+<p>Python: <code>clear_preferences()</code><br>
+Scheme: <code>(clear-preferences)</code></p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>clear_preferences()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(clear-preferences)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="fill_preferences_main_toolbar_icons">fill_preferences_main_toolbar_icons</h3>
+<p>Python: <code>fill_preferences_main_toolbar_icons(preferences, scrolled_window)</code><br>
+Scheme: <code>(fill-preferences-main-toolbar-icons preferences scrolled-window)</code></p>
+<p>Arguments: preferences (<code>GtkWidget *</code>), scrolled_window (<code>GtkWidget *</code>). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<h3 id="fill_preferences_model_toolbar_icons">fill_preferences_model_toolbar_icons</h3>
+<p>Python: <code>fill_preferences_model_toolbar_icons(preferences, scrolled_window)</code><br>
+Scheme: <code>(fill-preferences-model-toolbar-icons preferences scrolled-window)</code></p>
+<p>Arguments: preferences (<code>GtkWidget *</code>), scrolled_window (<code>GtkWidget *</code>). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<h3 id="get_auto_recontour_map">get_auto_recontour_map</h3>
+<p>Python: <code>get_auto_recontour_map()</code><br>
+Scheme: <code>(get-auto-recontour-map)</code></p>
+<p>return the auto-recontour state</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>get_auto_recontour_map()</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-auto-recontour-map)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<h3 id="get_fps_flag">get_fps_flag</h3>
+<p>Python: <code>get_fps_flag()</code><br>
+Scheme: <code>(get-fps-flag)</code></p>
+<p>set the state of show frames-per-second flag</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>get_fps_flag()</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-fps-flag)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<h3 id="get_view_matrix_element">get_view_matrix_element</h3>
+<p>Python: <code>get_view_matrix_element(row, col)</code><br>
+Scheme: <code>(get-view-matrix-element row col)</code></p>
+<p>print the view matrix</p>
+<p>Arguments: row (a whole number), col (a whole number). Returns: a number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>get_view_matrix_element(1, 1)</code></td><td>ran, returned <code>1.0</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-view-matrix-element 1 1)</code></td><td>ran, returned <code>1.0</code></td></tr></tbody></table>
+<h3 id="get_view_quaternion_internal">get_view_quaternion_internal</h3>
+<p>Python: <code>get_view_quaternion_internal(element)</code><br>
+Scheme: <code>(get-view-quaternion-internal element)</code></p>
+<p>internal function to get an element of the view quaternion.
+ The whole quaternion is returned by the scheme function
+ view-quaternion</p>
+<p>Arguments: element (a whole number). Returns: a number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>get_view_quaternion_internal(1)</code></td><td>ran, returned <code>0.0</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-view-quaternion-internal 1)</code></td><td>ran, returned <code>0.0</code></td></tr></tbody></table>
+<h3 id="hide_main_toolbar">hide_main_toolbar</h3>
+<p>Python: <code>hide_main_toolbar()</code><br>
+Scheme: <code>(hide-main-toolbar)</code></p>
+<p>hide the horizontal main toolbar in the GTK2 version</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>hide_main_toolbar()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(hide-main-toolbar)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="hide_main_toolbar_icon">hide_main_toolbar_icon</h3>
+<p>Python: <code>hide_main_toolbar_icon(pos)</code><br>
+Scheme: <code>(hide-main-toolbar-icon pos)</code></p>
+<p>Arguments: pos (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>hide_main_toolbar_icon(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(hide-main-toolbar-icon 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="hide_model_toolbar_icon">hide_model_toolbar_icon</h3>
+<p>Python: <code>hide_model_toolbar_icon(pos)</code><br>
+Scheme: <code>(hide-model-toolbar-icon pos)</code></p>
+<p>Arguments: pos (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>hide_model_toolbar_icon(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(hide-model-toolbar-icon 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="hide_modelling_toolbar">hide_modelling_toolbar</h3>
+<p>Python: <code>hide_modelling_toolbar()</code><br>
+Scheme: <code>(hide-modelling-toolbar)</code></p>
+<p>hide the vertical modelling toolbar in the GTK2 version</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>hide_modelling_toolbar()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(hide-modelling-toolbar)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="main_toolbar_style_state">main_toolbar_style_state</h3>
+<p>Python: <code>main_toolbar_style_state()</code><br>
+Scheme: <code>(main-toolbar-style-state)</code></p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>main_toolbar_style_state()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(main-toolbar-style-state)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="make_preferences_internal">make_preferences_internal</h3>
+<p>Python: <code>make_preferences_internal()</code><br>
+Scheme: <code>(make-preferences-internal)</code></p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>make_preferences_internal()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(make-preferences-internal)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="make_preferences_internal_default">make_preferences_internal_default</h3>
+<p>Python: <code>make_preferences_internal_default()</code><br>
+Scheme: <code>(make-preferences-internal-default)</code></p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>make_preferences_internal_default()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(make-preferences-internal-default)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="model_fit_refine_dialog_stays_on_top_state">model_fit_refine_dialog_stays_on_top_state</h3>
+<p>Python: <code>model_fit_refine_dialog_stays_on_top_state()</code><br>
+Scheme: <code>(model-fit-refine-dialog-stays-on-top-state)</code></p>
+<p>return the state model-fit-refine dialog stays on top</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>model_fit_refine_dialog_stays_on_top_state()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(model-fit-refine-dialog-stays-on-top-state)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="model_toolbar_style_state">model_toolbar_style_state</h3>
+<p>Python: <code>model_toolbar_style_state()</code><br>
+Scheme: <code>(model-toolbar-style-state)</code></p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>model_toolbar_style_state()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(model-toolbar-style-state)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="preferences">preferences</h3>
+<p>Python: <code>preferences()</code><br>
+Scheme: <code>(preferences)</code></p>
+<p>section Preferences</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>preferences()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(preferences)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="preferences_internal_change_value_float">preferences_internal_change_value_float</h3>
+<p>Python: <code>preferences_internal_change_value_float(preference_type, fvalue)</code><br>
+Scheme: <code>(preferences-internal-change-value-float preference-type fvalue)</code></p>
+<p>Arguments: preference_type (a whole number), fvalue (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>preferences_internal_change_value_float(1, 1.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(preferences-internal-change-value-float 1 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="preferences_internal_change_value_float3">preferences_internal_change_value_float3</h3>
+<p>Python: <code>preferences_internal_change_value_float3(preference_type, fvalue1, fvalue2, fvalue3)</code><br>
+Scheme: <code>(preferences-internal-change-value-float3 preference-type fvalue1 fvalue2 fvalue3)</code></p>
+<p>Arguments: preference_type (a whole number), fvalue1 (a number), fvalue2 (a number), fvalue3 (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>preferences_internal_change_value_float3(1, 1.0, 1.0, 1.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(preferences-internal-change-value-float3 1 1.0 1.0 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="preferences_internal_change_value_int">preferences_internal_change_value_int</h3>
+<p>Python: <code>preferences_internal_change_value_int(preference_type, ivalue)</code><br>
+Scheme: <code>(preferences-internal-change-value-int preference-type ivalue)</code></p>
+<p>Arguments: preference_type (a whole number), ivalue (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>preferences_internal_change_value_int(1, 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(preferences-internal-change-value-int 1 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="preferences_internal_change_value_int2">preferences_internal_change_value_int2</h3>
+<p>Python: <code>preferences_internal_change_value_int2(preference_type, ivalue1, ivalue2)</code><br>
+Scheme: <code>(preferences-internal-change-value-int2 preference-type ivalue1 ivalue2)</code></p>
+<p>Arguments: preference_type (a whole number), ivalue1 (a whole number), ivalue2 (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>preferences_internal_change_value_int2(1, 1, 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(preferences-internal-change-value-int2 1 1 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="preferences_internal_font_own_colour_flag">preferences_internal_font_own_colour_flag</h3>
+<p>Python: <code>preferences_internal_font_own_colour_flag()</code><br>
+Scheme: <code>(preferences-internal-font-own-colour-flag)</code></p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>preferences_internal_font_own_colour_flag()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(preferences-internal-font-own-colour-flag)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="print_view_matrix">print_view_matrix</h3>
+<p>Python: <code>print_view_matrix()</code><br>
+Scheme: <code>(print-view-matrix)</code></p>
+<p>print the view matrix to the console, useful for molscript,
+ perhaps</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>print_view_matrix()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(print-view-matrix)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="reattach_modelling_toolbar">reattach_modelling_toolbar</h3>
+<p>Python: <code>reattach_modelling_toolbar()</code><br>
+Scheme: <code>(reattach-modelling-toolbar)</code></p>
+<p>reattach the modelling toolbar to the last attached position</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>reattach_modelling_toolbar()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(reattach-modelling-toolbar)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="reset_preferences">reset_preferences</h3>
+<p>Python: <code>reset_preferences()</code><br>
+Scheme: <code>(reset-preferences)</code></p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>reset_preferences()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(reset-preferences)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="save_preferences">save_preferences</h3>
+<p>Python: <code>save_preferences()</code><br>
+Scheme: <code>(save-preferences)</code></p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>save_preferences()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(save-preferences)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="scroll_by_wheel_mouse_state">scroll_by_wheel_mouse_state</h3>
+<p>Python: <code>scroll_by_wheel_mouse_state()</code><br>
+Scheme: <code>(scroll-by-wheel-mouse-state)</code></p>
+<p>return the internal state of the scroll-wheel map contouring</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>scroll_by_wheel_mouse_state()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(scroll-by-wheel-mouse-state)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_accept_reject_dialog_docked">set_accept_reject_dialog_docked</h3>
+<p>Python: <code>set_accept_reject_dialog_docked(state)</code><br>
+Scheme: <code>(set-accept-reject-dialog-docked state)</code></p>
+<p>functions to dock the accept/reject dialog to the toolbar</p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_accept_reject_dialog_docked(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-accept-reject-dialog-docked 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_accept_reject_dialog_docked_show">set_accept_reject_dialog_docked_show</h3>
+<p>Python: <code>set_accept_reject_dialog_docked_show(state)</code><br>
+Scheme: <code>(set-accept-reject-dialog-docked-show state)</code></p>
+<p>set the accept/reject dialog docked show state</p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_accept_reject_dialog_docked_show(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-accept-reject-dialog-docked-show 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_auto_recontour_map">set_auto_recontour_map</h3>
+<p>Python: <code>set_auto_recontour_map(state)</code><br>
+Scheme: <code>(set-auto-recontour-map state)</code></p>
+<p>turn off (0) or on (1) auto recontouring (on screen centre change) (default it on)</p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_auto_recontour_map(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-auto-recontour-map 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_default_initial_contour_level_for_difference_map">set_default_initial_contour_level_for_difference_map</h3>
+<p>Python: <code>set_default_initial_contour_level_for_difference_map(n_sigma)</code><br>
+Scheme: <code>(set-default-initial-contour-level-for-difference-map n-sigma)</code></p>
+<p>set the default inital contour for FoFc-style map</p>
+<p>in sigma</p>
+<p>Arguments: n_sigma (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_default_initial_contour_level_for_difference_map(1.5)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-default-initial-contour-level-for-difference-map 1.5)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_default_initial_contour_level_for_map">set_default_initial_contour_level_for_map</h3>
+<p>Python: <code>set_default_initial_contour_level_for_map(n_sigma)</code><br>
+Scheme: <code>(set-default-initial-contour-level-for-map n-sigma)</code></p>
+<p>set the default inital contour for 2FoFc-style map</p>
+<p>in sigma</p>
+<p>Arguments: n_sigma (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_default_initial_contour_level_for_map(1.5)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-default-initial-contour-level-for-map 1.5)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_fps_flag">set_fps_flag</h3>
+<p>Python: <code>set_fps_flag(t)</code><br>
+Scheme: <code>(set-fps-flag t)</code></p>
+<p>set show frame-per-second flag</p>
+<p>Arguments: t (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_fps_flag(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-fps-flag 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_main_toolbar_style">set_main_toolbar_style</h3>
+<p>Python: <code>set_main_toolbar_style(state)</code><br>
+Scheme: <code>(set-main-toolbar-style state)</code></p>
+<p>functions for the main toolbar style</p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_main_toolbar_style(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-main-toolbar-style 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_mark_cis_peptides_as_bad">set_mark_cis_peptides_as_bad</h3>
+<p>Python: <code>set_mark_cis_peptides_as_bad(istate)</code><br>
+Scheme: <code>(set-mark-cis-peptides-as-bad istate)</code></p>
+<p>Arguments: istate (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_mark_cis_peptides_as_bad(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-mark-cis-peptides-as-bad 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_model_fit_refine_dialog_stays_on_top">set_model_fit_refine_dialog_stays_on_top</h3>
+<p>Python: <code>set_model_fit_refine_dialog_stays_on_top(istate)</code><br>
+Scheme: <code>(set-model-fit-refine-dialog-stays-on-top istate)</code></p>
+<p>model-fit-refine dialog stays on top</p>
+<p>Arguments: istate (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_model_fit_refine_dialog_stays_on_top(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-model-fit-refine-dialog-stays-on-top 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_model_toolbar_docked_position">set_model_toolbar_docked_position</h3>
+<p>Python: <code>set_model_toolbar_docked_position(state)</code><br>
+Scheme: <code>(set-model-toolbar-docked-position state)</code></p>
+<p>to swap sides of the Model/Fit/Refine toolbar
+ 0 (default) is right, 1 is left, 2 is top, 3 is bottom</p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_model_toolbar_docked_position(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-model-toolbar-docked-position 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_model_toolbar_style">set_model_toolbar_style</h3>
+<p>Python: <code>set_model_toolbar_style(state)</code><br>
+Scheme: <code>(set-model-toolbar-style state)</code></p>
+<p>functions for the refinement toolbar style</p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_model_toolbar_style(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-model-toolbar-style 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_scroll_by_wheel_mouse">set_scroll_by_wheel_mouse</h3>
+<p>Python: <code>set_scroll_by_wheel_mouse(istate)</code><br>
+Scheme: <code>(set-scroll-by-wheel-mouse istate)</code></p>
+<p>Some people (like Phil Evans) don't want to scroll their
+ map with the mouse-wheel.</p>
+<p> To turn off mouse wheel recontouring call this with istate value of 0</p>
+<p>Arguments: istate (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_scroll_by_wheel_mouse(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-scroll-by-wheel-mouse 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_show_origin_marker">set_show_origin_marker</h3>
+<p>Python: <code>set_show_origin_marker(istate)</code><br>
+Scheme: <code>(set-show-origin-marker istate)</code></p>
+<p>set a flag: is the origin marker to be shown? 1 for yes, 0
+ for no.</p>
+<p>Arguments: istate (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_show_origin_marker(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-show-origin-marker 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_view_quaternion">set_view_quaternion</h3>
+<p>Python: <code>set_view_quaternion(i, j, k, l)</code><br>
+Scheme: <code>(set-view-quaternion i j k l)</code></p>
+<p>Set the view quaternion</p>
+<p>Arguments: i (a number), j (a number), k (a number), l (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_view_quaternion(1.0, 1.0, 1.0, 1.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-view-quaternion 1.0 1.0 1.0 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="show_hide_preferences_tabs">show_hide_preferences_tabs</h3>
+<p>Python: <code>show_hide_preferences_tabs(toggletoolbutton, preference_type)</code><br>
+Scheme: <code>(show-hide-preferences-tabs toggletoolbutton preference-type)</code></p>
+<p>Arguments: toggletoolbutton (<code>GtkToggleToolButton *</code>), preference_type (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<h3 id="show_main_toolbar">show_main_toolbar</h3>
+<p>Python: <code>show_main_toolbar()</code><br>
+Scheme: <code>(show-main-toolbar)</code></p>
+<p>show the horizontal main toolbar in the GTK2 version
+ (the toolbar is shown by default)</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>show_main_toolbar()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(show-main-toolbar)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="show_main_toolbar_icon">show_main_toolbar_icon</h3>
+<p>Python: <code>show_main_toolbar_icon(pos)</code><br>
+Scheme: <code>(show-main-toolbar-icon pos)</code></p>
+<p>Arguments: pos (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>show_main_toolbar_icon(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(show-main-toolbar-icon 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="show_mark_cis_peptides_as_bad_state">show_mark_cis_peptides_as_bad_state</h3>
+<p>Python: <code>show_mark_cis_peptides_as_bad_state()</code><br>
+Scheme: <code>(show-mark-cis-peptides-as-bad-state)</code></p>
+<p>in geometry graph</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>show_mark_cis_peptides_as_bad_state()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(show-mark-cis-peptides-as-bad-state)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="show_model_toolbar_all_icons">show_model_toolbar_all_icons</h3>
+<p>Python: <code>show_model_toolbar_all_icons()</code><br>
+Scheme: <code>(show-model-toolbar-all-icons)</code></p>
+<p>show all available icons in the modelling toolbar (same as MFR dialog)</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>show_model_toolbar_all_icons()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(show-model-toolbar-all-icons)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="show_model_toolbar_icon">show_model_toolbar_icon</h3>
+<p>Python: <code>show_model_toolbar_icon(pos)</code><br>
+Scheme: <code>(show-model-toolbar-icon pos)</code></p>
+<p>Arguments: pos (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>show_model_toolbar_icon(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(show-model-toolbar-icon 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="show_model_toolbar_main_icons">show_model_toolbar_main_icons</h3>
+<p>Python: <code>show_model_toolbar_main_icons()</code><br>
+Scheme: <code>(show-model-toolbar-main-icons)</code></p>
+<p>show only a selection of icons in the modelling toolbar</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>show_model_toolbar_main_icons()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(show-model-toolbar-main-icons)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="show_modelling_toolbar">show_modelling_toolbar</h3>
+<p>Python: <code>show_modelling_toolbar()</code><br>
+Scheme: <code>(show-modelling-toolbar)</code></p>
+<p>show the vertical modelling toolbar in the GTK2 version
+ (the toolbar is shown by default)</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>show_modelling_toolbar()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(show-modelling-toolbar)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="show_origin_marker_state">show_origin_marker_state</h3>
+<p>Python: <code>show_origin_marker_state()</code><br>
+Scheme: <code>(show-origin-marker-state)</code></p>
+<p>return the origin marker shown? state</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>show_origin_marker_state()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(show-origin-marker-state)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="show_preferences">show_preferences</h3>
+<p>Python: <code>show_preferences()</code><br>
+Scheme: <code>(show-preferences)</code></p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>show_preferences()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(show-preferences)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="suck_model_fit_dialog">suck_model_fit_dialog</h3>
+<p>Python: <code>suck_model_fit_dialog()</code><br>
+Scheme: <code>(suck-model-fit-dialog)</code></p>
+<p>reparent the Model/Fit/Refine dialog so that it becomes
+ part of the main window, next to the GL graphics context</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>suck_model_fit_dialog()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(suck-model-fit-dialog)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="suck_model_fit_dialog_bl">suck_model_fit_dialog_bl</h3>
+<p>Python: <code>suck_model_fit_dialog_bl()</code><br>
+Scheme: <code>(suck-model-fit-dialog-bl)</code></p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>suck_model_fit_dialog_bl()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(suck-model-fit-dialog-bl)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="update_main_toolbar_icons_menu">update_main_toolbar_icons_menu</h3>
+<p>Python: <code>update_main_toolbar_icons_menu()</code><br>
+Scheme: <code>(update-main-toolbar-icons-menu)</code></p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>update_main_toolbar_icons_menu()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(update-main-toolbar-icons-menu)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="update_model_toolbar_icons_menu">update_model_toolbar_icons_menu</h3>
+<p>Python: <code>update_model_toolbar_icons_menu()</code><br>
+Scheme: <code>(update-model-toolbar-icons-menu)</code></p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>update_model_toolbar_icons_menu()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(update-model-toolbar-icons-menu)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="update_preference_gui">update_preference_gui</h3>
+<p>Python: <code>update_preference_gui()</code><br>
+Scheme: <code>(update-preference-gui)</code></p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>update_preference_gui()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(update-preference-gui)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="update_toolbar_icons_menu">update_toolbar_icons_menu</h3>
+<p>Python: <code>update_toolbar_icons_menu(toolbar_index)</code><br>
+Scheme: <code>(update-toolbar-icons-menu toolbar-index)</code></p>
+<p>Arguments: toolbar_index (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>update_toolbar_icons_menu(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(update-toolbar-icons-menu 1)</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

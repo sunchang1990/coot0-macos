@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="bd9e275245fa85591b407e7aa39243df16fc3fba">
+<title>State Functions - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="state-functions">State Functions</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; State Functions (8 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="run_state_file">run_state_file</h3>
+<p>Python: <code>run_state_file()</code><br>
+Scheme: <code>(run-state-file)</code></p>
+<p>just do it</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>run_state_file()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(run-state-file)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="run_state_file_maybe">run_state_file_maybe</h3>
+<p>Python: <code>run_state_file_maybe()</code><br>
+Scheme: <code>(run-state-file-maybe)</code></p>
+<p>run the state file depending on the state variables</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>run_state_file_maybe()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(run-state-file-maybe)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="save_state">save_state</h3>
+<p>Python: <code>save_state()</code><br>
+Scheme: <code>(save-state)</code></p>
+<p>save the current state to the default filename</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>save_state()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(save-state)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="save_state_file">save_state_file</h3>
+<p>Python: <code>save_state_file(filename)</code><br>
+Scheme: <code>(save-state-file filename)</code></p>
+<p>save the current state to file filename</p>
+<p>Arguments: filename (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>save_state_file("tutorial-modern.pdb")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(save-state-file "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="save_state_file_name">save_state_file_name</h3>
+<p>Python: <code>save_state_file_name()</code><br>
+Scheme: <code>(save-state-file-name-scm)</code></p>
+<p>the save state file name</p>
+<p> Returns the save state file name</p>
+<p>Arguments: none. Returns: a value (see the result of the example).
+Also available in Python as <code>save_state_file_name_py</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>save_state_file_name()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(save-state-file-name-scm)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="save_state_file_name_raw">save_state_file_name_raw</h3>
+<p>Python: <code>save_state_file_name_raw()</code><br>
+Scheme: <code>(save-state-file-name-raw)</code></p>
+<p>only to be used in callbacks.c, don't export</p>
+<p>Arguments: none. Returns: text.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>save_state_file_name_raw()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(save-state-file-name-raw)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_run_state_file_status">set_run_state_file_status</h3>
+<p>Python: <code>set_run_state_file_status(istat)</code><br>
+Scheme: <code>(set-run-state-file-status istat)</code></p>
+<p>set run state file status</p>
+<p>0: never run it
+1: ask to run it
+2: run it, no questions</p>
+<p>Arguments: istat (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_run_state_file_status(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-run-state-file-status 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_save_state_file_name">set_save_state_file_name</h3>
+<p>Python: <code>set_save_state_file_name(filename)</code><br>
+Scheme: <code>(set-save-state-file-name filename)</code></p>
+<p>set the filename</p>
+<p>Arguments: filename (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_save_state_file_name("tutorial-modern.pdb")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-save-state-file-name "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

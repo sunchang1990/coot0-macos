@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="7d8ae8b0216e4319cde3beb36b3b5881c5b7811f">
+<title>Backrubbing function - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="backrubbing-function">Backrubbing function</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Backrubbing function (2 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="backrub_rotamer">backrub_rotamer</h3>
+<p>Python: <code>backrub_rotamer(imol, chain_id, res_no, ins_code, alt_conf)</code><br>
+Scheme: <code>(backrub-rotamer imol chain-id res-no ins-code alt-conf)</code></p>
+<p>Do a back-rub rotamer search (with autoaccept).</p>
+<p>Returns the success status, 0 for fail, 1 for successful fit.</p>
+<p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text), alt_conf (text). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>backrub_rotamer(0, "A", 41, "", "")</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(backrub-rotamer 0 "A" 41 "" "")</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<h3 id="backrub_rotamer_intermediate_atoms">backrub_rotamer_intermediate_atoms</h3>
+<p>Python: <code>backrub_rotamer_intermediate_atoms()</code><br>
+Scheme: <code>(backrub-rotamer-intermediate-atoms)</code></p>
+<p>apply rotamer backrub to the active atom of the intermediate atoms</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>backrub_rotamer_intermediate_atoms()</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(backrub-rotamer-intermediate-atoms)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+</body></html>

@@ -62,7 +62,7 @@ add_simple_coot_menu_menuitem(menu, 'White background', lambda item: set_backgro
 
 ### 6.3 A key that runs your code
 
-Press `o` in the graphics window to refine 3 residues on each side of the centre.
+Press `v` in the graphics window to refine 3 residues on each side of the centre.
 
 ```python
 def refine_triple():
@@ -70,24 +70,26 @@ def refine_triple():
     if ar:
         refine_zone(ar[0], ar[1], ar[2] - 3, ar[2] + 3, ar[5])
 
-add_key_binding("Refine 7 residues", "o", refine_triple)
+add_key_binding("Refine 7 residues", "v", refine_triple)
 ```
 
 ```scheme
-(add-key-binding "Refine 7 residues" "o"
+(add-key-binding "Refine 7 residues" "v"
   (lambda ()
     (let ((ar (active-residue)))
       (if ar (refine-zone (list-ref ar 0) (list-ref ar 1) (- (list-ref ar 2) 3) (+ (list-ref ar 2) 3) (list-ref ar 5))))))
 ```
 <!-- check-py: "Refine 7 residues" in [k[2] for k in key_bindings] -->
-<!-- check-scm: (if (assoc (key-sym-code "o") *key-bindings*) #t #f) -->
+<!-- check-scm: (if (assoc (key-sym-code "v") *key-bindings*) #t #f) -->
 
-Keys Coot already uses cannot be taken: the binding is made but never runs. Coot's own keys include F5 (Model/Fit/Refine),
-F6 (Go To Atom), F7 (Display Manager), F8 (screenshot), the digits, arrows, `.` `,` `-` `+` `=`, Space, Return, Escape,
-`d f i l m n u`, and Ctrl with G, R, S, Y, Z. Keys from Calculate > ... > Install Template Keybindings (if you installed them)
-are taken as well. Free letters include `o`, `p` and `v`.
+Keys Coot already uses cannot be taken: the binding is made but never runs, or Coot does its own thing as well. Coot's own keys:
+F5 (Model/Fit/Refine), F6 (Go To Atom), F7 (Display Manager), F8 (screenshot), the digits, arrows, `.` `,` `-` `+` `=`, Space,
+Return, Escape, `c` (crosshairs), `d` `f` (clipping), `i` (spin), `l` (label), `m` `n` (zoom), `o` `O` (next / previous NCS chain),
+`p` (update Go To Atom), `s` (re-contour), `u` (undo move), and Ctrl with C, D, G, I, L, R, S, X, Y, Z. Keys from Calculate > ... >
+Install Template Keybindings (if you installed them) are taken as well; they use most other letters except `v`. Help > Keyboard
+Shortcuts (build 28) lists all keys and your own bindings.
 
-- **Ctrl keys** (Python): `add_key_binding("Refine 7 residues", "Control_t", refine_triple)` for Ctrl-T (build 27 or later).
+- **Ctrl keys** (Python): `add_key_binding("Refine 7 residues", "Control_t", refine_triple)` for Ctrl-T (build 28 or later). A key and its Ctrl- version are separate bindings.
 - **Function keys on a Mac**: F1-F12 control the Mac (brightness, sound, ...); press `fn` with them to send F9 etc. to Coot,
   or switch it in System Settings > Keyboard > Keyboard Shortcuts > Function Keys.
 

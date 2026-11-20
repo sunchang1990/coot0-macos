@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="fb50f751de18ff0d97323a8d70591dee3ff25cd5">
+<title>Atom Information functions - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="atom-information-functions">Atom Information functions</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Atom Information functions (17 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="active_residue">active_residue</h3>
+<p>Python: <code>active_residue()</code><br>
+Scheme: <code>(active-residue)</code></p>
+<p>Return a list of [imol, chain-id, resno, ins-code, atom-name,
+alt-conf] for atom that is closest to the screen centre. If there
+are multiple models with the same coordinates at the screen centre,
+return the attributes of the atom in the highest number molecule
+number.
+return False if no active residue</p>
+<p>Arguments: none. Returns: a value (see the result of the example).
+Also available in Python as <code>active_residue_py</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>active_residue()</code></td><td>ran, returned <code>[0, 'A', 42, '', ' CA ', '']</code></td></tr>
+<tr><td>Scheme</td><td><code>(active-residue)</code></td><td>ran, returned <code>(0 "A" 42 "" " CA " "")</code></td></tr></tbody></table>
+<h3 id="add_hydrogen_atoms_to_residue">add_hydrogen_atoms_to_residue</h3>
+<p>Python: <code>add_hydrogen_atoms_to_residue(imol, chain_id, res_no, ins_code)</code><br>
+Scheme: <code>(add-hydrogen-atoms-to-residue imol chain-id res-no ins-code)</code></p>
+<p>add hydrogen atoms to the specified residue</p>
+<p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>add_hydrogen_atoms_to_residue(0, "A", 41, "")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(add-hydrogen-atoms-to-residue 0 "A" 41 "")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="add_hydrogens_from_file">add_hydrogens_from_file</h3>
+<p>Python: <code>add_hydrogens_from_file(imol, pdb_with_Hs_file_name)</code><br>
+Scheme: <code>(add-hydrogens-from-file imol pdb-with-Hs-file-name)</code></p>
+<p>Add hydrogens to imol from the given pdb file</p>
+<p>Arguments: imol (a whole number), pdb_with_Hs_file_name (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>add_hydrogens_from_file(0, "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(add-hydrogens-from-file 0 "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="add_molecule">add_molecule</h3>
+<p>Python: <code>add_molecule(molecule_expression, name)</code><br>
+Scheme: <code>(add-molecule molecule-expression name)</code></p>
+<p>return a molecule number, -1 on error</p>
+<p>Arguments: molecule_expression (a list or value), name (text). Returns: a whole number.
+Also available in Python as <code>add_molecule_py</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<h3 id="atom_info_string">atom_info_string</h3>
+<p>Python: <code>atom_info_string(imol, chain_id, resno, ins_code, atname, altconf)</code><br>
+Scheme: <code>(atom-info-string imol chain-id resno ins-code atname altconf)</code></p>
+<p>output atom info in a python list for use in scripting:
+in this format [occ, temp_factor, element, x, y, z]. Return empty
+list if atom not found.</p>
+<p>Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_code (text), atname (text), altconf (text). Returns: a value (see the result of the example).
+Also available in Python as <code>atom_info_string_py</code>.
+Also available in Scheme as <code>atom-info-string-scm</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>atom_info_string(0, "A", 41, "", " CA ", "")</code></td><td>ran, returned <code>[1.0, 14.8, ' C', 47.072, 10.589, 17.411]</code></td></tr>
+<tr><td>Scheme</td><td><code>(atom-info-string 0 "A" 41 "" " CA " "")</code></td><td>ran, returned <code>(1.0 14.8 " C" 47.072 10.589 17.411)</code></td></tr></tbody></table>
+<h3 id="chain_fragments">chain_fragments</h3>
+<p>Python: <code>chain_fragments(imol, screen_output_also)</code><br>
+Scheme: <code>(chain-fragments imol screen-output-also)</code></p>
+<p>Arguments: imol (a whole number), screen_output_also (a whole number). Returns: a value (see the result of the example).
+Also available in Python as <code>chain_fragments_py</code>.
+Also available in Scheme as <code>chain-fragments-scm</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>chain_fragments(0, 1)</code></td><td>ran, returned <code>False</code></td></tr>
+<tr><td>Scheme</td><td><code>(chain-fragments 0 1)</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<h3 id="clear_and_update_molecule">clear_and_update_molecule</h3>
+<p>Python: <code>clear_and_update_molecule(molecule_number, molecule_expression)</code><br>
+Scheme: <code>(clear-and-update-molecule molecule-number molecule-expression)</code></p>
+<p>And going the other way, given an python-expression, update
+molecule_number by the given molecule. Clear what's currently
+there first though.</p>
+<p>Arguments: molecule_number (a whole number), molecule_expression (a list or value). Returns: a whole number.
+Also available in Python as <code>clear_and_update_molecule_py</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<h3 id="closest_atom">closest_atom</h3>
+<p>Python: <code>closest_atom(imol)</code><br>
+Scheme: <code>(closest-atom imol)</code></p>
+<p>return closest atom in imolth molecule
+Return a list of [imol, chain-id, resno, ins-code, atom-name,
+alt-conf, [x, y, z]] for atom that is closest to the screen
+centre in the given molecule (unlike active-residue, no account is
+taken of the displayed state of the molecule). If there is no
+atom, or if imol is not a valid model molecule, return False.</p>
+<p>Arguments: imol (a whole number). Returns: a value (see the result of the example).
+Also available in Python as <code>closest_atom_py</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>closest_atom(0)</code></td><td>ran, returned <code>[0, 'A', 42, '', ' CA ', '', 44.346, 10.357, 15.014]</code></td></tr>
+<tr><td>Scheme</td><td><code>(closest-atom 0)</code></td><td>ran, returned <code>(0 "A" 42 "" " CA " "" 44.346 10.357 15.014)</code></td></tr></tbody></table>
+<h3 id="hydrogenate_region">hydrogenate_region</h3>
+<p>Python: <code>hydrogenate_region(radius)</code><br>
+Scheme: <code>(hydrogenate-region radius)</code></p>
+<p>find the active residue, find the near residues (within radius)
+create a new molecule, run reduce on that, import hydrogens from
+the result and apply them to the molecule of the active residue.</p>
+<p>Arguments: radius (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>hydrogenate_region(5.0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(hydrogenate-region 5.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="molecule_to_pdb_string_py">molecule_to_pdb_string_py</h3>
+<p>Python: <code>molecule_to_pdb_string_py(imol)</code><br>
+Scheme: <code>(molecule-to-pdb-string-scm imol)</code></p>
+<p>Return the molecule as a PDB string</p>
+<p>Arguments: imol (a whole number). Returns: a value (see the result of the example).</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>molecule_to_pdb_string_py(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(molecule-to-pdb-string-scm 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="residue_centre_from_spec">residue_centre_from_spec</h3>
+<p>Python: <code>residue_centre_from_spec(imol, spec_py)</code></p>
+<p>the expanded form of this is in c-interface.h</p>
+<p>Arguments: imol (a whole number), spec_py (a list or value). Returns: a value (see the result of the example).
+Also available in Python as <code>residue_centre_from_spec_py</code>.
+<strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>residue_centre_from_spec(0, ["A", 41, ""])</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="residue_info">residue_info</h3>
+<p>Python: <code>residue_info(imol, chain_id, resno, ins_code)</code><br>
+Scheme: <code>(residue-info imol chain-id resno ins-code)</code></p>
+<p>Return a list of atom info for each atom in the specified residue:
+output is like this:
+[
+ [[atom-name,alt-conf]
+ [occ,temp_fact,element]
+ [x,y,z]]]</p>
+<p>Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_code (text). Returns: a value (see the result of the example).
+Also available in Python as <code>residue_info_py</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>residue_info(0, "A", 41, "")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(residue-info 0 "A" 41 "")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="residue_name">residue_name</h3>
+<p>Python: <code>residue_name(imol, chain_id, resno, ins_code)</code><br>
+Scheme: <code>(residue-name imol chain-id resno ins-code)</code></p>
+<p>return the residue name of the specified residue</p>
+<p>Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_code (text). Returns: a value (see the result of the example).</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>residue_name(0, "A", 41, "")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(residue-name 0 "A" 41 "")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="residues_near_residue">residues_near_residue</h3>
+<p>Python: <code>residues_near_residue(imol, residue_in, radius)</code><br>
+Scheme: <code>(residues-near-residue imol residue-in-scm radius)</code></p>
+<p>Return residue specs for residues that have atoms that are
+closer than radius Angstroems to any atom in the residue
+specified by residue_in.</p>
+<p>Arguments: imol (a whole number), residue_in (a list or value), radius (a number). Returns: a value (see the result of the example).
+Also available in Python as <code>residues_near_residue_py</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>residues_near_residue(0, ["A", 41, ""], 5.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(residues-near-residue 0 (list "A" 41 "") 5.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="resname_from_serial_number">resname_from_serial_number</h3>
+<p>Python: <code>resname_from_serial_number(imol, chain_id, serial_num)</code><br>
+Scheme: <code>(resname-from-serial-number imol chain-id serial-num)</code></p>
+<p>return the rename from a residue serial number</p>
+<p> Returns blank ("") on failure.</p>
+<p>Arguments: imol (a whole number), chain_id (text), serial_num (a whole number). Returns: text.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>resname_from_serial_number(0, "A", 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(resname-from-serial-number 0 "A" 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="serial_number_from_residue_specs">serial_number_from_residue_specs</h3>
+<p>Python: <code>serial_number_from_residue_specs(imol, chain_id, res_no, ins_code)</code><br>
+Scheme: <code>(serial-number-from-residue-specs imol chain-id res-no ins-code)</code></p>
+<p>return the serial number of the specified residue
+Returns -1 on failure to find the residue</p>
+<p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>serial_number_from_residue_specs(0, "A", 41, "")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(serial-number-from-residue-specs 0 "A" 41 "")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_b_factor_residues">set_b_factor_residues</h3>
+<p>Python: <code>set_b_factor_residues(imol, residue_specs_b_value_tuple_list_py)</code></p>
+<p>Arguments: imol (a whole number), residue_specs_b_value_tuple_list_py (a list or value). Returns: nothing.
+Also available in Python as <code>set_b_factor_residues_py</code>.
+<strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_b_factor_residues(0, ["A", 41, ""])</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

@@ -1,0 +1,71 @@
+Build 28 tarball verification (20 Nov 2026)
+tarball coot0-0.9.8.96-b28-macos-arm64.tar.gz sha256 0f4d56a6815477eedbbd8581d19bd327c9b6239ccf79bc318ea41af8c6468bbc
+unpacked into a folder with spaces, env -i HOME=<tmp> PATH=/usr/bin:/bin:/usr/sbin:/sbin
+
+== tests/run-headless-tests.sh (first b28 tarball; the final one differs only in tests/gui_menu_sweep.py and tests/real_window_checks.py, which the suites do not use)
+python-api                 SUMMARY 19 / 19
+scheme-api                 SUMMARY 27 / 27
+data-and-maps              SUMMARY 39 / 39
+ondemand-read              SUMMARY 3 / 3
+refine-zone                SUMMARY 7 / 7
+process-helpers            SUMMARY 10 / 10
+api-docs                   SUMMARY 8 / 8
+bundle-python              SUMMARY 19 / 19
+bundle-scheme              SUMMARY 6 / 6
+rdkit-python               SUMMARY 10 / 10
+rdkit-scheme               SUMMARY 3 / 3
+gtk2compat                 SUMMARY 12 / 12
+gui-scripts                SUMMARY 16 / 16
+gui-dialogs                SUMMARY 88 / 88
+gui-glyco                  SUMMARY 14 / 14
+gui-toolbar                SUMMARY 13 / 13
+gui-rcrane                 SUMMARY 21 / 21
+refmac-run                 SUMMARY 11 / 11
+cookbook                   SUMMARY 166 / 166
+installer                  SUMMARY 26 / 26
+startup-dictionaries       SUMMARY 1 / 1
+
+== tests/run-gui-sweep.sh (final tarball, two runs)
+GUI sweep: 257 items ok, 0 items with errors, 0 items without a handler, 6 items whose activation killed the headless process (OpenGL or screen needed; started 
+SWEEP 21 | Edit > Settings... > Python: Install Template Keybindings button '   X   Edit Chi Angles' | CRASH (process died: OpenGL call without a graphics conte
+SWEEP 36 | Calculate > Map Tools... > Brighten Maps | CRASH (process died: OpenGL call without a graphics context, or hang)
+SWEEP 108 | Draw > Representation Tools... > Ball & Stick... button '  OK  ' | CRASH (process died: OpenGL call without a graphics context, or hang)
+SWEEP 117 | Draw > Representation Tools... > Highlight Interesting Site (here)... | CRASH (process died: OpenGL call without a graphics context, or hang)
+SWEEP 141 | Validate > Views > Views Panel... | CRASH (process died: OpenGL call without a graphics context, or hang)
+SWEEP 151 | Ligand > Find Ligands... | CRASH (process died: OpenGL call without a graphics context, or hang)
+-- second run:
+GUI sweep: 258 items ok, 0 items with errors, 0 items without a handler, 5 items whose activation killed the headless process (OpenGL or screen needed; started 
+SWEEP 36 | Calculate > Map Tools... > Brighten Maps | CRASH (process died: OpenGL call without a graphics context, or hang)
+SWEEP 108 | Draw > Representation Tools... > Ball & Stick... button '  OK  ' | CRASH (process died: OpenGL call without a graphics context, or hang)
+SWEEP 117 | Draw > Representation Tools... > Highlight Interesting Site (here)... | CRASH (process died: OpenGL call without a graphics context, or hang)
+SWEEP 141 | Validate > Views > Views Panel... | CRASH (process died: OpenGL call without a graphics context, or hang)
+SWEEP 151 | Ligand > Find Ligands... | CRASH (process died: OpenGL call without a graphics context, or hang)
+(Edit Chi Angles: known flaky headless. Views Panel: crashes headless when Add a Spin View ran just before it in the same process; in a real window it is fine:)
+
+== tests/run-gui-audit.sh with COOT_AUDIT_ONLY='Validate > Views' (real window)
+AUDIT   0 | Validate > Views > Add View... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT   1 | Validate > Views > Add a Spin View... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT   2 | Validate > Views > Views Panel... | ok | windows: 1, buttons clicked: 4, 18.2 s
+AUDIT   3 | Validate > Views > Play Views | ok | windows: 0, buttons clicked: 0, 8.1 s
+AUDIT   4 | Validate > Views > Set Views Play Speed... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT   5 | Validate > Views > Save Views... | ok | windows: 1, buttons clicked: 1, 1.3 s
+
+== tests/run-real-window-checks.sh (final tarball, real window, synthetic GTK key events)
+PASS a plain key bound in Python runs when pressed (v)
+PASS Ctrl-T runs the Python binding made with "Control_t"
+PASS plain t does not run the Ctrl-T binding
+PASS o is Coot's own key (next NCS chain): a binding to it does not run
+PASS Help is the last menu
+PASS Help search sees the menu entries (more than 150)
+PASS no hidden (removed) entry is offered
+PASS search 'brighten' finds Brighten Maps
+PASS the search window opens on screen and lists results for 'refine'
+PASS Coot's own Help entries (Header/Remarks Browser, Hints, About) keep their handlers
+PASS the Keyboard Shortcuts window opens
+SUMMARY 11 / 11
+
+== m0/tools/bundle_check.py
+Mach-O files checked: 211 | highest minos: 11.0 | dangling symlinks: 0
+RESULT: OK
+
+== patch series rebuilt from the pristine tree with setup.sh: 46 patches, diff -rq with m0/coot-src: IDENTICAL

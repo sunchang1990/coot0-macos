@@ -39,6 +39,7 @@ def static_paths():
         for k in n.get("children", []): w(k, p)
         if "submenu" in n: w(n["submenu"], p)
     w(spec, [])
+    out |= {"Help" + p[len("About"):] for p in out if p == "About" or p.startswith("About > ")}   # (build 28) coot0 renames "About" to "Help"
     return out
 STATIC = static_paths()
 

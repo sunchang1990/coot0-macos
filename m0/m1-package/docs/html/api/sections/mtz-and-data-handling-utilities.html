@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="1d12459b3ae121dc98a24353a9ef1a3a8a0bdc70">
+<title>MTZ and data handling utilities - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="mtz-and-data-handling-utilities">MTZ and data handling utilities</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; MTZ and data handling utilities (9 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="get_d_cols">get_d_cols</h3>
+<p>Python: <code>get_d_cols(mtz_file_name)</code><br>
+Scheme: <code>(get-d-cols mtz-file-name)</code></p>
+<p>Arguments: mtz_file_name (text). Returns: a list.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>get_d_cols("rnasa-1.8-all_refmac1.mtz")</code></td><td>ran, returned <code>()</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-d-cols "rnasa-1.8-all_refmac1.mtz")</code></td><td>ran, returned <code>#()</code></td></tr></tbody></table>
+<h3 id="get_f_cols">get_f_cols</h3>
+<p>Python: <code>get_f_cols(mtz_file_name)</code><br>
+Scheme: <code>(get-f-cols mtz-file-name)</code></p>
+<p>Arguments: mtz_file_name (text). Returns: a list.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>get_f_cols("rnasa-1.8-all_refmac1.mtz")</code></td><td>ran, returned <code>('/RNASE3GMP/COMPLEX/FGMP18', '/RNASE3GMP/COMPLEX/FC', '/RNASE3GMP/COMPLEX/FC_ALL', '/RNASE3GMP/COMPLEX/FWT', '/RNASE3GM ...</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-f-cols "rnasa-1.8-all_refmac1.mtz")</code></td><td>ran, returned <code>#("/RNASE3GMP/COMPLEX/FGMP18" "/RNASE3GMP/COMPLEX/FC" "/RNASE3GMP/COMPLEX/FC_ALL" "/RNASE3GMP/COMPLEX/FWT" "/RNASE3GMP/C ...</code></td></tr></tbody></table>
+<h3 id="get_mtz_columns">get_mtz_columns</h3>
+<p>Python: <code>get_mtz_columns(filename)</code><br>
+Scheme: <code>(get-mtz-columns filename)</code></p>
+<p>Arguments: filename (text). Returns: <code>mtz_column_types_info_t</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>get_mtz_columns("tutorial-modern.pdb")</code></td><td>ran, returned <code>&lt;coot.mtz_column_types_info_t; proxy of &lt;Swig Object of type 'coot::mtz_column_types_info_t *' at 0x1086e9320&gt; &gt;</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-mtz-columns "tutorial-modern.pdb")</code></td><td>ran, returned <code>#&lt;collectable-swig-pointer coot::mtz_column_types_info_t * 920880000&gt;</code></td></tr></tbody></table>
+<h3 id="get_phi_cols">get_phi_cols</h3>
+<p>Python: <code>get_phi_cols(mtz_file_name)</code><br>
+Scheme: <code>(get-phi-cols mtz-file-name)</code></p>
+<p>Arguments: mtz_file_name (text). Returns: a list.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>get_phi_cols("rnasa-1.8-all_refmac1.mtz")</code></td><td>ran, returned <code>('/RNASE3GMP/COMPLEX/PHIC', '/RNASE3GMP/COMPLEX/PHIC_ALL', '/RNASE3GMP/COMPLEX/PHWT', '/RNASE3GMP/COMPLEX/PHDELWT', '/RN ...</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-phi-cols "rnasa-1.8-all_refmac1.mtz")</code></td><td>ran, returned <code>#("/RNASE3GMP/COMPLEX/PHIC" "/RNASE3GMP/COMPLEX/PHIC_ALL" "/RNASE3GMP/COMPLEX/PHWT" "/RNASE3GMP/COMPLEX/PHDELWT" "/RNASE ...</code></td></tr></tbody></table>
+<h3 id="get_r_free_cols">get_r_free_cols</h3>
+<p>Python: <code>get_r_free_cols(mtz_file_name)</code><br>
+Scheme: <code>(get-r-free-cols mtz-file-name)</code></p>
+<p>Arguments: mtz_file_name (text). Returns: a list.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>get_r_free_cols("rnasa-1.8-all_refmac1.mtz")</code></td><td>ran, returned <code>('/HKL_base/HKL_base/FreeR_flag',)</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-r-free-cols "rnasa-1.8-all_refmac1.mtz")</code></td><td>ran, returned <code>#("/HKL_base/HKL_base/FreeR_flag")</code></td></tr></tbody></table>
+<h3 id="get_sigf_cols">get_sigf_cols</h3>
+<p>Python: <code>get_sigf_cols(mtz_file_name)</code><br>
+Scheme: <code>(get-sigf-cols mtz-file-name)</code></p>
+<p>Arguments: mtz_file_name (text). Returns: a list.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>get_sigf_cols("rnasa-1.8-all_refmac1.mtz")</code></td><td>ran, returned <code>('/RNASE3GMP/COMPLEX/SIGFGMP18',)</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-sigf-cols "rnasa-1.8-all_refmac1.mtz")</code></td><td>ran, returned <code>#("/RNASE3GMP/COMPLEX/SIGFGMP18")</code></td></tr></tbody></table>
+<h3 id="get_weight_cols">get_weight_cols</h3>
+<p>Python: <code>get_weight_cols(mtz_file_name)</code><br>
+Scheme: <code>(get-weight-cols mtz-file-name)</code></p>
+<p>Arguments: mtz_file_name (text). Returns: a list.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>get_weight_cols("rnasa-1.8-all_refmac1.mtz")</code></td><td>ran, returned <code>('/RNASE3GMP/COMPLEX/FOM',)</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-weight-cols "rnasa-1.8-all_refmac1.mtz")</code></td><td>ran, returned <code>#("/RNASE3GMP/COMPLEX/FOM")</code></td></tr></tbody></table>
+<h3 id="manage_column_selector">manage_column_selector</h3>
+<p>Python: <code>manage_column_selector(filename)</code><br>
+Scheme: <code>(manage-column-selector filename)</code></p>
+<p>given a filename, try to read it as a data file</p>
+<p> We try as .phs and .cif files first</p>
+<p>Arguments: filename (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>manage_column_selector("tutorial-modern.pdb")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(manage-column-selector "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="my_combo_box_text_add_items">my_combo_box_text_add_items</h3>
+<p>Python: <code>my_combo_box_text_add_items(combobox, labels, active_label_index)</code><br>
+Scheme: <code>(my-combo-box-text-add-items combobox labels active-label-index)</code></p>
+<p>Arguments: combobox (<code>GtkComboBox *</code>), labels (a list), active_label_index (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+</body></html>

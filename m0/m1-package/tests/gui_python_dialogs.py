@@ -1016,6 +1016,124 @@ def key_bindings_reach_python():
     return True if fired == ["o", "ctrl-t"] else "a Ctrl key bound in Python did not run through Scheme's key hook: %r" % fired
 check("key bindings made in Python run, also with Ctrl (keys reach Python through Scheme's key hook)", key_bindings_reach_python)
 
+# (build 28) user, 20 Nov: Ctrl-T still did not run the "Control_t" binding.  The C++ key handler now passes its own Ctrl state
+# (the one Ctrl-S / Ctrl-Z use) as a second argument to Scheme's hook, which hands it to Python; no guessing from GDK.
+def ctrl_flag_through_scheme():
+    fired = []
+    real = g.get("_coot0_control_pressed")
+    g["_coot0_control_pressed"] = lambda: 0          # the old way says "no Ctrl": only the passed flag can make it run
+    try:
+        with contextlib.redirect_stdout(io.StringIO()):
+            g["add_key_binding"]("coot0 test ctrl k", "Control_k", lambda: fired.append("ctrl-k"))
+            g["add_key_binding"]("coot0 test plain k", "k", lambda: fired.append("k"))
+            coot.run_scheme_command("(graphics-general-key-press-hook %d 1)" % g["decode_key"]("k"))
+            coot.run_scheme_command("(graphics-general-key-press-hook %d 0)" % g["decode_key"]("k"))
+    finally:
+        if real is not None: g["_coot0_control_pressed"] = real
+    return True if fired == ["ctrl-k", "k"] else "Ctrl state passed by the C++ key handler: fired %r (want ['ctrl-k', 'k'])" % fired
+check("the Ctrl state from Coot's key handler reaches Python key bindings (Ctrl-K vs k)", ctrl_flag_through_scheme)
+
+# (build 28) user, 20 Nov: "a help tab in the main menu, where one can search the items in the existing menu and that points to the
+# documentation, readme and cookbook, similar to the help of Visual Studio Code"
+HELP_TOP = ["Search Menus and Docs...", "Keyboard Shortcuts...", None, "Cookbook (recipes)", "Scripting Reference (all functions)",
+            "Documentation Overview", "coot0 README", "What's New in coot0 (changes per build)", "Coot Website (Paul Emsley, online)", None]
+def help_menu():
+    lab = g.get("coot0_menu_label")
+    if lab is None: return "no Help menu code (coot0_help.py not loaded)"
+    tops = g["_menubar"].get_children()
+    names = [lab(i) for i in tops]
+    if names[-1] != "Help": return "last menu is %r, not Help: %r" % (names[-1], names)
+    sub = [lab(i) for i in tops[-1].get_submenu().get_children()]
+    if sub[:len(HELP_TOP)] != HELP_TOP: return "Help menu starts %r" % sub[:12]
+    return True if "About..." in sub and "Hints..." in sub else "Coot's own About... / Hints... gone: %r" % sub
+check("Help menu: the last menu, with search, keys, the documents, and Coot's About entries", help_menu)
+
+def help_menu_stays_last():
+    m = g["coot_menubar_menu"]("coot0 test late menu")      # a menu made later (as Modules... makes Glyco, Cryo-EM, ...)
+    names = [g["coot0_menu_label"](i) for i in g["_menubar"].get_children()]
+    return True if names[-1] == "Help" and "coot0 test late menu" in names else names
+check("Help stays the last menu when a script adds a menu later", help_menu_stays_last)
+
+def help_search_menus():
+    fired = []
+    menu = g["coot_menubar_menu"]("coot0 test late menu")
+    g["add_simple_coot_menu_menuitem"](menu, "coot0 help probe entry", lambda *a: fired.append(1))
+    r = [x for x in g["coot0_help_search"]("help probe") if x[0] == "Menu"]
+    if not r or r[0][:2] != ("Menu", "coot0 test late menu > coot0 help probe entry"): return "search 'help probe': %r" % [x[:2] for x in r[:3]]
+    g["coot0_help_run"](r[0][2])
+    if fired != [1]: return "the found menu entry did not run: %r" % fired
+    b = [x[1] for x in g["coot0_help_search"]("brighten maps") if x[0] == "Menu"]
+    return True if any(x.endswith("> Brighten Maps") for x in b) else "Calculate > ... > Brighten Maps not found: %r" % b
+check("Help search finds menu entries (also menus added later) and runs the one chosen", help_search_menus)
+
+def help_search_docs():
+    opened = []
+    real = g["coot0_open_url"]
+    g["coot0_open_url"] = lambda t: opened.append(t) or t
+    try:
+        found = {}
+        for q, kind, want in (("sphere refine", "Cookbook", "4.3 Sphere refine"), ("refine_zone", "Function", "refine_zone"),
+                              ("key that runs your code", "Cookbook", "6.3 A key that runs your code")):
+            r = [x for x in g["coot0_help_search"](q) if x[0] == kind and x[1].startswith(want)]
+            if not r: return "search %r: no %s %r" % (q, kind, want)
+            url = g["coot0_help_run"](r[0][2])
+            page, _, anchor = url[len("file://"):].partition("#")
+            import urllib.parse
+            page = urllib.parse.unquote(page)
+            if not os.path.exists(page): return "%r opens a missing page %s" % (q, page)
+            if ('id="%s"' % urllib.parse.unquote(anchor)) not in open(page).read(): return "%r: no heading #%s in %s" % (q, anchor, page)
+            fwd = opened[-1]
+            if url.replace("&", "&amp;") not in open(fwd).read(): return "the forwarding page does not lead to %s" % url
+        first = g["coot0_help_search"]("refine_zone")[0][:2]
+        return True if first == ("Function", "refine_zone") else "an exact match is not first: 'refine_zone' -> %r" % (first,)
+    finally:
+        g["coot0_open_url"] = real
+check("Help search finds recipes and functions, an exact match first, and opens the right page at the right heading", help_search_docs)
+
+def help_menu_documents():
+    opened = []
+    real = g["coot0_open_url"]
+    g["coot0_open_url"] = lambda t: opened.append(t) or t
+    try:
+        sub = g["_menubar"].get_children()[-1].get_submenu().get_children()
+        for item in sub:
+            if g["coot0_menu_label"](item) in HELP_TOP[3:9]: item.activate()
+    finally:
+        g["coot0_open_url"] = real
+    if len(opened) != 6: return "opened %r" % opened
+    missing = [t for t in opened if not t.startswith("https://") and not os.path.exists(t)]
+    return True if not missing else "missing pages: %r" % missing
+check("Help menu: every document entry opens a page that exists", help_menu_documents)
+
+def help_search_window():
+    opened = []
+    real = g["coot0_open_url"]
+    g["coot0_open_url"] = lambda t: opened.append(t) or t
+    try:
+        w = g["coot0_search_window"]()
+        win, entry, store, view, state = g["coot0_search_window_widget"]
+        entry.set_text("sphere refine")
+        if len(store) == 0: return "typing 'sphere refine' listed nothing"
+        entry.emit("activate")
+        if not opened: return "Enter in the search box opened nothing"
+        win.destroy()
+        return True
+    finally:
+        g["coot0_open_url"] = real
+check("Help > Search window: typing lists results, Enter opens the first", help_search_window)
+
+def help_keys():
+    with contextlib.redirect_stdout(io.StringIO()):
+        g["add_key_binding"]("coot0 probe on o", "o", lambda: None)
+        coot.run_scheme_command('(add-key-binding "coot0 scheme probe" "j" (lambda () #t))')
+    t = g["coot0_keys_text"]()
+    need = ["next / previous NCS chain", "coot0 probe on o", "coot0 scheme probe", "Ctrl-k"]
+    miss = [n for n in need if n not in t]
+    if miss: return "Keyboard Shortcuts text lacks %r" % miss
+    line = [l for l in t.splitlines() if "coot0 probe on o" in l][0]
+    return True if "never runs" in line else "a binding to Coot's own 'o' is not marked: %r" % line
+check("Help > Keyboard Shortcuts: Coot's keys, Python and Scheme bindings, a binding to Coot's own key marked", help_keys)
+
 check("no exception in any GTK signal handler", lambda: True if not _c.CALLBACK_ERRORS else [e[1][-300:] for e in _c.CALLBACK_ERRORS][:2])
 w = max(len(r[0]) for r in res)
 for n, ok, v in res: print(("PASS " if ok else "FAIL ") + n.ljust(w) + (("  " + v) if v else ""))

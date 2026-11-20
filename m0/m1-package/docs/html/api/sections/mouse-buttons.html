@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="7878791fd2d9b63d558b3356a7058d496dd3b604">
+<title>Mouse Buttons - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="mouse-buttons">Mouse Buttons</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Mouse Buttons (6 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="blob_under_pointer_to_screen_centre">blob_under_pointer_to_screen_centre</h3>
+<p>Python: <code>blob_under_pointer_to_screen_centre()</code><br>
+Scheme: <code>(blob-under-pointer-to-screen-centre)</code></p>
+<p>Put the blob under the cursor to the screen centre. Check only
+positive blobs. Useful function if bound to a key.</p>
+<p>The refinement map must be set. (We can't check all maps because they
+are not (or may not be) on the same scale).</p>
+<p> Returns 1 if successfully found a blob and moved there.
+ return 0 if no move.</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>blob_under_pointer_to_screen_centre()</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(blob-under-pointer-to-screen-centre)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<h3 id="control_key_for_rotate_state">control_key_for_rotate_state</h3>
+<p>Python: <code>control_key_for_rotate_state()</code><br>
+Scheme: <code>(control-key-for-rotate-state)</code></p>
+<p>return the control key rotate state</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>control_key_for_rotate_state()</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(control-key-for-rotate-state)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<h3 id="quanta_buttons">quanta_buttons</h3>
+<p>Python: <code>quanta_buttons()</code><br>
+Scheme: <code>(quanta-buttons)</code></p>
+<p>quanta-like buttons</p>
+<p>Note, when you have set these, there is no way to turn them of
+ again (other than restarting).</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>quanta_buttons()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(quanta-buttons)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="quanta_like_zoom">quanta_like_zoom</h3>
+<p>Python: <code>quanta_like_zoom()</code><br>
+Scheme: <code>(quanta-like-zoom)</code></p>
+<p>quanta-like zoom buttons</p>
+<p>Note, when you have set these, there is no way to turn them of
+ again (other than restarting).</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>quanta_like_zoom()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(quanta-like-zoom)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="select_atom_under_pointer">select_atom_under_pointer</h3>
+<p>Python: <code>select_atom_under_pointer()</code><br>
+Scheme: <code>(select-atom-under-pointer-scm)</code></p>
+<p>return Python false or a list of molecule number and an atom spec</p>
+<p>Arguments: none. Returns: a value (see the result of the example).
+Also available in Python as <code>select_atom_under_pointer_py</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>select_atom_under_pointer()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(select-atom-under-pointer-scm)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_control_key_for_rotate">set_control_key_for_rotate</h3>
+<p>Python: <code>set_control_key_for_rotate(state)</code><br>
+Scheme: <code>(set-control-key-for-rotate state)</code></p>
+<p>Alternate mode for rotation</p>
+<p>Prefered by some, including Dirk Kostrewa. I don't think this mode
+works properly yet</p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_control_key_for_rotate(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-control-key-for-rotate 1)</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

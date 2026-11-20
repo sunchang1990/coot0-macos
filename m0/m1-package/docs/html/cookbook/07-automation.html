@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="1966fe2f72da2487a8317014cc19473d5884db0e">
+<title>7. Automatic workflows: scripts, loops, hooks - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../README.html">coot0 documentation</a></div>
+<h1 id="7-automatic-workflows-scripts-loops-hooks">7. Automatic workflows: scripts, loops, hooks</h1>
+<p>*Each recipe stands alone and loads its own copy of the test files (run recipe 1.1 once first; with your own data use
+your molecule numbers instead: <a href="README.html#how-to-use-a-recipe">How to use a recipe</a>).*</p>
+<h3 id="71-run-a-script-without-the-window-batch">7.1 Run a script without the window (batch)</h3>
+<p>Write the commands into a file and give it to coot0 with <code>--script</code>. <code>--no-graphics</code> runs without a window;
+end the script with <code>coot_real_exit(0)</code> (Scheme: <code>(coot-real-exit 0)</code>) so that Coot quits when it is done.
+In a Terminal:</p>
+<pre class="text"><code>coot0 --no-graphics --script my-job.py
+coot0 --no-graphics --script my-job.scm</code></pre>
+<p>A small job, <code>my-job.py</code> / <code>my-job.scm</code>: refine A40-A45 and save the result.</p>
+<pre class="python"><code>imol = read_pdb("tutorial-modern.pdb")
+imol_map = make_and_draw_map("rnasa-1.8-all_refmac1.mtz", "FWT", "PHWT", "", 0, 0)
+set_imol_refinement_map(imol_map)
+set_refinement_immediate_replacement(1)
+refine_zone(imol, "A", 40, 45, "")
+accept_regularizement()
+write_pdb_file(imol, "refined.pdb")
+set_refinement_immediate_replacement(0)      # back to normal: the Accept window again
+# coot_real_exit(0)        &lt;- at the end of a batch script</code></pre>
+<pre class="scheme"><code>(define imol (read-pdb "tutorial-modern.pdb"))
+(define imol-map (make-and-draw-map "rnasa-1.8-all_refmac1.mtz" "FWT" "PHWT" "" 0 0))
+(set-imol-refinement-map imol-map)
+(set-refinement-immediate-replacement 1)
+(refine-zone imol "A" 40 45 "")
+(accept-regularizement)
+(write-pdb-file imol "refined.pdb")
+(set-refinement-immediate-replacement 0)   ; back to normal
+; (coot-real-exit 0)       &lt;- at the end of a batch script</code></pre>
+<p>With a window, open the script with Calculate &gt; Run Script..., or start <code>coot0 --script my-job.py</code>.</p>
+<h3 id="72-loop-over-every-residue-a-table-of-b-factors">7.2 Loop over every residue: a table of B-factors</h3>
+<pre class="python"><code>imol = read_pdb("tutorial-modern.pdb")
+for r in all_residues(imol)[:10]:                 # remove [:10] for all residues
+    ch, resno, ins = r[1], r[2], r[3]
+    atoms = residue_info(imol, ch, resno, ins)
+    mean_b = sum(a[1][1] for a in atoms) / len(atoms)
+    print("%s %4d %s  mean B %5.1f" % (ch, resno, residue_name(imol, ch, resno, ins), mean_b))</code></pre>
+<pre class="scheme"><code>(define imol (read-pdb "tutorial-modern.pdb"))
+(for-each
+  (lambda (r)
+    (let* ((ch (list-ref r 1)) (resno (list-ref r 2)) (ins (list-ref r 3))
+           (atoms (residue-info imol ch resno ins))
+           (mean-b (/ (apply + (map (lambda (a) (cadr (cadr a))) atoms)) (length atoms))))
+      (format #t "~a ~a ~a  mean B ~,1f~%" ch resno (residue-name imol ch resno ins) mean-b)))
+  (list-head (all-residues imol) 10))</code></pre>
+<h3 id="73-write-a-report-file-fit-to-the-map-of-every-residue">7.3 Write a report file: fit to the map of every residue</h3>
+<p>A tab-separated file you can open in Excel or Numbers.</p>
+<pre class="python"><code>imol = read_pdb("tutorial-modern.pdb")
+imol_map = make_and_draw_map("rnasa-1.8-all_refmac1.mtz", "FWT", "PHWT", "", 0, 0)
+with open("density-fit.tsv", "w") as f:
+    f.write("chain\tresidue\tname\tdensity\n")
+    for r in all_residues(imol):
+        spec = [r[1], r[2], r[3]]
+        f.write("%s\t%d\t%s\t%.3f\n" % (r[1], r[2], residue_name(imol, *spec), density_score_residue(imol, spec, imol_map)))
+print("written density-fit.tsv")</code></pre>
+<pre class="scheme"><code>(define imol (read-pdb "tutorial-modern.pdb"))
+(define imol-map (make-and-draw-map "rnasa-1.8-all_refmac1.mtz" "FWT" "PHWT" "" 0 0))
+(call-with-output-file "density-fit.tsv"
+  (lambda (port)
+    (display "chain\tresidue\tname\tdensity\n" port)
+    (for-each
+      (lambda (r)
+        (let ((spec (list-tail r 1)))
+          (format port "~a\t~a\t~a\t~,3f~%" (list-ref r 1) (list-ref r 2)
+                  (apply residue-name imol spec) (density-score-residue imol spec imol-map))))
+      (all-residues imol))))</code></pre>
+<h3 id="74-do-the-same-to-many-files">7.4 Do the same to many files</h3>
+<p>All <code>.pdb</code> files of a folder: report the number of residues per chain.</p>
+<pre class="python"><code>import glob
+for fn in sorted(glob.glob("*.pdb")):
+    imol = read_pdb(fn)
+    print(fn, [(ch, chain_n_residues(ch, imol)) for ch in chain_ids(imol)])
+    close_molecule(imol)</code></pre>
+<pre class="scheme"><code>(use-modules (ice-9 ftw))
+(for-each
+  (lambda (fn)
+    (let ((imol (read-pdb fn)))
+      (format #t "~a ~a~%" fn (map (lambda (ch) (list ch (chain-n-residues ch imol))) (chain-ids imol)))
+      (close-molecule imol)))
+  (scandir "." (lambda (f) (string-suffix? ".pdb" f))))</code></pre>
+<h3 id="75-a-hook-run-your-code-after-every-change-of-a-model">7.5 A hook: run your code after every change of a model</h3>
+<p>Coot calls <code>post_manipulation_script</code> (Python) or <code>post-manipulation-hook</code> (Scheme) after every refinement,
+deletion or mutation, with the molecule number and what happened.</p>
+<pre class="python"><code>def post_manipulation_script(imol, mode):
+    print("molecule", imol, "was changed, mode", mode)   # DELETED, MUTATED or MOVINGATOMS
+    return 1
+
+imol = read_pdb("tutorial-modern.pdb")
+delete_residue(imol, "A", 93, "")          # -&gt; prints the message</code></pre>
+<pre class="scheme"><code>(set! post-manipulation-hook
+  (lambda (imol mode)
+    (format #t "molecule ~a was changed, mode ~a~%" imol mode)))
+(define imol (read-pdb "tutorial-modern.pdb"))
+(delete-residue imol "A" 93 "")</code></pre>
+<p>To switch it off: <code>post_manipulation_script = False</code> / <code>(set! post-manipulation-hook #f)</code>.</p>
+<h3 id="76-repeat-something-while-coot-runs-every-10-seconds">7.6 Repeat something while Coot runs (every 10 seconds)</h3>
+<p>Saves a copy of molecule 0 every 10 seconds while the window is open (return <code>False</code> to stop).</p>
+<pre class="python"><code>import gobject
+def autosave():
+    if is_valid_model_molecule(0):
+        write_pdb_file(0, "autosave.pdb")
+    return True                             # True = keep going
+
+gobject.timeout_add(10000, autosave)</code></pre>
+<pre class="scheme"><code>(call-with-output-file "autosave.py"
+  (lambda (port) (display "
+import gobject
+def autosave():
+    if is_valid_model_molecule(0):
+        write_pdb_file(0, 'autosave.pdb')
+    return True
+gobject.timeout_add(10000, autosave)
+" port)))
+(run-python-script "autosave.py")</code></pre>
+<h3 id="77-python-from-scheme-and-scheme-from-python">7.7 Python from Scheme and Scheme from Python</h3>
+<pre class="python"><code>imol = read_pdb("tutorial-modern.pdb")
+print(run_scheme_command('(residue-name %d "A" 41 "")' % imol))     # GLU</code></pre>
+<pre class="scheme"><code>(display (run-python-command "2 ** 10")) (newline)</code></pre>
+</body></html>

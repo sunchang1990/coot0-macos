@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="2353eafec35b2f5f05de050997251bc0c1255f78">
+<title>Atom Labelling - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="atom-labelling">Atom Labelling</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Atom Labelling (8 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="add_atom_label">add_atom_label</h3>
+<p>Python: <code>add_atom_label(imol, chain_id, iresno, atom_id)</code><br>
+Scheme: <code>(add-atom-label imol chain-id iresno atom-id)</code></p>
+<p>Note we have to search for " CA " etc</p>
+<p>Arguments: imol (a whole number), chain_id (text), iresno (a whole number), atom_id (text). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>add_atom_label(0, "A", 41, "hello")</code></td><td>ran, returned <code>-1</code></td></tr>
+<tr><td>Scheme</td><td><code>(add-atom-label 0 "A" 41 "hello")</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<h3 id="brief_atom_labels_state">brief_atom_labels_state</h3>
+<p>Python: <code>brief_atom_labels_state()</code><br>
+Scheme: <code>(brief-atom-labels-state)</code></p>
+<p>the brief atom label state</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>brief_atom_labels_state()</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(brief-atom-labels-state)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<h3 id="centre_atom_label_status">centre_atom_label_status</h3>
+<p>Python: <code>centre_atom_label_status()</code><br>
+Scheme: <code>(centre-atom-label-status)</code></p>
+<p>0 for off, 1 or on</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>centre_atom_label_status()</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(centre-atom-label-status)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<h3 id="remove_all_atom_labels">remove_all_atom_labels</h3>
+<p>Python: <code>remove_all_atom_labels()</code><br>
+Scheme: <code>(remove-all-atom-labels)</code></p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>remove_all_atom_labels()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(remove-all-atom-labels)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="remove_atom_label">remove_atom_label</h3>
+<p>Python: <code>remove_atom_label(imol, chain_id, iresno, atom_id)</code><br>
+Scheme: <code>(remove-atom-label imol chain-id iresno atom-id)</code></p>
+<p>Arguments: imol (a whole number), chain_id (text), iresno (a whole number), atom_id (text). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>remove_atom_label(0, "A", 41, "hello")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(remove-atom-label 0 "A" 41 "hello")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_brief_atom_labels">set_brief_atom_labels</h3>
+<p>Python: <code>set_brief_atom_labels(istat)</code><br>
+Scheme: <code>(set-brief-atom-labels istat)</code></p>
+<p>use brief atom names for on-screen labels</p>
+<p> call with istat=1 to use brief labels, istat=0 for normal labels</p>
+<p>Arguments: istat (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_brief_atom_labels(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-brief-atom-labels 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_label_on_recentre_flag">set_label_on_recentre_flag</h3>
+<p>Python: <code>set_label_on_recentre_flag(i)</code><br>
+Scheme: <code>(set-label-on-recentre-flag i)</code></p>
+<p>Arguments: i (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_label_on_recentre_flag(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-label-on-recentre-flag 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_seg_ids_in_atom_labels">set_seg_ids_in_atom_labels</h3>
+<p>Python: <code>set_seg_ids_in_atom_labels(istat)</code><br>
+Scheme: <code>(set-seg-ids-in-atom-labels istat)</code></p>
+<p>set if brief atom labels should have seg-ids also</p>
+<p>Arguments: istat (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_seg_ids_in_atom_labels(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-seg-ids-in-atom-labels 1)</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

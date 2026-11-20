@@ -52,8 +52,10 @@ def coot_utils_model_list():
 
 # (build 27) keys that Coot's own key handler takes before any script binding sees them (globjects.cc): a recipe must not
 # bind these (build 26 bound F5, which opens Model/Fit/Refine instead)
-TAKEN_KEYS = set("F5 F6 F7 F8 i u d f n m l space Return Escape period comma minus plus equal Left Right Up Down".split()) \
-    | set("0123456789") | {"Control_" + c for c in "grszy"}
+# Keys Coot's C++ key handler (globjects.cc key_press_event / key_release_event) acts on itself.  Build 28: o, O (next / previous
+# NCS chain), p (update Go To Atom), c (crosshairs), s / S (re-contour), I and Ctrl-c/d/i/x were missing (user, 20 Nov: 6.3's "o").
+TAKEN_KEYS = set("F5 F6 F7 F8 i I u d f n m l o O p c s S space Return Escape period comma minus plus equal Left Right Up Down".split()) \
+    | set("0123456789") | {"Control_" + c for c in "cdgilrsxyz"}
 def bound_keys(blocks):
     return re.findall(r'add[_-]key[_-]binding\s*\(?\s*"[^"]*"\s*,?\s*"([^"]+)"', "\n".join(blocks))
 

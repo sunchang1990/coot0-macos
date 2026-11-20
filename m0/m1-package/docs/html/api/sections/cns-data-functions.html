@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="0ae0522b8616c2edf3818e6bbb2fa07d9c08b694">
+<title>CNS Data Functions - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="cns-data-functions">CNS Data Functions</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; CNS Data Functions (2 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="handle_cns_data_file">handle_cns_data_file</h3>
+<p>Python: <code>handle_cns_data_file(filename, imol)</code><br>
+Scheme: <code>(handle-cns-data-file filename imol)</code></p>
+<p>read CNS data (currently only a placeholder)</p>
+<p>Arguments: filename (text), imol (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>handle_cns_data_file("tutorial-modern.pdb", 0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
+<tr><td>Scheme</td><td><code>(handle-cns-data-file "tutorial-modern.pdb" 0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+<h3 id="handle_cns_data_file_with_cell">handle_cns_data_file_with_cell</h3>
+<p>Python: <code>handle_cns_data_file_with_cell(filename, imol, a, b, c, alpha, beta, gamma, spg_info)</code><br>
+Scheme: <code>(handle-cns-data-file-with-cell filename imol a b c alpha beta gamma spg-info)</code></p>
+<p>read CNS data (currently only a placeholder)</p>
+<p>a, b,c are in Angstroems. alpha, beta, gamma are in degrees. spg is
+the space group info, either ;-delimited symmetry operators or the
+space group name</p>
+<p>Arguments: filename (text), imol (a whole number), a (a number), b (a number), c (a number), alpha (a number), beta (a number), gamma (a number), spg_info (text). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>handle_cns_data_file_with_cell("tutorial-modern.pdb", 0, 1.0, 0.5, 1.0, 1.0, 1.0, 1.0, "hello")</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
+<tr><td>Scheme</td><td><code>(handle-cns-data-file-with-cell "tutorial-modern.pdb" 0 1.0 0.5 1.0 1.0 1.0 1.0 "hello")</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+</body></html>

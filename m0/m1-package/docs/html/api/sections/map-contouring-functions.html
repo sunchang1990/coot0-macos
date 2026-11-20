@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="187f65c4adea29dea2d0a5d06057e1c0a26676be">
+<title>Map Contouring Functions - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="map-contouring-functions">Map Contouring Functions</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Map Contouring Functions (6 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="map_contours">map_contours</h3>
+<p>Python: <code>map_contours(imol, contour_level)</code></p>
+<p>Arguments: imol (a whole number), contour_level (a number). Returns: a value (see the result of the example).
+<strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>map_contours(0, 1.5)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_radial_map_colouring_centre">set_radial_map_colouring_centre</h3>
+<p>Python: <code>set_radial_map_colouring_centre(imol, x, y, z)</code><br>
+Scheme: <code>(set-radial-map-colouring-centre imol x y z)</code></p>
+<p>radial map colouring centre</p>
+<p>Arguments: imol (a whole number), x (a number), y (a number), z (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_radial_map_colouring_centre(0, 54.5, 9.4, 12.3)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-radial-map-colouring-centre 0 54.5 9.4 12.3)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_radial_map_colouring_invert">set_radial_map_colouring_invert</h3>
+<p>Python: <code>set_radial_map_colouring_invert(imol, invert_state)</code><br>
+Scheme: <code>(set-radial-map-colouring-invert imol invert-state)</code></p>
+<p>radial map colouring inverted colour map</p>
+<p>Arguments: imol (a whole number), invert_state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_radial_map_colouring_invert(0, 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-radial-map-colouring-invert 0 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_radial_map_colouring_max_radius">set_radial_map_colouring_max_radius</h3>
+<p>Python: <code>set_radial_map_colouring_max_radius(imol, r)</code><br>
+Scheme: <code>(set-radial-map-colouring-max-radius imol r)</code></p>
+<p>radial map colouring max</p>
+<p>Arguments: imol (a whole number), r (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_radial_map_colouring_max_radius(0, 0.5)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-radial-map-colouring-max-radius 0 0.5)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_radial_map_colouring_min_radius">set_radial_map_colouring_min_radius</h3>
+<p>Python: <code>set_radial_map_colouring_min_radius(imol, r)</code><br>
+Scheme: <code>(set-radial-map-colouring-min-radius imol r)</code></p>
+<p>radial map colouring min</p>
+<p>Arguments: imol (a whole number), r (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_radial_map_colouring_min_radius(0, 0.5)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-radial-map-colouring-min-radius 0 0.5)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_radial_map_colouring_saturation">set_radial_map_colouring_saturation</h3>
+<p>Python: <code>set_radial_map_colouring_saturation(imol, saturation)</code><br>
+Scheme: <code>(set-radial-map-colouring-saturation imol saturation)</code></p>
+<p>radial map colouring saturation
+saturation is a number between 0 and 1, typically 0.5</p>
+<p>Arguments: imol (a whole number), saturation (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_radial_map_colouring_saturation(0, 1.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-radial-map-colouring-saturation 0 1.0)</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

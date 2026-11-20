@@ -1,0 +1,53 @@
+Build 27 vs build 28: the new tests fail on the build 27 files and pass on build 28 (20 Nov 2026)
+(tests of build 28 copied into an unpacked build 27 tarball; build 28 = working bundle before packaging; paths removed)
+
+== gui-dialogs, build 27 files
+FAIL the Ctrl state from Coot's key handler reaches Python key bindings (Ctrl-K vs k)                                                                                  "Ctrl state passed by the C++ key
+FAIL Help menu: the last menu, with search, keys, the documents, and Coot's About entries                                                                              'no Help menu code (coot0_help.py
+FAIL Help stays the last menu when a script adds a menu later                                                                                                          EXC KeyError('coot0_menu_label') 
+FAIL Help search finds menu entries (also menus added later) and runs the one chosen                                                                                   EXC KeyError('coot0_help_search')
+FAIL Help search finds recipes and functions and opens the right page at the right heading                                                                             EXC KeyError('coot0_open_url') il
+FAIL Help menu: every document entry opens a page that exists                                                                                                          EXC KeyError('coot0_open_url')  "
+FAIL Help > Search window: typing lists results, Enter opens the first                                                                                                 EXC KeyError('coot0_open_url') e 
+FAIL Help > Keyboard Shortcuts: Coot's keys, Python and Scheme bindings, a binding to Coot's own key marked                                                            EXC KeyError('coot0_keys_text') ^
+SUMMARY 80 / 88
+
+== gui-dialogs, build 28
+SUMMARY 88 / 88
+
+== api-docs, build 27 files
+FAIL docs/html: a page for every Markdown document, made from its current text                  'no docs/html'
+FAIL docs/html: the search index has every function and every recipe                            EXC FileNotFoundError(2, 'No such file or directory')
+SUMMARY 6 / 8
+
+== api-docs, build 28
+SUMMARY 8 / 8
+
+== cookbook, build 27 docs
+FAIL 06-customize: 6.3 A key that runs your code [python]                                                           binds ['o'], a key Coot itself uses (the binding never runs)
+FAIL 06-customize: 6.3 A key that runs your code [scheme]                                                           binds ['o'], a key Coot itself uses (the binding never runs)
+SUMMARY 164 / 166
+
+== cookbook, build 28
+SUMMARY 166 / 166
+
+== real window (tests/run-real-window-checks.sh, Coot in a window ~10 s, key events sent through GTK to the graphics window)
+-- build 27 (keys part only; the Help part did not exist):
+PASS a plain key bound in Python runs when pressed (v)
+FAIL Ctrl-T runs the Python binding made with "Control_t"  fired: []
+PASS plain t does not run the Ctrl-T binding
+PASS o is Coot's own key (next NCS chain): a binding to it does not run
+SUMMARY 3 / 4
+-- build 28:
+PASS a plain key bound in Python runs when pressed (v)
+PASS Ctrl-T runs the Python binding made with "Control_t"
+PASS plain t does not run the Ctrl-T binding
+PASS o is Coot's own key (next NCS chain): a binding to it does not run
+PASS Help is the last menu
+PASS Help search sees the menu entries (more than 150)
+PASS no hidden (removed) entry is offered
+PASS search 'brighten' finds Brighten Maps
+PASS the search window opens on screen and lists results for 'refine'
+PASS Coot's own Help entries (Header/Remarks Browser, Hints, About) keep their handlers
+PASS the Keyboard Shortcuts window opens
+SUMMARY 11 / 11

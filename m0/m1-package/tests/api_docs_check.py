@@ -43,6 +43,48 @@ check("docs/api: README, A-Z, one-language-only and the section pages are there"
 check("docs/api: every Python name in the reference exists in this Coot", py_names)
 check("docs/api: every Scheme name in the reference exists in this Coot", scm_names)
 check("docs/api: every Python example is valid Python", py_examples_parse)
+# (build 28) docs/html: the pages Help opens (made by m0/tools/gen_docs_html.py from the Markdown)
+import re, hashlib, html as _html
+H = os.path.join(here, "docs", "html")
+def html_pages():
+    if not os.path.isdir(H): return "no docs/html"
+    srcs = []
+    for root, dirs, files in os.walk(os.path.join(here, "docs")):
+        if os.path.abspath(root).startswith(H): continue
+        srcs += [os.path.join(root, f) for f in files if f.endswith(".md")]
+    stale, missing = [], []
+    for src in srcs:
+        page = os.path.join(H, os.path.relpath(src, os.path.join(here, "docs"))[:-3] + ".html")
+        if not os.path.exists(page): missing.append(page); continue
+        m = re.search(r'name="coot0-source-sha1" content="([0-9a-f]+)"', open(page, encoding="utf-8").read())
+        if not m or m.group(1) != hashlib.sha1(open(src, "rb").read()).hexdigest(): stale.append(os.path.relpath(page, H))
+    if missing or stale: return "missing %r, older than their Markdown %r" % (missing[:3], stale[:3])
+    return True if len(srcs) > 150 else "only %d Markdown pages" % len(srcs)
+def html_links():
+    ids, bad = {}, []
+    for root, dirs, files in os.walk(H):
+        for f in files:
+            if f.endswith(".html"):
+                p = os.path.abspath(os.path.join(root, f)); ids[p] = set(re.findall(r'id="([^"]+)"', open(p, encoding="utf-8").read()))
+    for p in ids:
+        for u in re.findall(r'href="([^"]+)"', open(p, encoding="utf-8").read()):
+            u = _html.unescape(u)
+            if re.match(r"^[a-z]+:", u): continue
+            path, _, a = u.partition("#")
+            t = os.path.abspath(os.path.join(os.path.dirname(p), path)) if path else p
+            if t.endswith(".html"):
+                if t not in ids: bad.append("%s -> %s" % (os.path.relpath(p, H), u))
+                elif a and a not in ids[t]: bad.append("%s -> %s (no such heading)" % (os.path.relpath(p, H), u))
+            elif not os.path.exists(t): bad.append("%s -> %s" % (os.path.relpath(p, H), u))
+    return True if not bad else "%d broken links: %r" % (len(bad), bad[:5])
+def html_index():
+    idx = json.load(open(os.path.join(H, "search-index.json")))
+    kinds = {}
+    for e in idx: kinds[e["kind"]] = kinds.get(e["kind"], 0) + 1
+    return True if kinds.get("Function", 0) > 1600 and kinds.get("Cookbook", 0) > 80 else kinds
+check("docs/html: a page for every Markdown document, made from its current text", html_pages)
+check("docs/html: every link between the pages leads to a page and heading that exist", html_links)
+check("docs/html: the search index has every function and every recipe", html_index)
 for name, ok, why in res:
     print("%s %-90s %s" % ("PASS" if ok else "FAIL", name, why))
 print("SUMMARY %d / %d" % (sum(1 for r in res if r[1]), len(res)))

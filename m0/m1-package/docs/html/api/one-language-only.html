@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="b7ff39f94f5dc145abb36977bd4859b17edfecfc">
+<title>Functions in only one language - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../README.html">coot0 documentation</a></div>
+<h1 id="functions-in-only-one-language">Functions in only one language</h1>
+<p>Almost every scripting function of Coot exists in both Python and Scheme, with the same name (Python <code>residue_name</code>, Scheme <code>residue-name</code>). These 18 exist only in Scheme and these 46 only in Python. Most of them convert values between the language and Coot (for example a Scheme list into a residue specification) and have a counterpart with a different name in the other language; the table says which.</p>
+<p>From Scheme you can call any Python-only function with <code>run-python-command</code>, for example <code>(run-python-command "all_molecule_ramachandran_region(0)")</code>; from Python any Scheme-only function with <code>run_scheme_command</code>, for example <code>run_scheme_command('(spherical-density-overlap 0 1)')</code> (cookbook 7.7).</p>
+<h2 id="only-in-scheme">Only in Scheme</h2>
+<table><thead><tr><th>Scheme</th><th>Counterpart in Python</th><th>What it does</th></tr></thead><tbody>
+<tr><td><a href="sections/sequence-from-map.html#atom-spec-from-scm-expression"><code>atom-spec-from-scm-expression</code></a></td><td><code>atom_spec_from_python_expression</code></td><td>expects an expr of length 5, ie: (list chain-id res-no ins-cod atom-name alt-conf)</td></tr>
+<tr><td><a href="sections/scripting.html#coot-has-python-p"><code>coot-has-python-p</code></a></td><td><code>coot_has_guile</code></td><td>(no description in Coot's headers)</td></tr>
+<tr><td><a href="sections/graphics-utility-functions.html#get-input-model-was-cif-state-scm"><code>get-input-model-was-cif-state-scm</code></a></td><td><code>get_input_molecule_was_in_mmcif_state</code></td><td>- get the name state of the input model. Return false if there was an erro with the molecule index</td></tr>
+<tr><td><a href="sections/map-to-model-correlation.html#map-to-model-correlation-stats-per-residue-scm"><code>map-to-model-correlation-stats-per-residue-scm</code></a></td><td><code>map_to_model_correlation_stats_per_residue_range_py</code></td><td>map to model stats</td></tr>
+<tr><td><a href="sections/mogul.html#mogul-results-process-many"><code>mogul-results-process-many</code></a></td><td>none</td><td>(no description in Coot's headers)</td></tr>
+<tr><td><a href="sections/pisa-interaction.html#pisa-molecule-record-chain-id"><code>pisa-molecule-record-chain-id</code></a></td><td>none</td><td>(no description in Coot's headers)</td></tr>
+<tr><td><a href="sections/pisa-interaction.html#pisa-molecule-record-residues"><code>pisa-molecule-record-residues</code></a></td><td>none</td><td>internal function</td></tr>
+<tr><td><a href="sections/sequence-from-map.html#residue-records-list-scm-to-residue-specs"><code>residue-records-list-scm-to-residue-specs</code></a></td><td><code>residue_records_list_py_to_residue_specs</code></td><td>(no description in Coot's headers)</td></tr>
+<tr><td><a href="sections/sequence-from-map.html#rtop-to-scm"><code>rtop-to-scm</code></a></td><td><code>rtop_to_python</code></td><td>(no description in Coot's headers)</td></tr>
+<tr><td><a href="sections/restraints-interface.html#run-python-command"><code>run-python-command</code></a></td><td><code>run_scheme_command</code></td><td>(no description in Coot's headers)</td></tr>
+<tr><td><a href="sections/scripting.html#safe-scheme-command-test"><code>safe-scheme-command-test</code></a></td><td><code>safe_python_command_test</code></td><td>(no description in Coot's headers)</td></tr>
+<tr><td><a href="sections/get-sequence.html#scm-symop-strings-to-space-group"><code>scm-symop-strings-to-space-group</code></a></td><td><code>py_symop_strings_to_space_group</code></td><td>(no description in Coot's headers)</td></tr>
+<tr><td><a href="sections/get-sequence.html#scm-to-residue-specs"><code>scm-to-residue-specs</code></a></td><td><code>py_to_residue_specs</code></td><td>(no description in Coot's headers)</td></tr>
+<tr><td><a href="sections/atom-selection-utilities.html#set-temperature-factors-for-atoms-in-residue-scm"><code>set-temperature-factors-for-atoms-in-residue-scm</code></a></td><td><code>set_b_factor_residues</code></td><td>(no description in Coot's headers)</td></tr>
+<tr><td><a href="sections/get-sequence.html#spherical-density-overlap"><code>spherical-density-overlap</code></a></td><td>none</td><td>(no description in Coot's headers)</td></tr>
+<tr><td><a href="sections/sequence-from-map.html#symbol-value-from-record"><code>symbol-value-from-record</code></a></td><td>none</td><td>(no description in Coot's headers)</td></tr>
+<tr><td><a href="sections/scripting.html#test-mol-triangles-scm"><code>test-mol-triangles-scm</code></a></td><td>none</td><td>(no description in Coot's headers)</td></tr>
+<tr><td><a href="sections/other-functions.html#try-load-scheme-extras-dir"><code>try-load-scheme-extras-dir</code></a></td><td><code>try_load_python_extras_dir</code></td><td>(no description in Coot's headers)</td></tr></tbody></table>
+<h2 id="only-in-python">Only in Python</h2>
+<table><thead><tr><th>Python</th><th>Counterpart in Scheme</th><th>What it does</th></tr></thead><tbody>
+<tr><td><a href="sections/add-a-residue-functions.html#add_residue_with_atoms_py"><code>add_residue_with_atoms_py</code></a></td><td>none</td><td>add a residue with atoms in scripting</td></tr>
+<tr><td><a href="sections/intermediate-atom-manipulation-interface.html#add_target_position_restraint_for_intermediate_atom"><code>add_target_position_restraint_for_intermediate_atom</code></a></td><td>none</td><td>add a target position for an intermediate atom and refine</td></tr>
+<tr><td><a href="sections/intermediate-atom-manipulation-interface.html#add_target_position_restraints_for_intermediate_atoms"><code>add_target_position_restraints_for_intermediate_atoms</code></a></td><td>none</td><td>and the multiple-atom version of that (so that they can be applied at the same time)</td></tr>
+<tr><td><a href="sections/experimental.html#all_molecule_ramachandran_region"><code>all_molecule_ramachandran_region</code></a></td><td>none</td><td>a stub currently</td></tr>
+<tr><td><a href="sections/extra-map-functions.html#analyse_map_point_density_change_py"><code>analyse_map_point_density_change_py</code></a></td><td>none</td><td>test function for analysis of multiple map</td></tr>
+<tr><td><a href="sections/sequence-from-map.html#atom_spec_from_python_expression"><code>atom_spec_from_python_expression</code></a></td><td><code>atom-spec-from-scm-expression</code></td><td>(no description in Coot's headers)</td></tr>
+<tr><td><a href="sections/map-functions.html#calculate_maps_and_stats_py"><code>calculate_maps_and_stats_py</code></a></td><td>none</td><td>Calculate structure factors and make a 2FoFC map and a Fo-Fc map updating the given</td></tr>
+<tr><td><a href="sections/restraints-interface.html#coot_has_guile"><code>coot_has_guile</code></a></td><td><code>coot-has-python-p</code></td><td>(no description in Coot's headers)</td></tr>
+<tr><td><a href="sections/scripting.html#display_python"><code>display_python</code></a></td><td>none</td><td>This is a common denominator really. It does not depend on mmdb,</td></tr>
+<tr><td><a href="sections/using-s-expression-molecules.html#get_bonds_representation"><code>get_bonds_representation</code></a></td><td>none</td><td>return a Python object for the bonds</td></tr>
+<tr><td><a href="sections/using-s-expression-molecules.html#get_dictionary_radii"><code>get_dictionary_radii</code></a></td><td>none</td><td>return a Python object for the radii of the atoms in the dictionary</td></tr>
+<tr><td><a href="sections/using-s-expression-molecules.html#get_environment_distances_representation"><code>get_environment_distances_representation</code></a></td><td>none</td><td>return a Python object for the representation of bump and hydrogen bonds of</td></tr>
+<tr><td><a href="sections/generic-objects.html#get_generic_object_py"><code>get_generic_object_py</code></a></td><td>none</td><td>(no description in Coot's headers)</td></tr>
+<tr><td><a href="sections/graphics-utility-functions.html#get_input_molecule_was_in_mmcif_state"><code>get_input_molecule_was_in_mmcif_state</code></a></td><td><code>get-input-model-was-cif-state-scm</code></td><td>- get the name state of the input model</td></tr>
+<tr><td><a href="sections/using-s-expression-molecules.html#get_intermediate_atoms_bonds_representation"><code>get_intermediate_atoms_bonds_representation</code></a></td><td>none</td><td>return a Python object for the intermediate atoms bonds</td></tr>
+<tr><td><a href="sections/ligands.html#get_intermediate_atoms_distortions"><code>get_intermediate_atoms_distortions</code></a></td><td>none</td><td>(no description in Coot's headers)</td></tr>
+<tr><td><a href="sections/pointer-position-function.html#get_pointer_position_frac"><code>get_pointer_position_frac</code></a></td><td>none</td><td>return the [x,y] position of the pointer in fractional coordinates.</td></tr>
+<tr><td><a href="sections/scripting.html#make_atom_spec"><code>make_atom_spec</code></a></td><td>none</td><td>(no description in Coot's headers)</td></tr>
+<tr><td><a href="sections/scripting.html#make_residue_spec_py"><code>make_residue_spec_py</code></a></td><td>none</td><td>(no description in Coot's headers)</td></tr>
+<tr><td><a href="sections/map-contouring-functions.html#map_contours"><code>map_contours</code></a></td><td>none</td><td>(no description in Coot's headers)</td></tr>
+<tr><td><a href="sections/validation-functions.html#map_peaks_around_molecule"><code>map_peaks_around_molecule</code></a></td><td>none</td><td>(no description in Coot's headers)</td></tr>
+<tr><td><a href="sections/validation-functions.html#map_peaks_near_point_from_list"><code>map_peaks_near_point_from_list</code></a></td><td>none</td><td>(no description in Coot's headers)</td></tr>
+<tr><td><a href="sections/restraints-interface.html#monomer_restraints_for_molecule"><code>monomer_restraints_for_molecule</code></a></td><td>none</td><td>(no description in Coot's headers)</td></tr>
+<tr><td><a href="sections/get-sequence.html#pathology_data"><code>pathology_data</code></a></td><td>none</td><td>(no description in Coot's headers)</td></tr>
+<tr><td><a href="sections/scripting.html#py_clean_internal"><code>py_clean_internal</code></a></td><td>none</td><td>(no description in Coot's headers)</td></tr>
+<tr><td><a href="sections/get-sequence.html#py_symop_strings_to_space_group"><code>py_symop_strings_to_space_group</code></a></td><td><code>scm-symop-strings-to-space-group</code></td><td>(no description in Coot's headers)</td></tr>
+<tr><td><a href="sections/get-sequence.html#py_to_residue_specs"><code>py_to_residue_specs</code></a></td><td><code>scm-to-residue-specs</code></td><td>(no description in Coot's headers)</td></tr>
+<tr><td><a href="sections/molecule-info-functions.html#python_representation_kk"><code>python_representation_kk</code></a></td><td>none</td><td>(no description in Coot's headers)</td></tr>
+<tr><td><a href="sections/refinement-with-specs.html#register_post_intermediate_atoms_moved_hook"><code>register_post_intermediate_atoms_moved_hook</code></a></td><td>none</td><td>(no description in Coot's headers)</td></tr>
+<tr><td><a href="sections/atom-information-functions.html#residue_centre_from_spec"><code>residue_centre_from_spec</code></a></td><td>none</td><td>the expanded form of this is in c-interface.h</td></tr>
+<tr><td><a href="sections/sequence-from-map.html#residue_records_list_py_to_residue_specs"><code>residue_records_list_py_to_residue_specs</code></a></td><td><code>residue-records-list-scm-to-residue-specs</code></td><td>(no description in Coot's headers)</td></tr>
+<tr><td><a href="sections/restraints-interface.html#residue_spec_make_triple"><code>residue_spec_make_triple</code></a></td><td>none</td><td>(no description in Coot's headers)</td></tr>
+<tr><td><a href="sections/sequence-from-map.html#rtop_to_python"><code>rtop_to_python</code></a></td><td><code>rtop-to-scm</code></td><td>(no description in Coot's headers)</td></tr>
+<tr><td><a href="sections/restraints-interface.html#run_scheme_command"><code>run_scheme_command</code></a></td><td><code>run-python-command</code></td><td>we ignore return values for now</td></tr>
+<tr><td><a href="sections/scripting.html#safe_python_command"><code>safe_python_command</code></a></td><td>none</td><td>do nothing</td></tr>
+<tr><td><a href="sections/scripting.html#safe_python_command_by_char_star"><code>safe_python_command_by_char_star</code></a></td><td>none</td><td>(no description in Coot's headers)</td></tr>
+<tr><td><a href="sections/scripting.html#safe_python_command_test"><code>safe_python_command_test</code></a></td><td><code>safe-scheme-command-test</code></td><td>(no description in Coot's headers)</td></tr>
+<tr><td><a href="sections/scripting.html#safe_python_command_with_return"><code>safe_python_command_with_return</code></a></td><td>none</td><td>(no description in Coot's headers)</td></tr>
+<tr><td><a href="sections/scripting.html#safe_python_command_with_unsafe_thread"><code>safe_python_command_with_unsafe_thread</code></a></td><td>none</td><td>(no description in Coot's headers)</td></tr>
+<tr><td><a href="sections/validation-functions.html#screen_vectors"><code>screen_vectors</code></a></td><td>none</td><td>BL says:: this probably shouldnt be here but cluster with KK code</td></tr>
+<tr><td><a href="sections/atom-information-functions.html#set_b_factor_residues"><code>set_b_factor_residues</code></a></td><td><code>set-temperature-factors-for-atoms-in-residue-scm</code></td><td>(no description in Coot's headers)</td></tr>
+<tr><td><a href="sections/get-sequence.html#set_python_draw_function"><code>set_python_draw_function</code></a></td><td>none</td><td>client/server functions</td></tr>
+<tr><td><a href="sections/colour.html#set_user_defined_colours_py"><code>set_user_defined_colours_py</code></a></td><td>none</td><td>by default user-defined colour indices will use a colour wheel</td></tr>
+<tr><td><a href="sections/images.html#text_png_as_string"><code>text_png_as_string</code></a></td><td>none</td><td>make a png given the info in text_info_dict</td></tr>
+<tr><td><a href="sections/other-functions.html#try_load_python_extras_dir"><code>try_load_python_extras_dir</code></a></td><td><code>try-load-scheme-extras-dir</code></td><td>(no description in Coot's headers)</td></tr>
+<tr><td><a href="sections/more-refinement-functions.html#use_unimodal_ring_torsion_restraints_for_residue"><code>use_unimodal_ring_torsion_restraints_for_residue</code></a></td><td>none</td><td>use unimodal ring torsion restraints (e.g. for carbohydrate pyranose)</td></tr></tbody></table>
+<h2 id="the-script-layers">The script layers</h2>
+<p>On top of these built-in functions, Coot loads helper functions written in Python (<code>share/coot/python/coot_utils.py</code>, <code>coot_gui.py</code>, ...) and in Scheme (<code>share/coot/scheme/coot-utils.scm</code>, ...), for example <code>chain_ids</code>, <code>all_residues</code>, <code>residues_near_residue</code>. Most exist in both languages. The menus, windows and toolbar of coot0 are made by the Python layer only (<code>coot_menubar_menu</code>, <code>coot_toolbar_button</code>, ...): from Scheme use them through <code>run-python-script</code> (cookbook 6.1 and 6.2).</p>
+</body></html>

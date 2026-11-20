@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="2a4cc7426f559e9b789d17b9d18914de12e5a29b">
+<title>Rotamer Functions - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="rotamer-functions">Rotamer Functions</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Rotamer Functions (20 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="auto_fit_best_rotamer">auto_fit_best_rotamer</h3>
+<p>Python: <code>auto_fit_best_rotamer(resno, altloc, insertion_code, chain_id, imol_coords, imol_map, clash_flag, lowest_probability)</code><br>
+Scheme: <code>(auto-fit-best-rotamer resno altloc insertion-code chain-id imol-coords imol-map clash-flag lowest-probability)</code></p>
+<p>auto fit by rotamer search.</p>
+<p> return the score, for some not very good reason. clash_flag
+ determines if we use clashes with other residues in the score for
+ this rotamer (or not). It would be cool to call this from a script
+ that went residue by residue along a (newly-built) chain (now available).</p>
+<p>Arguments: resno (a whole number), altloc (text), insertion_code (text), chain_id (text), imol_coords (a whole number), imol_map (a whole number), clash_flag (a whole number), lowest_probability (a number). Returns: a number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>auto_fit_best_rotamer(41, "", "", "A", 0, 1, 1, 1.0)</code></td><td>ran, returned <code>5.950581073760986</code></td></tr>
+<tr><td>Scheme</td><td><code>(auto-fit-best-rotamer 41 "" "" "A" 0 1 1 1.0)</code></td><td>ran, returned <code>5.950581073760986</code></td></tr></tbody></table>
+<h3 id="do_rotamers">do_rotamers</h3>
+<p>Python: <code>do_rotamers(atom_index, imol)</code><br>
+Scheme: <code>(do-rotamers atom-index imol)</code></p>
+<p>moving_atoms_asc</p>
+<p>Arguments: atom_index (a whole number), imol (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>do_rotamers(0, 0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(do-rotamers 0 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="fill_partial_residue">fill_partial_residue</h3>
+<p>Python: <code>fill_partial_residue(imol, chain_id, resno, inscode)</code><br>
+Scheme: <code>(fill-partial-residue imol chain-id resno inscode)</code></p>
+<p>Arguments: imol (a whole number), chain_id (text), resno (a whole number), inscode (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>fill_partial_residue(0, "A", 41, "")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(fill-partial-residue 0 "A" 41 "")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="de_chainsaw">de_chainsaw</h3>
+<p>Python: <code>de_chainsaw(imol)</code><br>
+Scheme: <code>(fill-partial-residues imol)</code></p>
+<p>fill all the residues of molecule number imol that have
+ missing atoms.</p>
+<p>To be used to remove the effects of chainsaw.</p>
+<p>Arguments: imol (a whole number). Returns: nothing.
+Also available in Python as <code>fill_partial_residues</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>de_chainsaw(0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(fill-partial-residues 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="get_rotamer_name">get_rotamer_name</h3>
+<p>Python: <code>get_rotamer_name(imol, chain_id, resno, ins_code)</code><br>
+Scheme: <code>(get-rotamer-name imol chain-id resno ins-code)</code></p>
+<p>Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_code (text). Returns: a value (see the result of the example).
+Also available in Python as <code>get_rotamer_name_py</code>.
+Also available in Scheme as <code>get-rotamer-name-scm</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>get_rotamer_name(0, "A", 41, "")</code></td><td>ran, returned <code>''</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-rotamer-name 0 "A" 41 "")</code></td><td>ran, returned <code>""</code></td></tr></tbody></table>
+<h3 id="missing_atom_info">missing_atom_info</h3>
+<p>Python: <code>missing_atom_info(imol)</code><br>
+Scheme: <code>(missing-atom-info imol)</code></p>
+<p>Arguments: imol (a whole number). Returns: a value (see the result of the example).
+Also available in Python as <code>missing_atom_info_py</code>.
+Also available in Scheme as <code>missing-atom-info-scm</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>missing_atom_info(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(missing-atom-info 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="n_rotamers">n_rotamers</h3>
+<p>Python: <code>n_rotamers(imol, chain_id, resno, ins_code)</code><br>
+Scheme: <code>(n-rotamers imol chain-id resno ins-code)</code></p>
+<p>return the number of rotamers for this residue - return -1
+ on no residue found.</p>
+<p>Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_code (text). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>n_rotamers(0, "A", 41, "")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(n-rotamers 0 "A" 41 "")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="rotamer_graphs">rotamer_graphs</h3>
+<p>Python: <code>rotamer_graphs(imol)</code><br>
+Scheme: <code>(rotamer-graphs imol)</code></p>
+<p>Activate rotamer graph analysis for molecule number imol.</p>
+<p>Return rotamer info - function used in testing.</p>
+<p>Arguments: imol (a whole number). Returns: a value (see the result of the example).
+Also available in Python as <code>rotamer_graphs_py</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>rotamer_graphs(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(rotamer-graphs 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="rotamer_score">rotamer_score</h3>
+<p>Python: <code>rotamer_score(imol, chain_id, res_no, insertion_code, alt_conf)</code><br>
+Scheme: <code>(rotamer-score imol chain-id res-no insertion-code alt-conf)</code></p>
+<p>currently stub function only</p>
+<p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), insertion_code (text), alt_conf (text). Returns: a number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>rotamer_score(0, "A", 41, "", "")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(rotamer-score 0 "A" 41 "" "")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="rotamer_search_mode_state">rotamer_search_mode_state</h3>
+<p>Python: <code>rotamer_search_mode_state()</code><br>
+Scheme: <code>(rotamer-search-mode-state)</code></p>
+<p>\ brief get the mode of rotamer search</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>rotamer_search_mode_state()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(rotamer-search-mode-state)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_auto_fit_best_rotamer_clash_flag">set_auto_fit_best_rotamer_clash_flag</h3>
+<p>Python: <code>set_auto_fit_best_rotamer_clash_flag(i)</code><br>
+Scheme: <code>(set-auto-fit-best-rotamer-clash-flag i)</code></p>
+<p>set the clash flag for rotamer search</p>
+<p> And this functions for [pre-setting] the variables for
+ auto_fit_best_rotamer called interactively (using a graphics_info_t
+ function). 0 off, 1 on.</p>
+<p>Arguments: i (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_auto_fit_best_rotamer_clash_flag(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-auto-fit-best-rotamer-clash-flag 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_residue_to_rotamer_name">set_residue_to_rotamer_name</h3>
+<p>Python: <code>set_residue_to_rotamer_name(imol, chain_id, resno, ins_code, alt_conf, rotamer_name)</code><br>
+Scheme: <code>(set-residue-to-rotamer-name imol chain-id resno ins-code alt-conf rotamer-name)</code></p>
+<p>set the residue specified to the rotamer name specified.</p>
+<p>(rotamer names are the Richardson rotamer names.)</p>
+<p>return value is 0 if atoms were not moved (e.g. because rotamer-name was not know)</p>
+<p>Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_code (text), alt_conf (text), rotamer_name (text). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_residue_to_rotamer_name(0, "A", 41, "", "", "my-name")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-residue-to-rotamer-name 0 "A" 41 "" "" "my-name")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_residue_to_rotamer_number">set_residue_to_rotamer_number</h3>
+<p>Python: <code>set_residue_to_rotamer_number(imol, chain_id, resno, ins_code, alt_conf, rotamer_number)</code><br>
+Scheme: <code>(set-residue-to-rotamer-number imol chain-id resno ins-code alt-conf rotamer-number)</code></p>
+<p>set the residue specified to the rotamer number specifed.</p>
+<p>Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_code (text), alt_conf (text), rotamer_number (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_residue_to_rotamer_number(0, "A", 41, "", "", 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-residue-to-rotamer-number 0 "A" 41 "" "" 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_rotamer_check_clashes">set_rotamer_check_clashes</h3>
+<p>Python: <code>set_rotamer_check_clashes(i)</code><br>
+Scheme: <code>(set-rotamer-check-clashes i)</code></p>
+<p>set a flag: 0 is off, 1 is on</p>
+<p>Arguments: i (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_rotamer_check_clashes(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-rotamer-check-clashes 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_rotamer_lowest_probability">set_rotamer_lowest_probability</h3>
+<p>Python: <code>set_rotamer_lowest_probability(f)</code><br>
+Scheme: <code>(set-rotamer-lowest-probability f)</code></p>
+<p>For Dunbrack rotamers, set the lowest probability to be
+ considered. Set as a percentage i.e. 1.00 is quite low. For
+ Richardson Rotamers, this has no effect.</p>
+<p>Arguments: f (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_rotamer_lowest_probability(1.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-rotamer-lowest-probability 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_rotamer_search_mode">set_rotamer_search_mode</h3>
+<p>Python: <code>set_rotamer_search_mode(mode)</code><br>
+Scheme: <code>(set-rotamer-search-mode mode)</code></p>
+<p>set the mode of rotamer search, options are (ROTAMERSEARCHAUTOMATIC),
+ (ROTAMERSEARCHLOWRES) (aka. "backrub rotamers"),
+ (ROTAMERSEARCHHIGHRES) (with rigid body fitting)</p>
+<p>Arguments: mode (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_rotamer_search_mode(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-rotamer-search-mode 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="setup_auto_fit_rotamer">setup_auto_fit_rotamer</h3>
+<p>Python: <code>setup_auto_fit_rotamer(state)</code><br>
+Scheme: <code>(setup-auto-fit-rotamer state)</code></p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>setup_auto_fit_rotamer(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(setup-auto-fit-rotamer 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="setup_rotamers">setup_rotamers</h3>
+<p>Python: <code>setup_rotamers(state)</code><br>
+Scheme: <code>(setup-rotamers state)</code></p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>setup_rotamers(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(setup-rotamers 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="show_rotamers_dialog">show_rotamers_dialog</h3>
+<p>Python: <code>show_rotamers_dialog(imol, chain_id, resno, ins_code, altconf)</code><br>
+Scheme: <code>(show-rotamers-dialog imol chain-id resno ins-code altconf)</code></p>
+<p>Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_code (text), altconf (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>show_rotamers_dialog(0, "A", 41, "", "")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(show-rotamers-dialog 0 "A" 41 "" "")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="simple_fill_partial_residues">simple_fill_partial_residues</h3>
+<p>Python: <code>simple_fill_partial_residues(imol)</code><br>
+Scheme: <code>(simple-fill-partial-residues imol)</code></p>
+<p>Fill amino acid residues</p>
+<p>do backrub rotamer search for residues, but don't do refinement</p>
+<p>Arguments: imol (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>simple_fill_partial_residues(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(simple-fill-partial-residues 0)</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

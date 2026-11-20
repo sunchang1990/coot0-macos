@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="64b242ad485d56712c8c13620eba34ee4984a017">
+<title>PDB Functions - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="pdb-functions">PDB Functions</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; PDB Functions (7 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="get_write_conect_record_state">get_write_conect_record_state</h3>
+<p>Python: <code>get_write_conect_record_state()</code><br>
+Scheme: <code>(get-write-conect-record-state)</code></p>
+<p>return the state of the write_conect_records_flag.</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>get_write_conect_record_state()</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-write-conect-record-state)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<h3 id="quick_save">quick_save</h3>
+<p>Python: <code>quick_save()</code><br>
+Scheme: <code>(quick-save)</code></p>
+<p>save all modified coordinates molecules to the default
+ names and save the state too.</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>quick_save()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(quick-save)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_write_conect_record_state">set_write_conect_record_state</h3>
+<p>Python: <code>set_write_conect_record_state(state)</code><br>
+Scheme: <code>(set-write-conect-record-state state)</code></p>
+<p>set the flag to write (or not) conect records to the PDB file.</p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_write_conect_record_state(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-write-conect-record-state 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="write_chain_to_pdb_file">write_chain_to_pdb_file</h3>
+<p>Python: <code>write_chain_to_pdb_file(imol, chainid, filename)</code><br>
+Scheme: <code>(write-chain-to-pdb-file imol chainid filename)</code></p>
+<p>return 0 on success, -1 on error.</p>
+<p>Arguments: imol (a whole number), chainid (text), filename (text). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>write_chain_to_pdb_file(0, "A", "tutorial-modern.pdb")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(write-chain-to-pdb-file 0 "A" "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="write_cif_file">write_cif_file</h3>
+<p>Python: <code>write_cif_file(imol, file_name)</code><br>
+Scheme: <code>(write-cif-file imol file-name)</code></p>
+<p>return 0 on success, 1 on error.</p>
+<p>Arguments: imol (a whole number), file_name (text). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>write_cif_file(0, "tutorial-modern.pdb")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(write-cif-file 0 "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="write_pdb_file">write_pdb_file</h3>
+<p>Python: <code>write_pdb_file(imol, file_name)</code><br>
+Scheme: <code>(write-pdb-file imol file-name)</code></p>
+<p>return 0 on success, 1 on error.</p>
+<p>Arguments: imol (a whole number), file_name (text). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>write_pdb_file(0, "tutorial-modern.pdb")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(write-pdb-file 0 "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="write_residue_range_to_pdb_file">write_residue_range_to_pdb_file</h3>
+<p>Python: <code>write_residue_range_to_pdb_file(imol, chainid, resno_start, resno_end, filename)</code><br>
+Scheme: <code>(write-residue-range-to-pdb-file imol chainid resno-start resno-end filename)</code></p>
+<p>return 0 on success, 1 on error.</p>
+<p>Arguments: imol (a whole number), chainid (text), resno_start (a whole number), resno_end (a whole number), filename (text). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>write_residue_range_to_pdb_file(0, "A", 41, 45, "tutorial-modern.pdb")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(write-residue-range-to-pdb-file 0 "A" 41 45 "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

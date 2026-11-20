@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="dc2514943812898cd39baca2eb438c37274f548a">
+<title>Display Lists for Maps - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="display-lists-for-maps">Display Lists for Maps</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Display Lists for Maps (3 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="display_lists_for_maps_state">display_lists_for_maps_state</h3>
+<p>Python: <code>display_lists_for_maps_state()</code><br>
+Scheme: <code>(display-lists-for-maps-state)</code></p>
+<p>return the state of display_lists_for_maps.</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>display_lists_for_maps_state()</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(display-lists-for-maps-state)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<h3 id="set_display_lists_for_maps">set_display_lists_for_maps</h3>
+<p>Python: <code>set_display_lists_for_maps(i)</code><br>
+Scheme: <code>(set-display-lists-for-maps i)</code></p>
+<p>Should display lists be used for maps? It may speed things
+ up if these are turned on (or off) - depends on graphics card and
+ drivers. Pass 1 for on, 0 for off.</p>
+<p>Arguments: i (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_display_lists_for_maps(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-display-lists-for-maps 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="update_maps">update_maps</h3>
+<p>Python: <code>update_maps()</code><br>
+Scheme: <code>(update-maps)</code></p>
+<p>update the maps to the current position - rarely needed</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>update_maps()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(update-maps)</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

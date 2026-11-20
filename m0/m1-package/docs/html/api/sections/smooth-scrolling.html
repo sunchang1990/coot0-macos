@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="3a02cfd0870e401cd7f4998307b9e61c7e013e2a">
+<title>Smooth Scrolling - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="smooth-scrolling">Smooth Scrolling</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Smooth Scrolling (8 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="get_smooth_scroll">get_smooth_scroll</h3>
+<p>Python: <code>get_smooth_scroll()</code><br>
+Scheme: <code>(get-smooth-scroll)</code></p>
+<p>return the smooth scrolling state</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>get_smooth_scroll()</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-smooth-scroll)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<h3 id="get_text_for_smooth_scroll_limit">get_text_for_smooth_scroll_limit</h3>
+<p>Python: <code>get_text_for_smooth_scroll_limit()</code><br>
+Scheme: <code>(get-text-for-smooth-scroll-limit)</code></p>
+<p>Arguments: none. Returns: text.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>get_text_for_smooth_scroll_limit()</code></td><td>ran, returned <code>'10.0 '</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-text-for-smooth-scroll-limit)</code></td><td>ran, returned <code>"10.0 "</code></td></tr></tbody></table>
+<h3 id="get_text_for_smooth_scroll_steps">get_text_for_smooth_scroll_steps</h3>
+<p>Python: <code>get_text_for_smooth_scroll_steps()</code><br>
+Scheme: <code>(get-text-for-smooth-scroll-steps)</code></p>
+<p>MOVE-ME to c-interface-gtk-widgets.h</p>
+<p>Arguments: none. Returns: text.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>get_text_for_smooth_scroll_steps()</code></td><td>ran, returned <code>'40   '</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-text-for-smooth-scroll-steps)</code></td><td>ran, returned <code>"40   "</code></td></tr></tbody></table>
+<h3 id="set_smooth_scroll_flag">set_smooth_scroll_flag</h3>
+<p>Python: <code>set_smooth_scroll_flag(v)</code><br>
+Scheme: <code>(set-smooth-scroll-flag v)</code></p>
+<p>set smooth scrolling</p>
+<p> @param v use v=1 to turn on smooth scrolling, v=0 for off (default on).</p>
+<p>Arguments: v (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_smooth_scroll_flag(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-smooth-scroll-flag 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_smooth_scroll_limit">set_smooth_scroll_limit</h3>
+<p>Python: <code>set_smooth_scroll_limit(lim)</code><br>
+Scheme: <code>(set-smooth-scroll-limit lim)</code></p>
+<p>do not scroll for distances greater this limit</p>
+<p>Arguments: lim (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_smooth_scroll_limit(1.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-smooth-scroll-limit 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_smooth_scroll_limit_str">set_smooth_scroll_limit_str</h3>
+<p>Python: <code>set_smooth_scroll_limit_str(t)</code><br>
+Scheme: <code>(set-smooth-scroll-limit-str t)</code></p>
+<p>MOVE-ME to c-interface-gtk-widgets.h</p>
+<p>Arguments: t (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_smooth_scroll_limit_str("hello")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-smooth-scroll-limit-str "hello")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_smooth_scroll_steps">set_smooth_scroll_steps</h3>
+<p>Python: <code>set_smooth_scroll_steps(i)</code><br>
+Scheme: <code>(set-smooth-scroll-steps i)</code></p>
+<p>set the number of steps in the smooth scroll</p>
+<p> Set more steps (e.g. 50) for more smoothness (default 10).</p>
+<p>Arguments: i (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_smooth_scroll_steps(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-smooth-scroll-steps 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_smooth_scroll_steps_str">set_smooth_scroll_steps_str</h3>
+<p>Python: <code>set_smooth_scroll_steps_str(t)</code><br>
+Scheme: <code>(set-smooth-scroll-steps-str t)</code></p>
+<p>MOVE-ME to c-interface-gtk-widgets.h</p>
+<p>Arguments: t (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_smooth_scroll_steps_str("hello")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-smooth-scroll-steps-str "hello")</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

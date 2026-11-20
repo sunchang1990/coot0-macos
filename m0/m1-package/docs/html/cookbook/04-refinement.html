@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="c721a558101efc9d4a9815cf2d6c2d8be2db26eb">
+<title>4. Refinement - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../README.html">coot0 documentation</a></div>
+<h1 id="4-refinement">4. Refinement</h1>
+<p>*Each recipe stands alone and loads its own copy of the test files (run recipe 1.1 once first; with your own data use
+your molecule numbers instead: <a href="README.html#how-to-use-a-recipe">How to use a recipe</a>).*</p>
+<p>Refinement needs a map (recipe 1.5 chooses it). From a script you usually want the result accepted at once,
+without the "Accept Refinement?" window: <code>set_refinement_immediate_replacement(1)</code>, then the refinement, then
+<code>accept_regularizement()</code>. <strong>Switch it off again at the end</strong> with <code>set_refinement_immediate_replacement(0)</code>, as every
+recipe here does: while it is on, refinements you start with the mouse or a key get no Accept window either, and their
+moving atoms stay on the screen. (If that happened: type <code>accept_regularizement()</code> or <code>clear_up_moving_atoms()</code>, then
+<code>set_refinement_immediate_replacement(0)</code>.)</p>
+<h3 id="41-refine-a-range-of-residues-against-the-map">4.1 Refine a range of residues against the map</h3>
+<pre class="python"><code>imol = read_pdb("tutorial-modern.pdb")
+imol_map = make_and_draw_map("rnasa-1.8-all_refmac1.mtz", "FWT", "PHWT", "", 0, 0)
+set_imol_refinement_map(imol_map)
+set_refinement_immediate_replacement(1)
+refine_zone(imol, "A", 40, 45, "")          # chain A, residues 40-45, no alt conf
+accept_regularizement()
+print("fit of A41 to the map: %.3f" % density_score_residue(imol, ["A", 41, ""], imol_map))
+set_refinement_immediate_replacement(0)      # back to normal: the Accept window again</code></pre>
+<pre class="scheme"><code>(define imol (read-pdb "tutorial-modern.pdb"))
+(define imol-map (make-and-draw-map "rnasa-1.8-all_refmac1.mtz" "FWT" "PHWT" "" 0 0))
+(set-imol-refinement-map imol-map)
+(set-refinement-immediate-replacement 1)
+(refine-zone imol "A" 40 45 "")
+(accept-regularizement)
+(format #t "fit of A41 to the map: ~a~%" (density-score-residue imol (list "A" 41 "") imol-map))
+(set-refinement-immediate-replacement 0)   ; back to normal</code></pre>
+<h3 id="42-refine-a-list-of-residues-they-need-not-be-next-to-each-other">4.2 Refine a list of residues (they need not be next to each other)</h3>
+<pre class="python"><code>imol = read_pdb("tutorial-modern.pdb")
+imol_map = make_and_draw_map("rnasa-1.8-all_refmac1.mtz", "FWT", "PHWT", "", 0, 0)
+set_imol_refinement_map(imol_map)
+set_refinement_immediate_replacement(1)
+refine_residues(imol, [["A", 41, ""], ["A", 42, ""], ["A", 85, ""]])
+accept_regularizement()
+set_refinement_immediate_replacement(0)      # back to normal: the Accept window again</code></pre>
+<pre class="scheme"><code>(define imol (read-pdb "tutorial-modern.pdb"))
+(define imol-map (make-and-draw-map "rnasa-1.8-all_refmac1.mtz" "FWT" "PHWT" "" 0 0))
+(set-imol-refinement-map imol-map)
+(set-refinement-immediate-replacement 1)
+(refine-residues imol (list (list "A" 41 "") (list "A" 42 "") (list "A" 85 "")))
+(accept-regularizement)
+(set-refinement-immediate-replacement 0)   ; back to normal</code></pre>
+<h3 id="43-sphere-refine-a-residue-and-everything-around-it">4.3 Sphere refine: a residue and everything around it</h3>
+<pre class="python"><code>imol = read_pdb("tutorial-modern.pdb")
+imol_map = make_and_draw_map("rnasa-1.8-all_refmac1.mtz", "FWT", "PHWT", "", 0, 0)
+set_imol_refinement_map(imol_map)
+set_refinement_immediate_replacement(1)
+centre = ["A", 41, ""]
+residues = [centre] + residues_near_residue(imol, centre, 4.0)
+refine_residues(imol, residues)
+accept_regularizement()
+print("refined", len(residues), "residues")
+set_refinement_immediate_replacement(0)      # back to normal: the Accept window again</code></pre>
+<pre class="scheme"><code>(define imol (read-pdb "tutorial-modern.pdb"))
+(define imol-map (make-and-draw-map "rnasa-1.8-all_refmac1.mtz" "FWT" "PHWT" "" 0 0))
+(set-imol-refinement-map imol-map)
+(set-refinement-immediate-replacement 1)
+(define centre (list "A" 41 ""))
+(define residues (cons centre (residues-near-residue imol centre 4.0)))
+(refine-residues imol residues)
+(accept-regularizement)
+(format #t "refined ~a residues~%" (length residues))
+(set-refinement-immediate-replacement 0)   ; back to normal</code></pre>
+<h3 id="44-geometry-only-regularize-no-map">4.4 Geometry only (regularize, no map)</h3>
+<pre class="python"><code>imol = read_pdb("tutorial-modern.pdb")
+set_refinement_immediate_replacement(1)
+regularize_zone(imol, "A", 40, 45, "")
+accept_regularizement()
+set_refinement_immediate_replacement(0)      # back to normal: the Accept window again</code></pre>
+<pre class="scheme"><code>(define imol (read-pdb "tutorial-modern.pdb"))
+(set-refinement-immediate-replacement 1)
+(regularize-zone imol "A" 40 45 "")
+(accept-regularizement)
+(set-refinement-immediate-replacement 0)   ; back to normal</code></pre>
+<h3 id="45-map-weight-and-restraints">4.5 Map weight and restraints</h3>
+<p>A smaller weight trusts the geometry more (default 60). Ramachandran and torsion restraints help at low resolution.</p>
+<pre class="python"><code>set_matrix(30.0)
+set_refine_ramachandran_angles(1)
+set_refine_with_torsion_restraints(1)
+print("weight", matrix_state(), "rama restraints", refine_ramachandran_angles_state())</code></pre>
+<pre class="scheme"><code>(set-matrix 30.0)
+(set-refine-ramachandran-angles 1)
+(set-refine-with-torsion-restraints 1)
+(format #t "weight ~a rama restraints ~a~%" (matrix-state) (refine-ramachandran-angles-state))</code></pre>
+<h3 id="46-rigid-body-fit-of-a-range">4.6 Rigid-body fit of a range</h3>
+<p>Note the argument order: first residue, last residue, chain, molecule.</p>
+<pre class="python"><code>imol = read_pdb("tutorial-modern.pdb")
+imol_map = make_and_draw_map("rnasa-1.8-all_refmac1.mtz", "FWT", "PHWT", "", 0, 0)
+set_imol_refinement_map(imol_map)
+set_refinement_immediate_replacement(1)
+rigid_body_refine_zone(30, 45, "A", imol)
+accept_regularizement()
+set_refinement_immediate_replacement(0)      # back to normal: the Accept window again</code></pre>
+<pre class="scheme"><code>(define imol (read-pdb "tutorial-modern.pdb"))
+(define imol-map (make-and-draw-map "rnasa-1.8-all_refmac1.mtz" "FWT" "PHWT" "" 0 0))
+(set-imol-refinement-map imol-map)
+(set-refinement-immediate-replacement 1)
+(rigid-body-refine-zone 30 45 "A" imol)
+(accept-regularizement)
+(set-refinement-immediate-replacement 0)   ; back to normal</code></pre>
+<h3 id="47-best-rotamer-for-a-side-chain">4.7 Best rotamer for a side chain</h3>
+<p>Arguments: residue number, alt conf, insertion code, chain, model, map, clash check (1 = yes), lowest rotamer probability.
+Returns a score.</p>
+<pre class="python"><code>imol = read_pdb("tutorial-modern.pdb")
+imol_map = make_and_draw_map("rnasa-1.8-all_refmac1.mtz", "FWT", "PHWT", "", 0, 0)
+score = auto_fit_best_rotamer(41, "", "", "A", imol, imol_map, 1, 0.01)
+print("rotamer score", score, "rotamer now", get_rotamer_name(imol, "A", 41, ""))</code></pre>
+<pre class="scheme"><code>(define imol (read-pdb "tutorial-modern.pdb"))
+(define imol-map (make-and-draw-map "rnasa-1.8-all_refmac1.mtz" "FWT" "PHWT" "" 0 0))
+(define score (auto-fit-best-rotamer 41 "" "" "A" imol imol-map 1 0.01))
+(format #t "rotamer score ~a~%" score)</code></pre>
+<h3 id="48-flip-a-peptide">4.8 Flip a peptide</h3>
+<p>Flips the peptide between residue A41 and A42 (the carbonyl O of A41 points the other way).</p>
+<pre class="python"><code>imol = read_pdb("tutorial-modern.pdb")
+before = atom_info_string(imol, "A", 41, "", " O  ", "")[3:]
+pepflip(imol, "A", 41, "", "")
+after = atom_info_string(imol, "A", 41, "", " O  ", "")[3:]
+print("O of A41 moved from", before, "to", after)</code></pre>
+<pre class="scheme"><code>(define imol (read-pdb "tutorial-modern.pdb"))
+(pepflip imol "A" 41 "" "")
+(display (list-tail (atom-info-string imol "A" 41 "" " O  " "") 3)) (newline)</code></pre>
+<h3 id="49-refine-every-chain-in-pieces-a-whole-model">4.9 Refine every chain in pieces (a whole model)</h3>
+<p>Refines chain by chain in overlapping pieces of 6 residues. It takes about a second per piece.</p>
+<pre class="python"><code>imol = read_pdb("tutorial-modern.pdb")
+imol_map = make_and_draw_map("rnasa-1.8-all_refmac1.mtz", "FWT", "PHWT", "", 0, 0)
+set_imol_refinement_map(imol_map)
+set_refinement_immediate_replacement(1)
+for ch in chain_ids(imol):
+    n = chain_n_residues(ch, imol)
+    first, last = seqnum_from_serial_number(imol, ch, 0), seqnum_from_serial_number(imol, ch, n - 1)
+    for start in range(first, min(last, first + 20), 5):      # (the whole chain: range(first, last, 5))
+        refine_zone(imol, ch, start, min(start + 5, last), "")
+        accept_regularizement()
+print("done")
+set_refinement_immediate_replacement(0)      # back to normal: the Accept window again</code></pre>
+<pre class="scheme"><code>(define imol (read-pdb "tutorial-modern.pdb"))
+(define imol-map (make-and-draw-map "rnasa-1.8-all_refmac1.mtz" "FWT" "PHWT" "" 0 0))
+(set-imol-refinement-map imol-map)
+(set-refinement-immediate-replacement 1)
+(for-each
+  (lambda (ch)
+    (let* ((n (chain-n-residues ch imol))
+           (first (seqnum-from-serial-number imol ch 0)) (last (seqnum-from-serial-number imol ch (- n 1))))
+      (let loop ((start first))
+        (if (&lt; start (min last (+ first 20)))          ; the whole chain: (&lt; start last)
+            (begin (refine-zone imol ch start (min (+ start 5) last) "")
+                   (accept-regularizement)
+                   (loop (+ start 5)))))))
+  (chain-ids imol))
+(set-refinement-immediate-replacement 0)   ; back to normal</code></pre>
+</body></html>

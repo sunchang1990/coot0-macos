@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="d12031716ea93bcc7c2d2f6ee2d95589aa19d589">
+<title>Save Coordinates - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="save-coordinates">Save Coordinates</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Save Coordinates (4 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="save_coordinates">save_coordinates</h3>
+<p>Python: <code>save_coordinates(imol, filename)</code><br>
+Scheme: <code>(save-coordinates imol filename)</code></p>
+<p>save coordinates of molecule number imol in filename</p>
+<p> Returns status 1 is good (success), 0 is fail.</p>
+<p>Arguments: imol (a whole number), filename (text). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>save_coordinates(0, "tutorial-modern.pdb")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(save-coordinates 0 "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="save_molecule_number_from_option_menu">save_molecule_number_from_option_menu</h3>
+<p>Python: <code>save_molecule_number_from_option_menu()</code><br>
+Scheme: <code>(save-molecule-number-from-option-menu)</code></p>
+<p>access to graphics_info_t::save_imol for use in callback.c</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>save_molecule_number_from_option_menu()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(save-molecule-number-from-option-menu)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_save_coordinates_in_original_directory">set_save_coordinates_in_original_directory</h3>
+<p>Python: <code>set_save_coordinates_in_original_directory(i)</code><br>
+Scheme: <code>(set-save-coordinates-in-original-directory i)</code></p>
+<p>set save coordinates in the starting directory</p>
+<p>Arguments: i (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_save_coordinates_in_original_directory(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-save-coordinates-in-original-directory 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_save_molecule_number">set_save_molecule_number</h3>
+<p>Python: <code>set_save_molecule_number(imol)</code><br>
+Scheme: <code>(set-save-molecule-number imol)</code></p>
+<p>access from callback.c, not to be used in scripting, I suggest.
+ Sets the <em>save</em> molecule number</p>
+<p>Arguments: imol (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_save_molecule_number(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-save-molecule-number 0)</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

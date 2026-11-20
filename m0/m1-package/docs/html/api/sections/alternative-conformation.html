@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="096e0c7a7a22bc4ea3042c0ec8b31702eabb4c64">
+<title>Alternative Conformation - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="alternative-conformation">Alternative Conformation</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Alternative Conformation (15 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="add_alt_conf">add_alt_conf</h3>
+<p>Python: <code>add_alt_conf(imol, chain_id, res_no, ins_code, alt_conf, rotamer_number)</code><br>
+Scheme: <code>(add-alt-conf imol chain-id res-no ins-code alt-conf rotamer-number)</code></p>
+<p>add an alternative conformer to a residue. Add it in
+ conformation rotamer number rotamer_number.</p>
+<p>Return the new alt_conf chain_id on sucess, python False on fail</p>
+<p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text), alt_conf (text), rotamer_number (a whole number). Returns: a value (see the result of the example).
+Also available in Python as <code>add_alt_conf_py</code>.
+Also available in Scheme as <code>add-alt-conf-scm</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>add_alt_conf(0, "A", 41, "", "", 1)</code></td><td>ran, returned <code>False</code></td></tr>
+<tr><td>Scheme</td><td><code>(add-alt-conf 0 "A" 41 "" "" 1)</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<h3 id="alt_conf_split_type_number">alt_conf_split_type_number</h3>
+<p>Python: <code>alt_conf_split_type_number()</code><br>
+Scheme: <code>(alt-conf-split-type-number)</code></p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>alt_conf_split_type_number()</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(alt-conf-split-type-number)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<h3 id="altconf">altconf</h3>
+<p>Python: <code>altconf()</code><br>
+Scheme: <code>(altconf)</code></p>
+<p>turn off pending atom pick</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>altconf()</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
+<tr><td>Scheme</td><td><code>(altconf)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+<h3 id="fill_occupancy_residue_range">fill_occupancy_residue_range</h3>
+<p>Python: <code>fill_occupancy_residue_range(imol, chain_id, ires1, ires2)</code><br>
+Scheme: <code>(fill-occupancy-residue-range imol chain-id ires1 ires2)</code></p>
+<p>Arguments: imol (a whole number), chain_id (text), ires1 (a whole number), ires2 (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>fill_occupancy_residue_range(0, "A", 1, 1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(fill-occupancy-residue-range 0 "A" 1 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="get_add_alt_conf_new_atoms_occupancy">get_add_alt_conf_new_atoms_occupancy</h3>
+<p>Python: <code>get_add_alt_conf_new_atoms_occupancy()</code><br>
+Scheme: <code>(get-add-alt-conf-new-atoms-occupancy)</code></p>
+<p>default 0.5</p>
+<p>Arguments: none. Returns: a number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>get_add_alt_conf_new_atoms_occupancy()</code></td><td>ran, returned <code>0.5</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-add-alt-conf-new-atoms-occupancy)</code></td><td>ran, returned <code>0.5</code></td></tr></tbody></table>
+<h3 id="reset_b_factor_residue_range">reset_b_factor_residue_range</h3>
+<p>Python: <code>reset_b_factor_residue_range(imol, chain_id, ires1, ires2)</code><br>
+Scheme: <code>(reset-b-factor-residue-range imol chain-id ires1 ires2)</code></p>
+<p>Arguments: imol (a whole number), chain_id (text), ires1 (a whole number), ires2 (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>reset_b_factor_residue_range(0, "A", 1, 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(reset-b-factor-residue-range 0 "A" 1 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_add_alt_conf_new_atoms_occupancy">set_add_alt_conf_new_atoms_occupancy</h3>
+<p>Python: <code>set_add_alt_conf_new_atoms_occupancy(f)</code><br>
+Scheme: <code>(set-add-alt-conf-new-atoms-occupancy f)</code></p>
+<p>temporary debugging interface.</p>
+<p>Arguments: f (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_add_alt_conf_new_atoms_occupancy(1.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-add-alt-conf-new-atoms-occupancy 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_add_alt_conf_split_type_number">set_add_alt_conf_split_type_number</h3>
+<p>Python: <code>set_add_alt_conf_split_type_number(i)</code><br>
+Scheme: <code>(set-add-alt-conf-split-type-number i)</code></p>
+<p>Arguments: i (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_add_alt_conf_split_type_number(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-add-alt-conf-split-type-number 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_b_factor_residue_range">set_b_factor_residue_range</h3>
+<p>Python: <code>set_b_factor_residue_range(imol, chain_id, ires1, ires2, bval)</code><br>
+Scheme: <code>(set-b-factor-residue-range imol chain-id ires1 ires2 bval)</code></p>
+<p>Arguments: imol (a whole number), chain_id (text), ires1 (a whole number), ires2 (a whole number), bval (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_b_factor_residue_range(0, "A", 1, 1, 1.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-b-factor-residue-range 0 "A" 1 1 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_occupancy_residue_range">set_occupancy_residue_range</h3>
+<p>Python: <code>set_occupancy_residue_range(imol, chain_id, ires1, ires2, occ)</code><br>
+Scheme: <code>(set-occupancy-residue-range imol chain-id ires1 ires2 occ)</code></p>
+<p>Arguments: imol (a whole number), chain_id (text), ires1 (a whole number), ires2 (a whole number), occ (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_occupancy_residue_range(0, "A", 1, 1, 1.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-occupancy-residue-range 0 "A" 1 1 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_show_alt_conf_intermediate_atoms">set_show_alt_conf_intermediate_atoms</h3>
+<p>Python: <code>set_show_alt_conf_intermediate_atoms(i)</code><br>
+Scheme: <code>(set-show-alt-conf-intermediate-atoms i)</code></p>
+<p>Arguments: i (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_show_alt_conf_intermediate_atoms(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-show-alt-conf-intermediate-atoms 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="show_alt_conf_intermediate_atoms_state">show_alt_conf_intermediate_atoms_state</h3>
+<p>Python: <code>show_alt_conf_intermediate_atoms_state()</code><br>
+Scheme: <code>(show-alt-conf-intermediate-atoms-state)</code></p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>show_alt_conf_intermediate_atoms_state()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(show-alt-conf-intermediate-atoms-state)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="unset_add_alt_conf_define">unset_add_alt_conf_define</h3>
+<p>Python: <code>unset_add_alt_conf_define()</code><br>
+Scheme: <code>(unset-add-alt-conf-define)</code></p>
+<p>set the static dialog holder in
+ graphics info to NULL</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>unset_add_alt_conf_define()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(unset-add-alt-conf-define)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="unset_add_alt_conf_dialog">unset_add_alt_conf_dialog</h3>
+<p>Python: <code>unset_add_alt_conf_dialog()</code><br>
+Scheme: <code>(unset-add-alt-conf-dialog)</code></p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>unset_add_alt_conf_dialog()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(unset-add-alt-conf-dialog)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="zero_occupancy_residue_range">zero_occupancy_residue_range</h3>
+<p>Python: <code>zero_occupancy_residue_range(imol, chain_id, ires1, ires2)</code><br>
+Scheme: <code>(zero-occupancy-residue-range imol chain-id ires1 ires2)</code></p>
+<p>Arguments: imol (a whole number), chain_id (text), ires1 (a whole number), ires2 (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>zero_occupancy_residue_range(0, "A", 1, 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(zero-occupancy-residue-range 0 "A" 1 1)</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

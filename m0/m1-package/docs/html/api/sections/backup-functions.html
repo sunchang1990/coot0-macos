@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="4bffff6adba56b916c8966c6935b4ba6c6629c6b">
+<title>Backup Functions - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="backup-functions">Backup Functions</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Backup Functions (16 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="apply_redo">apply_redo</h3>
+<p>Python: <code>apply_redo()</code><br>
+Scheme: <code>(apply-redo)</code></p>
+<p>apply redo - the "Redo" button callback</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>apply_redo()</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(apply-redo)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<h3 id="apply_undo">apply_undo</h3>
+<p>Python: <code>apply_undo()</code><br>
+Scheme: <code>(apply-undo)</code></p>
+<p>apply undo - the "Undo" button callback</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>apply_undo()</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(apply-undo)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<h3 id="backup_compress_files_state">backup_compress_files_state</h3>
+<p>Python: <code>backup_compress_files_state()</code><br>
+Scheme: <code>(backup-compress-files-state)</code></p>
+<p>return the state for compression of backup files</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>backup_compress_files_state()</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(backup-compress-files-state)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<h3 id="backup_state">backup_state</h3>
+<p>Python: <code>backup_state(imol)</code><br>
+Scheme: <code>(backup-state imol)</code></p>
+<p>return the backup state for molecule number imol</p>
+<p> return 0 for backups off, 1 for backups on, -1 for unknown</p>
+<p>Arguments: imol (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>backup_state(0)</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(backup-state 0)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<h3 id="decoloned_backup_file_names_state">decoloned_backup_file_names_state</h3>
+<p>Python: <code>decoloned_backup_file_names_state()</code><br>
+Scheme: <code>(decoloned-backup-file-names-state)</code></p>
+<p>return the state for adding paths to backup file names</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>decoloned_backup_file_names_state()</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(decoloned-backup-file-names-state)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<h3 id="have_unsaved_changes_p">have_unsaved_changes_p</h3>
+<p>Python: <code>have_unsaved_changes_p(imol)</code><br>
+Scheme: <code>(have-unsaved-changes-p imol)</code></p>
+<p>does molecule number imol have unsaved changes?
+ Returns -1 on bad imol, 0 on no unsaved changes, 1 on has unsaved changes</p>
+<p>Arguments: imol (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>have_unsaved_changes_p(0)</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(have-unsaved-changes-p 0)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<h3 id="make_backup">make_backup</h3>
+<p>Python: <code>make_backup(imol)</code><br>
+Scheme: <code>(make-backup imol)</code></p>
+<p>make backup for molecule number imol</p>
+<p>Arguments: imol (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>make_backup(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(make-backup 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_backup_compress_files">set_backup_compress_files</h3>
+<p>Python: <code>set_backup_compress_files(state)</code><br>
+Scheme: <code>(set-backup-compress-files state)</code></p>
+<p>set if backup files will be compressed or not using gzip</p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_backup_compress_files(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-backup-compress-files 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_decoloned_backup_file_names">set_decoloned_backup_file_names</h3>
+<p>Python: <code>set_decoloned_backup_file_names(state)</code><br>
+Scheme: <code>(set-decoloned-backup-file-names state)</code></p>
+<p>set the state for adding paths to backup file names</p>
+<p> by default directories names are added into the filename for backup
+ (with / to _ mapping). call this with state=1 to turn off directory
+ names</p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_decoloned_backup_file_names(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-decoloned-backup-file-names 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_have_unsaved_changes">set_have_unsaved_changes</h3>
+<p>Python: <code>set_have_unsaved_changes(imol)</code><br>
+Scheme: <code>(set-have-unsaved-changes imol)</code></p>
+<p>set the molecule number imol to be marked as having unsaved changes</p>
+<p>Arguments: imol (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_have_unsaved_changes(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-have-unsaved-changes 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_undo_molecule">set_undo_molecule</h3>
+<p>Python: <code>set_undo_molecule(imol)</code><br>
+Scheme: <code>(set-undo-molecule imol)</code></p>
+<p>set the molecule to which undo operations are done to
+ molecule number imol</p>
+<p>Arguments: imol (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_undo_molecule(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-undo-molecule 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_unpathed_backup_file_names">set_unpathed_backup_file_names</h3>
+<p>Python: <code>set_unpathed_backup_file_names(state)</code><br>
+Scheme: <code>(set-unpathed-backup-file-names state)</code></p>
+<p>set the state for adding paths to backup file names</p>
+<p> by default directories names are added into the filename for backup
+ (with / to _ mapping). call this with state=1 to turn off directory
+ names</p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_unpathed_backup_file_names(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-unpathed-backup-file-names 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="show_set_undo_molecule_chooser">show_set_undo_molecule_chooser</h3>
+<p>Python: <code>show_set_undo_molecule_chooser()</code><br>
+Scheme: <code>(show-set-undo-molecule-chooser)</code></p>
+<p>show the Undo Molecule chooser - i.e. choose the molecule
+ to which the "Undo" button applies.</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>show_set_undo_molecule_chooser()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(show-set-undo-molecule-chooser)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="turn_off_backup">turn_off_backup</h3>
+<p>Python: <code>turn_off_backup(imol)</code><br>
+Scheme: <code>(turn-off-backup imol)</code></p>
+<p>turn off backups for molecule number imol</p>
+<p>Arguments: imol (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>turn_off_backup(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(turn-off-backup 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="turn_on_backup">turn_on_backup</h3>
+<p>Python: <code>turn_on_backup(imol)</code><br>
+Scheme: <code>(turn-on-backup imol)</code></p>
+<p>turn on backups for molecule number imol</p>
+<p>Arguments: imol (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>turn_on_backup(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(turn-on-backup 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="unpathed_backup_file_names_state">unpathed_backup_file_names_state</h3>
+<p>Python: <code>unpathed_backup_file_names_state()</code><br>
+Scheme: <code>(unpathed-backup-file-names-state)</code></p>
+<p>return the state for adding paths to backup file names</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>unpathed_backup_file_names_state()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(unpathed-backup-file-names-state)</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

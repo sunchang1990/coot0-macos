@@ -1,4 +1,35 @@
-# Coot 0.9.8.96 on Apple Silicon: test round 27 (build 27 = build 26 + cookbook fixes + Ctrl key bindings from Python)
+# Coot 0.9.8.96 on Apple Silicon: test round 28 (build 28 = build 27 + a Help menu + Ctrl key bindings that work + recipe 6.3 fixed)
+
+**From you** (20 Nov): II1 failed (pressing `o` refined nothing; the terminal showed `(n-chains 2)` ...), II2 failed (neither Ctrl-T nor t did
+anything; t printed two "not found" lines, Ctrl-T one), II3 pass, II4 clear. Asked for a Help menu that searches the menus and points to the
+documentation, README and cookbook, like Visual Studio Code's Help.
+
+1. **`o` is Coot's own key**: "go to the same residue in the next NCS chain" (that is what `(n-chains 2)` ... was). My list of Coot's keys
+   was incomplete; it now comes from Coot's key handler itself. Recipe 6.3 uses `v`.
+2. **Ctrl-T**: your log shows the key reached Python but build 27 decided the Ctrl state by asking macOS separately, and that did not work
+   for you. Now Coot's own Ctrl state (the one Ctrl-S and Ctrl-Z use) is handed through. When a binding runs, the terminal prints
+   `INFO:: key Ctrl-116: running key binding "Ctrl test"`, so you can see it even if the action itself is quiet.
+   Also fixed: binding plain `k` after `Control_k` silently removed the Ctrl-K binding (an old Coot bug).
+3. **Help menu** (the old "About" menu, now "Help", always the last menu): Search Menus and Docs..., Keyboard Shortcuts..., the Cookbook,
+   the Scripting Reference, the documentation overview, the coot0 README, What's New, Coot's website; then Coot's own Header/Remarks
+   Browser, Hints and About. Documents open in your web browser.
+
+**On screen**: I ran Coot in a real window myself (about 10 s, `tests/run-real-window-checks.sh`): key presses sent through GTK to the
+graphics window ran the bindings (v, Ctrl-T, not t, not o), Help was the last menu, the search window and Keyboard Shortcuts opened. I did
+not look at the screen (no screenshot), and the key presses were synthetic, not your keyboard. **New tests**: `gui-dialogs` 80 -> 88,
+`api-docs` 5 -> 8, the cookbook key list; build 27 fails them. Evidence: `evidence/checks_b27_vs_b28.txt`.
+
+## JJ. Round 28 checks (about 10 minutes)
+
+| # | Do | Expected |
+|---|---|---|
+| JJ1 | Python window: `add_key_binding("Ctrl test", "Control_t", lambda: info_dialog("Ctrl-T works"))`. Click in the graphics window, press Ctrl-T; then plain `t`. | Ctrl-T: a small window "Ctrl-T works" and the terminal line `running key binding "Ctrl test"`. Plain `t`: no window. |
+| JJ2 | With a model and map: paste recipe 6.3 (Python) into the Python window, click in the graphics window, press `v` near a residue. | 7 residues refine, Accept window as usual. |
+| JJ3 | Help > Search Menus and Docs...; type `brighten`, double-click the menu line; type `sphere refine`, double-click the Cookbook line; type `refine_zone`, Enter. | Brighten Maps runs; the browser opens the cookbook at 4.3; then the reference at `refine_zone` (or the first function line). |
+| JJ4 | Help > Keyboard Shortcuts... (after JJ1). | Coot's keys, and "Ctrl test" under your bindings. |
+| JJ5 | Help > Cookbook, Scripting Reference, coot0 README, What's New. Then: is the menu what you had in mind? What would you add (e.g. a keyboard shortcut for the search)? | Each opens a readable page in the browser. Your opinion. |
+
+# Earlier round (II3, II4 confirmed 20 Nov; II1, II2 -> build 28): Coot 0.9.8.96 on Apple Silicon: test round 27 (build 27 = build 26 + cookbook fixes + Ctrl key bindings from Python)
 
 **From you** (19 Nov): HH1, HH2, HH3 pass; HH4: 6.1 ok, 6.3 F5 did nothing (fn+F5 opened Model/Fit/Refine), 6.4 did not load the map and
 "changed another map"; HH5 useful, but the recipes repeat the loading lines (following them in order loads many copies), and after recipe 4.1

@@ -1,0 +1,457 @@
+diff --git a/python/coot0_help.py b/python/coot0_help.py
+new file mode 100644
+index 0000000..3baac29
+--- /dev/null
++++ b/python/coot0_help.py
+@@ -0,0 +1,319 @@
++# coot0_help.py  (coot0, build 28) -- the Help menu.
++#
++# User request (20 Nov): "a help tab in the main menu, where one can search the items in the existing menus and that points
++# to the documentation, readme and cookbook, similar to the Help of Visual Studio Code".
++# Coot 0.9's last menu "About" (Remarks Browser, Hints, About...) becomes "Help" and gets, at the top:
++#   Search Menus and Docs...  one search box over every menu entry (open it from the results), every cookbook recipe,
++#                             every scripting function and the sections of the documentation (they open in the web browser)
++#   Keyboard Shortcuts...     Coot's own keys and the key bindings you made (add_key_binding)
++#   Cookbook / Scripting Reference / Documentation Overview / coot0 README / What's New / Coot Website
++# The documentation pages are docs/html/ of the package (made from the Markdown in docs/ by m0/tools/gen_docs_html.py).
++
++import os, json, re
++
++def coot0_docs_html_dir():
++    return os.path.join(os.environ.get("COOT_PREFIX", ""), "docs", "html")
++
++def coot0_open_url(target):
++    """opens a URL or a file in the default web browser (the tests replace this function)"""
++    import subprocess
++    if os.environ.get("COOT0_NO_BROWSER"):            # the test scripts (menu sweep, audit) press every entry: no browser windows
++        print("INFO:: (COOT0_NO_BROWSER) would open", target)
++        return target
++    try:
++        subprocess.Popen(["/usr/bin/open", target])
++    except Exception as e:
++        print("WARNING:: could not open %s: %s" % (target, e))
++    return target
++
++def coot0_open_doc(page, anchor=""):
++    """page: path inside docs/html (e.g. "cookbook/04-refinement.html"); anchor: a heading id on that page"""
++    path = os.path.join(coot0_docs_html_dir(), page)
++    if not os.path.exists(path):
++        info_dialog("The documentation page %s is not in this coot0 package\n(looked in %s)." % (page, coot0_docs_html_dir()))
++        return False
++    if not anchor:
++        return coot0_open_url(path)
++    # macOS "open" drops the #anchor of a file URL: open a one-line page that forwards to it instead
++    import tempfile, urllib.parse, html as _html
++    url = "file://" + urllib.parse.quote(path) + "#" + urllib.parse.quote(anchor)
++    fwd = os.path.join(tempfile.gettempdir(), "coot0-help-%d.html" % os.getpid())
++    with open(fwd, "w") as f:
++        f.write('<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=%s">'
++                '<script>location.replace(%s)</script><a href="%s">%s</a>\n'
++                % (_html.escape(url), json.dumps(url), _html.escape(url), _html.escape(page + "#" + anchor)))
++    coot0_open_url(fwd)
++    return url
++
++# ---------------------------------------------------------------- what can be searched
++def coot0_menu_label(item):
++    try:
++        for c in item.get_children():
++            t = c.get_text()
++            if t: return t.replace("_", "") if "__" not in t else t
++    except Exception:
++        pass
++    try:
++        t = item.get_property("label")
++        if t: return t.replace("_", "")
++    except Exception:
++        pass
++    return None
++
++def coot0_menu_entries():
++    """[(path list, menu item)] for every visible, usable menu entry (submenus opened, separators left out)"""
++    import coot_python, gtk
++    out = []
++    headless = bool(os.environ.get("COOT_GTK2COMPAT_HEADLESS"))
++    def walk(menu, path):
++        try: items = menu.get_children()
++        except Exception: return
++        for item in items:
++            if type(item).__name__ in ("SeparatorMenuItem", "TearoffMenuItem"): continue
++            try:
++                # (hidden = an entry coot0 removed because it cannot work; without a screen, show() does nothing: no test)
++                if not headless and not item.get_visible(): continue
++                if not item.get_sensitive(): continue
++            except Exception:
++                pass
++            label = coot0_menu_label(item)
++            if not label: continue
++            sub = item.get_submenu()
++            if sub is not None: walk(sub, path + [label])
++            elif path: out.append((path + [label], item))
++    mb = coot_python.main_menubar()
++    if mb is not None: walk(mb, [])
++    return out
++
++_coot0_doc_index = None
++def coot0_doc_entries():
++    global _coot0_doc_index
++    if _coot0_doc_index is None:
++        try:
++            _coot0_doc_index = json.load(open(os.path.join(coot0_docs_html_dir(), "search-index.json")))
++        except Exception as e:
++            print("WARNING:: no documentation search index:", e)
++            _coot0_doc_index = []
++    return _coot0_doc_index
++
++def coot0_help_search(text, limit=300):
++    """[(kind, shown text, action)] for the words in text (all words must match, case does not matter)"""
++    words = text.lower().replace("_", " ").replace("-", " ").split()
++    if not words: return []
++    def hit(s):
++        s = s.lower().replace("_", " ").replace("-", " ")
++        return all(w in s for w in words)
++    q = " ".join(words)
++    def norm(t): return t.lower().replace("_", " ").replace("-", " ").strip()
++    def quality(t):                       # 0 exact, 1 starts with the words, 2 contains them
++        t = norm(t)
++        return 0 if t == q else 1 if t.startswith(q) else 2
++    order = {"Menu": 0, "Cookbook": 1, "Function": 2, "Docs": 3}
++    res = []
++    for path, item in coot0_menu_entries():
++        shown = " > ".join(path)
++        if hit(shown): res.append((quality(path[-1]), order["Menu"], len(shown), ("Menu", shown, ("menu", item))))
++    for e in coot0_doc_entries():
++        if not hit(e["title"] + " " + e["where"]): continue
++        if e["kind"] == "Function" or e["where"] == e["title"]: shown = e["title"]
++        else: shown = "%s  (%s)" % (e["title"], e["where"])
++        title = re.sub(r"^[0-9.]+ ", "", e["title"])            # "4.3 Sphere refine..." -> "Sphere refine..."
++        res.append((quality(title), order.get(e["kind"], 9), len(shown), (e["kind"], shown, ("doc", e["page"], e["anchor"]))))
++    res.sort(key=lambda r: r[:3])        # exact matches first, then menus, recipes, functions, documents; shorter first
++    res = [r[3] for r in res]
++    return res[:limit]
++
++def coot0_help_run(action):
++    if action[0] == "menu":
++        action[1].activate()
++        return True
++    return coot0_open_doc(action[1], action[2])
++
++# ---------------------------------------------------------------- the search window
++coot0_search_window_widget = None
++def coot0_search_window():
++    import gtk, gobject
++    global coot0_search_window_widget
++    w = gtk.Window(gtk.WINDOW_TOPLEVEL)
++    w.set_title("Search Menus and Docs")
++    w.set_default_size(720, 480)
++    vbox = gtk.VBox(False, 6); vbox.set_border_width(8)
++    w.add(vbox)
++    entry = gtk.Entry()
++    vbox.pack_start(entry, False, False, 0)
++    hint = gtk.Label("Type a few words: menu entries, cookbook recipes, scripting functions and documentation sections are found.\n"
++                     "Double-click a line (or press Enter) to open it: a menu entry runs, a document opens in your web browser.")
++    hint.set_alignment(0, 0.5)
++    vbox.pack_start(hint, False, False, 0)
++    store = gtk.ListStore(str, str, int)
++    view = gtk.TreeView(store)
++    for i, title in enumerate(("Kind", "Entry")):
++        col = gtk.TreeViewColumn(title, gtk.CellRendererText(), text=i)
++        view.append_column(col)
++    sw = gtk.ScrolledWindow(); sw.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
++    sw.add(view)
++    vbox.pack_start(sw, True, True, 0)
++    status = gtk.Label(""); status.set_alignment(0, 0.5)
++    vbox.pack_start(status, False, False, 0)
++    bbox = gtk.HBox(False, 6)
++    close = gtk.Button("  Close  ")
++    bbox.pack_end(close, False, False, 0)
++    vbox.pack_start(bbox, False, False, 0)
++    state = {"results": []}
++
++    def refill(*args):
++        text = entry.get_text()
++        state["results"] = coot0_help_search(text)
++        store.clear()
++        for i, (kind, shown, action) in enumerate(state["results"]):
++            store.append([kind, shown, i])
++        n = len(state["results"])
++        status.set_text("" if not text.strip() else ("%d found%s" % (n, " (the first 300)" if n >= 300 else "") if n else "nothing found"))
++    def run_row(i):
++        if 0 <= i < len(state["results"]):
++            action = state["results"][i][2]
++            if action[0] == "menu": w.destroy()
++            coot0_help_run(action)
++    def on_row_activated(view_, path, column):
++        run_row(path[0] if isinstance(path, tuple) else int(path))
++    def on_entry_activate(*args):
++        model, it = view.get_selection().get_selected()
++        run_row(model.get_value(it, 2) if it is not None else 0)
++    entry.connect("changed", refill)
++    entry.connect("activate", on_entry_activate)
++    view.connect("row-activated", on_row_activated)
++    close.connect("clicked", lambda *a: w.destroy())
++    w.show_all()
++    entry.grab_focus()
++    coot0_search_window_widget = (w, entry, store, view, state)
++    return w
++
++# ---------------------------------------------------------------- keyboard shortcuts
++# Coot's own keys (src/globjects.cc key_press_event / key_release_event, 0.9.8.96); a key binding to one of these never runs
++coot0_coot_keys = [
++    ("F5", "Model/Fit/Refine window"), ("F6", "Go To Atom window"), ("F7", "Display Manager"), ("F8", "screenshot"),
++    ("Space / Shift-Space", "next / previous residue"), ("Return", "accept the refinement (or the rotamer)"),
++    ("Escape", "reject the refinement: the moving atoms go away"),
++    ("1 ... 6", "choose the chi angle (Edit Chi Angles); 3 also moves the view"), ("7 8 9 0", "taken (no action)"),
++    ("arrows", "move the view"), (". ,", "next / previous rotamer, peak or water in an open list"),
++    ("- + =", "map contour level down / up"), ("c", "crosshairs on / off"), ("d f", "clipping (slab) thinner / thicker"),
++    ("i", "spin the view on / off"), ("l", "label the nearest atom"), ("m n", "zoom out / in"),
++    ("o O", "next / previous NCS chain"), ("p", "update Go To Atom from the centre"), ("s", "re-contour the maps"),
++    ("u", "undo the last move"), ("Ctrl-1", "contact dots for the active molecule"), ("Ctrl-C", "copy the molecule of the active atom"), ("Ctrl-D, Ctrl-X", "delete the active residue"),
++    ("Ctrl-G", "go to residue (type it)"), ("Ctrl-I", "residue info"), ("Ctrl-L", "go to ligand"), ("Ctrl-R", "rock the view"),
++    ("Ctrl-S", "quick save"), ("Ctrl-Z / Ctrl-Y", "undo / redo"),
++    ("Mouse", "left-drag rotate, right-drag zoom (Mac trackpad: two-finger drag), Ctrl-left-drag move, scroll wheel contour level"),
++]
++
++def coot0_user_key_bindings():
++    """[(key, name, language)] from add_key_binding (Python) and add-key-binding (Scheme)"""
++    out = []
++    try:
++        for kb in key_bindings:
++            k = kb[1]
++            if isinstance(k, str) and k.startswith("Control_"): k = "Ctrl-" + k[len("Control_"):]
++            out.append((str(k), kb[2], "Python"))
++    except Exception:
++        pass
++    try:
++        r = run_scheme_command("(coot0-key-binding-list)")      # (coot-utils.scm; "(coot0-..." commands are not echoed)
++        if isinstance(r, list):
++            for k, name in r: out.append((str(k), str(name), "Scheme"))
++    except Exception:
++        pass
++    return out
++
++def coot0_keys_text():
++    lines = ["Coot's own keys (click in the graphics window first; a key binding of yours cannot take these):", ""]
++    for k, what in coot0_coot_keys: lines.append("  %-22s %s" % (k, what))
++    lines += ["", "Your key bindings (add_key_binding / Calculate > Scripting > Install Template Keybindings):", ""]
++    mine = coot0_user_key_bindings()
++    taken = set()
++    for k, what in coot0_coot_keys: taken.update(k.replace(",", " ").replace("/", " ").split())
++    if not mine: lines.append("  (none)")
++    for k, name, lang in mine:
++        lines.append("  %-22s %s  [%s]%s" % (k, name, lang, "   <- Coot's own key: this binding never runs" if k in taken else ""))
++    lines += ["", "Make one: Help > Search Menus and Docs, type \"key\" -> cookbook recipe 6.3.",
++              "On a Mac, F1-F12 need the fn key (or System Settings > Keyboard > Function Keys)."]
++    return "\n".join(lines)
++
++def coot0_keys_window():
++    import gtk, pango
++    w = gtk.Window(gtk.WINDOW_TOPLEVEL)
++    w.set_title("Keyboard Shortcuts")
++    w.set_default_size(720, 560)
++    vbox = gtk.VBox(False, 6); vbox.set_border_width(8); w.add(vbox)
++    tv = gtk.TextView(); tv.set_editable(False)
++    try: tv.modify_font(pango.FontDescription("Menlo 12"))
++    except Exception: pass
++    tv.get_buffer().set_text(coot0_keys_text())
++    sw = gtk.ScrolledWindow(); sw.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC); sw.add(tv)
++    vbox.pack_start(sw, True, True, 0)
++    close = gtk.Button("  Close  "); close.connect("clicked", lambda *a: w.destroy())
++    hb = gtk.HBox(False, 6); hb.pack_end(close, False, False, 0); vbox.pack_start(hb, False, False, 0)
++    w.show_all()
++    return w
++
++# ---------------------------------------------------------------- the menu
++coot0_help_menu_entries = [
++    ("Search Menus and Docs...", lambda: coot0_search_window()),
++    ("Keyboard Shortcuts...", lambda: coot0_keys_window()),
++    None,
++    ("Cookbook (recipes)", lambda: coot0_open_doc("cookbook/README.html")),
++    ("Scripting Reference (all functions)", lambda: coot0_open_doc("api/README.html")),
++    ("Documentation Overview", lambda: coot0_open_doc("README.html")),
++    ("coot0 README", lambda: coot0_open_doc("coot0-README.html")),
++    ("What's New in coot0 (changes per build)", lambda: coot0_open_doc("CHANGELOG.html")),
++    ("Coot Website (Paul Emsley, online)", lambda: coot0_open_url("https://www2.mrc-lmb.cam.ac.uk/personal/pemsley/coot/")),
++    None,
++]
++
++def coot0_install_help_menu():
++    try:
++        import coot_python, gtk
++        mb = coot_python.main_menubar()
++    except Exception:
++        return False
++    if mb is None: return False
++    help_item = None
++    for item in mb.get_children():
++        if coot0_menu_label(item) in ("About", "Help"): help_item = item
++    if help_item is None: return False
++    for c in help_item.get_children():
++        try: c.set_text_with_mnemonic("_Help")
++        except Exception: pass
++    menu = help_item.get_submenu()
++    if menu is None: return False
++    if any(coot0_menu_label(i) == coot0_help_menu_entries[0][0] for i in menu.get_children()): return True   # already there
++    for pos, e in enumerate(coot0_help_menu_entries):
++        if e is None:
++            mi = gtk.SeparatorMenuItem()
++        else:
++            mi = gtk.MenuItem(e[0])
++            mi.connect("activate", lambda w, f=e[1]: f())
++        menu.insert(mi, pos)
++        mi.show()
++    return True
++
++def coot0_help_menu_to_end():
++    """keeps Help the last menu: Coot adds menus later (Ligand, Glyco, Cryo-EM, ... via coot_menubar_menu)"""
++    try:
++        import coot_python, _gtk2core
++        mb = coot_python.main_menubar()
++        items = mb.get_children()
++        helps = [i for i in items if coot0_menu_label(i) == "Help"]
++        if not helps or items[-1] is helps[0] or coot0_menu_label(items[-1]) == "Help": return False
++        h = helps[0]
++        _gtk2core.call("g_object_ref", h)
++        try:
++            mb.remove(h); mb.append(h)
++        finally:
++            _gtk2core.call("g_object_unref", h)
++        return True
++    except Exception as e:
++        print("WARNING:: coot0_help_menu_to_end:", e)
++        return False
++
++if use_gui_qm:
++    coot0_install_help_menu()
++    coot0_help_menu_to_end()
+diff --git a/python/coot_gui.py b/python/coot_gui.py
+index 81ee22b..2c04e2c 100644
+--- a/python/coot_gui.py
++++ b/python/coot_gui.py
+@@ -1410,6 +1410,8 @@ def coot_menubar_menu(menu_label):
+        menuitem = gtk.MenuItem(menu_label)
+        menuitem.set_submenu(menu)
+        coot_main_menubar.append(menuitem)
++       try: coot0_help_menu_to_end()   # (coot0, build 28) Help stays the last menu
++       except NameError: pass
+        menuitem.show()
+        return menu
+    except: print("""BL WARNING:: could not import coot_python module!!\n
+diff --git a/python/coot_load_modules.py b/python/coot_load_modules.py
+index 053d8d1..0c7b148 100644
+--- a/python/coot_load_modules.py
++++ b/python/coot_load_modules.py
+@@ -108,7 +108,8 @@ post_list = ["coot_gui.py",
+             "pdbe_validation_data.py",
+             "contact_score_isolated_ligand.py",
+             "ligand_validation_sliders.py",
+-            "rcrane_loader.py" # calls set_found_coot_gui()
++            "rcrane_loader.py", # calls set_found_coot_gui()
++            "coot0_help.py"     # (coot0, build 28) the Help menu
+ ]
+ 
+ # list of modules not available on Windows
+diff --git a/python/coot_utils.py b/python/coot_utils.py
+index d8d3ece..9a29fbb 100644
+--- a/python/coot_utils.py
++++ b/python/coot_utils.py
+@@ -2040,13 +2040,16 @@ def add_key_binding(name, key, thunk):
+                     key_bindings.pop(keys.index(key))
+                 key_bindings.append([key, key, name, thunk])
+             elif (isinstance(key, str)):
+-                code = decode_key(key)
+-                if (code in codes):
+-                    print("INFO:: you are overwriting existing key (from code)", key)
+-                    key_bindings.pop(codes.index(code))
+-                if "Control_" in key:
+-                    code = decode_key(key[-1])
+-                if (("Control_" in key) or not (code == -1)):
++                # (coot0, build 28) a key and its Ctrl- version are two bindings: before, binding "k" removed a
++                # "Control_k" binding (same key code) and the Ctrl key did nothing any more
++                ctrl = "Control_" in key
++                code = decode_key(key[-1]) if ctrl else decode_key(key)
++                for i, kb in enumerate(key_bindings):
++                    if kb[0] == code and (("Control_" in str(kb[1])) == ctrl):
++                        print("INFO:: you are overwriting existing key (from code)", key)
++                        key_bindings.pop(i)
++                        break
++                if (ctrl or not (code == -1)):
+                     key_bindings.append([code, key, name, thunk])
+                 else:
+                     print("INFO:: key %s not found in code table" %key)
+@@ -2059,6 +2062,7 @@ def add_key_binding(name, key, thunk):
+ def _coot0_control_pressed():
+     # (coot0) With Guile built in, Coot sends unhandled keys to the Scheme hook, which passes only the key on to this
+     # function: the Ctrl state was lost and "Control_..." bindings made in Python never ran.  Ask GDK instead.
++    # (Build 28: the C++ passes its own Ctrl state through Scheme; this is only the fall-back for callers without it.)
+     try:
+         import ctypes
+         g = ctypes.PyDLL(None)
+@@ -2080,15 +2084,18 @@ def graphics_general_key_press_hook(key, control_flag = None):
+         control_flag = _coot0_control_pressed()
+     # print "graphics_general_key_press_hook(): Key %s was pressed" %key
+     if control_flag:
+-        codes = [elem[0] for elem in key_bindings if "Control_" in elem[1]]
+-        funcs = [elem[3] for elem in key_bindings if "Control_" in elem[1]]
++        codes = [elem[0] for elem in key_bindings if "Control_" in str(elem[1])]
++        funcs = [elem[3] for elem in key_bindings if "Control_" in str(elem[1])]
+     else:
+-        codes = [elem[0] for elem in key_bindings if not "Control_" in elem[1]]
+-        funcs = [elem[3] for elem in key_bindings if not "Control_" in elem[1]]
++        codes = [elem[0] for elem in key_bindings if not "Control_" in str(elem[1])]
++        funcs = [elem[3] for elem in key_bindings if not "Control_" in str(elem[1])]
+     if (key in codes):
+         index = codes.index(key)
+         func  = funcs[index]
+         # print "BL DEBUG:: index and executing:", index, func
++        # (coot0) say which binding runs: makes a key that does nothing visible easy to check
++        names = [elem[2] for elem in key_bindings if ("Control_" in str(elem[1])) == bool(control_flag)]
++        print("INFO:: key %s%s: running key binding \"%s\"" % ("Ctrl-" if control_flag else "", key, names[index]))
+         func()
+     else:
+         if coot_has_guile() and is_windows():
+diff --git a/scheme/coot-utils.scm b/scheme/coot-utils.scm
+index 93f718f..bcd564b 100644
+--- a/scheme/coot-utils.scm
++++ b/scheme/coot-utils.scm
+@@ -2119,10 +2119,16 @@
+ 	    (format #t "WARNING:: could not find key-sym-code for ~s~%" key)))))
+ 
+ 
++;; (coot0, build 28) the key bindings as (key name) pairs, for Help > Keyboard Shortcuts
++(define (coot0-key-binding-list)
++  (map (lambda (kb) (list (if (string? (cadr kb)) (cadr kb) (number->string (cadr kb))) (caddr kb))) *key-bindings*))
++
+ ;; general key press hook, not for public use.
+ ;; 
+-(define (graphics-general-key-press-hook key)
++(define (graphics-general-key-press-hook key . control-flag)
+   ;; (format #t "Key ~s was pressed~%" key)
++  ;; (coot0) the C++ passes the Ctrl state as a second argument; it goes on to Python,
++  ;; whose "Control_..." key bindings need it
+   (let ((field (assoc key *key-bindings*)))
+     ;; (format #t "Field: ~s~%" field)
+     (if (not field)
+@@ -2132,6 +2138,8 @@
+               (run-python-command (string-append 
+                                    "graphics_general_key_press_hook("
+                                    (number->string key)
++                                   (if (null? control-flag) ""
++                                       (string-append ", " (number->string (car control-flag))))
+                                    ")")))
+           (format #t "Key ~s not found in (scheme) key bindings~%" key))
+ 	(begin
+diff --git a/src/globjects.cc b/src/globjects.cc
+index 4c95237..6bb4893 100644
+--- a/src/globjects.cc
++++ b/src/globjects.cc
+@@ -3242,6 +3242,10 @@ gint key_press_event(GtkWidget *widget, GdkEventKey *event)
+ 	    // scheme_command += "\"";
+ 	    scheme_command += graphics_info_t::int_to_string(ikey);
+ 	    // scheme_command += "\"";
++	    // (coot0) pass the Ctrl state on, as the Python-only branch below does, so that
++	    // Python "Control_..." key bindings work in a build with both languages
++	    scheme_command += " ";
++	    scheme_command += graphics_info_t::int_to_string(graphics_info_t::control_is_pressed);
+ 	    scheme_command += ")";
+ 	    if (false)
+ 	       std::cout << "::::::: key press event not handled~! running scheme command: "

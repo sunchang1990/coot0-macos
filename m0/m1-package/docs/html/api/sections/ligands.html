@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="bc0d98043d41f25c29ac60f6fffbfc0fbe5daca6">
+<title>Ligands - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="ligands">Ligands</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Ligands (36 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="add_dictionary_from_residue">add_dictionary_from_residue</h3>
+<p>Python: <code>add_dictionary_from_residue(imol, chain_id, res_no, ins_code)</code><br>
+Scheme: <code>(add-dictionary-from-residue imol chain-id res-no ins-code)</code></p>
+<p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>add_dictionary_from_residue(0, "A", 41, "")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(add-dictionary-from-residue 0 "A" 41 "")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="comprised_of_organic_set_p">comprised_of_organic_set_p</h3>
+<p>Python: <code>comprised_of_organic_set_p(rn)</code><br>
+Scheme: <code>(comprised-of-organic-set-p rn)</code></p>
+<p>return False if unknown</p>
+<p>Arguments: rn (text). Returns: true or false.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>comprised_of_organic_set_p("hello")</code></td><td>ran, returned <code>False</code></td></tr>
+<tr><td>Scheme</td><td><code>(comprised-of-organic-set-p "hello")</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<h3 id="coot_add_hydrogen_atoms">coot_add_hydrogen_atoms</h3>
+<p>Python: <code>coot_add_hydrogen_atoms(imol)</code><br>
+Scheme: <code>(coot-add-hydrogen-atoms imol)</code></p>
+<p>this is not a ligand function - it does not belong here.
+ add Hydrogen atoms to the molecule</p>
+<p>Arguments: imol (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>coot_add_hydrogen_atoms(0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(coot-add-hydrogen-atoms 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="coot_all_atom_contact_dots">coot_all_atom_contact_dots</h3>
+<p>Python: <code>coot_all_atom_contact_dots(imol)</code><br>
+Scheme: <code>(coot-all-atom-contact-dots imol)</code></p>
+<p>all-atom contact dots. This is not the place for this declaration (not a ligand function)
+ calculate all-atom contact dots
+remove contact dots objects using the Generic Display Objects dialog</p>
+<p>Arguments: imol (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>coot_all_atom_contact_dots(0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(coot-all-atom-contact-dots 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="coot_contact_dots_for_ligand">coot_contact_dots_for_ligand</h3>
+<p>Python: <code>coot_contact_dots_for_ligand(imol, ligand_spec)</code><br>
+Scheme: <code>(coot-contact-dots-for-ligand-scm imol residue-spec-scm)</code></p>
+<p>Arguments: imol (a whole number), ligand_spec (a list or value). Returns: nothing.
+Also available in Python as <code>coot_contact_dots_for_ligand</code>, <code>coot_contact_dots_for_ligand_py</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>coot_contact_dots_for_ligand(0, ["A", 41, ""])</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(coot-contact-dots-for-ligand-scm 0 (list "A" 41 ""))</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="coot_reduce">coot_reduce</h3>
+<p>Python: <code>coot_reduce(imol)</code><br>
+Scheme: <code>(coot-reduce imol)</code></p>
+<p>Arguments: imol (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>coot_reduce(0)</code></td><td>not run: not run automatically (reduce: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(coot-reduce 0)</code></td><td>not run: not run automatically (reduce: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<h3 id="display_residue_distortions">display_residue_distortions</h3>
+<p>Python: <code>display_residue_distortions(imol, chain_id, res_no, ins_code)</code><br>
+Scheme: <code>(display-residue-distortions imol chain-id res-no ins-code)</code></p>
+<p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>display_residue_distortions(0, "A", 41, "")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(display-residue-distortions 0 "A" 41 "")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="display_residue_hydrogen_bond_atom_status_using_dictionary">display_residue_hydrogen_bond_atom_status_using_dictionary</h3>
+<p>Python: <code>display_residue_hydrogen_bond_atom_status_using_dictionary(imol, chain_id, res_no, ins_code)</code><br>
+Scheme: <code>(display-residue-hydrogen-bond-atom-status-using-dictionary imol chain-id res-no ins-code)</code></p>
+<p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>display_residue_hydrogen_bond_atom_status_using_dictionary(0, "A", 41, "")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(display-residue-hydrogen-bond-atom-status-using-dictionary 0 "A" 41 "")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="enhanced_ligand_coot_p">enhanced_ligand_coot_p</h3>
+<p>Python: <code>enhanced_ligand_coot_p()</code><br>
+Scheme: <code>(enhanced-ligand-coot-p)</code></p>
+<p>is this an "enhanced-ligand" version?</p>
+<p>Arguments: none. Returns: true or false.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>enhanced_ligand_coot_p()</code></td><td>ran, returned <code>True</code></td></tr>
+<tr><td>Scheme</td><td><code>(enhanced-ligand-coot-p)</code></td><td>ran, returned <code>#t</code></td></tr></tbody></table>
+<h3 id="get_intermediate_atoms_distortions">get_intermediate_atoms_distortions</h3>
+<p>Python: <code>get_intermediate_atoms_distortions()</code></p>
+<p>Arguments: none. Returns: a value (see the result of the example).
+Also available in Python as <code>get_intermediate_atoms_distortions_py</code>.
+<strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>get_intermediate_atoms_distortions()</code></td><td>ran, returned <code>False</code></td></tr></tbody></table>
+<h3 id="get_ligand_distortion_summary_info">get_ligand_distortion_summary_info</h3>
+<p>Python: <code>get_ligand_distortion_summary_info(imol, residue_spec)</code><br>
+Scheme: <code>(get-ligand-distortion-summary-info-scm imol residue-spec)</code></p>
+<p>return the summary info for ligand distortion</p>
+<p>Arguments: imol (a whole number), residue_spec (a list or value). Returns: a value (see the result of the example).
+Also available in Python as <code>get_ligand_distortion_summary_info_py</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>get_ligand_distortion_summary_info(0, ["A", 41, ""])</code></td><td>ran, returned <code>[2203.7119153114145, {'restraint_type': 'Chiral', 'target_value': 0.0, 'sigma': 0.1, 'fixed_atom_flags': [0, 0, 0, 0]}]</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-ligand-distortion-summary-info-scm 0 (list "A" 41 ""))</code></td><td>ran, returned <code>(2203.7119153114145 (("restraint-type" . "Chiral") ("target-value" . 0.0) ("sigma" . 0.1) ("fixed-atom-flags" 0 0 0 0)))</code></td></tr></tbody></table>
+<h3 id="get_ligand_percentile">get_ligand_percentile</h3>
+<p>Python: <code>get_ligand_percentile(metric_name, metric_value, reverse_order)</code><br>
+Scheme: <code>(get-ligand-percentile metric-name metric-value reverse-order)</code></p>
+<p>we want to read in the built-in database to convert these scores to percentiles
+return -1 (test for negative) on failure
+metric_name examples: density_correlation coot_diff_map_KS_2 mogul_z_worst bumps_1
+range: 0-&gt;100
+reverse order for mogul and bumps (for example) because low-is-good</p>
+<p>Arguments: metric_name (text), metric_value (a number), reverse_order (a whole number). Returns: a number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>get_ligand_percentile("my-name", 1.0, 1)</code></td><td>ran, returned <code>-1.0</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-ligand-percentile "my-name" 1.0 1)</code></td><td>ran, returned <code>-1.0</code></td></tr></tbody></table>
+<h3 id="get_monomer_molecule_by_network_and_dict_gen">get_monomer_molecule_by_network_and_dict_gen</h3>
+<p>Python: <code>get_monomer_molecule_by_network_and_dict_gen(text)</code><br>
+Scheme: <code>(get-monomer-molecule-by-network-and-dict-gen text)</code></p>
+<p>return a new molecule number</p>
+<p>Arguments: text (text). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>get_monomer_molecule_by_network_and_dict_gen("hello")</code></td><td>not run: not run automatically (network: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(get-monomer-molecule-by-network-and-dict-gen "hello")</code></td><td>not run: not run automatically (network: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<h3 id="gsl_sf_erf_scm">gsl_sf_erf_scm</h3>
+<p>Python: <code>gsl_sf_erf_scm(v)</code><br>
+Scheme: <code>(gsl-sf-erf-scm v)</code></p>
+<p>Arguments: v (a number). Returns: a number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>gsl_sf_erf_scm(1.0)</code></td><td>ran, returned <code>0.8427007929497149</code></td></tr>
+<tr><td>Scheme</td><td><code>(gsl-sf-erf-scm 1.0)</code></td><td>ran, returned <code>0.8427007929497149</code></td></tr></tbody></table>
+<h3 id="gui_ligand_metrics">gui_ligand_metrics</h3>
+<p>Python: <code>gui_ligand_metrics(ligand_spec, ligand_metrics, percentile_limit)</code><br>
+Scheme: <code>(gui-ligand-metrics-scm ligand-spec ligand-metrics percentile-limit)</code></p>
+<p>Arguments: ligand_spec (a list or value), ligand_metrics (a list or value), percentile_limit (a number). Returns: nothing.
+Also available in Python as <code>gui_ligand_metrics_py</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<h3 id="import_rdkit_mol_from_smiles">import_rdkit_mol_from_smiles</h3>
+<p>Python: <code>import_rdkit_mol_from_smiles(smiles, comp_id)</code><br>
+Scheme: <code>(import-rdkit-mol-from-smiles smiles comp-id)</code></p>
+<p>import a molecule from a smiles string
+RDKit is used to interpret the SMILES string
+no dictionary is generated
+Returns a molecule number or -1 on failure</p>
+<p>Arguments: smiles (text), comp_id (text). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>import_rdkit_mol_from_smiles("hello", "ALA")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(import-rdkit-mol-from-smiles "hello" "ALA")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="invert_chiral_centre">invert_chiral_centre</h3>
+<p>Python: <code>invert_chiral_centre(imol, chain_id, res_no, ins_code, atom_name)</code><br>
+Scheme: <code>(invert-chiral-centre imol chain-id res-no ins-code atom-name)</code></p>
+<p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text), atom_name (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>invert_chiral_centre(0, "A", 41, "", " CA ")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(invert-chiral-centre 0 "A" 41 "" " CA ")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="jed_flip_intermediate_atoms">jed_flip_intermediate_atoms</h3>
+<p>Python: <code>jed_flip_intermediate_atoms()</code><br>
+Scheme: <code>(jed-flip-intermediate-atoms)</code></p>
+<p>JED-Flip the bond of the active atoms</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>jed_flip_intermediate_atoms()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(jed-flip-intermediate-atoms)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="kolmogorov_smirnov">kolmogorov_smirnov</h3>
+<p>Python: <code>kolmogorov_smirnov(l1, l2)</code><br>
+Scheme: <code>(kolmogorov-smirnov l1 l2)</code></p>
+<p>Arguments: l1 (a list or value), l2 (a list or value). Returns: a number.
+Also available in Python as <code>kolmogorov_smirnov_py</code>.
+Also available in Scheme as <code>kolmogorov-smirnov-scm</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<h3 id="kolmogorov_smirnov_vs_normal">kolmogorov_smirnov_vs_normal</h3>
+<p>Python: <code>kolmogorov_smirnov_vs_normal(l1, mean, std_dev)</code><br>
+Scheme: <code>(kolmogorov-smirnov-vs-normal-scm l1 mean std-dev)</code></p>
+<p>Arguments: l1 (a list or value), mean (a number), std_dev (a number). Returns: a number.
+Also available in Python as <code>kolmogorov_smirnov_vs_normal_py</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<h3 id="kullback_liebler">kullback_liebler</h3>
+<p>Python: <code>kullback_liebler(l1, l2)</code><br>
+Scheme: <code>(kullback-liebler l1 l2)</code></p>
+<p>Arguments: l1 (a list or value), l2 (a list or value). Returns: a value (see the result of the example).
+Also available in Python as <code>kullback_liebler_py</code>.
+Also available in Scheme as <code>kullback-liebler-scm</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<h3 id="ligand_atom_overlaps">ligand_atom_overlaps</h3>
+<p>Python: <code>ligand_atom_overlaps(imol, ligand_spec, neighb_radius)</code><br>
+Scheme: <code>(ligand-atom-overlaps-scm imol ligand-spec neighb-radius)</code></p>
+<p>internal bumps scoring, sphere overlap</p>
+<p>Arguments: imol (a whole number), ligand_spec (a list or value), neighb_radius (a number). Returns: a value (see the result of the example).
+Also available in Python as <code>ligand_atom_overlaps_py</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>ligand_atom_overlaps(0, ["A", 41, ""], 5.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(ligand-atom-overlaps-scm 0 (list "A" 41 "") 5.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="linked_residues">linked_residues</h3>
+<p>Python: <code>linked_residues(residue_centre, imol, close_dist_max)</code><br>
+Scheme: <code>(linked-residues residue-centre imol close-dist-max)</code></p>
+<p>find all the residues that are linked to this reside (and those that are attached to those and so on)
+the attachment test is trivial: is an atom of a potential neighber within close_dist_max of
+an atom of the current residue?</p>
+<p>Arguments: residue_centre (a list or value), imol (a whole number), close_dist_max (a number). Returns: a value (see the result of the example).
+Also available in Python as <code>linked_residues_py</code>.
+Also available in Scheme as <code>linked-residues-scm</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<h3 id="match_residue_and_dictionary">match_residue_and_dictionary</h3>
+<p>Python: <code>match_residue_and_dictionary(imol, chain_id, res_no, ins_code, cif_dict_in, cif_dict_out, cif_dict_comp_id, reference_comp_id, output_comp_id, output_compound_name)</code><br>
+Scheme: <code>(match-residue-and-dictionary imol chain-id res-no ins-code cif-dict-in cif-dict-out cif-dict-comp-id reference-comp-id output-comp-id output-compound-name)</code></p>
+<p>Read cif_dict_in, match the atoms there-in to those of the dictionary of reference_comp_id.
+Write a new dictionary to cif_dict_out.
+Return 1 if was successful in doing the atom matching and writing the cif file.
+e.g: match_residue_and_dictionary(0, "A", 1, "", "DRG-pyrogen.cif", "DRG-renamed.cif", "DRG", "LYS")</p>
+<p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text), cif_dict_in (text), cif_dict_out (text), cif_dict_comp_id (text), reference_comp_id (text), output_comp_id (text), output_compound_name (text). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>match_residue_and_dictionary(0, "A", 41, "", "hello", "hello", "hello", "hello", "hello", "my-name")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(match-residue-and-dictionary 0 "A" 41 "" "hello" "hello" "hello" "hello" "hello" "my-name")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="match_this_residue_and_dictionary">match_this_residue_and_dictionary</h3>
+<p>Python: <code>match_this_residue_and_dictionary(imol, chain_id, res_no, ins_code, cif_dict_out, reference_comp_id, output_comp_id)</code><br>
+Scheme: <code>(match-this-residue-and-dictionary imol chain-id res-no ins-code cif-dict-out reference-comp-id output-comp-id)</code></p>
+<p>This is the GUI interface: User sits over on top of the residue
+they want to change and provides an output dictionary cif file
+name, a reference-comp-id and a compd-id for the new residue (type).</p>
+<p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text), cif_dict_out (text), reference_comp_id (text), output_comp_id (text). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>match_this_residue_and_dictionary(0, "A", 41, "", "hello", "hello", "hello")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(match-this-residue-and-dictionary 0 "A" 41 "" "hello" "hello" "hello")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="print_residue_distortions">print_residue_distortions</h3>
+<p>Python: <code>print_residue_distortions(imol, chain_id, res_no, ins_code)</code><br>
+Scheme: <code>(print-residue-distortions imol chain-id res-no ins-code)</code></p>
+<p>Returning void ATM. We shoud return an interesting object at some
+stage. Perhaps a coot::geometry_distortion_info_container_t?</p>
+<p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text). Returns: a number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>print_residue_distortions(0, "A", 41, "")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(print-residue-distortions 0 "A" 41 "")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="probe_clash_score">probe_clash_score</h3>
+<p>Python: <code>probe_clash_score(dots_file_name)</code><br>
+Scheme: <code>(probe-clash-score dots-file-name)</code></p>
+<p>return scheme false on failure or a scheme list
+(n_bad_overlaps n_hydrogen_bonds n_small_overlaps n_close_contacts
+n_wide_contacts)</p>
+<p>Arguments: dots_file_name (text). Returns: a value (see the result of the example).</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>probe_clash_score("tutorial-modern.pdb")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(probe-clash-score "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="residue_to_mdl_file_for_mogul">residue_to_mdl_file_for_mogul</h3>
+<p>Python: <code>residue_to_mdl_file_for_mogul(imol, chain_id, resno, ins_code, mdl_file_name)</code><br>
+Scheme: <code>(residue-to-mdl-file-for-mogul imol chain-id resno ins-code mdl-file-name)</code></p>
+<p>Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_code (text), mdl_file_name (text). Returns: true or false.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>residue_to_mdl_file_for_mogul(0, "A", 41, "", "tutorial-modern.pdb")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(residue-to-mdl-file-for-mogul 0 "A" 41 "" "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="residue_to_sdf_file">residue_to_sdf_file</h3>
+<p>Python: <code>residue_to_sdf_file(imol, chain_id, resno, ins_code, sdf_file_name, kekulize)</code><br>
+Scheme: <code>(residue-to-sdf-file imol chain-id resno ins-code sdf-file-name kekulize)</code></p>
+<p>20140226: now we change things so that the interface functions always get generated,
+ and what the function does depends on MAKE_ENHANCED_LIGAND_TOOLS
+#ifdef MAKE_ENHANCED_LIGAND_TOOLS
+was it OK or not? (i.e. did we not catch an exception)</p>
+<p>Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_code (text), sdf_file_name (text), kekulize (true or false). Returns: true or false.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>residue_to_sdf_file(0, "A", 41, "", "tutorial-modern.pdb", 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(residue-to-sdf-file 0 "A" 41 "" "tutorial-modern.pdb" 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="residues_distortions">residues_distortions</h3>
+<p>Python: <code>residues_distortions(imol, residue_spec_list)</code><br>
+Scheme: <code>(residues-distortions-scm imol residue-spec-list-scm)</code></p>
+<p>this is not a ligands function (although it can be used for ligands)
+it doesn't belong here</p>
+<p>Arguments: imol (a whole number), residue_spec_list (a list or value). Returns: a value (see the result of the example).
+Also available in Python as <code>residues_distortions_py</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>residues_distortions(0, ["A", 41, ""])</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(residues-distortions-scm 0 (list "A" 41 ""))</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="residues_torsions_match">residues_torsions_match</h3>
+<p>Python: <code>residues_torsions_match(imol_1, res_1, imol_2, res_2, tolerance)</code><br>
+Scheme: <code>(residues-torsions-match-scm imol-1 res-1 imol-2 res-2 tolerance)</code></p>
+<p>Arguments: imol_1 (a whole number), res_1 (a list or value), imol_2 (a whole number), res_2 (a list or value), tolerance (a number). Returns: true or false.
+Also available in Python as <code>residues_torsions_match_py</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<h3 id="reverse_jed_flip_intermediate_atoms">reverse_jed_flip_intermediate_atoms</h3>
+<p>Python: <code>reverse_jed_flip_intermediate_atoms()</code><br>
+Scheme: <code>(reverse-jed-flip-intermediate-atoms)</code></p>
+<p>JED-Flip the bond of the active atoms using reversed atom selection (wag the dog)</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>reverse_jed_flip_intermediate_atoms()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(reverse-jed-flip-intermediate-atoms)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_all_atom_contact_dots_ignore_water">set_all_atom_contact_dots_ignore_water</h3>
+<p>Python: <code>set_all_atom_contact_dots_ignore_water(state)</code><br>
+Scheme: <code>(set-all-atom-contact-dots-ignore-water state)</code></p>
+<p>set if all atom contact should ignore water-water interactions (default off)</p>
+<p>Arguments: state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_all_atom_contact_dots_ignore_water(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-all-atom-contact-dots-ignore-water 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="show_feats">show_feats</h3>
+<p>Python: <code>show_feats(imol, chain_id, resno, ins_code)</code><br>
+Scheme: <code>(show-feats imol chain-id resno ins-code)</code></p>
+<p>rdkit chemical features.</p>
+<p>Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_code (text). Returns: true or false.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>show_feats(0, "A", 41, "")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(show-feats 0 "A" 41 "")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="switch_his_protonation">switch_HIS_protonation</h3>
+<p>Python: <code>switch_HIS_protonation(imol, residue_spec)</code><br>
+Scheme: <code>(switch-HIS-protonation-scm imol residue-spec-scm)</code></p>
+<p>change HE2 to HD1 and vice versa</p>
+<p>Arguments: imol (a whole number), residue_spec (a list or value). Returns: nothing.
+Also available in Python as <code>switch_HIS_protonation</code>, <code>switch_HIS_protonation_py</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>switch_HIS_protonation(0, ["A", 41, ""])</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(switch-HIS-protonation-scm 0 (list "A" 41 ""))</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="write_dictionary_from_residue">write_dictionary_from_residue</h3>
+<p>Python: <code>write_dictionary_from_residue(imol, chain_id, res_no, ins_code, cif_file_name)</code><br>
+Scheme: <code>(write-dictionary-from-residue imol chain-id res-no ins-code cif-file-name)</code></p>
+<p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text), cif_file_name (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>write_dictionary_from_residue(0, "A", 41, "", "tutorial-modern.pdb")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(write-dictionary-from-residue 0 "A" 41 "" "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

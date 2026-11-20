@@ -5,6 +5,7 @@
 # and reports any Python exception.  Items that call OpenGL-only code (display lists, ball&stick) cannot run without a
 # graphics context; the sweep restarts after such a crash and lists them as CRASH (they are checked in the real GUI audit).
 HERE="$(cd "$(dirname "$0")/.." && pwd)"
+export COOT0_NO_BROWSER=1   # (build 28) Help entries that open documents only print what they would open
 if [ -n "$COOT_STATE_DIR" ]; then STATE="$COOT_STATE_DIR"                                    # (build 17) explicit
 elif [ -f "$HERE/.coot0-installed" ]; then STATE="$HOME/Library/Application Support/coot0"   # installed by install.sh: per user
 elif [ -w "$HERE" ]; then STATE="$HERE"; else STATE="$HOME/Library/Application Support/Coot-0.9.8.96"; fi

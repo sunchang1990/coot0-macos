@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="cc8769719eb13f07d8f8f501a70b3e9beb3b22f6">
+<title>Extra Map Functions - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="extra-map-functions">Extra Map Functions</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Extra Map Functions (18 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="add_map_colour_mol_menu_item">add_map_colour_mol_menu_item</h3>
+<p>Python: <code>add_map_colour_mol_menu_item(imol, name, sub_menu, callback)</code><br>
+Scheme: <code>(add-map-colour-mol-menu-item imol name sub-menu callback)</code></p>
+<p>Arguments: imol (a whole number), name (text), sub_menu (<code>GtkWidget *</code>), callback (<code>GtkSignalFunc</code>). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<h3 id="add_map_scroll_wheel_mol_menu_item">add_map_scroll_wheel_mol_menu_item</h3>
+<p>Python: <code>add_map_scroll_wheel_mol_menu_item(imol, name, menu, callback)</code><br>
+Scheme: <code>(add-map-scroll-wheel-mol-menu-item imol name menu callback)</code></p>
+<p>Actually this function is generic and could be renamed so.</p>
+<p>Arguments: imol (a whole number), name (text), menu (<code>GtkWidget *</code>), callback (<code>GtkSignalFunc</code>). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<h3 id="amplitude_vs_resolution_py">amplitude_vs_resolution_py</h3>
+<p>Python: <code>amplitude_vs_resolution_py(mol_map)</code><br>
+Scheme: <code>(amplitude-vs-resolution-scm mol-map)</code></p>
+<p>Arguments: mol_map (a whole number). Returns: a value (see the result of the example).</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>amplitude_vs_resolution_py(1)</code></td><td>ran, returned <code>[&lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;, ...</code></td></tr>
+<tr><td>Scheme</td><td><code>(amplitude-vs-resolution-scm 1)</code></td><td>ran, returned <code>((86091.39604021655 92 0.00424090013636843) (150838.67069283 140 0.01099814952550722) (108113.47222217107 175 0.01797754 ...</code></td></tr></tbody></table>
+<h3 id="analyse_map_point_density_change_py">analyse_map_point_density_change_py</h3>
+<p>Python: <code>analyse_map_point_density_change_py(map_number_list, imol_map_mask)</code></p>
+<p>test function for analysis of multiple map</p>
+<p>Arguments: map_number_list (a list or value), imol_map_mask (a whole number). Returns: a whole number.
+<strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<h3 id="auto_read_make_and_draw_maps">auto_read_make_and_draw_maps</h3>
+<p>Python: <code>auto_read_make_and_draw_maps(filename)</code><br>
+Scheme: <code>(auto-read-make-and-draw-maps filename)</code></p>
+<p>read MTZ file filename and from it try to make maps</p>
+<p>Useful for reading the output of refmac. The default labels (FWT/PHWT
+and DELFWT/PHDELFWT) can be changed using ...[something]</p>
+<p> Returns a list of molecule numbers for the new maps</p>
+<p>Arguments: filename (text). Returns: a list.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>auto_read_make_and_draw_maps("tutorial-modern.pdb")</code></td><td>ran, returned <code>()</code></td></tr>
+<tr><td>Scheme</td><td><code>(auto-read-make-and-draw-maps "tutorial-modern.pdb")</code></td><td>ran, returned <code>#()</code></td></tr></tbody></table>
+<h3 id="auto_read_make_and_draw_maps_from_cns">auto_read_make_and_draw_maps_from_cns</h3>
+<p>Python: <code>auto_read_make_and_draw_maps_from_cns(file_name)</code><br>
+Scheme: <code>(auto-read-make-and-draw-maps-from-cns file-name)</code></p>
+<p>Arguments: file_name (text). Returns: a list.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>auto_read_make_and_draw_maps_from_cns("tutorial-modern.pdb")</code></td><td>ran, returned <code>()</code></td></tr>
+<tr><td>Scheme</td><td><code>(auto-read-make-and-draw-maps-from-cns "tutorial-modern.pdb")</code></td><td>ran, returned <code>#()</code></td></tr></tbody></table>
+<h3 id="auto_read_make_and_draw_maps_from_mtz">auto_read_make_and_draw_maps_from_mtz</h3>
+<p>Python: <code>auto_read_make_and_draw_maps_from_mtz(file_name)</code><br>
+Scheme: <code>(auto-read-make-and-draw-maps-from-mtz file-name)</code></p>
+<p>set the flag to do a difference map (too) on auto-read MTZ</p>
+<p>Arguments: file_name (text). Returns: a list.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>auto_read_make_and_draw_maps_from_mtz("tutorial-modern.pdb")</code></td><td>ran, returned <code>()</code></td></tr>
+<tr><td>Scheme</td><td><code>(auto-read-make-and-draw-maps-from-mtz "tutorial-modern.pdb")</code></td><td>ran, returned <code>#()</code></td></tr></tbody></table>
+<h3 id="b_factor_from_map">b_factor_from_map</h3>
+<p>Python: <code>b_factor_from_map(imol_map)</code><br>
+Scheme: <code>(b-factor-from-map imol-map)</code></p>
+<p>b-factor from map
+calculate structure factors and use the amplitudes to estimate
+the B-factor of the data using a wilson plot using a low resolution
+limit of 4.5A.
+Returns -1 when given a bad map or there were no data beyond 4.5A</p>
+<p>Arguments: imol_map (a whole number). Returns: a number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>b_factor_from_map(1)</code></td><td>ran, returned <code>-1.0</code></td></tr>
+<tr><td>Scheme</td><td><code>(b-factor-from-map 1)</code></td><td>ran, returned <code>-1.0</code></td></tr></tbody></table>
+<h3 id="flip_hand">flip_hand</h3>
+<p>Python: <code>flip_hand(imol_map)</code><br>
+Scheme: <code>(flip-hand imol-map)</code></p>
+<p>Flip the hand of the map
+in case it was accidentally generated on the wrong one.
+Returns the molecule number of the flipped map.</p>
+<p>Arguments: imol_map (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>flip_hand(1)</code></td><td>ran, returned <code>2</code></td></tr>
+<tr><td>Scheme</td><td><code>(flip-hand 1)</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<h3 id="go_to_map_molecule_centre">go_to_map_molecule_centre</h3>
+<p>Python: <code>go_to_map_molecule_centre(imol_map)</code><br>
+Scheme: <code>(go-to-map-molecule-centre imol-map)</code></p>
+<p>Go to the centre of the molecule - for Cryo-EM Molecules
+ and recontour at a sensible value.</p>
+<p>Arguments: imol_map (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>go_to_map_molecule_centre(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(go-to-map-molecule-centre 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="handle_read_ccp4_map">handle_read_ccp4_map</h3>
+<p>Python: <code>handle_read_ccp4_map(filename, is_diff_map_flag)</code><br>
+Scheme: <code>(handle-read-ccp4-map filename is-diff-map-flag)</code></p>
+<p>same function as above - old name for the function. Deleted from the API at some stage</p>
+<p>Arguments: filename (text), is_diff_map_flag (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>handle_read_ccp4_map("tutorial-modern.pdb", 1)</code></td><td>ran, returned <code>-1</code></td></tr>
+<tr><td>Scheme</td><td><code>(handle-read-ccp4-map "tutorial-modern.pdb" 1)</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<h3 id="handle_read_emdb_data">handle_read_emdb_data</h3>
+<p>Python: <code>handle_read_emdb_data(dir_name)</code><br>
+Scheme: <code>(handle-read-emdb-data dir-name)</code></p>
+<p>Arguments: dir_name (text). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>handle_read_emdb_data(".")</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(handle-read-emdb-data ".")</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<h3 id="map_colour_components">map_colour_components</h3>
+<p>Python: <code>map_colour_components(imol)</code><br>
+Scheme: <code>(map-colour-components imol)</code></p>
+<p>return the colour triple of the imolth map
+e.g.: [0.4, 0.6, 0.8]. If invalid imol return Py_False.</p>
+<p>Arguments: imol (a whole number). Returns: a value (see the result of the example).
+Also available in Python as <code>map_colour_components_py</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>map_colour_components(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(map-colour-components 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="multi_sharpen_blur_map_py">multi_sharpen_blur_map_py</h3>
+<p>Python: <code>multi_sharpen_blur_map_py(imol_map, b_factors_list)</code><br>
+Scheme: <code>(multi-sharpen-blur-map-scm imol-map b-factors-list)</code></p>
+<p>make many sharpened or blurred maps
+blurred maps are generated by using a positive value of b_factor.</p>
+<p>Arguments: imol_map (a whole number), b_factors_list (a list or value). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<h3 id="read_ccp4_map">read_ccp4_map</h3>
+<p>Python: <code>read_ccp4_map(filename, is_diff_map_flag)</code><br>
+Scheme: <code>(read-ccp4-map filename is-diff-map-flag)</code></p>
+<p>read a CCP4 map or a CNS map (despite the name).</p>
+<p>Arguments: filename (text), is_diff_map_flag (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>read_ccp4_map("tutorial-modern.pdb", 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(read-ccp4-map "tutorial-modern.pdb" 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="res_tracer">res_tracer</h3>
+<p>Python: <code>res_tracer(imol_map, pir_file_name)</code><br>
+Scheme: <code>(res-tracer imol-map pir-file-name)</code></p>
+<p>trace the given map and try to apply the sequence in
+the given pir file</p>
+<p>Arguments: imol_map (a whole number), pir_file_name (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>res_tracer(1, "tutorial-modern.pdb")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(res-tracer 1 "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="sharpen_blur_map">sharpen_blur_map</h3>
+<p>Python: <code>sharpen_blur_map(imol_map, b_factor)</code><br>
+Scheme: <code>(sharpen-blur-map imol-map b-factor)</code></p>
+<p>make a sharpened or blurred map
+blurred maps are generated by using a positive value of b_factor.
+Returns the index of the map created by applying a b-factor
+ to the given map. Return -1 on failure.</p>
+<p>Arguments: imol_map (a whole number), b_factor (a number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>sharpen_blur_map(1, 20.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(sharpen-blur-map 1 20.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="sharpen_blur_map_with_resampling">sharpen_blur_map_with_resampling</h3>
+<p>Python: <code>sharpen_blur_map_with_resampling(imol_map, b_factor, resample_factor)</code><br>
+Scheme: <code>(sharpen-blur-map-with-resampling imol-map b-factor resample-factor)</code></p>
+<p>make a sharpened or blurred map with resampling
+resampling factor might typically be 1.3
+blurred maps are generated by using a positive value of b_factor.
+Returns the index of the map created by applying a b-factor
+ to the given map. Return -1 on failure.</p>
+<p>Arguments: imol_map (a whole number), b_factor (a number), resample_factor (a number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>sharpen_blur_map_with_resampling(1, 20.0, 1.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(sharpen-blur-map-with-resampling 1 20.0 1.0)</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

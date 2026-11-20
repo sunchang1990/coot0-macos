@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="bbab37d3ee5e86cc5137d9a26e8cff4f4d5d24ae">
+<title>Screen Rotation - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="screen-rotation">Screen Rotation</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; Screen Rotation (4 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="rotate_x_scene">rotate_x_scene</h3>
+<p>Python: <code>rotate_x_scene(nsteps, stepsize)</code><br>
+Scheme: <code>(rotate-x-scene nsteps stepsize)</code></p>
+<p>rotate view round x axis stepsize degrees for nstep such steps</p>
+<p>Arguments: nsteps (a whole number), stepsize (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>rotate_x_scene(1, 1.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(rotate-x-scene 1 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="rotate_y_scene">rotate_y_scene</h3>
+<p>Python: <code>rotate_y_scene(nsteps, stepsize)</code><br>
+Scheme: <code>(rotate-y-scene nsteps stepsize)</code></p>
+<p>rotate view round y axis stepsize degrees for nstep such steps</p>
+<p>Arguments: nsteps (a whole number), stepsize (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>rotate_y_scene(1, 1.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(rotate-y-scene 1 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="rotate_z_scene">rotate_z_scene</h3>
+<p>Python: <code>rotate_z_scene(nsteps, stepsize)</code><br>
+Scheme: <code>(rotate-z-scene nsteps stepsize)</code></p>
+<p>rotate view round z axis stepsize degrees for nstep such steps</p>
+<p>Arguments: nsteps (a whole number), stepsize (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>rotate_z_scene(1, 1.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(rotate-z-scene 1 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="spin_zoom_trans">spin_zoom_trans</h3>
+<p>Python: <code>spin_zoom_trans(axis, nstep, stepsize, zoom_by, x_rel, y_rel, z_rel)</code><br>
+Scheme: <code>(spin-zoom-trans axis nstep stepsize zoom-by x-rel y-rel z-rel)</code></p>
+<p>Bells and whistles rotation</p>
+<p> spin, zoom and translate.</p>
+<p> where axis is either x,y or z,
+ stepsize is in degrees,
+ zoom_by and x_rel etc are how much zoom, x,y,z should
+ have changed by after nstep steps.</p>
+<p>Arguments: axis (a whole number), nstep (a whole number), stepsize (a number), zoom_by (a number), x_rel (a number), y_rel (a number), z_rel (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>spin_zoom_trans(1, 1, 1.0, 100.0, 1.0, 1.0, 1.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(spin-zoom-trans 1 1 1.0 100.0 1.0 1.0 1.0)</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

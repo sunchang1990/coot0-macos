@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="6383e2710602e0b7a5762e691d7ecdda64d11eba">
+<title>NCS - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="ncs">NCS</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; NCS (29 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="add_ncs_matrix">add_ncs_matrix</h3>
+<p>Python: <code>add_ncs_matrix(imol, this_chain_id, target_chain_id, m11, m12, m13, m21, m22, m23, m31, m32, m33, t1, t2, t3)</code><br>
+Scheme: <code>(add-ncs-matrix imol this-chain-id target-chain-id m11 m12 m13 m21 m22 m23 m31 m32 m33 t1 t2 t3)</code></p>
+<p>Add NCS matrix</p>
+<p>Arguments: imol (a whole number), this_chain_id (text), target_chain_id (text), m11 (a number), m12 (a number), m13 (a number), m21 (a number), m22 (a number), m23 (a number), m31 (a number), m32 (a number), m33 (a number), t1 (a number), t2 (a number), t3 (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>add_ncs_matrix(0, "A", "A", 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(add-ncs-matrix 0 "A" "A" 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="add_strict_ncs_from_mtrix_from_self_file">add_strict_ncs_from_mtrix_from_self_file</h3>
+<p>Python: <code>add_strict_ncs_from_mtrix_from_self_file(imol)</code><br>
+Scheme: <code>(add-strict-ncs-from-mtrix-from-self-file imol)</code></p>
+<p>Arguments: imol (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>add_strict_ncs_from_mtrix_from_self_file(0)</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(add-strict-ncs-from-mtrix-from-self-file 0)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<h3 id="add_strict_ncs_matrix">add_strict_ncs_matrix</h3>
+<p>Python: <code>add_strict_ncs_matrix(imol, this_chain_id, target_chain_id, m11, m12, m13, m21, m22, m23, m31, m32, m33, t1, t2, t3)</code><br>
+Scheme: <code>(add-strict-ncs-matrix imol this-chain-id target-chain-id m11 m12 m13 m21 m22 m23 m31 m32 m33 t1 t2 t3)</code></p>
+<p>add an NCS matrix for strict NCS molecule representation</p>
+<p>for CNS strict NCS usage: expand like normal symmetry does</p>
+<p>Arguments: imol (a whole number), this_chain_id (text), target_chain_id (text), m11 (a number), m12 (a number), m13 (a number), m21 (a number), m22 (a number), m23 (a number), m31 (a number), m32 (a number), m33 (a number), t1 (a number), t2 (a number), t3 (a number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>add_strict_ncs_matrix(0, "A", "A", 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(add-strict-ncs-matrix 0 "A" "A" 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<h3 id="clear_ncs_ghost_matrices">clear_ncs_ghost_matrices</h3>
+<p>Python: <code>clear_ncs_ghost_matrices(imol)</code><br>
+Scheme: <code>(clear-ncs-ghost-matrices imol)</code></p>
+<p>Arguments: imol (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>clear_ncs_ghost_matrices(0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(clear-ncs-ghost-matrices 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="copy_chain">copy_chain</h3>
+<p>Python: <code>copy_chain(imol, from_chain, to_chain)</code><br>
+Scheme: <code>(copy-chain imol from-chain to-chain)</code></p>
+<p>Copy single NCS chain</p>
+<p>Arguments: imol (a whole number), from_chain (text), to_chain (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>copy_chain(0, "A", "B")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(copy-chain 0 "A" "B")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="copy_from_ncs_master_to_chains">copy_from_ncs_master_to_chains</h3>
+<p>Python: <code>copy_from_ncs_master_to_chains(imol, master_chain_id, chain_id_list)</code><br>
+Scheme: <code>(copy-from-ncs-master-to-chains imol master-chain-id chain-id-list)</code></p>
+<p>Arguments: imol (a whole number), master_chain_id (text), chain_id_list (a list or value). Returns: nothing.
+Also available in Python as <code>copy_from_ncs_master_to_chains_py</code>.
+Also available in Scheme as <code>copy-from-ncs-master-to-chains-scm</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<h3 id="copy_from_ncs_master_to_others">copy_from_ncs_master_to_others</h3>
+<p>Python: <code>copy_from_ncs_master_to_others(imol, chain_id)</code><br>
+Scheme: <code>(copy-from-ncs-master-to-others imol chain-id)</code></p>
+<p>Copy chain from master to all related NCS chains</p>
+<p>Arguments: imol (a whole number), chain_id (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>copy_from_ncs_master_to_others(0, "A")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(copy-from-ncs-master-to-others 0 "A")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="copy_from_ncs_master_to_specific_other_chains_py">copy_from_ncs_master_to_specific_other_chains_py</h3>
+<p>Python: <code>copy_from_ncs_master_to_specific_other_chains_py(imol, chain_id, other_chain_id_list_py)</code><br>
+Scheme: <code>(copy-from-ncs-master-to-specific-other-chains-scm imol chain-id other-chain-id-list-scm)</code></p>
+<p>Copy chain from master to specified other NCS chains</p>
+<p>Arguments: imol (a whole number), chain_id (text), other_chain_id_list_py (a list or value). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<h3 id="copy_residue_range_from_ncs_master_to_chains">copy_residue_range_from_ncs_master_to_chains</h3>
+<p>Python: <code>copy_residue_range_from_ncs_master_to_chains(imol, master_chain_id, residue_range_start, residue_range_end, chain_id_list)</code><br>
+Scheme: <code>(copy-residue-range-from-ncs-master-to-chains imol master-chain-id residue-range-start residue-range-end chain-id-list)</code></p>
+<p>Arguments: imol (a whole number), master_chain_id (text), residue_range_start (a whole number), residue_range_end (a whole number), chain_id_list (a list or value). Returns: nothing.
+Also available in Python as <code>copy_residue_range_from_ncs_master_to_chains_py</code>.
+Also available in Scheme as <code>copy-residue-range-from-ncs-master-to-chains-scm</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<h3 id="copy_residue_range_from_ncs_master_to_others">copy_residue_range_from_ncs_master_to_others</h3>
+<p>Python: <code>copy_residue_range_from_ncs_master_to_others(imol, master_chain_id, residue_range_start, residue_range_end)</code><br>
+Scheme: <code>(copy-residue-range-from-ncs-master-to-others imol master-chain-id residue-range-start residue-range-end)</code></p>
+<p>Copy residue range to all related NCS chains.</p>
+<p> If the
+ target residues do not exist in the peer chains, then create
+ them.</p>
+<p>Arguments: imol (a whole number), master_chain_id (text), residue_range_start (a whole number), residue_range_end (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>copy_residue_range_from_ncs_master_to_others(0, "A", 1, 1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(copy-residue-range-from-ncs-master-to-others 0 "A" 1 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="draw_ncs_ghosts_state">draw_ncs_ghosts_state</h3>
+<p>Python: <code>draw_ncs_ghosts_state(imol)</code><br>
+Scheme: <code>(draw-ncs-ghosts-state imol)</code></p>
+<p>return the drawing state of NCS ghosts for molecule number
+ imol. Return -1 on imol is a bad molecule or no ghosts.</p>
+<p>Arguments: imol (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>draw_ncs_ghosts_state(0)</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(draw-ncs-ghosts-state 0)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<h3 id="get_ncs_matrix_state">get_ncs_matrix_state</h3>
+<p>Python: <code>get_ncs_matrix_state()</code><br>
+Scheme: <code>(get-ncs-matrix-state)</code></p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>get_ncs_matrix_state()</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-ncs-matrix-state)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<h3 id="make_dynamically_transformed_ncs_maps">make_dynamically_transformed_ncs_maps</h3>
+<p>Python: <code>make_dynamically_transformed_ncs_maps(imol_model, imol_map, overwrite_maps_of_same_name_flag)</code><br>
+Scheme: <code>(make-dynamically-transformed-ncs-maps imol-model imol-map overwrite-maps-of-same-name-flag)</code></p>
+<p>make NCS map</p>
+<p>Arguments: imol_model (a whole number), imol_map (a whole number), overwrite_maps_of_same_name_flag (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>make_dynamically_transformed_ncs_maps(0, 1, 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(make-dynamically-transformed-ncs-maps 0 1 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="make_ncs_ghosts_maybe">make_ncs_ghosts_maybe</h3>
+<p>Python: <code>make_ncs_ghosts_maybe(imol)</code><br>
+Scheme: <code>(make-ncs-ghosts-maybe imol)</code></p>
+<p>Arguments: imol (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>make_ncs_ghosts_maybe(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(make-ncs-ghosts-maybe 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="make_ncs_maps">make_ncs_maps</h3>
+<p>Python: <code>make_ncs_maps(imol_model, imol_map)</code><br>
+Scheme: <code>(make-ncs-maps imol-model imol-map)</code></p>
+<p>Arguments: imol_model (a whole number), imol_map (a whole number). Returns: a list.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>make_ncs_maps(0, 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(make-ncs-maps 0 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="ncs_chain_differences">ncs_chain_differences</h3>
+<p>Python: <code>ncs_chain_differences(imol, master_chain_id)</code><br>
+Scheme: <code>(ncs-chain-differences imol master-chain-id)</code></p>
+<p>Return the NCS differences as a list.</p>
+<p> e.g. ["B", "A", [[[1, ""], [1, ""], 0.4], [[2, ""], [2, ""], 0.3]]]
+ i.e. ncs_related_chain its_master_chain_id and a list of residue
+ info: [residue number matches: [this_resno, this_inscode,
+ matching_master_resno, matching_master_inscode,
+ rms_atom_position_differences]]</p>
+<p>Arguments: imol (a whole number), master_chain_id (text). Returns: a value (see the result of the example).
+Also available in Python as <code>ncs_chain_differences_py</code>.
+Also available in Scheme as <code>ncs-chain-differences-scm</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>ncs_chain_differences(0, "A")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(ncs-chain-differences 0 "A")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="ncs_chain_ids">ncs_chain_ids</h3>
+<p>Python: <code>ncs_chain_ids(imol)</code><br>
+Scheme: <code>(ncs-chain-ids imol)</code></p>
+<p>Return the ncs chains id for the given molecule.</p>
+<p> return something like: [["A", "B"]] or [["A", "C", "E"], ["B",
+ "D", "F"]]. The master chain goes in first.</p>
+<p> If imol does not have NCS ghosts, return python False.</p>
+<p>Arguments: imol (a whole number). Returns: a value (see the result of the example).
+Also available in Python as <code>ncs_chain_ids_py</code>.
+Also available in Scheme as <code>ncs-chain-ids-scm</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>ncs_chain_ids(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(ncs-chain-ids 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="ncs_control_change_ncs_master_to_chain">ncs_control_change_ncs_master_to_chain</h3>
+<p>Python: <code>ncs_control_change_ncs_master_to_chain(imol, ichain)</code><br>
+Scheme: <code>(ncs-control-change-ncs-master-to-chain imol ichain)</code></p>
+<p>change the NCS master chain (by number)</p>
+<p>Arguments: imol (a whole number), ichain (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>ncs_control_change_ncs_master_to_chain(0, 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(ncs-control-change-ncs-master-to-chain 0 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="ncs_control_change_ncs_master_to_chain_id">ncs_control_change_ncs_master_to_chain_id</h3>
+<p>Python: <code>ncs_control_change_ncs_master_to_chain_id(imol, chain_id)</code><br>
+Scheme: <code>(ncs-control-change-ncs-master-to-chain-id imol chain-id)</code></p>
+<p>change the NCS master chain (by chain_id)</p>
+<p>Arguments: imol (a whole number), chain_id (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>ncs_control_change_ncs_master_to_chain_id(0, "A")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(ncs-control-change-ncs-master-to-chain-id 0 "A")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="ncs_control_display_chain">ncs_control_display_chain</h3>
+<p>Python: <code>ncs_control_display_chain(imol, ichain, state)</code><br>
+Scheme: <code>(ncs-control-display-chain imol ichain state)</code></p>
+<p>display the NCS master chain</p>
+<p>Arguments: imol (a whole number), ichain (a whole number), state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>ncs_control_display_chain(0, 1, 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(ncs-control-display-chain 0 1 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="ncs_ghosts">ncs_ghosts</h3>
+<p>Python: <code>ncs_ghosts(imol)</code><br>
+Scheme: <code>(ncs-ghosts imol)</code></p>
+<p>Get the NCS ghosts description</p>
+<p>Returns False on bad imol or a list of ghosts on good imol. Can
+ include NCS rtops if they are available, else the rtops are False</p>
+<p>Arguments: imol (a whole number). Returns: a value (see the result of the example).
+Also available in Python as <code>ncs_ghosts_py</code>.
+Also available in Scheme as <code>ncs-ghosts-scm</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>ncs_ghosts(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(ncs-ghosts 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="ncs_master_chains">ncs_master_chains</h3>
+<p>Python: <code>ncs_master_chains(imol)</code><br>
+Scheme: <code>(ncs-master-chains imol)</code></p>
+<p>Arguments: imol (a whole number). Returns: a value (see the result of the example).
+Also available in Python as <code>ncs_master_chains_py</code>.
+Also available in Scheme as <code>ncs-master-chains-scm</code>.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>ncs_master_chains(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(ncs-master-chains 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="ncs_update_ghosts">ncs_update_ghosts</h3>
+<p>Python: <code>ncs_update_ghosts(imol)</code><br>
+Scheme: <code>(ncs-update-ghosts imol)</code></p>
+<p>update ghosts for molecule number imol</p>
+<p>Arguments: imol (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>ncs_update_ghosts(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(ncs-update-ghosts 0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_draw_ncs_ghosts">set_draw_ncs_ghosts</h3>
+<p>Python: <code>set_draw_ncs_ghosts(imol, istate)</code><br>
+Scheme: <code>(set-draw-ncs-ghosts imol istate)</code></p>
+<p>set drawing state of NCS ghosts for molecule number imol</p>
+<p>Arguments: imol (a whole number), istate (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_draw_ncs_ghosts(0, 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-draw-ncs-ghosts 0 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_ncs_ghost_bond_thickness">set_ncs_ghost_bond_thickness</h3>
+<p>Python: <code>set_ncs_ghost_bond_thickness(imol, f)</code><br>
+Scheme: <code>(set-ncs-ghost-bond-thickness imol f)</code></p>
+<p>set bond thickness of NCS ghosts for molecule number imol</p>
+<p>Arguments: imol (a whole number), f (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_ncs_ghost_bond_thickness(0, 1.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-ncs-ghost-bond-thickness 0 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_ncs_homology_level">set_ncs_homology_level</h3>
+<p>Python: <code>set_ncs_homology_level(flev)</code><br>
+Scheme: <code>(set-ncs-homology-level flev)</code></p>
+<p>At what level of homology should we say that we can't see homology
+ for NCS calculation? (default 0.8)</p>
+<p>Arguments: flev (a number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_ncs_homology_level(1.0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-ncs-homology-level 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_ncs_matrix_type">set_ncs_matrix_type</h3>
+<p>Python: <code>set_ncs_matrix_type(flag)</code><br>
+Scheme: <code>(set-ncs-matrix-type flag)</code></p>
+<p>Arguments: flag (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_ncs_matrix_type(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-ncs-matrix-type 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_show_strict_ncs">set_show_strict_ncs</h3>
+<p>Python: <code>set_show_strict_ncs(imol, state)</code><br>
+Scheme: <code>(set-show-strict-ncs imol state)</code></p>
+<p>set display state of NCS ghost molecules for molecule number imol</p>
+<p>Arguments: imol (a whole number), state (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_show_strict_ncs(0, 1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-show-strict-ncs 0 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="show_strict_ncs_state">show_strict_ncs_state</h3>
+<p>Python: <code>show_strict_ncs_state(imol)</code><br>
+Scheme: <code>(show-strict-ncs-state imol)</code></p>
+<p>return the state of NCS ghost molecules for molecule number imol</p>
+<p>Arguments: imol (a whole number). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>show_strict_ncs_state(0)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(show-strict-ncs-state 0)</code></td><td>not tried</td></tr></tbody></table>
+</body></html>

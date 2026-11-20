@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="coot0-source-sha1" content="cd13c020b9399a4123214dccaa23b05593459f70">
+<title>File System Functions - coot0</title><style>
+:root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
+a { color:var(--link); } h1 { font-size:1.7em; } h2 { margin-top:1.6em; border-bottom:1px solid var(--line); } h3 { margin-top:1.5em; }
+code, pre { font:13px/1.45 Menlo, monospace; background:var(--code); border-radius:4px; } code { padding:1px 4px; }
+pre { padding:10px 12px; overflow-x:auto; } pre code { padding:0; background:none; }
+pre.python { border-left:3px solid #3776ab; } pre.scheme { border-left:3px solid #a14f9b; }
+table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; } th, td { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+.nav { color:var(--muted); font-size:13px; margin-bottom:8px; } :target { background: rgba(255, 214, 10, .25); }
+</style></head>
+<body>
+<div class="nav"><a href="../../README.html">coot0 documentation</a></div>
+<h1 id="file-system-functions">File System Functions</h1>
+<p><a href="../README.html">Scripting reference</a> &gt; File System Functions (22 functions)</p>
+<p>Examples use the test data: molecule 0 = <code>tutorial-modern.pdb</code>, molecule 1 = the map made from <code>rnasa-1.8-all_refmac1.mtz</code> (FWT/PHWT). See <a href="../README.html#how-to-read-it">How to read this reference</a>.</p>
+<h3 id="add_coordinates_glob_extension">add_coordinates_glob_extension</h3>
+<p>Python: <code>add_coordinates_glob_extension(ext)</code><br>
+Scheme: <code>(add-coordinates-glob-extension ext)</code></p>
+<p>add an extension to be treated as coordinate files</p>
+<p>Arguments: ext (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>add_coordinates_glob_extension("hello")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(add-coordinates-glob-extension "hello")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="add_data_glob_extension">add_data_glob_extension</h3>
+<p>Python: <code>add_data_glob_extension(ext)</code><br>
+Scheme: <code>(add-data-glob-extension ext)</code></p>
+<p>add an extension to be treated as data (reflection) files</p>
+<p>Arguments: ext (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>add_data_glob_extension("hello")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(add-data-glob-extension "hello")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="add_dictionary_glob_extension">add_dictionary_glob_extension</h3>
+<p>Python: <code>add_dictionary_glob_extension(ext)</code><br>
+Scheme: <code>(add-dictionary-glob-extension ext)</code></p>
+<p>add an extension to be treated as geometry dictionary files</p>
+<p>Arguments: ext (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>add_dictionary_glob_extension("hello")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(add-dictionary-glob-extension "hello")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="add_map_glob_extension">add_map_glob_extension</h3>
+<p>Python: <code>add_map_glob_extension(ext)</code><br>
+Scheme: <code>(add-map-glob-extension ext)</code></p>
+<p>add an extension to be treated as geometry map files</p>
+<p>Arguments: ext (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>add_map_glob_extension("hello")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(add-map-glob-extension "hello")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<h3 id="export_map_gui">export_map_gui</h3>
+<p>Python: <code>export_map_gui(export_map_fragment)</code><br>
+Scheme: <code>(export-map-gui export-map-fragment)</code></p>
+<p>show the export map GUI</p>
+<p>Arguments: export_map_fragment (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>export_map_gui(1)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
+<tr><td>Scheme</td><td><code>(export-map-gui 1)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+<h3 id="file_chooser_overwrite_state">file_chooser_overwrite_state</h3>
+<p>Python: <code>file_chooser_overwrite_state()</code><br>
+Scheme: <code>(file-chooser-overwrite-state)</code></p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>file_chooser_overwrite_state()</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(file-chooser-overwrite-state)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<h3 id="file_chooser_selector_state">file_chooser_selector_state</h3>
+<p>Python: <code>file_chooser_selector_state()</code><br>
+Scheme: <code>(file-chooser-selector-state)</code></p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>file_chooser_selector_state()</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(file-chooser-selector-state)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<h3 id="file_type_coords">file_type_coords</h3>
+<p>Python: <code>file_type_coords(file_name)</code><br>
+Scheme: <code>(file-type-coords file-name)</code></p>
+<p>is the given file name suitable to be read as coordinates?</p>
+<p>Arguments: file_name (text). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>file_type_coords("tutorial-modern.pdb")</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(file-type-coords "tutorial-modern.pdb")</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<h3 id="filter_fileselection_filenames_state">filter_fileselection_filenames_state</h3>
+<p>Python: <code>filter_fileselection_filenames_state()</code><br>
+Scheme: <code>(filter-fileselection-filenames-state)</code></p>
+<p>, return the state of the above variable</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>filter_fileselection_filenames_state()</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(filter-fileselection-filenames-state)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<h3 id="make_directory_maybe">make_directory_maybe</h3>
+<p>Python: <code>make_directory_maybe(dir)</code><br>
+Scheme: <code>(make-directory-maybe dir)</code></p>
+<p>make a directory dir (if it doesn't exist) and return error code</p>
+<p> If it can be created, create the directory dir, return the success status
+ like mkdir: mkdir</p>
+<p> Returns zero on success, or -1 if an error occurred.
+ If dir already exists as a directory, return 0 of course.</p>
+<p>Arguments: dir (text). Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>make_directory_maybe(".")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(make-directory-maybe ".")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="open_coords_dialog">open_coords_dialog</h3>
+<p>Python: <code>open_coords_dialog()</code><br>
+Scheme: <code>(open-coords-dialog)</code></p>
+<p>display the open coordinates dialog</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>open_coords_dialog()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(open-coords-dialog)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="remove_coordinates_glob_extension">remove_coordinates_glob_extension</h3>
+<p>Python: <code>remove_coordinates_glob_extension(ext)</code><br>
+Scheme: <code>(remove-coordinates-glob-extension ext)</code></p>
+<p>remove an extension to be treated as coordinate files</p>
+<p>Arguments: ext (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>remove_coordinates_glob_extension("hello")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(remove-coordinates-glob-extension "hello")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="remove_data_glob_extension">remove_data_glob_extension</h3>
+<p>Python: <code>remove_data_glob_extension(ext)</code><br>
+Scheme: <code>(remove-data-glob-extension ext)</code></p>
+<p>remove an extension to be treated as data (reflection) files</p>
+<p>Arguments: ext (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>remove_data_glob_extension("hello")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(remove-data-glob-extension "hello")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="remove_dictionary_glob_extension">remove_dictionary_glob_extension</h3>
+<p>Python: <code>remove_dictionary_glob_extension(ext)</code><br>
+Scheme: <code>(remove-dictionary-glob-extension ext)</code></p>
+<p>remove an extension to be treated as geometry dictionary files</p>
+<p>Arguments: ext (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>remove_dictionary_glob_extension("hello")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(remove-dictionary-glob-extension "hello")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="remove_map_glob_extension">remove_map_glob_extension</h3>
+<p>Python: <code>remove_map_glob_extension(ext)</code><br>
+Scheme: <code>(remove-map-glob-extension ext)</code></p>
+<p>remove an extension to be treated as geometry map files</p>
+<p>Arguments: ext (text). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>remove_map_glob_extension("hello")</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(remove-map-glob-extension "hello")</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_file_chooser_overwrite">set_file_chooser_overwrite</h3>
+<p>Python: <code>set_file_chooser_overwrite(istate)</code><br>
+Scheme: <code>(set-file-chooser-overwrite istate)</code></p>
+<p>Arguments: istate (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_file_chooser_overwrite(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-file-chooser-overwrite 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_file_chooser_selector">set_file_chooser_selector</h3>
+<p>Python: <code>set_file_chooser_selector(istate)</code><br>
+Scheme: <code>(set-file-chooser-selector istate)</code></p>
+<p>--- CHECKME - do these need to be here? ---</p>
+<p>Arguments: istate (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_file_chooser_selector(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-file-chooser-selector 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_filter_fileselection_filenames">set_filter_fileselection_filenames</h3>
+<p>Python: <code>set_filter_fileselection_filenames(istate)</code><br>
+Scheme: <code>(set-filter-fileselection-filenames istate)</code></p>
+<p>on opening a file selection dialog, pre-filter the files.</p>
+<p>set to 1 to pre-filter, [0 (off, non-pre-filtering) is the default</p>
+<p>Arguments: istate (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_filter_fileselection_filenames(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-filter-fileselection-filenames 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_show_paths_in_display_manager">set_show_paths_in_display_manager</h3>
+<p>Python: <code>set_show_paths_in_display_manager(i)</code><br>
+Scheme: <code>(set-show-paths-in-display-manager i)</code></p>
+<p>Show Paths in Display Manager?</p>
+<p> Some people don't like to see the full path names in the display manager
+ here is the way to turn them off, with an argument of 1.</p>
+<p>Arguments: i (a whole number). Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_show_paths_in_display_manager(1)</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-show-paths-in-display-manager 1)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="set_sticky_sort_by_date">set_sticky_sort_by_date</h3>
+<p>Python: <code>set_sticky_sort_by_date()</code><br>
+Scheme: <code>(set-sticky-sort-by-date)</code></p>
+<p>sort files in the file selection by date?</p>
+<p> some people like to have their files sorted by date by default</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>set_sticky_sort_by_date()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(set-sticky-sort-by-date)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="show_paths_in_display_manager_state">show_paths_in_display_manager_state</h3>
+<p>Python: <code>show_paths_in_display_manager_state()</code><br>
+Scheme: <code>(show-paths-in-display-manager-state)</code></p>
+<p>return the internal state</p>
+<p> What is the internal flag?</p>
+<p> Returns 1 for "yes, display paths" , 0 for not</p>
+<p>Arguments: none. Returns: a whole number.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>show_paths_in_display_manager_state()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(show-paths-in-display-manager-state)</code></td><td>not tried</td></tr></tbody></table>
+<h3 id="unset_sticky_sort_by_date">unset_sticky_sort_by_date</h3>
+<p>Python: <code>unset_sticky_sort_by_date()</code><br>
+Scheme: <code>(unset-sticky-sort-by-date)</code></p>
+<p>do not sort files in the file selection by date?</p>
+<p> removes the sorting of files by date</p>
+<p>Arguments: none. Returns: nothing.</p>
+<table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
+<tr><td>Python</td><td><code>unset_sticky_sort_by_date()</code></td><td>not tried</td></tr>
+<tr><td>Scheme</td><td><code>(unset-sticky-sort-by-date)</code></td><td>not tried</td></tr></tbody></table>
+</body></html>
