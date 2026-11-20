@@ -1,0 +1,145 @@
+diff --git a/python/contact_score_isolated_ligand.py b/python/contact_score_isolated_ligand.py
+index 9ab58f7..002af73 100644
+--- a/python/contact_score_isolated_ligand.py
++++ b/python/contact_score_isolated_ligand.py
+@@ -87,3 +87,20 @@ def coot_all_atom_contact_dots_func():
+                print(generic_object_name(i), "is not in", coot_probe_object_names)
+         coot_all_atom_contact_dots(aa_imol)
+ 
++# (coot0, build 29) user, 20 Nov: "is there a function that can turn off the dots (Ctrl-1)?"  Ctrl-1 and Ligand > Coot All-Atom
++# Contact Dots draw generic objects named "Molecule N: wide-contact" ... "Molecule N: clashes"; Coot 0.9.8.96 has nothing to remove them
++# but Draw > Generic Objects.  This empties and hides them (Ctrl-1 again draws them anew).
++coot0_contact_dot_types = ["wide-contact", "close-contact", "small-overlap", "big-overlap", "bad-overlap", "H-bond", "vdw-surface", "clashes"]
++def coot0_contact_dots_off(imol=-1):
++    """hides the all-atom contact dots of molecule imol (-1: of every molecule); returns how many dot objects were hidden"""
++    import re
++    n = 0
++    for i in range(number_of_generic_objects()):
++        if is_closed_generic_object_p(i): continue
++        m = re.match(r"Molecule (\d+): (.*)$", generic_object_name(i) or "")
++        if m and m.group(2) in coot0_contact_dot_types and (imol < 0 or int(m.group(1)) == imol):
++            generic_object_clear(i)
++            set_display_generic_object_simple(i, 0)
++            n += 1
++    graphics_draw()
++    return n
+diff --git a/python/coot0_help.py b/python/coot0_help.py
+index 3baac29..6be94c4 100644
+--- a/python/coot0_help.py
++++ b/python/coot0_help.py
+@@ -26,23 +26,53 @@ def coot0_open_url(target):
+         print("WARNING:: could not open %s: %s" % (target, e))
+     return target
+ 
++# (build 29) the pages are served from 127.0.0.1 by Coot itself: Safari (round 28, JJ3) would not follow the old
++# file-to-file forwarding page, and macOS "open" drops the #heading of a file:// URL.  An http:// URL keeps it.
++# The server runs in Coot's GTK main loop (polled every 50 ms): a Python thread would not run while Coot is idle.
++_coot0_docs_server = None
++def coot0_docs_server_poll():
++    import select
++    srv = _coot0_docs_server
++    if srv is None: return False
++    try:
++        while select.select([srv.socket], [], [], 0)[0]:
++            srv.handle_request()
++    except Exception as e:
++        print("WARNING:: documentation server:", e)
++    return True
++
++def coot0_docs_server_port():
++    """starts the documentation server once (127.0.0.1 only, the docs/html folder only); its port, or None"""
++    global _coot0_docs_server
++    if _coot0_docs_server is None:
++        try:
++            import http.server, functools, gobject
++            class Handler(http.server.SimpleHTTPRequestHandler):
++                timeout = 0.5                               # a browser that connects and sends nothing cannot hold Coot up
++                def log_message(self, *a): pass
++            srv = http.server.HTTPServer(("127.0.0.1", 0), functools.partial(Handler, directory=coot0_docs_html_dir()))
++            srv.timeout = 0
++            _coot0_docs_server = srv
++            gobject.timeout_add(50, coot0_docs_server_poll)
++        except Exception as e:
++            print("WARNING:: could not start the documentation server:", e)
++            return None
++    return _coot0_docs_server.server_address[1]
++
+ def coot0_open_doc(page, anchor=""):
+     """page: path inside docs/html (e.g. "cookbook/04-refinement.html"); anchor: a heading id on that page"""
++    import urllib.parse
+     path = os.path.join(coot0_docs_html_dir(), page)
+     if not os.path.exists(path):
+         info_dialog("The documentation page %s is not in this coot0 package\n(looked in %s)." % (page, coot0_docs_html_dir()))
+         return False
+-    if not anchor:
+-        return coot0_open_url(path)
+-    # macOS "open" drops the #anchor of a file URL: open a one-line page that forwards to it instead
+-    import tempfile, urllib.parse, html as _html
+-    url = "file://" + urllib.parse.quote(path) + "#" + urllib.parse.quote(anchor)
+-    fwd = os.path.join(tempfile.gettempdir(), "coot0-help-%d.html" % os.getpid())
+-    with open(fwd, "w") as f:
+-        f.write('<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=%s">'
+-                '<script>location.replace(%s)</script><a href="%s">%s</a>\n'
+-                % (_html.escape(url), json.dumps(url), _html.escape(url), _html.escape(page + "#" + anchor)))
+-    coot0_open_url(fwd)
++    port = coot0_docs_server_port()
++    if port:
++        url = "http://127.0.0.1:%d/%s" % (port, urllib.parse.quote(page))
++    else:
++        url = "file://" + urllib.parse.quote(path)        # (without the server: the page, but not the heading)
++    if anchor: url += "#" + urllib.parse.quote(anchor)
++    coot0_open_url(url)
+     return url
+ 
+ # ---------------------------------------------------------------- what can be searched
+@@ -142,7 +172,8 @@ def coot0_search_window():
+     entry = gtk.Entry()
+     vbox.pack_start(entry, False, False, 0)
+     hint = gtk.Label("Type a few words: menu entries, cookbook recipes, scripting functions and documentation sections are found.\n"
+-                     "Double-click a line (or press Enter) to open it: a menu entry runs, a document opens in your web browser.")
++                     "Enter opens the first line (Down: choose another, then Enter); double-click opens any line.\n"
++                     "A menu entry runs; a document opens in your web browser.")
+     hint.set_alignment(0, 0.5)
+     vbox.pack_start(hint, False, False, 0)
+     store = gtk.ListStore(str, str, int)
+@@ -175,10 +206,18 @@ def coot0_search_window():
+             if action[0] == "menu": w.destroy()
+             coot0_help_run(action)
+     def on_row_activated(view_, path, column):
+-        run_row(path[0] if isinstance(path, tuple) else int(path))
++        # (build 29) the GtkTreePath arrives as a pointer, not a row number (round 28, JJ3: double-click did nothing)
++        p = view.get_cursor()[0]
++        if p: run_row(p[0])
+     def on_entry_activate(*args):
+         model, it = view.get_selection().get_selected()
+         run_row(model.get_value(it, 2) if it is not None else 0)
++    def on_entry_key(widget, event):
++        if event.keyval in (gtk.keysyms.Down, gtk.keysyms.KP_Down) and len(store):     # Down: into the list
++            view.set_cursor((0,)); view.grab_focus()
++            return True
++        return False
++    entry.connect("key_press_event", on_entry_key)
+     entry.connect("changed", refill)
+     entry.connect("activate", on_entry_activate)
+     view.connect("row-activated", on_row_activated)
+@@ -199,7 +238,7 @@ coot0_coot_keys = [
+     ("- + =", "map contour level down / up"), ("c", "crosshairs on / off"), ("d f", "clipping (slab) thinner / thicker"),
+     ("i", "spin the view on / off"), ("l", "label the nearest atom"), ("m n", "zoom out / in"),
+     ("o O", "next / previous NCS chain"), ("p", "update Go To Atom from the centre"), ("s", "re-contour the maps"),
+-    ("u", "undo the last move"), ("Ctrl-1", "contact dots for the active molecule"), ("Ctrl-C", "copy the molecule of the active atom"), ("Ctrl-D, Ctrl-X", "delete the active residue"),
++    ("u", "undo the last move"), ("Ctrl-1", "contact dots for the active molecule (off: Ligand > Coot All-Atom Contact Dots Off)"), ("Ctrl-C", "copy the molecule of the active atom"), ("Ctrl-D, Ctrl-X", "delete the active residue"),
+     ("Ctrl-G", "go to residue (type it)"), ("Ctrl-I", "residue info"), ("Ctrl-L", "go to ligand"), ("Ctrl-R", "rock the view"),
+     ("Ctrl-S", "quick save"), ("Ctrl-Z / Ctrl-Y", "undo / redo"),
+     ("Mouse", "left-drag rotate, right-drag zoom (Mac trackpad: two-finger drag), Ctrl-left-drag move, scroll wheel contour level"),
+diff --git a/python/gui_contact_score_isolated_ligand.py b/python/gui_contact_score_isolated_ligand.py
+index 4b5ce25..e02bcd4 100644
+--- a/python/gui_contact_score_isolated_ligand.py
++++ b/python/gui_contact_score_isolated_ligand.py
+@@ -14,3 +14,7 @@ if (have_coot_python):
+       add_simple_coot_menu_menuitem(coot_menubar_menu("Ligand"),
+                                     "Coot All-Atom Contact Dots",
+                                     lambda func: coot_all_atom_contact_dots_func())
++
++      add_simple_coot_menu_menuitem(coot_menubar_menu("Ligand"),
++                                    "Coot All-Atom Contact Dots Off",
++                                    lambda func: coot0_contact_dots_off())   # (coot0, build 29)

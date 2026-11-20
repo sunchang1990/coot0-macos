@@ -96,7 +96,29 @@ def run(step=[0]):
         while gtk.events_pending(): gtk.main_iteration()
         mapped = fn("gtk_widget_get_mapped", ctypes.c_int, [P])(win._ptr)
         check("the search window opens on screen and lists results for 'refine'", (mapped == 1 and n > 20) or "mapped %r, %d rows" % (mapped, n))
-        win.destroy()
+        # (build 29) Enter through GTK, the page served by Coot (main-loop server), fetched while the real main loop runs
+        opened = []
+        real_open = coot0_open_url
+        globals()["coot0_open_url"] = lambda t: opened.append(t) or t
+        entry.set_text("sphere refine")
+        fn("gtk_widget_activate", ctypes.c_int, [P])(entry._ptr)
+        globals()["coot0_open_url"] = real_open
+        url = opened[-1] if opened else ""
+        got = []
+        import threading, urllib.request, time
+        def get():
+            try: got.append(urllib.request.urlopen(url, timeout=5).read().decode("utf-8"))
+            except Exception as e: got.append("ERR %r" % e)
+        threading.Thread(target=get).start()
+        t0 = time.time()
+        while not got and time.time() - t0 < 10:
+            while gtk.events_pending(): gtk.main_iteration()
+            time.sleep(0.02)
+        anchor = url.partition("#")[2]
+        check("Enter opens cookbook 4.3, served by Coot with its heading",
+              (url.startswith("http://127.0.0.1:") and got and ('id="%s"' % anchor) in got[0]) or "url %r, got %r" % (url, (got or ["nothing"])[0][:80]))
+        try: win.destroy()
+        except Exception: pass
         sid = fn("g_signal_lookup", ctypes.c_uint, [ctypes.c_char_p, ctypes.c_size_t])(b"activate", fn("gtk_menu_item_get_type", ctypes.c_size_t, [])())
         pending = fn("g_signal_has_handler_pending", ctypes.c_int, [P, ctypes.c_uint, ctypes.c_uint32, ctypes.c_int])
         help_menu = mb.get_children()[-1].get_submenu()

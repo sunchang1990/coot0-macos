@@ -6,6 +6,20 @@ applied to the pristine tree by `setup.sh`) or a change of the packaged data / s
 round, `TEST-PROTOCOL.md` has the user-facing explanation and the checks for you (newest round first).  A "build" is one delivered zip.
 "Verified" means a headless test (no window server in the build environment); what only a screen can show is marked "on screen: not verified".
 
+## Build 29  (patch 0047 help-open-and-contact-dots-off; Python only, `bin/coot-bin` as in build 28)
+- Fixed (user, 20 Nov, round 28 JJ3): in Help > Search Menus and Docs, **double-click did nothing**: the row arrives from GTK as a
+  pointer, not a row number, and was ignored.  **Enter ran, but the document did not open at its heading**: Safari does not follow the
+  small forwarding page build 28 used (macOS `open` drops the #heading of a file:// address).  Now Coot serves the documentation pages
+  itself on 127.0.0.1 (only this computer; only the docs/html folder; while Coot runs) and the browser opens e.g.
+  `http://127.0.0.1:PORT/cookbook/04-refinement.html#43-...`.  Down in the search box moves into the list.
+- New (user, 20 Nov): **contact dots off**.  Ctrl-1 (and Ligand > Coot All-Atom Contact Dots) draw the dots, Coot 0.9.8.96 has nothing to
+  remove them except Draw > Generic Objects.  New: **Ligand > Coot All-Atom Contact Dots Off** and `coot0_contact_dots_off(imol)`
+  (`-1` or nothing: every molecule).  Ctrl-1 again draws them anew.  Keyboard Shortcuts mentions it.
+- Tests: `gui-dialogs` 88 -> 89; the search-window check now makes GTK emit the signals itself (`gtk_widget_activate`,
+  `gtk_tree_view_row_activated`: build 28 called the Python handler, which hid the double-click bug), and the document checks fetch the
+  page from Coot's server and look for the heading (build 28 fails 4).  Real-window test 11 -> 12 (Enter -> page served with its heading).
+- On screen: whether Safari opens the served page at the heading is not verified by me (I did not open a browser).
+
 ## Build 28  (patch 0046 help-menu-ctrl-key-state (C++ + Python + Scheme); new `bin/coot-bin`; docs as web pages)
 - Fixed (user, 20 Nov, round 27 II1): cookbook **6.3 used `o`, which Coot uses itself** (next NCS chain: the terminal showed `(n-chains 2)`
   ...).  The list of Coot's own keys in 6.3 was written from memory and incomplete; it is now taken from Coot's key handler

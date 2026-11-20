@@ -1,0 +1,11 @@
+Build 28 vs build 29: new tests fail on build 28 files and pass on build 29 (20 Nov 2026; paths removed)
+
+== gui-dialogs, build 28 files
+FAIL Help search finds recipes and functions, an exact match first, and opens the right page at the right heading                                                      "'sphere refine' opens <path>
+FAIL Help menu: every document entry opens a page that exists                                                                                                          EXC KeyError('coot0_docs_server_poll') (build 28 has no documentation server)
+FAIL Help > Search window: typing lists results, Enter and double-click (GTK signals) open them                                                                        "double-click on line 5 ('4.9 Refine every chain in pieces (a w
+FAIL contact dots (Ctrl-1) can be switched off: coot0_contact_dots_off, Ligand > Coot All-Atom Contact Dots Off                                                        'no coot0_contact_dots_off'
+SUMMARY 85 / 89
+
+== gui-dialogs, build 29
+SUMMARY 89 / 89

@@ -1,0 +1,66 @@
+Build 29 tarball verification (20 Nov 2026)
+tarball coot0-0.9.8.96-b29-macos-arm64.tar.gz sha256 13540bc04eb030a6dc643fc347aba0a5bdf30b3baa07c8605165f02ac731a4ac
+unpacked into a folder with spaces, env -i HOME=<tmp> PATH=/usr/bin:/bin:/usr/sbin:/sbin
+
+== tests/run-headless-tests.sh
+python-api                 SUMMARY 19 / 19
+scheme-api                 SUMMARY 27 / 27
+data-and-maps              SUMMARY 39 / 39
+ondemand-read              SUMMARY 3 / 3
+refine-zone                SUMMARY 7 / 7
+process-helpers            SUMMARY 10 / 10
+api-docs                   SUMMARY 8 / 8
+bundle-python              SUMMARY 19 / 19
+bundle-scheme              SUMMARY 6 / 6
+rdkit-python               SUMMARY 10 / 10
+rdkit-scheme               SUMMARY 3 / 3
+gtk2compat                 SUMMARY 12 / 12
+gui-scripts                SUMMARY 16 / 16
+gui-dialogs                SUMMARY 89 / 89
+gui-glyco                  SUMMARY 14 / 14
+gui-toolbar                SUMMARY 13 / 13
+gui-rcrane                 SUMMARY 21 / 21
+refmac-run                 SUMMARY 11 / 11
+cookbook                   SUMMARY 166 / 166
+installer                  SUMMARY 26 / 26
+startup-dictionaries       SUMMARY 1 / 1
+
+== tests/run-gui-sweep.sh
+GUI sweep: 257 items ok, 0 items with errors, 0 items without a handler, 7 items whose activation killed the headless process (OpenGL or screen needed; started 
+SWEEP 21 | Edit > Settings... > Python: Install Template Keybindings button '   X   Edit Chi Angles' | CRASH (process died: OpenGL call without a graphics conte
+SWEEP 36 | Calculate > Map Tools... > Brighten Maps | CRASH (process died: OpenGL call without a graphics context, or hang)
+SWEEP 108 | Draw > Representation Tools... > Ball & Stick... button '  OK  ' | CRASH (process died: OpenGL call without a graphics context, or hang)
+SWEEP 117 | Draw > Representation Tools... > Highlight Interesting Site (here)... | CRASH (process died: OpenGL call without a graphics context, or hang)
+SWEEP 124 | Draw > Representation Tools... > 3D Annotations... > Save Annotations... | CRASH (process died: OpenGL call without a graphics context, or hang)
+SWEEP 152 | Ligand > Find Ligands... | CRASH (process died: OpenGL call without a graphics context, or hang)
+SWEEP 193 | Cryo-EM > Align and Mutate using ClustalW2 | CRASH (process died: OpenGL call without a graphics context, or hang)
+(Edit Chi Angles, ClustalW2: known flaky headless; Save Annotations: headless only, fine in a real window:)
+
+== tests/run-gui-audit.sh, COOT_AUDIT_ONLY='3D Annotations|Contact Dots|ClustalW2' (real window)
+AUDIT   0 | Draw > Representation Tools... > 3D Annotations... > Annotate position... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT   1 | Draw > Representation Tools... > 3D Annotations... > Save Annotations... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT   2 | Draw > Representation Tools... > 3D Annotations... > Load Annotations... | ok | windows: 1, buttons clicked: 1, 1.3 s
+AUDIT   3 | Draw > Representation Tools... > 3D Annotations... > Remove annotation here | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT   4 | Draw > Representation Tools... > 3D Annotations... > Remove annotation near click | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT   5 | Validate > All-Atom Contact Dots (Molprobity) | ok | windows: 0, buttons clicked: 0, 3.5 s | BL WARNING:: could neither find nor
+AUDIT   6 | Ligand > Coot All-Atom Contact Dots | ok | windows: 0, buttons clicked: 0, 1.2 s
+AUDIT   7 | Ligand > Coot All-Atom Contact Dots Off | ok | windows: 0, buttons clicked: 0, 1.1 s
+AUDIT   8 | Ligand > Contact Dots for Ligand | ok | windows: 0, buttons clicked: 0, 1.1 s
+
+== tests/run-real-window-checks.sh (real window)
+PASS a plain key bound in Python runs when pressed (v)
+PASS Ctrl-T runs the Python binding made with "Control_t"
+PASS plain t does not run the Ctrl-T binding
+PASS o is Coot's own key (next NCS chain): a binding to it does not run
+PASS Help is the last menu
+PASS Help search sees the menu entries (more than 150)
+PASS no hidden (removed) entry is offered
+PASS search 'brighten' finds Brighten Maps
+PASS the search window opens on screen and lists results for 'refine'
+PASS Enter opens cookbook 4.3, served by Coot with its heading
+PASS Coot's own Help entries (Header/Remarks Browser, Hints, About) keep their handlers
+PASS the Keyboard Shortcuts window opens
+SUMMARY 12 / 12
+
+== bundle_check: RESULT: OK (211 Mach-O, minos 11.0)
+== patch series rebuilt with setup.sh: 47 patches, IDENTICAL

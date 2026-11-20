@@ -496,3 +496,10 @@ Round 28: Help menu, Ctrl state from the C++, recipe 6.3 key v -> build 28  (pat
   Markdown subset; GitHub slugs; sha1 of the source in a meta tag; run it before packaging, CHANGELOG.html comes from CHANGELOG.md).
   Real-window test tests/run-real-window-checks.sh: GdkEventKey via gtk_widget_event on the GtkDrawingArea of the "Coot" window (CGEventPostToPid
   did not arrive: no Accessibility permission).
+
+Round 29: Help search opens what is picked, contact dots off -> build 29  (patch 0047 help-open-and-contact-dots-off; Python only)
+  User 20 Nov: JJ1/2/4/5 ok; JJ3: row-activated gives the GtkTreePath as an int pointer through the compat layer (handler used int(path) ->
+  out of range -> nothing); test used entry.emit (Python-level) -> missed it; now tests call gtk_widget_activate / gtk_tree_view_row_activated.
+  Enter worked but Safari (default browser) did not follow the /var/folders forwarding page -> docs served by http.server.HTTPServer on
+  127.0.0.1:0, polled from gobject.timeout_add(50) (a Python thread does not run while Coot idles: the GIL stays with the main thread);
+  handler timeout 0.5 s.  coot0_contact_dots_off: generic objects "Molecule N: <type>" (atom-overlaps types + clashes): clear + hide.

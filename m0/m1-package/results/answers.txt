@@ -1,10 +1,8 @@
 # One line per check: PASS / FAIL / PARTIAL and a few words.  (You can also just tell me in chat.)
-# Round 28 (see TEST-PROTOCOL.md, section JJ):
-JJ1 Ctrl-T binding shows "Ctrl-T works"; plain t does not:
-JJ2 cookbook 6.3: key v refines 7 residues:
-JJ3 Help > Search: Brighten Maps runs; cookbook 4.3 and refine_zone open in the browser:
-JJ4 Help > Keyboard Shortcuts lists Coot's keys and "Ctrl test":
-JJ5 Help documents open; the menu as you had in mind / what to add:
+# Round 29 (see TEST-PROTOCOL.md, section KK):
+KK1 Help search: Enter / double-click open the cookbook / reference at the right place; a menu line runs:
+KK2 Ligand > Coot All-Atom Contact Dots Off removes the Ctrl-1 dots; Ctrl-1 brings them back:
+# Round 28 (section JJ): JJ1, JJ2, JJ4, JJ5 confirmed 20 Nov; JJ3 (double-click / Enter) -> build 29.
 # Round 27 (section II): II3, II4 confirmed 20 Nov; II1 (key o is Coot's) and II2 (Ctrl-T) -> build 28.
 # Round 26 (section HH): HH1-HH3 confirmed 19 Nov; HH4 (6.3 F5, 6.4) and HH5 remarks -> build 27.
 # Round 25 (section GG): GG1-GG4 confirmed 18 Nov.

@@ -1,4 +1,26 @@
-# Coot 0.9.8.96 on Apple Silicon: test round 28 (build 28 = build 27 + a Help menu + Ctrl key bindings that work + recipe 6.3 fixed)
+# Coot 0.9.8.96 on Apple Silicon: test round 29 (build 29 = build 28 + Help search opens what you pick + contact dots off)
+
+**From you** (20 Nov): JJ1, JJ2, JJ4, JJ5 pass; JJ3: the search finds things, but double-click / Enter neither ran a menu entry nor opened the
+documentation. Asked: is there a function to turn off the dots of Ctrl-1?
+
+1. **Double-click** was ignored (GTK hands over the row as a pointer; my code expected a number; my test called the handler directly and
+   missed it). **Enter** did run, but the document was opened through a small forwarding page that Safari does not follow. Now Coot serves
+   the documentation pages itself (address `http://127.0.0.1:...`, reachable only from this Mac, only while Coot runs), so the browser opens
+   the page at the recipe or function. Down in the search box moves into the list.
+2. **Contact dots off**: Coot 0.9.8.96 had only Draw > Generic Objects... for that. New: **Ligand > Coot All-Atom Contact Dots Off**, and
+   in scripts `coot0_contact_dots_off()` (all molecules) or `coot0_contact_dots_off(0)` (molecule 0). Ctrl-1 draws them again.
+
+**On screen**: my real-window test (12 / 12) pressed Enter through GTK and fetched the page from Coot's server with its heading; I did not
+open a browser or look at the screen. **New tests**: `gui-dialogs` 88 -> 89 (build 28 fails 4). Evidence: `evidence/checks_b28_vs_b29.txt`.
+
+## KK. Round 29 checks (about 5 minutes)
+
+| # | Do | Expected |
+|---|---|---|
+| KK1 | Help > Search Menus and Docs...: type `sphere refine`, Enter. Then type `refine_zone`, double-click the `refine_zone` line. Then type `brighten`, double-click the menu line. | Safari opens the cookbook at 4.3, then the reference at `refine_zone`; Brighten Maps runs (the search window closes). |
+| KK2 | With a model: click an atom, Ctrl-1 (dots), then Ligand > Coot All-Atom Contact Dots Off. Then Ctrl-1 again. | The dots go; Ctrl-1 brings them back. |
+
+# Earlier round (JJ1, JJ2, JJ4, JJ5 confirmed 20 Nov; JJ3 -> build 29): Coot 0.9.8.96 on Apple Silicon: test round 28 (build 28 = build 27 + a Help menu + Ctrl key bindings that work + recipe 6.3 fixed)
 
 **From you** (20 Nov): II1 failed (pressing `o` refined nothing; the terminal showed `(n-chains 2)` ...), II2 failed (neither Ctrl-T nor t did
 anything; t printed two "not found" lines, Ctrl-T one), II3 pass, II4 clear. Asked for a Help menu that searches the menus and points to the

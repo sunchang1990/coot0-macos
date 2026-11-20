@@ -1066,6 +1066,22 @@ def help_search_menus():
     return True if any(x.endswith("> Brighten Maps") for x in b) else "Calculate > ... > Brighten Maps not found: %r" % b
 check("Help search finds menu entries (also menus added later) and runs the one chosen", help_search_menus)
 
+def fetch(url):
+    """GET url from Coot's documentation server, pumping its main-loop poll meanwhile: "200 <body>" or the error"""
+    import threading, urllib.request, time
+    out = []
+    def get():
+        try:
+            r = urllib.request.urlopen(url, timeout=5); out.append("%d %s" % (r.status, r.read().decode("utf-8")))
+        except Exception as e:
+            out.append("ERR %r" % e)
+    t = threading.Thread(target=get); t.start()
+    for i in range(500):
+        g["coot0_docs_server_poll"](); time.sleep(0.01)
+        if out: break
+    t.join(1)
+    return out[0] if out else "no answer"
+
 def help_search_docs():
     opened = []
     real = g["coot0_open_url"]
@@ -1077,13 +1093,14 @@ def help_search_docs():
             r = [x for x in g["coot0_help_search"](q) if x[0] == kind and x[1].startswith(want)]
             if not r: return "search %r: no %s %r" % (q, kind, want)
             url = g["coot0_help_run"](r[0][2])
-            page, _, anchor = url[len("file://"):].partition("#")
+            # (build 29) served by Coot on 127.0.0.1 (Safari, round 28 JJ3, did not follow a file-to-file forwarding page)
+            if not url.startswith("http://127.0.0.1:"): return "%r opens %s, not a page served by Coot" % (q, url)
+            if opened[-1] != url: return "the browser was asked to open %r, not %r" % (opened[-1:], url)
+            page, _, anchor = url.partition("#")
+            body = fetch(page)
+            if not body.startswith("200 "): return "%r: %s gave %s" % (q, page, body[:80])
             import urllib.parse
-            page = urllib.parse.unquote(page)
-            if not os.path.exists(page): return "%r opens a missing page %s" % (q, page)
-            if ('id="%s"' % urllib.parse.unquote(anchor)) not in open(page).read(): return "%r: no heading #%s in %s" % (q, anchor, page)
-            fwd = opened[-1]
-            if url.replace("&", "&amp;") not in open(fwd).read(): return "the forwarding page does not lead to %s" % url
+            if ('id="%s"' % urllib.parse.unquote(anchor)) not in body: return "%r: no heading #%s in %s" % (q, anchor, page)
         first = g["coot0_help_search"]("refine_zone")[0][:2]
         return True if first == ("Function", "refine_zone") else "an exact match is not first: 'refine_zone' -> %r" % (first,)
     finally:
@@ -1101,11 +1118,13 @@ def help_menu_documents():
     finally:
         g["coot0_open_url"] = real
     if len(opened) != 6: return "opened %r" % opened
-    missing = [t for t in opened if not t.startswith("https://") and not os.path.exists(t)]
+    missing = [t for t in opened if not t.startswith("https://") and not fetch(t).startswith("200 ")]
     return True if not missing else "missing pages: %r" % missing
 check("Help menu: every document entry opens a page that exists", help_menu_documents)
 
 def help_search_window():
+    # (build 29) round 28 JJ3: double-click and Enter did nothing.  The old test called entry.emit(); now the GTK signals are
+    # emitted by GTK itself (gtk_widget_activate, gtk_tree_view_row_activated), as a real Enter / double-click does.
     opened = []
     real = g["coot0_open_url"]
     g["coot0_open_url"] = lambda t: opened.append(t) or t
@@ -1114,13 +1133,23 @@ def help_search_window():
         win, entry, store, view, state = g["coot0_search_window_widget"]
         entry.set_text("sphere refine")
         if len(store) == 0: return "typing 'sphere refine' listed nothing"
-        entry.emit("activate")
-        if not opened: return "Enter in the search box opened nothing"
-        win.destroy()
+        _c.call("gtk_widget_activate", entry)
+        if len(opened) != 1: return "Enter in the search box opened %r" % opened
+        entry.set_text("refine")
+        if len(store) < 3: return "typing 'refine' listed %d" % len(store)
+        row = [i for i, r in enumerate(state["results"]) if r[2][0] == "doc"][1]     # the second document line
+        want = state["results"][row]
+        tp = _c.call("gtk_tree_path_new_from_string", str(row))
+        _c.call("gtk_tree_view_set_cursor", view, tp, None, False)
+        _c.call("gtk_tree_view_row_activated", view, tp, _c.call("gtk_tree_view_get_column", view, 0))
+        _c.call("gtk_tree_path_free", tp)
+        if len(opened) != 2 or want[2][1] not in opened[-1]: return "double-click on line %d (%r) opened %r" % (row + 1, want[1], opened[1:])
+        try: win.destroy()
+        except Exception: pass
         return True
     finally:
         g["coot0_open_url"] = real
-check("Help > Search window: typing lists results, Enter opens the first", help_search_window)
+check("Help > Search window: typing lists results, Enter and double-click (GTK signals) open them", help_search_window)
 
 def help_keys():
     with contextlib.redirect_stdout(io.StringIO()):
@@ -1133,6 +1162,28 @@ def help_keys():
     line = [l for l in t.splitlines() if "coot0 probe on o" in l][0]
     return True if "never runs" in line else "a binding to Coot's own 'o' is not marked: %r" % line
 check("Help > Keyboard Shortcuts: Coot's keys, Python and Scheme bindings, a binding to Coot's own key marked", help_keys)
+
+# (build 29) user, 20 Nov: "is there a function that can turn off the dots (ctrl-1)?"
+def contact_dots_off():
+    if "coot0_contact_dots_off" not in g: return "no coot0_contact_dots_off"
+    with contextlib.redirect_stdout(io.StringIO()):
+        imol = coot.read_pdb(os.path.join(here, "test-data", "tutorial-modern.pdb"))
+        coot.coot_all_atom_contact_dots(imol)
+    def dots():
+        r = []
+        for i in range(coot.number_of_generic_objects()):
+            n = g["generic_object_name"](i) or ""
+            if n.startswith("Molecule %d: " % imol) and not coot.is_closed_generic_object_p(i):
+                r.append((n, coot.generic_object_is_displayed_p(i), coot.generic_object_has_objects_p(i)))
+        return r
+    before = [d for d in dots() if d[1] and d[2]]
+    if len(before) < 2: return "Ctrl-1's dots were not made: %r" % dots()
+    n = g["coot0_contact_dots_off"](imol)
+    after = [d for d in dots() if d[1] or d[2]]
+    if n < len(before) or after: return "after off: %d hidden, still shown or filled %r" % (n, after)
+    ligand = [g["coot0_menu_label"](i) for i in g["coot_menubar_menu"]("Ligand").get_children()]
+    return True if "Coot All-Atom Contact Dots Off" in ligand else "no menu entry Ligand > Coot All-Atom Contact Dots Off"
+check("contact dots (Ctrl-1) can be switched off: coot0_contact_dots_off, Ligand > Coot All-Atom Contact Dots Off", contact_dots_off)
 
 check("no exception in any GTK signal handler", lambda: True if not _c.CALLBACK_ERRORS else [e[1][-300:] for e in _c.CALLBACK_ERRORS][:2])
 w = max(len(r[0]) for r in res)
