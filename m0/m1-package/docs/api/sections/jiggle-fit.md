@@ -19,6 +19,8 @@ Arguments: imol (a whole number), chain_id (text), n_trials (a whole number), ji
 | Python | `fit_chain_to_map_by_random_jiggle(0, "A", 1, 1.0)` | ran, returned `-999.0` |
 | Scheme | `(fit-chain-to-map-by-random-jiggle 0 "A" 1 1.0)` | ran, returned `-999.0` |
 
+Python and Scheme gave the same answer.
+
 ### fit_chain_to_map_by_random_jiggle_and_blur
 
 Python: `fit_chain_to_map_by_random_jiggle_and_blur(imol, chain_id, n_trials, jiggle_scale_factor, map_blur_factor)`  
@@ -35,6 +37,8 @@ Arguments: imol (a whole number), chain_id (text), n_trials (a whole number), ji
 | Python | `fit_chain_to_map_by_random_jiggle_and_blur(0, "A", 1, 1.0, 1.0)` | ran, returned `-100.0` |
 | Scheme | `(fit-chain-to-map-by-random-jiggle-and-blur 0 "A" 1 1.0 1.0)` | ran, returned `-100.0` |
 
+Python and Scheme gave the same answer.
+
 ### fit_molecule_to_map_by_random_jiggle
 
 Python: `fit_molecule_to_map_by_random_jiggle(imol, n_trials, jiggle_scale_factor)`  
@@ -49,6 +53,8 @@ Arguments: imol (a whole number), n_trials (a whole number), jiggle_scale_factor
 |---|---|---|
 | Python | `fit_molecule_to_map_by_random_jiggle(0, 1, 1.0)` | ran, returned `0.0` |
 | Scheme | `(fit-molecule-to-map-by-random-jiggle 0 1 1.0)` | ran, returned `0.0` |
+
+Python and Scheme gave the same answer.
 
 ### fit_molecule_to_map_by_random_jiggle_and_blur
 
@@ -66,6 +72,8 @@ Arguments: imol (a whole number), n_trials (a whole number), jiggle_scale_factor
 | Python | `fit_molecule_to_map_by_random_jiggle_and_blur(0, 1, 1.0, 1.0)` | ran, returned `0.0` |
 | Scheme | `(fit-molecule-to-map-by-random-jiggle-and-blur 0 1 1.0 1.0)` | ran, returned `0.0` |
 
+Python and Scheme gave the same answer.
+
 ### fit_to_map_by_random_jiggle
 
 Python: `fit_to_map_by_random_jiggle(imol, chain_id, resno, ins_code, n_trials, jiggle_scale_factor)`  
@@ -80,4 +88,6 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_c
 |---|---|---|
 | Python | `fit_to_map_by_random_jiggle(0, "A", 41, "", 1, 1.0)` | ran, returned `19.296470642089844` |
 | Scheme | `(fit-to-map-by-random-jiggle 0 "A" 41 "" 1 1.0)` | ran, returned `19.296470642089844` |
+
+Python and Scheme gave the same answer.
 

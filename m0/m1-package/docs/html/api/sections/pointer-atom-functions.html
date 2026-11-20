@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="4e10efe18c99a3166f83b87edc10e41bebb58af4">
+<meta name="coot0-source-sha1" content="23fc90dc887a737245641b1e1927f1b730a25366">
 <title>Pointer Atom Functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -26,6 +26,7 @@ Scheme: <code>(create-pointer-atom-molecule-maybe)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>create_pointer_atom_molecule_maybe()</code></td><td>ran, returned <code>2</code></td></tr>
 <tr><td>Scheme</td><td><code>(create-pointer-atom-molecule-maybe)</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="display_where_is_pointer">display_where_is_pointer</h3>
 <p>Python: <code>display_where_is_pointer()</code><br>
 Scheme: <code>(display-where-is-pointer)</code></p>
@@ -38,44 +39,45 @@ Scheme: <code>(display-where-is-pointer)</code></p>
 Scheme: <code>(place-atom-at-pointer)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>place_atom_at_pointer()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(place-atom-at-pointer)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>place_atom_at_pointer()</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
+<tr><td>Scheme</td><td><code>(place-atom-at-pointer)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
 <h3 id="place_atom_at_pointer_by_window">place_atom_at_pointer_by_window</h3>
 <p>Python: <code>place_atom_at_pointer_by_window()</code><br>
 Scheme: <code>(place-atom-at-pointer-by-window)</code></p>
 <p>which calls the following gui function (if using non dummies)</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>place_atom_at_pointer_by_window()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(place-atom-at-pointer-by-window)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>place_atom_at_pointer_by_window()</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
+<tr><td>Scheme</td><td><code>(place-atom-at-pointer-by-window)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
 <h3 id="place_typed_atom_at_pointer">place_typed_atom_at_pointer</h3>
 <p>Python: <code>place_typed_atom_at_pointer(type)</code><br>
 Scheme: <code>(place-typed-atom-at-pointer type)</code></p>
 <p>Arguments: type (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>place_typed_atom_at_pointer("ALA")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(place-typed-atom-at-pointer "ALA")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>place_typed_atom_at_pointer("ALA")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(place-typed-atom-at-pointer "ALA")</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="pointer_atom_molecule">pointer_atom_molecule</h3>
 <p>Python: <code>pointer_atom_molecule()</code><br>
 Scheme: <code>(pointer-atom-molecule)</code></p>
 <p>Return the current pointer atom molecule</p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>pointer_atom_molecule()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(pointer-atom-molecule)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>pointer_atom_molecule()</code></td><td>ran, returned <code>-1</code></td></tr>
+<tr><td>Scheme</td><td><code>(pointer-atom-molecule)</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="set_pointer_atom_is_dummy">set_pointer_atom_is_dummy</h3>
 <p>Python: <code>set_pointer_atom_is_dummy(i)</code><br>
 Scheme: <code>(set-pointer-atom-is-dummy i)</code></p>
 <p>! set pointer atom is a water (HOH)</p>
 <p>Arguments: i (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_pointer_atom_is_dummy(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-pointer-atom-is-dummy 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_pointer_atom_is_dummy(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-pointer-atom-is-dummy 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_pointer_atom_molecule">set_pointer_atom_molecule</h3>
 <p>Python: <code>set_pointer_atom_molecule(imol)</code><br>
 Scheme: <code>(set-pointer-atom-molecule imol)</code></p>
 <p>Arguments: imol (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_pointer_atom_molecule(0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-pointer-atom-molecule 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_pointer_atom_molecule(0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-pointer-atom-molecule 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
 </body></html>

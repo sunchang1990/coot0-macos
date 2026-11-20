@@ -16,3 +16,5 @@ Arguments: imol (a whole number), chain_id (text), reso (a whole number), insert
 | Python | `add_OXT_to_residue(0, "A", 1, "")` | ran, returned `1` |
 | Scheme | `(add-OXT-to-residue 0 "A" 1 "")` | ran, returned `1` |
 
+Python and Scheme gave the same answer.
+

@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="bb28dce6033864926ab5a25fd12b05e285a7e029">
+<meta name="coot0-source-sha1" content="9e3ac2ca6fcc1000359105f2aa1a0595b3342d99">
 <title>General (cc-interface) - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -24,7 +24,7 @@ Scheme: <code>(active-atom-spec)</code></p>
 <p>Arguments: none. Returns: a value (see the result of the example).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>active_atom_spec()</code></td><td>ran, returned <code>(True, (0, [True, 'A', 42, '']))</code></td></tr>
-<tr><td>Scheme</td><td><code>(active-atom-spec)</code></td><td>ran, returned <code>#&lt;collectable-swig-pointer std::pair&lt; bool,std::pair&lt; int,coot::atom_spec_t &gt; &gt; * adb90e940&gt;</code></td></tr></tbody></table>
+<tr><td>Scheme</td><td><code>(active-atom-spec)</code></td><td>ran, returned <code>#&lt;collectable-swig-pointer std::pair&lt; bool,std::pair&lt; int,coot::atom_spec_t &gt; &gt; * 8ebfc06e0&gt;</code></td></tr></tbody></table>
 <h3 id="add_cablam_markup">add_cablam_markup</h3>
 <p>Python: <code>add_cablam_markup(imol, cablam_log_file_name)</code><br>
 Scheme: <code>(add-cablam-markup imol cablam-log-file-name)</code></p>
@@ -33,6 +33,7 @@ Scheme: <code>(add-cablam-markup imol cablam-log-file-name)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>add_cablam_markup(0, "tutorial-modern.pdb")</code></td><td>ran, returned <code>[]</code></td></tr>
 <tr><td>Scheme</td><td><code>(add-cablam-markup 0 "tutorial-modern.pdb")</code></td><td>ran, returned <code>()</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="add_validation_mol_menu_item">add_validation_mol_menu_item</h3>
 <p>Python: <code>add_validation_mol_menu_item(imol, name, menu, callback)</code><br>
 Scheme: <code>(add-validation-mol-menu-item imol name menu callback)</code></p>
@@ -47,6 +48,7 @@ Scheme: <code>(compare-strings a b)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>compare_strings("hello", "hello")</code></td><td>ran, returned <code>False</code></td></tr>
 <tr><td>Scheme</td><td><code>(compare-strings "hello" "hello")</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="create_initial_validation_graph_submenu_generic">create_initial_validation_graph_submenu_generic</h3>
 <p>Python: <code>create_initial_validation_graph_submenu_generic(window1, menu_name, sub_menu_name)</code><br>
 Scheme: <code>(create-initial-validation-graph-submenu-generic window1 menu-name sub-menu-name)</code></p>
@@ -68,6 +70,7 @@ Scheme: <code>(filtered-by-glob pre-directory data-type)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>filtered_by_glob(".", 1)</code></td><td>ran, returned <code>('./rnasa-1.8-all_refmac1.mtz',)</code></td></tr>
 <tr><td>Scheme</td><td><code>(filtered-by-glob "." 1)</code></td><td>ran, returned <code>#("./rnasa-1.8-all_refmac1.mtz")</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="float_from_entry">float_from_entry</h3>
 <p>Python: <code>float_from_entry(entry)</code><br>
 Scheme: <code>(float-from-entry entry)</code></p>
@@ -89,6 +92,7 @@ Scheme: <code>(git-commit)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>git_commit()</code></td><td>ran, returned <code>'50638a38145722303017be802622d65d83bd7f66'</code></td></tr>
 <tr><td>Scheme</td><td><code>(git-commit)</code></td><td>ran, returned <code>"50638a38145722303017be802622d65d83bd7f66"</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="goto_next_atom_maybe">goto_next_atom_maybe</h3>
 <p>Python: <code>goto_next_atom_maybe(chain_id, resno, ins_code, atom_name)</code><br>
 Scheme: <code>(goto-next-atom-maybe chain-id resno ins-code atom-name)</code></p>
@@ -98,6 +102,7 @@ Also available in Scheme as <code>goto-next-atom-maybe-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>goto_next_atom_maybe("A", 41, "", " CA ")</code></td><td>ran, returned <code>['A', 41, '', ' CA ']</code></td></tr>
 <tr><td>Scheme</td><td><code>(goto-next-atom-maybe "A" 41 "" " CA ")</code></td><td>ran, returned <code>("A" 41 "" " CA ")</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="goto_prev_atom_maybe">goto_prev_atom_maybe</h3>
 <p>Python: <code>goto_prev_atom_maybe(chain_id, resno, ins_code, atom_name)</code><br>
 Scheme: <code>(goto-prev-atom-maybe chain-id resno ins-code atom-name)</code></p>
@@ -107,13 +112,14 @@ Also available in Scheme as <code>goto-prev-atom-maybe-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>goto_prev_atom_maybe("A", 41, "", " CA ")</code></td><td>ran, returned <code>['A', 40, '', ' CA ']</code></td></tr>
 <tr><td>Scheme</td><td><code>(goto-prev-atom-maybe "A" 41 "" " CA ")</code></td><td>ran, returned <code>("A" 40 "" " CA ")</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="int_from_entry">int_from_entry</h3>
 <p>Python: <code>int_from_entry(entry)</code><br>
 Scheme: <code>(int-from-entry entry)</code></p>
 <p>Arguments: entry (<code>GtkWidget *</code>). Returns: a list.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 <h3 id="menu_item_label">menu_item_label</h3>
 <p>Python: <code>menu_item_label(menu_item)</code><br>
 Scheme: <code>(menu-item-label menu-item)</code></p>
@@ -123,22 +129,22 @@ GtkPositionType data. A wrapper to a static graphics_info_t
 function.</p>
 <p>Arguments: menu_item (<code>GtkWidget *</code>). Returns: text.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 <h3 id="pre_directory_file_selection">pre_directory_file_selection</h3>
 <p>Python: <code>pre_directory_file_selection(sort_button)</code><br>
 Scheme: <code>(pre-directory-file-selection sort-button)</code></p>
 <p>Arguments: sort_button (<code>GtkWidget *</code>). Returns: text.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 <h3 id="probe_dots_short_contact_name_to_expanded_name">probe_dots_short_contact_name_to_expanded_name</h3>
 <p>Python: <code>probe_dots_short_contact_name_to_expanded_name(short_name)</code><br>
 Scheme: <code>(probe-dots-short-contact-name-to-expanded-name short-name)</code></p>
 <p>Arguments: short_name (text). Returns: text.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>probe_dots_short_contact_name_to_expanded_name("my-name")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(probe-dots-short-contact-name-to-expanded-name "my-name")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>probe_dots_short_contact_name_to_expanded_name("my-name")</code></td><td>not run: not run automatically (probe: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(probe-dots-short-contact-name-to-expanded-name "my-name")</code></td><td>not run: not run automatically (probe: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="set_go_to_atom_from_atom_spec">set_go_to_atom_from_atom_spec</h3>
 <p>Python: <code>set_go_to_atom_from_atom_spec(residue_spec)</code><br>
 Scheme: <code>(set-go-to-atom-from-atom-spec residue-spec)</code></p>
@@ -146,35 +152,38 @@ Scheme: <code>(set-go-to-atom-from-atom-spec residue-spec)</code></p>
 Also available in Python as <code>set_go_to_atom_from_atom_spec_py</code>.
 Also available in Scheme as <code>set-go-to-atom-from-atom-spec-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_go_to_atom_from_atom_spec(["A", 41, ""])</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-go-to-atom-from-atom-spec (list "A" 41 ""))</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_go_to_atom_from_atom_spec(["A", 41, ""])</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(set-go-to-atom-from-atom-spec (list "A" 41 ""))</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="set_go_to_atom_from_res_spec">set_go_to_atom_from_res_spec</h3>
 <p>Python: <code>set_go_to_atom_from_res_spec(residue_spec)</code><br>
 Scheme: <code>(set-go-to-atom-from-res-spec residue-spec)</code></p>
 <p>Arguments: residue_spec (a list or value). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_go_to_atom_from_res_spec(["A", 41, ""])</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-go-to-atom-from-res-spec (list "A" 41 ""))</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_go_to_atom_from_res_spec(["A", 41, ""])</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(set-go-to-atom-from-res-spec (list "A" 41 ""))</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="set_go_to_atom_from_spec">set_go_to_atom_from_spec</h3>
 <p>Python: <code>set_go_to_atom_from_spec(atom_spec)</code><br>
 Scheme: <code>(set-go-to-atom-from-spec atom-spec)</code></p>
 <p>Arguments: atom_spec (<code>coot::atom_spec_t</code>). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 <h3 id="string_member">string_member</h3>
 <p>Python: <code>string_member(search, list)</code><br>
 Scheme: <code>(string-member search list)</code></p>
 <p>Return 1 if search appears in list, 0 if not)</p>
 <p>Arguments: search (text), list (a list). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>string_member("hello", "hello")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(string-member "hello" "hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>string_member("hello", "hello")</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(string-member "hello" "hello")</code></td><td>error: In procedure string-member: Wrong type argument in position 2: "hello"</td></tr></tbody></table>
 <h3 id="wrapped_nothing_bad_dialog">wrapped_nothing_bad_dialog</h3>
 <p>Python: <code>wrapped_nothing_bad_dialog(label)</code><br>
 Scheme: <code>(wrapped-nothing-bad-dialog label)</code></p>
 <p>Arguments: label (text). Returns: <code>GtkWidget *</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>wrapped_nothing_bad_dialog("hello")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(wrapped-nothing-bad-dialog "hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>wrapped_nothing_bad_dialog("hello")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(wrapped-nothing-bad-dialog "hello")</code></td><td>ran, returned <code>()</code></td></tr></tbody></table>
+<p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 </body></html>

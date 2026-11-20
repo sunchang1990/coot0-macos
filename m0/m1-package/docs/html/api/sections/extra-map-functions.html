@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="cc8769719eb13f07d8f8f501a70b3e9beb3b22f6">
+<meta name="coot0-source-sha1" content="8ff0ec4434e605c5d20674d90854235c7b1af55c">
 <title>Extra Map Functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -57,6 +57,7 @@ and DELFWT/PHDELFWT) can be changed using ...[something]</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>auto_read_make_and_draw_maps("tutorial-modern.pdb")</code></td><td>ran, returned <code>()</code></td></tr>
 <tr><td>Scheme</td><td><code>(auto-read-make-and-draw-maps "tutorial-modern.pdb")</code></td><td>ran, returned <code>#()</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="auto_read_make_and_draw_maps_from_cns">auto_read_make_and_draw_maps_from_cns</h3>
 <p>Python: <code>auto_read_make_and_draw_maps_from_cns(file_name)</code><br>
 Scheme: <code>(auto-read-make-and-draw-maps-from-cns file-name)</code></p>
@@ -64,6 +65,7 @@ Scheme: <code>(auto-read-make-and-draw-maps-from-cns file-name)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>auto_read_make_and_draw_maps_from_cns("tutorial-modern.pdb")</code></td><td>ran, returned <code>()</code></td></tr>
 <tr><td>Scheme</td><td><code>(auto-read-make-and-draw-maps-from-cns "tutorial-modern.pdb")</code></td><td>ran, returned <code>#()</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="auto_read_make_and_draw_maps_from_mtz">auto_read_make_and_draw_maps_from_mtz</h3>
 <p>Python: <code>auto_read_make_and_draw_maps_from_mtz(file_name)</code><br>
 Scheme: <code>(auto-read-make-and-draw-maps-from-mtz file-name)</code></p>
@@ -72,6 +74,7 @@ Scheme: <code>(auto-read-make-and-draw-maps-from-mtz file-name)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>auto_read_make_and_draw_maps_from_mtz("tutorial-modern.pdb")</code></td><td>ran, returned <code>()</code></td></tr>
 <tr><td>Scheme</td><td><code>(auto-read-make-and-draw-maps-from-mtz "tutorial-modern.pdb")</code></td><td>ran, returned <code>#()</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="b_factor_from_map">b_factor_from_map</h3>
 <p>Python: <code>b_factor_from_map(imol_map)</code><br>
 Scheme: <code>(b-factor-from-map imol-map)</code></p>
@@ -84,6 +87,7 @@ Returns -1 when given a bad map or there were no data beyond 4.5A</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>b_factor_from_map(1)</code></td><td>ran, returned <code>-1.0</code></td></tr>
 <tr><td>Scheme</td><td><code>(b-factor-from-map 1)</code></td><td>ran, returned <code>-1.0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="flip_hand">flip_hand</h3>
 <p>Python: <code>flip_hand(imol_map)</code><br>
 Scheme: <code>(flip-hand imol-map)</code></p>
@@ -94,6 +98,7 @@ Returns the molecule number of the flipped map.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>flip_hand(1)</code></td><td>ran, returned <code>2</code></td></tr>
 <tr><td>Scheme</td><td><code>(flip-hand 1)</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="go_to_map_molecule_centre">go_to_map_molecule_centre</h3>
 <p>Python: <code>go_to_map_molecule_centre(imol_map)</code><br>
 Scheme: <code>(go-to-map-molecule-centre imol-map)</code></p>
@@ -111,6 +116,7 @@ Scheme: <code>(handle-read-ccp4-map filename is-diff-map-flag)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>handle_read_ccp4_map("tutorial-modern.pdb", 1)</code></td><td>ran, returned <code>-1</code></td></tr>
 <tr><td>Scheme</td><td><code>(handle-read-ccp4-map "tutorial-modern.pdb" 1)</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="handle_read_emdb_data">handle_read_emdb_data</h3>
 <p>Python: <code>handle_read_emdb_data(dir_name)</code><br>
 Scheme: <code>(handle-read-emdb-data dir-name)</code></p>
@@ -118,6 +124,7 @@ Scheme: <code>(handle-read-emdb-data dir-name)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>handle_read_emdb_data(".")</code></td><td>ran, returned <code>0</code></td></tr>
 <tr><td>Scheme</td><td><code>(handle-read-emdb-data ".")</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="map_colour_components">map_colour_components</h3>
 <p>Python: <code>map_colour_components(imol)</code><br>
 Scheme: <code>(map-colour-components imol)</code></p>
@@ -126,8 +133,9 @@ e.g.: [0.4, 0.6, 0.8]. If invalid imol return Py_False.</p>
 <p>Arguments: imol (a whole number). Returns: a value (see the result of the example).
 Also available in Python as <code>map_colour_components_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>map_colour_components(0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(map-colour-components 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>map_colour_components(0)</code></td><td>ran, returned <code>False</code></td></tr>
+<tr><td>Scheme</td><td><code>(map-colour-components 0)</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="multi_sharpen_blur_map_py">multi_sharpen_blur_map_py</h3>
 <p>Python: <code>multi_sharpen_blur_map_py(imol_map, b_factors_list)</code><br>
 Scheme: <code>(multi-sharpen-blur-map-scm imol-map b-factors-list)</code></p>
@@ -135,16 +143,17 @@ Scheme: <code>(multi-sharpen-blur-map-scm imol-map b-factors-list)</code></p>
 blurred maps are generated by using a positive value of b_factor.</p>
 <p>Arguments: imol_map (a whole number), b_factors_list (a list or value). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 <h3 id="read_ccp4_map">read_ccp4_map</h3>
 <p>Python: <code>read_ccp4_map(filename, is_diff_map_flag)</code><br>
 Scheme: <code>(read-ccp4-map filename is-diff-map-flag)</code></p>
 <p>read a CCP4 map or a CNS map (despite the name).</p>
 <p>Arguments: filename (text), is_diff_map_flag (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_ccp4_map("tutorial-modern.pdb", 1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(read-ccp4-map "tutorial-modern.pdb" 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>read_ccp4_map("tutorial-modern.pdb", 1)</code></td><td>ran, returned <code>-1</code></td></tr>
+<tr><td>Scheme</td><td><code>(read-ccp4-map "tutorial-modern.pdb" 1)</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="res_tracer">res_tracer</h3>
 <p>Python: <code>res_tracer(imol_map, pir_file_name)</code><br>
 Scheme: <code>(res-tracer imol-map pir-file-name)</code></p>
@@ -152,8 +161,8 @@ Scheme: <code>(res-tracer imol-map pir-file-name)</code></p>
 the given pir file</p>
 <p>Arguments: imol_map (a whole number), pir_file_name (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>res_tracer(1, "tutorial-modern.pdb")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(res-tracer 1 "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>res_tracer(1, "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(res-tracer 1 "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="sharpen_blur_map">sharpen_blur_map</h3>
 <p>Python: <code>sharpen_blur_map(imol_map, b_factor)</code><br>
 Scheme: <code>(sharpen-blur-map imol-map b-factor)</code></p>
@@ -163,8 +172,9 @@ Returns the index of the map created by applying a b-factor
  to the given map. Return -1 on failure.</p>
 <p>Arguments: imol_map (a whole number), b_factor (a number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>sharpen_blur_map(1, 20.0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(sharpen-blur-map 1 20.0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>sharpen_blur_map(1, 20.0)</code></td><td>ran, returned <code>2</code></td></tr>
+<tr><td>Scheme</td><td><code>(sharpen-blur-map 1 20.0)</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="sharpen_blur_map_with_resampling">sharpen_blur_map_with_resampling</h3>
 <p>Python: <code>sharpen_blur_map_with_resampling(imol_map, b_factor, resample_factor)</code><br>
 Scheme: <code>(sharpen-blur-map-with-resampling imol-map b-factor resample-factor)</code></p>
@@ -175,6 +185,7 @@ Returns the index of the map created by applying a b-factor
  to the given map. Return -1 on failure.</p>
 <p>Arguments: imol_map (a whole number), b_factor (a number), resample_factor (a number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>sharpen_blur_map_with_resampling(1, 20.0, 1.0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(sharpen-blur-map-with-resampling 1 20.0 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>sharpen_blur_map_with_resampling(1, 20.0, 1.0)</code></td><td>ran, returned <code>2</code></td></tr>
+<tr><td>Scheme</td><td><code>(sharpen-blur-map-with-resampling 1 20.0 1.0)</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 </body></html>

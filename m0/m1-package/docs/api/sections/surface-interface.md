@@ -51,6 +51,8 @@ Arguments: none. Returns: a number.
 | Python | `get_electrostatic_surface_charge_range()` | ran, returned `0.5` |
 | Scheme | `(get-electrostatic-surface-charge-range)` | ran, returned `0.5` |
 
+Python and Scheme gave the same answer.
+
 ### get_electrostatic_surface_opacity
 
 Python: `get_electrostatic_surface_opacity(imol)`  
@@ -66,6 +68,8 @@ Arguments: imol (a whole number). Returns: a number.
 | Python | `get_electrostatic_surface_opacity(0)` | ran, returned `1.0` |
 | Scheme | `(get-electrostatic-surface-opacity 0)` | ran, returned `1.0` |
 
+Python and Scheme gave the same answer.
+
 ### molecule_is_drawn_as_surface_int
 
 Python: `molecule_is_drawn_as_surface_int(imol)`  
@@ -75,8 +79,10 @@ Arguments: imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `molecule_is_drawn_as_surface_int(0)` | not tried |
-| Scheme | `(molecule-is-drawn-as-surface-int 0)` | not tried |
+| Python | `molecule_is_drawn_as_surface_int(0)` | ran, returned `1` |
+| Scheme | `(molecule-is-drawn-as-surface-int 0)` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 
 ### set_electrostatic_surface_charge_range
 
@@ -87,8 +93,8 @@ Arguments: v (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_electrostatic_surface_charge_range(1.0)` | not tried |
-| Scheme | `(set-electrostatic-surface-charge-range 1.0)` | not tried |
+| Python | `set_electrostatic_surface_charge_range(1.0)` | ran (no return value) |
+| Scheme | `(set-electrostatic-surface-charge-range 1.0)` | ran (no return value) |
 
 ### set_transparent_electrostatic_surface
 
@@ -102,6 +108,6 @@ Arguments: imol (a whole number), opacity (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_transparent_electrostatic_surface(0, 1.0)` | not tried |
-| Scheme | `(set-transparent-electrostatic-surface 0 1.0)` | not tried |
+| Python | `set_transparent_electrostatic_surface(0, 1.0)` | ran (no return value) |
+| Scheme | `(set-transparent-electrostatic-surface 0 1.0)` | ran (no return value) |
 

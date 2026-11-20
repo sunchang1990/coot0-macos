@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="f6b2a1d8d397f540aad4b3d021cf228881170738">
+<meta name="coot0-source-sha1" content="70a5773a824e04cda968f5e8c84a79bcc5239049">
 <title>RNA/DNA - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -27,8 +27,9 @@ Scheme: <code>(ideal-nucleic-acid RNA-or-DNA form single-stranged-flag sequence)
 <p>Returns the new molecule number or -1 if a problem</p>
 <p>Arguments: RNA_or_DNA (text), form (text), single_stranged_flag (a whole number), sequence (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>ideal_nucleic_acid("hello", "hello", 1, "ACDEFGHIKLMNPQRSTVWY")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(ideal-nucleic-acid "hello" "hello" 1 "ACDEFGHIKLMNPQRSTVWY")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>ideal_nucleic_acid("hello", "hello", 1, "ACDEFGHIKLMNPQRSTVWY")</code></td><td>ran, returned <code>-1</code></td></tr>
+<tr><td>Scheme</td><td><code>(ideal-nucleic-acid "hello" "hello" 1 "ACDEFGHIKLMNPQRSTVWY")</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="pucker_info">pucker_info</h3>
 <p>Python: <code>pucker_info(imol, residue_spec, do_pukka_pucker_check)</code><br>
 Scheme: <code>(pucker-info imol residue-spec do-pukka-pucker-check)</code></p>
@@ -41,16 +42,17 @@ Scheme: <code>(pucker-info imol residue-spec do-pukka-pucker-check)</code></p>
 Also available in Python as <code>pucker_info_py</code>.
 Also available in Scheme as <code>pucker-info-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>pucker_info(0, ["A", 41, ""], 1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(pucker-info 0 (list "A" 41 "") 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>pucker_info(0, ["A", 41, ""], 1)</code></td><td>ran, returned <code>False</code></td></tr>
+<tr><td>Scheme</td><td><code>(pucker-info 0 (list "A" 41 "") 1)</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="setup_base_pairing">setup_base_pairing</h3>
 <p>Python: <code>setup_base_pairing(state)</code><br>
 Scheme: <code>(setup-base-pairing state)</code></p>
 <p>not for user level</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>setup_base_pairing(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(setup-base-pairing 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>setup_base_pairing(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(setup-base-pairing 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="watson_crick_pair">watson_crick_pair</h3>
 <p>Python: <code>watson_crick_pair(imol, chain_id, resno)</code><br>
 Scheme: <code>(watson-crick-pair imol chain-id resno)</code></p>
@@ -58,14 +60,16 @@ Scheme: <code>(watson-crick-pair imol chain-id resno)</code></p>
  partner of the clicked/picked/selected residue</p>
 <p>Arguments: imol (a whole number), chain_id (text), resno (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>watson_crick_pair(0, "A", 41)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(watson-crick-pair 0 "A" 41)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>watson_crick_pair(0, "A", 41)</code></td><td>ran, returned <code>-1</code></td></tr>
+<tr><td>Scheme</td><td><code>(watson-crick-pair 0 "A" 41)</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="watson_crick_pair_for_residue_range">watson_crick_pair_for_residue_range</h3>
 <p>Python: <code>watson_crick_pair_for_residue_range(imol, chain_id, resno_start, resno_end)</code><br>
 Scheme: <code>(watson-crick-pair-for-residue-range imol chain-id resno-start resno-end)</code></p>
 <p>add base pairs for the given residue range, modify molecule imol by creating a new chain</p>
 <p>Arguments: imol (a whole number), chain_id (text), resno_start (a whole number), resno_end (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>watson_crick_pair_for_residue_range(0, "A", 41, 45)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(watson-crick-pair-for-residue-range 0 "A" 41 45)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>watson_crick_pair_for_residue_range(0, "A", 41, 45)</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(watson-crick-pair-for-residue-range 0 "A" 41 45)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 </body></html>

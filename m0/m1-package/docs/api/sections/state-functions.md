@@ -15,8 +15,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `run_state_file()` | not tried |
-| Scheme | `(run-state-file)` | not tried |
+| Python | `run_state_file()` | not run: not run automatically (run: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(run-state-file)` | not run: not run automatically (run: exits, uses the network, an external program, files or a screen) |
 
 ### run_state_file_maybe
 
@@ -29,8 +29,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `run_state_file_maybe()` | not tried |
-| Scheme | `(run-state-file-maybe)` | not tried |
+| Python | `run_state_file_maybe()` | not run: not run automatically (run: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(run-state-file-maybe)` | not run: not run automatically (run: exits, uses the network, an external program, files or a screen) |
 
 ### save_state
 
@@ -43,8 +43,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `save_state()` | not tried |
-| Scheme | `(save-state)` | not tried |
+| Python | `save_state()` | ran (no return value) |
+| Scheme | `(save-state)` | ran (no return value) |
 
 ### save_state_file
 
@@ -57,8 +57,8 @@ Arguments: filename (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `save_state_file("tutorial-modern.pdb")` | not tried |
-| Scheme | `(save-state-file "tutorial-modern.pdb")` | not tried |
+| Python | `save_state_file("tutorial-modern.pdb")` | ran (no return value) |
+| Scheme | `(save-state-file "tutorial-modern.pdb")` | ran (no return value) |
 
 ### save_state_file_name
 
@@ -74,8 +74,10 @@ Also available in Python as `save_state_file_name_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `save_state_file_name()` | not tried |
-| Scheme | `(save-state-file-name-scm)` | not tried |
+| Python | `save_state_file_name()` | ran, returned `'0-coot.state.scm'` |
+| Scheme | `(save-state-file-name-scm)` | ran, returned `"0-coot.state.scm"` |
+
+Python and Scheme gave the same answer.
 
 ### save_state_file_name_raw
 
@@ -88,8 +90,10 @@ Arguments: none. Returns: text.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `save_state_file_name_raw()` | not tried |
-| Scheme | `(save-state-file-name-raw)` | not tried |
+| Python | `save_state_file_name_raw()` | ran, returned `'0-coot.state.scm'` |
+| Scheme | `(save-state-file-name-raw)` | ran, returned `"0-coot.state.scm"` |
+
+Python and Scheme gave the same answer.
 
 ### set_run_state_file_status
 
@@ -106,8 +110,8 @@ Arguments: istat (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_run_state_file_status(1)` | not tried |
-| Scheme | `(set-run-state-file-status 1)` | not tried |
+| Python | `set_run_state_file_status(1)` | not run: not run automatically (run: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(set-run-state-file-status 1)` | not run: not run automatically (run: exits, uses the network, an external program, files or a screen) |
 
 ### set_save_state_file_name
 
@@ -120,6 +124,6 @@ Arguments: filename (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_save_state_file_name("tutorial-modern.pdb")` | not tried |
-| Scheme | `(set-save-state-file-name "tutorial-modern.pdb")` | not tried |
+| Python | `set_save_state_file_name("tutorial-modern.pdb")` | ran (no return value) |
+| Scheme | `(set-save-state-file-name "tutorial-modern.pdb")` | ran (no return value) |
 

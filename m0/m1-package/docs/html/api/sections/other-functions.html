@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="caa05a772e8484f8ffd2221304da1dfe0428bfb6">
+<meta name="coot0-source-sha1" content="7ecd8d91755589a23cc51ec5f4a06a76408ea98a">
 <title>Other functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -58,6 +58,7 @@ Scheme: <code>(coot-version)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>coot_version()</code></td><td>ran, returned <code>'0.9.8.96'</code></td></tr>
 <tr><td>Scheme</td><td><code>(coot-version)</code></td><td>ran, returned <code>"0.9.8.96"</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="coot_version_extra_info">coot_version_extra_info</h3>
 <p>Python: <code>coot_version_extra_info()</code><br>
 Scheme: <code>(coot-version-extra-info)</code></p>
@@ -65,6 +66,7 @@ Scheme: <code>(coot-version-extra-info)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>coot_version_extra_info()</code></td><td>ran, returned <code>'(revision-count 10988)\n[with guile 3.0.10 embedded]\n[with python 3.11.18 embedded]\ngit commit: 50638a38145722303017b ...</code></td></tr>
 <tr><td>Scheme</td><td><code>(coot-version-extra-info)</code></td><td>ran, returned <code>"(revision-count 10988)\n[with guile 3.0.10 embedded]\n[with python 3.11.18 embedded]\ngit commit: 50638a38145722303017b ...</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="generic_objects_gui_wrapper">generic_objects_gui_wrapper</h3>
 <p>Python: <code>generic_objects_gui_wrapper()</code><br>
 Scheme: <code>(generic-objects-gui-wrapper)</code></p>
@@ -79,26 +81,26 @@ Scheme: <code>(generic-objects-gui-wrapper)</code></p>
 Scheme: <code>(link-atoms)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>link_atoms()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(link-atoms)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>link_atoms()</code></td><td>error: TypeError: Wrong number or type of arguments for overloaded function 'link_atoms'.   Possible C/C++ prototypes are:     coot::link_atoms(mmd ...</td></tr>
+<tr><td>Scheme</td><td><code>(link-atoms)</code></td><td>error: In procedure link-atoms: No matching method for generic function 'link_atoms'</td></tr></tbody></table>
 <h3 id="set_display_all_generic_objects">set_display_all_generic_objects</h3>
 <p>Python: <code>set_display_all_generic_objects(state)</code><br>
 Scheme: <code>(set-display-all-generic-objects state)</code></p>
 <p>display (1) or undisplay (0) all generic display objects</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_display_all_generic_objects(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-display-all-generic-objects 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_display_all_generic_objects(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-display-all-generic-objects 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="try_load_python_extras_dir">try_load_python_extras_dir</h3>
 <p>Python: <code>try_load_python_extras_dir()</code></p>
 <p>Arguments: none. Returns: nothing.
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>try_load_python_extras_dir()</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>try_load_python_extras_dir()</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="try-load-scheme-extras-dir">try-load-scheme-extras-dir</h3>
 <p>Scheme: <code>(try-load-scheme-extras-dir)</code></p>
 <p>Arguments: none. Returns: nothing.
 <strong>Scheme only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Scheme</td><td><code>(try-load-scheme-extras-dir)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Scheme</td><td><code>(try-load-scheme-extras-dir)</code></td><td>ran (no return value)</td></tr></tbody></table>
 </body></html>

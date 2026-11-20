@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="78961e9823c821cb54dbdce4a50442564c5bf691">
+<meta name="coot0-source-sha1" content="752de9bdbe264c7f89e2c2c7c2033d2fb9ceb92e">
 <title>Superposition (SSM) - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -26,8 +26,8 @@ can either move imol2 or copy it to generate a new molecule depending
 on the vaule of move_imol2_flag (1 for copy 0 for move).</p>
 <p>Arguments: imol1 (a whole number), imol2 (a whole number), move_imol2_flag (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>superpose(0, 0, 0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(superpose 0 0 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>superpose(0, 0, 0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(superpose 0 0 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="superpose_with_atom_selection">superpose_with_atom_selection</h3>
 <p>Python: <code>superpose_with_atom_selection(imol1, imol2, mmdb_atom_sel_str_1, mmdb_atom_sel_str_2, move_imol2_copy_flag)</code><br>
 Scheme: <code>(superpose-with-atom-selection imol1 imol2 mmdb-atom-sel-str-1 mmdb-atom-sel-str-2 move-imol2-copy-flag)</code></p>
@@ -41,8 +41,9 @@ new molecule (if move_imol2_flag was 1) or the imol2 or -1 (signifying
 failure to do the SMM superposition).</p>
 <p>Arguments: imol1 (a whole number), imol2 (a whole number), mmdb_atom_sel_str_1 (text), mmdb_atom_sel_str_2 (text), move_imol2_copy_flag (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>superpose_with_atom_selection(0, 0, "//A/41-45", "//A/41-45", 0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(superpose-with-atom-selection 0 0 "//A/41-45" "//A/41-45" 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>superpose_with_atom_selection(0, 0, "//A/41-45", "//A/41-45", 0)</code></td><td>ran, returned <code>-1</code></td></tr>
+<tr><td>Scheme</td><td><code>(superpose-with-atom-selection 0 0 "//A/41-45" "//A/41-45" 0)</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="superpose_with_chain_selection">superpose_with_chain_selection</h3>
 <p>Python: <code>superpose_with_chain_selection(imol1, imol2, chain_imol1, chain_imol2, chain_used_flag_imol1, chain_used_flag_imol2, move_imol2_copy_flag)</code><br>
 Scheme: <code>(superpose-with-chain-selection imol1 imol2 chain-imol1 chain-imol2 chain-used-flag-imol1 chain-used-flag-imol2 move-imol2-copy-flag)</code></p>
@@ -52,6 +53,6 @@ we can either move imol2 or copy it to generate a new molecule
 depending on the vaule of move_imol2_flag (1 for move 0 for copy).</p>
 <p>Arguments: imol1 (a whole number), imol2 (a whole number), chain_imol1 (text), chain_imol2 (text), chain_used_flag_imol1 (a whole number), chain_used_flag_imol2 (a whole number), move_imol2_copy_flag (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>superpose_with_chain_selection(0, 0, "A", "B", 0, 0, 0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(superpose-with-chain-selection 0 0 "A" "B" 0 0 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>superpose_with_chain_selection(0, 0, "A", "B", 0, 0, 0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(superpose-with-chain-selection 0 0 "A" "B" 0 0 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
 </body></html>

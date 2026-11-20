@@ -30,6 +30,8 @@ Arguments: rn (text). Returns: true or false.
 | Python | `comprised_of_organic_set_p("hello")` | ran, returned `False` |
 | Scheme | `(comprised-of-organic-set-p "hello")` | ran, returned `#f` |
 
+Python and Scheme gave the same answer.
+
 ### coot_add_hydrogen_atoms
 
 Python: `coot_add_hydrogen_atoms(imol)`  
@@ -124,6 +126,8 @@ Arguments: none. Returns: true or false.
 | Python | `enhanced_ligand_coot_p()` | ran, returned `True` |
 | Scheme | `(enhanced-ligand-coot-p)` | ran, returned `#t` |
 
+Python and Scheme gave the same answer.
+
 ### get_intermediate_atoms_distortions
 
 Python: `get_intermediate_atoms_distortions()`
@@ -151,6 +155,8 @@ Also available in Python as `get_ligand_distortion_summary_info_py`.
 | Python | `get_ligand_distortion_summary_info(0, ["A", 41, ""])` | ran, returned `[2203.7119153114145, {'restraint_type': 'Chiral', 'target_value': 0.0, 'sigma': 0.1, 'fixed_atom_flags': [0, 0, 0, 0]}]` |
 | Scheme | `(get-ligand-distortion-summary-info-scm 0 (list "A" 41 ""))` | ran, returned `(2203.7119153114145 (("restraint-type" . "Chiral") ("target-value" . 0.0) ("sigma" . 0.1) ("fixed-atom-flags" 0 0 0 0)))` |
 
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
+
 ### get_ligand_percentile
 
 Python: `get_ligand_percentile(metric_name, metric_value, reverse_order)`  
@@ -168,6 +174,8 @@ Arguments: metric_name (text), metric_value (a number), reverse_order (a whole n
 |---|---|---|
 | Python | `get_ligand_percentile("my-name", 1.0, 1)` | ran, returned `-1.0` |
 | Scheme | `(get-ligand-percentile "my-name" 1.0 1)` | ran, returned `-1.0` |
+
+Python and Scheme gave the same answer.
 
 ### get_monomer_molecule_by_network_and_dict_gen
 
@@ -194,6 +202,8 @@ Arguments: v (a number). Returns: a number.
 |---|---|---|
 | Python | `gsl_sf_erf_scm(1.0)` | ran, returned `0.8427007929497149` |
 | Scheme | `(gsl-sf-erf-scm 1.0)` | ran, returned `0.8427007929497149` |
+
+Python and Scheme gave the same answer.
 
 ### gui_ligand_metrics
 
@@ -222,8 +232,10 @@ Arguments: smiles (text), comp_id (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `import_rdkit_mol_from_smiles("hello", "ALA")` | not tried |
-| Scheme | `(import-rdkit-mol-from-smiles "hello" "ALA")` | not tried |
+| Python | `import_rdkit_mol_from_smiles("hello", "ALA")` | ran, returned `-1` |
+| Scheme | `(import-rdkit-mol-from-smiles "hello" "ALA")` | ran, returned `-1` |
+
+Python and Scheme gave the same answer.
 
 ### invert_chiral_centre
 
@@ -234,8 +246,8 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `invert_chiral_centre(0, "A", 41, "", " CA ")` | not tried |
-| Scheme | `(invert-chiral-centre 0 "A" 41 "" " CA ")` | not tried |
+| Python | `invert_chiral_centre(0, "A", 41, "", " CA ")` | ran (no return value) |
+| Scheme | `(invert-chiral-centre 0 "A" 41 "" " CA ")` | ran (no return value) |
 
 ### jed_flip_intermediate_atoms
 
@@ -248,8 +260,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `jed_flip_intermediate_atoms()` | not tried |
-| Scheme | `(jed-flip-intermediate-atoms)` | not tried |
+| Python | `jed_flip_intermediate_atoms()` | ran, returned `0` |
+| Scheme | `(jed-flip-intermediate-atoms)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### kolmogorov_smirnov
 
@@ -262,8 +276,8 @@ Also available in Scheme as `kolmogorov-smirnov-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### kolmogorov_smirnov_vs_normal
 
@@ -275,8 +289,8 @@ Also available in Python as `kolmogorov_smirnov_vs_normal_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### kullback_liebler
 
@@ -289,8 +303,8 @@ Also available in Scheme as `kullback-liebler-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### ligand_atom_overlaps
 
@@ -304,8 +318,10 @@ Also available in Python as `ligand_atom_overlaps_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `ligand_atom_overlaps(0, ["A", 41, ""], 5.0)` | not tried |
-| Scheme | `(ligand-atom-overlaps-scm 0 (list "A" 41 "") 5.0)` | not tried |
+| Python | `ligand_atom_overlaps(0, ["A", 41, ""], 5.0)` | ran, returned `[[[-1, 'A', 41, '', ' N  ', ''], [-1, 'A', 42, '', ' N  ', ''], 0.3194418392156972, False], [[-1, 'A', 41, '', ' N  ', ' ...` |
+| Scheme | `(ligand-atom-overlaps-scm 0 (list "A" 41 "") 5.0)` | ran, returned `(((-1 "A" 41 "" " N  " "") (-1 "A" 42 "" " N  " "") 0.3194418392156972 #f) ((-1 "A" 41 "" " N  " "") (-1 "A" 40 "" " N   ...` |
+
+Python and Scheme gave the same answer.
 
 ### linked_residues
 
@@ -322,8 +338,8 @@ Also available in Scheme as `linked-residues-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### match_residue_and_dictionary
 
@@ -339,8 +355,10 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `match_residue_and_dictionary(0, "A", 41, "", "hello", "hello", "hello", "hello", "hello", "my-name")` | not tried |
-| Scheme | `(match-residue-and-dictionary 0 "A" 41 "" "hello" "hello" "hello" "hello" "hello" "my-name")` | not tried |
+| Python | `match_residue_and_dictionary(0, "A", 41, "", "hello", "hello", "hello", "hello", "hello", "my-name")` | ran, returned `0` |
+| Scheme | `(match-residue-and-dictionary 0 "A" 41 "" "hello" "hello" "hello" "hello" "hello" "my-name")` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### match_this_residue_and_dictionary
 
@@ -355,8 +373,10 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `match_this_residue_and_dictionary(0, "A", 41, "", "hello", "hello", "hello")` | not tried |
-| Scheme | `(match-this-residue-and-dictionary 0 "A" 41 "" "hello" "hello" "hello")` | not tried |
+| Python | `match_this_residue_and_dictionary(0, "A", 41, "", "hello", "hello", "hello")` | ran, returned `0` |
+| Scheme | `(match-this-residue-and-dictionary 0 "A" 41 "" "hello" "hello" "hello")` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### print_residue_distortions
 
@@ -370,8 +390,10 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `print_residue_distortions(0, "A", 41, "")` | not tried |
-| Scheme | `(print-residue-distortions 0 "A" 41 "")` | not tried |
+| Python | `print_residue_distortions(0, "A", 41, "")` | ran, returned `2304.3666726013203` |
+| Scheme | `(print-residue-distortions 0 "A" 41 "")` | ran, returned `2304.3666726013203` |
+
+Python and Scheme gave the same answer.
 
 ### probe_clash_score
 
@@ -386,8 +408,8 @@ Arguments: dots_file_name (text). Returns: a value (see the result of the exampl
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `probe_clash_score("tutorial-modern.pdb")` | not tried |
-| Scheme | `(probe-clash-score "tutorial-modern.pdb")` | not tried |
+| Python | `probe_clash_score("tutorial-modern.pdb")` | not run: not run automatically (probe: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(probe-clash-score "tutorial-modern.pdb")` | not run: not run automatically (probe: exits, uses the network, an external program, files or a screen) |
 
 ### residue_to_mdl_file_for_mogul
 
@@ -398,8 +420,8 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_c
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `residue_to_mdl_file_for_mogul(0, "A", 41, "", "tutorial-modern.pdb")` | not tried |
-| Scheme | `(residue-to-mdl-file-for-mogul 0 "A" 41 "" "tutorial-modern.pdb")` | not tried |
+| Python | `residue_to_mdl_file_for_mogul(0, "A", 41, "", "tutorial-modern.pdb")` | not run: not run automatically (mogul: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(residue-to-mdl-file-for-mogul 0 "A" 41 "" "tutorial-modern.pdb")` | not run: not run automatically (mogul: exits, uses the network, an external program, files or a screen) |
 
 ### residue_to_sdf_file
 
@@ -415,8 +437,8 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_c
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `residue_to_sdf_file(0, "A", 41, "", "tutorial-modern.pdb", 1)` | not tried |
-| Scheme | `(residue-to-sdf-file 0 "A" 41 "" "tutorial-modern.pdb" 1)` | not tried |
+| Python | `residue_to_sdf_file(0, "A", 41, "", "tutorial-modern.pdb", True)` | ran, returned `False` |
+| Scheme | `(residue-to-sdf-file 0 "A" 41 "" "tutorial-modern.pdb" 1)` | error: In procedure residue-to-sdf-file: No matching method for generic function 'residue_to_sdf_file' |
 
 ### residues_distortions
 
@@ -431,8 +453,8 @@ Also available in Python as `residues_distortions_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `residues_distortions(0, ["A", 41, ""])` | not tried |
-| Scheme | `(residues-distortions-scm 0 (list "A" 41 ""))` | not tried |
+| Python | `residues_distortions(0, ["A", 41, ""])` | error: SystemError: <built-in function residues_distortions_py> returned a result with an exception set |
+| Scheme | `(residues-distortions-scm 0 (list "A" 41 ""))` | error: In procedure length: Wrong type argument in position 1: "A" |
 
 ### residues_torsions_match
 
@@ -444,8 +466,8 @@ Also available in Python as `residues_torsions_match_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### reverse_jed_flip_intermediate_atoms
 
@@ -458,8 +480,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `reverse_jed_flip_intermediate_atoms()` | not tried |
-| Scheme | `(reverse-jed-flip-intermediate-atoms)` | not tried |
+| Python | `reverse_jed_flip_intermediate_atoms()` | ran, returned `0` |
+| Scheme | `(reverse-jed-flip-intermediate-atoms)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### set_all_atom_contact_dots_ignore_water
 
@@ -472,8 +496,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_all_atom_contact_dots_ignore_water(1)` | not tried |
-| Scheme | `(set-all-atom-contact-dots-ignore-water 1)` | not tried |
+| Python | `set_all_atom_contact_dots_ignore_water(1)` | ran (no return value) |
+| Scheme | `(set-all-atom-contact-dots-ignore-water 1)` | ran (no return value) |
 
 ### show_feats
 
@@ -486,8 +510,10 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_c
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `show_feats(0, "A", 41, "")` | not tried |
-| Scheme | `(show-feats 0 "A" 41 "")` | not tried |
+| Python | `show_feats(0, "A", 41, "")` | ran, returned `False` |
+| Scheme | `(show-feats 0 "A" 41 "")` | ran, returned `#f` |
+
+Python and Scheme gave the same answer.
 
 ### switch_HIS_protonation
 
@@ -501,8 +527,8 @@ Also available in Python as `switch_HIS_protonation`, `switch_HIS_protonation_py
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `switch_HIS_protonation(0, ["A", 41, ""])` | not tried |
-| Scheme | `(switch-HIS-protonation-scm 0 (list "A" 41 ""))` | not tried |
+| Python | `switch_HIS_protonation(0, ["A", 41, ""])` | ran (no return value) |
+| Scheme | `(switch-HIS-protonation-scm 0 (list "A" 41 ""))` | ran (no return value) |
 
 ### write_dictionary_from_residue
 
@@ -513,6 +539,6 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `write_dictionary_from_residue(0, "A", 41, "", "tutorial-modern.pdb")` | not tried |
-| Scheme | `(write-dictionary-from-residue 0 "A" 41 "" "tutorial-modern.pdb")` | not tried |
+| Python | `write_dictionary_from_residue(0, "A", 41, "", "tutorial-modern.pdb")` | ran (no return value) |
+| Scheme | `(write-dictionary-from-residue 0 "A" 41 "" "tutorial-modern.pdb")` | ran (no return value) |
 

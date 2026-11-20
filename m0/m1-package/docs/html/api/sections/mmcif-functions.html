@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="f450898a20364e63e2b6268bbc70f1700efffaf2">
+<meta name="coot0-source-sha1" content="c3b26f5a9eaf8b847c954707c70e77c080d3aea2">
 <title>mmCIF Functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -24,6 +24,7 @@ Scheme: <code>(auto-read-cif-data-with-phases filename)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>auto_read_cif_data_with_phases("tutorial-modern.pdb")</code></td><td>ran, returned <code>-1</code></td></tr>
 <tr><td>Scheme</td><td><code>(auto-read-cif-data-with-phases "tutorial-modern.pdb")</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="handle_cif_dictionary">handle_cif_dictionary</h3>
 <p>Python: <code>handle_cif_dictionary(filename)</code><br>
 Scheme: <code>(handle-cif-dictionary filename)</code></p>
@@ -32,6 +33,7 @@ Scheme: <code>(handle-cif-dictionary filename)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>handle_cif_dictionary("tutorial-modern.pdb")</code></td><td>ran, returned <code>-1</code></td></tr>
 <tr><td>Scheme</td><td><code>(handle-cif-dictionary "tutorial-modern.pdb")</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="handle_cif_dictionary_for_molecule">handle_cif_dictionary_for_molecule</h3>
 <p>Python: <code>handle_cif_dictionary_for_molecule(filename, imol_enc, new_molecule_from_dictionary_cif_checkbutton_state)</code><br>
 Scheme: <code>(handle-cif-dictionary-for-molecule filename imol-enc new-molecule-from-dictionary-cif-checkbutton-state)</code></p>
@@ -43,6 +45,7 @@ Scheme: <code>(handle-cif-dictionary-for-molecule filename imol-enc new-molecule
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>handle_cif_dictionary_for_molecule("tutorial-modern.pdb", 0, 1)</code></td><td>ran, returned <code>-1</code></td></tr>
 <tr><td>Scheme</td><td><code>(handle-cif-dictionary-for-molecule "tutorial-modern.pdb" 0 1)</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="import_all_refmac_cifs">import_all_refmac_cifs</h3>
 <p>Python: <code>import_all_refmac_cifs()</code><br>
 Scheme: <code>(import-all-refmac-cifs)</code></p>
@@ -50,8 +53,8 @@ Scheme: <code>(import-all-refmac-cifs)</code></p>
  in subdirectories and import them all.</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>import_all_refmac_cifs()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(import-all-refmac-cifs)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>import_all_refmac_cifs()</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(import-all-refmac-cifs)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="non_standard_residue_names">non_standard_residue_names</h3>
 <p>Python: <code>non_standard_residue_names(imol)</code><br>
 Scheme: <code>(non-standard-residue-names imol)</code></p>
@@ -60,79 +63,82 @@ Scheme: <code>(non-standard-residue-names imol)</code></p>
 Also available in Python as <code>non_standard_residue_names_py</code>.
 Also available in Scheme as <code>non-standard-residue-names-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>non_standard_residue_names(0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(non-standard-residue-names 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>non_standard_residue_names(0)</code></td><td>ran, returned <code>[]</code></td></tr>
+<tr><td>Scheme</td><td><code>(non-standard-residue-names 0)</code></td><td>ran, returned <code>()</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="open_cif_dictionary_file_selector_dialog">open_cif_dictionary_file_selector_dialog</h3>
 <p>Python: <code>open_cif_dictionary_file_selector_dialog()</code><br>
 Scheme: <code>(open-cif-dictionary-file-selector-dialog)</code></p>
 <p>open the cif dictionary file selector dialog</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>open_cif_dictionary_file_selector_dialog()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(open-cif-dictionary-file-selector-dialog)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>open_cif_dictionary_file_selector_dialog()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(open-cif-dictionary-file-selector-dialog)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="read_cif_data">read_cif_data</h3>
 <p>Python: <code>read_cif_data(filename, imol_coords)</code><br>
 Scheme: <code>(read-cif-data filename imol-coords)</code></p>
 <p>Arguments: filename (text), imol_coords (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_cif_data("tutorial-modern.pdb", 0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(read-cif-data "tutorial-modern.pdb" 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>read_cif_data("tutorial-modern.pdb", 0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
+<tr><td>Scheme</td><td><code>(read-cif-data "tutorial-modern.pdb" 0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
 <h3 id="read_cif_data_2fofc_map">read_cif_data_2fofc_map</h3>
 <p>Python: <code>read_cif_data_2fofc_map(filename, imol_coords)</code><br>
 Scheme: <code>(read-cif-data-2fofc-map filename imol-coords)</code></p>
 <p>Arguments: filename (text), imol_coords (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_cif_data_2fofc_map("tutorial-modern.pdb", 0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(read-cif-data-2fofc-map "tutorial-modern.pdb" 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>read_cif_data_2fofc_map("tutorial-modern.pdb", 0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
+<tr><td>Scheme</td><td><code>(read-cif-data-2fofc-map "tutorial-modern.pdb" 0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
 <h3 id="read_cif_data_fofc_map">read_cif_data_fofc_map</h3>
 <p>Python: <code>read_cif_data_fofc_map(filename, imol_coords)</code><br>
 Scheme: <code>(read-cif-data-fofc-map filename imol-coords)</code></p>
 <p>Arguments: filename (text), imol_coords (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_cif_data_fofc_map("tutorial-modern.pdb", 0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(read-cif-data-fofc-map "tutorial-modern.pdb" 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>read_cif_data_fofc_map("tutorial-modern.pdb", 0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
+<tr><td>Scheme</td><td><code>(read-cif-data-fofc-map "tutorial-modern.pdb" 0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
 <h3 id="read_cif_data_with_phases_2fo_fc">read_cif_data_with_phases_2fo_fc</h3>
 <p>Python: <code>read_cif_data_with_phases_2fo_fc(filename)</code><br>
 Scheme: <code>(read-cif-data-with-phases-2fo-fc filename)</code></p>
 <p>Arguments: filename (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_cif_data_with_phases_2fo_fc("tutorial-modern.pdb")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(read-cif-data-with-phases-2fo-fc "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>read_cif_data_with_phases_2fo_fc("tutorial-modern.pdb")</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
+<tr><td>Scheme</td><td><code>(read-cif-data-with-phases-2fo-fc "tutorial-modern.pdb")</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
 <h3 id="read_cif_data_with_phases_diff_sigmaa">read_cif_data_with_phases_diff_sigmaa</h3>
 <p>Python: <code>read_cif_data_with_phases_diff_sigmaa(filename)</code><br>
 Scheme: <code>(read-cif-data-with-phases-diff-sigmaa filename)</code></p>
 <p>Arguments: filename (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_cif_data_with_phases_diff_sigmaa("tutorial-modern.pdb")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(read-cif-data-with-phases-diff-sigmaa "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>read_cif_data_with_phases_diff_sigmaa("tutorial-modern.pdb")</code></td><td>ran, returned <code>-1</code></td></tr>
+<tr><td>Scheme</td><td><code>(read-cif-data-with-phases-diff-sigmaa "tutorial-modern.pdb")</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="read_cif_data_with_phases_fo_alpha_calc">read_cif_data_with_phases_fo_alpha_calc</h3>
 <p>Python: <code>read_cif_data_with_phases_fo_alpha_calc(filename)</code><br>
 Scheme: <code>(read-cif-data-with-phases-fo-alpha-calc filename)</code></p>
 <p>Arguments: filename (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_cif_data_with_phases_fo_alpha_calc("tutorial-modern.pdb")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(read-cif-data-with-phases-fo-alpha-calc "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>read_cif_data_with_phases_fo_alpha_calc("tutorial-modern.pdb")</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
+<tr><td>Scheme</td><td><code>(read-cif-data-with-phases-fo-alpha-calc "tutorial-modern.pdb")</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
 <h3 id="read_cif_data_with_phases_fo_fc">read_cif_data_with_phases_fo_fc</h3>
 <p>Python: <code>read_cif_data_with_phases_fo_fc(filename)</code><br>
 Scheme: <code>(read-cif-data-with-phases-fo-fc filename)</code></p>
 <p>Arguments: filename (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_cif_data_with_phases_fo_fc("tutorial-modern.pdb")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(read-cif-data-with-phases-fo-fc "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>read_cif_data_with_phases_fo_fc("tutorial-modern.pdb")</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
+<tr><td>Scheme</td><td><code>(read-cif-data-with-phases-fo-fc "tutorial-modern.pdb")</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
 <h3 id="read_cif_data_with_phases_nfo_fc">read_cif_data_with_phases_nfo_fc</h3>
 <p>Python: <code>read_cif_data_with_phases_nfo_fc(filename, map_type)</code><br>
 Scheme: <code>(read-cif-data-with-phases-nfo-fc filename map-type)</code></p>
 <p>Arguments: filename (text), map_type (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_cif_data_with_phases_nfo_fc("tutorial-modern.pdb", 1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(read-cif-data-with-phases-nfo-fc "tutorial-modern.pdb" 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>read_cif_data_with_phases_nfo_fc("tutorial-modern.pdb", 1)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
+<tr><td>Scheme</td><td><code>(read-cif-data-with-phases-nfo-fc "tutorial-modern.pdb" 1)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
 <h3 id="read_cif_data_with_phases_sigmaa">read_cif_data_with_phases_sigmaa</h3>
 <p>Python: <code>read_cif_data_with_phases_sigmaa(filename)</code><br>
 Scheme: <code>(read-cif-data-with-phases-sigmaa filename)</code></p>
 <p>Arguments: filename (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_cif_data_with_phases_sigmaa("tutorial-modern.pdb")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(read-cif-data-with-phases-sigmaa "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>read_cif_data_with_phases_sigmaa("tutorial-modern.pdb")</code></td><td>ran, returned <code>-1</code></td></tr>
+<tr><td>Scheme</td><td><code>(read-cif-data-with-phases-sigmaa "tutorial-modern.pdb")</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="read_cif_dictionary">read_cif_dictionary</h3>
 <p>Python: <code>read_cif_dictionary(filename)</code><br>
 Scheme: <code>(read-cif-dictionary filename)</code></p>
@@ -140,34 +146,39 @@ Scheme: <code>(read-cif-dictionary filename)</code></p>
 <p>return the number of bonds read (&gt; 0 can be treated as success)</p>
 <p>Arguments: filename (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_cif_dictionary("tutorial-modern.pdb")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(read-cif-dictionary "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>read_cif_dictionary("tutorial-modern.pdb")</code></td><td>ran, returned <code>-1</code></td></tr>
+<tr><td>Scheme</td><td><code>(read-cif-dictionary "tutorial-modern.pdb")</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="read_small_molecule_cif">read_small_molecule_cif</h3>
 <p>Python: <code>read_small_molecule_cif(file_name)</code><br>
 Scheme: <code>(read-small-molecule-cif file-name)</code></p>
 <p>Arguments: file_name (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_small_molecule_cif("tutorial-modern.pdb")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(read-small-molecule-cif "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>read_small_molecule_cif("tutorial-modern.pdb")</code></td><td>ran, returned <code>-1</code></td></tr>
+<tr><td>Scheme</td><td><code>(read-small-molecule-cif "tutorial-modern.pdb")</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="read_small_molecule_data_cif">read_small_molecule_data_cif</h3>
 <p>Python: <code>read_small_molecule_data_cif(file_name)</code><br>
 Scheme: <code>(read-small-molecule-data-cif file-name)</code></p>
 <p>Arguments: file_name (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_small_molecule_data_cif("tutorial-modern.pdb")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(read-small-molecule-data-cif "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>read_small_molecule_data_cif("tutorial-modern.pdb")</code></td><td>ran, returned <code>-1</code></td></tr>
+<tr><td>Scheme</td><td><code>(read-small-molecule-data-cif "tutorial-modern.pdb")</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="read_small_molecule_data_cif_and_make_map_using_coords">read_small_molecule_data_cif_and_make_map_using_coords</h3>
 <p>Python: <code>read_small_molecule_data_cif_and_make_map_using_coords(file_name, imol_coords)</code><br>
 Scheme: <code>(read-small-molecule-data-cif-and-make-map-using-coords file-name imol-coords)</code></p>
 <p>Arguments: file_name (text), imol_coords (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_small_molecule_data_cif_and_make_map_using_coords("tutorial-modern.pdb", 0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(read-small-molecule-data-cif-and-make-map-using-coords "tutorial-modern.pdb" 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>read_small_molecule_data_cif_and_make_map_using_coords("tutorial-modern.pdb", 0)</code></td><td>ran, returned <code>-1</code></td></tr>
+<tr><td>Scheme</td><td><code>(read-small-molecule-data-cif-and-make-map-using-coords "tutorial-modern.pdb" 0)</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="write_connectivity">write_connectivity</h3>
 <p>Python: <code>write_connectivity(monomer_name, filename)</code><br>
 Scheme: <code>(write-connectivity monomer-name filename)</code></p>
 <p>Arguments: monomer_name (text), filename (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>write_connectivity("my-name", "tutorial-modern.pdb")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(write-connectivity "my-name" "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>write_connectivity("my-name", "tutorial-modern.pdb")</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(write-connectivity "my-name" "tutorial-modern.pdb")</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 </body></html>

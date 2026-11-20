@@ -30,6 +30,8 @@ Arguments: imol (a whole number). Returns: a whole number.
 | Python | `add_strict_ncs_from_mtrix_from_self_file(0)` | ran, returned `0` |
 | Scheme | `(add-strict-ncs-from-mtrix-from-self-file 0)` | ran, returned `0` |
 
+Python and Scheme gave the same answer.
+
 ### add_strict_ncs_matrix
 
 Python: `add_strict_ncs_matrix(imol, this_chain_id, target_chain_id, m11, m12, m13, m21, m22, m23, m31, m32, m33, t1, t2, t3)`  
@@ -45,6 +47,8 @@ Arguments: imol (a whole number), this_chain_id (text), target_chain_id (text), 
 |---|---|---|
 | Python | `add_strict_ncs_matrix(0, "A", "A", 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)` | ran, returned `1` |
 | Scheme | `(add-strict-ncs-matrix 0 "A" "A" 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0)` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 
 ### clear_ncs_ghost_matrices
 
@@ -161,6 +165,8 @@ Arguments: imol (a whole number). Returns: a whole number.
 | Python | `draw_ncs_ghosts_state(0)` | ran, returned `0` |
 | Scheme | `(draw-ncs-ghosts-state 0)` | ran, returned `0` |
 
+Python and Scheme gave the same answer.
+
 ### get_ncs_matrix_state
 
 Python: `get_ncs_matrix_state()`  
@@ -173,6 +179,8 @@ Arguments: none. Returns: a whole number.
 | Python | `get_ncs_matrix_state()` | ran, returned `1` |
 | Scheme | `(get-ncs-matrix-state)` | ran, returned `1` |
 
+Python and Scheme gave the same answer.
+
 ### make_dynamically_transformed_ncs_maps
 
 Python: `make_dynamically_transformed_ncs_maps(imol_model, imol_map, overwrite_maps_of_same_name_flag)`  
@@ -184,8 +192,10 @@ Arguments: imol_model (a whole number), imol_map (a whole number), overwrite_map
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `make_dynamically_transformed_ncs_maps(0, 1, 1)` | not tried |
-| Scheme | `(make-dynamically-transformed-ncs-maps 0 1 1)` | not tried |
+| Python | `make_dynamically_transformed_ncs_maps(0, 1, 1)` | ran, returned `2` |
+| Scheme | `(make-dynamically-transformed-ncs-maps 0 1 1)` | ran, returned `2` |
+
+Python and Scheme gave the same answer.
 
 ### make_ncs_ghosts_maybe
 
@@ -196,8 +206,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `make_ncs_ghosts_maybe(0)` | not tried |
-| Scheme | `(make-ncs-ghosts-maybe 0)` | not tried |
+| Python | `make_ncs_ghosts_maybe(0)` | ran (no return value) |
+| Scheme | `(make-ncs-ghosts-maybe 0)` | ran (no return value) |
 
 ### make_ncs_maps
 
@@ -208,8 +218,10 @@ Arguments: imol_model (a whole number), imol_map (a whole number). Returns: a li
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `make_ncs_maps(0, 1)` | not tried |
-| Scheme | `(make-ncs-maps 0 1)` | not tried |
+| Python | `make_ncs_maps(0, 1)` | ran, returned `(2,)` |
+| Scheme | `(make-ncs-maps 0 1)` | ran, returned `#(2)` |
+
+Python and Scheme gave the same answer.
 
 ### ncs_chain_differences
 
@@ -230,8 +242,10 @@ Also available in Scheme as `ncs-chain-differences-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `ncs_chain_differences(0, "A")` | not tried |
-| Scheme | `(ncs-chain-differences 0 "A")` | not tried |
+| Python | `ncs_chain_differences(0, "A")` | ran, returned `['B', 'A', [[[1, ''], [1, ''], 0.4996705651283264], [[2, ''], [2, ''], 0.2834187150001526], [[3, ''], [3, ''], 0.3093564 ...` |
+| Scheme | `(ncs-chain-differences 0 "A")` | ran, returned `("B" "A" (((1 "") (1 "") 0.4996705651283264) ((2 "") (2 "") 0.2834187150001526) ((3 "") (3 "") 0.3093564510345459) ((4 " ...` |
+
+Python and Scheme gave the same answer.
 
 ### ncs_chain_ids
 
@@ -251,8 +265,10 @@ Also available in Scheme as `ncs-chain-ids-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `ncs_chain_ids(0)` | not tried |
-| Scheme | `(ncs-chain-ids 0)` | not tried |
+| Python | `ncs_chain_ids(0)` | ran, returned `[['A', 'B']]` |
+| Scheme | `(ncs-chain-ids 0)` | ran, returned `(("A" "B"))` |
+
+Python and Scheme gave the same answer.
 
 ### ncs_control_change_ncs_master_to_chain
 
@@ -265,8 +281,8 @@ Arguments: imol (a whole number), ichain (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `ncs_control_change_ncs_master_to_chain(0, 1)` | not tried |
-| Scheme | `(ncs-control-change-ncs-master-to-chain 0 1)` | not tried |
+| Python | `ncs_control_change_ncs_master_to_chain(0, 1)` | ran (no return value) |
+| Scheme | `(ncs-control-change-ncs-master-to-chain 0 1)` | ran (no return value) |
 
 ### ncs_control_change_ncs_master_to_chain_id
 
@@ -279,8 +295,8 @@ Arguments: imol (a whole number), chain_id (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `ncs_control_change_ncs_master_to_chain_id(0, "A")` | not tried |
-| Scheme | `(ncs-control-change-ncs-master-to-chain-id 0 "A")` | not tried |
+| Python | `ncs_control_change_ncs_master_to_chain_id(0, "A")` | ran (no return value) |
+| Scheme | `(ncs-control-change-ncs-master-to-chain-id 0 "A")` | ran (no return value) |
 
 ### ncs_control_display_chain
 
@@ -293,8 +309,8 @@ Arguments: imol (a whole number), ichain (a whole number), state (a whole number
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `ncs_control_display_chain(0, 1, 1)` | not tried |
-| Scheme | `(ncs-control-display-chain 0 1 1)` | not tried |
+| Python | `ncs_control_display_chain(0, 1, 1)` | ran (no return value) |
+| Scheme | `(ncs-control-display-chain 0 1 1)` | ran (no return value) |
 
 ### ncs_ghosts
 
@@ -312,8 +328,10 @@ Also available in Scheme as `ncs-ghosts-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `ncs_ghosts(0)` | not tried |
-| Scheme | `(ncs-ghosts 0)` | not tried |
+| Python | `ncs_ghosts(0)` | ran, returned `[['NCS found from matching Chain B onto Chain A', 'B', 'A', [[0.9704933516651332, -0.046903931449300246, -0.236522040386 ...` |
+| Scheme | `(ncs-ghosts 0)` | ran, returned `(("NCS found from matching Chain B onto Chain A" "B" "A" ((0.9704933516651332 -0.046903931449300246 -0.2365220403860403  ...` |
+
+Python and Scheme gave the same answer.
 
 ### ncs_master_chains
 
@@ -326,8 +344,10 @@ Also available in Scheme as `ncs-master-chains-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `ncs_master_chains(0)` | not tried |
-| Scheme | `(ncs-master-chains 0)` | not tried |
+| Python | `ncs_master_chains(0)` | ran, returned `['A']` |
+| Scheme | `(ncs-master-chains 0)` | ran, returned `("A")` |
+
+Python and Scheme gave the same answer.
 
 ### ncs_update_ghosts
 
@@ -340,8 +360,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `ncs_update_ghosts(0)` | not tried |
-| Scheme | `(ncs-update-ghosts 0)` | not tried |
+| Python | `ncs_update_ghosts(0)` | ran (no return value) |
+| Scheme | `(ncs-update-ghosts 0)` | ran (no return value) |
 
 ### set_draw_ncs_ghosts
 
@@ -354,8 +374,8 @@ Arguments: imol (a whole number), istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_draw_ncs_ghosts(0, 1)` | not tried |
-| Scheme | `(set-draw-ncs-ghosts 0 1)` | not tried |
+| Python | `set_draw_ncs_ghosts(0, 1)` | ran (no return value) |
+| Scheme | `(set-draw-ncs-ghosts 0 1)` | ran (no return value) |
 
 ### set_ncs_ghost_bond_thickness
 
@@ -368,8 +388,8 @@ Arguments: imol (a whole number), f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_ncs_ghost_bond_thickness(0, 1.0)` | not tried |
-| Scheme | `(set-ncs-ghost-bond-thickness 0 1.0)` | not tried |
+| Python | `set_ncs_ghost_bond_thickness(0, 1.0)` | ran (no return value) |
+| Scheme | `(set-ncs-ghost-bond-thickness 0 1.0)` | ran (no return value) |
 
 ### set_ncs_homology_level
 
@@ -383,8 +403,8 @@ Arguments: flev (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_ncs_homology_level(1.0)` | not tried |
-| Scheme | `(set-ncs-homology-level 1.0)` | not tried |
+| Python | `set_ncs_homology_level(1.0)` | ran (no return value) |
+| Scheme | `(set-ncs-homology-level 1.0)` | ran (no return value) |
 
 ### set_ncs_matrix_type
 
@@ -395,8 +415,8 @@ Arguments: flag (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_ncs_matrix_type(1)` | not tried |
-| Scheme | `(set-ncs-matrix-type 1)` | not tried |
+| Python | `set_ncs_matrix_type(1)` | ran (no return value) |
+| Scheme | `(set-ncs-matrix-type 1)` | ran (no return value) |
 
 ### set_show_strict_ncs
 
@@ -409,8 +429,8 @@ Arguments: imol (a whole number), state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_show_strict_ncs(0, 1)` | not tried |
-| Scheme | `(set-show-strict-ncs 0 1)` | not tried |
+| Python | `set_show_strict_ncs(0, 1)` | ran (no return value) |
+| Scheme | `(set-show-strict-ncs 0 1)` | ran (no return value) |
 
 ### show_strict_ncs_state
 
@@ -423,6 +443,8 @@ Arguments: imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `show_strict_ncs_state(0)` | not tried |
-| Scheme | `(show-strict-ncs-state 0)` | not tried |
+| Python | `show_strict_ncs_state(0)` | ran, returned `1` |
+| Scheme | `(show-strict-ncs-state 0)` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 

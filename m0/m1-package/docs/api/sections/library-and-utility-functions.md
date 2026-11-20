@@ -87,6 +87,8 @@ Also available in Scheme as `coot-sys-build-type-scm`.
 | Python | `coot_sys_build_type()` | ran, returned `'Darwin-arm64'` |
 | Scheme | `(coot-sys-build-type)` | ran, returned `"Darwin-arm64"` |
 
+Python and Scheme gave the same answer.
+
 ### first_coords_imol
 
 Python: `first_coords_imol()`  
@@ -102,6 +104,8 @@ Arguments: none. Returns: a whole number.
 |---|---|---|
 | Python | `first_coords_imol()` | ran, returned `0` |
 | Scheme | `(first-coords-imol)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### first_small_coords_imol
 
@@ -119,6 +123,8 @@ Arguments: none. Returns: a whole number.
 | Python | `first_small_coords_imol()` | ran, returned `-1` |
 | Scheme | `(first-small-coords-imol)` | ran, returned `-1` |
 
+Python and Scheme gave the same answer.
+
 ### first_unsaved_coords_imol
 
 Python: `first_unsaved_coords_imol()`  
@@ -135,6 +141,8 @@ Arguments: none. Returns: a whole number.
 | Python | `first_unsaved_coords_imol()` | ran, returned `-1` |
 | Scheme | `(first-unsaved-coords-imol)` | ran, returned `-1` |
 
+Python and Scheme gave the same answer.
+
 ### git_revision_count
 
 Python: `git_revision_count()`  
@@ -148,6 +156,8 @@ Arguments: none. Returns: a whole number.
 |---|---|---|
 | Python | `git_revision_count()` | ran, returned `10988` |
 | Scheme | `(git-revision-count)` | ran, returned `10988` |
+
+Python and Scheme gave the same answer.
 
 ### mmcif_sfs_to_mtz
 
@@ -164,8 +174,10 @@ Arguments: cif_file_name (text), mtz_file_name (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `mmcif_sfs_to_mtz("tutorial-modern.pdb", "rnasa-1.8-all_refmac1.mtz")` | not tried |
-| Scheme | `(mmcif-sfs-to-mtz "tutorial-modern.pdb" "rnasa-1.8-all_refmac1.mtz")` | not tried |
+| Python | `mmcif_sfs_to_mtz("tutorial-modern.pdb", "rnasa-1.8-all_refmac1.mtz")` | ran, returned `-1` |
+| Scheme | `(mmcif-sfs-to-mtz "tutorial-modern.pdb" "rnasa-1.8-all_refmac1.mtz")` | ran, returned `-1` |
+
+Python and Scheme gave the same answer.
 
 ### molecule_name
 
@@ -181,8 +193,10 @@ Arguments: imol (a whole number). Returns: text.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `molecule_name(0)` | not tried |
-| Scheme | `(molecule-name 0)` | not tried |
+| Python | `molecule_name(0)` | ran, returned `'tutorial-modern.pdb'` |
+| Scheme | `(molecule-name 0)` | ran, returned `"tutorial-modern.pdb"` |
+
+Python and Scheme gave the same answer.
 
 ### molecule_name_stub
 
@@ -197,8 +211,10 @@ Also available in Scheme as `molecule-name-stub-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `molecule_name_stub(0, 1)` | not tried |
-| Scheme | `(molecule-name-stub 0 1)` | not tried |
+| Python | `molecule_name_stub(0, 1)` | ran, returned `'tutorial-modern'` |
+| Scheme | `(molecule-name-stub 0 1)` | ran, returned `"tutorial-modern"` |
+
+Python and Scheme gave the same answer.
 
 ### run_clear_backups
 
@@ -212,8 +228,8 @@ Also available in Python as `run_clear_backups_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `run_clear_backups(1)` | not tried |
-| Scheme | `(run-clear-backups 1)` | not tried |
+| Python | `run_clear_backups(1)` | not run: not run automatically (run: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(run-clear-backups 1)` | not run: not run automatically (run: exits, uses the network, an external program, files or a screen) |
 
 ### set_molecule_name
 
@@ -226,8 +242,8 @@ Arguments: imol (a whole number), new_name (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_molecule_name(0, "my-name")` | not tried |
-| Scheme | `(set-molecule-name 0 "my-name")` | not tried |
+| Python | `set_molecule_name(0, "my-name")` | ran (no return value) |
+| Scheme | `(set-molecule-name 0 "my-name")` | ran (no return value) |
 
 ### svn_revision
 
@@ -240,6 +256,8 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `svn_revision()` | not tried |
-| Scheme | `(svn-revision)` | not tried |
+| Python | `svn_revision()` | ran, returned `10988` |
+| Scheme | `(svn-revision)` | ran, returned `10988` |
+
+Python and Scheme gave the same answer.
 

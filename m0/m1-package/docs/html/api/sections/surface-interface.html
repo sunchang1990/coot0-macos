@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="c5825e07d3a77e05fb44eaaabcb893f4da327fc3">
+<meta name="coot0-source-sha1" content="86fd692e29c3d241f7a992c2cf65482347c61a2c">
 <title>Surface Interface - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -45,6 +45,7 @@ Scheme: <code>(get-electrostatic-surface-charge-range)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>get_electrostatic_surface_charge_range()</code></td><td>ran, returned <code>0.5</code></td></tr>
 <tr><td>Scheme</td><td><code>(get-electrostatic-surface-charge-range)</code></td><td>ran, returned <code>0.5</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="get_electrostatic_surface_opacity">get_electrostatic_surface_opacity</h3>
 <p>Python: <code>get_electrostatic_surface_opacity(imol)</code><br>
 Scheme: <code>(get-electrostatic-surface-opacity imol)</code></p>
@@ -54,20 +55,22 @@ Scheme: <code>(get-electrostatic-surface-opacity imol)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>get_electrostatic_surface_opacity(0)</code></td><td>ran, returned <code>1.0</code></td></tr>
 <tr><td>Scheme</td><td><code>(get-electrostatic-surface-opacity 0)</code></td><td>ran, returned <code>1.0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="molecule_is_drawn_as_surface_int">molecule_is_drawn_as_surface_int</h3>
 <p>Python: <code>molecule_is_drawn_as_surface_int(imol)</code><br>
 Scheme: <code>(molecule-is-drawn-as-surface-int imol)</code></p>
 <p>Arguments: imol (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>molecule_is_drawn_as_surface_int(0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(molecule-is-drawn-as-surface-int 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>molecule_is_drawn_as_surface_int(0)</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(molecule-is-drawn-as-surface-int 0)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="set_electrostatic_surface_charge_range">set_electrostatic_surface_charge_range</h3>
 <p>Python: <code>set_electrostatic_surface_charge_range(v)</code><br>
 Scheme: <code>(set-electrostatic-surface-charge-range v)</code></p>
 <p>Arguments: v (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_electrostatic_surface_charge_range(1.0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-electrostatic-surface-charge-range 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_electrostatic_surface_charge_range(1.0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-electrostatic-surface-charge-range 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_transparent_electrostatic_surface">set_transparent_electrostatic_surface</h3>
 <p>Python: <code>set_transparent_electrostatic_surface(imol, opacity)</code><br>
 Scheme: <code>(set-transparent-electrostatic-surface imol opacity)</code></p>
@@ -75,6 +78,6 @@ Scheme: <code>(set-transparent-electrostatic-surface imol opacity)</code></p>
  opacity &gt; 0.0 will turn on screendoor transparency (stippling).</p>
 <p>Arguments: imol (a whole number), opacity (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_transparent_electrostatic_surface(0, 1.0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-transparent-electrostatic-surface 0 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_transparent_electrostatic_surface(0, 1.0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-transparent-electrostatic-surface 0 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
 </body></html>

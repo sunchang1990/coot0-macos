@@ -18,6 +18,8 @@ Arguments: none. Returns: a whole number.
 | Python | `accept_reject_dialog_docked_show_state()` | ran, returned `1` |
 | Scheme | `(accept-reject-dialog-docked-show-state)` | ran, returned `1` |
 
+Python and Scheme gave the same answer.
+
 ### accept_reject_dialog_docked_state
 
 Python: `accept_reject_dialog_docked_state()`  
@@ -31,6 +33,8 @@ Arguments: none. Returns: a whole number.
 |---|---|---|
 | Python | `accept_reject_dialog_docked_state()` | ran, returned `0` |
 | Scheme | `(accept-reject-dialog-docked-state)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### add_status_bar_text
 
@@ -129,6 +133,8 @@ Arguments: none. Returns: a whole number.
 | Python | `get_auto_recontour_map()` | ran, returned `1` |
 | Scheme | `(get-auto-recontour-map)` | ran, returned `1` |
 
+Python and Scheme gave the same answer.
+
 ### get_fps_flag
 
 Python: `get_fps_flag()`  
@@ -143,6 +149,8 @@ Arguments: none. Returns: a whole number.
 | Python | `get_fps_flag()` | ran, returned `0` |
 | Scheme | `(get-fps-flag)` | ran, returned `0` |
 
+Python and Scheme gave the same answer.
+
 ### get_view_matrix_element
 
 Python: `get_view_matrix_element(row, col)`  
@@ -156,6 +164,8 @@ Arguments: row (a whole number), col (a whole number). Returns: a number.
 |---|---|---|
 | Python | `get_view_matrix_element(1, 1)` | ran, returned `1.0` |
 | Scheme | `(get-view-matrix-element 1 1)` | ran, returned `1.0` |
+
+Python and Scheme gave the same answer.
 
 ### get_view_quaternion_internal
 
@@ -172,6 +182,8 @@ Arguments: element (a whole number). Returns: a number.
 |---|---|---|
 | Python | `get_view_quaternion_internal(1)` | ran, returned `0.0` |
 | Scheme | `(get-view-quaternion-internal 1)` | ran, returned `0.0` |
+
+Python and Scheme gave the same answer.
 
 ### hide_main_toolbar
 
@@ -234,8 +246,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `main_toolbar_style_state()` | not tried |
-| Scheme | `(main-toolbar-style-state)` | not tried |
+| Python | `main_toolbar_style_state()` | ran, returned `2` |
+| Scheme | `(main-toolbar-style-state)` | ran, returned `2` |
+
+Python and Scheme gave the same answer.
 
 ### make_preferences_internal
 
@@ -246,8 +260,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `make_preferences_internal()` | not tried |
-| Scheme | `(make-preferences-internal)` | not tried |
+| Python | `make_preferences_internal()` | ran (no return value) |
+| Scheme | `(make-preferences-internal)` | ran (no return value) |
 
 ### make_preferences_internal_default
 
@@ -258,8 +272,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `make_preferences_internal_default()` | not tried |
-| Scheme | `(make-preferences-internal-default)` | not tried |
+| Python | `make_preferences_internal_default()` | ran (no return value) |
+| Scheme | `(make-preferences-internal-default)` | ran (no return value) |
 
 ### model_fit_refine_dialog_stays_on_top_state
 
@@ -272,8 +286,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `model_fit_refine_dialog_stays_on_top_state()` | not tried |
-| Scheme | `(model-fit-refine-dialog-stays-on-top-state)` | not tried |
+| Python | `model_fit_refine_dialog_stays_on_top_state()` | ran, returned `1` |
+| Scheme | `(model-fit-refine-dialog-stays-on-top-state)` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 
 ### model_toolbar_style_state
 
@@ -284,8 +300,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `model_toolbar_style_state()` | not tried |
-| Scheme | `(model-toolbar-style-state)` | not tried |
+| Python | `model_toolbar_style_state()` | ran, returned `1` |
+| Scheme | `(model-toolbar-style-state)` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 
 ### preferences
 
@@ -298,8 +316,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `preferences()` | not tried |
-| Scheme | `(preferences)` | not tried |
+| Python | `preferences()` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(preferences)` | stopped Coot when tried without a window (not checked with a window) |
 
 ### preferences_internal_change_value_float
 
@@ -310,8 +328,8 @@ Arguments: preference_type (a whole number), fvalue (a number). Returns: nothing
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `preferences_internal_change_value_float(1, 1.0)` | not tried |
-| Scheme | `(preferences-internal-change-value-float 1 1.0)` | not tried |
+| Python | `preferences_internal_change_value_float(1, 1.0)` | ran (no return value) |
+| Scheme | `(preferences-internal-change-value-float 1 1.0)` | ran (no return value) |
 
 ### preferences_internal_change_value_float3
 
@@ -322,8 +340,8 @@ Arguments: preference_type (a whole number), fvalue1 (a number), fvalue2 (a numb
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `preferences_internal_change_value_float3(1, 1.0, 1.0, 1.0)` | not tried |
-| Scheme | `(preferences-internal-change-value-float3 1 1.0 1.0 1.0)` | not tried |
+| Python | `preferences_internal_change_value_float3(1, 1.0, 1.0, 1.0)` | ran (no return value) |
+| Scheme | `(preferences-internal-change-value-float3 1 1.0 1.0 1.0)` | ran (no return value) |
 
 ### preferences_internal_change_value_int
 
@@ -334,8 +352,8 @@ Arguments: preference_type (a whole number), ivalue (a whole number). Returns: n
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `preferences_internal_change_value_int(1, 1)` | not tried |
-| Scheme | `(preferences-internal-change-value-int 1 1)` | not tried |
+| Python | `preferences_internal_change_value_int(1, 1)` | ran (no return value) |
+| Scheme | `(preferences-internal-change-value-int 1 1)` | ran (no return value) |
 
 ### preferences_internal_change_value_int2
 
@@ -346,8 +364,8 @@ Arguments: preference_type (a whole number), ivalue1 (a whole number), ivalue2 (
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `preferences_internal_change_value_int2(1, 1, 1)` | not tried |
-| Scheme | `(preferences-internal-change-value-int2 1 1 1)` | not tried |
+| Python | `preferences_internal_change_value_int2(1, 1, 1)` | ran (no return value) |
+| Scheme | `(preferences-internal-change-value-int2 1 1 1)` | ran (no return value) |
 
 ### preferences_internal_font_own_colour_flag
 
@@ -358,8 +376,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `preferences_internal_font_own_colour_flag()` | not tried |
-| Scheme | `(preferences-internal-font-own-colour-flag)` | not tried |
+| Python | `preferences_internal_font_own_colour_flag()` | ran, returned `-1` |
+| Scheme | `(preferences-internal-font-own-colour-flag)` | ran, returned `-1` |
+
+Python and Scheme gave the same answer.
 
 ### print_view_matrix
 
@@ -373,8 +393,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `print_view_matrix()` | not tried |
-| Scheme | `(print-view-matrix)` | not tried |
+| Python | `print_view_matrix()` | ran (no return value) |
+| Scheme | `(print-view-matrix)` | ran (no return value) |
 
 ### reattach_modelling_toolbar
 
@@ -387,8 +407,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `reattach_modelling_toolbar()` | not tried |
-| Scheme | `(reattach-modelling-toolbar)` | not tried |
+| Python | `reattach_modelling_toolbar()` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(reattach-modelling-toolbar)` | stopped Coot when tried without a window (not checked with a window) |
 
 ### reset_preferences
 
@@ -399,8 +419,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `reset_preferences()` | not tried |
-| Scheme | `(reset-preferences)` | not tried |
+| Python | `reset_preferences()` | ran (no return value) |
+| Scheme | `(reset-preferences)` | ran (no return value) |
 
 ### save_preferences
 
@@ -411,8 +431,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `save_preferences()` | not tried |
-| Scheme | `(save-preferences)` | not tried |
+| Python | `save_preferences()` | ran (no return value) |
+| Scheme | `(save-preferences)` | ran (no return value) |
 
 ### scroll_by_wheel_mouse_state
 
@@ -425,8 +445,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `scroll_by_wheel_mouse_state()` | not tried |
-| Scheme | `(scroll-by-wheel-mouse-state)` | not tried |
+| Python | `scroll_by_wheel_mouse_state()` | ran, returned `1` |
+| Scheme | `(scroll-by-wheel-mouse-state)` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 
 ### set_accept_reject_dialog_docked
 
@@ -439,8 +461,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_accept_reject_dialog_docked(1)` | not tried |
-| Scheme | `(set-accept-reject-dialog-docked 1)` | not tried |
+| Python | `set_accept_reject_dialog_docked(1)` | ran (no return value) |
+| Scheme | `(set-accept-reject-dialog-docked 1)` | ran (no return value) |
 
 ### set_accept_reject_dialog_docked_show
 
@@ -453,8 +475,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_accept_reject_dialog_docked_show(1)` | not tried |
-| Scheme | `(set-accept-reject-dialog-docked-show 1)` | not tried |
+| Python | `set_accept_reject_dialog_docked_show(1)` | ran (no return value) |
+| Scheme | `(set-accept-reject-dialog-docked-show 1)` | ran (no return value) |
 
 ### set_auto_recontour_map
 
@@ -467,8 +489,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_auto_recontour_map(1)` | not tried |
-| Scheme | `(set-auto-recontour-map 1)` | not tried |
+| Python | `set_auto_recontour_map(1)` | ran (no return value) |
+| Scheme | `(set-auto-recontour-map 1)` | ran (no return value) |
 
 ### set_default_initial_contour_level_for_difference_map
 
@@ -483,8 +505,8 @@ Arguments: n_sigma (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_default_initial_contour_level_for_difference_map(1.5)` | not tried |
-| Scheme | `(set-default-initial-contour-level-for-difference-map 1.5)` | not tried |
+| Python | `set_default_initial_contour_level_for_difference_map(1.5)` | ran (no return value) |
+| Scheme | `(set-default-initial-contour-level-for-difference-map 1.5)` | ran (no return value) |
 
 ### set_default_initial_contour_level_for_map
 
@@ -499,8 +521,8 @@ Arguments: n_sigma (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_default_initial_contour_level_for_map(1.5)` | not tried |
-| Scheme | `(set-default-initial-contour-level-for-map 1.5)` | not tried |
+| Python | `set_default_initial_contour_level_for_map(1.5)` | ran (no return value) |
+| Scheme | `(set-default-initial-contour-level-for-map 1.5)` | ran (no return value) |
 
 ### set_fps_flag
 
@@ -513,8 +535,8 @@ Arguments: t (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_fps_flag(1)` | not tried |
-| Scheme | `(set-fps-flag 1)` | not tried |
+| Python | `set_fps_flag(1)` | ran (no return value) |
+| Scheme | `(set-fps-flag 1)` | ran (no return value) |
 
 ### set_main_toolbar_style
 
@@ -527,8 +549,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_main_toolbar_style(1)` | not tried |
-| Scheme | `(set-main-toolbar-style 1)` | not tried |
+| Python | `set_main_toolbar_style(1)` | ran (no return value) |
+| Scheme | `(set-main-toolbar-style 1)` | ran (no return value) |
 
 ### set_mark_cis_peptides_as_bad
 
@@ -539,8 +561,8 @@ Arguments: istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_mark_cis_peptides_as_bad(1)` | not tried |
-| Scheme | `(set-mark-cis-peptides-as-bad 1)` | not tried |
+| Python | `set_mark_cis_peptides_as_bad(1)` | ran (no return value) |
+| Scheme | `(set-mark-cis-peptides-as-bad 1)` | ran (no return value) |
 
 ### set_model_fit_refine_dialog_stays_on_top
 
@@ -553,8 +575,8 @@ Arguments: istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_model_fit_refine_dialog_stays_on_top(1)` | not tried |
-| Scheme | `(set-model-fit-refine-dialog-stays-on-top 1)` | not tried |
+| Python | `set_model_fit_refine_dialog_stays_on_top(1)` | ran (no return value) |
+| Scheme | `(set-model-fit-refine-dialog-stays-on-top 1)` | ran (no return value) |
 
 ### set_model_toolbar_docked_position
 
@@ -568,8 +590,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_model_toolbar_docked_position(1)` | not tried |
-| Scheme | `(set-model-toolbar-docked-position 1)` | not tried |
+| Python | `set_model_toolbar_docked_position(1)` | ran (no return value) |
+| Scheme | `(set-model-toolbar-docked-position 1)` | ran (no return value) |
 
 ### set_model_toolbar_style
 
@@ -582,8 +604,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_model_toolbar_style(1)` | not tried |
-| Scheme | `(set-model-toolbar-style 1)` | not tried |
+| Python | `set_model_toolbar_style(1)` | ran (no return value) |
+| Scheme | `(set-model-toolbar-style 1)` | ran (no return value) |
 
 ### set_scroll_by_wheel_mouse
 
@@ -599,8 +621,8 @@ Arguments: istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_scroll_by_wheel_mouse(1)` | not tried |
-| Scheme | `(set-scroll-by-wheel-mouse 1)` | not tried |
+| Python | `set_scroll_by_wheel_mouse(1)` | ran (no return value) |
+| Scheme | `(set-scroll-by-wheel-mouse 1)` | ran (no return value) |
 
 ### set_show_origin_marker
 
@@ -614,8 +636,8 @@ Arguments: istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_show_origin_marker(1)` | not tried |
-| Scheme | `(set-show-origin-marker 1)` | not tried |
+| Python | `set_show_origin_marker(1)` | ran (no return value) |
+| Scheme | `(set-show-origin-marker 1)` | ran (no return value) |
 
 ### set_view_quaternion
 
@@ -628,8 +650,8 @@ Arguments: i (a number), j (a number), k (a number), l (a number). Returns: noth
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_view_quaternion(1.0, 1.0, 1.0, 1.0)` | not tried |
-| Scheme | `(set-view-quaternion 1.0 1.0 1.0 1.0)` | not tried |
+| Python | `set_view_quaternion(1.0, 1.0, 1.0, 1.0)` | ran (no return value) |
+| Scheme | `(set-view-quaternion 1.0 1.0 1.0 1.0)` | ran (no return value) |
 
 ### show_hide_preferences_tabs
 
@@ -640,8 +662,8 @@ Arguments: toggletoolbutton (`GtkToggleToolButton *`), preference_type (a whole 
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### show_main_toolbar
 
@@ -655,8 +677,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `show_main_toolbar()` | not tried |
-| Scheme | `(show-main-toolbar)` | not tried |
+| Python | `show_main_toolbar()` | ran (no return value) |
+| Scheme | `(show-main-toolbar)` | ran (no return value) |
 
 ### show_main_toolbar_icon
 
@@ -667,8 +689,8 @@ Arguments: pos (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `show_main_toolbar_icon(1)` | not tried |
-| Scheme | `(show-main-toolbar-icon 1)` | not tried |
+| Python | `show_main_toolbar_icon(1)` | ran (no return value) |
+| Scheme | `(show-main-toolbar-icon 1)` | ran (no return value) |
 
 ### show_mark_cis_peptides_as_bad_state
 
@@ -681,8 +703,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `show_mark_cis_peptides_as_bad_state()` | not tried |
-| Scheme | `(show-mark-cis-peptides-as-bad-state)` | not tried |
+| Python | `show_mark_cis_peptides_as_bad_state()` | ran, returned `1` |
+| Scheme | `(show-mark-cis-peptides-as-bad-state)` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 
 ### show_model_toolbar_all_icons
 
@@ -695,8 +719,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `show_model_toolbar_all_icons()` | not tried |
-| Scheme | `(show-model-toolbar-all-icons)` | not tried |
+| Python | `show_model_toolbar_all_icons()` | ran (no return value) |
+| Scheme | `(show-model-toolbar-all-icons)` | ran (no return value) |
 
 ### show_model_toolbar_icon
 
@@ -707,8 +731,8 @@ Arguments: pos (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `show_model_toolbar_icon(1)` | not tried |
-| Scheme | `(show-model-toolbar-icon 1)` | not tried |
+| Python | `show_model_toolbar_icon(1)` | ran (no return value) |
+| Scheme | `(show-model-toolbar-icon 1)` | ran (no return value) |
 
 ### show_model_toolbar_main_icons
 
@@ -721,8 +745,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `show_model_toolbar_main_icons()` | not tried |
-| Scheme | `(show-model-toolbar-main-icons)` | not tried |
+| Python | `show_model_toolbar_main_icons()` | ran (no return value) |
+| Scheme | `(show-model-toolbar-main-icons)` | ran (no return value) |
 
 ### show_modelling_toolbar
 
@@ -736,8 +760,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `show_modelling_toolbar()` | not tried |
-| Scheme | `(show-modelling-toolbar)` | not tried |
+| Python | `show_modelling_toolbar()` | ran (no return value) |
+| Scheme | `(show-modelling-toolbar)` | ran (no return value) |
 
 ### show_origin_marker_state
 
@@ -750,8 +774,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `show_origin_marker_state()` | not tried |
-| Scheme | `(show-origin-marker-state)` | not tried |
+| Python | `show_origin_marker_state()` | ran, returned `1` |
+| Scheme | `(show-origin-marker-state)` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 
 ### show_preferences
 
@@ -762,8 +788,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `show_preferences()` | not tried |
-| Scheme | `(show-preferences)` | not tried |
+| Python | `show_preferences()` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(show-preferences)` | stopped Coot when tried without a window (not checked with a window) |
 
 ### suck_model_fit_dialog
 
@@ -777,8 +803,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `suck_model_fit_dialog()` | not tried |
-| Scheme | `(suck-model-fit-dialog)` | not tried |
+| Python | `suck_model_fit_dialog()` | ran, returned `0` |
+| Scheme | `(suck-model-fit-dialog)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### suck_model_fit_dialog_bl
 
@@ -789,8 +817,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `suck_model_fit_dialog_bl()` | not tried |
-| Scheme | `(suck-model-fit-dialog-bl)` | not tried |
+| Python | `suck_model_fit_dialog_bl()` | ran, returned `0` |
+| Scheme | `(suck-model-fit-dialog-bl)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### update_main_toolbar_icons_menu
 
@@ -801,8 +831,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `update_main_toolbar_icons_menu()` | not tried |
-| Scheme | `(update-main-toolbar-icons-menu)` | not tried |
+| Python | `update_main_toolbar_icons_menu()` | ran (no return value) |
+| Scheme | `(update-main-toolbar-icons-menu)` | ran (no return value) |
 
 ### update_model_toolbar_icons_menu
 
@@ -813,8 +843,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `update_model_toolbar_icons_menu()` | not tried |
-| Scheme | `(update-model-toolbar-icons-menu)` | not tried |
+| Python | `update_model_toolbar_icons_menu()` | ran (no return value) |
+| Scheme | `(update-model-toolbar-icons-menu)` | ran (no return value) |
 
 ### update_preference_gui
 
@@ -825,8 +855,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `update_preference_gui()` | not tried |
-| Scheme | `(update-preference-gui)` | not tried |
+| Python | `update_preference_gui()` | ran (no return value) |
+| Scheme | `(update-preference-gui)` | ran (no return value) |
 
 ### update_toolbar_icons_menu
 
@@ -837,6 +867,6 @@ Arguments: toolbar_index (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `update_toolbar_icons_menu(1)` | not tried |
-| Scheme | `(update-toolbar-icons-menu 1)` | not tried |
+| Python | `update_toolbar_icons_menu(1)` | ran (no return value) |
+| Scheme | `(update-toolbar-icons-menu 1)` | ran (no return value) |
 

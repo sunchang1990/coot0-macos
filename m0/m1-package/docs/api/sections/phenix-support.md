@@ -15,6 +15,6 @@ Arguments: button_label (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_button_label_for_external_refinement("hello")` | not tried |
-| Scheme | `(set-button-label-for-external-refinement "hello")` | not tried |
+| Python | `set_button_label_for_external_refinement("hello")` | not run: not run automatically (external: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(set-button-label-for-external-refinement "hello")` | not run: not run automatically (external: exits, uses the network, an external program, files or a screen) |
 

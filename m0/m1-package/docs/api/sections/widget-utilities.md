@@ -17,8 +17,8 @@ Arguments: s (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_main_window_title("hello")` | not tried |
-| Scheme | `(set-main-window-title "hello")` | not tried |
+| Python | `set_main_window_title("hello")` | ran (no return value) |
+| Scheme | `(set-main-window-title "hello")` | ran (no return value) |
 
 ### set_show_modelling_toolbar
 
@@ -31,6 +31,6 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_show_modelling_toolbar(1)` | not tried |
-| Scheme | `(set-show-modelling-toolbar 1)` | not tried |
+| Python | `set_show_modelling_toolbar(1)` | ran (no return value) |
+| Scheme | `(set-show-modelling-toolbar 1)` | ran (no return value) |
 

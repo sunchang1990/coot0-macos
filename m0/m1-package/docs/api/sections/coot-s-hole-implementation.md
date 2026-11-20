@@ -19,7 +19,7 @@ Arguments: imol (a whole number), start_x (a number), start_y (a number), start_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `hole(0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1, 1, "tutorial-modern.pdb")` | error: TypeError: in method 'hole', argument 11 of type 'bool' |
+| Python | `hole(0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1, True, "tutorial-modern.pdb")` | ran (no return value) |
 | Scheme | `(hole 0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1 1 "tutorial-modern.pdb")` | ran (no return value) |
 
 ### link_info
@@ -36,8 +36,10 @@ Also available in Scheme as `link-info-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `link_info(0)` | not tried |
-| Scheme | `(link-info 0)` | not tried |
+| Python | `link_info(0)` | ran, returned `[]` |
+| Scheme | `(link-info 0)` | ran, returned `()` |
+
+Python and Scheme gave the same answer.
 
 ### make_link
 
@@ -50,8 +52,8 @@ Arguments: imol (a whole number), spec_1 (a list or value), spec_2 (a list or va
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `make_link(0, ["A", 41, ""], ["A", 41, ""], "my-name", 1.0)` | not tried |
-| Scheme | `(make-link 0 (list "A" 41 "") (list "A" 41 "") "my-name" 1.0)` | not tried |
+| Python | `make_link(0, ["A", 41, ""], ["A", 41, ""], "my-name", 1.0)` | ran (no return value) |
+| Scheme | `(make-link 0 (list "A" 41 "") (list "A" 41 "") "my-name" 1.0)` | ran (no return value) |
 
 ### probe_radius_graph_close_callback
 
@@ -64,8 +66,8 @@ Arguments: button (`GtkWidget *`), dialog (`GtkWidget *`). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### show_hole_probe_radius_graph
 
@@ -76,8 +78,8 @@ Arguments: hole_path (a list), path_length (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### show_hole_probe_radius_graph_basic
 
@@ -88,8 +90,8 @@ Arguments: hole_path (a list), path_length (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### show_hole_probe_radius_graph_goocanvas
 
@@ -100,6 +102,6 @@ Arguments: hole_path (a list), path_length (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 

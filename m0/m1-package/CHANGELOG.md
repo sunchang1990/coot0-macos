@@ -6,6 +6,27 @@ applied to the pristine tree by `setup.sh`) or a change of the packaged data / s
 round, `TEST-PROTOCOL.md` has the user-facing explanation and the checks for you (newest round first).  A "build" is one delivered zip.
 "Verified" means a headless test (no window server in the build environment); what only a screen can show is marked "on screen: not verified".
 
+## Build 30  (patch 0048 scheme-list-builders-sanitise-alt-confs (C++ + Python); new `bin/coot-bin`; scripting reference: every function tried)
+- Found by running each read-only function in Python and in Scheme on the test data and comparing the answers (20 Nov). Problems 2-5
+  are in Coot 0.9.8.96's own C++ source:
+  1. `sanitise_alt_confs_active_residue()` (Python) always failed with a TypeError: it took the chain, residue number and insertion
+     code all from the same field of the active atom.  The Scheme version was right.
+  2. Scheme `map-peaks` gave the peaks lowest first (Python: highest first, as Coot sorts them).  Now highest first in both.
+  3. Scheme `map-to-model-correlation-stats-per-residue-range-scm` returned a list nested ~90 levels deep (the two arguments of
+     `scm_cons` were swapped).  Now a flat list `((residue-spec (n correlation)) ...)` in residue order, as in Python.
+  4. Scheme `ncs-chain-differences` left out the residues (the lines were commented out): `((0.5) (0.283) ...)`.  Now each entry is
+     `((resno ins-code) (master-resno ins-code) mean-difference)`, as in Python.
+  5. Python `ligand_atom_overlaps` always returned False: its C++ in 0.9.8.96 was unfinished ("FIXME").  Now it returns the overlaps
+     as the Scheme version does: `[[atom-spec-1, atom-spec-2, overlap-volume, is-h-bond], ...]`.
+- Scripting reference (docs/api): the run that tries every example (`tests/run-api-examples.sh`) stopped after a third of the calls in
+  build 26, because an example overwrote the test model and the next Coot could not load it.  The script now copies fresh test data
+  before each start.  Now every one of the 3,406 examples (1,717 Python, 1,689 Scheme) has a result: 1,399 Python and 1,369 Scheme
+  ran; 18 / 26 gave an error (mostly placeholder values such as `"hello"`); 64 / 62 need the graphics window (stopped Coot without one;
+  not tried with one); 7 / 7 gave no answer within 60 s; 229 / 225 were not run on purpose (they quit Coot, use the network or an
+  external program, or take a widget).  For the 570 functions where both languages returned a comparable value, Python and Scheme gave
+  the same answer for 528; each page says so.  The Python examples now pass True/False for true/false arguments (5 more ran).
+- Tests: `python-api` 19 -> 21, `scheme-api` 27 -> 30 (build 29 fails all 5 new checks).
+
 ## Build 29  (patch 0047 help-open-and-contact-dots-off; Python only, `bin/coot-bin` as in build 28)
 - Fixed (user, 20 Nov, round 28 JJ3): in Help > Search Menus and Docs, **double-click did nothing**: the row arrives from GTK as a
   pointer, not a row number, and was ignored.  **Enter ran, but the document did not open at its heading**: Safari does not follow the

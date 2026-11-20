@@ -67,6 +67,8 @@ Arguments: obj_no (a whole number). Returns: a whole number.
 | Python | `generic_object_has_objects_p(1)` | ran, returned `0` |
 | Scheme | `(generic-object-has-objects-p 1)` | ran, returned `0` |
 
+Python and Scheme gave the same answer.
+
 ### generic_object_index
 
 Python: `generic_object_index(name)`  
@@ -80,6 +82,8 @@ Arguments: name (text). Returns: a whole number.
 |---|---|---|
 | Python | `generic_object_index("my-name")` | ran, returned `-1` |
 | Scheme | `(generic-object-index "my-name")` | ran, returned `-1` |
+
+Python and Scheme gave the same answer.
 
 ### generic_object_info
 
@@ -112,6 +116,8 @@ Arguments: object_number (a whole number). Returns: a whole number.
 | Python | `generic_object_is_displayed_p(1)` | ran, returned `0` |
 | Scheme | `(generic-object-is-displayed-p 1)` | ran, returned `0` |
 
+Python and Scheme gave the same answer.
+
 ### generic_object_name
 
 Python: `generic_object_name(obj_number)`  
@@ -125,6 +131,8 @@ Also available in Scheme as `generic-object-name-scm`.
 |---|---|---|
 | Python | `generic_object_name(1)` | ran, returned `False` |
 | Scheme | `(generic-object-name 1)` | ran, returned `#f` |
+
+Python and Scheme gave the same answer.
 
 ### get_generic_object_py
 
@@ -150,8 +158,10 @@ Arguments: object_number (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `is_closed_generic_object_p(1)` | not tried |
-| Scheme | `(is-closed-generic-object-p 1)` | not tried |
+| Python | `is_closed_generic_object_p(1)` | ran, returned `0` |
+| Scheme | `(is-closed-generic-object-p 1)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### number_of_generic_objects
 
@@ -164,8 +174,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `number_of_generic_objects()` | not tried |
-| Scheme | `(number-of-generic-objects)` | not tried |
+| Python | `number_of_generic_objects()` | ran, returned `0` |
+| Scheme | `(number-of-generic-objects)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### set_display_generic_object
 
@@ -181,8 +193,8 @@ Arguments: object_number (a whole number), istate (a whole number). Returns: not
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_display_generic_object(1, 1)` | not tried |
-| Scheme | `(set-display-generic-object 1 1)` | not tried |
+| Python | `set_display_generic_object(1, 1)` | ran (no return value) |
+| Scheme | `(set-display-generic-object 1 1)` | ran (no return value) |
 
 ### set_display_generic_object_simple
 
@@ -198,8 +210,8 @@ Arguments: object_number (a whole number), istate (a whole number). Returns: not
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_display_generic_object_simple(1, 1)` | not tried |
-| Scheme | `(set-display-generic-object-simple 1 1)` | not tried |
+| Python | `set_display_generic_object_simple(1, 1)` | ran (no return value) |
+| Scheme | `(set-display-generic-object-simple 1 1)` | ran (no return value) |
 
 ### set_display_generic_objects_as_solid
 
@@ -210,8 +222,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_display_generic_objects_as_solid(1)` | not tried |
-| Scheme | `(set-display-generic-objects-as-solid 1)` | not tried |
+| Python | `set_display_generic_objects_as_solid(1)` | ran (no return value) |
+| Scheme | `(set-display-generic-objects-as-solid 1)` | ran (no return value) |
 
 ### to_generic_object_add_arc
 
@@ -224,8 +236,8 @@ Arguments: object_number (a whole number), colour (text), radius (a number), rad
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `to_generic_object_add_arc(1, "hello", 5.0, 5.0, 10.0, 10.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)` | not tried |
-| Scheme | `(to-generic-object-add-arc 1 "hello" 5.0 5.0 10.0 10.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0)` | not tried |
+| Python | `to_generic_object_add_arc(1, "hello", 5.0, 5.0, 10.0, 10.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)` | ran (no return value) |
+| Scheme | `(to-generic-object-add-arc 1 "hello" 5.0 5.0 10.0 10.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0)` | ran (no return value) |
 
 ### to_generic_object_add_dashed_line
 
@@ -240,8 +252,8 @@ Arguments: object_number (a whole number), colour (text), line_width (a whole nu
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `to_generic_object_add_dashed_line(1, "hello", 2, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)` | not tried |
-| Scheme | `(to-generic-object-add-dashed-line 1 "hello" 2 1.0 1.0 1.0 1.0 1.0 1.0 1.0)` | not tried |
+| Python | `to_generic_object_add_dashed_line(1, "hello", 2, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)` | ran (no return value) |
+| Scheme | `(to-generic-object-add-dashed-line 1 "hello" 2 1.0 1.0 1.0 1.0 1.0 1.0 1.0)` | ran (no return value) |
 
 ### to_generic_object_add_display_list_handle
 
@@ -254,8 +266,8 @@ Arguments: object_number (a whole number), display_list_id (a whole number). Ret
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `to_generic_object_add_display_list_handle(1, 1)` | not tried |
-| Scheme | `(to-generic-object-add-display-list-handle 1 1)` | not tried |
+| Python | `to_generic_object_add_display_list_handle(1, 1)` | ran (no return value) |
+| Scheme | `(to-generic-object-add-display-list-handle 1 1)` | ran (no return value) |
 
 ### to_generic_object_add_dodecahedron
 
@@ -266,8 +278,8 @@ Arguments: object_number (a whole number), colour (text), radius (a number), x (
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `to_generic_object_add_dodecahedron(1, "hello", 5.0, 54.5, 9.4, 12.3)` | not tried |
-| Scheme | `(to-generic-object-add-dodecahedron 1 "hello" 5.0 54.5 9.4 12.3)` | not tried |
+| Python | `to_generic_object_add_dodecahedron(1, "hello", 5.0, 54.5, 9.4, 12.3)` | ran (no return value) |
+| Scheme | `(to-generic-object-add-dodecahedron 1 "hello" 5.0 54.5 9.4 12.3)` | ran (no return value) |
 
 ### to_generic_object_add_line
 
@@ -280,8 +292,8 @@ Arguments: object_number (a whole number), colour (text), line_width (a whole nu
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `to_generic_object_add_line(1, "hello", 2, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)` | not tried |
-| Scheme | `(to-generic-object-add-line 1 "hello" 2 1.0 1.0 1.0 1.0 1.0 1.0)` | not tried |
+| Python | `to_generic_object_add_line(1, "hello", 2, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)` | ran (no return value) |
+| Scheme | `(to-generic-object-add-line 1 "hello" 2 1.0 1.0 1.0 1.0 1.0 1.0)` | ran (no return value) |
 
 ### to_generic_object_add_pentakis_dodecahedron
 
@@ -292,8 +304,8 @@ Arguments: object_number (a whole number), colour (text), stellation_factor (a n
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `to_generic_object_add_pentakis_dodecahedron(1, "hello", 1.0, 5.0, 54.5, 9.4, 12.3)` | not tried |
-| Scheme | `(to-generic-object-add-pentakis-dodecahedron 1 "hello" 1.0 5.0 54.5 9.4 12.3)` | not tried |
+| Python | `to_generic_object_add_pentakis_dodecahedron(1, "hello", 1.0, 5.0, 54.5, 9.4, 12.3)` | ran (no return value) |
+| Scheme | `(to-generic-object-add-pentakis-dodecahedron 1 "hello" 1.0 5.0 54.5 9.4 12.3)` | ran (no return value) |
 
 ### to_generic_object_add_point
 
@@ -306,6 +318,6 @@ Arguments: object_number (a whole number), colour (text), point_width (a whole n
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `to_generic_object_add_point(1, "hello", 2, 1.0, 1.0, 1.0)` | not tried |
-| Scheme | `(to-generic-object-add-point 1 "hello" 2 1.0 1.0 1.0)` | not tried |
+| Python | `to_generic_object_add_point(1, "hello", 2, 1.0, 1.0, 1.0)` | ran (no return value) |
+| Scheme | `(to-generic-object-add-point 1 "hello" 2 1.0 1.0 1.0)` | ran (no return value) |
 

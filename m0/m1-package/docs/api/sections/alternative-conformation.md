@@ -23,6 +23,8 @@ Also available in Scheme as `add-alt-conf-scm`.
 | Python | `add_alt_conf(0, "A", 41, "", "", 1)` | ran, returned `False` |
 | Scheme | `(add-alt-conf 0 "A" 41 "" "" 1)` | ran, returned `#f` |
 
+Python and Scheme gave the same answer.
+
 ### alt_conf_split_type_number
 
 Python: `alt_conf_split_type_number()`  
@@ -34,6 +36,8 @@ Arguments: none. Returns: a whole number.
 |---|---|---|
 | Python | `alt_conf_split_type_number()` | ran, returned `1` |
 | Scheme | `(alt-conf-split-type-number)` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 
 ### altconf
 
@@ -75,6 +79,8 @@ Arguments: none. Returns: a number.
 | Python | `get_add_alt_conf_new_atoms_occupancy()` | ran, returned `0.5` |
 | Scheme | `(get-add-alt-conf-new-atoms-occupancy)` | ran, returned `0.5` |
 
+Python and Scheme gave the same answer.
+
 ### reset_b_factor_residue_range
 
 Python: `reset_b_factor_residue_range(imol, chain_id, ires1, ires2)`  
@@ -84,8 +90,8 @@ Arguments: imol (a whole number), chain_id (text), ires1 (a whole number), ires2
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `reset_b_factor_residue_range(0, "A", 1, 1)` | not tried |
-| Scheme | `(reset-b-factor-residue-range 0 "A" 1 1)` | not tried |
+| Python | `reset_b_factor_residue_range(0, "A", 1, 1)` | ran (no return value) |
+| Scheme | `(reset-b-factor-residue-range 0 "A" 1 1)` | ran (no return value) |
 
 ### set_add_alt_conf_new_atoms_occupancy
 
@@ -98,8 +104,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_add_alt_conf_new_atoms_occupancy(1.0)` | not tried |
-| Scheme | `(set-add-alt-conf-new-atoms-occupancy 1.0)` | not tried |
+| Python | `set_add_alt_conf_new_atoms_occupancy(1.0)` | ran (no return value) |
+| Scheme | `(set-add-alt-conf-new-atoms-occupancy 1.0)` | ran (no return value) |
 
 ### set_add_alt_conf_split_type_number
 
@@ -110,8 +116,8 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_add_alt_conf_split_type_number(1)` | not tried |
-| Scheme | `(set-add-alt-conf-split-type-number 1)` | not tried |
+| Python | `set_add_alt_conf_split_type_number(1)` | ran (no return value) |
+| Scheme | `(set-add-alt-conf-split-type-number 1)` | ran (no return value) |
 
 ### set_b_factor_residue_range
 
@@ -122,8 +128,8 @@ Arguments: imol (a whole number), chain_id (text), ires1 (a whole number), ires2
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_b_factor_residue_range(0, "A", 1, 1, 1.0)` | not tried |
-| Scheme | `(set-b-factor-residue-range 0 "A" 1 1 1.0)` | not tried |
+| Python | `set_b_factor_residue_range(0, "A", 1, 1, 1.0)` | ran (no return value) |
+| Scheme | `(set-b-factor-residue-range 0 "A" 1 1 1.0)` | ran (no return value) |
 
 ### set_occupancy_residue_range
 
@@ -134,8 +140,8 @@ Arguments: imol (a whole number), chain_id (text), ires1 (a whole number), ires2
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_occupancy_residue_range(0, "A", 1, 1, 1.0)` | not tried |
-| Scheme | `(set-occupancy-residue-range 0 "A" 1 1 1.0)` | not tried |
+| Python | `set_occupancy_residue_range(0, "A", 1, 1, 1.0)` | ran (no return value) |
+| Scheme | `(set-occupancy-residue-range 0 "A" 1 1 1.0)` | ran (no return value) |
 
 ### set_show_alt_conf_intermediate_atoms
 
@@ -146,8 +152,8 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_show_alt_conf_intermediate_atoms(1)` | not tried |
-| Scheme | `(set-show-alt-conf-intermediate-atoms 1)` | not tried |
+| Python | `set_show_alt_conf_intermediate_atoms(1)` | ran (no return value) |
+| Scheme | `(set-show-alt-conf-intermediate-atoms 1)` | ran (no return value) |
 
 ### show_alt_conf_intermediate_atoms_state
 
@@ -158,8 +164,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `show_alt_conf_intermediate_atoms_state()` | not tried |
-| Scheme | `(show-alt-conf-intermediate-atoms-state)` | not tried |
+| Python | `show_alt_conf_intermediate_atoms_state()` | ran, returned `0` |
+| Scheme | `(show-alt-conf-intermediate-atoms-state)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### unset_add_alt_conf_define
 
@@ -173,8 +181,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `unset_add_alt_conf_define()` | not tried |
-| Scheme | `(unset-add-alt-conf-define)` | not tried |
+| Python | `unset_add_alt_conf_define()` | ran (no return value) |
+| Scheme | `(unset-add-alt-conf-define)` | ran (no return value) |
 
 ### unset_add_alt_conf_dialog
 
@@ -185,8 +193,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `unset_add_alt_conf_dialog()` | not tried |
-| Scheme | `(unset-add-alt-conf-dialog)` | not tried |
+| Python | `unset_add_alt_conf_dialog()` | ran (no return value) |
+| Scheme | `(unset-add-alt-conf-dialog)` | ran (no return value) |
 
 ### zero_occupancy_residue_range
 
@@ -197,6 +205,6 @@ Arguments: imol (a whole number), chain_id (text), ires1 (a whole number), ires2
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `zero_occupancy_residue_range(0, "A", 1, 1)` | not tried |
-| Scheme | `(zero-occupancy-residue-range 0 "A" 1 1)` | not tried |
+| Python | `zero_occupancy_residue_range(0, "A", 1, 1)` | ran (no return value) |
+| Scheme | `(zero-occupancy-residue-range 0 "A" 1 1)` | ran (no return value) |
 

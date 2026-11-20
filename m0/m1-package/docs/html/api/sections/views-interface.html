@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="0991e6bce34ea8866e52f726b165446440a7e73f">
+<meta name="coot0-source-sha1" content="5a0a6dc45a6f58e2dfa3f86c0a4c7e0116286ee4">
 <title>Views Interface - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -28,6 +28,7 @@ Scheme: <code>(add-action-view view-name action-function)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>add_action_view("my-name", "hello")</code></td><td>ran, returned <code>0</code></td></tr>
 <tr><td>Scheme</td><td><code>(add-action-view "my-name" "hello")</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 <h3 id="add_spin_view">add_spin_view</h3>
 <p>Python: <code>add_spin_view(view_name, n_steps, degrees_total)</code><br>
 Scheme: <code>(add-spin-view view-name n-steps degrees-total)</code></p>
@@ -35,6 +36,7 @@ Scheme: <code>(add-spin-view view-name n-steps degrees-total)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>add_spin_view("my-name", 1, 1.0)</code></td><td>ran, returned <code>0</code></td></tr>
 <tr><td>Scheme</td><td><code>(add-spin-view "my-name" 1 1.0)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 <h3 id="add_view_description">add_view_description</h3>
 <p>Python: <code>add_view_description(view_number, description)</code><br>
 Scheme: <code>(add-view-description view-number description)</code></p>
@@ -51,6 +53,7 @@ Scheme: <code>(add-view-here view-name)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>add_view_here("my-name")</code></td><td>ran, returned <code>2</code></td></tr>
 <tr><td>Scheme</td><td><code>(add-view-here "my-name")</code></td><td>ran, returned <code>3</code></td></tr></tbody></table>
+<p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 <h3 id="add_view_raw">add_view_raw</h3>
 <p>Python: <code>add_view_raw(rcx, rcy, rcz, quat1, quat2, quat3, quat4, zoom, view_name)</code><br>
 Scheme: <code>(add-view-raw rcx rcy rcz quat1 quat2 quat3 quat4 zoom view-name)</code></p>
@@ -59,6 +62,7 @@ Scheme: <code>(add-view-raw rcx rcy rcz quat1 quat2 quat3 quat4 zoom view-name)<
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>add_view_raw(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 100.0, "my-name")</code></td><td>ran, returned <code>4</code></td></tr>
 <tr><td>Scheme</td><td><code>(add-view-raw 1.0 1.0 1.0 1.0 1.0 1.0 1.0 100.0 "my-name")</code></td><td>ran, returned <code>5</code></td></tr></tbody></table>
+<p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 <h3 id="clear_all_views">clear_all_views</h3>
 <p>Python: <code>clear_all_views()</code><br>
 Scheme: <code>(clear-all-views)</code></p>
@@ -76,6 +80,7 @@ Scheme: <code>(go-to-first-view snap-to-view-flag)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>go_to_first_view(1)</code></td><td>ran, returned <code>0</code></td></tr>
 <tr><td>Scheme</td><td><code>(go-to-first-view 1)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="go_to_view">go_to_view</h3>
 <p>Python: <code>go_to_view(view)</code><br>
 Scheme: <code>(go-to-view view)</code></p>
@@ -91,6 +96,7 @@ Scheme: <code>(go-to-view-number view-number snap-to-view-flag)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>go_to_view_number(1, 1)</code></td><td>ran, returned <code>0</code></td></tr>
 <tr><td>Scheme</td><td><code>(go-to-view-number 1 1)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="insert_action_view_after_view">insert_action_view_after_view</h3>
 <p>Python: <code>insert_action_view_after_view(view_number, view_name, action_function)</code><br>
 Scheme: <code>(insert-action-view-after-view view-number view-name action-function)</code></p>
@@ -98,68 +104,72 @@ Scheme: <code>(insert-action-view-after-view view-number view-name action-functi
 <p> Returns the view number for this (new) view.</p>
 <p>Arguments: view_number (a whole number), view_name (text), action_function (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>insert_action_view_after_view(1, "my-name", "hello")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(insert-action-view-after-view 1 "my-name" "hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>insert_action_view_after_view(1, "my-name", "hello")</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(insert-action-view-after-view 1 "my-name" "hello")</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 <h3 id="n_views">n_views</h3>
 <p>Python: <code>n_views()</code><br>
 Scheme: <code>(n-views)</code></p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>n_views()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(n-views)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>n_views()</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(n-views)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="play_views">play_views</h3>
 <p>Python: <code>play_views()</code><br>
 Scheme: <code>(play-views)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>play_views()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(play-views)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>play_views()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(play-views)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="remove_named_view">remove_named_view</h3>
 <p>Python: <code>remove_named_view(view_name)</code><br>
 Scheme: <code>(remove-named-view view-name)</code></p>
 <p>the view with the given name</p>
 <p>Arguments: view_name (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>remove_named_view("my-name")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(remove-named-view "my-name")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>remove_named_view("my-name")</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(remove-named-view "my-name")</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="remove_this_view">remove_this_view</h3>
 <p>Python: <code>remove_this_view()</code><br>
 Scheme: <code>(remove-this-view)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>remove_this_view()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(remove-this-view)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>remove_this_view()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(remove-this-view)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="remove_view">remove_view</h3>
 <p>Python: <code>remove_view(view_number)</code><br>
 Scheme: <code>(remove-view view-number)</code></p>
 <p>the given view number</p>
 <p>Arguments: view_number (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>remove_view(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(remove-view 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>remove_view(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(remove-view 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="save_views">save_views</h3>
 <p>Python: <code>save_views(view_file_name)</code><br>
 Scheme: <code>(save-views view-file-name)</code></p>
 <p>save views to view_file_name</p>
 <p>Arguments: view_file_name (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>save_views("tutorial-modern.pdb")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(save-views "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>save_views("tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(save-views "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_views_play_speed">set_views_play_speed</h3>
 <p>Python: <code>set_views_play_speed(f)</code><br>
 Scheme: <code>(set-views-play-speed f)</code></p>
 <p>Arguments: f (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_views_play_speed(1.0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-views-play-speed 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_views_play_speed(1.0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-views-play-speed 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="view_description">view_description</h3>
 <p>Python: <code>view_description(view_number)</code><br>
 Scheme: <code>(view-description view-number)</code></p>
 <p>Arguments: view_number (a whole number). Returns: a value (see the result of the example).
 Also available in Python as <code>view_description_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>view_description(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(view-description 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>view_description(1)</code></td><td>ran, returned <code>False</code></td></tr>
+<tr><td>Scheme</td><td><code>(view-description 1)</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="view_name">view_name</h3>
 <p>Python: <code>view_name(view_number)</code><br>
 Scheme: <code>(view-name view-number)</code></p>
@@ -168,13 +178,15 @@ Scheme: <code>(view-name view-number)</code></p>
 <p>Arguments: view_number (a whole number). Returns: a value (see the result of the example).
 Also available in Python as <code>view_name_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>view_name(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(view-name 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>view_name(1)</code></td><td>ran, returned <code>False</code></td></tr>
+<tr><td>Scheme</td><td><code>(view-name 1)</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="views_play_speed">views_play_speed</h3>
 <p>Python: <code>views_play_speed()</code><br>
 Scheme: <code>(views-play-speed)</code></p>
 <p>Arguments: none. Returns: a number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>views_play_speed()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(views-play-speed)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>views_play_speed()</code></td><td>ran, returned <code>10.0</code></td></tr>
+<tr><td>Scheme</td><td><code>(views-play-speed)</code></td><td>ran, returned <code>10.0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 </body></html>

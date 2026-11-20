@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="61511fe332cd0eb0cf4658ddd89e8bea4fa1b33d">
+<meta name="coot0-source-sha1" content="568ccb801ca2675bc1161cf1ff9f0fec2ecaf27d">
 <title>Rotamer Scoring - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -23,6 +23,7 @@ Scheme: <code>(score-rotamers imol chain-id res-no ins-code alt-conf imol-map cl
 <p>return a list (possibly empty)</p>
 <p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text), alt_conf (text), imol_map (a whole number), clash_flag (a whole number), lowest_probability (a number). Returns: a value (see the result of the example).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>score_rotamers(0, "A", 41, "", "", 1, 1, 1.0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(score-rotamers 0 "A" 41 "" "" 1 1 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>score_rotamers(0, "A", 41, "", "", 1, 1, 1.0)</code></td><td>ran, returned <code>[['mt-10 ', 33.0, -0.6280274987220764, [[' N  ', 1.790576457977295], [' CA ', -0.00864859577268362], [' CB ', -0.2229364 ...</code></td></tr>
+<tr><td>Scheme</td><td><code>(score-rotamers 0 "A" 41 "" "" 1 1 1.0)</code></td><td>ran, returned <code>(("mt-10 " 33.0 ((" N  " 1.790576457977295) (" CA " -0.00864859577268362) (" CB " -0.22293642163276672) (" CG " 0.134302 ...</code></td></tr></tbody></table>
+<p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 </body></html>

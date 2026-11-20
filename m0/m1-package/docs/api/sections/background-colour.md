@@ -21,6 +21,8 @@ Arguments: none. Returns: a whole number.
 | Python | `background_is_black_p()` | ran, returned `1` |
 | Scheme | `(background-is-black-p)` | ran, returned `1` |
 
+Python and Scheme gave the same answer.
+
 ### redraw_background
 
 Python: `redraw_background()`  
@@ -32,8 +34,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `redraw_background()` | not tried |
-| Scheme | `(redraw-background)` | not tried |
+| Python | `redraw_background()` | ran (no return value) |
+| Scheme | `(redraw-background)` | ran (no return value) |
 
 ### set_background_colour
 
@@ -48,6 +50,6 @@ Arguments: red (a number), green (a number), blue (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_background_colour(0.5, 0.5, 0.5)` | not tried |
-| Scheme | `(set-background-colour 0.5 0.5 0.5)` | not tried |
+| Python | `set_background_colour(0.5, 0.5, 0.5)` | ran (no return value) |
+| Scheme | `(set-background-colour 0.5 0.5 0.5)` | ran (no return value) |
 

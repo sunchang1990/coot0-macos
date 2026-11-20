@@ -20,6 +20,8 @@ Arguments: none. Returns: a whole number.
 | Python | `get_font_size()` | ran, returned `2` |
 | Scheme | `(get-font-size)` | ran, returned `2` |
 
+Python and Scheme gave the same answer.
+
 ### set_font_colour
 
 Python: `set_font_colour(red, green, blue)`  
@@ -32,8 +34,8 @@ Arguments: red (a number), green (a number), blue (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_font_colour(0.5, 0.5, 0.5)` | not tried |
-| Scheme | `(set-font-colour 0.5 0.5 0.5)` | not tried |
+| Python | `set_font_colour(0.5, 0.5, 0.5)` | ran (no return value) |
+| Scheme | `(set-font-colour 0.5 0.5 0.5)` | ran (no return value) |
 
 ### set_font_size
 
@@ -48,8 +50,8 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_font_size(1)` | not tried |
-| Scheme | `(set-font-size 1)` | not tried |
+| Python | `set_font_size(1)` | ran (no return value) |
+| Scheme | `(set-font-size 1)` | ran (no return value) |
 
 ### set_use_stroke_characters
 
@@ -62,6 +64,6 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_use_stroke_characters(1)` | not tried |
-| Scheme | `(set-use-stroke-characters 1)` | not tried |
+| Python | `set_use_stroke_characters(1)` | ran (no return value) |
+| Scheme | `(set-use-stroke-characters 1)` | ran (no return value) |
 

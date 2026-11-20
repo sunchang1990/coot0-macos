@@ -55,8 +55,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `pisa_clear_interfaces()` | not tried |
-| Scheme | `(pisa-clear-interfaces)` | not tried |
+| Python | `pisa_clear_interfaces()` | not run: not run automatically (pisa: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(pisa-clear-interfaces)` | not run: not run automatically (pisa: exits, uses the network, an external program, files or a screen) |
 
 ### pisa_interaction
 
@@ -70,8 +70,8 @@ Arguments: imol_1 (a whole number), imol_2 (a whole number). Returns: a whole nu
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `pisa_interaction(0, 0)` | not tried |
-| Scheme | `(pisa-interaction 0 0)` | not tried |
+| Python | `pisa_interaction(0, 0)` | not run: not run automatically (pisa: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(pisa-interaction 0 0)` | not run: not run automatically (pisa: exits, uses the network, an external program, files or a screen) |
 
 ### pisa-molecule-record-chain-id
 
@@ -82,7 +82,7 @@ Arguments: molecule-record-1 (a list or value). Returns: a value (see the result
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Scheme | (no automatic example) | not tried |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### pisa-molecule-record-residues
 
@@ -95,5 +95,5 @@ Arguments: molecule-record-1 (a list or value). Returns: a value (see the result
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Scheme | (no automatic example) | not tried |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 

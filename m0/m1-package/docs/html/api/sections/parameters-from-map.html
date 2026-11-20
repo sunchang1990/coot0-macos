@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="bcc3024ba635035ce324267e7e3580b2d6f070b0">
+<meta name="coot0-source-sha1" content="f41db5daa7ac6f55d65c424760a07a70cf28a20a">
 <title>Parameters from map - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -29,6 +29,7 @@ Also available in Scheme as <code>cell-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>cell(0)</code></td><td>ran, returned <code>[64.897, 78.323, 38.792, 90.0, 90.0, 90.0]</code></td></tr>
 <tr><td>Scheme</td><td><code>(cell 0)</code></td><td>ran, returned <code>(64.897 78.323 38.792 90.0 90.0 90.0)</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="map_parameters">map_parameters</h3>
 <p>Python: <code>map_parameters(imol)</code><br>
 Scheme: <code>(map-parameters imol)</code></p>
@@ -39,8 +40,9 @@ Scheme: <code>(map-parameters imol)</code></p>
 Also available in Python as <code>map_parameters_py</code>.
 Also available in Scheme as <code>map-parameters-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>map_parameters(0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(map-parameters 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>map_parameters(0)</code></td><td>ran, returned <code>False</code></td></tr>
+<tr><td>Scheme</td><td><code>(map-parameters 0)</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="mtz_fp_for_map">mtz_fp_for_map</h3>
 <p>Python: <code>mtz_fp_for_map(imol_map)</code><br>
 Scheme: <code>(mtz-fp-for-map imol-map)</code></p>
@@ -51,8 +53,9 @@ Scheme: <code>(mtz-fp-for-map imol-map)</code></p>
 <p> Caller should dispose of returned pointer.</p>
 <p>Arguments: imol_map (a whole number). Returns: text.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>mtz_fp_for_map(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(mtz-fp-for-map 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>mtz_fp_for_map(1)</code></td><td>ran, returned <code>'FWT'</code></td></tr>
+<tr><td>Scheme</td><td><code>(mtz-fp-for-map 1)</code></td><td>ran, returned <code>"FWT"</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="mtz_hklin_for_map">mtz_hklin_for_map</h3>
 <p>Python: <code>mtz_hklin_for_map(imol_map)</code><br>
 Scheme: <code>(mtz-hklin-for-map imol-map)</code></p>
@@ -61,8 +64,9 @@ Scheme: <code>(mtz-hklin-for-map imol-map)</code></p>
  generated from a CCP4 map file say).</p>
 <p>Arguments: imol_map (a whole number). Returns: text.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>mtz_hklin_for_map(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(mtz-hklin-for-map 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>mtz_hklin_for_map(1)</code></td><td>ran, returned <code>'rnasa-1.8-all_refmac1.mtz'</code></td></tr>
+<tr><td>Scheme</td><td><code>(mtz-hklin-for-map 1)</code></td><td>ran, returned <code>"rnasa-1.8-all_refmac1.mtz"</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="mtz_phi_for_map">mtz_phi_for_map</h3>
 <p>Python: <code>mtz_phi_for_map(imol_map)</code><br>
 Scheme: <code>(mtz-phi-for-map imol-map)</code></p>
@@ -73,8 +77,9 @@ Scheme: <code>(mtz-phi-for-map imol-map)</code></p>
  Caller should dispose of returned pointer.</p>
 <p>Arguments: imol_map (a whole number). Returns: text.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>mtz_phi_for_map(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(mtz-phi-for-map 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>mtz_phi_for_map(1)</code></td><td>ran, returned <code>'PHWT'</code></td></tr>
+<tr><td>Scheme</td><td><code>(mtz-phi-for-map 1)</code></td><td>ran, returned <code>"PHWT"</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="mtz_use_weight_for_map">mtz_use_weight_for_map</h3>
 <p>Python: <code>mtz_use_weight_for_map(imol_map)</code><br>
 Scheme: <code>(mtz-use-weight-for-map imol-map)</code></p>
@@ -84,8 +89,9 @@ Scheme: <code>(mtz-use-weight-for-map imol-map)</code></p>
  associated with that map.</p>
 <p>Arguments: imol_map (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>mtz_use_weight_for_map(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(mtz-use-weight-for-map 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>mtz_use_weight_for_map(1)</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(mtz-use-weight-for-map 1)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="mtz_weight_for_map">mtz_weight_for_map</h3>
 <p>Python: <code>mtz_weight_for_map(imol_map)</code><br>
 Scheme: <code>(mtz-weight-for-map imol-map)</code></p>
@@ -96,6 +102,7 @@ Scheme: <code>(mtz-weight-for-map imol-map)</code></p>
  Caller should dispose of returned pointer.</p>
 <p>Arguments: imol_map (a whole number). Returns: text.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>mtz_weight_for_map(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(mtz-weight-for-map 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>mtz_weight_for_map(1)</code></td><td>ran, returned <code>''</code></td></tr>
+<tr><td>Scheme</td><td><code>(mtz-weight-for-map 1)</code></td><td>ran, returned <code>""</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 </body></html>

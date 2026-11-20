@@ -18,6 +18,8 @@ Arguments: imol (a whole number), residue_spec (a list or value), imol_map (a wh
 | Python | `density_score_residue(0, ["A", 41, ""], 1)` | ran, returned `4.34853982925415` |
 | Scheme | `(density-score-residue 0 (list "A" 41 "") 1)` | ran, returned `4.34853982925415` |
 
+Python and Scheme gave the same answer.
+
 ### map_mean
 
 Python: `map_mean(imol)`  
@@ -31,8 +33,10 @@ Also available in Python as `map_mean_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `map_mean(0)` | not tried |
-| Scheme | `(map-mean-scm 0)` | not tried |
+| Python | `map_mean(0)` | ran, returned `False` |
+| Scheme | `(map-mean-scm 0)` | ran, returned `#f` |
+
+Python and Scheme gave the same answer.
 
 ### map_sigma
 
@@ -45,8 +49,10 @@ Also available in Scheme as `map-sigma-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `map_sigma(0)` | not tried |
-| Scheme | `(map-sigma 0)` | not tried |
+| Python | `map_sigma(0)` | ran, returned `False` |
+| Scheme | `(map-sigma 0)` | ran, returned `#f` |
+
+Python and Scheme gave the same answer.
 
 ### map_statistics
 
@@ -59,8 +65,10 @@ Also available in Scheme as `map-statistics-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `map_statistics(0)` | not tried |
-| Scheme | `(map-statistics 0)` | not tried |
+| Python | `map_statistics(0)` | ran, returned `False` |
+| Scheme | `(map-statistics 0)` | ran, returned `#f` |
+
+Python and Scheme gave the same answer.
 
 ### map_to_model_correlation
 
@@ -80,8 +88,8 @@ Arguments: imol (a whole number), residue_specs (a list or value), neighb_residu
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `map_to_model_correlation(0, [["A", 41, ""], ["A", 42, ""]], ["A", 41, ""], 1, 1)` | not tried |
-| Scheme | `(map-to-model-correlation 0 (list (list "A" 41 "") (list "A" 42 "")) (list "A" 41 "") 1 1)` | not tried |
+| Python | `map_to_model_correlation(0, [["A", 41, ""], ["A", 42, ""]], ["A", 41, ""], 1, 1)` | error: SystemError: <built-in function map_to_model_correlation_py> returned a result with an exception set |
+| Scheme | `(map-to-model-correlation 0 (list (list "A" 41 "") (list "A" 42 "")) (list "A" 41 "") 1 1)` | error: In procedure length: Wrong type argument in position 1: "A" |
 
 ### map_to_model_correlation_per_residue
 
@@ -103,8 +111,10 @@ Also available in Scheme as `map-to-model-correlation-per-residue-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `map_to_model_correlation_per_residue(0, [["A", 41, ""], ["A", 42, ""]], 1, 1)` | not tried |
-| Scheme | `(map-to-model-correlation-per-residue 0 (list (list "A" 41 "") (list "A" 42 "")) 1 1)` | not tried |
+| Python | `map_to_model_correlation_per_residue(0, [["A", 41, ""], ["A", 42, ""]], 1, 1)` | ran, returned `[[[True, 'A', 41, ''], 0.27271050214767456], [[True, 'A', 42, ''], 0.7473998069763184]]` |
+| Scheme | `(map-to-model-correlation-per-residue 0 (list (list "A" 41 "") (list "A" 42 "")) 1 1)` | ran, returned `(((#t "A" 41 "") 0.27271050214767456) ((#t "A" 42 "") 0.7473998069763184))` |
+
+Python and Scheme gave the same answer.
 
 ### map_to_model_correlation_stats
 
@@ -124,8 +134,8 @@ Arguments: imol (a whole number), residue_specs (a list or value), neighb_residu
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `map_to_model_correlation_stats(0, [["A", 41, ""], ["A", 42, ""]], ["A", 41, ""], 1, 1)` | not tried |
-| Scheme | `(map-to-model-correlation-stats 0 (list (list "A" 41 "") (list "A" 42 "")) (list "A" 41 "") 1 1)` | not tried |
+| Python | `map_to_model_correlation_stats(0, [["A", 41, ""], ["A", 42, ""]], ["A", 41, ""], 1, 1)` | error: SystemError: <built-in function map_to_model_correlation_stats_py> returned a result with an exception set |
+| Scheme | `(map-to-model-correlation-stats 0 (list (list "A" 41 "") (list "A" 42 "")) (list "A" 41 "") 1 1)` | error: In procedure length: Wrong type argument in position 1: "A" |
 
 ### map-to-model-correlation-stats-per-residue-scm
 
@@ -138,7 +148,7 @@ Arguments: imol (a whole number), residue-specs-scm (a list or value), atom-mask
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Scheme | `(map-to-model-correlation-stats-per-residue-scm 0 (list (list "A" 41 "") (list "A" 42 "")) 1 5.0 1)` | not tried |
+| Scheme | `(map-to-model-correlation-stats-per-residue-scm 0 (list (list "A" 41 "") (list "A" 42 "")) 1 5.0 1)` | ran, returned `(((#t "A" 41 "") (-0.06600063564065085 0.1473731077517851)) ((#t "A" 42 "") (-0.036889933628944244 0.12350242598888322)) ...` |
 
 ### map_to_model_correlation_stats_per_residue_range_py
 
@@ -153,8 +163,10 @@ Arguments: imol (a whole number), chain_id (text), imol_map (a whole number), n_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `map_to_model_correlation_stats_per_residue_range_py(0, "A", 1, 1, 1)` | not tried |
-| Scheme | `(map-to-model-correlation-stats-per-residue-range-scm 0 "A" 1 1 1)` | not tried |
+| Python | `map_to_model_correlation_stats_per_residue_range_py(0, "A", 1, 1, 1)` | ran, returned `[[[[True, 'A', 1, ''], [1087, 0.7118559265818732]], [[True, 'A', 2, ''], [554, 0.3979060701858177]], [[True, 'A', 3, ''] ...` |
+| Scheme | `(map-to-model-correlation-stats-per-residue-range-scm 0 "A" 1 1 1)` | ran, returned `((((#t "A" 1 "") (1087 0.7118559265818732)) ((#t "A" 2 "") (554 0.3979060701858177)) ((#t "A" 3 "") (862 0.8684288459695 ...` |
+
+Python and Scheme gave the same answer.
 
 ### qq_plot_map_and_model
 
@@ -167,8 +179,8 @@ Also available in Scheme as `qq-plot-map-and-model-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `qq_plot_map_and_model(0, [["A", 41, ""], ["A", 42, ""]], ["A", 41, ""], 1, 1)` | not tried |
-| Scheme | `(qq-plot-map-and-model 0 (list (list "A" 41 "") (list "A" 42 "")) (list "A" 41 "") 1 1)` | not tried |
+| Python | `qq_plot_map_and_model(0, [["A", 41, ""], ["A", 42, ""]], ["A", 41, ""], 1, 1)` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(qq-plot-map-and-model 0 (list (list "A" 41 "") (list "A" 42 "")) (list "A" 41 "") 1 1)` | error: In procedure length: Wrong type argument in position 1: "A" |
 
 ### set_map_correlation_atom_radius
 
@@ -182,6 +194,6 @@ Arguments: r (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_map_correlation_atom_radius(0.5)` | not tried |
-| Scheme | `(set-map-correlation-atom-radius 0.5)` | not tried |
+| Python | `set_map_correlation_atom_radius(0.5)` | ran (no return value) |
+| Scheme | `(set-map-correlation-atom-radius 0.5)` | ran (no return value) |
 

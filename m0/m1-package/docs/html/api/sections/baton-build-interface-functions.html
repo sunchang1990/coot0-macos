@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="c97d452d11f7f7d17411815765d0d07d3b05e6f4">
+<meta name="coot0-source-sha1" content="24b3c471e6620e8d18322c45c7044b8b2d503fbf">
 <title>Baton Build Interface Functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -55,8 +55,8 @@ Scheme: <code>(lengthen-baton)</code></p>
 <p>lengthen the baton</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>lengthen_baton()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(lengthen-baton)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>lengthen_baton()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(lengthen-baton)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="reverse_direction_of_fragment">reverse_direction_of_fragment</h3>
 <p>Python: <code>reverse_direction_of_fragment(imol, chain_id, resno)</code><br>
 Scheme: <code>(reverse-direction-of-fragment imol chain-id resno)</code></p>
@@ -69,8 +69,8 @@ Scheme: <code>(reverse-direction-of-fragment imol chain-id resno)</code></p>
  marks a break. Throw away all atoms in fragment other than CAs.</p>
 <p>Arguments: imol (a whole number), chain_id (text), resno (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>reverse_direction_of_fragment(0, "A", 41)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(reverse-direction-of-fragment 0 "A" 41)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>reverse_direction_of_fragment(0, "A", 41)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(reverse-direction-of-fragment 0 "A" 41)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_baton_build_params">set_baton_build_params</h3>
 <p>Python: <code>set_baton_build_params(istart_resno, chain_id, direction)</code><br>
 Scheme: <code>(set-baton-build-params istart-resno chain-id direction)</code></p>
@@ -78,37 +78,37 @@ Scheme: <code>(set-baton-build-params istart-resno chain-id direction)</code></p
  be "forwards" or "backwards"</p>
 <p>Arguments: istart_resno (a whole number), chain_id (text), direction (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_baton_build_params(41, "A", ".")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-baton-build-params 41 "A" ".")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_baton_build_params(41, "A", ".")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-baton-build-params 41 "A" ".")</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_baton_mode">set_baton_mode</h3>
 <p>Python: <code>set_baton_mode(i)</code><br>
 Scheme: <code>(set-baton-mode i)</code></p>
 <p>toggle so that mouse movement moves the baton not rotates the view.</p>
 <p>Arguments: i (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_baton_mode(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-baton-mode 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_baton_mode(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-baton-mode 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="setup_reverse_direction">setup_reverse_direction</h3>
 <p>Python: <code>setup_reverse_direction(i)</code><br>
 Scheme: <code>(setup-reverse-direction i)</code></p>
 <p>Arguments: i (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>setup_reverse_direction(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(setup-reverse-direction 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>setup_reverse_direction(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(setup-reverse-direction 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="shorten_baton">shorten_baton</h3>
 <p>Python: <code>shorten_baton()</code><br>
 Scheme: <code>(shorten-baton)</code></p>
 <p>shorten the baton length</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>shorten_baton()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(shorten-baton)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>shorten_baton()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(shorten-baton)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="try_set_draw_baton">try_set_draw_baton</h3>
 <p>Python: <code>try_set_draw_baton(i)</code><br>
 Scheme: <code>(try-set-draw-baton i)</code></p>
 <p>draw the baton or not</p>
 <p>Arguments: i (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>try_set_draw_baton(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(try-set-draw-baton 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>try_set_draw_baton(1)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
+<tr><td>Scheme</td><td><code>(try-set-draw-baton 1)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
 </body></html>

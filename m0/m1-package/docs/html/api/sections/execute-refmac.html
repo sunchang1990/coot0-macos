@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="a5391bb0418fcc63e95d14b8005ed61fde7c4aa1">
+<meta name="coot0-source-sha1" content="437507f9eb4dafc04600e7987d4a94025880e3b6">
 <title>Execute Refmac - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -80,6 +80,7 @@ Scheme: <code>(ccp4-project-directory ccp4-project-name)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>ccp4_project_directory("my-name")</code></td><td>ran, returned <code>''</code></td></tr>
 <tr><td>Scheme</td><td><code>(ccp4-project-directory "my-name")</code></td><td>ran, returned <code>""</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="clear_refmac_sad_atoms">clear_refmac_sad_atoms</h3>
 <p>Python: <code>clear_refmac_sad_atoms()</code><br>
 Scheme: <code>(clear-refmac-sad-atoms)</code></p>
@@ -142,37 +143,38 @@ Scheme: <code>(get-saved-refmac-file-filename)</code></p>
 Scheme: <code>(languagize-command command-parts)</code></p>
 <p>Arguments: command_parts (a list). Returns: text.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>languagize_command("hello")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(languagize-command "hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>languagize_command("hello")</code></td><td>ran, returned <code>'(h e l l o)'</code></td></tr>
+<tr><td>Scheme</td><td><code>(languagize-command "hello")</code></td><td>error: In procedure languagize-command: Wrong type argument in position 1: "hello"</td></tr></tbody></table>
 <h3 id="merge_molecules_by_vector">merge_molecules_by_vector</h3>
 <p>Python: <code>merge_molecules_by_vector(add_molecules, imol)</code><br>
 Scheme: <code>(merge-molecules-by-vector add-molecules imol)</code></p>
 <p>return the status and vector of chain-ids of the new chain ids.</p>
 <p>Arguments: add_molecules (a list), imol (a whole number). Returns: a list.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 <h3 id="parse_ccp4i_defs">parse_ccp4i_defs</h3>
 <p>Python: <code>parse_ccp4i_defs(filename)</code><br>
 Scheme: <code>(parse-ccp4i-defs filename)</code></p>
 <p>Arguments: filename (text). Returns: a list.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>parse_ccp4i_defs("tutorial-modern.pdb")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(parse-ccp4i-defs "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>parse_ccp4i_defs("tutorial-modern.pdb")</code></td><td>not run: not run automatically (ccp4i: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(parse-ccp4i-defs "tutorial-modern.pdb")</code></td><td>not run: not run automatically (ccp4i: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="pythonize_command_name">pythonize_command_name</h3>
 <p>Python: <code>pythonize_command_name(s)</code><br>
 Scheme: <code>(pythonize-command-name s)</code></p>
 <p>Arguments: s (text). Returns: text.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>pythonize_command_name("hello")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(pythonize-command-name "hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>pythonize_command_name("hello")</code></td><td>ran, returned <code>'hello'</code></td></tr>
+<tr><td>Scheme</td><td><code>(pythonize-command-name "hello")</code></td><td>ran, returned <code>"hello"</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="refmac_imol_coords">refmac_imol_coords</h3>
 <p>Python: <code>refmac_imol_coords()</code><br>
 Scheme: <code>(refmac-imol-coords)</code></p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>refmac_imol_coords()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(refmac-imol-coords)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>refmac_imol_coords()</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(refmac-imol-coords)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="refmac_name">refmac_name</h3>
 <p>Python: <code>refmac_name(imol)</code><br>
 Scheme: <code>(refmac-name imol)</code></p>
@@ -180,147 +182,149 @@ Scheme: <code>(refmac-name imol)</code></p>
 <p> Returns a stub name used in the construction of filename for refmac output</p>
 <p>Arguments: imol (a whole number). Returns: text.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>refmac_name(0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(refmac-name 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>refmac_name(0)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(refmac-name 0)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="refmac_use_intensities_state">refmac_use_intensities_state</h3>
 <p>Python: <code>refmac_use_intensities_state()</code><br>
 Scheme: <code>(refmac-use-intensities-state)</code></p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>refmac_use_intensities_state()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(refmac-use-intensities-state)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>refmac_use_intensities_state()</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(refmac-use-intensities-state)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="refmac_use_ncs_state">refmac_use_ncs_state</h3>
 <p>Python: <code>refmac_use_ncs_state()</code><br>
 Scheme: <code>(refmac-use-ncs-state)</code></p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>refmac_use_ncs_state()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(refmac-use-ncs-state)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>refmac_use_ncs_state()</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(refmac-use-ncs-state)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="refmac_use_sad_state">refmac_use_sad_state</h3>
 <p>Python: <code>refmac_use_sad_state()</code><br>
 Scheme: <code>(refmac-use-sad-state)</code></p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>refmac_use_sad_state()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(refmac-use-sad-state)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>refmac_use_sad_state()</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(refmac-use-sad-state)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="refmac_use_tls_state">refmac_use_tls_state</h3>
 <p>Python: <code>refmac_use_tls_state()</code><br>
 Scheme: <code>(refmac-use-tls-state)</code></p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>refmac_use_tls_state()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(refmac-use-tls-state)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>refmac_use_tls_state()</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(refmac-use-tls-state)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="refmac_use_twin_state">refmac_use_twin_state</h3>
 <p>Python: <code>refmac_use_twin_state()</code><br>
 Scheme: <code>(refmac-use-twin-state)</code></p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>refmac_use_twin_state()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(refmac-use-twin-state)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>refmac_use_twin_state()</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(refmac-use-twin-state)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="save_refmac_params_to_map">save_refmac_params_to_map</h3>
 <p>Python: <code>save_refmac_params_to_map(imol_map, mtz_filename, fobs_col, sigfobs_col, r_free_col, r_free_flag_sensible)</code><br>
 Scheme: <code>(save-refmac-params-to-map imol-map mtz-filename fobs-col sigfobs-col r-free-col r-free-flag-sensible)</code></p>
 <p>Arguments: imol_map (a whole number), mtz_filename (text), fobs_col (text), sigfobs_col (text), r_free_col (text), r_free_flag_sensible (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>save_refmac_params_to_map(1, "rnasa-1.8-all_refmac1.mtz", "FWT", "hello", "hello", 1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(save-refmac-params-to-map 1 "rnasa-1.8-all_refmac1.mtz" "FWT" "hello" "hello" 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>save_refmac_params_to_map(1, "rnasa-1.8-all_refmac1.mtz", "FWT", "hello", "hello", 1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(save-refmac-params-to-map 1 "rnasa-1.8-all_refmac1.mtz" "FWT" "hello" "hello" 1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="save_refmac_phase_params_to_map">save_refmac_phase_params_to_map</h3>
 <p>Python: <code>save_refmac_phase_params_to_map(imol_map, phi, fom, hla, hlb, hlc, hld)</code><br>
 Scheme: <code>(save-refmac-phase-params-to-map imol-map phi fom hla hlb hlc hld)</code></p>
 <p>Arguments: imol_map (a whole number), phi (text), fom (text), hla (text), hlb (text), hlc (text), hld (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>save_refmac_phase_params_to_map(1, "PHWT", "", "hello", "hello", "hello", "hello")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(save-refmac-phase-params-to-map 1 "PHWT" "" "hello" "hello" "hello" "hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>save_refmac_phase_params_to_map(1, "PHWT", "", "hello", "hello", "hello", "hello")</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(save-refmac-phase-params-to-map 1 "PHWT" "" "hello" "hello" "hello" "hello")</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="schemize_command_name">schemize_command_name</h3>
 <p>Python: <code>schemize_command_name(s)</code><br>
 Scheme: <code>(schemize-command-name s)</code></p>
 <p>Arguments: s (text). Returns: text.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>schemize_command_name("hello")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(schemize-command-name "hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>schemize_command_name("hello")</code></td><td>ran, returned <code>'hello'</code></td></tr>
+<tr><td>Scheme</td><td><code>(schemize-command-name "hello")</code></td><td>ran, returned <code>"hello"</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="set_refmac_molecule">set_refmac_molecule</h3>
 <p>Python: <code>set_refmac_molecule(imol)</code><br>
 Scheme: <code>(set-refmac-molecule imol)</code></p>
 <p>this is the option menu callback - does nothing.</p>
 <p>Arguments: imol (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_refmac_molecule(0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-refmac-molecule 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_refmac_molecule(0)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(set-refmac-molecule 0)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="set_refmac_ncycles">set_refmac_ncycles</h3>
 <p>Python: <code>set_refmac_ncycles(no_cycles)</code><br>
 Scheme: <code>(set-refmac-ncycles no-cycles)</code></p>
 <p>Arguments: no_cycles (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_refmac_ncycles(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-refmac-ncycles 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_refmac_ncycles(1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(set-refmac-ncycles 1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="set_refmac_phase_input">set_refmac_phase_input</h3>
 <p>Python: <code>set_refmac_phase_input(phase_flag)</code><br>
 Scheme: <code>(set-refmac-phase-input phase-flag)</code></p>
 <p>Arguments: phase_flag (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_refmac_phase_input(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-refmac-phase-input 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_refmac_phase_input(1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(set-refmac-phase-input 1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="set_refmac_refinement_method">set_refmac_refinement_method</h3>
 <p>Python: <code>set_refmac_refinement_method(method)</code><br>
 Scheme: <code>(set-refmac-refinement-method method)</code></p>
 <p>Arguments: method (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_refmac_refinement_method(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-refmac-refinement-method 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_refmac_refinement_method(1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(set-refmac-refinement-method 1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="set_refmac_use_intensities">set_refmac_use_intensities</h3>
 <p>Python: <code>set_refmac_use_intensities(state)</code><br>
 Scheme: <code>(set-refmac-use-intensities state)</code></p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_refmac_use_intensities(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-refmac-use-intensities 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_refmac_use_intensities(1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(set-refmac-use-intensities 1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="set_refmac_use_ncs">set_refmac_use_ncs</h3>
 <p>Python: <code>set_refmac_use_ncs(state)</code><br>
 Scheme: <code>(set-refmac-use-ncs state)</code></p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_refmac_use_ncs(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-refmac-use-ncs 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_refmac_use_ncs(1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(set-refmac-use-ncs 1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="set_refmac_use_sad">set_refmac_use_sad</h3>
 <p>Python: <code>set_refmac_use_sad(state)</code><br>
 Scheme: <code>(set-refmac-use-sad state)</code></p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_refmac_use_sad(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-refmac-use-sad 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_refmac_use_sad(1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(set-refmac-use-sad 1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="set_refmac_use_tls">set_refmac_use_tls</h3>
 <p>Python: <code>set_refmac_use_tls(state)</code><br>
 Scheme: <code>(set-refmac-use-tls state)</code></p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_refmac_use_tls(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-refmac-use-tls 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_refmac_use_tls(1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(set-refmac-use-tls 1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="set_refmac_use_twin">set_refmac_use_twin</h3>
 <p>Python: <code>set_refmac_use_twin(state)</code><br>
 Scheme: <code>(set-refmac-use-twin state)</code></p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_refmac_use_twin(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-refmac-use-twin 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_refmac_use_twin(1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(set-refmac-use-twin 1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="set_refmac_used_mtz_file">set_refmac_used_mtz_file</h3>
 <p>Python: <code>set_refmac_used_mtz_file(state)</code><br>
 Scheme: <code>(set-refmac-used-mtz-file state)</code></p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_refmac_used_mtz_file(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-refmac-used-mtz-file 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_refmac_used_mtz_file(1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(set-refmac-used-mtz-file 1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="set_stored_refmac_file_mtz_filename">set_stored_refmac_file_mtz_filename</h3>
 <p>Python: <code>set_stored_refmac_file_mtz_filename(imol, mtz_filename)</code><br>
 Scheme: <code>(set-stored-refmac-file-mtz-filename imol mtz-filename)</code></p>
 <p>Arguments: imol (a whole number), mtz_filename (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_stored_refmac_file_mtz_filename(0, "rnasa-1.8-all_refmac1.mtz")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-stored-refmac-file-mtz-filename 0 "rnasa-1.8-all_refmac1.mtz")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_stored_refmac_file_mtz_filename(0, "rnasa-1.8-all_refmac1.mtz")</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(set-stored-refmac-file-mtz-filename 0 "rnasa-1.8-all_refmac1.mtz")</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="single_quote">single_quote</h3>
 <p>Python: <code>single_quote(s)</code><br>
 Scheme: <code>(single-quote s)</code></p>
 <p>Arguments: s (text). Returns: text.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>single_quote("hello")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(single-quote "hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>single_quote("hello")</code></td><td>ran, returned <code>'"hello"'</code></td></tr>
+<tr><td>Scheme</td><td><code>(single-quote "hello")</code></td><td>ran, returned <code>"\"hello\""</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 </body></html>

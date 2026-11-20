@@ -30,8 +30,8 @@ Arguments: am (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `rotate_chi(1.0)` | not tried |
-| Scheme | `(rotate-chi 1.0)` | not tried |
+| Python | `rotate_chi(1.0)` | ran (no return value) |
+| Scheme | `(rotate-chi 1.0)` | ran (no return value) |
 
 ### set_edit_chi_angles_reverse_fragment_state
 
@@ -45,8 +45,8 @@ Arguments: istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_edit_chi_angles_reverse_fragment_state(1)` | not tried |
-| Scheme | `(set-edit-chi-angles-reverse-fragment-state 1)` | not tried |
+| Python | `set_edit_chi_angles_reverse_fragment_state(1)` | ran (no return value) |
+| Scheme | `(set-edit-chi-angles-reverse-fragment-state 1)` | ran (no return value) |
 
 ### set_find_hydrogen_torsion
 
@@ -64,8 +64,8 @@ Also available in Python as `set_find_hydrogen_torsions`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_find_hydrogen_torsion(1)` | not tried |
-| Scheme | `(set-find-hydrogen-torsions 1)` | not tried |
+| Python | `set_find_hydrogen_torsion(1)` | ran (no return value) |
+| Scheme | `(set-find-hydrogen-torsions 1)` | ran (no return value) |
 
 ### set_graphics_edit_current_chi
 
@@ -76,8 +76,8 @@ Arguments: ichi (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_graphics_edit_current_chi(1)` | not tried |
-| Scheme | `(set-graphics-edit-current-chi 1)` | not tried |
+| Python | `set_graphics_edit_current_chi(1)` | ran (no return value) |
+| Scheme | `(set-graphics-edit-current-chi 1)` | ran (no return value) |
 
 ### set_moving_atom_move_chis
 
@@ -88,8 +88,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_moving_atom_move_chis()` | not tried |
-| Scheme | `(set-moving-atom-move-chis)` | not tried |
+| Python | `set_moving_atom_move_chis()` | ran (no return value) |
+| Scheme | `(set-moving-atom-move-chis)` | ran (no return value) |
 
 ### set_show_chi_angle_bond
 
@@ -100,8 +100,10 @@ Arguments: imode (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_show_chi_angle_bond(1)` | not tried |
-| Scheme | `(set-show-chi-angle-bond 1)` | not tried |
+| Python | `set_show_chi_angle_bond(1)` | ran, returned `0` |
+| Scheme | `(set-show-chi-angle-bond 1)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### setup_edit_chi_angles
 
@@ -114,8 +116,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `setup_edit_chi_angles(1)` | not tried |
-| Scheme | `(setup-edit-chi-angles 1)` | not tried |
+| Python | `setup_edit_chi_angles(1)` | ran (no return value) |
+| Scheme | `(setup-edit-chi-angles 1)` | ran (no return value) |
 
 ### setup_residue_partial_alt_locs
 
@@ -126,8 +128,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `setup_residue_partial_alt_locs(1)` | not tried |
-| Scheme | `(setup-residue-partial-alt-locs 1)` | not tried |
+| Python | `setup_residue_partial_alt_locs(1)` | ran (no return value) |
+| Scheme | `(setup-residue-partial-alt-locs 1)` | ran (no return value) |
 
 ### setup_torsion_general
 
@@ -141,8 +143,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `setup_torsion_general(1)` | not tried |
-| Scheme | `(setup-torsion-general 1)` | not tried |
+| Python | `setup_torsion_general(1)` | ran (no return value) |
+| Scheme | `(setup-torsion-general 1)` | ran (no return value) |
 
 ### toggle_torsion_general_reverse
 
@@ -155,8 +157,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `toggle_torsion_general_reverse()` | not tried |
-| Scheme | `(toggle-torsion-general-reverse)` | not tried |
+| Python | `toggle_torsion_general_reverse()` | ran (no return value) |
+| Scheme | `(toggle-torsion-general-reverse)` | ran (no return value) |
 
 ### unset_moving_atom_move_chis
 
@@ -169,6 +171,6 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `unset_moving_atom_move_chis()` | not tried |
-| Scheme | `(unset-moving-atom-move-chis)` | not tried |
+| Python | `unset_moving_atom_move_chis()` | ran (no return value) |
+| Scheme | `(unset-moving-atom-move-chis)` | ran (no return value) |
 

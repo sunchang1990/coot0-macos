@@ -32,6 +32,8 @@ Arguments: none. Returns: a number.
 | Python | `check_waters_by_difference_map_sigma_level_state()` | ran, returned `3.5` |
 | Scheme | `(check-waters-by-difference-map-sigma-level-state)` | ran, returned `3.5` |
 
+Python and Scheme gave the same answer.
+
 ### delete_checked_waters_baddies
 
 Python: `delete_checked_waters_baddies(imol, b_factor_lim, map_sigma_lim, min_dist, max_dist, part_occ_contact_flag, zero_occ_flag, logical_operator_and_or_flag)`  
@@ -66,6 +68,8 @@ Also available in Scheme as `highly-coordinated-waters-scm`.
 | Python | `highly_coordinated_waters(0, 1, 1.0)` | ran, returned `[[], []]` |
 | Scheme | `(highly-coordinated-waters 0 1 1.0)` | ran, returned `(())` |
 
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
+
 ### metal_coordination
 
 Python: `metal_coordination(imol, dist_max)`  
@@ -76,8 +80,10 @@ Also available in Python as `metal_coordination_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `metal_coordination(0, 1.0)` | not tried |
-| Scheme | `(metal-coordination-scm 0 1.0)` | not tried |
+| Python | `metal_coordination(0, 1.0)` | ran, returned `False` |
+| Scheme | `(metal-coordination-scm 0 1.0)` | ran, returned `#f` |
+
+Python and Scheme gave the same answer.
 
 ### set_check_waters_b_factor_limit
 
@@ -88,8 +94,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_check_waters_b_factor_limit(1.0)` | not tried |
-| Scheme | `(set-check-waters-b-factor-limit 1.0)` | not tried |
+| Python | `set_check_waters_b_factor_limit(1.0)` | ran (no return value) |
+| Scheme | `(set-check-waters-b-factor-limit 1.0)` | ran (no return value) |
 
 ### set_check_waters_by_difference_map_sigma_level
 
@@ -100,8 +106,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_check_waters_by_difference_map_sigma_level(1.0)` | not tried |
-| Scheme | `(set-check-waters-by-difference-map-sigma-level 1.0)` | not tried |
+| Python | `set_check_waters_by_difference_map_sigma_level(1.0)` | ran (no return value) |
+| Scheme | `(set-check-waters-by-difference-map-sigma-level 1.0)` | ran (no return value) |
 
 ### set_check_waters_map_sigma_limit
 
@@ -112,8 +118,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_check_waters_map_sigma_limit(1.0)` | not tried |
-| Scheme | `(set-check-waters-map-sigma-limit 1.0)` | not tried |
+| Python | `set_check_waters_map_sigma_limit(1.0)` | ran (no return value) |
+| Scheme | `(set-check-waters-map-sigma-limit 1.0)` | ran (no return value) |
 
 ### set_check_waters_max_dist_limit
 
@@ -124,8 +130,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_check_waters_max_dist_limit(1.0)` | not tried |
-| Scheme | `(set-check-waters-max-dist-limit 1.0)` | not tried |
+| Python | `set_check_waters_max_dist_limit(1.0)` | ran (no return value) |
+| Scheme | `(set-check-waters-max-dist-limit 1.0)` | ran (no return value) |
 
 ### set_check_waters_min_dist_limit
 
@@ -136,6 +142,6 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_check_waters_min_dist_limit(1.0)` | not tried |
-| Scheme | `(set-check-waters-min-dist-limit 1.0)` | not tried |
+| Python | `set_check_waters_min_dist_limit(1.0)` | ran (no return value) |
+| Scheme | `(set-check-waters-min-dist-limit 1.0)` | ran (no return value) |
 

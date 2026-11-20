@@ -67,8 +67,8 @@ Arguments: imol1 (a whole number), imol2 (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `ramachandran_plot_differences(0, 0)` | not tried |
-| Scheme | `(ramachandran-plot-differences 0 0)` | not tried |
+| Python | `ramachandran_plot_differences(0, 0)` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(ramachandran-plot-differences 0 0)` | stopped Coot when tried without a window (not checked with a window) |
 
 ### ramachandran_plot_differences_by_chain
 
@@ -81,8 +81,8 @@ Arguments: imol1 (a whole number), imol2 (a whole number), a_chain (text), b_cha
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `ramachandran_plot_differences_by_chain(0, 0, "A", "A")` | not tried |
-| Scheme | `(ramachandran-plot-differences-by-chain 0 0 "A" "A")` | not tried |
+| Python | `ramachandran_plot_differences_by_chain(0, 0, "A", "A")` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(ramachandran-plot-differences-by-chain 0 0 "A" "A")` | stopped Coot when tried without a window (not checked with a window) |
 
 ### ramachandran_psi_axis_mode
 
@@ -93,8 +93,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `ramachandran_psi_axis_mode()` | not tried |
-| Scheme | `(ramachandran-psi-axis-mode)` | not tried |
+| Python | `ramachandran_psi_axis_mode()` | ran, returned `0` |
+| Scheme | `(ramachandran-psi-axis-mode)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### set_kleywegt_plot_n_diffs
 
@@ -108,8 +110,8 @@ Arguments: n_diffs (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_kleywegt_plot_n_diffs(1)` | not tried |
-| Scheme | `(set-kleywegt-plot-n-diffs 1)` | not tried |
+| Python | `set_kleywegt_plot_n_diffs(1)` | not run: not run automatically (kleywegt: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(set-kleywegt-plot-n-diffs 1)` | not run: not run automatically (kleywegt: exits, uses the network, an external program, files or a screen) |
 
 ### set_moving_atoms
 
@@ -120,8 +122,8 @@ Arguments: phi (a number), psi (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_moving_atoms(10.0, 10.0)` | not tried |
-| Scheme | `(set-moving-atoms 10.0 10.0)` | not tried |
+| Python | `set_moving_atoms(10.0, 10.0)` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(set-moving-atoms 10.0 10.0)` | stopped Coot when tried without a window (not checked with a window) |
 
 ### set_ramachandran_plot_background_block_size
 
@@ -137,8 +139,8 @@ Arguments: blocksize (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_ramachandran_plot_background_block_size(1.0)` | not tried |
-| Scheme | `(set-ramachandran-plot-background-block-size 1.0)` | not tried |
+| Python | `set_ramachandran_plot_background_block_size(1.0)` | ran (no return value) |
+| Scheme | `(set-ramachandran-plot-background-block-size 1.0)` | ran (no return value) |
 
 ### set_ramachandran_plot_contour_levels
 
@@ -152,8 +154,8 @@ Arguments: level_prefered (a number), level_allowed (a number). Returns: nothing
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_ramachandran_plot_contour_levels(1.5, 1.5)` | not tried |
-| Scheme | `(set-ramachandran-plot-contour-levels 1.5 1.5)` | not tried |
+| Python | `set_ramachandran_plot_contour_levels(1.5, 1.5)` | ran (no return value) |
+| Scheme | `(set-ramachandran-plot-contour-levels 1.5 1.5)` | ran (no return value) |
 
 ### set_ramachandran_psi_axis_mode
 
@@ -167,8 +169,8 @@ Arguments: mode (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_ramachandran_psi_axis_mode(1)` | not tried |
-| Scheme | `(set-ramachandran-psi-axis-mode 1)` | not tried |
+| Python | `set_ramachandran_psi_axis_mode(1)` | ran (no return value) |
+| Scheme | `(set-ramachandran-psi-axis-mode 1)` | ran (no return value) |
 
 ### setup_dynamic_distances
 
@@ -181,8 +183,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `setup_dynamic_distances(1)` | not tried |
-| Scheme | `(setup-dynamic-distances 1)` | not tried |
+| Python | `setup_dynamic_distances(1)` | ran (no return value) |
+| Scheme | `(setup-dynamic-distances 1)` | ran (no return value) |
 
 ### setup_edit_phi_psi
 
@@ -193,6 +195,6 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `setup_edit_phi_psi(1)` | not tried |
-| Scheme | `(setup-edit-phi-psi 1)` | not tried |
+| Python | `setup_edit_phi_psi(1)` | ran (no return value) |
+| Scheme | `(setup-edit-phi-psi 1)` | ran (no return value) |
 

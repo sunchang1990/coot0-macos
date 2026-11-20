@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="ba36a2a1ef1877a1316a06fa6632ae2931eb34dd">
+<meta name="coot0-source-sha1" content="a28b6cf771cc8a82b349b7b06bd3bd6922b5d0f5">
 <title>Validation Functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -25,6 +25,7 @@ Scheme: <code>(atom-overlap-score imol)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>atom_overlap_score(0)</code></td><td>ran, returned <code>218.46453857421875</code></td></tr>
 <tr><td>Scheme</td><td><code>(atom-overlap-score 0)</code></td><td>ran, returned <code>218.46453857421875</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="c_beta_deviations_py">c_beta_deviations_py</h3>
 <p>Python: <code>c_beta_deviations_py(imol)</code><br>
 Scheme: <code>(c-beta-deviations imol)</code></p>
@@ -32,8 +33,9 @@ Scheme: <code>(c-beta-deviations imol)</code></p>
 <p>Arguments: imol (a whole number). Returns: a value (see the result of the example).
 Also available in Scheme as <code>c-beta-deviations-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>c_beta_deviations_py(0)</code></td><td>ran, returned <code>[[[True, 'A', 2, ''], {'': 0.12761455152709072}], [[True, 'A', 1, ''], {'': 0.16953483228562496}], [[True, 'A', 3, ''],  ...</code></td></tr>
-<tr><td>Scheme</td><td><code>(c-beta-deviations 0)</code></td><td>ran, returned <code>(((#t "B" 96 "") (("" 0.1133771061611323))) ((#t "B" 95 "") (("" 0.04492830156277413))) ((#t "B" 94 "") (("" 0.085321917 ...</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>c_beta_deviations_py(0)</code></td><td>ran, returned <code>[[[True, 'A', 20, ''], {'': 0.07846646398291499}], [[True, 'A', 21, ''], {'': 0.08318442018770937}], [[True, 'A', 22, '' ...</code></td></tr>
+<tr><td>Scheme</td><td><code>(c-beta-deviations 0)</code></td><td>ran, returned <code>(((#t "A" 19 "") (("" 0.07497434605080751))) ((#t "A" 18 "") (("" 0.08964755866427819))) ((#t "A" 17 "") (("" 0.13465415 ...</code></td></tr></tbody></table>
+<p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 <h3 id="clear_diff_map_peaks">clear_diff_map_peaks</h3>
 <p>Python: <code>clear_diff_map_peaks()</code><br>
 Scheme: <code>(clear-diff-map-peaks)</code></p>
@@ -75,6 +77,7 @@ Scheme: <code>(difference-map-peaks-max-closeness)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>difference_map_peaks_max_closeness()</code></td><td>ran, returned <code>2.0</code></td></tr>
 <tr><td>Scheme</td><td><code>(difference-map-peaks-max-closeness)</code></td><td>ran, returned <code>2.0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="get_torsion">get_torsion</h3>
 <p>Python: <code>get_torsion(imol, atom_spec_1, atom_spec_2, atom_spec_3, atom_spec_4)</code><br>
 Scheme: <code>(get-torsion imol atom-spec-1 atom-spec-2 atom-spec-3 atom-spec-4)</code></p>
@@ -84,6 +87,7 @@ Also available in Scheme as <code>get-torsion-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>get_torsion(0, ["A", 41, "", " CA ", ""], ["A", 41, "", " CA ", ""], ["A", 41, "", " CA ", ""], ["A", 41, "", " CA ", ""])</code></td><td>ran, returned <code>nan</code></td></tr>
 <tr><td>Scheme</td><td><code>(get-torsion 0 (list "A" 41 "" " CA " "") (list "A" 41 "" " CA " "") (list "A" 41 "" " CA " "") (list "A" 41 "" " CA " ""))</code></td><td>ran, returned <code>+nan.0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="gln_asn_b_factor_outliers">gln_asn_b_factor_outliers</h3>
 <p>Python: <code>gln_asn_b_factor_outliers(imol)</code><br>
 Scheme: <code>(gln-asn-b-factor-outliers imol)</code></p>
@@ -99,15 +103,17 @@ Scheme: <code>(gln-asn-b-factor-outliers imol)</code></p>
 Scheme: <code>(is-valid-map-molecule imol)</code></p>
 <p>Arguments: imol (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>is_valid_map_molecule(0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(is-valid-map-molecule 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>is_valid_map_molecule(0)</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(is-valid-map-molecule 0)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="is_valid_model_molecule">is_valid_model_molecule</h3>
 <p>Python: <code>is_valid_model_molecule(imol)</code><br>
 Scheme: <code>(is-valid-model-molecule imol)</code></p>
 <p>Arguments: imol (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>is_valid_model_molecule(0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(is-valid-model-molecule 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>is_valid_model_molecule(0)</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(is-valid-model-molecule 0)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="map_peaks">map_peaks</h3>
 <p>Python: <code>map_peaks(imol_map, n_sigma)</code><br>
 Scheme: <code>(map-peaks imol-map n-sigma)</code></p>
@@ -119,15 +125,16 @@ Scheme: <code>(map-peaks imol-map n-sigma)</code></p>
 Also available in Python as <code>map_peaks_py</code>.
 Also available in Scheme as <code>map-peaks-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>map_peaks(1, 1.5)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(map-peaks 1 1.5)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>map_peaks(1, 1.5)</code></td><td>ran, returned <code>[[58.71012697972355, 8.723667220957577, 32.92142303206025], [58.09156606964766, 11.74520870289532, 27.625261377819815],  ...</code></td></tr>
+<tr><td>Scheme</td><td><code>(map-peaks 1 1.5)</code></td><td>ran, returned <code>((58.71012697972355 8.723667220957577 32.92142303206025) (58.09156606964766 11.74520870289532 27.625261377819815) (5.139 ...</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="map_peaks_around_molecule">map_peaks_around_molecule</h3>
 <p>Python: <code>map_peaks_around_molecule(imol_map, sigma, negative_also_flag, imol_coords)</code></p>
 <p>Arguments: imol_map (a whole number), sigma (a number), negative_also_flag (a whole number), imol_coords (a whole number). Returns: a value (see the result of the example).
 Also available in Python as <code>map_peaks_around_molecule_py</code>.
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>map_peaks_around_molecule(1, 1.5, 1, 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>map_peaks_around_molecule(1, 1.5, 1, 0)</code></td><td>ran, returned <code>[[3.4549152851104736, [58.71012697972355, 8.723667220957578, -5.8705767848342845]], [3.000621795654297, [25.643064482733 ...</code></td></tr></tbody></table>
 <h3 id="map_peaks_near_point">map_peaks_near_point</h3>
 <p>Python: <code>map_peaks_near_point(imol_map, n_sigma, x, y, z, radius)</code><br>
 Scheme: <code>(map-peaks-near-point imol-map n-sigma x y z radius)</code></p>
@@ -135,15 +142,16 @@ Scheme: <code>(map-peaks-near-point imol-map n-sigma x y z radius)</code></p>
 Also available in Python as <code>map_peaks_near_point_py</code>.
 Also available in Scheme as <code>map-peaks-near-point-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>map_peaks_near_point(1, 1.5, 54.5, 9.4, 12.3, 5.0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(map-peaks-near-point 1 1.5 54.5 9.4 12.3 5.0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>map_peaks_near_point(1, 1.5, 54.5, 9.4, 12.3, 5.0)</code></td><td>ran, returned <code>[]</code></td></tr>
+<tr><td>Scheme</td><td><code>(map-peaks-near-point 1 1.5 54.5 9.4 12.3 5.0)</code></td><td>ran, returned <code>()</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="map_peaks_near_point_from_list">map_peaks_near_point_from_list</h3>
 <p>Python: <code>map_peaks_near_point_from_list(imol_map, peak_list, x, y, z, radius)</code></p>
 <p>Arguments: imol_map (a whole number), peak_list (a list or value), x (a number), y (a number), z (a number), radius (a number). Returns: a value (see the result of the example).
 Also available in Python as <code>map_peaks_near_point_from_list_py</code>.
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 <h3 id="multi_residue_torsion">multi_residue_torsion</h3>
 <p>Python: <code>multi_residue_torsion(imol, residues_specs_py)</code><br>
 Scheme: <code>(multi-residue-torsion imol residues-specs-scm)</code></p>
@@ -152,22 +160,22 @@ Scheme: <code>(multi-residue-torsion imol residues-specs-scm)</code></p>
 Also available in Python as <code>multi_residue_torsion_py</code>.
 Also available in Scheme as <code>multi-residue-torsion-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>multi_residue_torsion(0, ["A", 41, ""])</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(multi-residue-torsion 0 (list "A" 41 ""))</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>multi_residue_torsion(0, ["A", 41, ""])</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
+<tr><td>Scheme</td><td><code>(multi-residue-torsion 0 (list "A" 41 ""))</code></td><td>error: In procedure length: Wrong type argument in position 1: "A"</td></tr></tbody></table>
 <h3 id="probe_clash_score_as_py">probe_clash_score_as_py</h3>
 <p>Python: <code>probe_clash_score_as_py(p)</code><br>
 Scheme: <code>(probe-clash-score-as-scm p)</code></p>
 <p>Arguments: p (<code>coot::probe_clash_score_t</code>). Returns: a value (see the result of the example).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 <h3 id="probe_clash_score_from_py">probe_clash_score_from_py</h3>
 <p>Python: <code>probe_clash_score_from_py(p)</code><br>
 Scheme: <code>(probe-clash-score-from-scm p)</code></p>
 <p>Arguments: p (a list or value). Returns: <code>coot::probe_clash_score_t</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 <h3 id="screen_vectors">screen_vectors</h3>
 <p>Python: <code>screen_vectors()</code></p>
 <p>BL says:: this probably shouldnt be here but cluster with KK code</p>
@@ -175,7 +183,7 @@ Scheme: <code>(probe-clash-score-from-scm p)</code></p>
 Also available in Python as <code>screen_vectors_py</code>.
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>screen_vectors()</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>screen_vectors()</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_difference_map_peaks_max_closeness">set_difference_map_peaks_max_closeness</h3>
 <p>Python: <code>set_difference_map_peaks_max_closeness(m)</code><br>
 Scheme: <code>(set-difference-map-peaks-max-closeness m)</code></p>
@@ -185,15 +193,15 @@ Scheme: <code>(set-difference-map-peaks-max-closeness m)</code></p>
 max_closeness, so here is a means to set it and query it.</p>
 <p>Arguments: m (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_difference_map_peaks_max_closeness(1.0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-difference-map-peaks-max-closeness 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_difference_map_peaks_max_closeness(1.0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-difference-map-peaks-max-closeness 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_multi_residue_torsion_reverse_mode">set_multi_residue_torsion_reverse_mode</h3>
 <p>Python: <code>set_multi_residue_torsion_reverse_mode(mode)</code><br>
 Scheme: <code>(set-multi-residue-torsion-reverse-mode mode)</code></p>
 <p>Arguments: mode (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_multi_residue_torsion_reverse_mode(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-multi-residue-torsion-reverse-mode 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_multi_residue_torsion_reverse_mode(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-multi-residue-torsion-reverse-mode 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_torsion">set_torsion</h3>
 <p>Python: <code>set_torsion(imol, chain_id, res_no, insertion_code, alt_conf, atom_name_1, atom_name_2, atom_name_3, atom_name_4, tors)</code><br>
 Scheme: <code>(set-torsion imol chain-id res-no insertion-code alt-conf atom-name-1 atom-name-2 atom-name-3 atom-name-4 tors)</code></p>
@@ -203,21 +211,22 @@ Scheme: <code>(set-torsion imol chain-id res-no insertion-code alt-conf atom-nam
 Also available in Python as <code>set_torsion_py</code>.
 Also available in Scheme as <code>set-torsion-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_torsion(0, "A", 41, "", "", " CA ", " CA ", " CA ", " CA ", 1.0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-torsion 0 "A" 41 "" "" " CA " " CA " " CA " " CA " 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_torsion(0, "A", 41, "", "", " CA ", " CA ", " CA ", " CA ", 1.0)</code></td><td>ran, returned <code>nan</code></td></tr>
+<tr><td>Scheme</td><td><code>(set-torsion 0 "A" 41 "" "" " CA " " CA " " CA " " CA " 1.0)</code></td><td>ran, returned <code>+nan.0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="setup_multi_residue_torsion">setup_multi_residue_torsion</h3>
 <p>Python: <code>setup_multi_residue_torsion()</code><br>
 Scheme: <code>(setup-multi-residue-torsion)</code></p>
 <p>show the rotatable bonds dialog</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>setup_multi_residue_torsion()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(setup-multi-residue-torsion)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>setup_multi_residue_torsion()</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
+<tr><td>Scheme</td><td><code>(setup-multi-residue-torsion)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
 <h3 id="show_multi_residue_torsion_dialog">show_multi_residue_torsion_dialog</h3>
 <p>Python: <code>show_multi_residue_torsion_dialog()</code><br>
 Scheme: <code>(show-multi-residue-torsion-dialog)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>show_multi_residue_torsion_dialog()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(show-multi-residue-torsion-dialog)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>show_multi_residue_torsion_dialog()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(show-multi-residue-torsion-dialog)</code></td><td>ran (no return value)</td></tr></tbody></table>
 </body></html>

@@ -74,6 +74,8 @@ Arguments: filename (text). Returns: a list.
 | Python | `auto_read_make_and_draw_maps("tutorial-modern.pdb")` | ran, returned `()` |
 | Scheme | `(auto-read-make-and-draw-maps "tutorial-modern.pdb")` | ran, returned `#()` |
 
+Python and Scheme gave the same answer.
+
 ### auto_read_make_and_draw_maps_from_cns
 
 Python: `auto_read_make_and_draw_maps_from_cns(file_name)`  
@@ -85,6 +87,8 @@ Arguments: file_name (text). Returns: a list.
 |---|---|---|
 | Python | `auto_read_make_and_draw_maps_from_cns("tutorial-modern.pdb")` | ran, returned `()` |
 | Scheme | `(auto-read-make-and-draw-maps-from-cns "tutorial-modern.pdb")` | ran, returned `#()` |
+
+Python and Scheme gave the same answer.
 
 ### auto_read_make_and_draw_maps_from_mtz
 
@@ -99,6 +103,8 @@ Arguments: file_name (text). Returns: a list.
 |---|---|---|
 | Python | `auto_read_make_and_draw_maps_from_mtz("tutorial-modern.pdb")` | ran, returned `()` |
 | Scheme | `(auto-read-make-and-draw-maps-from-mtz "tutorial-modern.pdb")` | ran, returned `#()` |
+
+Python and Scheme gave the same answer.
 
 ### b_factor_from_map
 
@@ -118,6 +124,8 @@ Arguments: imol_map (a whole number). Returns: a number.
 | Python | `b_factor_from_map(1)` | ran, returned `-1.0` |
 | Scheme | `(b-factor-from-map 1)` | ran, returned `-1.0` |
 
+Python and Scheme gave the same answer.
+
 ### flip_hand
 
 Python: `flip_hand(imol_map)`  
@@ -133,6 +141,8 @@ Arguments: imol_map (a whole number). Returns: a whole number.
 |---|---|---|
 | Python | `flip_hand(1)` | ran, returned `2` |
 | Scheme | `(flip-hand 1)` | ran, returned `2` |
+
+Python and Scheme gave the same answer.
 
 ### go_to_map_molecule_centre
 
@@ -163,6 +173,8 @@ Arguments: filename (text), is_diff_map_flag (a whole number). Returns: a whole 
 | Python | `handle_read_ccp4_map("tutorial-modern.pdb", 1)` | ran, returned `-1` |
 | Scheme | `(handle-read-ccp4-map "tutorial-modern.pdb" 1)` | ran, returned `-1` |
 
+Python and Scheme gave the same answer.
+
 ### handle_read_emdb_data
 
 Python: `handle_read_emdb_data(dir_name)`  
@@ -174,6 +186,8 @@ Arguments: dir_name (text). Returns: a whole number.
 |---|---|---|
 | Python | `handle_read_emdb_data(".")` | ran, returned `0` |
 | Scheme | `(handle-read-emdb-data ".")` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### map_colour_components
 
@@ -188,8 +202,10 @@ Also available in Python as `map_colour_components_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `map_colour_components(0)` | not tried |
-| Scheme | `(map-colour-components 0)` | not tried |
+| Python | `map_colour_components(0)` | ran, returned `False` |
+| Scheme | `(map-colour-components 0)` | ran, returned `#f` |
+
+Python and Scheme gave the same answer.
 
 ### multi_sharpen_blur_map_py
 
@@ -203,8 +219,8 @@ Arguments: imol_map (a whole number), b_factors_list (a list or value). Returns:
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### read_ccp4_map
 
@@ -217,8 +233,10 @@ Arguments: filename (text), is_diff_map_flag (a whole number). Returns: a whole 
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `read_ccp4_map("tutorial-modern.pdb", 1)` | not tried |
-| Scheme | `(read-ccp4-map "tutorial-modern.pdb" 1)` | not tried |
+| Python | `read_ccp4_map("tutorial-modern.pdb", 1)` | ran, returned `-1` |
+| Scheme | `(read-ccp4-map "tutorial-modern.pdb" 1)` | ran, returned `-1` |
+
+Python and Scheme gave the same answer.
 
 ### res_tracer
 
@@ -232,8 +250,8 @@ Arguments: imol_map (a whole number), pir_file_name (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `res_tracer(1, "tutorial-modern.pdb")` | not tried |
-| Scheme | `(res-tracer 1 "tutorial-modern.pdb")` | not tried |
+| Python | `res_tracer(1, "tutorial-modern.pdb")` | ran (no return value) |
+| Scheme | `(res-tracer 1 "tutorial-modern.pdb")` | ran (no return value) |
 
 ### sharpen_blur_map
 
@@ -249,8 +267,10 @@ Arguments: imol_map (a whole number), b_factor (a number). Returns: a whole numb
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `sharpen_blur_map(1, 20.0)` | not tried |
-| Scheme | `(sharpen-blur-map 1 20.0)` | not tried |
+| Python | `sharpen_blur_map(1, 20.0)` | ran, returned `2` |
+| Scheme | `(sharpen-blur-map 1 20.0)` | ran, returned `2` |
+
+Python and Scheme gave the same answer.
 
 ### sharpen_blur_map_with_resampling
 
@@ -267,6 +287,8 @@ Arguments: imol_map (a whole number), b_factor (a number), resample_factor (a nu
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `sharpen_blur_map_with_resampling(1, 20.0, 1.0)` | not tried |
-| Scheme | `(sharpen-blur-map-with-resampling 1 20.0 1.0)` | not tried |
+| Python | `sharpen_blur_map_with_resampling(1, 20.0, 1.0)` | ran, returned `2` |
+| Scheme | `(sharpen-blur-map-with-resampling 1 20.0 1.0)` | ran, returned `2` |
+
+Python and Scheme gave the same answer.
 

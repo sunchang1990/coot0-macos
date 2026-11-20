@@ -20,6 +20,8 @@ Arguments: imol (a whole number). Returns: a whole number.
 | Python | `fix_nomenclature_errors(0)` | ran, returned `0` |
 | Scheme | `(fix-nomenclature-errors 0)` | ran, returned `0` |
 
+Python and Scheme gave the same answer.
+
 ### set_nomenclature_errors_on_read
 
 Python: `set_nomenclature_errors_on_read(mode)`  
@@ -35,6 +37,6 @@ Arguments: mode (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_nomenclature_errors_on_read("hello")` | not tried |
-| Scheme | `(set-nomenclature-errors-on-read "hello")` | not tried |
+| Python | `set_nomenclature_errors_on_read("hello")` | ran (no return value) |
+| Scheme | `(set-nomenclature-errors-on-read "hello")` | ran (no return value) |
 

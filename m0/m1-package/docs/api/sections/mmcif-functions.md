@@ -16,6 +16,8 @@ Arguments: filename (text). Returns: a whole number.
 | Python | `auto_read_cif_data_with_phases("tutorial-modern.pdb")` | ran, returned `-1` |
 | Scheme | `(auto-read-cif-data-with-phases "tutorial-modern.pdb")` | ran, returned `-1` |
 
+Python and Scheme gave the same answer.
+
 ### handle_cif_dictionary
 
 Python: `handle_cif_dictionary(filename)`  
@@ -29,6 +31,8 @@ Arguments: filename (text). Returns: a whole number.
 |---|---|---|
 | Python | `handle_cif_dictionary("tutorial-modern.pdb")` | ran, returned `-1` |
 | Scheme | `(handle-cif-dictionary "tutorial-modern.pdb")` | ran, returned `-1` |
+
+Python and Scheme gave the same answer.
 
 ### handle_cif_dictionary_for_molecule
 
@@ -48,6 +52,8 @@ Arguments: filename (text), imol_enc (a whole number), new_molecule_from_diction
 | Python | `handle_cif_dictionary_for_molecule("tutorial-modern.pdb", 0, 1)` | ran, returned `-1` |
 | Scheme | `(handle-cif-dictionary-for-molecule "tutorial-modern.pdb" 0 1)` | ran, returned `-1` |
 
+Python and Scheme gave the same answer.
+
 ### import_all_refmac_cifs
 
 Python: `import_all_refmac_cifs()`  
@@ -60,8 +66,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `import_all_refmac_cifs()` | not tried |
-| Scheme | `(import-all-refmac-cifs)` | not tried |
+| Python | `import_all_refmac_cifs()` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(import-all-refmac-cifs)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
 
 ### non_standard_residue_names
 
@@ -76,8 +82,10 @@ Also available in Scheme as `non-standard-residue-names-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `non_standard_residue_names(0)` | not tried |
-| Scheme | `(non-standard-residue-names 0)` | not tried |
+| Python | `non_standard_residue_names(0)` | ran, returned `[]` |
+| Scheme | `(non-standard-residue-names 0)` | ran, returned `()` |
+
+Python and Scheme gave the same answer.
 
 ### open_cif_dictionary_file_selector_dialog
 
@@ -90,8 +98,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `open_cif_dictionary_file_selector_dialog()` | not tried |
-| Scheme | `(open-cif-dictionary-file-selector-dialog)` | not tried |
+| Python | `open_cif_dictionary_file_selector_dialog()` | ran (no return value) |
+| Scheme | `(open-cif-dictionary-file-selector-dialog)` | ran (no return value) |
 
 ### read_cif_data
 
@@ -102,8 +110,8 @@ Arguments: filename (text), imol_coords (a whole number). Returns: a whole numbe
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `read_cif_data("tutorial-modern.pdb", 0)` | not tried |
-| Scheme | `(read-cif-data "tutorial-modern.pdb" 0)` | not tried |
+| Python | `read_cif_data("tutorial-modern.pdb", 0)` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(read-cif-data "tutorial-modern.pdb" 0)` | stopped Coot when tried without a window (not checked with a window) |
 
 ### read_cif_data_2fofc_map
 
@@ -114,8 +122,8 @@ Arguments: filename (text), imol_coords (a whole number). Returns: a whole numbe
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `read_cif_data_2fofc_map("tutorial-modern.pdb", 0)` | not tried |
-| Scheme | `(read-cif-data-2fofc-map "tutorial-modern.pdb" 0)` | not tried |
+| Python | `read_cif_data_2fofc_map("tutorial-modern.pdb", 0)` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(read-cif-data-2fofc-map "tutorial-modern.pdb" 0)` | stopped Coot when tried without a window (not checked with a window) |
 
 ### read_cif_data_fofc_map
 
@@ -126,8 +134,8 @@ Arguments: filename (text), imol_coords (a whole number). Returns: a whole numbe
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `read_cif_data_fofc_map("tutorial-modern.pdb", 0)` | not tried |
-| Scheme | `(read-cif-data-fofc-map "tutorial-modern.pdb" 0)` | not tried |
+| Python | `read_cif_data_fofc_map("tutorial-modern.pdb", 0)` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(read-cif-data-fofc-map "tutorial-modern.pdb" 0)` | stopped Coot when tried without a window (not checked with a window) |
 
 ### read_cif_data_with_phases_2fo_fc
 
@@ -138,8 +146,8 @@ Arguments: filename (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `read_cif_data_with_phases_2fo_fc("tutorial-modern.pdb")` | not tried |
-| Scheme | `(read-cif-data-with-phases-2fo-fc "tutorial-modern.pdb")` | not tried |
+| Python | `read_cif_data_with_phases_2fo_fc("tutorial-modern.pdb")` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(read-cif-data-with-phases-2fo-fc "tutorial-modern.pdb")` | stopped Coot when tried without a window (not checked with a window) |
 
 ### read_cif_data_with_phases_diff_sigmaa
 
@@ -150,8 +158,10 @@ Arguments: filename (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `read_cif_data_with_phases_diff_sigmaa("tutorial-modern.pdb")` | not tried |
-| Scheme | `(read-cif-data-with-phases-diff-sigmaa "tutorial-modern.pdb")` | not tried |
+| Python | `read_cif_data_with_phases_diff_sigmaa("tutorial-modern.pdb")` | ran, returned `-1` |
+| Scheme | `(read-cif-data-with-phases-diff-sigmaa "tutorial-modern.pdb")` | ran, returned `-1` |
+
+Python and Scheme gave the same answer.
 
 ### read_cif_data_with_phases_fo_alpha_calc
 
@@ -162,8 +172,8 @@ Arguments: filename (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `read_cif_data_with_phases_fo_alpha_calc("tutorial-modern.pdb")` | not tried |
-| Scheme | `(read-cif-data-with-phases-fo-alpha-calc "tutorial-modern.pdb")` | not tried |
+| Python | `read_cif_data_with_phases_fo_alpha_calc("tutorial-modern.pdb")` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(read-cif-data-with-phases-fo-alpha-calc "tutorial-modern.pdb")` | stopped Coot when tried without a window (not checked with a window) |
 
 ### read_cif_data_with_phases_fo_fc
 
@@ -174,8 +184,8 @@ Arguments: filename (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `read_cif_data_with_phases_fo_fc("tutorial-modern.pdb")` | not tried |
-| Scheme | `(read-cif-data-with-phases-fo-fc "tutorial-modern.pdb")` | not tried |
+| Python | `read_cif_data_with_phases_fo_fc("tutorial-modern.pdb")` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(read-cif-data-with-phases-fo-fc "tutorial-modern.pdb")` | stopped Coot when tried without a window (not checked with a window) |
 
 ### read_cif_data_with_phases_nfo_fc
 
@@ -186,8 +196,8 @@ Arguments: filename (text), map_type (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `read_cif_data_with_phases_nfo_fc("tutorial-modern.pdb", 1)` | not tried |
-| Scheme | `(read-cif-data-with-phases-nfo-fc "tutorial-modern.pdb" 1)` | not tried |
+| Python | `read_cif_data_with_phases_nfo_fc("tutorial-modern.pdb", 1)` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(read-cif-data-with-phases-nfo-fc "tutorial-modern.pdb" 1)` | stopped Coot when tried without a window (not checked with a window) |
 
 ### read_cif_data_with_phases_sigmaa
 
@@ -198,8 +208,10 @@ Arguments: filename (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `read_cif_data_with_phases_sigmaa("tutorial-modern.pdb")` | not tried |
-| Scheme | `(read-cif-data-with-phases-sigmaa "tutorial-modern.pdb")` | not tried |
+| Python | `read_cif_data_with_phases_sigmaa("tutorial-modern.pdb")` | ran, returned `-1` |
+| Scheme | `(read-cif-data-with-phases-sigmaa "tutorial-modern.pdb")` | ran, returned `-1` |
+
+Python and Scheme gave the same answer.
 
 ### read_cif_dictionary
 
@@ -214,8 +226,10 @@ Arguments: filename (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `read_cif_dictionary("tutorial-modern.pdb")` | not tried |
-| Scheme | `(read-cif-dictionary "tutorial-modern.pdb")` | not tried |
+| Python | `read_cif_dictionary("tutorial-modern.pdb")` | ran, returned `-1` |
+| Scheme | `(read-cif-dictionary "tutorial-modern.pdb")` | ran, returned `-1` |
+
+Python and Scheme gave the same answer.
 
 ### read_small_molecule_cif
 
@@ -226,8 +240,10 @@ Arguments: file_name (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `read_small_molecule_cif("tutorial-modern.pdb")` | not tried |
-| Scheme | `(read-small-molecule-cif "tutorial-modern.pdb")` | not tried |
+| Python | `read_small_molecule_cif("tutorial-modern.pdb")` | ran, returned `-1` |
+| Scheme | `(read-small-molecule-cif "tutorial-modern.pdb")` | ran, returned `-1` |
+
+Python and Scheme gave the same answer.
 
 ### read_small_molecule_data_cif
 
@@ -238,8 +254,10 @@ Arguments: file_name (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `read_small_molecule_data_cif("tutorial-modern.pdb")` | not tried |
-| Scheme | `(read-small-molecule-data-cif "tutorial-modern.pdb")` | not tried |
+| Python | `read_small_molecule_data_cif("tutorial-modern.pdb")` | ran, returned `-1` |
+| Scheme | `(read-small-molecule-data-cif "tutorial-modern.pdb")` | ran, returned `-1` |
+
+Python and Scheme gave the same answer.
 
 ### read_small_molecule_data_cif_and_make_map_using_coords
 
@@ -250,8 +268,10 @@ Arguments: file_name (text), imol_coords (a whole number). Returns: a whole numb
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `read_small_molecule_data_cif_and_make_map_using_coords("tutorial-modern.pdb", 0)` | not tried |
-| Scheme | `(read-small-molecule-data-cif-and-make-map-using-coords "tutorial-modern.pdb" 0)` | not tried |
+| Python | `read_small_molecule_data_cif_and_make_map_using_coords("tutorial-modern.pdb", 0)` | ran, returned `-1` |
+| Scheme | `(read-small-molecule-data-cif-and-make-map-using-coords "tutorial-modern.pdb" 0)` | ran, returned `-1` |
+
+Python and Scheme gave the same answer.
 
 ### write_connectivity
 
@@ -262,6 +282,8 @@ Arguments: monomer_name (text), filename (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `write_connectivity("my-name", "tutorial-modern.pdb")` | not tried |
-| Scheme | `(write-connectivity "my-name" "tutorial-modern.pdb")` | not tried |
+| Python | `write_connectivity("my-name", "tutorial-modern.pdb")` | ran, returned `0` |
+| Scheme | `(write-connectivity "my-name" "tutorial-modern.pdb")` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 

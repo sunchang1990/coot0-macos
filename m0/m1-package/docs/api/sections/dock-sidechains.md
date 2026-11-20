@@ -17,3 +17,5 @@ Also available in Python as `cootaneer_py`.
 | Python | `cootaneer(1, 0, ["A", 41, "", " CA ", ""])` | ran, returned `0` |
 | Scheme | `(cootaneer 1 0 (list "A" 41 "" " CA " ""))` | ran, returned `0` |
 
+Python and Scheme gave the same answer.
+

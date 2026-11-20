@@ -112,6 +112,8 @@ Arguments: ccp4_project_name (text). Returns: text.
 | Python | `ccp4_project_directory("my-name")` | ran, returned `''` |
 | Scheme | `(ccp4-project-directory "my-name")` | ran, returned `""` |
 
+Python and Scheme gave the same answer.
+
 ### clear_refmac_sad_atoms
 
 Python: `clear_refmac_sad_atoms()`  
@@ -219,8 +221,8 @@ Arguments: command_parts (a list). Returns: text.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `languagize_command("hello")` | not tried |
-| Scheme | `(languagize-command "hello")` | not tried |
+| Python | `languagize_command("hello")` | ran, returned `'(h e l l o)'` |
+| Scheme | `(languagize-command "hello")` | error: In procedure languagize-command: Wrong type argument in position 1: "hello" |
 
 ### merge_molecules_by_vector
 
@@ -233,8 +235,8 @@ Arguments: add_molecules (a list), imol (a whole number). Returns: a list.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### parse_ccp4i_defs
 
@@ -245,8 +247,8 @@ Arguments: filename (text). Returns: a list.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `parse_ccp4i_defs("tutorial-modern.pdb")` | not tried |
-| Scheme | `(parse-ccp4i-defs "tutorial-modern.pdb")` | not tried |
+| Python | `parse_ccp4i_defs("tutorial-modern.pdb")` | not run: not run automatically (ccp4i: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(parse-ccp4i-defs "tutorial-modern.pdb")` | not run: not run automatically (ccp4i: exits, uses the network, an external program, files or a screen) |
 
 ### pythonize_command_name
 
@@ -257,8 +259,10 @@ Arguments: s (text). Returns: text.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `pythonize_command_name("hello")` | not tried |
-| Scheme | `(pythonize-command-name "hello")` | not tried |
+| Python | `pythonize_command_name("hello")` | ran, returned `'hello'` |
+| Scheme | `(pythonize-command-name "hello")` | ran, returned `"hello"` |
+
+Python and Scheme gave the same answer.
 
 ### refmac_imol_coords
 
@@ -269,8 +273,8 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `refmac_imol_coords()` | not tried |
-| Scheme | `(refmac-imol-coords)` | not tried |
+| Python | `refmac_imol_coords()` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(refmac-imol-coords)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
 
 ### refmac_name
 
@@ -285,8 +289,8 @@ Arguments: imol (a whole number). Returns: text.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `refmac_name(0)` | not tried |
-| Scheme | `(refmac-name 0)` | not tried |
+| Python | `refmac_name(0)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(refmac-name 0)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
 
 ### refmac_use_intensities_state
 
@@ -297,8 +301,8 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `refmac_use_intensities_state()` | not tried |
-| Scheme | `(refmac-use-intensities-state)` | not tried |
+| Python | `refmac_use_intensities_state()` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(refmac-use-intensities-state)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
 
 ### refmac_use_ncs_state
 
@@ -309,8 +313,8 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `refmac_use_ncs_state()` | not tried |
-| Scheme | `(refmac-use-ncs-state)` | not tried |
+| Python | `refmac_use_ncs_state()` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(refmac-use-ncs-state)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
 
 ### refmac_use_sad_state
 
@@ -321,8 +325,8 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `refmac_use_sad_state()` | not tried |
-| Scheme | `(refmac-use-sad-state)` | not tried |
+| Python | `refmac_use_sad_state()` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(refmac-use-sad-state)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
 
 ### refmac_use_tls_state
 
@@ -333,8 +337,8 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `refmac_use_tls_state()` | not tried |
-| Scheme | `(refmac-use-tls-state)` | not tried |
+| Python | `refmac_use_tls_state()` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(refmac-use-tls-state)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
 
 ### refmac_use_twin_state
 
@@ -345,8 +349,8 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `refmac_use_twin_state()` | not tried |
-| Scheme | `(refmac-use-twin-state)` | not tried |
+| Python | `refmac_use_twin_state()` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(refmac-use-twin-state)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
 
 ### save_refmac_params_to_map
 
@@ -357,8 +361,8 @@ Arguments: imol_map (a whole number), mtz_filename (text), fobs_col (text), sigf
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `save_refmac_params_to_map(1, "rnasa-1.8-all_refmac1.mtz", "FWT", "hello", "hello", 1)` | not tried |
-| Scheme | `(save-refmac-params-to-map 1 "rnasa-1.8-all_refmac1.mtz" "FWT" "hello" "hello" 1)` | not tried |
+| Python | `save_refmac_params_to_map(1, "rnasa-1.8-all_refmac1.mtz", "FWT", "hello", "hello", 1)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(save-refmac-params-to-map 1 "rnasa-1.8-all_refmac1.mtz" "FWT" "hello" "hello" 1)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
 
 ### save_refmac_phase_params_to_map
 
@@ -369,8 +373,8 @@ Arguments: imol_map (a whole number), phi (text), fom (text), hla (text), hlb (t
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `save_refmac_phase_params_to_map(1, "PHWT", "", "hello", "hello", "hello", "hello")` | not tried |
-| Scheme | `(save-refmac-phase-params-to-map 1 "PHWT" "" "hello" "hello" "hello" "hello")` | not tried |
+| Python | `save_refmac_phase_params_to_map(1, "PHWT", "", "hello", "hello", "hello", "hello")` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(save-refmac-phase-params-to-map 1 "PHWT" "" "hello" "hello" "hello" "hello")` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
 
 ### schemize_command_name
 
@@ -381,8 +385,10 @@ Arguments: s (text). Returns: text.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `schemize_command_name("hello")` | not tried |
-| Scheme | `(schemize-command-name "hello")` | not tried |
+| Python | `schemize_command_name("hello")` | ran, returned `'hello'` |
+| Scheme | `(schemize-command-name "hello")` | ran, returned `"hello"` |
+
+Python and Scheme gave the same answer.
 
 ### set_refmac_molecule
 
@@ -395,8 +401,8 @@ Arguments: imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_refmac_molecule(0)` | not tried |
-| Scheme | `(set-refmac-molecule 0)` | not tried |
+| Python | `set_refmac_molecule(0)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(set-refmac-molecule 0)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
 
 ### set_refmac_ncycles
 
@@ -407,8 +413,8 @@ Arguments: no_cycles (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_refmac_ncycles(1)` | not tried |
-| Scheme | `(set-refmac-ncycles 1)` | not tried |
+| Python | `set_refmac_ncycles(1)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(set-refmac-ncycles 1)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
 
 ### set_refmac_phase_input
 
@@ -419,8 +425,8 @@ Arguments: phase_flag (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_refmac_phase_input(1)` | not tried |
-| Scheme | `(set-refmac-phase-input 1)` | not tried |
+| Python | `set_refmac_phase_input(1)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(set-refmac-phase-input 1)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
 
 ### set_refmac_refinement_method
 
@@ -431,8 +437,8 @@ Arguments: method (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_refmac_refinement_method(1)` | not tried |
-| Scheme | `(set-refmac-refinement-method 1)` | not tried |
+| Python | `set_refmac_refinement_method(1)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(set-refmac-refinement-method 1)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
 
 ### set_refmac_use_intensities
 
@@ -443,8 +449,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_refmac_use_intensities(1)` | not tried |
-| Scheme | `(set-refmac-use-intensities 1)` | not tried |
+| Python | `set_refmac_use_intensities(1)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(set-refmac-use-intensities 1)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
 
 ### set_refmac_use_ncs
 
@@ -455,8 +461,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_refmac_use_ncs(1)` | not tried |
-| Scheme | `(set-refmac-use-ncs 1)` | not tried |
+| Python | `set_refmac_use_ncs(1)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(set-refmac-use-ncs 1)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
 
 ### set_refmac_use_sad
 
@@ -467,8 +473,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_refmac_use_sad(1)` | not tried |
-| Scheme | `(set-refmac-use-sad 1)` | not tried |
+| Python | `set_refmac_use_sad(1)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(set-refmac-use-sad 1)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
 
 ### set_refmac_use_tls
 
@@ -479,8 +485,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_refmac_use_tls(1)` | not tried |
-| Scheme | `(set-refmac-use-tls 1)` | not tried |
+| Python | `set_refmac_use_tls(1)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(set-refmac-use-tls 1)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
 
 ### set_refmac_use_twin
 
@@ -491,8 +497,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_refmac_use_twin(1)` | not tried |
-| Scheme | `(set-refmac-use-twin 1)` | not tried |
+| Python | `set_refmac_use_twin(1)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(set-refmac-use-twin 1)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
 
 ### set_refmac_used_mtz_file
 
@@ -503,8 +509,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_refmac_used_mtz_file(1)` | not tried |
-| Scheme | `(set-refmac-used-mtz-file 1)` | not tried |
+| Python | `set_refmac_used_mtz_file(1)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(set-refmac-used-mtz-file 1)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
 
 ### set_stored_refmac_file_mtz_filename
 
@@ -515,8 +521,8 @@ Arguments: imol (a whole number), mtz_filename (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_stored_refmac_file_mtz_filename(0, "rnasa-1.8-all_refmac1.mtz")` | not tried |
-| Scheme | `(set-stored-refmac-file-mtz-filename 0 "rnasa-1.8-all_refmac1.mtz")` | not tried |
+| Python | `set_stored_refmac_file_mtz_filename(0, "rnasa-1.8-all_refmac1.mtz")` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(set-stored-refmac-file-mtz-filename 0 "rnasa-1.8-all_refmac1.mtz")` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
 
 ### single_quote
 
@@ -527,6 +533,8 @@ Arguments: s (text). Returns: text.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `single_quote("hello")` | not tried |
-| Scheme | `(single-quote "hello")` | not tried |
+| Python | `single_quote("hello")` | ran, returned `'"hello"'` |
+| Scheme | `(single-quote "hello")` | ran, returned `"\"hello\""` |
+
+Python and Scheme gave the same answer.
 

@@ -24,6 +24,8 @@ Arguments: imol (a whole number), chain_id (text), iresno_start (a whole number)
 | Python | `db_mainchain(0, "A", 41, 45, ".")` | ran, returned `-1` |
 | Scheme | `(db-mainchain 0 "A" 41 45 ".")` | ran, returned `-1` |
 
+Python and Scheme gave the same answer.
+
 ### db_mainchains_fragment
 
 Python: `db_mainchains_fragment(imol, chain_id, res_no)`  
@@ -39,6 +41,8 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number). Retu
 |---|---|---|
 | Python | `db_mainchains_fragment(0, "A", 41)` | ran, returned `2` |
 | Scheme | `(db-mainchains-fragment 0 "A" 41)` | ran, returned `2` |
+
+Python and Scheme gave the same answer.
 
 ### do_db_main
 

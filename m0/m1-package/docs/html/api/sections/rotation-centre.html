@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="7675765a39c6906d3d213369f86add6bc28e0d00">
+<meta name="coot0-source-sha1" content="3e5c6c38cb31b88c2a960cad3878f8ad3859e292">
 <title>Rotation Centre - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -23,8 +23,8 @@ Scheme: <code>(get-text-for-rotation-centre-cube-size)</code></p>
 <p>MOVE-ME to c-interface-gtk-widgets.h</p>
 <p>Arguments: none. Returns: text.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>get_text_for_rotation_centre_cube_size()</code></td><td>ran, returned <code>&lt;Swig Object of type 'gchar *' at 0x1086e8a80&gt;</code></td></tr>
-<tr><td>Scheme</td><td><code>(get-text-for-rotation-centre-cube-size)</code></td><td>ran, returned <code>#&lt;swig-pointer gchar * 91ff56ca0&gt;</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>get_text_for_rotation_centre_cube_size()</code></td><td>ran, returned <code>&lt;Swig Object of type 'gchar *' at 0x10a26c9c0&gt;</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-text-for-rotation-centre-cube-size)</code></td><td>ran, returned <code>#&lt;swig-pointer gchar * 81473ed10&gt;</code></td></tr></tbody></table>
 <h3 id="go_to_ligand">go_to_ligand</h3>
 <p>Python: <code>go_to_ligand()</code><br>
 Scheme: <code>(go-to-ligand)</code></p>
@@ -34,37 +34,40 @@ Scheme: <code>(go-to-ligand)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>go_to_ligand()</code></td><td>ran, returned <code>[0.0, 0.0, 0.0]</code></td></tr>
 <tr><td>Scheme</td><td><code>(go-to-ligand)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 <h3 id="recentre_on_read_pdb">recentre_on_read_pdb</h3>
 <p>Python: <code>recentre_on_read_pdb()</code><br>
 Scheme: <code>(recentre-on-read-pdb)</code></p>
 <p>return the recentre-on-pdb state</p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>recentre_on_read_pdb()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(recentre-on-read-pdb)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>recentre_on_read_pdb()</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(recentre-on-read-pdb)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="rotation_centre_position">rotation_centre_position</h3>
 <p>Python: <code>rotation_centre_position(axis)</code><br>
 Scheme: <code>(rotation-centre-position axis)</code></p>
 <p>Arguments: axis (a whole number). Returns: a number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>rotation_centre_position(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(rotation-centre-position 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>rotation_centre_position(1)</code></td><td>ran, returned <code>8.686544418334961</code></td></tr>
+<tr><td>Scheme</td><td><code>(rotation-centre-position 1)</code></td><td>ran, returned <code>8.686544418334961</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="set_go_to_ligand_n_atoms_limit">set_go_to_ligand_n_atoms_limit</h3>
 <p>Python: <code>set_go_to_ligand_n_atoms_limit(n_atom_min)</code><br>
 Scheme: <code>(set-go-to-ligand-n-atoms-limit n-atom-min)</code></p>
 <p>go to the ligand that has more than n_atom_min atoms</p>
 <p>Arguments: n_atom_min (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_go_to_ligand_n_atoms_limit(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-go-to-ligand-n-atoms-limit 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_go_to_ligand_n_atoms_limit(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-go-to-ligand-n-atoms-limit 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_recentre_on_read_pdb">set_recentre_on_read_pdb</h3>
 <p>Python: <code>set_recentre_on_read_pdb(int)</code><br>
 Scheme: <code>(set-recentre-on-read-pdb int)</code></p>
 <p>set the recentre-on-pdb state</p>
 <p>Arguments: int (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_recentre_on_read_pdb(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-recentre-on-read-pdb 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_recentre_on_read_pdb(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-recentre-on-read-pdb 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_reorienting_next_residue_mode">set_reorienting_next_residue_mode</h3>
 <p>Python: <code>set_reorienting_next_residue_mode(state)</code><br>
 Scheme: <code>(set-reorienting-next-residue-mode state)</code></p>
@@ -73,38 +76,38 @@ Scheme: <code>(set-reorienting-next-residue-mode state)</code></p>
 "up" - set this mode to 1 for reorientation-mode - and 0 for off (standard translation)</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_reorienting_next_residue_mode(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-reorienting-next-residue-mode 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_reorienting_next_residue_mode(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-reorienting-next-residue-mode 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_rotation_centre">set_rotation_centre</h3>
 <p>Python: <code>set_rotation_centre(x, y, z)</code><br>
 Scheme: <code>(set-rotation-centre x y z)</code></p>
 <p>set the rotation centre</p>
 <p>Arguments: x (a number), y (a number), z (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_rotation_centre(54.5, 9.4, 12.3)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-rotation-centre 54.5 9.4 12.3)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_rotation_centre(54.5, 9.4, 12.3)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-rotation-centre 54.5 9.4 12.3)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_rotation_centre_internal">set_rotation_centre_internal</h3>
 <p>Python: <code>set_rotation_centre_internal(x, y, z)</code><br>
 Scheme: <code>(set-rotation-centre-internal x y z)</code></p>
 <p>The redraw happens somewhere else...</p>
 <p>Arguments: x (a number), y (a number), z (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_rotation_centre_internal(54.5, 9.4, 12.3)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-rotation-centre-internal 54.5 9.4 12.3)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_rotation_centre_internal(54.5, 9.4, 12.3)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-rotation-centre-internal 54.5 9.4 12.3)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_rotation_centre_size">set_rotation_centre_size</h3>
 <p>Python: <code>set_rotation_centre_size(f)</code><br>
 Scheme: <code>(set-rotation-centre-size f)</code></p>
 <p>set rotoation centre marker size</p>
 <p>Arguments: f (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_rotation_centre_size(1.0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-rotation-centre-size 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_rotation_centre_size(1.0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-rotation-centre-size 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_rotation_centre_size_from_widget">set_rotation_centre_size_from_widget</h3>
 <p>Python: <code>set_rotation_centre_size_from_widget(text)</code><br>
 Scheme: <code>(set-rotation-centre-size-from-widget text)</code></p>
 <p>MOVE-ME to c-interface-gtk-widgets.h</p>
 <p>Arguments: text (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_rotation_centre_size_from_widget("hello")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-rotation-centre-size-from-widget "hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_rotation_centre_size_from_widget("hello")</code></td><td>error: TypeError: in method 'set_rotation_centre_size_from_widget', argument 1 of type 'gchar const *'</td></tr>
+<tr><td>Scheme</td><td><code>(set-rotation-centre-size-from-widget "hello")</code></td><td>error: In procedure set-rotation-centre-size-from-widget: Wrong type argument in position 1: "hello"</td></tr></tbody></table>
 </body></html>

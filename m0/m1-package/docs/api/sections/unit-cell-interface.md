@@ -18,6 +18,8 @@ Arguments: imol (a whole number). Returns: a whole number.
 | Python | `get_show_unit_cell(0)` | ran, returned `0` |
 | Scheme | `(get-show-unit-cell 0)` | ran, returned `0` |
 
+Python and Scheme gave the same answer.
+
 ### set_show_unit_cell
 
 Python: `set_show_unit_cell(imol, istate)`  
@@ -32,8 +34,8 @@ Arguments: imol (a whole number), istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_show_unit_cell(0, 1)` | not tried |
-| Scheme | `(set-show-unit-cell 0 1)` | not tried |
+| Python | `set_show_unit_cell(0, 1)` | ran (no return value) |
+| Scheme | `(set-show-unit-cell 0 1)` | ran (no return value) |
 
 ### set_show_unit_cells_all
 
@@ -49,8 +51,8 @@ Arguments: istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_show_unit_cells_all(1)` | not tried |
-| Scheme | `(set-show-unit-cells-all 1)` | not tried |
+| Python | `set_show_unit_cells_all(1)` | ran (no return value) |
+| Scheme | `(set-show-unit-cells-all 1)` | ran (no return value) |
 
 ### set_unit_cell_colour
 
@@ -61,6 +63,6 @@ Arguments: red (a number), green (a number), blue (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_unit_cell_colour(0.5, 0.5, 0.5)` | not tried |
-| Scheme | `(set-unit-cell-colour 0.5 0.5 0.5)` | not tried |
+| Python | `set_unit_cell_colour(0.5, 0.5, 0.5)` | ran (no return value) |
+| Scheme | `(set-unit-cell-colour 0.5 0.5 0.5)` | ran (no return value) |
 

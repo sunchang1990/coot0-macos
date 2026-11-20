@@ -18,6 +18,8 @@ Also available in Python as `save_coords_name_suggestion_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `save_coords_name_suggestion(0)` | not tried |
-| Scheme | `(save-coords-name-suggestion-scm 0)` | not tried |
+| Python | `save_coords_name_suggestion(0)` | ran, returned `'tutorial-modern-coot-0.pdb'` |
+| Scheme | `(save-coords-name-suggestion-scm 0)` | ran, returned `"tutorial-modern-coot-0.pdb"` |
+
+Python and Scheme gave the same answer.
 

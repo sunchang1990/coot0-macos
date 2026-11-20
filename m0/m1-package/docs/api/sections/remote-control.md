@@ -27,8 +27,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `make_socket_listener_maybe()` | not tried |
-| Scheme | `(make-socket-listener-maybe)` | not tried |
+| Python | `make_socket_listener_maybe()` | not run: not run automatically (socket: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(make-socket-listener-maybe)` | not run: not run automatically (socket: exits, uses the network, an external program, files or a screen) |
 
 ### set_coot_listener_socket_state_internal
 
@@ -39,8 +39,8 @@ Arguments: sock_state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_coot_listener_socket_state_internal(1)` | not tried |
-| Scheme | `(set-coot-listener-socket-state-internal 1)` | not tried |
+| Python | `set_coot_listener_socket_state_internal(1)` | not run: not run automatically (socket: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(set-coot-listener-socket-state-internal 1)` | not run: not run automatically (socket: exits, uses the network, an external program, files or a screen) |
 
 ### set_remote_control_port
 
@@ -51,8 +51,8 @@ Arguments: port_number (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_remote_control_port(1)` | not tried |
-| Scheme | `(set-remote-control-port 1)` | not tried |
+| Python | `set_remote_control_port(1)` | not run: not run automatically (remote: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(set-remote-control-port 1)` | not run: not run automatically (remote: exits, uses the network, an external program, files or a screen) |
 
 ### set_socket_python_string_waiting
 
@@ -65,8 +65,8 @@ Arguments: s (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_socket_python_string_waiting("hello")` | not tried |
-| Scheme | `(set-socket-python-string-waiting "hello")` | not tried |
+| Python | `set_socket_python_string_waiting("hello")` | not run: not run automatically (socket: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(set-socket-python-string-waiting "hello")` | not run: not run automatically (socket: exits, uses the network, an external program, files or a screen) |
 
 ### set_socket_string_waiting
 
@@ -79,8 +79,8 @@ Arguments: s (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_socket_string_waiting("hello")` | not tried |
-| Scheme | `(set-socket-string-waiting "hello")` | not tried |
+| Python | `set_socket_string_waiting("hello")` | not run: not run automatically (socket: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(set-socket-string-waiting "hello")` | not run: not run automatically (socket: exits, uses the network, an external program, files or a screen) |
 
 ### set_tip_of_the_day_flag
 
@@ -93,6 +93,6 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_tip_of_the_day_flag(1)` | not tried |
-| Scheme | `(set-tip-of-the-day-flag 1)` | not tried |
+| Python | `set_tip_of_the_day_flag(1)` | ran (no return value) |
+| Scheme | `(set-tip-of-the-day-flag 1)` | ran (no return value) |
 

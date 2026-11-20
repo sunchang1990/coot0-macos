@@ -101,8 +101,8 @@ Arguments: atom_index (a whole number), imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `output_residue_info_as_text(0, 0)` | not tried |
-| Scheme | `(output-residue-info-as-text 0 0)` | not tried |
+| Python | `output_residue_info_as_text(0, 0)` | ran (no return value) |
+| Scheme | `(output-residue-info-as-text 0 0)` | ran (no return value) |
 
 ### output_residue_info_dialog
 
@@ -115,8 +115,8 @@ Arguments: imol (a whole number), atom_index (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `output_residue_info_dialog(0, 0)` | not tried |
-| Scheme | `(output-residue-info-dialog 0 0)` | not tried |
+| Python | `output_residue_info_dialog(0, 0)` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(output-residue-info-dialog 0 0)` | stopped Coot when tried without a window (not checked with a window) |
 
 ### residue_info_apply_all_checkbutton_toggled
 
@@ -127,8 +127,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `residue_info_apply_all_checkbutton_toggled()` | not tried |
-| Scheme | `(residue-info-apply-all-checkbutton-toggled)` | not tried |
+| Python | `residue_info_apply_all_checkbutton_toggled()` | ran (no return value) |
+| Scheme | `(residue-info-apply-all-checkbutton-toggled)` | ran (no return value) |
 
 ### residue_info_dialog
 
@@ -141,8 +141,8 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_c
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `residue_info_dialog(0, "A", 41, "")` | not tried |
-| Scheme | `(residue-info-dialog 0 "A" 41 "")` | not tried |
+| Python | `residue_info_dialog(0, "A", 41, "")` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(residue-info-dialog 0 "A" 41 "")` | stopped Coot when tried without a window (not checked with a window) |
 
 ### residue_info_dialog_is_displayed
 
@@ -153,8 +153,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `residue_info_dialog_is_displayed()` | not tried |
-| Scheme | `(residue-info-dialog-is-displayed)` | not tried |
+| Python | `residue_info_dialog_is_displayed()` | ran, returned `0` |
+| Scheme | `(residue-info-dialog-is-displayed)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### unset_residue_info_widget
 
@@ -167,6 +169,6 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `unset_residue_info_widget()` | not tried |
-| Scheme | `(unset-residue-info-widget)` | not tried |
+| Python | `unset_residue_info_widget()` | ran (no return value) |
+| Scheme | `(unset-residue-info-widget)` | ran (no return value) |
 

@@ -18,6 +18,8 @@ Arguments: none. Returns: a whole number.
 | Python | `get_smooth_scroll()` | ran, returned `1` |
 | Scheme | `(get-smooth-scroll)` | ran, returned `1` |
 
+Python and Scheme gave the same answer.
+
 ### get_text_for_smooth_scroll_limit
 
 Python: `get_text_for_smooth_scroll_limit()`  
@@ -29,6 +31,8 @@ Arguments: none. Returns: text.
 |---|---|---|
 | Python | `get_text_for_smooth_scroll_limit()` | ran, returned `'10.0 '` |
 | Scheme | `(get-text-for-smooth-scroll-limit)` | ran, returned `"10.0 "` |
+
+Python and Scheme gave the same answer.
 
 ### get_text_for_smooth_scroll_steps
 
@@ -44,6 +48,8 @@ Arguments: none. Returns: text.
 | Python | `get_text_for_smooth_scroll_steps()` | ran, returned `'40   '` |
 | Scheme | `(get-text-for-smooth-scroll-steps)` | ran, returned `"40   "` |
 
+Python and Scheme gave the same answer.
+
 ### set_smooth_scroll_flag
 
 Python: `set_smooth_scroll_flag(v)`  
@@ -57,8 +63,8 @@ Arguments: v (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_smooth_scroll_flag(1)` | not tried |
-| Scheme | `(set-smooth-scroll-flag 1)` | not tried |
+| Python | `set_smooth_scroll_flag(1)` | ran (no return value) |
+| Scheme | `(set-smooth-scroll-flag 1)` | ran (no return value) |
 
 ### set_smooth_scroll_limit
 
@@ -71,8 +77,8 @@ Arguments: lim (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_smooth_scroll_limit(1.0)` | not tried |
-| Scheme | `(set-smooth-scroll-limit 1.0)` | not tried |
+| Python | `set_smooth_scroll_limit(1.0)` | ran (no return value) |
+| Scheme | `(set-smooth-scroll-limit 1.0)` | ran (no return value) |
 
 ### set_smooth_scroll_limit_str
 
@@ -85,8 +91,8 @@ Arguments: t (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_smooth_scroll_limit_str("hello")` | not tried |
-| Scheme | `(set-smooth-scroll-limit-str "hello")` | not tried |
+| Python | `set_smooth_scroll_limit_str("hello")` | ran (no return value) |
+| Scheme | `(set-smooth-scroll-limit-str "hello")` | ran (no return value) |
 
 ### set_smooth_scroll_steps
 
@@ -101,8 +107,8 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_smooth_scroll_steps(1)` | not tried |
-| Scheme | `(set-smooth-scroll-steps 1)` | not tried |
+| Python | `set_smooth_scroll_steps(1)` | ran (no return value) |
+| Scheme | `(set-smooth-scroll-steps 1)` | ran (no return value) |
 
 ### set_smooth_scroll_steps_str
 
@@ -115,6 +121,6 @@ Arguments: t (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_smooth_scroll_steps_str("hello")` | not tried |
-| Scheme | `(set-smooth-scroll-steps-str "hello")` | not tried |
+| Python | `set_smooth_scroll_steps_str("hello")` | ran (no return value) |
+| Scheme | `(set-smooth-scroll-steps-str "hello")` | ran (no return value) |
 

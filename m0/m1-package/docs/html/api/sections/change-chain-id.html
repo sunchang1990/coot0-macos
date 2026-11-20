@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="0dfeb88a02d87398953d1703b6c0f812a68a4283">
+<meta name="coot0-source-sha1" content="28201868ed970b835f0226c020717fb5d2a86a7e">
 <title>Change Chain ID - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -33,4 +33,5 @@ Also available in Python as <code>change_chain_id_with_result_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>change_chain_id_with_result(0, "A", "A", 1, 41, 41)</code></td><td>ran, returned <code>[0, 'CONFLICT!  Residue 41 already exists in chain A\nChange chain ID of residue range failed.\n']</code></td></tr>
 <tr><td>Scheme</td><td><code>(change-chain-id-with-result-scm 0 "A" "A" 1 41 41)</code></td><td>ran, returned <code>(0 "CONFLICT!  Residue 41 already exists in chain A\nChange chain ID of residue range failed.\n")</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 </body></html>

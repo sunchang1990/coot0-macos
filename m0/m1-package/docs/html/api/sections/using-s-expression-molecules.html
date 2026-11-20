@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="a600a68786bf843cada95949e47e967aebfbb299">
+<meta name="coot0-source-sha1" content="f7c1c60f0b73885ab51e63913d911a48745dfa34">
 <title>Using S-expression molecules - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -31,6 +31,7 @@ Also available in Python as <code>closest_atom_raw_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>closest_atom_raw()</code></td><td>ran, returned <code>[0, 'A', 42, '', ' OG ', '', 42.08, 9.668, 14.424]</code></td></tr>
 <tr><td>Scheme</td><td><code>(closest-atom-raw-scm)</code></td><td>ran, returned <code>(0 "A" 42 "" " OG " "" 42.08 9.668 14.424)</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="closest_atom_simple">closest_atom_simple</h3>
 <p>Python: <code>closest_atom_simple()</code><br>
 Scheme: <code>(closest-atom-simple-scm)</code></p>
@@ -45,6 +46,7 @@ Also available in Python as <code>closest_atom_simple_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>closest_atom_simple()</code></td><td>ran, returned <code>[0, 'A', 42, '', ' OG ', '']</code></td></tr>
 <tr><td>Scheme</td><td><code>(closest-atom-simple-scm)</code></td><td>ran, returned <code>(0 "A" 42 "" " OG " "")</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="get_bonds_representation">get_bonds_representation</h3>
 <p>Python: <code>get_bonds_representation(imol)</code></p>
 <p>return a Python object for the bonds</p>
@@ -63,6 +65,7 @@ will return only after the atoms have finished moving.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>get_continue_updating_refinement_atoms_state()</code></td><td>ran, returned <code>0</code></td></tr>
 <tr><td>Scheme</td><td><code>(get-continue-updating-refinement-atoms-state)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="get_dictionary_radii">get_dictionary_radii</h3>
 <p>Python: <code>get_dictionary_radii()</code></p>
 <p>return a Python object for the radii of the atoms in the dictionary</p>
@@ -92,8 +95,8 @@ Scheme: <code>(label-closest-atoms-in-neighbour-residues-scm imol residue-spec-s
 <p>label the closest atoms in the residues that neighbour residue_spec</p>
 <p>Arguments: imol (a whole number), residue_spec_py (a list or value), radius (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>label_closest_atoms_in_neighbour_residues_py(0, ["A", 41, ""], 5.0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(label-closest-atoms-in-neighbour-residues-scm 0 (list "A" 41 "") 5.0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>label_closest_atoms_in_neighbour_residues_py(0, ["A", 41, ""], 5.0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(label-closest-atoms-in-neighbour-residues-scm 0 (list "A" 41 "") 5.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="residues_near_position">residues_near_position</h3>
 <p>Python: <code>residues_near_position(imol, pos_in, radius)</code><br>
 Scheme: <code>(residues-near-position imol pos radius)</code></p>
@@ -103,8 +106,8 @@ closer than radius Angstroems to the given position.</p>
 Also available in Python as <code>residues_near_position_py</code>.
 Also available in Scheme as <code>residues-near-position-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 <h3 id="residues_near_residues">residues_near_residues</h3>
 <p>Python: <code>residues_near_residues(imol, residues_in, radius)</code><br>
 Scheme: <code>(residues-near-residues imol residues-in radius)</code></p>
@@ -115,6 +118,7 @@ specified by residues_in.</p>
 Also available in Python as <code>residues_near_residues_py</code>.
 Also available in Scheme as <code>residues-near-residues-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>residues_near_residues(0, [["A", 41, ""], ["A", 42, ""]], 5.0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(residues-near-residues 0 (list (list "A" 41 "") (list "A" 42 "")) 5.0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>residues_near_residues(0, [["A", 41, ""], ["A", 42, ""]], 5.0)</code></td><td>ran, returned <code>[[['A', 41, ''], [['A', 37, ''], ['A', 39, ''], ['A', 40, ''], ['A', 42, ''], ['A', 43, ''], ['A', 44, ''], ['A', 86, '' ...</code></td></tr>
+<tr><td>Scheme</td><td><code>(residues-near-residues 0 (list (list "A" 41 "") (list "A" 42 "")) 5.0)</code></td><td>ran, returned <code>(((#t "A" 42 "") ((#t "B" 60 "") (#t "B" 58 "") (#t "A" 46 "") (#t "A" 44 "") (#t "A" 43 "") (#t "A" 41 "") (#t "A" 40 " ...</code></td></tr></tbody></table>
+<p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 </body></html>

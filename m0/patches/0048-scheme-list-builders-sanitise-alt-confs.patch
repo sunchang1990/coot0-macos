@@ -1,0 +1,94 @@
+diff --git a/python/coot_utils.py b/python/coot_utils.py
+index 9a29fbb..dd439e0 100644
+--- a/python/coot_utils.py
++++ b/python/coot_utils.py
+@@ -2804,9 +2804,9 @@ def sanitise_alt_confs_active_residue():
+     active_atom = active_residue()
+     if active_atom:
+         imol     = active_atom[0]
+-        chain_id = active_atom[2]
++        chain_id = active_atom[1]   # macOS port (build 30): all three were active_atom[2]
+         resno    = active_atom[2]
+-        inscode  = active_atom[2]
++        inscode  = active_atom[3]
+ 
+         atom_ls = residue_info(imol, chain_id, resno, inscode)
+ 
+diff --git a/src/atom-overlaps.cc b/src/atom-overlaps.cc
+index 8eb4e48..cce54fe 100644
+--- a/src/atom-overlaps.cc
++++ b/src/atom-overlaps.cc
+@@ -103,7 +103,19 @@ PyObject *ligand_atom_overlaps_py(int imol, PyObject *ligand_spec, double neighb
+ 	    coot::atom_overlaps_container_t ol(residue_p, neighb_residues, mol, g.Geom_p());
+ 	    ol.make_overlaps();
+ 
+-	    // convert ol to a python object.  FIXME
++	    // macOS port (build 30): was "convert ol to a python object.  FIXME" (returned False); now as the Scheme
++	    // version: a list of [atom-spec-1, atom-spec-2, overlap-volume, is-h-bond]
++	    r = PyList_New(ol.overlaps.size());
++	    for (unsigned int i=0; i<ol.overlaps.size(); i++) {
++	       PyObject *l = PyList_New(4);
++	       PyList_SetItem(l, 0, atom_spec_to_py(coot::atom_spec_t(ol.overlaps[i].atom_1)));
++	       PyList_SetItem(l, 1, atom_spec_to_py(coot::atom_spec_t(ol.overlaps[i].atom_2)));
++	       PyList_SetItem(l, 2, PyFloat_FromDouble(ol.overlaps[i].overlap_volume));
++	       PyObject *hb = ol.overlaps[i].is_h_bond ? Py_True : Py_False;
++	       Py_INCREF(hb);
++	       PyList_SetItem(l, 3, hb);
++	       PyList_SetItem(r, i, l);
++	    }
+ 	 }
+       } 
+    };
+diff --git a/src/c-interface-ncs.cc b/src/c-interface-ncs.cc
+index 653978c..1fa84df 100644
+--- a/src/c-interface-ncs.cc
++++ b/src/c-interface-ncs.cc
+@@ -563,8 +563,10 @@ SCM ncs_chain_differences_scm(int imol, const char *master_chain_id) {
+ 						  cd.residue_info[iresinf].target_inscode);
+ 		  SCM res_l = SCM_EOL;
+ 		  res_l = scm_cons(scm_double2num(cd.residue_info[iresinf].mean_diff), res_l);
+-//		  res_l = scm_cons(scm_cdr(scm_residue(target_res)), res_l);
+-//		  res_l = scm_cons(scm_cdr(scm_residue(this_res)), res_l);
++		  // macOS port (build 30): the residues were left out (commented out upstream); now as in Python:
++		  // ((resno ins-code) (target-resno target-ins-code) mean-diff)
++		  res_l = scm_cons(scm_list_2(SCM_MAKINUM(target_res.res_no), scm_makfrom0str(target_res.ins_code.c_str())), res_l);
++		  res_l = scm_cons(scm_list_2(SCM_MAKINUM(this_res.res_no), scm_makfrom0str(this_res.ins_code.c_str())), res_l);
+ 		  l_residue_data = scm_cons(res_l, l_residue_data);
+ 	       }
+ 	       r = scm_cons(l_residue_data, SCM_EOL);
+diff --git a/src/c-interface-validate.cc b/src/c-interface-validate.cc
+index 6524cfb..8513b50 100644
+--- a/src/c-interface-validate.cc
++++ b/src/c-interface-validate.cc
+@@ -1451,6 +1451,7 @@ SCM map_peaks_scm(int imol_map, float n_sigma) {
+ 	 pt = scm_reverse(pt);
+ 	 r = scm_cons(pt, r);
+       }
++      r = scm_reverse(r); // macOS port (build 30): highest peak first, as in Python (was the lowest first)
+    }
+    return r;
+ }
+diff --git a/src/cc-interface-map-utils.cc b/src/cc-interface-map-utils.cc
+index 4c0b517..572c796 100644
+--- a/src/cc-interface-map-utils.cc
++++ b/src/cc-interface-map-utils.cc
+@@ -141,7 +141,7 @@ SCM map_to_model_correlation_stats_per_residue_range_scm(int imol, const std::st
+       SCM spec_scm = residue_spec_to_scm(spec);
+       SCM stats_scm = scm_list_2(SCM_MAKINUM(stats.n), scm_double2num(stats.correlation()));
+       SCM item = scm_list_2(spec_scm, stats_scm);
+-      r_0 = scm_cons(r_0, item);
++      r_0 = scm_cons(item, r_0); // macOS port (build 30): arguments were swapped (nested list)
+    }
+    for (it=m.second.begin(); it!=m.second.end(); ++it) {
+       const coot::residue_spec_t &spec(it->first);
+@@ -149,8 +149,8 @@ SCM map_to_model_correlation_stats_per_residue_range_scm(int imol, const std::st
+       SCM spec_scm = residue_spec_to_scm(spec);
+       SCM stats_scm = scm_list_2(SCM_MAKINUM(stats.n), scm_double2num(stats.correlation()));
+       SCM item = scm_list_2(spec_scm, stats_scm);
+-      r_1 = scm_cons(r_1, item);
++      r_1 = scm_cons(item, r_1); // macOS port (build 30): arguments were swapped (nested list)
+    }
+-   return scm_list_2(r_0, r_1);
++   return scm_list_2(scm_reverse(r_0), scm_reverse(r_1)); // in residue order, as in Python
+ }
+ #endif

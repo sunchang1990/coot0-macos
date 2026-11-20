@@ -19,6 +19,8 @@ Also available in Scheme as `CG-spin-search-scm`.
 | Python | `CG_spin_search_py(0, 1)` | ran, returned `[[-24.0, [True, 'A', 1, '']], [9.0, [True, 'A', 8, '']], [-3.0, [True, 'A', 11, '']], [3.0, [True, 'A', 14, '']], [3.0,  ...` |
 | Scheme | `(CG-spin-search 0 1)` | ran, returned `(((#t "A" 1 "") -24.0) ((#t "A" 8 "") 9.0) ((#t "A" 11 "") -3.0) ((#t "A" 14 "") 3.0) ((#t "A" 17 "") 3.0) ((#t "A" 19 " ...` |
 
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
+
 ### monomer_lib_3_letter_codes_matching
 
 Python: `monomer_lib_3_letter_codes_matching(search_string, allow_minimal_descriptions_flag)`  
@@ -28,8 +30,8 @@ Arguments: search_string (text), allow_minimal_descriptions_flag (a whole number
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `monomer_lib_3_letter_codes_matching("hello", 1)` | not tried |
-| Scheme | `(monomer-lib-3-letter-codes-matching "hello" 1)` | not tried |
+| Python | `monomer_lib_3_letter_codes_matching("hello", 1)` | ran, returned `<Swig Object of type 'std::vector< std::pair< std::string,std::string >,std::allocator< std::pair< std::string,std::stri ...` |
+| Scheme | `(monomer-lib-3-letter-codes-matching "hello" 1)` | ran, returned `#<collectable-swig-pointer std::vector< std::pair< std::string,std::string > > * 718d33e80>` |
 
 ### mutate_internal
 
@@ -40,8 +42,8 @@ Arguments: ires (a whole number), chain_id (text), imol (a whole number), target
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `mutate_internal(41, "A", 0, "ALA")` | not tried |
-| Scheme | `(mutate-internal 41 "A" 0 "ALA")` | not tried |
+| Python | `mutate_internal(41, "A", 0, "ALA")` | error: TypeError: in method 'mutate_internal', argument 4 of type 'std::string &' |
+| Scheme | `(mutate-internal 41 "A" 0 "ALA")` | error: In procedure mutate-internal: Wrong type argument in position 4: "ALA" |
 
 ### on_monomer_lib_sbase_molecule_button_press
 
@@ -52,8 +54,8 @@ Arguments: button (`GtkButton *`), user_data (`gpointer`). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### on_monomer_lib_search_results_button_press
 
@@ -64,8 +66,8 @@ Arguments: button (`GtkButton *`), user_data (`gpointer`). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### overlap_ligands_internal
 
@@ -76,8 +78,8 @@ Arguments: imol_ligand (a whole number), imol_ref (a whole number), chain_id_ref
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `overlap_ligands_internal(0, 0, "A", 41, 1)` | not tried |
-| Scheme | `(overlap-ligands-internal 0 0 "A" 41 1)` | not tried |
+| Python | `overlap_ligands_internal(0, 0, "A", 41, True)` | ran, returned `<Swig Object of type 'coot::graph_match_info_t *' at 0x10c29d1d0>` |
+| Scheme | `(overlap-ligands-internal 0 0 "A" 41 1)` | ran, returned `#<collectable-swig-pointer coot::graph_match_info_t * 7acc8b020>` |
 
 ### spin_N
 
@@ -94,8 +96,8 @@ Also available in Python as `spin_N_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `spin_N(0, ["A", 41, ""], 10.0)` | not tried |
-| Scheme | `(spin-N-scm 0 (list "A" 41 "") 10.0)` | not tried |
+| Python | `spin_N(0, ["A", 41, ""], 10.0)` | ran (no return value) |
+| Scheme | `(spin-N-scm 0 (list "A" 41 "") 10.0)` | ran (no return value) |
 
 ### spin_search
 
@@ -112,8 +114,8 @@ Also available in Python as `spin_search_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### spin_search_by_atom_vectors
 
@@ -124,6 +126,6 @@ Arguments: imol_map (a whole number), imol (a whole number), chain_id (text), re
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `spin_search_by_atom_vectors(1, 0, "A", 41, "", ".", "hello")` | not tried |
-| Scheme | `(spin-search-by-atom-vectors 1 0 "A" 41 "" "." "hello")` | not tried |
+| Python | `spin_search_by_atom_vectors(1, 0, "A", 41, "", ".", "hello")` | error: TypeError: in method 'spin_search_by_atom_vectors', argument 6 of type 'std::pair< std::string,std::string > const &' |
+| Scheme | `(spin-search-by-atom-vectors 1 0 "A" 41 "" "." "hello")` | error: In procedure spin-search-by-atom-vectors: Wrong type argument in position 6: "." |
 

@@ -21,6 +21,8 @@ Also available in Python as `cis_peptides_py`.
 | Python | `cis_peptides(0)` | ran, returned `[[[True, 'A', 26, ''], [True, 'A', 27, ''], 6.120067119598389], [[True, 'A', 40, ''], [True, 'A', 41, ''], 47.1598320007 ...` |
 | Scheme | `(cis-peptides 0)` | ran, returned `(((#t "A" 26 "") (#t "A" 27 "") 6.120067119598389) ((#t "A" 40 "") (#t "A" 41 "") 47.15983200073242) ((#t "B" 26 "") (#t ...` |
 
+Python and Scheme gave the same answer.
+
 ### cis_trans_convert
 
 Python: `cis_trans_convert(imol, chain_id, resno, altconf)`  
@@ -47,6 +49,8 @@ Arguments: none. Returns: a whole number.
 |---|---|---|
 | Python | `cis_trans_convert_intermediate_atoms()` | ran, returned `0` |
 | Scheme | `(cis-trans-convert-intermediate-atoms)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### clear_delete_item_widget
 
@@ -130,6 +134,8 @@ Arguments: imol (a whole number). Returns: a whole number.
 | Python | `delete_hydrogen_atoms(0)` | ran, returned `0` |
 | Scheme | `(delete-hydrogen-atoms 0)` | ran, returned `0` |
 
+Python and Scheme gave the same answer.
+
 ### delete_hydrogens
 
 Python: `delete_hydrogens(imol)`  
@@ -146,6 +152,8 @@ Arguments: imol (a whole number). Returns: a whole number.
 | Python | `delete_hydrogens(0)` | ran, returned `0` |
 | Scheme | `(delete-hydrogens 0)` | ran, returned `0` |
 
+Python and Scheme gave the same answer.
+
 ### delete_item_mode_is_atom_p
 
 Python: `delete_item_mode_is_atom_p()`  
@@ -158,6 +166,8 @@ Arguments: none. Returns: a whole number.
 | Python | `delete_item_mode_is_atom_p()` | ran, returned `0` |
 | Scheme | `(delete-item-mode-is-atom-p)` | ran, returned `0` |
 
+Python and Scheme gave the same answer.
+
 ### delete_item_mode_is_chain_p
 
 Python: `delete_item_mode_is_chain_p()`  
@@ -169,6 +179,8 @@ Arguments: none. Returns: a whole number.
 |---|---|---|
 | Python | `delete_item_mode_is_chain_p()` | ran, returned `0` |
 | Scheme | `(delete-item-mode-is-chain-p)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### delete_item_mode_is_residue_p
 
@@ -184,6 +196,8 @@ Arguments: none. Returns: a whole number.
 | Python | `delete_item_mode_is_residue_p()` | ran, returned `1` |
 | Scheme | `(delete-item-mode-is-residue-p)` | ran, returned `1` |
 
+Python and Scheme gave the same answer.
+
 ### delete_item_mode_is_sidechain_p
 
 Python: `delete_item_mode_is_sidechain_p()`  
@@ -196,6 +210,8 @@ Arguments: none. Returns: a whole number.
 | Python | `delete_item_mode_is_sidechain_p()` | ran, returned `0` |
 | Scheme | `(delete-item-mode-is-sidechain-p)` | ran, returned `0` |
 
+Python and Scheme gave the same answer.
+
 ### delete_item_mode_is_sidechain_range_p
 
 Python: `delete_item_mode_is_sidechain_range_p()`  
@@ -207,6 +223,8 @@ Arguments: none. Returns: a whole number.
 |---|---|---|
 | Python | `delete_item_mode_is_sidechain_range_p()` | ran, returned `0` |
 | Scheme | `(delete-item-mode-is-sidechain-range-p)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### delete_item_mode_is_water_p
 
@@ -222,6 +240,8 @@ Arguments: none. Returns: a whole number.
 | Python | `delete_item_mode_is_water_p()` | ran, returned `0` |
 | Scheme | `(delete-item-mode-is-water-p)` | ran, returned `0` |
 
+Python and Scheme gave the same answer.
+
 ### delete_item_widget_is_being_shown
 
 Python: `delete_item_widget_is_being_shown()`  
@@ -234,6 +254,8 @@ Arguments: none. Returns: a whole number.
 | Python | `delete_item_widget_is_being_shown()` | ran, returned `0` |
 | Scheme | `(delete-item-widget-is-being-shown)` | ran, returned `0` |
 
+Python and Scheme gave the same answer.
+
 ### delete_item_widget_keep_active_on
 
 Python: `delete_item_widget_keep_active_on()`  
@@ -245,6 +267,8 @@ Arguments: none. Returns: a whole number.
 |---|---|---|
 | Python | `delete_item_widget_keep_active_on()` | ran, returned `0` |
 | Scheme | `(delete-item-widget-keep-active-on)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### delete_object_handle_delete_dialog
 
@@ -400,6 +424,8 @@ Arguments: imol (a whole number). Returns: a whole number.
 | Python | `delete_waters(0)` | ran, returned `0` |
 | Scheme | `(delete-waters 0)` | ran, returned `0` |
 
+Python and Scheme gave the same answer.
+
 ### do_cis_trans_conversion_setup
 
 Python: `do_cis_trans_conversion_setup(istate)`  
@@ -440,6 +466,8 @@ Arguments: none. Returns: a whole number.
 | Python | `get_rot_trans_object_type()` | ran, returned `12` |
 | Scheme | `(get-rot-trans-object-type)` | ran, returned `12` |
 
+Python and Scheme gave the same answer.
+
 ### post_delete_item_dialog
 
 Python: `post_delete_item_dialog()`  
@@ -449,8 +477,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `post_delete_item_dialog()` | not tried |
-| Scheme | `(post-delete-item-dialog)` | not tried |
+| Python | `post_delete_item_dialog()` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(post-delete-item-dialog)` | stopped Coot when tried without a window (not checked with a window) |
 
 ### rot_trans_reset_previous
 
@@ -461,8 +489,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `rot_trans_reset_previous()` | not tried |
-| Scheme | `(rot-trans-reset-previous)` | not tried |
+| Python | `rot_trans_reset_previous()` | ran (no return value) |
+| Scheme | `(rot-trans-reset-previous)` | ran (no return value) |
 
 ### set_delete_atom_mode
 
@@ -475,8 +503,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_delete_atom_mode()` | not tried |
-| Scheme | `(set-delete-atom-mode)` | not tried |
+| Python | `set_delete_atom_mode()` | ran (no return value) |
+| Scheme | `(set-delete-atom-mode)` | ran (no return value) |
 
 ### set_delete_chain_mode
 
@@ -487,8 +515,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_delete_chain_mode()` | not tried |
-| Scheme | `(set-delete-chain-mode)` | not tried |
+| Python | `set_delete_chain_mode()` | ran (no return value) |
+| Scheme | `(set-delete-chain-mode)` | ran (no return value) |
 
 ### set_delete_residue_hydrogens_mode
 
@@ -499,8 +527,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_delete_residue_hydrogens_mode()` | not tried |
-| Scheme | `(set-delete-residue-hydrogens-mode)` | not tried |
+| Python | `set_delete_residue_hydrogens_mode()` | ran (no return value) |
+| Scheme | `(set-delete-residue-hydrogens-mode)` | ran (no return value) |
 
 ### set_delete_residue_mode
 
@@ -511,8 +539,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_delete_residue_mode()` | not tried |
-| Scheme | `(set-delete-residue-mode)` | not tried |
+| Python | `set_delete_residue_mode()` | ran (no return value) |
+| Scheme | `(set-delete-residue-mode)` | ran (no return value) |
 
 ### set_delete_residue_zone_mode
 
@@ -523,8 +551,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_delete_residue_zone_mode()` | not tried |
-| Scheme | `(set-delete-residue-zone-mode)` | not tried |
+| Python | `set_delete_residue_zone_mode()` | ran (no return value) |
+| Scheme | `(set-delete-residue-zone-mode)` | ran (no return value) |
 
 ### set_delete_sidechain_mode
 
@@ -535,8 +563,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_delete_sidechain_mode()` | not tried |
-| Scheme | `(set-delete-sidechain-mode)` | not tried |
+| Python | `set_delete_sidechain_mode()` | ran (no return value) |
+| Scheme | `(set-delete-sidechain-mode)` | ran (no return value) |
 
 ### set_delete_sidechain_range_mode
 
@@ -547,8 +575,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_delete_sidechain_range_mode()` | not tried |
-| Scheme | `(set-delete-sidechain-range-mode)` | not tried |
+| Python | `set_delete_sidechain_range_mode()` | ran (no return value) |
+| Scheme | `(set-delete-sidechain-range-mode)` | ran (no return value) |
 
 ### set_delete_water_mode
 
@@ -559,8 +587,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_delete_water_mode()` | not tried |
-| Scheme | `(set-delete-water-mode)` | not tried |
+| Python | `set_delete_water_mode()` | ran (no return value) |
+| Scheme | `(set-delete-water-mode)` | ran (no return value) |
 
 ### set_rot_trans_object_type
 
@@ -571,8 +599,8 @@ Arguments: rt_type (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_rot_trans_object_type(1)` | not tried |
-| Scheme | `(set-rot-trans-object-type 1)` | not tried |
+| Python | `set_rot_trans_object_type(1)` | ran (no return value) |
+| Scheme | `(set-rot-trans-object-type 1)` | ran (no return value) |
 
 ### set_rotate_translate_zone_rotates_about_zone_centre
 
@@ -583,8 +611,8 @@ Arguments: istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_rotate_translate_zone_rotates_about_zone_centre(1)` | not tried |
-| Scheme | `(set-rotate-translate-zone-rotates-about-zone-centre 1)` | not tried |
+| Python | `set_rotate_translate_zone_rotates_about_zone_centre(1)` | ran (no return value) |
+| Scheme | `(set-rotate-translate-zone-rotates-about-zone-centre 1)` | ran (no return value) |
 
 ### store_delete_item_widget_position
 
@@ -595,8 +623,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `store_delete_item_widget_position()` | not tried |
-| Scheme | `(store-delete-item-widget-position)` | not tried |
+| Python | `store_delete_item_widget_position()` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(store-delete-item-widget-position)` | stopped Coot when tried without a window (not checked with a window) |
 
 ### twisted_trans_peptides
 
@@ -608,6 +636,8 @@ Also available in Python as `twisted_trans_peptides_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `twisted_trans_peptides(0)` | not tried |
-| Scheme | `(twisted-trans-peptides 0)` | not tried |
+| Python | `twisted_trans_peptides(0)` | ran, returned `[[[True, 'A', 41, ''], [True, 'A', 42, ''], -134.07498676511048]]` |
+| Scheme | `(twisted-trans-peptides 0)` | ran, returned `(((#t "A" 41 "") (#t "A" 42 "") -134.07498676511048))` |
+
+Python and Scheme gave the same answer.
 

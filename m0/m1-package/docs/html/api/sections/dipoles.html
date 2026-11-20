@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="1d17b01b5740cbb4aa7e2cb63f50e9f81843e1a5">
+<meta name="coot0-source-sha1" content="dfd09811207dc39a03fa615bcfcfe3304a233d63">
 <title>Dipoles - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -25,8 +25,9 @@ Scheme: <code>(add-dipole imol chain-id res-no ins-code)</code></p>
 Also available in Python as <code>add_dipole_py</code>.
 Also available in Scheme as <code>add-dipole-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>add_dipole(0, "A", 41, "")</code></td><td>ran, returned <code>[-1, [2.3836891226e-314, 3.0428733255e-314, 2.1617066947e-314]]</code></td></tr>
-<tr><td>Scheme</td><td><code>(add-dipole 0 "A" 41 "")</code></td><td>ran, returned <code>(-1 (5.0e-323 2.1584990723e-314 2.3856689583e-314))</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>add_dipole(0, "A", 41, "")</code></td><td>ran, returned <code>[-1, [0.0, 6.5193059465536e-311, 3.56e-322]]</code></td></tr>
+<tr><td>Scheme</td><td><code>(add-dipole 0 "A" 41 "")</code></td><td>ran, returned <code>(-1 (0.0 6.5193059465536e-311 3.56e-322))</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="add_dipole_for_residues">add_dipole_for_residues</h3>
 <p>Python: <code>add_dipole_for_residues(imol, residue_specs)</code><br>
 Scheme: <code>(add-dipole-for-residues imol residue-specs)</code></p>
@@ -36,8 +37,9 @@ Scheme: <code>(add-dipole-for-residues imol residue-specs)</code></p>
 Also available in Python as <code>add_dipole_for_residues_py</code>.
 Also available in Scheme as <code>add-dipole-for-residues-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>add_dipole_for_residues(0, [["A", 41, ""], ["A", 42, ""]])</code></td><td>ran, returned <code>[-1, [1e-323, 2.46527736567e-313, 2.46477814396e-313]]</code></td></tr>
-<tr><td>Scheme</td><td><code>(add-dipole-for-residues 0 (list (list "A" 41 "") (list "A" 42 "")))</code></td><td>ran, returned <code>(-1 (1.0e-323 2.4652773064e-313 2.46477814396e-313))</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>add_dipole_for_residues(0, [["A", 41, ""], ["A", 42, ""]])</code></td><td>ran, returned <code>[-1, [1e-323, 2.1537237812e-313, 2.15390748945e-313]]</code></td></tr>
+<tr><td>Scheme</td><td><code>(add-dipole-for-residues 0 (list (list "A" 41 "") (list "A" 42 "")))</code></td><td>ran, returned <code>(-1 (1.0e-323 2.1537237338e-313 2.1539075685e-313))</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="delete_dipole">delete_dipole</h3>
 <p>Python: <code>delete_dipole(imol, dipole_number)</code><br>
 Scheme: <code>(delete-dipole imol dipole-number)</code></p>
@@ -52,8 +54,9 @@ Scheme: <code>(make-and-draw-patterson mtz-file-name f-col sigf-col)</code></p>
 <p>Returns a new molecule number or -1 on failure</p>
 <p>Arguments: mtz_file_name (text), f_col (text), sigf_col (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>make_and_draw_patterson("rnasa-1.8-all_refmac1.mtz", "FWT", "hello")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(make-and-draw-patterson "rnasa-1.8-all_refmac1.mtz" "FWT" "hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>make_and_draw_patterson("rnasa-1.8-all_refmac1.mtz", "FWT", "hello")</code></td><td>ran, returned <code>-1</code></td></tr>
+<tr><td>Scheme</td><td><code>(make-and-draw-patterson "rnasa-1.8-all_refmac1.mtz" "FWT" "hello")</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="make_and_draw_patterson_using_intensities">make_and_draw_patterson_using_intensities</h3>
 <p>Python: <code>make_and_draw_patterson_using_intensities(mtz_file_name, i_col, sigi_col)</code><br>
 Scheme: <code>(make-and-draw-patterson-using-intensities mtz-file-name i-col sigi-col)</code></p>
@@ -61,6 +64,7 @@ Scheme: <code>(make-and-draw-patterson-using-intensities mtz-file-name i-col sig
 <p>Returns a new molecule number or -1 on failure</p>
 <p>Arguments: mtz_file_name (text), i_col (text), sigi_col (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>make_and_draw_patterson_using_intensities("rnasa-1.8-all_refmac1.mtz", "hello", "hello")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(make-and-draw-patterson-using-intensities "rnasa-1.8-all_refmac1.mtz" "hello" "hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>make_and_draw_patterson_using_intensities("rnasa-1.8-all_refmac1.mtz", "hello", "hello")</code></td><td>ran, returned <code>-1</code></td></tr>
+<tr><td>Scheme</td><td><code>(make-and-draw-patterson-using-intensities "rnasa-1.8-all_refmac1.mtz" "hello" "hello")</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 </body></html>

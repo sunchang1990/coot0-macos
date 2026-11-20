@@ -17,6 +17,6 @@ Arguments: imol (a whole number), residues_specs_py (a list or value), n_trials 
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `multi_residue_torsion_fit(0, ["A", 41, ""], 1)` | not tried |
-| Scheme | `(multi-residue-torsion-fit 0 (list "A" 41 "") 1)` | not tried |
+| Python | `multi_residue_torsion_fit(0, ["A", 41, ""], 1)` | error: SystemError: <built-in function multi_residue_torsion_fit_py> returned a result with an exception set |
+| Scheme | `(multi-residue-torsion-fit 0 (list "A" 41 "") 1)` | error: In procedure length: Wrong type argument in position 1: "A" |
 

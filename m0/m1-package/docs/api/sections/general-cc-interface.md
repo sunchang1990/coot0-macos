@@ -16,7 +16,7 @@ Arguments: none. Returns: a value (see the result of the example).
 | | Example | When tried (test data, no window) |
 |---|---|---|
 | Python | `active_atom_spec()` | ran, returned `(True, (0, [True, 'A', 42, '']))` |
-| Scheme | `(active-atom-spec)` | ran, returned `#<collectable-swig-pointer std::pair< bool,std::pair< int,coot::atom_spec_t > > * adb90e940>` |
+| Scheme | `(active-atom-spec)` | ran, returned `#<collectable-swig-pointer std::pair< bool,std::pair< int,coot::atom_spec_t > > * 8ebfc06e0>` |
 
 ### add_cablam_markup
 
@@ -31,6 +31,8 @@ Arguments: imol (a whole number), cablam_log_file_name (text). Returns: a value 
 |---|---|---|
 | Python | `add_cablam_markup(0, "tutorial-modern.pdb")` | ran, returned `[]` |
 | Scheme | `(add-cablam-markup 0 "tutorial-modern.pdb")` | ran, returned `()` |
+
+Python and Scheme gave the same answer.
 
 ### add_validation_mol_menu_item
 
@@ -55,6 +57,8 @@ Arguments: a (text), b (text). Returns: true or false.
 |---|---|---|
 | Python | `compare_strings("hello", "hello")` | ran, returned `False` |
 | Scheme | `(compare-strings "hello" "hello")` | ran, returned `#f` |
+
+Python and Scheme gave the same answer.
 
 ### create_initial_validation_graph_submenu_generic
 
@@ -92,6 +96,8 @@ Arguments: pre_directory (text), data_type (a whole number). Returns: a list.
 | Python | `filtered_by_glob(".", 1)` | ran, returned `('./rnasa-1.8-all_refmac1.mtz',)` |
 | Scheme | `(filtered-by-glob "." 1)` | ran, returned `#("./rnasa-1.8-all_refmac1.mtz")` |
 
+Python and Scheme gave the same answer.
+
 ### float_from_entry
 
 Python: `float_from_entry(entry)`  
@@ -128,6 +134,8 @@ Arguments: none. Returns: text.
 | Python | `git_commit()` | ran, returned `'50638a38145722303017be802622d65d83bd7f66'` |
 | Scheme | `(git-commit)` | ran, returned `"50638a38145722303017be802622d65d83bd7f66"` |
 
+Python and Scheme gave the same answer.
+
 ### goto_next_atom_maybe
 
 Python: `goto_next_atom_maybe(chain_id, resno, ins_code, atom_name)`  
@@ -141,6 +149,8 @@ Also available in Scheme as `goto-next-atom-maybe-scm`.
 |---|---|---|
 | Python | `goto_next_atom_maybe("A", 41, "", " CA ")` | ran, returned `['A', 41, '', ' CA ']` |
 | Scheme | `(goto-next-atom-maybe "A" 41 "" " CA ")` | ran, returned `("A" 41 "" " CA ")` |
+
+Python and Scheme gave the same answer.
 
 ### goto_prev_atom_maybe
 
@@ -156,6 +166,8 @@ Also available in Scheme as `goto-prev-atom-maybe-scm`.
 | Python | `goto_prev_atom_maybe("A", 41, "", " CA ")` | ran, returned `['A', 40, '', ' CA ']` |
 | Scheme | `(goto-prev-atom-maybe "A" 41 "" " CA ")` | ran, returned `("A" 40 "" " CA ")` |
 
+Python and Scheme gave the same answer.
+
 ### int_from_entry
 
 Python: `int_from_entry(entry)`  
@@ -165,8 +177,8 @@ Arguments: entry (`GtkWidget *`). Returns: a list.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### menu_item_label
 
@@ -182,8 +194,8 @@ Arguments: menu_item (`GtkWidget *`). Returns: text.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### pre_directory_file_selection
 
@@ -194,8 +206,8 @@ Arguments: sort_button (`GtkWidget *`). Returns: text.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### probe_dots_short_contact_name_to_expanded_name
 
@@ -206,8 +218,8 @@ Arguments: short_name (text). Returns: text.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `probe_dots_short_contact_name_to_expanded_name("my-name")` | not tried |
-| Scheme | `(probe-dots-short-contact-name-to-expanded-name "my-name")` | not tried |
+| Python | `probe_dots_short_contact_name_to_expanded_name("my-name")` | not run: not run automatically (probe: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(probe-dots-short-contact-name-to-expanded-name "my-name")` | not run: not run automatically (probe: exits, uses the network, an external program, files or a screen) |
 
 ### set_go_to_atom_from_atom_spec
 
@@ -220,8 +232,10 @@ Also available in Scheme as `set-go-to-atom-from-atom-spec-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_go_to_atom_from_atom_spec(["A", 41, ""])` | not tried |
-| Scheme | `(set-go-to-atom-from-atom-spec (list "A" 41 ""))` | not tried |
+| Python | `set_go_to_atom_from_atom_spec(["A", 41, ""])` | ran, returned `0` |
+| Scheme | `(set-go-to-atom-from-atom-spec (list "A" 41 ""))` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### set_go_to_atom_from_res_spec
 
@@ -232,8 +246,10 @@ Arguments: residue_spec (a list or value). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_go_to_atom_from_res_spec(["A", 41, ""])` | not tried |
-| Scheme | `(set-go-to-atom-from-res-spec (list "A" 41 ""))` | not tried |
+| Python | `set_go_to_atom_from_res_spec(["A", 41, ""])` | ran, returned `1` |
+| Scheme | `(set-go-to-atom-from-res-spec (list "A" 41 ""))` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 
 ### set_go_to_atom_from_spec
 
@@ -244,8 +260,8 @@ Arguments: atom_spec (`coot::atom_spec_t`). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### string_member
 
@@ -258,8 +274,8 @@ Arguments: search (text), list (a list). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `string_member("hello", "hello")` | not tried |
-| Scheme | `(string-member "hello" "hello")` | not tried |
+| Python | `string_member("hello", "hello")` | ran, returned `0` |
+| Scheme | `(string-member "hello" "hello")` | error: In procedure string-member: Wrong type argument in position 2: "hello" |
 
 ### wrapped_nothing_bad_dialog
 
@@ -270,6 +286,8 @@ Arguments: label (text). Returns: `GtkWidget *`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `wrapped_nothing_bad_dialog("hello")` | not tried |
-| Scheme | `(wrapped-nothing-bad-dialog "hello")` | not tried |
+| Python | `wrapped_nothing_bad_dialog("hello")` | ran (no return value) |
+| Scheme | `(wrapped-nothing-bad-dialog "hello")` | ran, returned `()` |
+
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 

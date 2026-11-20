@@ -15,8 +15,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `load_tutorial_model_and_data()` | not tried |
-| Scheme | `(load-tutorial-model-and-data)` | not tried |
+| Python | `load_tutorial_model_and_data()` | ran (no return value) |
+| Scheme | `(load-tutorial-model-and-data)` | ran (no return value) |
 
 ### lsq_improve
 
@@ -37,8 +37,8 @@ Arguments: imol_ref (a whole number), ref_selection (text), imol_moving (a whole
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `lsq_improve(0, "//A/41-45", 0, "//A/41-45", 1, 1.0)` | not tried |
-| Scheme | `(lsq-improve 0 "//A/41-45" 0 "//A/41-45" 1 1.0)` | not tried |
+| Python | `lsq_improve(0, "//A/41-45", 0, "//A/41-45", 1, 1.0)` | not run: not run automatically (lsq_improve: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(lsq-improve 0 "//A/41-45" 0 "//A/41-45" 1 1.0)` | not run: not run automatically (lsq_improve: exits, uses the network, an external program, files or a screen) |
 
 ### set_visible_toolbar_multi_refine_cancel_button
 
@@ -49,8 +49,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_visible_toolbar_multi_refine_cancel_button(1)` | not tried |
-| Scheme | `(set-visible-toolbar-multi-refine-cancel-button 1)` | not tried |
+| Python | `set_visible_toolbar_multi_refine_cancel_button(1)` | ran (no return value) |
+| Scheme | `(set-visible-toolbar-multi-refine-cancel-button 1)` | ran (no return value) |
 
 ### set_visible_toolbar_multi_refine_continue_button
 
@@ -61,8 +61,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_visible_toolbar_multi_refine_continue_button(1)` | not tried |
-| Scheme | `(set-visible-toolbar-multi-refine-continue-button 1)` | not tried |
+| Python | `set_visible_toolbar_multi_refine_continue_button(1)` | ran (no return value) |
+| Scheme | `(set-visible-toolbar-multi-refine-continue-button 1)` | ran (no return value) |
 
 ### set_visible_toolbar_multi_refine_stop_button
 
@@ -73,8 +73,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_visible_toolbar_multi_refine_stop_button(1)` | not tried |
-| Scheme | `(set-visible-toolbar-multi-refine-stop-button 1)` | not tried |
+| Python | `set_visible_toolbar_multi_refine_stop_button(1)` | ran (no return value) |
+| Scheme | `(set-visible-toolbar-multi-refine-stop-button 1)` | ran (no return value) |
 
 ### toolbar_multi_refine_button_set_sensitive
 
@@ -88,8 +88,8 @@ Arguments: button_type (text), state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `toolbar_multi_refine_button_set_sensitive("hello", 1)` | not tried |
-| Scheme | `(toolbar-multi-refine-button-set-sensitive "hello" 1)` | not tried |
+| Python | `toolbar_multi_refine_button_set_sensitive("hello", 1)` | ran (no return value) |
+| Scheme | `(toolbar-multi-refine-button-set-sensitive "hello" 1)` | ran (no return value) |
 
 ### toolbar_multi_refine_cancel
 
@@ -100,8 +100,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `toolbar_multi_refine_cancel()` | not tried |
-| Scheme | `(toolbar-multi-refine-cancel)` | not tried |
+| Python | `toolbar_multi_refine_cancel()` | ran (no return value) |
+| Scheme | `(toolbar-multi-refine-cancel)` | ran (no return value) |
 
 ### toolbar_multi_refine_continue
 
@@ -112,8 +112,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `toolbar_multi_refine_continue()` | not tried |
-| Scheme | `(toolbar-multi-refine-continue)` | not tried |
+| Python | `toolbar_multi_refine_continue()` | ran (no return value) |
+| Scheme | `(toolbar-multi-refine-continue)` | ran (no return value) |
 
 ### toolbar_multi_refine_stop
 
@@ -124,6 +124,6 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `toolbar_multi_refine_stop()` | not tried |
-| Scheme | `(toolbar-multi-refine-stop)` | not tried |
+| Python | `toolbar_multi_refine_stop()` | ran (no return value) |
+| Scheme | `(toolbar-multi-refine-stop)` | ran (no return value) |
 

@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="a76d541e70d6b7900afbda1c6c372bd2bc997d4b">
+<meta name="coot0-source-sha1" content="28da7758b65d8a7945626b70bd469ba94adf32c6">
 <title>Masks - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -24,24 +24,27 @@ Scheme: <code>(make-masked-maps-split-by-chain imol imol-map)</code></p>
 <p> needs to return a list of values</p>
 <p>Arguments: imol (a whole number), imol_map (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>make_masked_maps_split_by_chain(0, 1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(make-masked-maps-split-by-chain 0 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>make_masked_maps_split_by_chain(0, 1)</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(make-masked-maps-split-by-chain 0 1)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="map_mask_atom_radius">map_mask_atom_radius</h3>
 <p>Python: <code>map_mask_atom_radius()</code><br>
 Scheme: <code>(map-mask-atom-radius)</code></p>
 <p>get the atom radius for map masking</p>
 <p>Arguments: none. Returns: a number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>map_mask_atom_radius()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(map-mask-atom-radius)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>map_mask_atom_radius()</code></td><td>ran, returned <code>-99.0</code></td></tr>
+<tr><td>Scheme</td><td><code>(map-mask-atom-radius)</code></td><td>ran, returned <code>-99.0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="mask_map_by_atom_selection">mask_map_by_atom_selection</h3>
 <p>Python: <code>mask_map_by_atom_selection(map_mol_no, coords_mol_no, mmdb_atom_selection, invert_flag)</code><br>
 Scheme: <code>(mask-map-by-atom-selection map-mol-no coords-mol-no mmdb-atom-selection invert-flag)</code></p>
 <p>mask map by atom selection</p>
 <p>Arguments: map_mol_no (a whole number), coords_mol_no (a whole number), mmdb_atom_selection (text), invert_flag (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>mask_map_by_atom_selection(1, 1, "//A/41-45", 1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(mask-map-by-atom-selection 1 1 "//A/41-45" 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>mask_map_by_atom_selection(1, 1, "//A/41-45", 1)</code></td><td>ran, returned <code>-1</code></td></tr>
+<tr><td>Scheme</td><td><code>(mask-map-by-atom-selection 1 1 "//A/41-45" 1)</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="mask_map_by_molecule">mask_map_by_molecule</h3>
 <p>Python: <code>mask_map_by_molecule(map_mol_no, coord_mol_no, invert_flag)</code><br>
 Scheme: <code>(mask-map-by-molecule map-mol-no coord-mol-no invert-flag)</code></p>
@@ -52,14 +55,15 @@ Scheme: <code>(mask-map-by-molecule map-mol-no coord-mol-no invert-flag)</code><
  where there are no atoms atoms.</p>
 <p>Arguments: map_mol_no (a whole number), coord_mol_no (a whole number), invert_flag (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>mask_map_by_molecule(1, 1, 1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(mask-map-by-molecule 1 1 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>mask_map_by_molecule(1, 1, 1)</code></td><td>ran, returned <code>-1</code></td></tr>
+<tr><td>Scheme</td><td><code>(mask-map-by-molecule 1 1 1)</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="set_map_mask_atom_radius">set_map_mask_atom_radius</h3>
 <p>Python: <code>set_map_mask_atom_radius(rad)</code><br>
 Scheme: <code>(set-map-mask-atom-radius rad)</code></p>
 <p>set the atom radius for map masking</p>
 <p>Arguments: rad (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_map_mask_atom_radius(5.0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-map-mask-atom-radius 5.0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_map_mask_atom_radius(5.0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-map-mask-atom-radius 5.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
 </body></html>

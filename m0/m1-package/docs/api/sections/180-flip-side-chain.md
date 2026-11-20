@@ -27,8 +27,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `setup_180_degree_flip(1)` | not tried |
-| Scheme | `(setup-180-degree-flip 1)` | not tried |
+| Python | `setup_180_degree_flip(1)` | ran (no return value) |
+| Scheme | `(setup-180-degree-flip 1)` | ran (no return value) |
 
 ### side_chain_flip_180_intermediate_atoms
 
@@ -41,6 +41,8 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `side_chain_flip_180_intermediate_atoms()` | not tried |
-| Scheme | `(side-chain-flip-180-intermediate-atoms)` | not tried |
+| Python | `side_chain_flip_180_intermediate_atoms()` | ran, returned `0` |
+| Scheme | `(side-chain-flip-180-intermediate-atoms)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 

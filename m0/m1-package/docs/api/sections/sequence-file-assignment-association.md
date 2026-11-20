@@ -26,6 +26,8 @@ Also available in Scheme as `alignment-mismatches-scm`.
 | Python | `alignment_mismatches(0)` | ran, returned `False` |
 | Scheme | `(alignment-mismatches 0)` | ran, returned `#f` |
 
+Python and Scheme gave the same answer.
+
 ### assign_fasta_sequence
 
 Python: `assign_fasta_sequence(imol, chain_id_in, seq)`  
@@ -152,8 +154,8 @@ Arguments: imol (a whole number), chain_id (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `print_sequence_chain(0, "A")` | not tried |
-| Scheme | `(print-sequence-chain 0 "A")` | not tried |
+| Python | `print_sequence_chain(0, "A")` | ran (no return value) |
+| Scheme | `(print-sequence-chain 0 "A")` | ran (no return value) |
 
 ### print_sequence_chain_general
 
@@ -167,8 +169,8 @@ Arguments: imol (a whole number), chain_id (text), pir_format (a whole number), 
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `print_sequence_chain_general(0, "A", 1, 1, "tutorial-modern.pdb")` | not tried |
-| Scheme | `(print-sequence-chain-general 0 "A" 1 1 "tutorial-modern.pdb")` | not tried |
+| Python | `print_sequence_chain_general(0, "A", 1, 1, "tutorial-modern.pdb")` | ran (no return value) |
+| Scheme | `(print-sequence-chain-general 0 "A" 1 1 "tutorial-modern.pdb")` | ran (no return value) |
 
 ### sequence_info
 
@@ -185,6 +187,8 @@ Also available in Python as `sequence_info_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `sequence_info(0)` | not tried |
-| Scheme | `(sequence-info 0)` | not tried |
+| Python | `sequence_info(0)` | ran, returned `False` |
+| Scheme | `(sequence-info 0)` | ran, returned `#f` |
+
+Python and Scheme gave the same answer.
 

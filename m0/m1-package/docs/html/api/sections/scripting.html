@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="0f18c6df0d13521b728b9349234606390be64048">
+<meta name="coot0-source-sha1" content="a79437d0c2a1fe2737aa038abaa15d1ccf703667">
 <title>Scripting - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -40,75 +40,75 @@ return a python string, decode to c++ using scm_to_locale_string();</p>
 Also available in Python as <code>make_atom_spec_py</code>.
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>make_atom_spec(["A", 41, ""])</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>make_atom_spec(["A", 41, ""])</code></td><td>ran, returned <code>&lt;Swig Object of type 'std::pair&lt; bool,coot::atom_spec_t &gt; *' at 0x10a778540&gt;</code></td></tr></tbody></table>
 <h3 id="make_residue_spec_py">make_residue_spec_py</h3>
 <p>Python: <code>make_residue_spec_py(spec)</code></p>
 <p>Arguments: spec (a list or value). Returns: a list.
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>make_residue_spec_py(["A", 41, ""])</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>make_residue_spec_py(["A", 41, ""])</code></td><td>ran, returned <code>&lt;Swig Object of type 'std::pair&lt; bool,coot::residue_spec_t &gt; *' at 0x1098451a0&gt;</code></td></tr></tbody></table>
 <h3 id="py_clean_internal">py_clean_internal</h3>
 <p>Python: <code>py_clean_internal(obj)</code></p>
 <p>Arguments: obj (a list or value). Returns: a value (see the result of the example).
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 <h3 id="run_generic_script">run_generic_script</h3>
 <p>Python: <code>run_generic_script(cmd_strings)</code><br>
 Scheme: <code>(run-generic-script cmd-strings)</code></p>
 <p>Is this a repeat of something? I don't know.</p>
 <p>Arguments: cmd_strings (a list). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>run_generic_script("hello")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(run-generic-script "hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>run_generic_script("hello")</code></td><td>not run: not run automatically (run: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(run-generic-script "hello")</code></td><td>not run: not run automatically (run: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="safe_python_command">safe_python_command</h3>
 <p>Python: <code>safe_python_command(python_command)</code></p>
 <p>do nothing</p>
 <p>Arguments: python_command (text). Returns: nothing.
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>safe_python_command("hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>safe_python_command("hello")</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="safe_python_command_by_char_star">safe_python_command_by_char_star</h3>
 <p>Python: <code>safe_python_command_by_char_star(python_command)</code></p>
 <p>Arguments: python_command (text). Returns: nothing.
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>safe_python_command_by_char_star("hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>safe_python_command_by_char_star("hello")</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="safe_python_command_test">safe_python_command_test</h3>
 <p>Python: <code>safe_python_command_test(cmd)</code></p>
 <p>Arguments: cmd (text). Returns: a value (see the result of the example).
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>safe_python_command_test("hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>safe_python_command_test("hello")</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="safe_python_command_with_return">safe_python_command_with_return</h3>
 <p>Python: <code>safe_python_command_with_return(python_cmd)</code></p>
 <p>Arguments: python_cmd (text). Returns: a value (see the result of the example).
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>safe_python_command_with_return("hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>safe_python_command_with_return("hello")</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="safe_python_command_with_unsafe_thread">safe_python_command_with_unsafe_thread</h3>
 <p>Python: <code>safe_python_command_with_unsafe_thread(cmd)</code></p>
 <p>Arguments: cmd (text). Returns: nothing.
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>safe_python_command_with_unsafe_thread("hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>safe_python_command_with_unsafe_thread("hello")</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
 <h3 id="safe_scheme_command">safe_scheme_command</h3>
 <p>Python: <code>safe_scheme_command(scheme_command)</code><br>
 Scheme: <code>(safe-scheme-command scheme-command)</code></p>
 <p>Arguments: scheme_command (text). Returns: a value (see the result of the example).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>safe_scheme_command("hello")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(safe-scheme-command "hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>safe_scheme_command("hello")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(safe-scheme-command "hello")</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="safe-scheme-command-test">safe-scheme-command-test</h3>
 <p>Scheme: <code>(safe-scheme-command-test cmd)</code></p>
 <p>Arguments: cmd (text). Returns: a value (see the result of the example).
 <strong>Scheme only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Scheme</td><td><code>(safe-scheme-command-test "hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Scheme</td><td><code>(safe-scheme-command-test "hello")</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="test-mol-triangles-scm">test-mol-triangles-scm</h3>
 <p>Scheme: <code>(test-mol-triangles-scm i-scm j-scm)</code></p>
 <p>Arguments: i-scm (a list or value), j-scm (a list or value). Returns: a value (see the result of the example).
 <strong>Scheme only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 </body></html>

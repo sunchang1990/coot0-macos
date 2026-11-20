@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="056b1e07af14601b6bd155d91e170a0e3f1ffe71">
+<meta name="coot0-source-sha1" content="ef5ea74fc0aaa164f7df4efb4037a994f5f32114">
 <title>Library and Utility Functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -66,6 +66,7 @@ Also available in Scheme as <code>coot-sys-build-type-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>coot_sys_build_type()</code></td><td>ran, returned <code>'Darwin-arm64'</code></td></tr>
 <tr><td>Scheme</td><td><code>(coot-sys-build-type)</code></td><td>ran, returned <code>"Darwin-arm64"</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="first_coords_imol">first_coords_imol</h3>
 <p>Python: <code>first_coords_imol()</code><br>
 Scheme: <code>(first-coords-imol)</code></p>
@@ -75,6 +76,7 @@ Scheme: <code>(first-coords-imol)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>first_coords_imol()</code></td><td>ran, returned <code>0</code></td></tr>
 <tr><td>Scheme</td><td><code>(first-coords-imol)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="first_small_coords_imol">first_small_coords_imol</h3>
 <p>Python: <code>first_small_coords_imol()</code><br>
 Scheme: <code>(first-small-coords-imol)</code></p>
@@ -84,6 +86,7 @@ Scheme: <code>(first-small-coords-imol)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>first_small_coords_imol()</code></td><td>ran, returned <code>-1</code></td></tr>
 <tr><td>Scheme</td><td><code>(first-small-coords-imol)</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="first_unsaved_coords_imol">first_unsaved_coords_imol</h3>
 <p>Python: <code>first_unsaved_coords_imol()</code><br>
 Scheme: <code>(first-unsaved-coords-imol)</code></p>
@@ -93,6 +96,7 @@ Scheme: <code>(first-unsaved-coords-imol)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>first_unsaved_coords_imol()</code></td><td>ran, returned <code>-1</code></td></tr>
 <tr><td>Scheme</td><td><code>(first-unsaved-coords-imol)</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="git_revision_count">git_revision_count</h3>
 <p>Python: <code>git_revision_count()</code><br>
 Scheme: <code>(git-revision-count)</code></p>
@@ -101,6 +105,7 @@ Scheme: <code>(git-revision-count)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>git_revision_count()</code></td><td>ran, returned <code>10988</code></td></tr>
 <tr><td>Scheme</td><td><code>(git-revision-count)</code></td><td>ran, returned <code>10988</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="mmcif_sfs_to_mtz">mmcif_sfs_to_mtz</h3>
 <p>Python: <code>mmcif_sfs_to_mtz(cif_file_name, mtz_file_name)</code><br>
 Scheme: <code>(mmcif-sfs-to-mtz cif-file-name mtz-file-name)</code></p>
@@ -110,8 +115,9 @@ Scheme: <code>(mmcif-sfs-to-mtz cif-file-name mtz-file-name)</code></p>
  -1 on complete failure to write a file.</p>
 <p>Arguments: cif_file_name (text), mtz_file_name (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>mmcif_sfs_to_mtz("tutorial-modern.pdb", "rnasa-1.8-all_refmac1.mtz")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(mmcif-sfs-to-mtz "tutorial-modern.pdb" "rnasa-1.8-all_refmac1.mtz")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>mmcif_sfs_to_mtz("tutorial-modern.pdb", "rnasa-1.8-all_refmac1.mtz")</code></td><td>ran, returned <code>-1</code></td></tr>
+<tr><td>Scheme</td><td><code>(mmcif-sfs-to-mtz "tutorial-modern.pdb" "rnasa-1.8-all_refmac1.mtz")</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="molecule_name">molecule_name</h3>
 <p>Python: <code>molecule_name(imol)</code><br>
 Scheme: <code>(molecule-name imol)</code></p>
@@ -120,8 +126,9 @@ Scheme: <code>(molecule-name imol)</code></p>
  e.g. "/a/b/c.pdb" for "d/e/f.mtz FWT PHWT"</p>
 <p>Arguments: imol (a whole number). Returns: text.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>molecule_name(0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(molecule-name 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>molecule_name(0)</code></td><td>ran, returned <code>'tutorial-modern.pdb'</code></td></tr>
+<tr><td>Scheme</td><td><code>(molecule-name 0)</code></td><td>ran, returned <code>"tutorial-modern.pdb"</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="molecule_name_stub">molecule_name_stub</h3>
 <p>Python: <code>molecule_name_stub(imol, include_path_flag)</code><br>
 Scheme: <code>(molecule-name-stub imol include-path-flag)</code></p>
@@ -130,8 +137,9 @@ Scheme: <code>(molecule-name-stub imol include-path-flag)</code></p>
 Also available in Python as <code>molecule_name_stub_py</code>.
 Also available in Scheme as <code>molecule-name-stub-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>molecule_name_stub(0, 1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(molecule-name-stub 0 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>molecule_name_stub(0, 1)</code></td><td>ran, returned <code>'tutorial-modern'</code></td></tr>
+<tr><td>Scheme</td><td><code>(molecule-name-stub 0 1)</code></td><td>ran, returned <code>"tutorial-modern"</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="run_clear_backups">run_clear_backups</h3>
 <p>Python: <code>run_clear_backups(retval)</code><br>
 Scheme: <code>(run-clear-backups retval)</code></p>
@@ -139,22 +147,23 @@ Scheme: <code>(run-clear-backups retval)</code></p>
 <p>Arguments: retval (a whole number). Returns: nothing.
 Also available in Python as <code>run_clear_backups_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>run_clear_backups(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(run-clear-backups 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>run_clear_backups(1)</code></td><td>not run: not run automatically (run: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(run-clear-backups 1)</code></td><td>not run: not run automatically (run: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="set_molecule_name">set_molecule_name</h3>
 <p>Python: <code>set_molecule_name(imol, new_name)</code><br>
 Scheme: <code>(set-molecule-name imol new-name)</code></p>
 <p>set the molecule name of the imol-th molecule</p>
 <p>Arguments: imol (a whole number), new_name (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_molecule_name(0, "my-name")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-molecule-name 0 "my-name")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_molecule_name(0, "my-name")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-molecule-name 0 "my-name")</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="svn_revision">svn_revision</h3>
 <p>Python: <code>svn_revision()</code><br>
 Scheme: <code>(svn-revision)</code></p>
 <p>an alias to git_revision_count() for backwards compatibility</p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>svn_revision()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(svn-revision)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>svn_revision()</code></td><td>ran, returned <code>10988</code></td></tr>
+<tr><td>Scheme</td><td><code>(svn-revision)</code></td><td>ran, returned <code>10988</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 </body></html>

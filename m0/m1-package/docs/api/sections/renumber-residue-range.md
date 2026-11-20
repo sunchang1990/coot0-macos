@@ -19,6 +19,8 @@ Arguments: imol (a whole number), chain_id (text), current_resno (a whole number
 | Python | `change_residue_number(0, "A", 41, "", 41, "")` | ran, returned `1` |
 | Scheme | `(change-residue-number 0 "A" 41 "" 41 "")` | ran, returned `1` |
 
+Python and Scheme gave the same answer.
+
 ### renumber_residue_range
 
 Python: `renumber_residue_range(imol, chain_id, start_res, last_res, offset)`  
@@ -30,6 +32,8 @@ Arguments: imol (a whole number), chain_id (text), start_res (a whole number), l
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `renumber_residue_range(0, "A", 41, 45, 1)` | not tried |
-| Scheme | `(renumber-residue-range 0 "A" 41 45 1)` | not tried |
+| Python | `renumber_residue_range(0, "A", 41, 45, 1)` | ran, returned `0` |
+| Scheme | `(renumber-residue-range 0 "A" 41 45 1)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 

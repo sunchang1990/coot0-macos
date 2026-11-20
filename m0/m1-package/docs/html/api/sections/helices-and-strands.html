@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="b1b715653cdf9232157c0bb28515f85f0127ab0d">
+<meta name="coot0-source-sha1" content="c11de8c317e9bac3d4057e351e7793413e93ef9a">
 <title>Helices and Strands - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -29,6 +29,7 @@ Scheme: <code>(find-helices)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>find_helices()</code></td><td>ran, returned <code>2</code></td></tr>
 <tr><td>Scheme</td><td><code>(find-helices)</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="find_secondary_structure">find_secondary_structure</h3>
 <p>Python: <code>find_secondary_structure(use_helix, helix_length, helix_target, use_strand, strand_length, strand_target)</code><br>
 Scheme: <code>(find-secondary-structure use-helix helix-length helix-target use-strand strand-length strand-target)</code></p>
@@ -63,6 +64,7 @@ Scheme: <code>(find-strands)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>find_strands()</code></td><td>ran, returned <code>2</code></td></tr>
 <tr><td>Scheme</td><td><code>(find-strands)</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="place_helix_here">place_helix_here</h3>
 <p>Python: <code>place_helix_here()</code><br>
 Scheme: <code>(place-helix-here)</code></p>
@@ -74,8 +76,9 @@ Scheme: <code>(place-helix-here)</code></p>
 <p> Returns the index of the new molecule.</p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>place_helix_here()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(place-helix-here)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>place_helix_here()</code></td><td>ran, returned <code>2</code></td></tr>
+<tr><td>Scheme</td><td><code>(place-helix-here)</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="place_strand_here">place_strand_here</h3>
 <p>Python: <code>place_strand_here(n_residues, n_sample_strands)</code><br>
 Scheme: <code>(place-strand-here n-residues n-sample-strands)</code></p>
@@ -89,8 +92,9 @@ Scheme: <code>(place-strand-here n-residues n-sample-strands)</code></p>
 <p> Returns the index of the new molecule.</p>
 <p>Arguments: n_residues (a whole number), n_sample_strands (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>place_strand_here(1, 1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(place-strand-here 1 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>place_strand_here(1, 1)</code></td><td>ran, returned <code>-1</code></td></tr>
+<tr><td>Scheme</td><td><code>(place-strand-here 1 1)</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="place_strand_here_dialog">place_strand_here_dialog</h3>
 <p>Python: <code>place_strand_here_dialog()</code><br>
 Scheme: <code>(place-strand-here-dialog)</code></p>
@@ -99,13 +103,13 @@ Scheme: <code>(place-strand-here-dialog)</code></p>
  function, display it in place, don't return a widget.</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>place_strand_here_dialog()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(place-strand-here-dialog)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>place_strand_here_dialog()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(place-strand-here-dialog)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_place_helix_here_fudge_factor">set_place_helix_here_fudge_factor</h3>
 <p>Python: <code>set_place_helix_here_fudge_factor(ff)</code><br>
 Scheme: <code>(set-place-helix-here-fudge-factor ff)</code></p>
 <p>Arguments: ff (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_place_helix_here_fudge_factor(1.0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-place-helix-here-fudge-factor 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_place_helix_here_fudge_factor(1.0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-place-helix-here-fudge-factor 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
 </body></html>

@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="83982ff3ae53fd89777ad8978ba714375bbb7b28">
+<meta name="coot0-source-sha1" content="0ca934fd061f462e103ea93e47f4b148bebbf222">
 <title>Spin Search Functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -26,41 +26,42 @@ Also available in Scheme as <code>CG-spin-search-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>CG_spin_search_py(0, 1)</code></td><td>ran, returned <code>[[-24.0, [True, 'A', 1, '']], [9.0, [True, 'A', 8, '']], [-3.0, [True, 'A', 11, '']], [3.0, [True, 'A', 14, '']], [3.0,  ...</code></td></tr>
 <tr><td>Scheme</td><td><code>(CG-spin-search 0 1)</code></td><td>ran, returned <code>(((#t "A" 1 "") -24.0) ((#t "A" 8 "") 9.0) ((#t "A" 11 "") -3.0) ((#t "A" 14 "") 3.0) ((#t "A" 17 "") 3.0) ((#t "A" 19 " ...</code></td></tr></tbody></table>
+<p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 <h3 id="monomer_lib_3_letter_codes_matching">monomer_lib_3_letter_codes_matching</h3>
 <p>Python: <code>monomer_lib_3_letter_codes_matching(search_string, allow_minimal_descriptions_flag)</code><br>
 Scheme: <code>(monomer-lib-3-letter-codes-matching search-string allow-minimal-descriptions-flag)</code></p>
 <p>Arguments: search_string (text), allow_minimal_descriptions_flag (a whole number). Returns: a list.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>monomer_lib_3_letter_codes_matching("hello", 1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(monomer-lib-3-letter-codes-matching "hello" 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>monomer_lib_3_letter_codes_matching("hello", 1)</code></td><td>ran, returned <code>&lt;Swig Object of type 'std::vector&lt; std::pair&lt; std::string,std::string &gt;,std::allocator&lt; std::pair&lt; std::string,std::stri ...</code></td></tr>
+<tr><td>Scheme</td><td><code>(monomer-lib-3-letter-codes-matching "hello" 1)</code></td><td>ran, returned <code>#&lt;collectable-swig-pointer std::vector&lt; std::pair&lt; std::string,std::string &gt; &gt; * 718d33e80&gt;</code></td></tr></tbody></table>
 <h3 id="mutate_internal">mutate_internal</h3>
 <p>Python: <code>mutate_internal(ires, chain_id, imol, target_res_type)</code><br>
 Scheme: <code>(mutate-internal ires chain-id imol target-res-type)</code></p>
 <p>Arguments: ires (a whole number), chain_id (text), imol (a whole number), target_res_type (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>mutate_internal(41, "A", 0, "ALA")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(mutate-internal 41 "A" 0 "ALA")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>mutate_internal(41, "A", 0, "ALA")</code></td><td>error: TypeError: in method 'mutate_internal', argument 4 of type 'std::string &amp;'</td></tr>
+<tr><td>Scheme</td><td><code>(mutate-internal 41 "A" 0 "ALA")</code></td><td>error: In procedure mutate-internal: Wrong type argument in position 4: "ALA"</td></tr></tbody></table>
 <h3 id="on_monomer_lib_sbase_molecule_button_press">on_monomer_lib_sbase_molecule_button_press</h3>
 <p>Python: <code>on_monomer_lib_sbase_molecule_button_press(button, user_data)</code><br>
 Scheme: <code>(on-monomer-lib-sbase-molecule-button-press button user-data)</code></p>
 <p>Arguments: button (<code>GtkButton *</code>), user_data (<code>gpointer</code>). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 <h3 id="on_monomer_lib_search_results_button_press">on_monomer_lib_search_results_button_press</h3>
 <p>Python: <code>on_monomer_lib_search_results_button_press(button, user_data)</code><br>
 Scheme: <code>(on-monomer-lib-search-results-button-press button user-data)</code></p>
 <p>Arguments: button (<code>GtkButton *</code>), user_data (<code>gpointer</code>). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 <h3 id="overlap_ligands_internal">overlap_ligands_internal</h3>
 <p>Python: <code>overlap_ligands_internal(imol_ligand, imol_ref, chain_id_ref, resno_ref, apply_rtop_flag)</code><br>
 Scheme: <code>(overlap-ligands-internal imol-ligand imol-ref chain-id-ref resno-ref apply-rtop-flag)</code></p>
 <p>Arguments: imol_ligand (a whole number), imol_ref (a whole number), chain_id_ref (text), resno_ref (a whole number), apply_rtop_flag (true or false). Returns: <code>coot::graph_match_info_t</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>overlap_ligands_internal(0, 0, "A", 41, 1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(overlap-ligands-internal 0 0 "A" 41 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>overlap_ligands_internal(0, 0, "A", 41, True)</code></td><td>ran, returned <code>&lt;Swig Object of type 'coot::graph_match_info_t *' at 0x10c29d1d0&gt;</code></td></tr>
+<tr><td>Scheme</td><td><code>(overlap-ligands-internal 0 0 "A" 41 1)</code></td><td>ran, returned <code>#&lt;collectable-swig-pointer coot::graph_match_info_t * 7acc8b020&gt;</code></td></tr></tbody></table>
 <h3 id="spin_n">spin_N</h3>
 <p>Python: <code>spin_N(imol, residue_spec, angle)</code><br>
 Scheme: <code>(spin-N-scm imol residue-spec-scm angle)</code></p>
@@ -71,8 +72,8 @@ Scheme: <code>(spin-N-scm imol residue-spec-scm angle)</code></p>
 <p>Arguments: imol (a whole number), residue_spec (a list or value), angle (a number). Returns: nothing.
 Also available in Python as <code>spin_N_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>spin_N(0, ["A", 41, ""], 10.0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(spin-N-scm 0 (list "A" 41 "") 10.0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>spin_N(0, ["A", 41, ""], 10.0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(spin-N-scm 0 (list "A" 41 "") 10.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="spin_search">spin_search</h3>
 <p>Python: <code>spin_search(imol_map, imol, chain_id, resno, ins_code, direction_atoms_list, moving_atoms_list)</code><br>
 Scheme: <code>(spin-search imol-map imol chain-id resno ins-code direction-atoms-list moving-atoms-list)</code></p>
@@ -83,13 +84,13 @@ Scheme: <code>(spin-search imol-map imol chain-id resno ins-code direction-atoms
 <p>Arguments: imol_map (a whole number), imol (a whole number), chain_id (text), resno (a whole number), ins_code (text), direction_atoms_list (a list or value), moving_atoms_list (a list or value). Returns: nothing.
 Also available in Python as <code>spin_search_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 <h3 id="spin_search_by_atom_vectors">spin_search_by_atom_vectors</h3>
 <p>Python: <code>spin_search_by_atom_vectors(imol_map, imol, chain_id, resno, ins_code, direction_atoms_list, moving_atoms_list)</code><br>
 Scheme: <code>(spin-search-by-atom-vectors imol-map imol chain-id resno ins-code direction-atoms-list moving-atoms-list)</code></p>
 <p>Arguments: imol_map (a whole number), imol (a whole number), chain_id (text), resno (a whole number), ins_code (text), direction_atoms_list (text), moving_atoms_list (a list). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>spin_search_by_atom_vectors(1, 0, "A", 41, "", ".", "hello")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(spin-search-by-atom-vectors 1 0 "A" 41 "" "." "hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>spin_search_by_atom_vectors(1, 0, "A", 41, "", ".", "hello")</code></td><td>error: TypeError: in method 'spin_search_by_atom_vectors', argument 6 of type 'std::pair&lt; std::string,std::string &gt; const &amp;'</td></tr>
+<tr><td>Scheme</td><td><code>(spin-search-by-atom-vectors 1 0 "A" 41 "" "." "hello")</code></td><td>error: In procedure spin-search-by-atom-vectors: Wrong type argument in position 6: "."</td></tr></tbody></table>
 </body></html>

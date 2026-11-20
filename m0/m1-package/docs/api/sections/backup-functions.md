@@ -18,6 +18,8 @@ Arguments: none. Returns: a whole number.
 | Python | `apply_redo()` | ran, returned `0` |
 | Scheme | `(apply-redo)` | ran, returned `0` |
 
+Python and Scheme gave the same answer.
+
 ### apply_undo
 
 Python: `apply_undo()`  
@@ -32,6 +34,8 @@ Arguments: none. Returns: a whole number.
 | Python | `apply_undo()` | ran, returned `0` |
 | Scheme | `(apply-undo)` | ran, returned `0` |
 
+Python and Scheme gave the same answer.
+
 ### backup_compress_files_state
 
 Python: `backup_compress_files_state()`  
@@ -45,6 +49,8 @@ Arguments: none. Returns: a whole number.
 |---|---|---|
 | Python | `backup_compress_files_state()` | ran, returned `1` |
 | Scheme | `(backup-compress-files-state)` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 
 ### backup_state
 
@@ -62,6 +68,8 @@ Arguments: imol (a whole number). Returns: a whole number.
 | Python | `backup_state(0)` | ran, returned `1` |
 | Scheme | `(backup-state 0)` | ran, returned `1` |
 
+Python and Scheme gave the same answer.
+
 ### decoloned_backup_file_names_state
 
 Python: `decoloned_backup_file_names_state()`  
@@ -75,6 +83,8 @@ Arguments: none. Returns: a whole number.
 |---|---|---|
 | Python | `decoloned_backup_file_names_state()` | ran, returned `0` |
 | Scheme | `(decoloned-backup-file-names-state)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### have_unsaved_changes_p
 
@@ -91,6 +101,8 @@ Arguments: imol (a whole number). Returns: a whole number.
 | Python | `have_unsaved_changes_p(0)` | ran, returned `0` |
 | Scheme | `(have-unsaved-changes-p 0)` | ran, returned `0` |
 
+Python and Scheme gave the same answer.
+
 ### make_backup
 
 Python: `make_backup(imol)`  
@@ -102,8 +114,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `make_backup(0)` | not tried |
-| Scheme | `(make-backup 0)` | not tried |
+| Python | `make_backup(0)` | ran (no return value) |
+| Scheme | `(make-backup 0)` | ran (no return value) |
 
 ### set_backup_compress_files
 
@@ -116,8 +128,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_backup_compress_files(1)` | not tried |
-| Scheme | `(set-backup-compress-files 1)` | not tried |
+| Python | `set_backup_compress_files(1)` | ran (no return value) |
+| Scheme | `(set-backup-compress-files 1)` | ran (no return value) |
 
 ### set_decoloned_backup_file_names
 
@@ -134,8 +146,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_decoloned_backup_file_names(1)` | not tried |
-| Scheme | `(set-decoloned-backup-file-names 1)` | not tried |
+| Python | `set_decoloned_backup_file_names(1)` | ran (no return value) |
+| Scheme | `(set-decoloned-backup-file-names 1)` | ran (no return value) |
 
 ### set_have_unsaved_changes
 
@@ -148,8 +160,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_have_unsaved_changes(0)` | not tried |
-| Scheme | `(set-have-unsaved-changes 0)` | not tried |
+| Python | `set_have_unsaved_changes(0)` | ran (no return value) |
+| Scheme | `(set-have-unsaved-changes 0)` | ran (no return value) |
 
 ### set_undo_molecule
 
@@ -163,8 +175,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_undo_molecule(0)` | not tried |
-| Scheme | `(set-undo-molecule 0)` | not tried |
+| Python | `set_undo_molecule(0)` | ran (no return value) |
+| Scheme | `(set-undo-molecule 0)` | ran (no return value) |
 
 ### set_unpathed_backup_file_names
 
@@ -181,8 +193,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_unpathed_backup_file_names(1)` | not tried |
-| Scheme | `(set-unpathed-backup-file-names 1)` | not tried |
+| Python | `set_unpathed_backup_file_names(1)` | ran (no return value) |
+| Scheme | `(set-unpathed-backup-file-names 1)` | ran (no return value) |
 
 ### show_set_undo_molecule_chooser
 
@@ -196,8 +208,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `show_set_undo_molecule_chooser()` | not tried |
-| Scheme | `(show-set-undo-molecule-chooser)` | not tried |
+| Python | `show_set_undo_molecule_chooser()` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(show-set-undo-molecule-chooser)` | stopped Coot when tried without a window (not checked with a window) |
 
 ### turn_off_backup
 
@@ -210,8 +222,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `turn_off_backup(0)` | not tried |
-| Scheme | `(turn-off-backup 0)` | not tried |
+| Python | `turn_off_backup(0)` | ran (no return value) |
+| Scheme | `(turn-off-backup 0)` | ran (no return value) |
 
 ### turn_on_backup
 
@@ -224,8 +236,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `turn_on_backup(0)` | not tried |
-| Scheme | `(turn-on-backup 0)` | not tried |
+| Python | `turn_on_backup(0)` | ran (no return value) |
+| Scheme | `(turn-on-backup 0)` | ran (no return value) |
 
 ### unpathed_backup_file_names_state
 
@@ -238,6 +250,8 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `unpathed_backup_file_names_state()` | not tried |
-| Scheme | `(unpathed-backup-file-names-state)` | not tried |
+| Python | `unpathed_backup_file_names_state()` | ran, returned `0` |
+| Scheme | `(unpathed-backup-file-names-state)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 

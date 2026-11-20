@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="4e04ef3819498bc21c7997561e9e926cbf02925a">
+<meta name="coot0-source-sha1" content="95503b56a24ec914094aa71eae6a1be353ed066f">
 <title>Bond Representation - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -26,6 +26,7 @@ Scheme: <code>(additional-representation-by-attributes imol chain-id resno-start
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>additional_representation_by_attributes(0, "A", 41, 45, "", 1, 1, 1.0, 1)</code></td><td>ran, returned <code>0</code></td></tr>
 <tr><td>Scheme</td><td><code>(additional-representation-by-attributes 0 "A" 41 45 "" 1 1 1.0 1)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 <h3 id="additional_representation_by_string">additional_representation_by_string</h3>
 <p>Python: <code>additional_representation_by_string(imol, atom_selection, representation_type, bonds_box_type, bond_width, draw_hydrogens_flag)</code><br>
 Scheme: <code>(additional-representation-by-string imol atom-selection representation-type bonds-box-type bond-width draw-hydrogens-flag)</code></p>
@@ -34,6 +35,7 @@ Scheme: <code>(additional-representation-by-string imol atom-selection represent
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>additional_representation_by_string(0, "//A/41-45", 1, 1, 1.0, 1)</code></td><td>ran, returned <code>2</code></td></tr>
 <tr><td>Scheme</td><td><code>(additional-representation-by-string 0 "//A/41-45" 1 1 1.0 1)</code></td><td>ran, returned <code>3</code></td></tr></tbody></table>
+<p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 <h3 id="additional_representation_info">additional_representation_info</h3>
 <p>Python: <code>additional_representation_info(imol)</code><br>
 Scheme: <code>(additional-representation-info imol)</code></p>
@@ -43,6 +45,7 @@ Also available in Scheme as <code>additional-representation-info-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>additional_representation_info(0)</code></td><td>ran, returned <code>[[0, 'Sticks: A 41-45', True, 1.0], [1, 'Sticks: A 41-45', True, 1.0], [2, 'Sticks: //A/41-45', True, 1.0], [3, 'Sticks: ...</code></td></tr>
 <tr><td>Scheme</td><td><code>(additional-representation-info 0)</code></td><td>ran, returned <code>((3 "Sticks: //A/41-45" #t 1.0) (2 "Sticks: //A/41-45" #t 1.0) (1 "Sticks: A 41-45" #t 1.0) (0 "Sticks: A 41-45" #t 1.0) ...</code></td></tr></tbody></table>
+<p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 <h3 id="all_additional_representations_off_except">all_additional_representations_off_except</h3>
 <p>Python: <code>all_additional_representations_off_except(imol, representation_number, ball_and_sticks_off_too_flag)</code><br>
 Scheme: <code>(all-additional-representations-off-except imol representation-number ball-and-sticks-off-too-flag)</code></p>
@@ -69,6 +72,7 @@ Scheme: <code>(clear-ball-and-stick imol)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>clear_ball_and_stick(0)</code></td><td>ran, returned <code>0</code></td></tr>
 <tr><td>Scheme</td><td><code>(clear-ball-and-stick 0)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="delete_additional_representation">delete_additional_representation</h3>
 <p>Python: <code>delete_additional_representation(imol, representation_number)</code><br>
 Scheme: <code>(delete-additional-representation imol representation-number)</code></p>
@@ -86,6 +90,7 @@ Scheme: <code>(draw-hydrogens-state imol)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>draw_hydrogens_state(0)</code></td><td>ran, returned <code>1</code></td></tr>
 <tr><td>Scheme</td><td><code>(draw-hydrogens-state 0)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="get_bond_colour_rotation_for_molecule">get_bond_colour_rotation_for_molecule</h3>
 <p>Python: <code>get_bond_colour_rotation_for_molecule(imol)</code><br>
 Scheme: <code>(get-bond-colour-rotation-for-molecule imol)</code></p>
@@ -95,6 +100,7 @@ Scheme: <code>(get-bond-colour-rotation-for-molecule imol)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>get_bond_colour_rotation_for_molecule(0)</code></td><td>ran, returned <code>21.0</code></td></tr>
 <tr><td>Scheme</td><td><code>(get-bond-colour-rotation-for-molecule 0)</code></td><td>ran, returned <code>21.0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="get_default_bond_thickness">get_default_bond_thickness</h3>
 <p>Python: <code>get_default_bond_thickness()</code><br>
 Scheme: <code>(get-default-bond-thickness)</code></p>
@@ -103,6 +109,7 @@ Scheme: <code>(get-default-bond-thickness)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>get_default_bond_thickness()</code></td><td>ran, returned <code>5</code></td></tr>
 <tr><td>Scheme</td><td><code>(get-default-bond-thickness)</code></td><td>ran, returned <code>5</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="graphics_molecule_bond_type">graphics_molecule_bond_type</h3>
 <p>Python: <code>graphics_molecule_bond_type(imol)</code><br>
 Scheme: <code>(graphics-molecule-bond-type imol)</code></p>
@@ -111,6 +118,7 @@ Scheme: <code>(graphics-molecule-bond-type imol)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>graphics_molecule_bond_type(0)</code></td><td>ran, returned <code>1</code></td></tr>
 <tr><td>Scheme</td><td><code>(graphics-molecule-bond-type 0)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="graphics_to_b_factor_cas_representation">graphics_to_b_factor_cas_representation</h3>
 <p>Python: <code>graphics_to_b_factor_cas_representation(imol)</code><br>
 Scheme: <code>(graphics-to-b-factor-cas-representation imol)</code></p>
@@ -224,56 +232,57 @@ Scheme: <code>(make-ball-and-stick imol atom-selection-str bond-thickness sphere
 <p>e.g. (make-ball-and-stick 0 "/1" 0.15 0.25 1)</p>
 <p>Arguments: imol (a whole number), atom_selection_str (text), bond_thickness (a number), sphere_size (a number), do_spheres_flag (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>make_ball_and_stick(0, "//A/41-45", 1.0, 1.0, 1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(make-ball-and-stick 0 "//A/41-45" 1.0 1.0 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>make_ball_and_stick(0, "//A/41-45", 1.0, 1.0, 1)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
+<tr><td>Scheme</td><td><code>(make-ball-and-stick 0 "//A/41-45" 1.0 1.0 1)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
 <h3 id="set_b_factor_bonds_scale_factor">set_b_factor_bonds_scale_factor</h3>
 <p>Python: <code>set_b_factor_bonds_scale_factor(imol, f)</code><br>
 Scheme: <code>(set-b-factor-bonds-scale-factor imol f)</code></p>
 <p>scale the colours for colour by b factor representation</p>
 <p>Arguments: imol (a whole number), f (a number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_b_factor_bonds_scale_factor(0, 1.0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-b-factor-bonds-scale-factor 0 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_b_factor_bonds_scale_factor(0, 1.0)</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(set-b-factor-bonds-scale-factor 0 1.0)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="set_bond_colour_rotation_for_molecule">set_bond_colour_rotation_for_molecule</h3>
 <p>Python: <code>set_bond_colour_rotation_for_molecule(imol, f)</code><br>
 Scheme: <code>(set-bond-colour-rotation-for-molecule imol f)</code></p>
 <p>set bond colour for molecule</p>
 <p>Arguments: imol (a whole number), f (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_bond_colour_rotation_for_molecule(0, 1.0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-bond-colour-rotation-for-molecule 0 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_bond_colour_rotation_for_molecule(0, 1.0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-bond-colour-rotation-for-molecule 0 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_bond_thickness">set_bond_thickness</h3>
 <p>Python: <code>set_bond_thickness(imol, t)</code><br>
 Scheme: <code>(set-bond-thickness imol t)</code></p>
 <p>set the thickness of the bonds in molecule number imol to t pixels</p>
 <p>Arguments: imol (a whole number), t (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_bond_thickness(0, 1.0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-bond-thickness 0 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_bond_thickness(0, 1.0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-bond-thickness 0 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_bond_thickness_intermediate_atoms">set_bond_thickness_intermediate_atoms</h3>
 <p>Python: <code>set_bond_thickness_intermediate_atoms(t)</code><br>
 Scheme: <code>(set-bond-thickness-intermediate-atoms t)</code></p>
 <p>set the thickness of the bonds of the intermediate atoms to t pixels</p>
 <p>Arguments: t (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_bond_thickness_intermediate_atoms(1.0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-bond-thickness-intermediate-atoms 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_bond_thickness_intermediate_atoms(1.0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-bond-thickness-intermediate-atoms 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_default_bond_thickness">set_default_bond_thickness</h3>
 <p>Python: <code>set_default_bond_thickness(t)</code><br>
 Scheme: <code>(set-default-bond-thickness t)</code></p>
 <p>set the default thickness for bonds (e.g. in ~/.coot)</p>
 <p>Arguments: t (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_default_bond_thickness(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-default-bond-thickness 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_default_bond_thickness(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-default-bond-thickness 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_default_representation_type">set_default_representation_type</h3>
 <p>Python: <code>set_default_representation_type(type)</code><br>
 Scheme: <code>(set-default-representation-type type)</code></p>
 <p>set the default representation type (default 1).</p>
 <p>Arguments: type (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_default_representation_type(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-default-representation-type 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_default_representation_type(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-default-representation-type 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_draw_cis_peptide_markups">set_draw_cis_peptide_markups</h3>
 <p>Python: <code>set_draw_cis_peptide_markups(status)</code><br>
 Scheme: <code>(set-draw-cis-peptide-markups status)</code></p>
@@ -281,8 +290,8 @@ Scheme: <code>(set-draw-cis-peptide-markups status)</code></p>
 <p> default status is 1.</p>
 <p>Arguments: status (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_draw_cis_peptide_markups(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-draw-cis-peptide-markups 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_draw_cis_peptide_markups(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-draw-cis-peptide-markups 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_draw_hydrogens">set_draw_hydrogens</h3>
 <p>Python: <code>set_draw_hydrogens(imol, istat)</code><br>
 Scheme: <code>(set-draw-hydrogens imol istat)</code></p>
@@ -290,8 +299,8 @@ Scheme: <code>(set-draw-hydrogens imol istat)</code></p>
  istat = 1: show hydrogens</p>
 <p>Arguments: imol (a whole number), istat (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_draw_hydrogens(0, 1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-draw-hydrogens 0 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_draw_hydrogens(0, 1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-draw-hydrogens 0 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_draw_missing_residues_loops">set_draw_missing_residues_loops</h3>
 <p>Python: <code>set_draw_missing_residues_loops(state)</code><br>
 Scheme: <code>(set-draw-missing-residues-loops state)</code></p>
@@ -299,16 +308,16 @@ Scheme: <code>(set-draw-missing-residues-loops state)</code></p>
 <p>For taking screenshots, we often don't want to see them.</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_draw_missing_residues_loops(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-draw-missing-residues-loops 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_draw_missing_residues_loops(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-draw-missing-residues-loops 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_draw_moving_atoms_restraints">set_draw_moving_atoms_restraints</h3>
 <p>Python: <code>set_draw_moving_atoms_restraints(state)</code><br>
 Scheme: <code>(set-draw-moving-atoms-restraints state)</code></p>
 <p>undocumented feature for development.</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_draw_moving_atoms_restraints(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-draw-moving-atoms-restraints 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_draw_moving_atoms_restraints(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-draw-moving-atoms-restraints 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_draw_stick_mode_atoms">set_draw_stick_mode_atoms</h3>
 <p>Python: <code>set_draw_stick_mode_atoms(imol, state)</code><br>
 Scheme: <code>(set-draw-stick-mode-atoms imol state)</code></p>
@@ -317,16 +326,16 @@ Scheme: <code>(set-draw-stick-mode-atoms imol state)</code></p>
 <p>turn on with state = 1</p>
 <p>Arguments: imol (a whole number), state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_draw_stick_mode_atoms(0, 1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-draw-stick-mode-atoms 0 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_draw_stick_mode_atoms(0, 1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-draw-stick-mode-atoms 0 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_draw_stick_mode_atoms_default">set_draw_stick_mode_atoms_default</h3>
 <p>Python: <code>set_draw_stick_mode_atoms_default(state)</code><br>
 Scheme: <code>(set-draw-stick-mode-atoms-default state)</code></p>
 <p>set default for the drawing of atoms in stick mode (default is on (1))</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_draw_stick_mode_atoms_default(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-draw-stick-mode-atoms-default 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_draw_stick_mode_atoms_default(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-draw-stick-mode-atoms-default 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_draw_zero_occ_markers">set_draw_zero_occ_markers</h3>
 <p>Python: <code>set_draw_zero_occ_markers(status)</code><br>
 Scheme: <code>(set-draw-zero-occ-markers status)</code></p>
@@ -334,8 +343,8 @@ Scheme: <code>(set-draw-zero-occ-markers status)</code></p>
 <p> default status is 1.</p>
 <p>Arguments: status (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_draw_zero_occ_markers(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-draw-zero-occ-markers 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_draw_zero_occ_markers(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-draw-zero-occ-markers 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_flev_idle_ligand_interactions">set_flev_idle_ligand_interactions</h3>
 <p>Python: <code>set_flev_idle_ligand_interactions(state)</code><br>
 Scheme: <code>(set-flev-idle-ligand-interactions state)</code></p>
@@ -344,8 +353,8 @@ Scheme: <code>(set-flev-idle-ligand-interactions state)</code></p>
 <p>turn off with arg 0.</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_flev_idle_ligand_interactions(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-flev-idle-ligand-interactions 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_flev_idle_ligand_interactions(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-flev-idle-ligand-interactions 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_grey_carbon_colour">set_grey_carbon_colour</h3>
 <p>Python: <code>set_grey_carbon_colour(imol, r, g, b)</code><br>
 Scheme: <code>(set-grey-carbon-colour imol r g b)</code></p>
@@ -353,47 +362,47 @@ Scheme: <code>(set-grey-carbon-colour imol r g b)</code></p>
 <p>can be not grey if you desire, r, g, b in the range 0 to 1.</p>
 <p>Arguments: imol (a whole number), r (a number), g (a number), b (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_grey_carbon_colour(0, 0.5, 0.5, 0.5)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-grey-carbon-colour 0 0.5 0.5 0.5)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_grey_carbon_colour(0, 0.5, 0.5, 0.5)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-grey-carbon-colour 0 0.5 0.5 0.5)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_show_additional_representation">set_show_additional_representation</h3>
 <p>Python: <code>set_show_additional_representation(imol, representation_number, on_off_flag)</code><br>
 Scheme: <code>(set-show-additional-representation imol representation-number on-off-flag)</code></p>
 <p>display/undisplay the given additional representation</p>
 <p>Arguments: imol (a whole number), representation_number (a whole number), on_off_flag (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_show_additional_representation(0, 1, 1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-show-additional-representation 0 1 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_show_additional_representation(0, 1, 1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-show-additional-representation 0 1 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_show_all_additional_representations">set_show_all_additional_representations</h3>
 <p>Python: <code>set_show_all_additional_representations(imol, on_off_flag)</code><br>
 Scheme: <code>(set-show-all-additional-representations imol on-off-flag)</code></p>
 <p>display/undisplay all the additional representations for the given molecule</p>
 <p>Arguments: imol (a whole number), on_off_flag (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_show_all_additional_representations(0, 1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-show-all-additional-representations 0 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_show_all_additional_representations(0, 1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-show-all-additional-representations 0 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_unbonded_atom_star_size">set_unbonded_atom_star_size</h3>
 <p>Python: <code>set_unbonded_atom_star_size(f)</code><br>
 Scheme: <code>(set-unbonded-atom-star-size f)</code></p>
 <p>Arguments: f (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_unbonded_atom_star_size(1.0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-unbonded-atom-star-size 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_unbonded_atom_star_size(1.0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-unbonded-atom-star-size 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_use_grey_carbons_for_molecule">set_use_grey_carbons_for_molecule</h3>
 <p>Python: <code>set_use_grey_carbons_for_molecule(imol, state)</code><br>
 Scheme: <code>(set-use-grey-carbons-for-molecule imol state)</code></p>
 <p>make the carbon atoms for molecule imol be grey</p>
 <p>Arguments: imol (a whole number), state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_use_grey_carbons_for_molecule(0, 1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-use-grey-carbons-for-molecule 0 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_use_grey_carbons_for_molecule(0, 1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-use-grey-carbons-for-molecule 0 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_use_variable_bond_thickness">set_use_variable_bond_thickness</h3>
 <p>Python: <code>set_use_variable_bond_thickness(state)</code><br>
 Scheme: <code>(set-use-variable-bond-thickness state)</code></p>
 <p>allow lines that are further away to be thinner</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_use_variable_bond_thickness(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-use-variable-bond-thickness 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_use_variable_bond_thickness(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-use-variable-bond-thickness 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="toggle_idle_ligand_interactions">toggle_idle_ligand_interactions</h3>
 <p>Python: <code>toggle_idle_ligand_interactions()</code><br>
 Scheme: <code>(toggle-flev-idle-ligand-interactions)</code></p>
@@ -401,6 +410,6 @@ Scheme: <code>(toggle-flev-idle-ligand-interactions)</code></p>
 <p>Arguments: none. Returns: nothing.
 Also available in Python as <code>toggle_flev_idle_ligand_interactions</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>toggle_idle_ligand_interactions()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(toggle-flev-idle-ligand-interactions)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>toggle_idle_ligand_interactions()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(toggle-flev-idle-ligand-interactions)</code></td><td>ran (no return value)</td></tr></tbody></table>
 </body></html>

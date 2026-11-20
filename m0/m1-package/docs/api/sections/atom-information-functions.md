@@ -24,6 +24,8 @@ Also available in Python as `active_residue_py`.
 | Python | `active_residue()` | ran, returned `[0, 'A', 42, '', ' CA ', '']` |
 | Scheme | `(active-residue)` | ran, returned `(0 "A" 42 "" " CA " "")` |
 
+Python and Scheme gave the same answer.
+
 ### add_hydrogen_atoms_to_residue
 
 Python: `add_hydrogen_atoms_to_residue(imol, chain_id, res_no, ins_code)`  
@@ -85,6 +87,8 @@ Also available in Scheme as `atom-info-string-scm`.
 | Python | `atom_info_string(0, "A", 41, "", " CA ", "")` | ran, returned `[1.0, 14.8, ' C', 47.072, 10.589, 17.411]` |
 | Scheme | `(atom-info-string 0 "A" 41 "" " CA " "")` | ran, returned `(1.0 14.8 " C" 47.072 10.589 17.411)` |
 
+Python and Scheme gave the same answer.
+
 ### chain_fragments
 
 Python: `chain_fragments(imol, screen_output_also)`  
@@ -98,6 +102,8 @@ Also available in Scheme as `chain-fragments-scm`.
 |---|---|---|
 | Python | `chain_fragments(0, 1)` | ran, returned `False` |
 | Scheme | `(chain-fragments 0 1)` | ran, returned `#f` |
+
+Python and Scheme gave the same answer.
 
 ### clear_and_update_molecule
 
@@ -136,6 +142,8 @@ Also available in Python as `closest_atom_py`.
 | Python | `closest_atom(0)` | ran, returned `[0, 'A', 42, '', ' CA ', '', 44.346, 10.357, 15.014]` |
 | Scheme | `(closest-atom 0)` | ran, returned `(0 "A" 42 "" " CA " "" 44.346 10.357 15.014)` |
 
+Python and Scheme gave the same answer.
+
 ### hydrogenate_region
 
 Python: `hydrogenate_region(radius)`  
@@ -150,7 +158,7 @@ Arguments: radius (a number). Returns: nothing.
 | | Example | When tried (test data, no window) |
 |---|---|---|
 | Python | `hydrogenate_region(5.0)` | ran (no return value) |
-| Scheme | `(hydrogenate-region 5.0)` | not tried |
+| Scheme | `(hydrogenate-region 5.0)` | ran (no return value) |
 
 ### molecule_to_pdb_string_py
 
@@ -163,8 +171,10 @@ Arguments: imol (a whole number). Returns: a value (see the result of the exampl
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `molecule_to_pdb_string_py(0)` | not tried |
-| Scheme | `(molecule-to-pdb-string-scm 0)` | not tried |
+| Python | `molecule_to_pdb_string_py(0)` | ran, returned `'HEADER    ----                                             \nCOMPND    ---                                              ...` |
+| Scheme | `(molecule-to-pdb-string-scm 0)` | ran, returned `"HEADER    ----                                             \nCOMPND    ---                                              ...` |
+
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
 ### residue_centre_from_spec
 
@@ -178,7 +188,7 @@ Also available in Python as `residue_centre_from_spec_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `residue_centre_from_spec(0, ["A", 41, ""])` | not tried |
+| Python | `residue_centre_from_spec(0, ["A", 41, ""])` | ran, returned `[48.17811111111111, 11.594, 17.793222222222226]` |
 
 ### residue_info
 
@@ -197,8 +207,10 @@ Also available in Python as `residue_info_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `residue_info(0, "A", 41, "")` | not tried |
-| Scheme | `(residue-info 0 "A" 41 "")` | not tried |
+| Python | `residue_info(0, "A", 41, "")` | ran, returned `[[[' N  ', ''], [1.0, 13.57, ' N', ''], [46.374, 11.225, 18.462], 294], [[' CA ', ''], [1.0, 14.8, ' C', ''], [47.072, 1 ...` |
+| Scheme | `(residue-info 0 "A" 41 "")` | ran, returned `(((" N  " "") (1.0 13.57 " N" "") (46.374 11.225 18.462)) ((" CA " "") (1.0 14.8 " C" "") (47.072 10.589 17.411)) ((" CB ...` |
+
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
 ### residue_name
 
@@ -211,8 +223,10 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_c
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `residue_name(0, "A", 41, "")` | not tried |
-| Scheme | `(residue-name 0 "A" 41 "")` | not tried |
+| Python | `residue_name(0, "A", 41, "")` | ran, returned `'GLU'` |
+| Scheme | `(residue-name 0 "A" 41 "")` | ran, returned `"GLU"` |
+
+Python and Scheme gave the same answer.
 
 ### residues_near_residue
 
@@ -228,8 +242,10 @@ Also available in Python as `residues_near_residue_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `residues_near_residue(0, ["A", 41, ""], 5.0)` | not tried |
-| Scheme | `(residues-near-residue 0 (list "A" 41 "") 5.0)` | not tried |
+| Python | `residues_near_residue(0, ["A", 41, ""], 5.0)` | ran, returned `[['A', 42, ''], ['B', 61, ''], ['A', 39, ''], ['A', 40, ''], ['A', 43, ''], ['A', 37, ''], ['A', 86, ''], ['A', 44, '']]` |
+| Scheme | `(residues-near-residue 0 (list "A" 41 "") 5.0)` | ran, returned `(("A" 44 "") ("A" 86 "") ("A" 37 "") ("A" 43 "") ("A" 40 "") ("A" 39 "") ("B" 61 "") ("A" 42 ""))` |
+
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
 ### resname_from_serial_number
 
@@ -244,8 +260,10 @@ Arguments: imol (a whole number), chain_id (text), serial_num (a whole number). 
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `resname_from_serial_number(0, "A", 1)` | not tried |
-| Scheme | `(resname-from-serial-number 0 "A" 1)` | not tried |
+| Python | `resname_from_serial_number(0, "A", 1)` | ran, returned `'VAL'` |
+| Scheme | `(resname-from-serial-number 0 "A" 1)` | ran, returned `"VAL"` |
+
+Python and Scheme gave the same answer.
 
 ### serial_number_from_residue_specs
 
@@ -259,8 +277,10 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `serial_number_from_residue_specs(0, "A", 41, "")` | not tried |
-| Scheme | `(serial-number-from-residue-specs 0 "A" 41 "")` | not tried |
+| Python | `serial_number_from_residue_specs(0, "A", 41, "")` | ran, returned `40` |
+| Scheme | `(serial-number-from-residue-specs 0 "A" 41 "")` | ran, returned `40` |
+
+Python and Scheme gave the same answer.
 
 ### set_b_factor_residues
 
@@ -272,5 +292,5 @@ Also available in Python as `set_b_factor_residues_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_b_factor_residues(0, ["A", 41, ""])` | not tried |
+| Python | `set_b_factor_residues(0, ["A", 41, ""])` | ran (no return value) |
 

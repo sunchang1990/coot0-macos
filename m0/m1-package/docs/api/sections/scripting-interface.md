@@ -15,8 +15,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `post_python_scripting_window()` | not tried |
-| Scheme | `(post-python-scripting-window)` | not tried |
+| Python | `post_python_scripting_window()` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(post-python-scripting-window)` | stopped Coot when tried without a window (not checked with a window) |
 
 ### post_scheme_scripting_window
 
@@ -29,8 +29,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `post_scheme_scripting_window()` | not tried |
-| Scheme | `(post-scheme-scripting-window)` | not tried |
+| Python | `post_scheme_scripting_window()` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(post-scheme-scripting-window)` | stopped Coot when tried without a window (not checked with a window) |
 
 ### post_scripting_window
 
@@ -43,8 +43,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `post_scripting_window()` | not tried |
-| Scheme | `(post-scripting-window)` | not tried |
+| Python | `post_scripting_window()` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(post-scripting-window)` | stopped Coot when tried without a window (not checked with a window) |
 
 ### probe_available_p
 
@@ -60,8 +60,8 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `probe_available_p()` | not tried |
-| Scheme | `(probe-available-p)` | not tried |
+| Python | `probe_available_p()` | not run: not run automatically (probe: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(probe-available-p)` | not run: not run automatically (probe: exits, uses the network, an external program, files or a screen) |
 
 ### run_command_line_scripts
 
@@ -74,8 +74,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `run_command_line_scripts()` | not tried |
-| Scheme | `(run-command-line-scripts)` | not tried |
+| Python | `run_command_line_scripts()` | not run: not run automatically (run: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(run-command-line-scripts)` | not run: not run automatically (run: exits, uses the network, an external program, files or a screen) |
 
 ### set_found_coot_gui
 
@@ -86,8 +86,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_found_coot_gui()` | not tried |
-| Scheme | `(set-found-coot-gui)` | not tried |
+| Python | `set_found_coot_gui()` | ran (no return value) |
+| Scheme | `(set-found-coot-gui)` | ran (no return value) |
 
 ### set_found_coot_python_gui
 
@@ -98,8 +98,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_found_coot_python_gui()` | not tried |
-| Scheme | `(set-found-coot-python-gui)` | not tried |
+| Python | `set_found_coot_python_gui()` | ran (no return value) |
+| Scheme | `(set-found-coot-python-gui)` | ran (no return value) |
 
 ### set_guile_gui_loaded_flag
 
@@ -110,8 +110,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_guile_gui_loaded_flag()` | not tried |
-| Scheme | `(set-guile-gui-loaded-flag)` | not tried |
+| Python | `set_guile_gui_loaded_flag()` | ran (no return value) |
+| Scheme | `(set-guile-gui-loaded-flag)` | ran (no return value) |
 
 ### set_python_gui_loaded_flag
 
@@ -122,6 +122,6 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_python_gui_loaded_flag()` | not tried |
-| Scheme | `(set-python-gui-loaded-flag)` | not tried |
+| Python | `set_python_gui_loaded_flag()` | ran (no return value) |
+| Scheme | `(set-python-gui-loaded-flag)` | ran (no return value) |
 

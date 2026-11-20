@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="003580450fd640ee1b66ef26e9eeece1f1a4ef82">
+<meta name="coot0-source-sha1" content="7ce004c1d1b1fc20e1be926ff98cbf83867dc4b0">
 <title>Anisotropic Atoms Interface - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -25,6 +25,7 @@ Scheme: <code>(get-aniso-probability)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>get_aniso_probability()</code></td><td>ran, returned <code>50.0</code></td></tr>
 <tr><td>Scheme</td><td><code>(get-aniso-probability)</code></td><td>ran, returned <code>50.0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="get_limit_aniso">get_limit_aniso</h3>
 <p>Python: <code>get_limit_aniso()</code><br>
 Scheme: <code>(get-limit-aniso)</code></p>
@@ -33,6 +34,7 @@ Scheme: <code>(get-limit-aniso)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>get_limit_aniso()</code></td><td>ran, returned <code>12.0</code></td></tr>
 <tr><td>Scheme</td><td><code>(get-limit-aniso)</code></td><td>ran, returned <code>12.0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="get_show_aniso">get_show_aniso</h3>
 <p>Python: <code>get_show_aniso()</code><br>
 Scheme: <code>(get-show-aniso)</code></p>
@@ -41,6 +43,7 @@ Scheme: <code>(get-show-aniso)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>get_show_aniso()</code></td><td>ran, returned <code>0</code></td></tr>
 <tr><td>Scheme</td><td><code>(get-show-aniso)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="get_show_limit_aniso">get_show_limit_aniso</h3>
 <p>Python: <code>get_show_limit_aniso()</code><br>
 Scheme: <code>(get-show-limit-aniso)</code></p>
@@ -49,6 +52,7 @@ Scheme: <code>(get-show-limit-aniso)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>get_show_limit_aniso()</code></td><td>ran, returned <code>0</code></td></tr>
 <tr><td>Scheme</td><td><code>(get-show-limit-aniso)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="get_text_for_aniso_limit_radius_entry">get_text_for_aniso_limit_radius_entry</h3>
 <p>Python: <code>get_text_for_aniso_limit_radius_entry()</code><br>
 Scheme: <code>(get-text-for-aniso-limit-radius-entry)</code></p>
@@ -57,36 +61,37 @@ Scheme: <code>(get-text-for-aniso-limit-radius-entry)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>get_text_for_aniso_limit_radius_entry()</code></td><td>ran, returned <code>'12.0 '</code></td></tr>
 <tr><td>Scheme</td><td><code>(get-text-for-aniso-limit-radius-entry)</code></td><td>ran, returned <code>"12.0 "</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="set_aniso_limit_size_from_widget">set_aniso_limit_size_from_widget</h3>
 <p>Python: <code>set_aniso_limit_size_from_widget(text)</code><br>
 Scheme: <code>(set-aniso-limit-size-from-widget text)</code></p>
 <p>MOVE-ME to c-interface-gtk-widgets.h</p>
 <p>Arguments: text (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_aniso_limit_size_from_widget("hello")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-aniso-limit-size-from-widget "hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_aniso_limit_size_from_widget("hello")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-aniso-limit-size-from-widget "hello")</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_aniso_probability">set_aniso_probability</h3>
 <p>Python: <code>set_aniso_probability(f)</code><br>
 Scheme: <code>(set-aniso-probability f)</code></p>
 <p>set aniso probability</p>
 <p>Arguments: f (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_aniso_probability(1.0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-aniso-probability 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_aniso_probability(1.0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-aniso-probability 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_limit_aniso">set_limit_aniso</h3>
 <p>Python: <code>set_limit_aniso(state)</code><br>
 Scheme: <code>(set-limit-aniso state)</code></p>
 <p>set the aniso atom limit</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_limit_aniso(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-limit-aniso 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_limit_aniso(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-limit-aniso 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_show_aniso">set_show_aniso</h3>
 <p>Python: <code>set_show_aniso(state)</code><br>
 Scheme: <code>(set-show-aniso state)</code></p>
 <p>set show aniso atoms</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_show_aniso(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-show-aniso 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_show_aniso(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-show-aniso 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 </body></html>

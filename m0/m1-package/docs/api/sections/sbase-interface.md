@@ -25,6 +25,8 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_c
 | Python | `add_linked_residue(0, "A", 41, "", "hello", "hello", 1)` | ran, returned `False` |
 | Scheme | `(add-linked-residue 0 "A" 41 "" "hello" "hello" 1)` | ran, returned `#f` |
 
+Python and Scheme gave the same answer.
+
 ### get_ccp4srs_monomer_and_dictionary
 
 Python: `get_ccp4srs_monomer_and_dictionary(comp_id)`  
@@ -43,6 +45,8 @@ Arguments: comp_id (text). Returns: a whole number.
 | Python | `get_ccp4srs_monomer_and_dictionary("ALA")` | ran, returned `-1` |
 | Scheme | `(get-ccp4srs-monomer-and-dictionary "ALA")` | ran, returned `-1` |
 
+Python and Scheme gave the same answer.
+
 ### get_sbase_monomer
 
 Python: `get_sbase_monomer(comp_id)`  
@@ -56,6 +60,8 @@ Arguments: comp_id (text). Returns: a whole number.
 |---|---|---|
 | Python | `get_sbase_monomer("ALA")` | ran, returned `-1` |
 | Scheme | `(get-sbase-monomer "ALA")` | ran, returned `-1` |
+
+Python and Scheme gave the same answer.
 
 ### matching_compound_names_from_sbase
 
@@ -71,8 +77,10 @@ Also available in Scheme as `matching-compound-names-from-sbase-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `matching_compound_names_from_sbase("my-name")` | not tried |
-| Scheme | `(matching-compound-names-from-sbase "my-name")` | not tried |
+| Python | `matching_compound_names_from_sbase("my-name")` | ran, returned `[]` |
+| Scheme | `(matching-compound-names-from-sbase "my-name")` | ran, returned `()` |
+
+Python and Scheme gave the same answer.
 
 ### set_add_linked_residue_do_fit_and_refine
 
@@ -83,6 +91,6 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_add_linked_residue_do_fit_and_refine(1)` | not tried |
-| Scheme | `(set-add-linked-residue-do-fit-and-refine 1)` | not tried |
+| Python | `set_add_linked_residue_do_fit_and_refine(1)` | ran (no return value) |
+| Scheme | `(set-add-linked-residue-do-fit-and-refine 1)` | ran (no return value) |
 

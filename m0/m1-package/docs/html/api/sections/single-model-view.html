@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="5dd526fc4428fb24588218bf410f90c8d8754b12">
+<meta name="coot0-source-sha1" content="bd66b5576ba20d9fec7cd2bca49bfdae299bebe1">
 <title>single-model view - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -30,23 +30,23 @@ Scheme: <code>(run-update-self-maybe)</code></p>
 <p>this function is here because it is called by c_inner_main() (ie. need a c interface).</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>run_update_self_maybe()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(run-update-self-maybe)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>run_update_self_maybe()</code></td><td>not run: not run automatically (run: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(run-update-self-maybe)</code></td><td>not run: not run automatically (run: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="show_go_to_residue_keyboarding_mode_window">show_go_to_residue_keyboarding_mode_window</h3>
 <p>Python: <code>show_go_to_residue_keyboarding_mode_window()</code><br>
 Scheme: <code>(show-go-to-residue-keyboarding-mode-window)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>show_go_to_residue_keyboarding_mode_window()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(show-go-to-residue-keyboarding-mode-window)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>show_go_to_residue_keyboarding_mode_window()</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
+<tr><td>Scheme</td><td><code>(show-go-to-residue-keyboarding-mode-window)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
 <h3 id="single_model_view_model_number">single_model_view_model_number</h3>
 <p>Python: <code>single_model_view_model_number(imol, imodel)</code><br>
 Scheme: <code>(single-model-view-model-number imol imodel)</code></p>
 <p>put molecule number imol to display only model number imodel</p>
 <p>Arguments: imol (a whole number), imodel (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>single_model_view_model_number(0, 1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(single-model-view-model-number 0 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>single_model_view_model_number(0, 1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(single-model-view-model-number 0 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="single_model_view_next_model_number">single_model_view_next_model_number</h3>
 <p>Python: <code>single_model_view_next_model_number(imol)</code><br>
 Scheme: <code>(single-model-view-next-model-number imol)</code></p>
@@ -54,8 +54,9 @@ Scheme: <code>(single-model-view-next-model-number imol)</code></p>
 <p>return 0 on non-multimodel-molecule.</p>
 <p>Arguments: imol (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>single_model_view_next_model_number(0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(single-model-view-next-model-number 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>single_model_view_next_model_number(0)</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(single-model-view-next-model-number 0)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="single_model_view_prev_model_number">single_model_view_prev_model_number</h3>
 <p>Python: <code>single_model_view_prev_model_number(imol)</code><br>
 Scheme: <code>(single-model-view-prev-model-number imol)</code></p>
@@ -63,8 +64,9 @@ Scheme: <code>(single-model-view-prev-model-number imol)</code></p>
 <p>return 0 on non-multimodel-molecule.</p>
 <p>Arguments: imol (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>single_model_view_prev_model_number(0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(single-model-view-prev-model-number 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>single_model_view_prev_model_number(0)</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(single-model-view-prev-model-number 0)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="single_model_view_this_model_number">single_model_view_this_model_number</h3>
 <p>Python: <code>single_model_view_this_model_number(imol)</code><br>
 Scheme: <code>(single-model-view-this-model-number imol)</code></p>
@@ -72,6 +74,7 @@ Scheme: <code>(single-model-view-this-model-number imol)</code></p>
 <p>return 0 on non-multimodel-molecule.</p>
 <p>Arguments: imol (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>single_model_view_this_model_number(0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(single-model-view-this-model-number 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>single_model_view_this_model_number(0)</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(single-model-view-this-model-number 0)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 </body></html>

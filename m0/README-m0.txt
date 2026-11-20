@@ -503,3 +503,18 @@ Round 29: Help search opens what is picked, contact dots off -> build 29  (patch
   Enter worked but Safari (default browser) did not follow the /var/folders forwarding page -> docs served by http.server.HTTPServer on
   127.0.0.1:0, polled from gobject.timeout_add(50) (a Python thread does not run while Coot idles: the GIL stays with the main thread);
   handler timeout 0.5 s.  coot0_contact_dots_off: generic objects "Molecule N: <type>" (atom-overlaps types + clashes): clear + hide.
+
+Round 30: scripting functions checked Python against Scheme; every example tried -> build 30  (patch 0048 scheme-list-builders-sanitise-alt-confs;
+  NEW coot-bin m0/bin_b30)
+  User 20 Nov: KK1, KK2 ok; asked for more testing of the Python/Scheme functions and complete docs.  Cross-language comparison (read-only
+  functions by name, same example in both, values brought to one form): 206 built-in + 35 script-layer functions; real differences:
+  coot_utils.sanitise_alt_confs_active_residue (active_atom[2] for chain/resno/inscode), map_peaks_scm (list built by cons, never
+  reversed: lowest peak first), map_to_model_correlation_stats_per_residue_range_scm (scm_cons(r_0, item): swapped -> nested),
+  ncs_chain_differences_scm (residue specs commented out upstream; now (resno ins) pairs as Python's slice [2:4]); full run: ligand_atom_overlaps_py
+  never filled its list (FIXME upstream; now as the Scheme version; rebuilt atom-overlaps too).  Full run 3406/3406 (314 Coot starts, ~35 min).  Not fixed (noted):
+  map_to_model_correlation_py returns NULL without an exception on bad args (SystemError); highly-coordinated-waters Scheme (()) vs Python
+  [[], []].  Incremental rebuild: cp -Rp obj_b28 obj_b30, --only 'c-interface-ncs|c-interface-validate|cc-interface-map-utils', link with
+  obj_b26/out.json, manual relocation as round 26/28.  run-api-examples.sh: fresh test data before every Coot start (build 26 run had
+  stopped at 1251/3406 calls: an example overwrote tutorial-modern.pdb, setup read_pdb -> -1, driver exit 4).  gen_api_docs.py: Python vs
+  Scheme agreement per function (canon(): lists ( ), True/#t, None/#f, numbers 3 decimals; pointers not compared; 300-char cut -> prefix);
+  528/570 agree (rest: counters/state from the Python call first, reversed or reshaped lists).  gen_api_index.py: bool args True/False in Python.

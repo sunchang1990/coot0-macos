@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="d53fb120c90b4f43709a5c4506ef80ae64f44c28">
+<meta name="coot0-source-sha1" content="0bb10e855ee2e5c9893c430f3cabe22527aad0c7">
 <title>Refmac Functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -33,16 +33,16 @@ Scheme: <code>(keep-map-colour-after-refmac-state)</code></p>
 <p> Returns 1 for "yes", 0 for "no"</p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>keep_map_colour_after_refmac_state()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(keep-map-colour-after-refmac-state)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>keep_map_colour_after_refmac_state()</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(keep-map-colour-after-refmac-state)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="refmac_runs_with_nolabels">refmac_runs_with_nolabels</h3>
 <p>Python: <code>refmac_runs_with_nolabels()</code><br>
 Scheme: <code>(refmac-runs-with-nolabels)</code></p>
 <p>refmac vresion testing, returns 1 for new refmac (&gt;5.3) otherwise 0</p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>refmac_runs_with_nolabels()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(refmac-runs-with-nolabels)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>refmac_runs_with_nolabels()</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(refmac-runs-with-nolabels)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="set_keep_map_colour_after_refmac">set_keep_map_colour_after_refmac</h3>
 <p>Python: <code>set_keep_map_colour_after_refmac(istate)</code><br>
 Scheme: <code>(set-keep-map-colour-after-refmac istate)</code></p>
@@ -50,8 +50,8 @@ Scheme: <code>(set-keep-map-colour-after-refmac istate)</code></p>
 <p>call this with istate=1</p>
 <p>Arguments: istate (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_keep_map_colour_after_refmac(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-keep-map-colour-after-refmac 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_keep_map_colour_after_refmac(1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(set-keep-map-colour-after-refmac 1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="set_refmac_counter">set_refmac_counter</h3>
 <p>Python: <code>set_refmac_counter(imol, refmac_count)</code><br>
 Scheme: <code>(set-refmac-counter imol refmac-count)</code></p>
@@ -59,8 +59,8 @@ Scheme: <code>(set-refmac-counter imol refmac-count)</code></p>
  construct a unique filename for new output</p>
 <p>Arguments: imol (a whole number), refmac_count (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_refmac_counter(0, 1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-refmac-counter 0 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_refmac_counter(0, 1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(set-refmac-counter 0 1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="swap_map_colours">swap_map_colours</h3>
 <p>Python: <code>swap_map_colours(imol1, imol2)</code><br>
 Scheme: <code>(swap-map-colours imol1 imol2)</code></p>
@@ -70,6 +70,6 @@ Scheme: <code>(swap-map-colours imol1 imol2)</code></p>
  colour</p>
 <p>Arguments: imol1 (a whole number), imol2 (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>swap_map_colours(0, 0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(swap-map-colours 0 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>swap_map_colours(0, 0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(swap-map-colours 0 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
 </body></html>

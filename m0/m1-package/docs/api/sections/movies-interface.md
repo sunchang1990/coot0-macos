@@ -14,8 +14,10 @@ Also available in Python as `movie_file_name_prefix_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `movie_file_name_prefix()` | not tried |
-| Scheme | `(movie-file-name-prefix)` | not tried |
+| Python | `movie_file_name_prefix()` | ran, returned `'movie_'` |
+| Scheme | `(movie-file-name-prefix)` | ran, returned `"movie_"` |
+
+Python and Scheme gave the same answer.
 
 ### movie_frame_number
 
@@ -26,8 +28,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `movie_frame_number()` | not tried |
-| Scheme | `(movie-frame-number)` | not tried |
+| Python | `movie_frame_number()` | ran, returned `0` |
+| Scheme | `(movie-frame-number)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### set_make_movie_mode
 
@@ -38,8 +42,8 @@ Arguments: make_movies_flag (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_make_movie_mode(1)` | not tried |
-| Scheme | `(set-make-movie-mode 1)` | not tried |
+| Python | `set_make_movie_mode(1)` | ran (no return value) |
+| Scheme | `(set-make-movie-mode 1)` | ran (no return value) |
 
 ### set_movie_file_name_prefix
 
@@ -50,8 +54,8 @@ Arguments: file_name (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_movie_file_name_prefix("tutorial-modern.pdb")` | not tried |
-| Scheme | `(set-movie-file-name-prefix "tutorial-modern.pdb")` | not tried |
+| Python | `set_movie_file_name_prefix("tutorial-modern.pdb")` | ran (no return value) |
+| Scheme | `(set-movie-file-name-prefix "tutorial-modern.pdb")` | ran (no return value) |
 
 ### set_movie_frame_number
 
@@ -62,6 +66,6 @@ Arguments: frame_number (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_movie_frame_number(1)` | not tried |
-| Scheme | `(set-movie-frame-number 1)` | not tried |
+| Python | `set_movie_frame_number(1)` | ran (no return value) |
+| Scheme | `(set-movie-frame-number 1)` | ran (no return value) |
 

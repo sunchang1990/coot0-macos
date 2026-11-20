@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""gen_api_docs.py INDEX.json RESULTS.jsonl OUTDIR  (build 26)
+"""gen_api_docs.py INDEX.json RESULTS.jsonl OUTDIR  (build 26; build 30: Python/Scheme agreement)
 
 Writes the scripting reference (Markdown) from the function index (gen_api_index.py) and the results of trying
 every example (tests/run-api-examples.sh):
@@ -23,7 +23,7 @@ for l in open(RES):
 os.makedirs(os.path.join(OUT, "sections"), exist_ok=True)
 for f in os.listdir(os.path.join(OUT, "sections")):
     if f.endswith(".md"): os.remove(os.path.join(OUT, "sections", f))
-shutil.copy(IDX, os.path.join(OUT, "api-index.json"))
+if os.path.abspath(IDX) != os.path.abspath(os.path.join(OUT, "api-index.json")): shutil.copy(IDX, os.path.join(OUT, "api-index.json"))
 
 def slug(s): return re.sub(r"[^a-z0-9]+", "-", s.lower()).strip("-") or "other"
 
@@ -77,6 +77,47 @@ def result_cell(key, lang):
         return "no answer within 60 s (slow, or waits for something)"
     return "not run: %s" % cell(r.get("why", ""), 120)
 
+# ---- build 30: do Python and Scheme give the same answer?  Python's repr and Scheme's printed value are brought
+# to one form (lists as ( ), True/#t, None/False/#f, numbers to 3 decimals) and compared.
+def _num(s):
+    if s in ("+nan.0", "-nan.0", "nan"): return "nan"
+    try: x = float(s)
+    except ValueError: return s
+    if x != x: return "nan"
+    if x == int(x) and abs(x) < 1e15 and not re.search(r"[.eE]", s): return str(int(x))
+    return ("%.3f" % x).rstrip("0").rstrip(".").replace("-0", "0") if abs(x) < 1e12 else "%.3g" % x
+TOK = re.compile(r'"(?:[^"\\]|\\.)*"|\'(?:[^\'\\]|\\.)*\'|[()\[\]#]|[^\s()\[\],#]+')
+def canon(v, lang):
+    v = (v or "").strip()
+    if lang == "scm" and v.startswith("#("): v = v[1:]                 # a Scheme vector prints as #( )
+    out = []
+    for m in TOK.finditer(v):
+        s = m.group(0)
+        if s[0] in "\"'":
+            body = s[1:-1]
+            if s[0] == "'": body = body.replace('\\\'', "'").replace('"', '\\"')
+            out.append('"' + body + '"'); continue
+        if s in "([": out.append("("); continue
+        if s in ")]": out.append(")"); continue
+        if s == "#": out.append("#"); continue
+        if lang == "py":
+            s = {"True": "#t", "False": "#f", "None": "#f"}.get(s, s)
+        out.append(_num(s))
+    t = " ".join(out).replace("# t", "#t").replace("# f", "#f").replace("( ", "(").replace(" )", ")")
+    return t
+def agreement(key):
+    """'same' | 'different' | None (not both ran with a value)"""
+    a, b = res.get((key, "py")), res.get((key, "scm"))
+    if not (a and b and a["status"] == "ok" and b["status"] == "ok"): return None
+    va, vb = a.get("value", "") or "", b.get("value", "") or ""
+    if va in ("", "None") and vb in ("", "#<unspecified>"): return None   # nothing returned in either
+    if "<" in va or "#<" in vb: return None                              # objects/pointers: not comparable
+    ca, cb = canon(va, "py"), canon(vb, "scm")
+    if va.endswith(" ...") or vb.endswith(" ..."):                       # cut at 300 characters: compare what is there
+        n = min(len(ca), len(cb)) - 12
+        return "same" if n > 20 and ca[:n] == cb[:n] else "different"
+    return "same" if ca == cb else "different"
+
 def clean_doc(d):
     d = re.sub(r"\\(param|p|c|b|e)\s+", "", d or "")
     d = d.replace("@return", "Returns").replace("\\return", "Returns").replace("\\note", "Note:")
@@ -121,6 +162,9 @@ def fn_md(e):
         L.append("| Python | %s | %s |" % ("`%s`" % cell(e["py_ex"], 200) if e.get("py_ex") else "(no automatic example)", result_cell(e["key"], "py")))
     if e["scm"]:
         L.append("| Scheme | %s | %s |" % ("`%s`" % cell(e["scm_ex"], 200) if e.get("scm_ex") else "(no automatic example)", result_cell(e["key"], "scm")))
+    ag = agreement(e["key"])
+    if ag == "same": L.append(""); L.append("Python and Scheme gave the same answer.")
+    elif ag == "different": L.append(""); L.append("Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).")
     L.append("")
     return "\n".join(L)
 
@@ -206,12 +250,19 @@ L = ["# Coot scripting reference (coot0%s)" % (" " + VERSION if VERSION else "")
      "without a window: *ran* (with the value it returned), *error* (with Coot's message; usually the example "
      "needs other values), *stopped Coot (no window)* (the function needs the graphics window; it was not checked "
      "with one), *not run* (it would quit Coot, use the network, run an external program, or needs a widget). "
-     "*Ran* means only that Coot accepted the call; the result was not checked.", "",
+     "*Ran* means that Coot accepted the call; the value itself was checked only by comparing the two languages "
+     "(next section) and, for the functions the cookbook uses, by the cookbook's own checks.", "",
      "## Results of trying the examples", "",
      "| | Ran | Error | Stopped Coot (no window) | No answer in 60 s | Not run |", "|---|---|---|---|---|---|"]
 for lang, nm in (("py", "Python"), ("scm", "Scheme")):
     c = collections.Counter(r["status"] for (k, l), r in res.items() if l == lang)
     L.append("| %s | %d | %d | %d | %d | %d |" % (nm, c["ok"], c["error"], c["crash"], c["hung"], c["skipped"]))
+ags = collections.Counter(agreement(e["key"]) for e in entries if e["py"] and e["scm"])
+L += ["", "Where both languages ran and returned a value that can be compared (%d functions), Python and Scheme gave the "
+      "same answer for %d. The other %d are listed on their pages as *different answers*; mostly that is because the "
+      "Python example ran first and changed the data (a counter, a new molecule, a restraint added), or because one "
+      "language returns the same information in another shape. Values that are objects (pointers) are not compared."
+      % (ags["same"] + ags["different"], ags["same"], ags["different"])]
 L += ["", "## Sections", "", "Coot's own section names, in alphabetical order. Also: [all functions A-Z](A-Z.md), "
       "[functions in only one language](one-language-only.md).", "", "| Section | Functions |", "|---|---|"]
 for sec, es in secs.items():

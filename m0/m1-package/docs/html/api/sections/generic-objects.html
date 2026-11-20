@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="7e0875a26b8d6c225fb9c0052ce889020b4377bb">
+<meta name="coot0-source-sha1" content="c70db2e1525755716b4c36eda5652b10441ed638">
 <title>Generic Objects - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -54,6 +54,7 @@ Scheme: <code>(generic-object-has-objects-p obj-no)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>generic_object_has_objects_p(1)</code></td><td>ran, returned <code>0</code></td></tr>
 <tr><td>Scheme</td><td><code>(generic-object-has-objects-p 1)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="generic_object_index">generic_object_index</h3>
 <p>Python: <code>generic_object_index(name)</code><br>
 Scheme: <code>(generic-object-index name)</code></p>
@@ -62,6 +63,7 @@ Scheme: <code>(generic-object-index name)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>generic_object_index("my-name")</code></td><td>ran, returned <code>-1</code></td></tr>
 <tr><td>Scheme</td><td><code>(generic-object-index "my-name")</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="generic_object_info">generic_object_info</h3>
 <p>Python: <code>generic_object_info()</code><br>
 Scheme: <code>(generic-object-info)</code></p>
@@ -80,6 +82,7 @@ Scheme: <code>(generic-object-is-displayed-p object-number)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>generic_object_is_displayed_p(1)</code></td><td>ran, returned <code>0</code></td></tr>
 <tr><td>Scheme</td><td><code>(generic-object-is-displayed-p 1)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="generic_object_name">generic_object_name</h3>
 <p>Python: <code>generic_object_name(obj_number)</code><br>
 Scheme: <code>(generic-object-name obj-number)</code></p>
@@ -89,6 +92,7 @@ Also available in Scheme as <code>generic-object-name-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>generic_object_name(1)</code></td><td>ran, returned <code>False</code></td></tr>
 <tr><td>Scheme</td><td><code>(generic-object-name 1)</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="get_generic_object_py">get_generic_object_py</h3>
 <p>Python: <code>get_generic_object_py(obj_number)</code></p>
 <p>Arguments: obj_number (a whole number). Returns: a value (see the result of the example).
@@ -102,16 +106,18 @@ Scheme: <code>(is-closed-generic-object-p object-number)</code></p>
 <p> Returns 1 for yes, 0 othersize</p>
 <p>Arguments: object_number (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>is_closed_generic_object_p(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(is-closed-generic-object-p 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>is_closed_generic_object_p(1)</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(is-closed-generic-object-p 1)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="number_of_generic_objects">number_of_generic_objects</h3>
 <p>Python: <code>number_of_generic_objects()</code><br>
 Scheme: <code>(number-of-generic-objects)</code></p>
 <p>return the number of generic display objects</p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>number_of_generic_objects()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(number-of-generic-objects)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>number_of_generic_objects()</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(number-of-generic-objects)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="set_display_generic_object">set_display_generic_object</h3>
 <p>Python: <code>set_display_generic_object(object_number, istate)</code><br>
 Scheme: <code>(set-display-generic-object object-number istate)</code></p>
@@ -120,8 +126,8 @@ Scheme: <code>(set-display-generic-object object-number istate)</code></p>
  generally need this function.</p>
 <p>Arguments: object_number (a whole number), istate (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_display_generic_object(1, 1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-display-generic-object 1 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_display_generic_object(1, 1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-display-generic-object 1 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_display_generic_object_simple">set_display_generic_object_simple</h3>
 <p>Python: <code>set_display_generic_object_simple(object_number, istate)</code><br>
 Scheme: <code>(set-display-generic-object-simple object-number istate)</code></p>
@@ -130,23 +136,23 @@ Scheme: <code>(set-display-generic-object-simple object-number istate)</code></p
  Use when enabling multiple generic objects.</p>
 <p>Arguments: object_number (a whole number), istate (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_display_generic_object_simple(1, 1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-display-generic-object-simple 1 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_display_generic_object_simple(1, 1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-display-generic-object-simple 1 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_display_generic_objects_as_solid">set_display_generic_objects_as_solid</h3>
 <p>Python: <code>set_display_generic_objects_as_solid(state)</code><br>
 Scheme: <code>(set-display-generic-objects-as-solid state)</code></p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_display_generic_objects_as_solid(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-display-generic-objects-as-solid 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_display_generic_objects_as_solid(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-display-generic-objects-as-solid 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="to_generic_object_add_arc">to_generic_object_add_arc</h3>
 <p>Python: <code>to_generic_object_add_arc(object_number, colour, radius, radius_inner, from_angle, to_angle, start_point_x, start_point_y, start_point_z, start_dir_x, start_dir_y, start_dir_z, normal_x1, normal_y1, normal_z1)</code><br>
 Scheme: <code>(to-generic-object-add-arc object-number colour radius radius-inner from-angle to-angle start-point-x start-point-y start-point-z start-dir-x start-dir-y start-dir-z normal-x1 normal-y1 normal-z1)</code></p>
 <p>add point to generic object object_number</p>
 <p>Arguments: object_number (a whole number), colour (text), radius (a number), radius_inner (a number), from_angle (a number), to_angle (a number), start_point_x (a number), start_point_y (a number), start_point_z (a number), start_dir_x (a number), start_dir_y (a number), start_dir_z (a number), normal_x1 (a number), normal_y1 (a number), normal_z1 (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>to_generic_object_add_arc(1, "hello", 5.0, 5.0, 10.0, 10.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(to-generic-object-add-arc 1 "hello" 5.0 5.0 10.0 10.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>to_generic_object_add_arc(1, "hello", 5.0, 5.0, 10.0, 10.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(to-generic-object-add-arc 1 "hello" 5.0 5.0 10.0 10.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="to_generic_object_add_dashed_line">to_generic_object_add_dashed_line</h3>
 <p>Python: <code>to_generic_object_add_dashed_line(object_number, colour, line_width, dash_density, from_x1, from_y1, from_z1, to_x2, to_y2, to_z2)</code><br>
 Scheme: <code>(to-generic-object-add-dashed-line object-number colour line-width dash-density from-x1 from-y1 from-z1 to-x2 to-y2 to-z2)</code></p>
@@ -154,44 +160,44 @@ Scheme: <code>(to-generic-object-add-dashed-line object-number colour line-width
 <p>dash_density is number of dashes per Angstrom.</p>
 <p>Arguments: object_number (a whole number), colour (text), line_width (a whole number), dash_density (a number), from_x1 (a number), from_y1 (a number), from_z1 (a number), to_x2 (a number), to_y2 (a number), to_z2 (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>to_generic_object_add_dashed_line(1, "hello", 2, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(to-generic-object-add-dashed-line 1 "hello" 2 1.0 1.0 1.0 1.0 1.0 1.0 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>to_generic_object_add_dashed_line(1, "hello", 2, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(to-generic-object-add-dashed-line 1 "hello" 2 1.0 1.0 1.0 1.0 1.0 1.0 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="to_generic_object_add_display_list_handle">to_generic_object_add_display_list_handle</h3>
 <p>Python: <code>to_generic_object_add_display_list_handle(object_number, display_list_id)</code><br>
 Scheme: <code>(to-generic-object-add-display-list-handle object-number display-list-id)</code></p>
 <p>add a display list handle generic object</p>
 <p>Arguments: object_number (a whole number), display_list_id (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>to_generic_object_add_display_list_handle(1, 1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(to-generic-object-add-display-list-handle 1 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>to_generic_object_add_display_list_handle(1, 1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(to-generic-object-add-display-list-handle 1 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="to_generic_object_add_dodecahedron">to_generic_object_add_dodecahedron</h3>
 <p>Python: <code>to_generic_object_add_dodecahedron(object_number, colour, radius, x, y, z)</code><br>
 Scheme: <code>(to-generic-object-add-dodecahedron object-number colour radius x y z)</code></p>
 <p>Arguments: object_number (a whole number), colour (text), radius (a number), x (a number), y (a number), z (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>to_generic_object_add_dodecahedron(1, "hello", 5.0, 54.5, 9.4, 12.3)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(to-generic-object-add-dodecahedron 1 "hello" 5.0 54.5 9.4 12.3)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>to_generic_object_add_dodecahedron(1, "hello", 5.0, 54.5, 9.4, 12.3)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(to-generic-object-add-dodecahedron 1 "hello" 5.0 54.5 9.4 12.3)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="to_generic_object_add_line">to_generic_object_add_line</h3>
 <p>Python: <code>to_generic_object_add_line(object_number, colour, line_width, from_x1, from_y1, from_z1, to_x2, to_y2, to_z2)</code><br>
 Scheme: <code>(to-generic-object-add-line object-number colour line-width from-x1 from-y1 from-z1 to-x2 to-y2 to-z2)</code></p>
 <p>add line to generic object object_number</p>
 <p>Arguments: object_number (a whole number), colour (text), line_width (a whole number), from_x1 (a number), from_y1 (a number), from_z1 (a number), to_x2 (a number), to_y2 (a number), to_z2 (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>to_generic_object_add_line(1, "hello", 2, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(to-generic-object-add-line 1 "hello" 2 1.0 1.0 1.0 1.0 1.0 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>to_generic_object_add_line(1, "hello", 2, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(to-generic-object-add-line 1 "hello" 2 1.0 1.0 1.0 1.0 1.0 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="to_generic_object_add_pentakis_dodecahedron">to_generic_object_add_pentakis_dodecahedron</h3>
 <p>Python: <code>to_generic_object_add_pentakis_dodecahedron(object_number, colour, stellation_factor, radius_factor, x, y, z)</code><br>
 Scheme: <code>(to-generic-object-add-pentakis-dodecahedron object-number colour stellation-factor radius-factor x y z)</code></p>
 <p>Arguments: object_number (a whole number), colour (text), stellation_factor (a number), radius_factor (a number), x (a number), y (a number), z (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>to_generic_object_add_pentakis_dodecahedron(1, "hello", 1.0, 5.0, 54.5, 9.4, 12.3)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(to-generic-object-add-pentakis-dodecahedron 1 "hello" 1.0 5.0 54.5 9.4 12.3)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>to_generic_object_add_pentakis_dodecahedron(1, "hello", 1.0, 5.0, 54.5, 9.4, 12.3)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(to-generic-object-add-pentakis-dodecahedron 1 "hello" 1.0 5.0 54.5 9.4 12.3)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="to_generic_object_add_point">to_generic_object_add_point</h3>
 <p>Python: <code>to_generic_object_add_point(object_number, colour, point_width, from_x1, from_y1, from_z1)</code><br>
 Scheme: <code>(to-generic-object-add-point object-number colour point-width from-x1 from-y1 from-z1)</code></p>
 <p>add point to generic object object_number</p>
 <p>Arguments: object_number (a whole number), colour (text), point_width (a whole number), from_x1 (a number), from_y1 (a number), from_z1 (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>to_generic_object_add_point(1, "hello", 2, 1.0, 1.0, 1.0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(to-generic-object-add-point 1 "hello" 2 1.0 1.0 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>to_generic_object_add_point(1, "hello", 2, 1.0, 1.0, 1.0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(to-generic-object-add-point 1 "hello" 2 1.0 1.0 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
 </body></html>

@@ -19,8 +19,8 @@ Arguments: imol1 (a whole number), imol2 (a whole number), move_imol2_flag (a wh
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `superpose(0, 0, 0)` | not tried |
-| Scheme | `(superpose 0 0 0)` | not tried |
+| Python | `superpose(0, 0, 0)` | ran (no return value) |
+| Scheme | `(superpose 0 0 0)` | ran (no return value) |
 
 ### superpose_with_atom_selection
 
@@ -42,8 +42,10 @@ Arguments: imol1 (a whole number), imol2 (a whole number), mmdb_atom_sel_str_1 (
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `superpose_with_atom_selection(0, 0, "//A/41-45", "//A/41-45", 0)` | not tried |
-| Scheme | `(superpose-with-atom-selection 0 0 "//A/41-45" "//A/41-45" 0)` | not tried |
+| Python | `superpose_with_atom_selection(0, 0, "//A/41-45", "//A/41-45", 0)` | ran, returned `-1` |
+| Scheme | `(superpose-with-atom-selection 0 0 "//A/41-45" "//A/41-45" 0)` | ran, returned `-1` |
+
+Python and Scheme gave the same answer.
 
 ### superpose_with_chain_selection
 
@@ -60,6 +62,6 @@ Arguments: imol1 (a whole number), imol2 (a whole number), chain_imol1 (text), c
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `superpose_with_chain_selection(0, 0, "A", "B", 0, 0, 0)` | not tried |
-| Scheme | `(superpose-with-chain-selection 0 0 "A" "B" 0 0 0)` | not tried |
+| Python | `superpose_with_chain_selection(0, 0, "A", "B", 0, 0, 0)` | ran (no return value) |
+| Scheme | `(superpose-with-chain-selection 0 0 "A" "B" 0 0 0)` | ran (no return value) |
 

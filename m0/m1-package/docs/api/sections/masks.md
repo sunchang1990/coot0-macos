@@ -17,8 +17,10 @@ Arguments: imol (a whole number), imol_map (a whole number). Returns: a whole nu
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `make_masked_maps_split_by_chain(0, 1)` | not tried |
-| Scheme | `(make-masked-maps-split-by-chain 0 1)` | not tried |
+| Python | `make_masked_maps_split_by_chain(0, 1)` | ran, returned `0` |
+| Scheme | `(make-masked-maps-split-by-chain 0 1)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### map_mask_atom_radius
 
@@ -31,8 +33,10 @@ Arguments: none. Returns: a number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `map_mask_atom_radius()` | not tried |
-| Scheme | `(map-mask-atom-radius)` | not tried |
+| Python | `map_mask_atom_radius()` | ran, returned `-99.0` |
+| Scheme | `(map-mask-atom-radius)` | ran, returned `-99.0` |
+
+Python and Scheme gave the same answer.
 
 ### mask_map_by_atom_selection
 
@@ -45,8 +49,10 @@ Arguments: map_mol_no (a whole number), coords_mol_no (a whole number), mmdb_ato
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `mask_map_by_atom_selection(1, 1, "//A/41-45", 1)` | not tried |
-| Scheme | `(mask-map-by-atom-selection 1 1 "//A/41-45" 1)` | not tried |
+| Python | `mask_map_by_atom_selection(1, 1, "//A/41-45", 1)` | ran, returned `-1` |
+| Scheme | `(mask-map-by-atom-selection 1 1 "//A/41-45" 1)` | ran, returned `-1` |
+
+Python and Scheme gave the same answer.
 
 ### mask_map_by_molecule
 
@@ -64,8 +70,10 @@ Arguments: map_mol_no (a whole number), coord_mol_no (a whole number), invert_fl
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `mask_map_by_molecule(1, 1, 1)` | not tried |
-| Scheme | `(mask-map-by-molecule 1 1 1)` | not tried |
+| Python | `mask_map_by_molecule(1, 1, 1)` | ran, returned `-1` |
+| Scheme | `(mask-map-by-molecule 1 1 1)` | ran, returned `-1` |
+
+Python and Scheme gave the same answer.
 
 ### set_map_mask_atom_radius
 
@@ -78,6 +86,6 @@ Arguments: rad (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_map_mask_atom_radius(5.0)` | not tried |
-| Scheme | `(set-map-mask-atom-radius 5.0)` | not tried |
+| Python | `set_map_mask_atom_radius(5.0)` | ran (no return value) |
+| Scheme | `(set-map-mask-atom-radius 5.0)` | ran (no return value) |
 

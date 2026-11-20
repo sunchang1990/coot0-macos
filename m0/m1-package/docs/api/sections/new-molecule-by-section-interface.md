@@ -15,8 +15,8 @@ Arguments: m11 (a number), m12 (a number), m13 (a number), m21 (a number), m22 (
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_axis_orientation_matrix(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)` | not tried |
-| Scheme | `(set-axis-orientation-matrix 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0)` | not tried |
+| Python | `set_axis_orientation_matrix(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)` | ran (no return value) |
+| Scheme | `(set-axis-orientation-matrix 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0)` | ran (no return value) |
 
 ### set_axis_orientation_matrix_usage
 
@@ -27,6 +27,6 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_axis_orientation_matrix_usage(1)` | not tried |
-| Scheme | `(set-axis-orientation-matrix-usage 1)` | not tried |
+| Python | `set_axis_orientation_matrix_usage(1)` | ran (no return value) |
+| Scheme | `(set-axis-orientation-matrix-usage 1)` | ran (no return value) |
 

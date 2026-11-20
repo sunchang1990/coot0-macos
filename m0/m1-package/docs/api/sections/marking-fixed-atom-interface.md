@@ -41,8 +41,10 @@ Also available in Scheme as `mark-atom-as-fixed-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `mark_atom_as_fixed(0, ["A", 41, "", " CA ", ""], 1)` | not tried |
-| Scheme | `(mark-atom-as-fixed 0 (list "A" 41 "" " CA " "") 1)` | not tried |
+| Python | `mark_atom_as_fixed(0, ["A", 41, "", " CA ", ""], 1)` | ran, returned `True` |
+| Scheme | `(mark-atom-as-fixed 0 (list "A" 41 "" " CA " "") 1)` | ran, returned `#f` |
+
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
 ### mark_multiple_atoms_as_fixed
 
@@ -54,8 +56,8 @@ Also available in Python as `mark_multiple_atoms_as_fixed_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `mark_multiple_atoms_as_fixed(0, ["A", 41, "", " CA ", ""], 1)` | not tried |
-| Scheme | `(mark-multiple-atoms-as-fixed-scm 0 (list "A" 41 "" " CA " "") 1)` | not tried |
+| Python | `mark_multiple_atoms_as_fixed(0, ["A", 41, "", " CA ", ""], 1)` | error: SystemError: <built-in function mark_multiple_atoms_as_fixed_py> returned a result with an exception set |
+| Scheme | `(mark-multiple-atoms-as-fixed-scm 0 (list "A" 41 "" " CA " "") 1)` | error: In procedure length: Wrong type argument in position 1: "A" |
 
 ### set_debug_atom_picking
 
@@ -68,8 +70,8 @@ Arguments: istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_debug_atom_picking(1)` | not tried |
-| Scheme | `(set-debug-atom-picking 1)` | not tried |
+| Python | `set_debug_atom_picking(1)` | ran (no return value) |
+| Scheme | `(set-debug-atom-picking 1)` | ran (no return value) |
 
 ### setup_fixed_atom_pick
 
@@ -80,6 +82,6 @@ Arguments: ipick (a whole number), is_unpick (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `setup_fixed_atom_pick(1, 1)` | not tried |
-| Scheme | `(setup-fixed-atom-pick 1 1)` | not tried |
+| Python | `setup_fixed_atom_pick(1, 1)` | ran (no return value) |
+| Scheme | `(setup-fixed-atom-pick 1 1)` | ran (no return value) |
 

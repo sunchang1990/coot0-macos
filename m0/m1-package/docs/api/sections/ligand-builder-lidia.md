@@ -17,8 +17,8 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_c
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `residue_to_ligand_builder(0, "A", 41, "", 1.0)` | not tried |
-| Scheme | `(residue-to-ligand-builder 0 "A" 41 "" 1.0)` | not tried |
+| Python | `residue_to_ligand_builder(0, "A", 41, "", 1.0)` | ran (no return value) |
+| Scheme | `(residue-to-ligand-builder 0 "A" 41 "" 1.0)` | ran (no return value) |
 
 ### smiles_to_ligand_builder
 
@@ -29,6 +29,6 @@ Arguments: smiles_string (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `smiles_to_ligand_builder("hello")` | not tried |
-| Scheme | `(smiles-to-ligand-builder "hello")` | not tried |
+| Python | `smiles_to_ligand_builder("hello")` | ran (no return value) |
+| Scheme | `(smiles-to-ligand-builder "hello")` | ran (no return value) |
 

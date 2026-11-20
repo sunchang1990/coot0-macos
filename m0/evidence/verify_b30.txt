@@ -1,0 +1,57 @@
+Build 30 verification (20 Nov 2026): tarball coot0-0.9.8.96-b30-macos-arm64.tar.gz
+sha256 54d4ffe4f29cf89fa8b0782f261f7a9f596449371a0cd9c2eacd037bde47df6a
+
+== headless suites (unpacked into a folder with spaces, env -i)
+api-docs                   SUMMARY 8 / 8
+bundle-python              SUMMARY 19 / 19
+bundle-scheme              SUMMARY 6 / 6
+cookbook                   SUMMARY 166 / 166
+data-and-maps              SUMMARY 39 / 39
+gtk2compat                 SUMMARY 12 / 12
+gui-dialogs                SUMMARY 89 / 89
+gui-glyco                  SUMMARY 14 / 14
+gui-rcrane                 SUMMARY 21 / 21
+gui-scripts                SUMMARY 16 / 16
+gui-toolbar                SUMMARY 13 / 13
+installer                  SUMMARY 26 / 26
+ondemand-read              SUMMARY 3 / 3
+process-helpers            SUMMARY 10 / 10
+python-api                 SUMMARY 21 / 21
+rdkit-python               SUMMARY 10 / 10
+rdkit-scheme               SUMMARY 3 / 3
+refine-zone                SUMMARY 7 / 7
+refmac-run                 SUMMARY 11 / 11
+scheme-api                 SUMMARY 30 / 30
+startup-dictionaries       SUMMARY 1 / 1
+
+== GUI sweep
+GUI sweep: 256 items ok, 0 items with errors, 0 items without a handler, 8 items whose activation killed the headless process (OpenGL or screen needed; started but not completed, listed below, checked
+SWEEP 21 | Edit > Settings... > Python: Install Template Keybindings button '   X   Edit Chi Angles' | CRASH (process died: OpenGL call without a graphics context, or hang)
+SWEEP 36 | Calculate > Map Tools... > Brighten Maps | CRASH (process died: OpenGL call without a graphics context, or hang)
+SWEEP 108 | Draw > Representation Tools... > Ball & Stick... button '  OK  ' | CRASH (process died: OpenGL call without a graphics context, or hang)
+SWEEP 117 | Draw > Representation Tools... > Highlight Interesting Site (here)... | CRASH (process died: OpenGL call without a graphics context, or hang)
+SWEEP 124 | Draw > Representation Tools... > 3D Annotations... > Save Annotations... | CRASH (process died: OpenGL call without a graphics context, or hang)
+SWEEP 141 | Validate > Views > Views Panel... | CRASH (process died: OpenGL call without a graphics context, or hang)
+SWEEP 152 | Ligand > Find Ligands... | CRASH (process died: OpenGL call without a graphics context, or hang)
+SWEEP 193 | Cryo-EM > Align and Mutate using ClustalW2 | CRASH (process died: OpenGL call without a graphics context, or hang)
+
+== real-window checks
+PASS a plain key bound in Python runs when pressed (v)
+PASS Ctrl-T runs the Python binding made with "Control_t"
+PASS plain t does not run the Ctrl-T binding
+PASS o is Coot's own key (next NCS chain): a binding to it does not run
+PASS Help is the last menu
+PASS Help search sees the menu entries (more than 150)
+PASS no hidden (removed) entry is offered
+PASS search 'brighten' finds Brighten Maps
+PASS the search window opens on screen and lists results for 'refine'
+PASS Enter opens cookbook 4.3, served by Coot with its heading
+PASS Coot's own Help entries (Header/Remarks Browser, Hints, About) keep their handlers
+PASS the Keyboard Shortcuts window opens
+SUMMARY 12 / 12
+
+== bundle_check
+Mach-O files checked: 211 | highest minos: 11.0 | dangling symlinks: 0
+RESULT: OK
+
+== patch series rebuilt from scratch with setup.sh: 48 patches, diff -rq vs m0/coot-src: IDENTICAL

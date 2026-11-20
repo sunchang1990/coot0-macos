@@ -74,6 +74,8 @@ Arguments: none. Returns: text.
 | Python | `coot_version()` | ran, returned `'0.9.8.96'` |
 | Scheme | `(coot-version)` | ran, returned `"0.9.8.96"` |
 
+Python and Scheme gave the same answer.
+
 ### coot_version_extra_info
 
 Python: `coot_version_extra_info()`  
@@ -85,6 +87,8 @@ Arguments: none. Returns: text.
 |---|---|---|
 | Python | `coot_version_extra_info()` | ran, returned `'(revision-count 10988)\n[with guile 3.0.10 embedded]\n[with python 3.11.18 embedded]\ngit commit: 50638a38145722303017b ...` |
 | Scheme | `(coot-version-extra-info)` | ran, returned `"(revision-count 10988)\n[with guile 3.0.10 embedded]\n[with python 3.11.18 embedded]\ngit commit: 50638a38145722303017b ...` |
+
+Python and Scheme gave the same answer.
 
 ### generic_objects_gui_wrapper
 
@@ -110,8 +114,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `link_atoms()` | not tried |
-| Scheme | `(link-atoms)` | not tried |
+| Python | `link_atoms()` | error: TypeError: Wrong number or type of arguments for overloaded function 'link_atoms'.   Possible C/C++ prototypes are:     coot::link_atoms(mmd ... |
+| Scheme | `(link-atoms)` | error: In procedure link-atoms: No matching method for generic function 'link_atoms' |
 
 ### set_display_all_generic_objects
 
@@ -124,8 +128,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_display_all_generic_objects(1)` | not tried |
-| Scheme | `(set-display-all-generic-objects 1)` | not tried |
+| Python | `set_display_all_generic_objects(1)` | ran (no return value) |
+| Scheme | `(set-display-all-generic-objects 1)` | ran (no return value) |
 
 ### try_load_python_extras_dir
 
@@ -136,7 +140,7 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `try_load_python_extras_dir()` | not tried |
+| Python | `try_load_python_extras_dir()` | ran (no return value) |
 
 ### try-load-scheme-extras-dir
 
@@ -147,5 +151,5 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Scheme | `(try-load-scheme-extras-dir)` | not tried |
+| Scheme | `(try-load-scheme-extras-dir)` | ran (no return value) |
 

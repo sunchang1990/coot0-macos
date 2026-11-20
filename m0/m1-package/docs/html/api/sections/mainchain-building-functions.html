@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="f11672cd12d05b47d7491a13c4cb62a02ffa74a1">
+<meta name="coot0-source-sha1" content="e3c795478311c557797a251b12f78182ed7ddb3d">
 <title>Mainchain Building Functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -28,6 +28,7 @@ Scheme: <code>(db-mainchain imol chain-id iresno-start iresno-end direction)</co
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>db_mainchain(0, "A", 41, 45, ".")</code></td><td>ran, returned <code>-1</code></td></tr>
 <tr><td>Scheme</td><td><code>(db-mainchain 0 "A" 41 45 ".")</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="db_mainchains_fragment">db_mainchains_fragment</h3>
 <p>Python: <code>db_mainchains_fragment(imol, chain_id, res_no)</code><br>
 Scheme: <code>(db-mainchains-fragment imol chain-id res-no)</code></p>
@@ -37,6 +38,7 @@ Scheme: <code>(db-mainchains-fragment imol chain-id res-no)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>db_mainchains_fragment(0, "A", 41)</code></td><td>ran, returned <code>2</code></td></tr>
 <tr><td>Scheme</td><td><code>(db-mainchains-fragment 0 "A" 41)</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="do_db_main">do_db_main</h3>
 <p>Python: <code>do_db_main(state)</code><br>
 Scheme: <code>(do-db-main state)</code></p>

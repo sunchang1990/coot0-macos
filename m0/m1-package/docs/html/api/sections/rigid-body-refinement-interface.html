@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="b48a23caa4ac3ed8f4fb4cf33dca02bc0e8510fa">
+<meta name="coot0-source-sha1" content="4ee918b1fae59020b0ccfdefce3077d5f646519b">
 <title>Rigid Body Refinement Interface - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -37,8 +37,8 @@ Scheme: <code>(execute-rigid-body-refine auto-range-flag)</code></p>
 Scheme: <code>(rigid-body-refine-by-atom-selection imol atom-selection-string)</code></p>
 <p>Arguments: imol (a whole number), atom_selection_string (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>rigid_body_refine_by_atom_selection(0, "//A/41-45")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(rigid-body-refine-by-atom-selection 0 "//A/41-45")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>rigid_body_refine_by_atom_selection(0, "//A/41-45")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(rigid-body-refine-by-atom-selection 0 "//A/41-45")</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="rigid_body_refine_by_residue_ranges">rigid_body_refine_by_residue_ranges</h3>
 <p>Python: <code>rigid_body_refine_by_residue_ranges(imol, residue_ranges)</code><br>
 Scheme: <code>(rigid-body-refine-by-residue-ranges imol residue-ranges)</code></p>
@@ -49,8 +49,8 @@ Scheme: <code>(rigid-body-refine-by-residue-ranges imol residue-ranges)</code></
 Also available in Python as <code>rigid_body_refine_by_residue_ranges_py</code>.
 Also available in Scheme as <code>rigid-body-refine-by-residue-ranges-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 <h3 id="rigid_body_refine_zone">rigid_body_refine_zone</h3>
 <p>Python: <code>rigid_body_refine_zone(reso_start, resno_end, chain_id, imol)</code><br>
 Scheme: <code>(rigid-body-refine-zone reso-start resno-end chain-id imol)</code></p>
@@ -60,8 +60,8 @@ Scheme: <code>(rigid-body-refine-zone reso-start resno-end chain-id imol)</code>
  execute_rigid_body_refine()</p>
 <p>Arguments: reso_start (a whole number), resno_end (a whole number), chain_id (text), imol (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>rigid_body_refine_zone(1, 45, "A", 0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(rigid-body-refine-zone 1 45 "A" 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>rigid_body_refine_zone(1, 45, "A", 0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(rigid-body-refine-zone 1 45 "A" 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_rigid_body_fit_acceptable_fit_fraction">set_rigid_body_fit_acceptable_fit_fraction</h3>
 <p>Python: <code>set_rigid_body_fit_acceptable_fit_fraction(f)</code><br>
 Scheme: <code>(set-rigid-body-fit-acceptable-fit-fraction f)</code></p>
@@ -69,6 +69,6 @@ Scheme: <code>(set-rigid-body-fit-acceptable-fit-fraction f)</code></p>
 <p> @param f in the range 0.0 -&gt; 1.0 (default 0.75)</p>
 <p>Arguments: f (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_rigid_body_fit_acceptable_fit_fraction(1.0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-rigid-body-fit-acceptable-fit-fraction 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_rigid_body_fit_acceptable_fit_fraction(1.0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-rigid-body-fit-acceptable-fit-fraction 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
 </body></html>

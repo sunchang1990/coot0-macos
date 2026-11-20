@@ -48,6 +48,8 @@ Arguments: imol (a whole number), atom_selection_str (text), dots_object_name (t
 | Python | `dots(0, "//A/41-45", "my-name", 1.0, 1.0)` | ran, returned `0` |
 | Scheme | `(dots 0 "//A/41-45" "my-name" 1.0 1.0)` | ran, returned `1` |
 
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
+
 ### n_dots_sets
 
 Python: `n_dots_sets(imol)`  
@@ -59,8 +61,10 @@ Arguments: imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `n_dots_sets(0)` | not tried |
-| Scheme | `(n-dots-sets 0)` | not tried |
+| Python | `n_dots_sets(0)` | ran, returned `0` |
+| Scheme | `(n-dots-sets 0)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### set_dots_colour
 
@@ -76,8 +80,8 @@ Arguments: imol (a whole number), r (a number), g (a number), b (a number). Retu
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_dots_colour(0, 0.5, 0.5, 0.5)` | not tried |
-| Scheme | `(set-dots-colour 0 0.5 0.5 0.5)` | not tried |
+| Python | `set_dots_colour(0, 0.5, 0.5, 0.5)` | ran (no return value) |
+| Scheme | `(set-dots-colour 0 0.5 0.5 0.5)` | ran (no return value) |
 
 ### unset_dots_colour
 
@@ -92,6 +96,6 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `unset_dots_colour(0)` | not tried |
-| Scheme | `(unset-dots-colour 0)` | not tried |
+| Python | `unset_dots_colour(0)` | ran (no return value) |
+| Scheme | `(unset-dots-colour 0)` | ran (no return value) |
 

@@ -18,8 +18,8 @@ Arguments: txt (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `info_dialog("hello")` | not tried |
-| Scheme | `(info-dialog "hello")` | not tried |
+| Python | `info_dialog("hello")` | ran (no return value) |
+| Scheme | `(info-dialog "hello")` | ran (no return value) |
 
 ### info_dialog_and_text
 
@@ -34,8 +34,8 @@ Arguments: txt (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `info_dialog_and_text("hello")` | not tried |
-| Scheme | `(info-dialog-and-text "hello")` | not tried |
+| Python | `info_dialog_and_text("hello")` | ran (no return value) |
+| Scheme | `(info-dialog-and-text "hello")` | ran (no return value) |
 
 ### info_dialog_with_markup
 
@@ -50,6 +50,6 @@ Arguments: txt (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `info_dialog_with_markup("hello")` | not tried |
-| Scheme | `(info-dialog-with-markup "hello")` | not tried |
+| Python | `info_dialog_with_markup("hello")` | ran (no return value) |
+| Scheme | `(info-dialog-with-markup "hello")` | ran (no return value) |
 

@@ -22,6 +22,8 @@ Arguments: target_seq (text), match_fraction (a number). Returns: a value (see t
 | Python | `align_to_closest_chain("ACDEFGHIKLMNPQRSTVWY", 0.5)` | ran, returned `False` |
 | Scheme | `(align-to-closest-chain "ACDEFGHIKLMNPQRSTVWY" 0.5)` | ran, returned `#f` |
 
+Python and Scheme gave the same answer.
+
 ### decode_ints
 
 Python: `decode_ints(i)`  
@@ -31,8 +33,8 @@ Arguments: i (a whole number). Returns: a list.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `decode_ints(1)` | ran, returned `<Swig Object of type 'std::pair< int,int > *' at 0x10a1fd350>` |
-| Scheme | `(decode-ints 1)` | ran, returned `#<collectable-swig-pointer std::pair< int,int > * 8ce4b0b60>` |
+| Python | `decode_ints(1)` | ran, returned `<Swig Object of type 'std::pair< int,int > *' at 0x10b8e1230>` |
+| Scheme | `(decode-ints 1)` | ran, returned `#<collectable-swig-pointer std::pair< int,int > * bd70e7090>` |
 
 ### encode_ints
 
@@ -50,6 +52,8 @@ Arguments: i1 (a whole number), i2 (a whole number). Returns: a whole number.
 | Python | `encode_ints(1, 1)` | ran, returned `1001` |
 | Scheme | `(encode-ints 1 1)` | ran, returned `1001` |
 
+Python and Scheme gave the same answer.
+
 ### get_sequence_as_fasta_for_chain
 
 Python: `get_sequence_as_fasta_for_chain(imol, chain_id)`  
@@ -63,6 +67,8 @@ Arguments: imol (a whole number), chain_id (text). Returns: text.
 |---|---|---|
 | Python | `get_sequence_as_fasta_for_chain(0, "A")` | ran, returned `'> tutorial-modern A\n\nDVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYG\nYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLID\ ...` |
 | Scheme | `(get-sequence-as-fasta-for-chain 0 "A")` | ran, returned `"> tutorial-modern A\n\nDVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYG\nYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLID\ ...` |
+
+Python and Scheme gave the same answer.
 
 ### graphics_to_phenix_geo_representation
 
@@ -89,8 +95,8 @@ Also available in Scheme as `key-sym-code-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### molecule_atom_overlaps
 
@@ -103,8 +109,10 @@ Also available in Scheme as `molecule-atom-overlaps-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `molecule_atom_overlaps(0)` | not tried |
-| Scheme | `(molecule-atom-overlaps 0)` | not tried |
+| Python | `molecule_atom_overlaps(0)` | ran, returned `[{'atom-1-spec': [-1, 'A', 2, '', ' CA ', ''], 'atom-2-spec': [-1, 'A', 89, '', ' CZ ', ''], 'overlap-volume': 7.4502435 ...` |
+| Scheme | `(molecule-atom-overlaps 0)` | ran, returned `(((-1 "A" 2 "" " CA " "") (-1 "A" 89 "" " CZ " "") 1.7000000476837158 1.7000000476837158 7.450243542341931) ((-1 "A" 2 " ...` |
+
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
 ### pathology_data
 
@@ -115,7 +123,7 @@ Arguments: mtz_file_name (text), fp_col (text), sigfp_col (text). Returns: a val
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `pathology_data("rnasa-1.8-all_refmac1.mtz", "hello", "hello")` | not tried |
+| Python | `pathology_data("rnasa-1.8-all_refmac1.mtz", "hello", "hello")` | ran, returned `False` |
 
 ### prodrg_import_function
 
@@ -131,8 +139,8 @@ Arguments: file_name (text), comp_id (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `prodrg_import_function("tutorial-modern.pdb", "ALA")` | not tried |
-| Scheme | `(prodrg-import-function "tutorial-modern.pdb" "ALA")` | not tried |
+| Python | `prodrg_import_function("tutorial-modern.pdb", "ALA")` | not run: not run automatically (prodrg: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(prodrg-import-function "tutorial-modern.pdb" "ALA")` | not run: not run automatically (prodrg: exits, uses the network, an external program, files or a screen) |
 
 ### py_symop_strings_to_space_group
 
@@ -143,7 +151,7 @@ Arguments: symop_string_list (a list or value). Returns: `clipper::Spacegroup`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### py_to_residue_specs
 
@@ -154,7 +162,7 @@ Arguments: s (a list or value). Returns: a list.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### register_interesting_positions_list
 
@@ -166,8 +174,8 @@ Also available in Python as `register_interesting_positions_list_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### resolve_clashing_sidechains_by_deletion
 
@@ -178,8 +186,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `resolve_clashing_sidechains_by_deletion(0)` | not tried |
-| Scheme | `(resolve-clashing-sidechains-by-deletion 0)` | not tried |
+| Python | `resolve_clashing_sidechains_by_deletion(0)` | ran (no return value) |
+| Scheme | `(resolve-clashing-sidechains-by-deletion 0)` | ran (no return value) |
 
 ### resolve_clashing_sidechains_by_rebuilding
 
@@ -190,8 +198,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `resolve_clashing_sidechains_by_rebuilding(0)` | not tried |
-| Scheme | `(resolve-clashing-sidechains-by-rebuilding 0)` | not tried |
+| Python | `resolve_clashing_sidechains_by_rebuilding(0)` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(resolve-clashing-sidechains-by-rebuilding 0)` | stopped Coot when tried without a window (not checked with a window) |
 
 ### sbase_import_function
 
@@ -207,8 +215,8 @@ Arguments: comp_id (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `sbase_import_function("ALA")` | not tried |
-| Scheme | `(sbase-import-function "ALA")` | not tried |
+| Python | `sbase_import_function("ALA")` | ran (no return value) |
+| Scheme | `(sbase-import-function "ALA")` | ran (no return value) |
 
 ### scm-symop-strings-to-space-group
 
@@ -219,7 +227,7 @@ Arguments: symop-string-list (a list or value). Returns: `clipper::Spacegroup`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Scheme | (no automatic example) | not tried |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### scm-to-residue-specs
 
@@ -230,7 +238,7 @@ Arguments: s (a list or value). Returns: a list.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Scheme | (no automatic example) | not tried |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### set_python_draw_function
 
@@ -243,7 +251,7 @@ Arguments: command_string (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_python_draw_function("hello")` | not tried |
+| Python | `set_python_draw_function("hello")` | ran (no return value) |
 
 ### simple_text_dialog
 
@@ -256,8 +264,8 @@ Arguments: dialog_title (text), text (text), geom_x (a whole number), geom_y (a 
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `simple_text_dialog("hello", "hello", 1, 1)` | not tried |
-| Scheme | `(simple-text-dialog "hello" "hello" 1 1)` | not tried |
+| Python | `simple_text_dialog("hello", "hello", 1, 1)` | ran (no return value) |
+| Scheme | `(simple-text-dialog "hello" "hello" 1 1)` | ran (no return value) |
 
 ### spherical-density-overlap
 
@@ -268,7 +276,7 @@ Arguments: i-scm (a list or value), j-scm (a list or value). Returns: a value (s
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Scheme | (no automatic example) | not tried |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### store_keyed_user_name
 
@@ -281,8 +289,8 @@ Arguments: key (text), user_name (text), passwd (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `store_keyed_user_name("hello", "my-name", "hello")` | not tried |
-| Scheme | `(store-keyed-user-name "hello" "my-name" "hello")` | not tried |
+| Python | `store_keyed_user_name("hello", "my-name", "hello")` | ran (no return value) |
+| Scheme | `(store-keyed-user-name "hello" "my-name" "hello")` | ran (no return value) |
 
 ### write_sequence
 
@@ -295,6 +303,6 @@ Arguments: imol (a whole number), file_name (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `write_sequence(0, "tutorial-modern.pdb")` | not tried |
-| Scheme | `(write-sequence 0 "tutorial-modern.pdb")` | not tried |
+| Python | `write_sequence(0, "tutorial-modern.pdb")` | ran (no return value) |
+| Scheme | `(write-sequence 0 "tutorial-modern.pdb")` | ran (no return value) |
 

@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="b5f584c8e44ec411c8b7ddf8758ae97206f40a7f">
+<meta name="coot0-source-sha1" content="c7c7271b3030db0d6fdc437ce77d994e4d464e30">
 <title>Simplex Refinement Interface - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -31,6 +31,7 @@ Scheme: <code>(score-residue-range-fit-to-map res1 res2 altloc chain-id imol imo
 <p>simply score the residue range fit to map</p>
 <p>Arguments: res1 (a whole number), res2 (a whole number), altloc (text), chain_id (text), imol (a whole number), imol_for_map (a whole number). Returns: a number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>score_residue_range_fit_to_map(1, 1, "", "A", 0, 1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(score-residue-range-fit-to-map 1 1 "" "A" 0 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>score_residue_range_fit_to_map(1, 1, "", "A", 0, 1)</code></td><td>ran, returned <code>5.491945266723633</code></td></tr>
+<tr><td>Scheme</td><td><code>(score-residue-range-fit-to-map 1 1 "" "A" 0 1)</code></td><td>ran, returned <code>5.491945266723633</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 </body></html>

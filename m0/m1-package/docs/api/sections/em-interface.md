@@ -15,8 +15,8 @@ Arguments: imol_map (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `map_histogram(1)` | not tried |
-| Scheme | `(map-histogram 1)` | not tried |
+| Python | `map_histogram(1)` | ran (no return value) |
+| Scheme | `(map-histogram 1)` | ran (no return value) |
 
 ### scale_cell
 
@@ -31,8 +31,10 @@ Arguments: imol_map (a whole number), fac_u (a number), fac_v (a number), fac_w 
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `scale_cell(1, 1.0, 1.0, 1.0)` | not tried |
-| Scheme | `(scale-cell 1 1.0 1.0 1.0)` | not tried |
+| Python | `scale_cell(1, 1.0, 1.0, 1.0)` | ran, returned `0` |
+| Scheme | `(scale-cell 1 1.0 1.0 1.0)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### segment_map
 
@@ -47,8 +49,8 @@ Arguments: imol_map (a whole number), low_level (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `segment_map(1, 1.5)` | not tried |
-| Scheme | `(segment-map 1 1.5)` | not tried |
+| Python | `segment_map(1, 1.5)` | ran (no return value) |
+| Scheme | `(segment-map 1 1.5)` | ran (no return value) |
 
 ### segment_map_multi_scale
 
@@ -59,8 +61,8 @@ Arguments: imol_map (a whole number), low_level (a number), b_factor_inc (a numb
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `segment_map_multi_scale(1, 1.5, 20.0, 1)` | not tried |
-| Scheme | `(segment-map-multi-scale 1 1.5 20.0 1)` | not tried |
+| Python | `segment_map_multi_scale(1, 1.5, 20.0, 1)` | ran (no return value) |
+| Scheme | `(segment-map-multi-scale 1 1.5 20.0 1)` | ran (no return value) |
 
 ### set_ignore_pseudo_zeros_for_map_stats
 
@@ -73,6 +75,6 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_ignore_pseudo_zeros_for_map_stats(1)` | not tried |
-| Scheme | `(set-ignore-pseudo-zeros-for-map-stats 1)` | not tried |
+| Python | `set_ignore_pseudo_zeros_for_map_stats(1)` | ran (no return value) |
+| Scheme | `(set-ignore-pseudo-zeros-for-map-stats 1)` | ran (no return value) |
 

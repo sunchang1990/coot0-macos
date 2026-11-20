@@ -33,6 +33,19 @@ check("chain_ids -> list[str]", lambda: isinstance(g["chain_ids"](imol), list) a
 check("is_protein_chain_qm(imol, chain)", lambda: g["is_protein_chain_qm"](imol, c0) in (0, 1))
 check("residue_spec helper (str ops ported)", lambda: g["residue_spec_to_chain_id"](["A", 1, ""]) == "A")
 check("atom_spec -> residue_spec", lambda: g["atom_spec_to_residue_spec"](["A", 1, "", " CA ", ""]) is not None)
+def sanitise_active():   # build 30: coot_utils took chain, residue and insertion code all from active_atom[2]
+    coot.set_go_to_atom_molecule(imol); coot.set_go_to_atom_chain_residue_atom_name(c0, r0, " CA ")
+    coot.set_atom_string_attribute(imol, c0, r0, "", " CA ", "", "alt-conf", "A")
+    before = [a[0][1] for a in coot.residue_info_py(imol, c0, r0, "") if a[0][0] == " CA "]
+    g["sanitise_alt_confs_active_residue"]()
+    after = [a[0][1] for a in coot.residue_info_py(imol, c0, r0, "") if a[0][0] == " CA "]
+    return True if (before == ["A"] and after == [""]) else (before, after)
+check("sanitise_alt_confs_active_residue clears an orphan alt conf", sanitise_active)
+def ligand_overlaps():   # build 30: the C++ of 0.9.8.96 never filled the list ("FIXME"): always False
+    im = coot.read_pdb(os.path.join(os.environ["COOT_PREFIX"], "test-data", "tutorial-modern.pdb"))
+    r = g["ligand_atom_overlaps"](im, ["A", 41, ""], 5.0)
+    return True if (isinstance(r, list) and r and all(len(x) == 4 and x[0][1] == "A" for x in r)) else r
+check("ligand_atom_overlaps returns the overlaps (as Scheme does)", ligand_overlaps)
 nfun = sum(1 for k, v in g.items() if callable(v) and not k.startswith("_"))
 print("INFO callables visible in __main__:", nfun)
 w = max(len(r[0]) for r in res)

@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="527a15d4a1d019d32f6bf829b4a910a9d60d5df3">
+<meta name="coot0-source-sha1" content="3c4a554b2cc49b571ba0fa4bfb3650dbba816a18">
 <title>Dynamic Map - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -24,6 +24,7 @@ Scheme: <code>(get-dynamic-map-sampling)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>get_dynamic_map_sampling()</code></td><td>ran, returned <code>0</code></td></tr>
 <tr><td>Scheme</td><td><code>(get-dynamic-map-sampling)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="get_dynamic_map_size_display">get_dynamic_map_size_display</h3>
 <p>Python: <code>get_dynamic_map_size_display()</code><br>
 Scheme: <code>(get-dynamic-map-size-display)</code></p>
@@ -31,54 +32,55 @@ Scheme: <code>(get-dynamic-map-size-display)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>get_dynamic_map_size_display()</code></td><td>ran, returned <code>0</code></td></tr>
 <tr><td>Scheme</td><td><code>(get-dynamic-map-size-display)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="set_dynamic_map_sampling_off">set_dynamic_map_sampling_off</h3>
 <p>Python: <code>set_dynamic_map_sampling_off()</code><br>
 Scheme: <code>(set-dynamic-map-sampling-off)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_dynamic_map_sampling_off()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-dynamic-map-sampling-off)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_dynamic_map_sampling_off()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-dynamic-map-sampling-off)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_dynamic_map_sampling_on">set_dynamic_map_sampling_on</h3>
 <p>Python: <code>set_dynamic_map_sampling_on()</code><br>
 Scheme: <code>(set-dynamic-map-sampling-on)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_dynamic_map_sampling_on()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-dynamic-map-sampling-on)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_dynamic_map_sampling_on()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-dynamic-map-sampling-on)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_dynamic_map_size_display_off">set_dynamic_map_size_display_off</h3>
 <p>Python: <code>set_dynamic_map_size_display_off()</code><br>
 Scheme: <code>(set-dynamic-map-size-display-off)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_dynamic_map_size_display_off()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-dynamic-map-size-display-off)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_dynamic_map_size_display_off()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-dynamic-map-size-display-off)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_dynamic_map_size_display_on">set_dynamic_map_size_display_on</h3>
 <p>Python: <code>set_dynamic_map_size_display_on()</code><br>
 Scheme: <code>(set-dynamic-map-size-display-on)</code></p>
 <p>scripting interface:</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_dynamic_map_size_display_on()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-dynamic-map-size-display-on)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_dynamic_map_size_display_on()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-dynamic-map-size-display-on)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_dynamic_map_zoom_offset">set_dynamic_map_zoom_offset</h3>
 <p>Python: <code>set_dynamic_map_zoom_offset(i)</code><br>
 Scheme: <code>(set-dynamic-map-zoom-offset i)</code></p>
 <p>Arguments: i (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_dynamic_map_zoom_offset(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-dynamic-map-zoom-offset 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_dynamic_map_zoom_offset(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-dynamic-map-zoom-offset 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="toggle_dynamic_map_display_size">toggle_dynamic_map_display_size</h3>
 <p>Python: <code>toggle_dynamic_map_display_size()</code><br>
 Scheme: <code>(toggle-dynamic-map-display-size)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>toggle_dynamic_map_display_size()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(toggle-dynamic-map-display-size)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>toggle_dynamic_map_display_size()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(toggle-dynamic-map-display-size)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="toggle_dynamic_map_sampling">toggle_dynamic_map_sampling</h3>
 <p>Python: <code>toggle_dynamic_map_sampling()</code><br>
 Scheme: <code>(toggle-dynamic-map-sampling)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>toggle_dynamic_map_sampling()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(toggle-dynamic-map-sampling)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>toggle_dynamic_map_sampling()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(toggle-dynamic-map-sampling)</code></td><td>ran (no return value)</td></tr></tbody></table>
 </body></html>

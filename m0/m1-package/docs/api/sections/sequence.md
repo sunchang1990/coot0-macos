@@ -42,6 +42,8 @@ Arguments: sequence (text). Returns: true or false.
 | Python | `assign_sequence_to_best_matching_chain("ACDEFGHIKLMNPQRSTVWY")` | ran, returned `False` |
 | Scheme | `(assign-sequence-to-best-matching-chain "ACDEFGHIKLMNPQRSTVWY")` | ran, returned `#f` |
 
+Python and Scheme gave the same answer.
+
 ### assign_sequences_to_best_matching_chain_from_fasta
 
 Python: `assign_sequences_to_best_matching_chain_from_fasta(fasta_file_name)`  
@@ -53,6 +55,8 @@ Arguments: fasta_file_name (text). Returns: true or false.
 |---|---|---|
 | Python | `assign_sequences_to_best_matching_chain_from_fasta("tutorial-modern.pdb")` | ran, returned `False` |
 | Scheme | `(assign-sequences-to-best-matching-chain-from-fasta "tutorial-modern.pdb")` | ran, returned `#f` |
+
+Python and Scheme gave the same answer.
 
 ### associate_pir_alignment
 
@@ -92,6 +96,6 @@ Arguments: imol (a whole number), sequence (text). Returns: a list.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `sequence_comparison_to_chains(0, "ACDEFGHIKLMNPQRSTVWY")` | not tried |
-| Scheme | `(sequence-comparison-to-chains 0 "ACDEFGHIKLMNPQRSTVWY")` | not tried |
+| Python | `sequence_comparison_to_chains(0, "ACDEFGHIKLMNPQRSTVWY")` | ran, returned `<Swig Object of type 'std::vector< coot::chain_mutation_info_container_t,std::allocator< coot::chain_mutation_info_conta ...` |
+| Scheme | `(sequence-comparison-to-chains 0 "ACDEFGHIKLMNPQRSTVWY")` | ran, returned `#<collectable-swig-pointer std::vector< coot::chain_mutation_info_container_t > * c3d0eef80>` |
 

@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="c75847dbbf854518f27f0ca521527a39cdc36f3e">
+<meta name="coot0-source-sha1" content="492b17db27caec52be569b764e76abc458b5a8a8">
 <title>Monomer - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -37,6 +37,7 @@ Scheme: <code>(auto-load-dictionary comp-id)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>auto_load_dictionary("ALA")</code></td><td>ran, returned <code>2</code></td></tr>
 <tr><td>Scheme</td><td><code>(auto-load-dictionary "ALA")</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="comp_id2name">comp_id2name</h3>
 <p>Python: <code>comp_id2name(comp_id)</code><br>
 Scheme: <code>(comp-id-&gt;name comp-id)</code></p>
@@ -48,6 +49,7 @@ Also available in Scheme as <code>comp-id-to-name-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>comp_id2name("ALA")</code></td><td>ran, returned <code>'ALANINE'</code></td></tr>
 <tr><td>Scheme</td><td><code>(comp-id-&gt;name "ALA")</code></td><td>ran, returned <code>"ALANINE"</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="get_monomer">get_monomer</h3>
 <p>Python: <code>get_monomer(comp_id)</code><br>
 Scheme: <code>(get-monomer comp-id)</code></p>
@@ -57,6 +59,7 @@ Scheme: <code>(get-monomer comp-id)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>get_monomer("ALA")</code></td><td>ran, returned <code>2</code></td></tr>
 <tr><td>Scheme</td><td><code>(get-monomer "ALA")</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="get_monomer_for_molecule">get_monomer_for_molecule</h3>
 <p>Python: <code>get_monomer_for_molecule(comp_id, imol)</code><br>
 Scheme: <code>(get-monomer-for-molecule comp-id imol)</code></p>
@@ -65,6 +68,7 @@ Scheme: <code>(get-monomer-for-molecule comp-id imol)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>get_monomer_for_molecule("ALA", 0)</code></td><td>ran, returned <code>2</code></td></tr>
 <tr><td>Scheme</td><td><code>(get-monomer-for-molecule "ALA" 0)</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="get_monomer_for_molecule_by_index">get_monomer_for_molecule_by_index</h3>
 <p>Python: <code>get_monomer_for_molecule_by_index(dict_idx, imol_enc)</code><br>
 Scheme: <code>(get-monomer-for-molecule-by-index dict-idx imol-enc)</code></p>
@@ -72,6 +76,7 @@ Scheme: <code>(get-monomer-for-molecule-by-index dict-idx imol-enc)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>get_monomer_for_molecule_by_index(1, 0)</code></td><td>ran, returned <code>2</code></td></tr>
 <tr><td>Scheme</td><td><code>(get-monomer-for-molecule-by-index 1 0)</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="get_monomer_from_dictionary">get_monomer_from_dictionary</h3>
 <p>Python: <code>get_monomer_from_dictionary(comp_id, idealised_flag)</code><br>
 Scheme: <code>(get-monomer-from-dictionary comp-id idealised-flag)</code></p>
@@ -83,14 +88,16 @@ Scheme: <code>(get-monomer-from-dictionary comp-id idealised-flag)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>get_monomer_from_dictionary("ALA", 1)</code></td><td>ran, returned <code>2</code></td></tr>
 <tr><td>Scheme</td><td><code>(get-monomer-from-dictionary "ALA" 1)</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="import_python_module">import_python_module</h3>
 <p>Python: <code>import_python_module(module_name, use_namespace)</code><br>
 Scheme: <code>(import-python-module module-name use-namespace)</code></p>
 <p>import python module</p>
 <p>Arguments: module_name (text), use_namespace (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>import_python_module("my-name", 1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(import-python-module "my-name" 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>import_python_module("my-name", 1)</code></td><td>ran, returned <code>-1</code></td></tr>
+<tr><td>Scheme</td><td><code>(import-python-module "my-name" 1)</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="matching_compound_names_from_dictionary">matching_compound_names_from_dictionary</h3>
 <p>Python: <code>matching_compound_names_from_dictionary(compound_name_fragment, allow_minimal_descriptions_flag)</code><br>
 Scheme: <code>(matching-compound-names-from-dictionary compound-name-fragment allow-minimal-descriptions-flag)</code></p>
@@ -100,16 +107,18 @@ Scheme: <code>(matching-compound-names-from-dictionary compound-name-fragment al
 Also available in Python as <code>matching_compound_names_from_dictionary_py</code>.
 Also available in Scheme as <code>matching-compound-names-from-dictionary-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>matching_compound_names_from_dictionary("my-name", 1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(matching-compound-names-from-dictionary "my-name" 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>matching_compound_names_from_dictionary("my-name", 1)</code></td><td>ran, returned <code>[]</code></td></tr>
+<tr><td>Scheme</td><td><code>(matching-compound-names-from-dictionary "my-name" 1)</code></td><td>ran, returned <code>()</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="reload_dictionary">reload_dictionary</h3>
 <p>Python: <code>reload_dictionary(comp_id)</code><br>
 Scheme: <code>(reload-dictionary comp-id)</code></p>
 <p>as above, but dictionary is cleared and re-read if it already exists</p>
 <p>Arguments: comp_id (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>reload_dictionary("ALA")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(reload-dictionary "ALA")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>reload_dictionary("ALA")</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(reload-dictionary "ALA")</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="remove_non_auto_load_residue_name">remove_non_auto_load_residue_name</h3>
 <p>Python: <code>remove_non_auto_load_residue_name(s)</code><br>
 Scheme: <code>(remove-non-auto-load-residue-name s)</code></p>
@@ -117,30 +126,30 @@ Scheme: <code>(remove-non-auto-load-residue-name s)</code></p>
  get auto-loaded from the Refmac dictionary.</p>
 <p>Arguments: s (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>remove_non_auto_load_residue_name("hello")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(remove-non-auto-load-residue-name "hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>remove_non_auto_load_residue_name("hello")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(remove-non-auto-load-residue-name "hello")</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="run_guile_script">run_guile_script</h3>
 <p>Python: <code>run_guile_script(filename)</code><br>
 Scheme: <code>(run-guile-script filename)</code></p>
 <p>guile run script file</p>
 <p>Arguments: filename (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>run_guile_script("tutorial-modern.pdb")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(run-guile-script "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>run_guile_script("tutorial-modern.pdb")</code></td><td>not run: not run automatically (run: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(run-guile-script "tutorial-modern.pdb")</code></td><td>not run: not run automatically (run: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="run_python_script">run_python_script</h3>
 <p>Python: <code>run_python_script(filename)</code><br>
 Scheme: <code>(run-python-script filename)</code></p>
 <p>run python script file</p>
 <p>Arguments: filename (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>run_python_script("tutorial-modern.pdb")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(run-python-script "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>run_python_script("tutorial-modern.pdb")</code></td><td>not run: not run automatically (run: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(run-python-script "tutorial-modern.pdb")</code></td><td>not run: not run automatically (run: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="run_script">run_script</h3>
 <p>Python: <code>run_script(filename)</code><br>
 Scheme: <code>(run-script filename)</code></p>
 <p>run script file</p>
 <p>Arguments: filename (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>run_script("tutorial-modern.pdb")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(run-script "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>run_script("tutorial-modern.pdb")</code></td><td>not run: not run automatically (run: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(run-script "tutorial-modern.pdb")</code></td><td>not run: not run automatically (run: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 </body></html>

@@ -16,3 +16,5 @@ Arguments: uri (text). Returns: a whole number.
 | Python | `handle_drag_and_drop_string("hello")` | ran, returned `0` |
 | Scheme | `(handle-drag-and-drop-string "hello")` | ran, returned `0` |
 
+Python and Scheme gave the same answer.
+

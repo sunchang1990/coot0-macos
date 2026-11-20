@@ -18,3 +18,5 @@ Also available in Scheme as `get-pkgdatadir-scm`.
 | Python | `get_pkgdatadir()` | ran, returned `'/usr/local/share/coot'` |
 | Scheme | `(pkgdatadir)` | ran, returned `"/usr/local/share/coot"` |
 
+Python and Scheme gave the same answer.
+

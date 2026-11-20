@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="fb50f751de18ff0d97323a8d70591dee3ff25cd5">
+<meta name="coot0-source-sha1" content="5045a39da1953484d223f79fea1ba2fc76b19c68">
 <title>Atom Information functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -31,6 +31,7 @@ Also available in Python as <code>active_residue_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>active_residue()</code></td><td>ran, returned <code>[0, 'A', 42, '', ' CA ', '']</code></td></tr>
 <tr><td>Scheme</td><td><code>(active-residue)</code></td><td>ran, returned <code>(0 "A" 42 "" " CA " "")</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="add_hydrogen_atoms_to_residue">add_hydrogen_atoms_to_residue</h3>
 <p>Python: <code>add_hydrogen_atoms_to_residue(imol, chain_id, res_no, ins_code)</code><br>
 Scheme: <code>(add-hydrogen-atoms-to-residue imol chain-id res-no ins-code)</code></p>
@@ -68,6 +69,7 @@ Also available in Scheme as <code>atom-info-string-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>atom_info_string(0, "A", 41, "", " CA ", "")</code></td><td>ran, returned <code>[1.0, 14.8, ' C', 47.072, 10.589, 17.411]</code></td></tr>
 <tr><td>Scheme</td><td><code>(atom-info-string 0 "A" 41 "" " CA " "")</code></td><td>ran, returned <code>(1.0 14.8 " C" 47.072 10.589 17.411)</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="chain_fragments">chain_fragments</h3>
 <p>Python: <code>chain_fragments(imol, screen_output_also)</code><br>
 Scheme: <code>(chain-fragments imol screen-output-also)</code></p>
@@ -77,6 +79,7 @@ Also available in Scheme as <code>chain-fragments-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>chain_fragments(0, 1)</code></td><td>ran, returned <code>False</code></td></tr>
 <tr><td>Scheme</td><td><code>(chain-fragments 0 1)</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="clear_and_update_molecule">clear_and_update_molecule</h3>
 <p>Python: <code>clear_and_update_molecule(molecule_number, molecule_expression)</code><br>
 Scheme: <code>(clear-and-update-molecule molecule-number molecule-expression)</code></p>
@@ -102,6 +105,7 @@ Also available in Python as <code>closest_atom_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>closest_atom(0)</code></td><td>ran, returned <code>[0, 'A', 42, '', ' CA ', '', 44.346, 10.357, 15.014]</code></td></tr>
 <tr><td>Scheme</td><td><code>(closest-atom 0)</code></td><td>ran, returned <code>(0 "A" 42 "" " CA " "" 44.346 10.357 15.014)</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="hydrogenate_region">hydrogenate_region</h3>
 <p>Python: <code>hydrogenate_region(radius)</code><br>
 Scheme: <code>(hydrogenate-region radius)</code></p>
@@ -111,15 +115,16 @@ the result and apply them to the molecule of the active residue.</p>
 <p>Arguments: radius (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>hydrogenate_region(5.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(hydrogenate-region 5.0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Scheme</td><td><code>(hydrogenate-region 5.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="molecule_to_pdb_string_py">molecule_to_pdb_string_py</h3>
 <p>Python: <code>molecule_to_pdb_string_py(imol)</code><br>
 Scheme: <code>(molecule-to-pdb-string-scm imol)</code></p>
 <p>Return the molecule as a PDB string</p>
 <p>Arguments: imol (a whole number). Returns: a value (see the result of the example).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>molecule_to_pdb_string_py(0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(molecule-to-pdb-string-scm 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>molecule_to_pdb_string_py(0)</code></td><td>ran, returned <code>'HEADER    ----                                             \nCOMPND    ---                                              ...</code></td></tr>
+<tr><td>Scheme</td><td><code>(molecule-to-pdb-string-scm 0)</code></td><td>ran, returned <code>"HEADER    ----                                             \nCOMPND    ---                                              ...</code></td></tr></tbody></table>
+<p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 <h3 id="residue_centre_from_spec">residue_centre_from_spec</h3>
 <p>Python: <code>residue_centre_from_spec(imol, spec_py)</code></p>
 <p>the expanded form of this is in c-interface.h</p>
@@ -127,7 +132,7 @@ Scheme: <code>(molecule-to-pdb-string-scm imol)</code></p>
 Also available in Python as <code>residue_centre_from_spec_py</code>.
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>residue_centre_from_spec(0, ["A", 41, ""])</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>residue_centre_from_spec(0, ["A", 41, ""])</code></td><td>ran, returned <code>[48.17811111111111, 11.594, 17.793222222222226]</code></td></tr></tbody></table>
 <h3 id="residue_info">residue_info</h3>
 <p>Python: <code>residue_info(imol, chain_id, resno, ins_code)</code><br>
 Scheme: <code>(residue-info imol chain-id resno ins-code)</code></p>
@@ -140,16 +145,18 @@ output is like this:
 <p>Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_code (text). Returns: a value (see the result of the example).
 Also available in Python as <code>residue_info_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>residue_info(0, "A", 41, "")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(residue-info 0 "A" 41 "")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>residue_info(0, "A", 41, "")</code></td><td>ran, returned <code>[[[' N  ', ''], [1.0, 13.57, ' N', ''], [46.374, 11.225, 18.462], 294], [[' CA ', ''], [1.0, 14.8, ' C', ''], [47.072, 1 ...</code></td></tr>
+<tr><td>Scheme</td><td><code>(residue-info 0 "A" 41 "")</code></td><td>ran, returned <code>(((" N  " "") (1.0 13.57 " N" "") (46.374 11.225 18.462)) ((" CA " "") (1.0 14.8 " C" "") (47.072 10.589 17.411)) ((" CB ...</code></td></tr></tbody></table>
+<p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 <h3 id="residue_name">residue_name</h3>
 <p>Python: <code>residue_name(imol, chain_id, resno, ins_code)</code><br>
 Scheme: <code>(residue-name imol chain-id resno ins-code)</code></p>
 <p>return the residue name of the specified residue</p>
 <p>Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_code (text). Returns: a value (see the result of the example).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>residue_name(0, "A", 41, "")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(residue-name 0 "A" 41 "")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>residue_name(0, "A", 41, "")</code></td><td>ran, returned <code>'GLU'</code></td></tr>
+<tr><td>Scheme</td><td><code>(residue-name 0 "A" 41 "")</code></td><td>ran, returned <code>"GLU"</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="residues_near_residue">residues_near_residue</h3>
 <p>Python: <code>residues_near_residue(imol, residue_in, radius)</code><br>
 Scheme: <code>(residues-near-residue imol residue-in-scm radius)</code></p>
@@ -159,8 +166,9 @@ specified by residue_in.</p>
 <p>Arguments: imol (a whole number), residue_in (a list or value), radius (a number). Returns: a value (see the result of the example).
 Also available in Python as <code>residues_near_residue_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>residues_near_residue(0, ["A", 41, ""], 5.0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(residues-near-residue 0 (list "A" 41 "") 5.0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>residues_near_residue(0, ["A", 41, ""], 5.0)</code></td><td>ran, returned <code>[['A', 42, ''], ['B', 61, ''], ['A', 39, ''], ['A', 40, ''], ['A', 43, ''], ['A', 37, ''], ['A', 86, ''], ['A', 44, '']]</code></td></tr>
+<tr><td>Scheme</td><td><code>(residues-near-residue 0 (list "A" 41 "") 5.0)</code></td><td>ran, returned <code>(("A" 44 "") ("A" 86 "") ("A" 37 "") ("A" 43 "") ("A" 40 "") ("A" 39 "") ("B" 61 "") ("A" 42 ""))</code></td></tr></tbody></table>
+<p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 <h3 id="resname_from_serial_number">resname_from_serial_number</h3>
 <p>Python: <code>resname_from_serial_number(imol, chain_id, serial_num)</code><br>
 Scheme: <code>(resname-from-serial-number imol chain-id serial-num)</code></p>
@@ -168,8 +176,9 @@ Scheme: <code>(resname-from-serial-number imol chain-id serial-num)</code></p>
 <p> Returns blank ("") on failure.</p>
 <p>Arguments: imol (a whole number), chain_id (text), serial_num (a whole number). Returns: text.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>resname_from_serial_number(0, "A", 1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(resname-from-serial-number 0 "A" 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>resname_from_serial_number(0, "A", 1)</code></td><td>ran, returned <code>'VAL'</code></td></tr>
+<tr><td>Scheme</td><td><code>(resname-from-serial-number 0 "A" 1)</code></td><td>ran, returned <code>"VAL"</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="serial_number_from_residue_specs">serial_number_from_residue_specs</h3>
 <p>Python: <code>serial_number_from_residue_specs(imol, chain_id, res_no, ins_code)</code><br>
 Scheme: <code>(serial-number-from-residue-specs imol chain-id res-no ins-code)</code></p>
@@ -177,13 +186,14 @@ Scheme: <code>(serial-number-from-residue-specs imol chain-id res-no ins-code)</
 Returns -1 on failure to find the residue</p>
 <p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>serial_number_from_residue_specs(0, "A", 41, "")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(serial-number-from-residue-specs 0 "A" 41 "")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>serial_number_from_residue_specs(0, "A", 41, "")</code></td><td>ran, returned <code>40</code></td></tr>
+<tr><td>Scheme</td><td><code>(serial-number-from-residue-specs 0 "A" 41 "")</code></td><td>ran, returned <code>40</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="set_b_factor_residues">set_b_factor_residues</h3>
 <p>Python: <code>set_b_factor_residues(imol, residue_specs_b_value_tuple_list_py)</code></p>
 <p>Arguments: imol (a whole number), residue_specs_b_value_tuple_list_py (a list or value). Returns: nothing.
 Also available in Python as <code>set_b_factor_residues_py</code>.
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_b_factor_residues(0, ["A", 41, ""])</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_b_factor_residues(0, ["A", 41, ""])</code></td><td>ran (no return value)</td></tr></tbody></table>
 </body></html>

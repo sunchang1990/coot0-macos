@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="cd13c020b9399a4123214dccaa23b05593459f70">
+<meta name="coot0-source-sha1" content="1c14345b869f9b5594429fbfed5431f6144b5d6d">
 <title>File System Functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -64,6 +64,7 @@ Scheme: <code>(file-chooser-overwrite-state)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>file_chooser_overwrite_state()</code></td><td>ran, returned <code>1</code></td></tr>
 <tr><td>Scheme</td><td><code>(file-chooser-overwrite-state)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="file_chooser_selector_state">file_chooser_selector_state</h3>
 <p>Python: <code>file_chooser_selector_state()</code><br>
 Scheme: <code>(file-chooser-selector-state)</code></p>
@@ -71,6 +72,7 @@ Scheme: <code>(file-chooser-selector-state)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>file_chooser_selector_state()</code></td><td>ran, returned <code>1</code></td></tr>
 <tr><td>Scheme</td><td><code>(file-chooser-selector-state)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="file_type_coords">file_type_coords</h3>
 <p>Python: <code>file_type_coords(file_name)</code><br>
 Scheme: <code>(file-type-coords file-name)</code></p>
@@ -79,6 +81,7 @@ Scheme: <code>(file-type-coords file-name)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>file_type_coords("tutorial-modern.pdb")</code></td><td>ran, returned <code>1</code></td></tr>
 <tr><td>Scheme</td><td><code>(file-type-coords "tutorial-modern.pdb")</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="filter_fileselection_filenames_state">filter_fileselection_filenames_state</h3>
 <p>Python: <code>filter_fileselection_filenames_state()</code><br>
 Scheme: <code>(filter-fileselection-filenames-state)</code></p>
@@ -87,6 +90,7 @@ Scheme: <code>(filter-fileselection-filenames-state)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>filter_fileselection_filenames_state()</code></td><td>ran, returned <code>0</code></td></tr>
 <tr><td>Scheme</td><td><code>(filter-fileselection-filenames-state)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="make_directory_maybe">make_directory_maybe</h3>
 <p>Python: <code>make_directory_maybe(dir)</code><br>
 Scheme: <code>(make-directory-maybe dir)</code></p>
@@ -97,63 +101,64 @@ Scheme: <code>(make-directory-maybe dir)</code></p>
  If dir already exists as a directory, return 0 of course.</p>
 <p>Arguments: dir (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>make_directory_maybe(".")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(make-directory-maybe ".")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>make_directory_maybe(".")</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(make-directory-maybe ".")</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="open_coords_dialog">open_coords_dialog</h3>
 <p>Python: <code>open_coords_dialog()</code><br>
 Scheme: <code>(open-coords-dialog)</code></p>
 <p>display the open coordinates dialog</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>open_coords_dialog()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(open-coords-dialog)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>open_coords_dialog()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(open-coords-dialog)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="remove_coordinates_glob_extension">remove_coordinates_glob_extension</h3>
 <p>Python: <code>remove_coordinates_glob_extension(ext)</code><br>
 Scheme: <code>(remove-coordinates-glob-extension ext)</code></p>
 <p>remove an extension to be treated as coordinate files</p>
 <p>Arguments: ext (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>remove_coordinates_glob_extension("hello")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(remove-coordinates-glob-extension "hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>remove_coordinates_glob_extension("hello")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(remove-coordinates-glob-extension "hello")</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="remove_data_glob_extension">remove_data_glob_extension</h3>
 <p>Python: <code>remove_data_glob_extension(ext)</code><br>
 Scheme: <code>(remove-data-glob-extension ext)</code></p>
 <p>remove an extension to be treated as data (reflection) files</p>
 <p>Arguments: ext (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>remove_data_glob_extension("hello")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(remove-data-glob-extension "hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>remove_data_glob_extension("hello")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(remove-data-glob-extension "hello")</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="remove_dictionary_glob_extension">remove_dictionary_glob_extension</h3>
 <p>Python: <code>remove_dictionary_glob_extension(ext)</code><br>
 Scheme: <code>(remove-dictionary-glob-extension ext)</code></p>
 <p>remove an extension to be treated as geometry dictionary files</p>
 <p>Arguments: ext (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>remove_dictionary_glob_extension("hello")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(remove-dictionary-glob-extension "hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>remove_dictionary_glob_extension("hello")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(remove-dictionary-glob-extension "hello")</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="remove_map_glob_extension">remove_map_glob_extension</h3>
 <p>Python: <code>remove_map_glob_extension(ext)</code><br>
 Scheme: <code>(remove-map-glob-extension ext)</code></p>
 <p>remove an extension to be treated as geometry map files</p>
 <p>Arguments: ext (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>remove_map_glob_extension("hello")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(remove-map-glob-extension "hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>remove_map_glob_extension("hello")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(remove-map-glob-extension "hello")</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_file_chooser_overwrite">set_file_chooser_overwrite</h3>
 <p>Python: <code>set_file_chooser_overwrite(istate)</code><br>
 Scheme: <code>(set-file-chooser-overwrite istate)</code></p>
 <p>Arguments: istate (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_file_chooser_overwrite(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-file-chooser-overwrite 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_file_chooser_overwrite(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-file-chooser-overwrite 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_file_chooser_selector">set_file_chooser_selector</h3>
 <p>Python: <code>set_file_chooser_selector(istate)</code><br>
 Scheme: <code>(set-file-chooser-selector istate)</code></p>
 <p>--- CHECKME - do these need to be here? ---</p>
 <p>Arguments: istate (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_file_chooser_selector(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-file-chooser-selector 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_file_chooser_selector(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-file-chooser-selector 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_filter_fileselection_filenames">set_filter_fileselection_filenames</h3>
 <p>Python: <code>set_filter_fileselection_filenames(istate)</code><br>
 Scheme: <code>(set-filter-fileselection-filenames istate)</code></p>
@@ -161,8 +166,8 @@ Scheme: <code>(set-filter-fileselection-filenames istate)</code></p>
 <p>set to 1 to pre-filter, [0 (off, non-pre-filtering) is the default</p>
 <p>Arguments: istate (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_filter_fileselection_filenames(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-filter-fileselection-filenames 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_filter_fileselection_filenames(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-filter-fileselection-filenames 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_show_paths_in_display_manager">set_show_paths_in_display_manager</h3>
 <p>Python: <code>set_show_paths_in_display_manager(i)</code><br>
 Scheme: <code>(set-show-paths-in-display-manager i)</code></p>
@@ -171,8 +176,8 @@ Scheme: <code>(set-show-paths-in-display-manager i)</code></p>
  here is the way to turn them off, with an argument of 1.</p>
 <p>Arguments: i (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_show_paths_in_display_manager(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-show-paths-in-display-manager 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_show_paths_in_display_manager(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-show-paths-in-display-manager 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_sticky_sort_by_date">set_sticky_sort_by_date</h3>
 <p>Python: <code>set_sticky_sort_by_date()</code><br>
 Scheme: <code>(set-sticky-sort-by-date)</code></p>
@@ -180,8 +185,8 @@ Scheme: <code>(set-sticky-sort-by-date)</code></p>
 <p> some people like to have their files sorted by date by default</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_sticky_sort_by_date()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-sticky-sort-by-date)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_sticky_sort_by_date()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-sticky-sort-by-date)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="show_paths_in_display_manager_state">show_paths_in_display_manager_state</h3>
 <p>Python: <code>show_paths_in_display_manager_state()</code><br>
 Scheme: <code>(show-paths-in-display-manager-state)</code></p>
@@ -190,8 +195,9 @@ Scheme: <code>(show-paths-in-display-manager-state)</code></p>
 <p> Returns 1 for "yes, display paths" , 0 for not</p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>show_paths_in_display_manager_state()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(show-paths-in-display-manager-state)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>show_paths_in_display_manager_state()</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(show-paths-in-display-manager-state)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="unset_sticky_sort_by_date">unset_sticky_sort_by_date</h3>
 <p>Python: <code>unset_sticky_sort_by_date()</code><br>
 Scheme: <code>(unset-sticky-sort-by-date)</code></p>
@@ -199,6 +205,6 @@ Scheme: <code>(unset-sticky-sort-by-date)</code></p>
 <p> removes the sorting of files by date</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>unset_sticky_sort_by_date()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(unset-sticky-sort-by-date)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>unset_sticky_sort_by_date()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(unset-sticky-sort-by-date)</code></td><td>ran (no return value)</td></tr></tbody></table>
 </body></html>

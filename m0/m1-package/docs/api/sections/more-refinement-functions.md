@@ -44,6 +44,8 @@ Arguments: none. Returns: a number.
 | Python | `get_refinement_geman_mcclure_alpha()` | ran, returned `1.0` |
 | Scheme | `(get-refinement-geman-mcclure-alpha)` | ran, returned `1.0` |
 
+Python and Scheme gave the same answer.
+
 ### set_log_cosh_target_distance_scale_factor
 
 Python: `set_log_cosh_target_distance_scale_factor(sf)`  
@@ -55,8 +57,8 @@ Arguments: sf (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_log_cosh_target_distance_scale_factor(1.0)` | not tried |
-| Scheme | `(set-log-cosh-target-distance-scale-factor 1.0)` | not tried |
+| Python | `set_log_cosh_target_distance_scale_factor(1.0)` | ran (no return value) |
+| Scheme | `(set-log-cosh-target-distance-scale-factor 1.0)` | ran (no return value) |
 
 ### set_refinement_geman_mcclure_alpha
 
@@ -69,8 +71,8 @@ Arguments: alpha (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_refinement_geman_mcclure_alpha(1.0)` | not tried |
-| Scheme | `(set-refinement-geman-mcclure-alpha 1.0)` | not tried |
+| Python | `set_refinement_geman_mcclure_alpha(1.0)` | ran (no return value) |
+| Scheme | `(set-refinement-geman-mcclure-alpha 1.0)` | ran (no return value) |
 
 ### set_refinement_lennard_jones_epsilon
 
@@ -83,8 +85,8 @@ Arguments: epsilon (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_refinement_lennard_jones_epsilon(1.0)` | not tried |
-| Scheme | `(set-refinement-lennard-jones-epsilon 1.0)` | not tried |
+| Python | `set_refinement_lennard_jones_epsilon(1.0)` | ran (no return value) |
+| Scheme | `(set-refinement-lennard-jones-epsilon 1.0)` | ran (no return value) |
 
 ### use_unimodal_ring_torsion_restraints
 
@@ -98,8 +100,8 @@ Arguments: res_name (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `use_unimodal_ring_torsion_restraints("ALA")` | not tried |
-| Scheme | `(use-unimodal-ring-torsion-restraints "ALA")` | not tried |
+| Python | `use_unimodal_ring_torsion_restraints("ALA")` | ran (no return value) |
+| Scheme | `(use-unimodal-ring-torsion-restraints "ALA")` | ran (no return value) |
 
 ### use_unimodal_ring_torsion_restraints_for_residue
 
@@ -115,5 +117,5 @@ Arguments: res_name (text), torsions_info_list (a list or value). Returns: nothi
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 

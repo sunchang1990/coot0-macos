@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="acbd8330600ff3a5cab5f565193df462ebda783d">
+<meta name="coot0-source-sha1" content="1ab77e144830ebf4bef4687b993e4b5ed6b22202">
 <title>Sequence from Map - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -158,6 +158,7 @@ Scheme: <code>(get-drug-mdl-via-wikipedia-and-drugbank drugname)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>get_drug_mdl_via_wikipedia_and_drugbank("my-name")</code></td><td>ran, returned <code>''</code></td></tr>
 <tr><td>Scheme</td><td><code>(get-drug-mdl-via-wikipedia-and-drugbank "my-name")</code></td><td>ran, returned <code>""</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="inverse_rtop">inverse_rtop</h3>
 <p>Python: <code>inverse_rtop(rtop_py)</code><br>
 Scheme: <code>(inverse-rtop rtop-scm)</code></p>
@@ -165,8 +166,8 @@ Scheme: <code>(inverse-rtop rtop-scm)</code></p>
 Also available in Python as <code>inverse_rtop_py</code>.
 Also available in Scheme as <code>inverse-rtop-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 <h3 id="is_interesting_dots_object_next_p">is_interesting_dots_object_next_p</h3>
 <p>Python: <code>is_interesting_dots_object_next_p(vs)</code><br>
 Scheme: <code>(is-interesting-dots-object-next-p vs)</code></p>
@@ -175,15 +176,15 @@ we were interested to make a graphics object from (rather than just
 header info)</p>
 <p>Arguments: vs (a list). Returns: text.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>is_interesting_dots_object_next_p("hello")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(is-interesting-dots-object-next-p "hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>is_interesting_dots_object_next_p("hello")</code></td><td>ran, returned <code>&lt;Swig Object of type 'std::pair&lt; short,std::string &gt; *' at 0x10a45b150&gt;</code></td></tr>
+<tr><td>Scheme</td><td><code>(is-interesting-dots-object-next-p "hello")</code></td><td>error: In procedure is-interesting-dots-object-next-p: Wrong type argument in position 1: "hello"</td></tr></tbody></table>
 <h3 id="make_complementary_dotted_surfaces">make_complementary_dotted_surfaces</h3>
 <p>Python: <code>make_complementary_dotted_surfaces(imol_1, imol_2, r1, r2)</code><br>
 Scheme: <code>(make-complementary-dotted-surfaces imol-1 imol-2 r1 r2)</code></p>
 <p>Arguments: imol_1 (a whole number), imol_2 (a whole number), r1 (a list), r2 (a list). Returns: <code>clipper::Coord_orth</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 <h3 id="orient_view">orient_view</h3>
 <p>Python: <code>orient_view(imol, central_residue_spec, neighbour_residue_spec)</code><br>
 Scheme: <code>(orient-view imol central-residue-spec neighbour-residue-spec)</code></p>
@@ -191,66 +192,67 @@ Scheme: <code>(orient-view imol central-residue-spec neighbour-residue-spec)</co
 central_residue and neighbour_residue is perpendicular to screen z.</p>
 <p>Arguments: imol (a whole number), central_residue_spec (<code>coot::residue_spec_t</code>), neighbour_residue_spec (<code>// ligand typically  coot::residue_spec_t</code>). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 <h3 id="pisa_interfaces_display_only">pisa_interfaces_display_only</h3>
 <p>Python: <code>pisa_interfaces_display_only(imol_1, imol_2, centre_pt)</code><br>
 Scheme: <code>(pisa-interfaces-display-only imol-1 imol-2 centre-pt)</code></p>
 <p>Arguments: imol_1 (a whole number), imol_2 (a whole number), centre_pt (<code>clipper::Coord_orth</code>). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 <h3 id="residue_records_list_py_to_residue_specs">residue_records_list_py_to_residue_specs</h3>
 <p>Python: <code>residue_records_list_py_to_residue_specs(mol_1_residue_records, chain_id)</code></p>
 <p>Arguments: mol_1_residue_records (a list or value), chain_id (text). Returns: a list.
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 <h3 id="residue-records-list-scm-to-residue-specs">residue-records-list-scm-to-residue-specs</h3>
 <p>Scheme: <code>(residue-records-list-scm-to-residue-specs mol-1-residue-records chain-id)</code></p>
 <p>Arguments: mol-1-residue-records (a list or value), chain-id (text). Returns: a list.
 <strong>Scheme only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 <h3 id="rtop-to-scm">rtop-to-scm</h3>
 <p>Scheme: <code>(rtop-to-scm rtop)</code></p>
 <p>Arguments: rtop (<code>clipper::RTop_orth</code>). Returns: a value (see the result of the example).
 <strong>Scheme only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 <h3 id="rtop_to_python">rtop_to_python</h3>
 <p>Python: <code>rtop_to_python(rtop)</code></p>
 <p>Arguments: rtop (<code>clipper::RTop_orth</code>). Returns: a value (see the result of the example).
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 <h3 id="sequence_from_map">sequence_from_map</h3>
 <p>Python: <code>sequence_from_map(imol, chain_id, resno_start, resno_end, imol_map)</code><br>
 Scheme: <code>(sequence-from-map imol chain-id resno-start resno-end imol-map)</code></p>
 <p>Arguments: imol (a whole number), chain_id (text), resno_start (a whole number), resno_end (a whole number), imol_map (a whole number). Returns: text.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>sequence_from_map(0, "A", 41, 45, 1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(sequence-from-map 0 "A" 41 45 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>sequence_from_map(0, "A", 41, 45, 1)</code></td><td>ran, returned <code>'XXXXX'</code></td></tr>
+<tr><td>Scheme</td><td><code>(sequence-from-map 0 "A" 41 45 1)</code></td><td>ran, returned <code>"XXXXX"</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="set_display_control_button_state">set_display_control_button_state</h3>
 <p>Python: <code>set_display_control_button_state(imol, button_type, state)</code><br>
 Scheme: <code>(set-display-control-button-state imol button-type state)</code></p>
 <p>Arguments: imol (a whole number), button_type (text), state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_display_control_button_state(0, "hello", 1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-display-control-button-state 0 "hello" 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_display_control_button_state(0, "hello", 1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-display-control-button-state 0 "hello" 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="stop_curl_download">stop_curl_download</h3>
 <p>Python: <code>stop_curl_download(file_name)</code><br>
 Scheme: <code>(stop-curl-download file-name)</code></p>
 <p>Arguments: file_name (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>stop_curl_download("tutorial-modern.pdb")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(stop-curl-download "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>stop_curl_download("tutorial-modern.pdb")</code></td><td>not run: not run automatically (curl: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(stop-curl-download "tutorial-modern.pdb")</code></td><td>not run: not run automatically (curl: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="symbol-value-from-record">symbol-value-from-record</h3>
 <p>Scheme: <code>(symbol-value-from-record record-1 symbol)</code></p>
 <p>Arguments: record-1 (a list or value), symbol (text). Returns: a value (see the result of the example).
 <strong>Scheme only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 <h3 id="topological_equivalence_chiral_centres">topological_equivalence_chiral_centres</h3>
 <p>Python: <code>topological_equivalence_chiral_centres(residue_type)</code><br>
 Scheme: <code>(topological-equivalence-chiral-centres residue-type)</code></p>
@@ -258,36 +260,38 @@ Scheme: <code>(topological-equivalence-chiral-centres residue-type)</code></p>
  equivalence analysis based on the bond info (and element names).</p>
 <p>Arguments: residue_type (text). Returns: a list.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>topological_equivalence_chiral_centres("ALA")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(topological-equivalence-chiral-centres "ALA")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>topological_equivalence_chiral_centres("ALA")</code></td><td>ran, returned <code>()</code></td></tr>
+<tr><td>Scheme</td><td><code>(topological-equivalence-chiral-centres "ALA")</code></td><td>ran, returned <code>#()</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="untangle_mmdb_chain_id_string">untangle_mmdb_chain_id_string</h3>
 <p>Python: <code>untangle_mmdb_chain_id_string(mmdb_chain_id_in)</code><br>
 Scheme: <code>(untangle-mmdb-chain-id-string mmdb-chain-id-in)</code></p>
 <p>Arguments: mmdb_chain_id_in (text). Returns: text.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>untangle_mmdb_chain_id_string("A")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(untangle-mmdb-chain-id-string "A")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>untangle_mmdb_chain_id_string("A")</code></td><td>ran, returned <code>'A'</code></td></tr>
+<tr><td>Scheme</td><td><code>(untangle-mmdb-chain-id-string "A")</code></td><td>ran, returned <code>"A"</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="wrapped_curl_easy_perform">wrapped_curl_easy_perform</h3>
 <p>Python: <code>wrapped_curl_easy_perform(data)</code><br>
 Scheme: <code>(wrapped-curl-easy-perform data)</code></p>
 <p>Arguments: data (<code>void *</code>). Returns: <code>void *</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 <h3 id="write_coot_curl_data">write_coot_curl_data</h3>
 <p>Python: <code>write_coot_curl_data(buffer, size, nmemb, userp)</code><br>
 Scheme: <code>(write-coot-curl-data buffer size nmemb userp)</code></p>
 <p>internal use</p>
 <p>Arguments: buffer (<code>void *</code>), size (a whole number), nmemb (a whole number), userp (<code>void *</code>). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 <h3 id="write_coot_curl_data_to_file">write_coot_curl_data_to_file</h3>
 <p>Python: <code>write_coot_curl_data_to_file(buffer, size, nmemb, userp)</code><br>
 Scheme: <code>(write-coot-curl-data-to-file buffer size nmemb userp)</code></p>
 <p>internal use</p>
 <p>Arguments: buffer (<code>void *</code>), size (a whole number), nmemb (a whole number), userp (<code>void *</code>). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 </body></html>

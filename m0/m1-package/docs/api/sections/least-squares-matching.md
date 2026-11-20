@@ -45,6 +45,8 @@ Also available in Python as `apply_lsq_matches_py`.
 | Python | `apply_lsq_matches(0, 0)` | ran, returned `False` |
 | Scheme | `(apply-lsq-matches 0 0)` | ran, returned `#f` |
 
+Python and Scheme gave the same answer.
+
 ### apply_lsq_matches_simple
 
 Python: `apply_lsq_matches_simple(imol_reference, imol_moving)`  
@@ -58,6 +60,8 @@ Arguments: imol_reference (a whole number), imol_moving (a whole number). Return
 |---|---|---|
 | Python | `apply_lsq_matches_simple(0, 0)` | ran, returned `0` |
 | Scheme | `(apply-lsq-matches-simple 0 0)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### clear_lsq_matches
 
@@ -85,6 +89,8 @@ Also available in Scheme as `get-lsq-matrix-scm`.
 | Python | `get_lsq_matrix(0, 0)` | ran, returned `False` |
 | Scheme | `(get-lsq-matrix 0 0)` | ran, returned `#f` |
 
+Python and Scheme gave the same answer.
+
 ### remove_last_lsq_plane_atom
 
 Python: `remove_last_lsq_plane_atom()`  
@@ -96,8 +102,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `remove_last_lsq_plane_atom()` | not tried |
-| Scheme | `(remove-last-lsq-plane-atom)` | not tried |
+| Python | `remove_last_lsq_plane_atom()` | ran (no return value) |
+| Scheme | `(remove-last-lsq-plane-atom)` | ran (no return value) |
 
 ### setup_lsq_deviation
 
@@ -110,8 +116,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `setup_lsq_deviation(1)` | not tried |
-| Scheme | `(setup-lsq-deviation 1)` | not tried |
+| Python | `setup_lsq_deviation(1)` | ran (no return value) |
+| Scheme | `(setup-lsq-deviation 1)` | ran (no return value) |
 
 ### setup_lsq_plane_define
 
@@ -122,8 +128,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `setup_lsq_plane_define(1)` | not tried |
-| Scheme | `(setup-lsq-plane-define 1)` | not tried |
+| Python | `setup_lsq_plane_define(1)` | ran (no return value) |
+| Scheme | `(setup-lsq-plane-define 1)` | ran (no return value) |
 
 ### unset_lsq_plane_dialog
 
@@ -134,6 +140,6 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `unset_lsq_plane_dialog()` | not tried |
-| Scheme | `(unset-lsq-plane-dialog)` | not tried |
+| Python | `unset_lsq_plane_dialog()` | ran (no return value) |
+| Scheme | `(unset-lsq-plane-dialog)` | ran (no return value) |
 

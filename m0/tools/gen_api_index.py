@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""gen_api_index.py SRC OUT.json  (build 26)
+"""gen_api_index.py SRC OUT.json  (build 26; build 30: Python bool arguments as True/False)
 
 Builds the index of every function that Coot 0.9.8.96 exposes to Python and Scheme through SWIG:
   - Python names from src/coot_wrap_python.cc (+ the short aliases in python/redefine_functions.py),
@@ -236,6 +236,9 @@ for k, e in sorted(E.items()):
     if e["py"]:
         pi, vals = ex_args(e["py_c"], inf)
         e["py_args"] = pi.get("args", []); e["py_ret"] = pi.get("ret", "")
+        # build 30: SWIG's Python wrapper takes True/False (not 1/0) for a bool argument
+        vals = [bool(v) if (isinstance(v, int) and t.replace("const", "").strip() == "bool") else v
+                for (t, n), v in zip(pi.get("args", []), vals)] if len(vals) == len(pi.get("args", [])) else vals
         e["py_ex"] = None if any(v is None for v in vals) else "%s(%s)" % (e["py"], ", ".join(py_lit(v) for v in vals))
     if e["scm"]:
         si, svals = ex_args(e["scm_c"], inf)

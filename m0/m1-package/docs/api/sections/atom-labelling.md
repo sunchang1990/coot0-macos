@@ -18,6 +18,8 @@ Arguments: imol (a whole number), chain_id (text), iresno (a whole number), atom
 | Python | `add_atom_label(0, "A", 41, "hello")` | ran, returned `-1` |
 | Scheme | `(add-atom-label 0 "A" 41 "hello")` | ran, returned `-1` |
 
+Python and Scheme gave the same answer.
+
 ### brief_atom_labels_state
 
 Python: `brief_atom_labels_state()`  
@@ -31,6 +33,8 @@ Arguments: none. Returns: a whole number.
 |---|---|---|
 | Python | `brief_atom_labels_state()` | ran, returned `0` |
 | Scheme | `(brief-atom-labels-state)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### centre_atom_label_status
 
@@ -46,6 +50,8 @@ Arguments: none. Returns: a whole number.
 | Python | `centre_atom_label_status()` | ran, returned `1` |
 | Scheme | `(centre-atom-label-status)` | ran, returned `1` |
 
+Python and Scheme gave the same answer.
+
 ### remove_all_atom_labels
 
 Python: `remove_all_atom_labels()`  
@@ -55,8 +61,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `remove_all_atom_labels()` | not tried |
-| Scheme | `(remove-all-atom-labels)` | not tried |
+| Python | `remove_all_atom_labels()` | ran (no return value) |
+| Scheme | `(remove-all-atom-labels)` | ran (no return value) |
 
 ### remove_atom_label
 
@@ -67,8 +73,10 @@ Arguments: imol (a whole number), chain_id (text), iresno (a whole number), atom
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `remove_atom_label(0, "A", 41, "hello")` | not tried |
-| Scheme | `(remove-atom-label 0 "A" 41 "hello")` | not tried |
+| Python | `remove_atom_label(0, "A", 41, "hello")` | ran, returned `-1` |
+| Scheme | `(remove-atom-label 0 "A" 41 "hello")` | ran, returned `-1` |
+
+Python and Scheme gave the same answer.
 
 ### set_brief_atom_labels
 
@@ -83,8 +91,8 @@ Arguments: istat (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_brief_atom_labels(1)` | not tried |
-| Scheme | `(set-brief-atom-labels 1)` | not tried |
+| Python | `set_brief_atom_labels(1)` | ran (no return value) |
+| Scheme | `(set-brief-atom-labels 1)` | ran (no return value) |
 
 ### set_label_on_recentre_flag
 
@@ -95,8 +103,8 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_label_on_recentre_flag(1)` | not tried |
-| Scheme | `(set-label-on-recentre-flag 1)` | not tried |
+| Python | `set_label_on_recentre_flag(1)` | ran (no return value) |
+| Scheme | `(set-label-on-recentre-flag 1)` | ran (no return value) |
 
 ### set_seg_ids_in_atom_labels
 
@@ -109,6 +117,6 @@ Arguments: istat (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_seg_ids_in_atom_labels(1)` | not tried |
-| Scheme | `(set-seg-ids-in-atom-labels 1)` | not tried |
+| Python | `set_seg_ids_in_atom_labels(1)` | ran (no return value) |
+| Scheme | `(set-seg-ids-in-atom-labels 1)` | ran (no return value) |
 

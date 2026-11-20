@@ -30448,7 +30448,7 @@
    ]
   ],
   "py_ret": "void",
-  "py_ex": "hole(0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1, 1, \"tutorial-modern.pdb\")",
+  "py_ex": "hole(0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1, True, \"tutorial-modern.pdb\")",
   "scm_args": [
    [
     "int",
@@ -40772,7 +40772,7 @@
    ]
   ],
   "py_ret": "coot::graph_match_info_t",
-  "py_ex": "overlap_ligands_internal(0, 0, \"A\", 41, 1)",
+  "py_ex": "overlap_ligands_internal(0, 0, \"A\", 41, True)",
   "scm_args": [
    [
     "int",
@@ -43209,7 +43209,7 @@
    ]
   ],
   "py_ret": "PyObject *",
-  "py_ex": "protein_db_loops(0, [\"A\", 41, \"\"], 1, 1, 1)",
+  "py_ex": "protein_db_loops(0, [\"A\", 41, \"\"], 1, 1, True)",
   "scm_args": [
    [
     "int",
@@ -48848,7 +48848,7 @@
    ]
   ],
   "py_ret": "bool",
-  "py_ex": "residue_to_sdf_file(0, \"A\", 41, \"\", \"tutorial-modern.pdb\", 1)",
+  "py_ex": "residue_to_sdf_file(0, \"A\", 41, \"\", \"tutorial-modern.pdb\", True)",
   "scm_args": [
    [
     "int",
@@ -55991,7 +55991,7 @@
    ]
   ],
   "py_ret": "void",
-  "py_ex": "set_cryo_em_refinement(1)",
+  "py_ex": "set_cryo_em_refinement(True)",
   "scm_args": [
    [
     "bool",
@@ -65500,7 +65500,7 @@
    ]
   ],
   "py_ret": "void",
-  "py_ex": "set_regenerate_bonds_needs_make_bonds_type_checked(1)",
+  "py_ex": "set_regenerate_bonds_needs_make_bonds_type_checked(True)",
   "scm_args": [
    [
     "bool",

@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="d9bcb422943d520d58d8b9ca2819ee9b4578bbe8">
+<meta name="coot0-source-sha1" content="bbfa5d05f6a55453a5bbc9b0ef52de9fa00fda14">
 <title>Multi-Residue Torsion - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -24,6 +24,6 @@ Scheme: <code>(multi-residue-torsion-fit imol residues-specs-scm n-trials)</code
 <p>(note: fit to the current-refinement map)</p>
 <p>Arguments: imol (a whole number), residues_specs_py (a list or value), n_trials (a whole number). Returns: a value (see the result of the example).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>multi_residue_torsion_fit(0, ["A", 41, ""], 1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(multi-residue-torsion-fit 0 (list "A" 41 "") 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>multi_residue_torsion_fit(0, ["A", 41, ""], 1)</code></td><td>error: SystemError: &lt;built-in function multi_residue_torsion_fit_py&gt; returned a result with an exception set</td></tr>
+<tr><td>Scheme</td><td><code>(multi-residue-torsion-fit 0 (list "A" 41 "") 1)</code></td><td>error: In procedure length: Wrong type argument in position 1: "A"</td></tr></tbody></table>
 </body></html>

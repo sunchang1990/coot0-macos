@@ -42,7 +42,7 @@ Also available in Python as `make_atom_spec_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `make_atom_spec(["A", 41, ""])` | not tried |
+| Python | `make_atom_spec(["A", 41, ""])` | ran, returned `<Swig Object of type 'std::pair< bool,coot::atom_spec_t > *' at 0x10a778540>` |
 
 ### make_residue_spec_py
 
@@ -53,7 +53,7 @@ Arguments: spec (a list or value). Returns: a list.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `make_residue_spec_py(["A", 41, ""])` | not tried |
+| Python | `make_residue_spec_py(["A", 41, ""])` | ran, returned `<Swig Object of type 'std::pair< bool,coot::residue_spec_t > *' at 0x1098451a0>` |
 
 ### py_clean_internal
 
@@ -64,7 +64,7 @@ Arguments: obj (a list or value). Returns: a value (see the result of the exampl
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### run_generic_script
 
@@ -77,8 +77,8 @@ Arguments: cmd_strings (a list). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `run_generic_script("hello")` | not tried |
-| Scheme | `(run-generic-script "hello")` | not tried |
+| Python | `run_generic_script("hello")` | not run: not run automatically (run: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(run-generic-script "hello")` | not run: not run automatically (run: exits, uses the network, an external program, files or a screen) |
 
 ### safe_python_command
 
@@ -91,7 +91,7 @@ Arguments: python_command (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `safe_python_command("hello")` | not tried |
+| Python | `safe_python_command("hello")` | ran (no return value) |
 
 ### safe_python_command_by_char_star
 
@@ -102,7 +102,7 @@ Arguments: python_command (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `safe_python_command_by_char_star("hello")` | not tried |
+| Python | `safe_python_command_by_char_star("hello")` | ran (no return value) |
 
 ### safe_python_command_test
 
@@ -113,7 +113,7 @@ Arguments: cmd (text). Returns: a value (see the result of the example).
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `safe_python_command_test("hello")` | not tried |
+| Python | `safe_python_command_test("hello")` | ran (no return value) |
 
 ### safe_python_command_with_return
 
@@ -124,7 +124,7 @@ Arguments: python_cmd (text). Returns: a value (see the result of the example).
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `safe_python_command_with_return("hello")` | not tried |
+| Python | `safe_python_command_with_return("hello")` | ran (no return value) |
 
 ### safe_python_command_with_unsafe_thread
 
@@ -135,7 +135,7 @@ Arguments: cmd (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `safe_python_command_with_unsafe_thread("hello")` | not tried |
+| Python | `safe_python_command_with_unsafe_thread("hello")` | stopped Coot when tried without a window (not checked with a window) |
 
 ### safe_scheme_command
 
@@ -146,8 +146,8 @@ Arguments: scheme_command (text). Returns: a value (see the result of the exampl
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `safe_scheme_command("hello")` | not tried |
-| Scheme | `(safe-scheme-command "hello")` | not tried |
+| Python | `safe_scheme_command("hello")` | ran (no return value) |
+| Scheme | `(safe-scheme-command "hello")` | ran (no return value) |
 
 ### safe-scheme-command-test
 
@@ -158,7 +158,7 @@ Arguments: cmd (text). Returns: a value (see the result of the example).
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Scheme | `(safe-scheme-command-test "hello")` | not tried |
+| Scheme | `(safe-scheme-command-test "hello")` | ran (no return value) |
 
 ### test-mol-triangles-scm
 
@@ -169,5 +169,5 @@ Arguments: i-scm (a list or value), j-scm (a list or value). Returns: a value (s
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Scheme | (no automatic example) | not tried |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 

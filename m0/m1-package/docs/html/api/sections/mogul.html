@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="11d1e4b1443b710b5e74d19ebb85cbd01eeefd20">
+<meta name="coot0-source-sha1" content="138e2f6a44ec7262104083e0592768f64384c68e">
 <title>Mogul - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -44,33 +44,33 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 02110-1301, USA</p>
 <p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text), mogul_out_file_name (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>mogul_markup(0, "A", 41, "", "tutorial-modern.pdb")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(mogul-markup 0 "A" 41 "" "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>mogul_markup(0, "A", 41, "", "tutorial-modern.pdb")</code></td><td>not run: not run automatically (mogul: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(mogul-markup 0 "A" 41 "" "tutorial-modern.pdb")</code></td><td>not run: not run automatically (mogul: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="mogul_results_py">mogul_results_py</h3>
 <p>Python: <code>mogul_results_py(mogul_out_file_name)</code><br>
 Scheme: <code>(mogul-results-scm mogul-out-file-name)</code></p>
 <p>Arguments: mogul_out_file_name (text). Returns: a value (see the result of the example).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>mogul_results_py("tutorial-modern.pdb")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(mogul-results-scm "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>mogul_results_py("tutorial-modern.pdb")</code></td><td>not run: not run automatically (mogul: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(mogul-results-scm "tutorial-modern.pdb")</code></td><td>not run: not run automatically (mogul: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="mogul-results-process-many">mogul-results-process-many</h3>
 <p>Scheme: <code>(mogul-results-process-many glob-str glob-dir)</code></p>
 <p>Arguments: glob-str (text), glob-dir (text). Returns: a value (see the result of the example).
 <strong>Scheme only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Scheme</td><td><code>(mogul-results-process-many "hello" ".")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Scheme</td><td><code>(mogul-results-process-many "hello" ".")</code></td><td>not run: not run automatically (mogul: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="set_mogul_max_badness">set_mogul_max_badness</h3>
 <p>Python: <code>set_mogul_max_badness(b)</code><br>
 Scheme: <code>(set-mogul-max-badness b)</code></p>
 <p>Arguments: b (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_mogul_max_badness(0.5)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-mogul-max-badness 0.5)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_mogul_max_badness(0.5)</code></td><td>not run: not run automatically (mogul: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(set-mogul-max-badness 0.5)</code></td><td>not run: not run automatically (mogul: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="update_restraints_using_mogul">update_restraints_using_mogul</h3>
 <p>Python: <code>update_restraints_using_mogul(imol, chain_id, res_no, ins_code, residue_type, mogul_out_file_name)</code><br>
 Scheme: <code>(update-restraints-using-mogul imol chain-id res-no ins-code residue-type mogul-out-file-name)</code></p>
 <p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text), residue_type (text), mogul_out_file_name (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>update_restraints_using_mogul(0, "A", 41, "", "ALA", "tutorial-modern.pdb")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(update-restraints-using-mogul 0 "A" 41 "" "ALA" "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>update_restraints_using_mogul(0, "A", 41, "", "ALA", "tutorial-modern.pdb")</code></td><td>not run: not run automatically (mogul: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(update-restraints-using-mogul 0 "A" 41 "" "ALA" "tutorial-modern.pdb")</code></td><td>not run: not run automatically (mogul: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 </body></html>

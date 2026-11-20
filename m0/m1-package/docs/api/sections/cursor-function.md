@@ -29,8 +29,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `normal_cursor()` | not tried |
-| Scheme | `(normal-cursor)` | not tried |
+| Python | `normal_cursor()` | ran (no return value) |
+| Scheme | `(normal-cursor)` | ran (no return value) |
 
 ### pick_cursor_maybe
 
@@ -43,8 +43,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `pick_cursor_maybe()` | not tried |
-| Scheme | `(pick-cursor-maybe)` | not tried |
+| Python | `pick_cursor_maybe()` | ran (no return value) |
+| Scheme | `(pick-cursor-maybe)` | ran (no return value) |
 
 ### rotate_cursor
 
@@ -57,8 +57,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `rotate_cursor()` | not tried |
-| Scheme | `(rotate-cursor)` | not tried |
+| Python | `rotate_cursor()` | ran (no return value) |
+| Scheme | `(rotate-cursor)` | ran (no return value) |
 
 ### set_pick_cursor_index
 
@@ -74,6 +74,6 @@ Arguments: icursor_index (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_pick_cursor_index(1)` | not tried |
-| Scheme | `(set-pick-cursor-index 1)` | not tried |
+| Python | `set_pick_cursor_index(1)` | ran (no return value) |
+| Scheme | `(set-pick-cursor-index 1)` | ran (no return value) |
 

@@ -19,8 +19,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `scale_zoom(1.0)` | not tried |
-| Scheme | `(scale-zoom 1.0)` | not tried |
+| Python | `scale_zoom(1.0)` | ran (no return value) |
+| Scheme | `(scale-zoom 1.0)` | ran (no return value) |
 
 ### scale_zoom_internal
 
@@ -33,8 +33,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `scale_zoom_internal(1.0)` | not tried |
-| Scheme | `(scale-zoom-internal 1.0)` | not tried |
+| Python | `scale_zoom_internal(1.0)` | ran (no return value) |
+| Scheme | `(scale-zoom-internal 1.0)` | ran (no return value) |
 
 ### set_smooth_scroll_do_zoom
 
@@ -48,8 +48,8 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_smooth_scroll_do_zoom(1)` | not tried |
-| Scheme | `(set-smooth-scroll-do-zoom 1)` | not tried |
+| Python | `set_smooth_scroll_do_zoom(1)` | ran (no return value) |
+| Scheme | `(set-smooth-scroll-do-zoom 1)` | ran (no return value) |
 
 ### set_smooth_scroll_zoom_limit
 
@@ -60,8 +60,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_smooth_scroll_zoom_limit(1.0)` | not tried |
-| Scheme | `(set-smooth-scroll-zoom-limit 1.0)` | not tried |
+| Python | `set_smooth_scroll_zoom_limit(1.0)` | ran (no return value) |
+| Scheme | `(set-smooth-scroll-zoom-limit 1.0)` | ran (no return value) |
 
 ### set_zoom
 
@@ -74,8 +74,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_zoom(1.0)` | not tried |
-| Scheme | `(set-zoom 1.0)` | not tried |
+| Python | `set_zoom(1.0)` | ran (no return value) |
+| Scheme | `(set-zoom 1.0)` | ran (no return value) |
 
 ### smooth_scroll_do_zoom
 
@@ -88,8 +88,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `smooth_scroll_do_zoom()` | not tried |
-| Scheme | `(smooth-scroll-do-zoom)` | not tried |
+| Python | `smooth_scroll_do_zoom()` | ran, returned `0` |
+| Scheme | `(smooth-scroll-do-zoom)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### smooth_scroll_zoom_limit
 
@@ -100,8 +102,10 @@ Arguments: none. Returns: a number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `smooth_scroll_zoom_limit()` | not tried |
-| Scheme | `(smooth-scroll-zoom-limit)` | not tried |
+| Python | `smooth_scroll_zoom_limit()` | ran, returned `30.0` |
+| Scheme | `(smooth-scroll-zoom-limit)` | ran, returned `30.0` |
+
+Python and Scheme gave the same answer.
 
 ### zoom_factor
 
@@ -114,6 +118,8 @@ Arguments: none. Returns: a number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `zoom_factor()` | not tried |
-| Scheme | `(zoom-factor)` | not tried |
+| Python | `zoom_factor()` | ran, returned `100.0` |
+| Scheme | `(zoom-factor)` | ran, returned `100.0` |
+
+Python and Scheme gave the same answer.
 

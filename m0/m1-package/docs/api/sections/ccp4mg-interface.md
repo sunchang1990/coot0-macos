@@ -34,8 +34,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_add_ccp4i_projects_to_file_dialogs(1)` | not tried |
-| Scheme | `(set-add-ccp4i-projects-to-file-dialogs 1)` | not tried |
+| Python | `set_add_ccp4i_projects_to_file_dialogs(1)` | not run: not run automatically (ccp4i: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(set-add-ccp4i-projects-to-file-dialogs 1)` | not run: not run automatically (ccp4i: exits, uses the network, an external program, files or a screen) |
 
 ### write_ccp4mg_picture_description
 
@@ -48,6 +48,6 @@ Arguments: filename (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `write_ccp4mg_picture_description("tutorial-modern.pdb")` | not tried |
-| Scheme | `(write-ccp4mg-picture-description "tutorial-modern.pdb")` | not tried |
+| Python | `write_ccp4mg_picture_description("tutorial-modern.pdb")` | not run: not run automatically (ccp4mg: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(write-ccp4mg-picture-description "tutorial-modern.pdb")` | not run: not run automatically (ccp4mg: exits, uses the network, an external program, files or a screen) |
 

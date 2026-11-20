@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="14a9a65bb33ed3f9c177e1350399ccfa6ec6ae2b">
+<meta name="coot0-source-sha1" content="75454ea6b325ec33a5bbab302bdd851bf1999f0c">
 <title>Renumber Residue Range - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -26,12 +26,14 @@ Scheme: <code>(change-residue-number imol chain-id current-resno current-inscode
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>change_residue_number(0, "A", 41, "", 41, "")</code></td><td>ran, returned <code>1</code></td></tr>
 <tr><td>Scheme</td><td><code>(change-residue-number 0 "A" 41 "" 41 "")</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="renumber_residue_range">renumber_residue_range</h3>
 <p>Python: <code>renumber_residue_range(imol, chain_id, start_res, last_res, offset)</code><br>
 Scheme: <code>(renumber-residue-range imol chain-id start-res last-res offset)</code></p>
 <p>renumber the given residue range by offset residues</p>
 <p>Arguments: imol (a whole number), chain_id (text), start_res (a whole number), last_res (a whole number), offset (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>renumber_residue_range(0, "A", 41, 45, 1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(renumber-residue-range 0 "A" 41 45 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>renumber_residue_range(0, "A", 41, 45, 1)</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(renumber-residue-range 0 "A" 41 45 1)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 </body></html>

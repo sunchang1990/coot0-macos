@@ -15,8 +15,8 @@ Arguments: imol (a whole number), field (text). Returns: text.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `get_text_for_phs_cell_chooser(0, "hello")` | ran, returned `<Swig Object of type 'gchar *' at 0x1086e9920>` |
-| Scheme | `(get-text-for-phs-cell-chooser 0 "hello")` | ran, returned `#<swig-pointer gchar * 9231460d0>` |
+| Python | `get_text_for_phs_cell_chooser(0, "hello")` | ran, returned `<Swig Object of type 'gchar *' at 0x10a26d740>` |
+| Scheme | `(get-text-for-phs-cell-chooser 0 "hello")` | ran, returned `#<swig-pointer gchar * 814768050>` |
 
 ### graphics_store_phs_filename
 
@@ -41,8 +41,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `possible_cell_symm_for_phs_file()` | not tried |
-| Scheme | `(possible-cell-symm-for-phs-file)` | not tried |
+| Python | `possible_cell_symm_for_phs_file()` | ran, returned `1` |
+| Scheme | `(possible-cell-symm-for-phs-file)` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 
 ### read_phs_and_coords_and_make_map
 
@@ -57,8 +59,8 @@ Arguments: pdb_filename (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `read_phs_and_coords_and_make_map("tutorial-modern.pdb")` | not tried |
-| Scheme | `(read-phs-and-coords-and-make-map "tutorial-modern.pdb")` | not tried |
+| Python | `read_phs_and_coords_and_make_map("tutorial-modern.pdb")` | ran (no return value) |
+| Scheme | `(read-phs-and-coords-and-make-map "tutorial-modern.pdb")` | ran (no return value) |
 
 ### read_phs_and_make_map_using_cell_symm
 
@@ -71,8 +73,8 @@ Arguments: phs_file_name (text), hm_spacegroup (text), a (a number), b (a number
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `read_phs_and_make_map_using_cell_symm("tutorial-modern.pdb", "hello", 1.0, 0.5, 1.0, 1.0, 1.0, 1.0)` | not tried |
-| Scheme | `(read-phs-and-make-map-using-cell-symm "tutorial-modern.pdb" "hello" 1.0 0.5 1.0 1.0 1.0 1.0)` | not tried |
+| Python | `read_phs_and_make_map_using_cell_symm("tutorial-modern.pdb", "hello", 1.0, 0.5, 1.0, 1.0, 1.0, 1.0)` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(read-phs-and-make-map-using-cell-symm "tutorial-modern.pdb" "hello" 1.0 0.5 1.0 1.0 1.0 1.0)` | stopped Coot when tried without a window (not checked with a window) |
 
 ### read_phs_and_make_map_using_cell_symm_from_mol
 
@@ -89,8 +91,8 @@ Arguments: phs_filename (text), imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `read_phs_and_make_map_using_cell_symm_from_mol("tutorial-modern.pdb", 0)` | not tried |
-| Scheme | `(read-phs-and-make-map-using-cell-symm-from-mol "tutorial-modern.pdb" 0)` | not tried |
+| Python | `read_phs_and_make_map_using_cell_symm_from_mol("tutorial-modern.pdb", 0)` | no answer within 60 s (slow, or waits for something) |
+| Scheme | `(read-phs-and-make-map-using-cell-symm-from-mol "tutorial-modern.pdb" 0)` | no answer within 60 s (slow, or waits for something) |
 
 ### read_phs_and_make_map_using_cell_symm_from_mol_using_implicit_phs_filename
 
@@ -101,8 +103,10 @@ Arguments: imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `read_phs_and_make_map_using_cell_symm_from_mol_using_implicit_phs_filename(0)` | not tried |
-| Scheme | `(read-phs-and-make-map-using-cell-symm-from-mol-using-implicit-phs-filename 0)` | not tried |
+| Python | `read_phs_and_make_map_using_cell_symm_from_mol_using_implicit_phs_filename(0)` | ran, returned `2` |
+| Scheme | `(read-phs-and-make-map-using-cell-symm-from-mol-using-implicit-phs-filename 0)` | ran, returned `2` |
+
+Python and Scheme gave the same answer.
 
 ### read_phs_and_make_map_using_cell_symm_from_previous_mol
 
@@ -118,8 +122,8 @@ Arguments: phs_filename (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `read_phs_and_make_map_using_cell_symm_from_previous_mol("tutorial-modern.pdb")` | not tried |
-| Scheme | `(read-phs-and-make-map-using-cell-symm-from-previous-mol "tutorial-modern.pdb")` | not tried |
+| Python | `read_phs_and_make_map_using_cell_symm_from_previous_mol("tutorial-modern.pdb")` | no answer within 60 s (slow, or waits for something) |
+| Scheme | `(read-phs-and-make-map-using-cell-symm-from-previous-mol "tutorial-modern.pdb")` | no answer within 60 s (slow, or waits for something) |
 
 ### read_phs_and_make_map_with_reso_limits
 
@@ -142,6 +146,8 @@ Arguments: imol (a whole number), phs_file_name (text), reso_lim_low (a number),
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `read_phs_and_make_map_with_reso_limits(0, "tutorial-modern.pdb", 2.0, 2.0)` | not tried |
-| Scheme | `(read-phs-and-make-map-with-reso-limits 0 "tutorial-modern.pdb" 2.0 2.0)` | not tried |
+| Python | `read_phs_and_make_map_with_reso_limits(0, "tutorial-modern.pdb", 2.0, 2.0)` | ran, returned `2` |
+| Scheme | `(read-phs-and-make-map-with-reso-limits 0 "tutorial-modern.pdb" 2.0 2.0)` | ran, returned `2` |
+
+Python and Scheme gave the same answer.
 

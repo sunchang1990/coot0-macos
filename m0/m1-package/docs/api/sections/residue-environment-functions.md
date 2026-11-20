@@ -17,6 +17,8 @@ Also available in Python as `add_atom_geometry_distance_py`.
 | Python | `add_atom_geometry_distance(0, ["A", 41, "", " CA ", ""], 0, ["A", 41, "", " CA ", ""])` | ran, returned `0.0` |
 | Scheme | `(add-atom-geometry-distance-scm 0 (list "A" 41 "" " CA " "") 0 (list "A" 41 "" " CA " ""))` | ran, returned `0.0` |
 
+Python and Scheme gave the same answer.
+
 ### add_geometry_distance
 
 Python: `add_geometry_distance(imol_1, x_1, y_1, z_1, imol_2, x_2, y_2, z_2)`  
@@ -33,6 +35,8 @@ Arguments: imol_1 (a whole number), x_1 (a number), y_1 (a number), z_1 (a numbe
 | Python | `add_geometry_distance(0, 1.0, 1.0, 1.0, 0, 1.0, 1.0, 1.0)` | ran, returned `0.0` |
 | Scheme | `(add-geometry-distance 0 1.0 1.0 1.0 0 1.0 1.0 1.0)` | ran, returned `0.0` |
 
+Python and Scheme gave the same answer.
+
 ### label_atoms_in_residue
 
 Python: `label_atoms_in_residue()`  
@@ -44,8 +48,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `label_atoms_in_residue()` | not tried |
-| Scheme | `(label-atoms-in-residue)` | not tried |
+| Python | `label_atoms_in_residue()` | ran (no return value) |
+| Scheme | `(label-atoms-in-residue)` | ran (no return value) |
 
 ### label_neighbours
 
@@ -58,8 +62,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `label_neighbours()` | not tried |
-| Scheme | `(label-neighbours)` | not tried |
+| Python | `label_neighbours()` | ran (no return value) |
+| Scheme | `(label-neighbours)` | ran (no return value) |
 
 ### set_environment_distances_distance_limits
 
@@ -72,8 +76,8 @@ Arguments: min_dist (a number), max_dist (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_environment_distances_distance_limits(1.0, 1.0)` | not tried |
-| Scheme | `(set-environment-distances-distance-limits 1.0 1.0)` | not tried |
+| Python | `set_environment_distances_distance_limits(1.0, 1.0)` | ran (no return value) |
+| Scheme | `(set-environment-distances-distance-limits 1.0 1.0)` | ran (no return value) |
 
 ### set_environment_distances_label_atom
 
@@ -86,8 +90,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_environment_distances_label_atom(1)` | not tried |
-| Scheme | `(set-environment-distances-label-atom 1)` | not tried |
+| Python | `set_environment_distances_label_atom(1)` | ran (no return value) |
+| Scheme | `(set-environment-distances-label-atom 1)` | ran (no return value) |
 
 ### set_show_environment_distances
 
@@ -101,8 +105,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_show_environment_distances(1)` | not tried |
-| Scheme | `(set-show-environment-distances 1)` | not tried |
+| Python | `set_show_environment_distances(1)` | ran (no return value) |
+| Scheme | `(set-show-environment-distances 1)` | ran (no return value) |
 
 ### set_show_environment_distances_as_solid
 
@@ -115,8 +119,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_show_environment_distances_as_solid(1)` | not tried |
-| Scheme | `(set-show-environment-distances-as-solid 1)` | not tried |
+| Python | `set_show_environment_distances_as_solid(1)` | ran (no return value) |
+| Scheme | `(set-show-environment-distances-as-solid 1)` | ran (no return value) |
 
 ### set_show_environment_distances_bumps
 
@@ -130,8 +134,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_show_environment_distances_bumps(1)` | not tried |
-| Scheme | `(set-show-environment-distances-bumps 1)` | not tried |
+| Python | `set_show_environment_distances_bumps(1)` | ran (no return value) |
+| Scheme | `(set-show-environment-distances-bumps 1)` | ran (no return value) |
 
 ### set_show_environment_distances_h_bonds
 
@@ -145,8 +149,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_show_environment_distances_h_bonds(1)` | not tried |
-| Scheme | `(set-show-environment-distances-h-bonds 1)` | not tried |
+| Python | `set_show_environment_distances_h_bonds(1)` | ran (no return value) |
+| Scheme | `(set-show-environment-distances-h-bonds 1)` | ran (no return value) |
 
 ### show_environment_distances_state
 
@@ -159,6 +163,8 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `show_environment_distances_state()` | not tried |
-| Scheme | `(show-environment-distances-state)` | not tried |
+| Python | `show_environment_distances_state()` | ran, returned `1` |
+| Scheme | `(show-environment-distances-state)` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 

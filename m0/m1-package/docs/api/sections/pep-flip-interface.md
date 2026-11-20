@@ -27,8 +27,8 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), insco
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `pepflip(0, "A", 41, "", "")` | not tried |
-| Scheme | `(pepflip 0 "A" 41 "" "")` | not tried |
+| Python | `pepflip(0, "A", 41, "", "")` | ran (no return value) |
+| Scheme | `(pepflip 0 "A" 41 "" "")` | ran (no return value) |
 
 ### pepflip_intermediate_atoms
 
@@ -39,8 +39,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `pepflip_intermediate_atoms()` | not tried |
-| Scheme | `(pepflip-intermediate-atoms)` | not tried |
+| Python | `pepflip_intermediate_atoms()` | ran, returned `0` |
+| Scheme | `(pepflip-intermediate-atoms)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### pepflip_intermediate_atoms_other_peptide
 
@@ -51,8 +53,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `pepflip_intermediate_atoms_other_peptide()` | not tried |
-| Scheme | `(pepflip-intermediate-atoms-other-peptide)` | not tried |
+| Python | `pepflip_intermediate_atoms_other_peptide()` | ran, returned `0` |
+| Scheme | `(pepflip-intermediate-atoms-other-peptide)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### pepflip_using_difference_map
 
@@ -64,6 +68,8 @@ Also available in Python as `pepflip_using_difference_map_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `pepflip_using_difference_map(0, 1, 1.5)` | not tried |
-| Scheme | `(pepflip-using-difference-map-scm 0 1 1.5)` | not tried |
+| Python | `pepflip_using_difference_map(0, 1, 1.5)` | ran, returned `[]` |
+| Scheme | `(pepflip-using-difference-map-scm 0 1 1.5)` | ran, returned `()` |
+
+Python and Scheme gave the same answer.
 

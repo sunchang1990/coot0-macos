@@ -23,3 +23,5 @@ Arguments: radius (a number). Returns: a whole number.
 | Python | `find_nucleic_acids_local(5.0)` | ran, returned `2` |
 | Scheme | `(find-nucleic-acids-local 5.0)` | ran, returned `2` |
 
+Python and Scheme gave the same answer.
+

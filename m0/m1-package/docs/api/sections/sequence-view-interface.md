@@ -107,8 +107,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `nsv(0)` | not tried |
-| Scheme | `(nsv 0)` | not tried |
+| Python | `nsv(0)` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(nsv 0)` | stopped Coot when tried without a window (not checked with a window) |
 
 ### sequence_view_old_style
 
@@ -121,8 +121,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `sequence_view_old_style(0)` | not tried |
-| Scheme | `(sequence-view-old-style 0)` | not tried |
+| Python | `sequence_view_old_style(0)` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(sequence-view-old-style 0)` | stopped Coot when tried without a window (not checked with a window) |
 
 ### set_backbone_torsion_carbonyl_button_start_pos
 
@@ -133,8 +133,8 @@ Arguments: ix (a whole number), iy (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_backbone_torsion_carbonyl_button_start_pos(1, 1)` | not tried |
-| Scheme | `(set-backbone-torsion-carbonyl-button-start-pos 1 1)` | not tried |
+| Python | `set_backbone_torsion_carbonyl_button_start_pos(1, 1)` | ran (no return value) |
+| Scheme | `(set-backbone-torsion-carbonyl-button-start-pos 1 1)` | ran (no return value) |
 
 ### set_backbone_torsion_peptide_button_start_pos
 
@@ -145,8 +145,8 @@ Arguments: ix (a whole number), iy (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_backbone_torsion_peptide_button_start_pos(1, 1)` | not tried |
-| Scheme | `(set-backbone-torsion-peptide-button-start-pos 1 1)` | not tried |
+| Python | `set_backbone_torsion_peptide_button_start_pos(1, 1)` | ran (no return value) |
+| Scheme | `(set-backbone-torsion-peptide-button-start-pos 1 1)` | ran (no return value) |
 
 ### set_nsv_canvas_pixel_limit
 
@@ -159,8 +159,8 @@ Arguments: cpl (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_nsv_canvas_pixel_limit(1)` | not tried |
-| Scheme | `(set-nsv-canvas-pixel-limit 1)` | not tried |
+| Python | `set_nsv_canvas_pixel_limit(1)` | ran (no return value) |
+| Scheme | `(set-nsv-canvas-pixel-limit 1)` | ran (no return value) |
 
 ### set_sequence_view_is_docked
 
@@ -175,8 +175,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_sequence_view_is_docked(1)` | not tried |
-| Scheme | `(set-sequence-view-is-docked 1)` | not tried |
+| Python | `set_sequence_view_is_docked(1)` | ran (no return value) |
+| Scheme | `(set-sequence-view-is-docked 1)` | ran (no return value) |
 
 ### setup_backbone_torsion_edit
 
@@ -187,8 +187,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `setup_backbone_torsion_edit(1)` | not tried |
-| Scheme | `(setup-backbone-torsion-edit 1)` | not tried |
+| Python | `setup_backbone_torsion_edit(1)` | ran (no return value) |
+| Scheme | `(setup-backbone-torsion-edit 1)` | ran (no return value) |
 
 ### update_sequence_view_current_position_highlight_from_active_atom
 
@@ -201,6 +201,6 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `update_sequence_view_current_position_highlight_from_active_atom()` | not tried |
-| Scheme | `(update-sequence-view-current-position-highlight-from-active-atom)` | not tried |
+| Python | `update_sequence_view_current_position_highlight_from_active_atom()` | ran (no return value) |
+| Scheme | `(update-sequence-view-current-position-highlight-from-active-atom)` | ran (no return value) |
 

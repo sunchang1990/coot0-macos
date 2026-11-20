@@ -21,6 +21,8 @@ Arguments: none. Returns: a whole number.
 | Python | `another_level()` | ran, returned `2` |
 | Scheme | `(another-level)` | ran, returned `2` |
 
+Python and Scheme gave the same answer.
+
 ### another_level_from_map_molecule_number
 
 Python: `another_level_from_map_molecule_number(imap)`  
@@ -38,6 +40,8 @@ Arguments: imap (a whole number). Returns: a whole number.
 | Python | `another_level_from_map_molecule_number(1)` | ran, returned `2` |
 | Scheme | `(another-level-from-map-molecule-number 1)` | ran, returned `2` |
 
+Python and Scheme gave the same answer.
+
 ### auto_read_do_difference_map_too_state
 
 Python: `auto_read_do_difference_map_too_state()`  
@@ -54,6 +58,8 @@ Arguments: none. Returns: a whole number.
 | Python | `auto_read_do_difference_map_too_state()` | ran, returned `1` |
 | Scheme | `(auto-read-do-difference-map-too-state)` | ran, returned `1` |
 
+Python and Scheme gave the same answer.
+
 ### cns_file_has_phases_p
 
 Python: `cns_file_has_phases_p(cns_file_name)`  
@@ -67,6 +73,8 @@ Arguments: cns_file_name (text). Returns: a whole number.
 |---|---|---|
 | Python | `cns_file_has_phases_p("tutorial-modern.pdb")` | ran, returned `0` |
 | Scheme | `(cns-file-has-phases-p "tutorial-modern.pdb")` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### density_at_point
 
@@ -82,6 +90,8 @@ Arguments: imol_map (a whole number), x (a number), y (a number), z (a number). 
 |---|---|---|
 | Python | `density_at_point(1, 54.5, 9.4, 12.3)` | ran, returned `0.19171960651874542` |
 | Scheme | `(density-at-point 1 54.5 9.4 12.3)` | ran, returned `0.19171960651874542` |
+
+Python and Scheme gave the same answer.
 
 ### esoteric_depth_cue_state
 
@@ -99,6 +109,8 @@ Arguments: none. Returns: a whole number.
 | Python | `esoteric_depth_cue_state()` | ran, returned `1` |
 | Scheme | `(esoteric-depth-cue-state)` | ran, returned `1` |
 
+Python and Scheme gave the same answer.
+
 ### get_map_radius
 
 Python: `get_map_radius()`  
@@ -112,6 +124,8 @@ Arguments: none. Returns: a number.
 |---|---|---|
 | Python | `get_map_radius()` | ran, returned `16.0` |
 | Scheme | `(get-map-radius)` | ran, returned `16.0` |
+
+Python and Scheme gave the same answer.
 
 ### get_text_for_density_size_em_widget
 
@@ -127,6 +141,8 @@ Arguments: none. Returns: text.
 | Python | `get_text_for_density_size_em_widget()` | ran, returned `'55.0 '` |
 | Scheme | `(get-text-for-density-size-em-widget)` | ran, returned `"55.0 "` |
 
+Python and Scheme gave the same answer.
+
 ### get_text_for_density_size_widget
 
 Python: `get_text_for_density_size_widget()`  
@@ -141,6 +157,8 @@ Arguments: none. Returns: text.
 | Python | `get_text_for_density_size_widget()` | ran, returned `'16.0 '` |
 | Scheme | `(get-text-for-density-size-widget)` | ran, returned `"16.0 "` |
 
+Python and Scheme gave the same answer.
+
 ### is_mtz_file_p
 
 Python: `is_mtz_file_p(filename)`  
@@ -152,8 +170,10 @@ Arguments: filename (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `is_mtz_file_p("tutorial-modern.pdb")` | not tried |
-| Scheme | `(is-mtz-file-p "tutorial-modern.pdb")` | not tried |
+| Python | `is_mtz_file_p("tutorial-modern.pdb")` | ran, returned `0` |
+| Scheme | `(is-mtz-file-p "tutorial-modern.pdb")` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### make_and_draw_map
 
@@ -174,8 +194,10 @@ Arguments: mtz_file_name (text), f_col (text), phi_col (text), weight (text), us
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `make_and_draw_map("rnasa-1.8-all_refmac1.mtz", "FWT", "PHWT", "", 1, 1)` | not tried |
-| Scheme | `(make-and-draw-map "rnasa-1.8-all_refmac1.mtz" "FWT" "PHWT" "" 1 1)` | not tried |
+| Python | `make_and_draw_map("rnasa-1.8-all_refmac1.mtz", "FWT", "PHWT", "", 1, 1)` | ran, returned `-1` |
+| Scheme | `(make-and-draw-map "rnasa-1.8-all_refmac1.mtz" "FWT" "PHWT" "" 1 1)` | ran, returned `-1` |
+
+Python and Scheme gave the same answer.
 
 ### make_and_draw_map_with_refmac_params
 
@@ -193,8 +215,8 @@ Arguments: mtz_file_name (text), a (text), b (text), weight (text), use_weights 
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `make_and_draw_map_with_refmac_params("rnasa-1.8-all_refmac1.mtz", "hello", "hello", "", 1, 1, 1, "FWT", "hello", "hello", 1)` | not tried |
-| Scheme | `(make-and-draw-map-with-refmac-params "rnasa-1.8-all_refmac1.mtz" "hello" "hello" "" 1 1 1 "FWT" "hello" "hello" 1)` | not tried |
+| Python | `make_and_draw_map_with_refmac_params("rnasa-1.8-all_refmac1.mtz", "hello", "hello", "", 1, 1, 1, "FWT", "hello", "hello", 1)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(make-and-draw-map-with-refmac-params "rnasa-1.8-all_refmac1.mtz" "hello" "hello" "" 1 1 1 "FWT" "hello" "hello" 1)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
 
 ### make_and_draw_map_with_reso_with_refmac_params
 
@@ -207,8 +229,8 @@ Arguments: mtz_file_name (text), a (text), b (text), weight (text), use_weights 
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `make_and_draw_map_with_reso_with_refmac_params("rnasa-1.8-all_refmac1.mtz", "hello", "hello", "", 1, 1, 1, "FWT", "hello", "hello", 1, 1, 1, 2.0, 2.0)` | not tried |
-| Scheme | `(make-and-draw-map-with-reso-with-refmac-params "rnasa-1.8-all_refmac1.mtz" "hello" "hello" "" 1 1 1 "FWT" "hello" "hello" 1 1 1 2.0 2.0)` | not tried |
+| Python | `make_and_draw_map_with_reso_with_refmac_params("rnasa-1.8-all_refmac1.mtz", "hello", "hello", "", 1, 1, 1, "FWT", "hello", "hello", 1, 1, 1, 2.0, 2.0)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(make-and-draw-map-with-reso-with-refmac-params "rnasa-1.8-all_refmac1.mtz" "hello" "hello" "" 1 1 1 "FWT" "hello" "hello" 1 1 1 2.0 2.0)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
 
 ### make_updating_map
 
@@ -223,8 +245,10 @@ Arguments: mtz_file_name (text), f_col (text), phi_col (text), weight (text), us
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `make_updating_map("rnasa-1.8-all_refmac1.mtz", "FWT", "PHWT", "", 1, 1)` | not tried |
-| Scheme | `(make-updating-map "rnasa-1.8-all_refmac1.mtz" "FWT" "PHWT" "" 1 1)` | not tried |
+| Python | `make_updating_map("rnasa-1.8-all_refmac1.mtz", "FWT", "PHWT", "", 1, 1)` | ran, returned `1` |
+| Scheme | `(make-updating-map "rnasa-1.8-all_refmac1.mtz" "FWT" "PHWT" "" 1 1)` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 
 ### map_is_difference_map
 
@@ -237,8 +261,10 @@ Arguments: imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `map_is_difference_map(0)` | not tried |
-| Scheme | `(map-is-difference-map 0)` | not tried |
+| Python | `map_is_difference_map(0)` | ran, returned `0` |
+| Scheme | `(map-is-difference-map 0)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### map_line_width_state
 
@@ -251,8 +277,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `map_line_width_state()` | not tried |
-| Scheme | `(map-line-width-state)` | not tried |
+| Python | `map_line_width_state()` | ran, returned `1` |
+| Scheme | `(map-line-width-state)` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 
 ### mtz_file_has_phases_p
 
@@ -265,8 +293,10 @@ Arguments: mtz_file_name (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `mtz_file_has_phases_p("rnasa-1.8-all_refmac1.mtz")` | not tried |
-| Scheme | `(mtz-file-has-phases-p "rnasa-1.8-all_refmac1.mtz")` | not tried |
+| Python | `mtz_file_has_phases_p("rnasa-1.8-all_refmac1.mtz")` | ran, returned `1` |
+| Scheme | `(mtz-file-has-phases-p "rnasa-1.8-all_refmac1.mtz")` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 
 ### read_mtz
 
@@ -280,8 +310,10 @@ Arguments: mtz_file_name (text), f_col (text), phi_col (text), weight (text), us
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `read_mtz("rnasa-1.8-all_refmac1.mtz", "FWT", "PHWT", "", 1, 1)` | not tried |
-| Scheme | `(read-mtz "rnasa-1.8-all_refmac1.mtz" "FWT" "PHWT" "" 1 1)` | not tried |
+| Python | `read_mtz("rnasa-1.8-all_refmac1.mtz", "FWT", "PHWT", "", 1, 1)` | ran, returned `-1` |
+| Scheme | `(read-mtz "rnasa-1.8-all_refmac1.mtz" "FWT" "PHWT" "" 1 1)` | ran, returned `-1` |
+
+Python and Scheme gave the same answer.
 
 ### refmac_parameters
 
@@ -294,8 +326,8 @@ Also available in Scheme as `refmac-parameters-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `refmac_parameters(0)` | not tried |
-| Scheme | `(refmac-parameters 0)` | not tried |
+| Python | `refmac_parameters(0)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(refmac-parameters 0)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
 
 ### residue_density_fit_scale_factor
 
@@ -308,8 +340,10 @@ Arguments: none. Returns: a number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `residue_density_fit_scale_factor()` | not tried |
-| Scheme | `(residue-density-fit-scale-factor)` | not tried |
+| Python | `residue_density_fit_scale_factor()` | ran, returned `1.0` |
+| Scheme | `(residue-density-fit-scale-factor)` | ran, returned `1.0` |
+
+Python and Scheme gave the same answer.
 
 ### set_auto_read_column_labels
 
@@ -328,8 +362,8 @@ Arguments: fwt (text), phwt (text), is_for_diff_map_flag (a whole number). Retur
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_auto_read_column_labels("hello", "hello", 1)` | not tried |
-| Scheme | `(set-auto-read-column-labels "hello" "hello" 1)` | not tried |
+| Python | `set_auto_read_column_labels("hello", "hello", 1)` | ran (no return value) |
+| Scheme | `(set-auto-read-column-labels "hello" "hello" 1)` | ran (no return value) |
 
 ### set_auto_read_do_difference_map_too
 
@@ -340,8 +374,8 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_auto_read_do_difference_map_too(1)` | not tried |
-| Scheme | `(set-auto-read-do-difference-map-too 1)` | not tried |
+| Python | `set_auto_read_do_difference_map_too(1)` | ran (no return value) |
+| Scheme | `(set-auto-read-do-difference-map-too 1)` | ran (no return value) |
 
 ### set_density_size
 
@@ -354,8 +388,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_density_size(1.0)` | not tried |
-| Scheme | `(set-density-size 1.0)` | not tried |
+| Python | `set_density_size(1.0)` | ran (no return value) |
+| Scheme | `(set-density-size 1.0)` | ran (no return value) |
 
 ### set_density_size_em_from_widget
 
@@ -366,8 +400,8 @@ Arguments: text (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_density_size_em_from_widget("hello")` | not tried |
-| Scheme | `(set-density-size-em-from-widget "hello")` | not tried |
+| Python | `set_density_size_em_from_widget("hello")` | ran (no return value) |
+| Scheme | `(set-density-size-em-from-widget "hello")` | ran (no return value) |
 
 ### set_density_size_from_widget
 
@@ -380,8 +414,8 @@ Arguments: text (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_density_size_from_widget("hello")` | not tried |
-| Scheme | `(set-density-size-from-widget "hello")` | not tried |
+| Python | `set_density_size_from_widget("hello")` | ran (no return value) |
+| Scheme | `(set-density-size-from-widget "hello")` | ran (no return value) |
 
 ### set_display_intro_string
 
@@ -394,8 +428,8 @@ Arguments: str (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_display_intro_string("hello")` | not tried |
-| Scheme | `(set-display-intro-string "hello")` | not tried |
+| Python | `set_display_intro_string("hello")` | ran (no return value) |
+| Scheme | `(set-display-intro-string "hello")` | ran (no return value) |
 
 ### set_esoteric_depth_cue
 
@@ -412,8 +446,8 @@ Arguments: istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_esoteric_depth_cue(1)` | not tried |
-| Scheme | `(set-esoteric-depth-cue 1)` | not tried |
+| Python | `set_esoteric_depth_cue(1)` | ran (no return value) |
+| Scheme | `(set-esoteric-depth-cue 1)` | ran (no return value) |
 
 ### set_map_is_difference_map
 
@@ -428,8 +462,10 @@ Arguments: imol (a whole number), bool_flag (a whole number). Returns: a whole n
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_map_is_difference_map(0, 1)` | not tried |
-| Scheme | `(set-map-is-difference-map 0 1)` | not tried |
+| Python | `set_map_is_difference_map(0, 1)` | ran, returned `0` |
+| Scheme | `(set-map-is-difference-map 0 1)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### set_map_line_width
 
@@ -442,8 +478,8 @@ Arguments: w (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_map_line_width(1)` | not tried |
-| Scheme | `(set-map-line-width 1)` | not tried |
+| Python | `set_map_line_width(1)` | ran (no return value) |
+| Scheme | `(set-map-line-width 1)` | ran (no return value) |
 
 ### set_map_radius
 
@@ -456,8 +492,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_map_radius(1.0)` | not tried |
-| Scheme | `(set-map-radius 1.0)` | not tried |
+| Python | `set_map_radius(1.0)` | ran (no return value) |
+| Scheme | `(set-map-radius 1.0)` | ran (no return value) |
 
 ### set_map_radius_em
 
@@ -470,8 +506,8 @@ Arguments: radius (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_map_radius_em(5.0)` | not tried |
-| Scheme | `(set-map-radius-em 5.0)` | not tried |
+| Python | `set_map_radius_em(5.0)` | ran (no return value) |
+| Scheme | `(set-map-radius-em 5.0)` | ran (no return value) |
 
 ### set_map_radius_slider_max
 
@@ -482,8 +518,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_map_radius_slider_max(1.0)` | not tried |
-| Scheme | `(set-map-radius-slider-max 1.0)` | not tried |
+| Python | `set_map_radius_slider_max(1.0)` | ran (no return value) |
+| Scheme | `(set-map-radius-slider-max 1.0)` | ran (no return value) |
 
 ### set_swap_difference_map_colours
 
@@ -499,8 +535,8 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_swap_difference_map_colours(1)` | not tried |
-| Scheme | `(set-swap-difference-map-colours 1)` | not tried |
+| Python | `set_swap_difference_map_colours(1)` | ran (no return value) |
+| Scheme | `(set-swap-difference-map-colours 1)` | ran (no return value) |
 
 ### stop_updating_molecule
 
@@ -511,8 +547,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `stop_updating_molecule(0)` | not tried |
-| Scheme | `(stop-updating-molecule 0)` | not tried |
+| Python | `stop_updating_molecule(0)` | ran (no return value) |
+| Scheme | `(stop-updating-molecule 0)` | ran (no return value) |
 
 ### swap_difference_map_colours_state
 
@@ -523,8 +559,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `swap_difference_map_colours_state()` | not tried |
-| Scheme | `(swap-difference-map-colours-state)` | not tried |
+| Python | `swap_difference_map_colours_state()` | ran, returned `0` |
+| Scheme | `(swap-difference-map-colours-state)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### valid_labels
 
@@ -537,8 +575,10 @@ Arguments: mtz_file_name (text), f_col (text), phi_col (text), weight_col (text)
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `valid_labels("rnasa-1.8-all_refmac1.mtz", "FWT", "PHWT", "", 1)` | not tried |
-| Scheme | `(valid-labels "rnasa-1.8-all_refmac1.mtz" "FWT" "PHWT" "" 1)` | not tried |
+| Python | `valid_labels("rnasa-1.8-all_refmac1.mtz", "FWT", "PHWT", "", 1)` | ran, returned `0` |
+| Scheme | `(valid-labels "rnasa-1.8-all_refmac1.mtz" "FWT" "PHWT" "" 1)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### wrapped_auto_read_make_and_draw_maps
 
@@ -549,6 +589,6 @@ Arguments: filename (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `wrapped_auto_read_make_and_draw_maps("tutorial-modern.pdb")` | not tried |
-| Scheme | `(wrapped-auto-read-make-and-draw-maps "tutorial-modern.pdb")` | not tried |
+| Python | `wrapped_auto_read_make_and_draw_maps("tutorial-modern.pdb")` | ran (no return value) |
+| Scheme | `(wrapped-auto-read-make-and-draw-maps "tutorial-modern.pdb")` | ran (no return value) |
 

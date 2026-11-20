@@ -18,6 +18,8 @@ Arguments: comp_id (text). Returns: a value (see the result of the example).
 | Python | `SMILES_for_comp_id("ALA")` | ran, returned `'C[C@H](N)C(O)=O'` |
 | Scheme | `(SMILES-for-comp-id "ALA")` | ran, returned `"C[C@H](N)C(O)=O"` |
 
+Python and Scheme gave the same answer.
+
 ### cif_file_for_comp_id
 
 Python: `cif_file_for_comp_id(comp_id)`  
@@ -31,6 +33,8 @@ Also available in Scheme as `cif-file-for-comp-id-scm`.
 |---|---|---|
 | Python | `cif_file_for_comp_id("ALA")` | ran, returned `'<coot0>/monomers/a/ALA.cif'` |
 | Scheme | `(cif-file-for-comp-id "ALA")` | ran, returned `"<coot0>/monomers/a/ALA.cif"` |
+
+Python and Scheme gave the same answer.
 
 ### debug_dictionary
 
@@ -59,6 +63,8 @@ Also available in Python as `dictionaries_read_py`.
 | Python | `dictionaries_read()` | ran, returned `[]` |
 | Scheme | `(dictionaries-read)` | ran, returned `()` |
 
+Python and Scheme gave the same answer.
+
 ### dictionary_entries
 
 Python: `dictionary_entries()`  
@@ -70,4 +76,6 @@ Arguments: none. Returns: a value (see the result of the example).
 |---|---|---|
 | Python | `dictionary_entries()` | ran, returned `['ALA', 'ASP', 'ASN', 'CYS', 'GLN', 'GLY', 'GLU', 'PHE', 'HIS', 'ILE', 'LYS', 'LEU', 'MET', 'MSE', 'PRO', 'ARG', 'SER',  ...` |
 | Scheme | `(dictionary-entries)` | ran, returned `("ALA" "ASP" "ASN" "CYS" "GLN" "GLY" "GLU" "PHE" "HIS" "ILE" "LYS" "LEU" "MET" "MSE" "PRO" "ARG" "SER" "THR" "VAL" "TRP" ...` |
+
+Python and Scheme gave the same answer.
 

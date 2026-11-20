@@ -86,6 +86,8 @@ Arguments: none. Returns: a whole number.
 | Python | `file_chooser_overwrite_state()` | ran, returned `1` |
 | Scheme | `(file-chooser-overwrite-state)` | ran, returned `1` |
 
+Python and Scheme gave the same answer.
+
 ### file_chooser_selector_state
 
 Python: `file_chooser_selector_state()`  
@@ -97,6 +99,8 @@ Arguments: none. Returns: a whole number.
 |---|---|---|
 | Python | `file_chooser_selector_state()` | ran, returned `1` |
 | Scheme | `(file-chooser-selector-state)` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 
 ### file_type_coords
 
@@ -112,6 +116,8 @@ Arguments: file_name (text). Returns: a whole number.
 | Python | `file_type_coords("tutorial-modern.pdb")` | ran, returned `1` |
 | Scheme | `(file-type-coords "tutorial-modern.pdb")` | ran, returned `1` |
 
+Python and Scheme gave the same answer.
+
 ### filter_fileselection_filenames_state
 
 Python: `filter_fileselection_filenames_state()`  
@@ -125,6 +131,8 @@ Arguments: none. Returns: a whole number.
 |---|---|---|
 | Python | `filter_fileselection_filenames_state()` | ran, returned `0` |
 | Scheme | `(filter-fileselection-filenames-state)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### make_directory_maybe
 
@@ -143,8 +151,10 @@ Arguments: dir (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `make_directory_maybe(".")` | not tried |
-| Scheme | `(make-directory-maybe ".")` | not tried |
+| Python | `make_directory_maybe(".")` | ran, returned `0` |
+| Scheme | `(make-directory-maybe ".")` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### open_coords_dialog
 
@@ -157,8 +167,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `open_coords_dialog()` | not tried |
-| Scheme | `(open-coords-dialog)` | not tried |
+| Python | `open_coords_dialog()` | ran (no return value) |
+| Scheme | `(open-coords-dialog)` | ran (no return value) |
 
 ### remove_coordinates_glob_extension
 
@@ -171,8 +181,8 @@ Arguments: ext (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `remove_coordinates_glob_extension("hello")` | not tried |
-| Scheme | `(remove-coordinates-glob-extension "hello")` | not tried |
+| Python | `remove_coordinates_glob_extension("hello")` | ran (no return value) |
+| Scheme | `(remove-coordinates-glob-extension "hello")` | ran (no return value) |
 
 ### remove_data_glob_extension
 
@@ -185,8 +195,8 @@ Arguments: ext (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `remove_data_glob_extension("hello")` | not tried |
-| Scheme | `(remove-data-glob-extension "hello")` | not tried |
+| Python | `remove_data_glob_extension("hello")` | ran (no return value) |
+| Scheme | `(remove-data-glob-extension "hello")` | ran (no return value) |
 
 ### remove_dictionary_glob_extension
 
@@ -199,8 +209,8 @@ Arguments: ext (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `remove_dictionary_glob_extension("hello")` | not tried |
-| Scheme | `(remove-dictionary-glob-extension "hello")` | not tried |
+| Python | `remove_dictionary_glob_extension("hello")` | ran (no return value) |
+| Scheme | `(remove-dictionary-glob-extension "hello")` | ran (no return value) |
 
 ### remove_map_glob_extension
 
@@ -213,8 +223,8 @@ Arguments: ext (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `remove_map_glob_extension("hello")` | not tried |
-| Scheme | `(remove-map-glob-extension "hello")` | not tried |
+| Python | `remove_map_glob_extension("hello")` | ran (no return value) |
+| Scheme | `(remove-map-glob-extension "hello")` | ran (no return value) |
 
 ### set_file_chooser_overwrite
 
@@ -225,8 +235,8 @@ Arguments: istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_file_chooser_overwrite(1)` | not tried |
-| Scheme | `(set-file-chooser-overwrite 1)` | not tried |
+| Python | `set_file_chooser_overwrite(1)` | ran (no return value) |
+| Scheme | `(set-file-chooser-overwrite 1)` | ran (no return value) |
 
 ### set_file_chooser_selector
 
@@ -239,8 +249,8 @@ Arguments: istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_file_chooser_selector(1)` | not tried |
-| Scheme | `(set-file-chooser-selector 1)` | not tried |
+| Python | `set_file_chooser_selector(1)` | ran (no return value) |
+| Scheme | `(set-file-chooser-selector 1)` | ran (no return value) |
 
 ### set_filter_fileselection_filenames
 
@@ -255,8 +265,8 @@ Arguments: istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_filter_fileselection_filenames(1)` | not tried |
-| Scheme | `(set-filter-fileselection-filenames 1)` | not tried |
+| Python | `set_filter_fileselection_filenames(1)` | ran (no return value) |
+| Scheme | `(set-filter-fileselection-filenames 1)` | ran (no return value) |
 
 ### set_show_paths_in_display_manager
 
@@ -272,8 +282,8 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_show_paths_in_display_manager(1)` | not tried |
-| Scheme | `(set-show-paths-in-display-manager 1)` | not tried |
+| Python | `set_show_paths_in_display_manager(1)` | ran (no return value) |
+| Scheme | `(set-show-paths-in-display-manager 1)` | ran (no return value) |
 
 ### set_sticky_sort_by_date
 
@@ -288,8 +298,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_sticky_sort_by_date()` | not tried |
-| Scheme | `(set-sticky-sort-by-date)` | not tried |
+| Python | `set_sticky_sort_by_date()` | ran (no return value) |
+| Scheme | `(set-sticky-sort-by-date)` | ran (no return value) |
 
 ### show_paths_in_display_manager_state
 
@@ -306,8 +316,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `show_paths_in_display_manager_state()` | not tried |
-| Scheme | `(show-paths-in-display-manager-state)` | not tried |
+| Python | `show_paths_in_display_manager_state()` | ran, returned `0` |
+| Scheme | `(show-paths-in-display-manager-state)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### unset_sticky_sort_by_date
 
@@ -322,6 +334,6 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `unset_sticky_sort_by_date()` | not tried |
-| Scheme | `(unset-sticky-sort-by-date)` | not tried |
+| Python | `unset_sticky_sort_by_date()` | ran (no return value) |
+| Scheme | `(unset-sticky-sort-by-date)` | ran (no return value) |
 

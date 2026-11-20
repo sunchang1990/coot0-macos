@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="36656e51224e94435f7326270e4f7f65a3324538">
+<meta name="coot0-source-sha1" content="69fe7357d278164db7c7abe387cd9e24076d5968">
 <title>Molecule Info Functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -39,6 +39,7 @@ Scheme: <code>(add-ligand-delete-residue-copy-molecule imol-ligand-new chain-id-
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>add_ligand_delete_residue_copy_molecule(0, "B", 41, 0, "A", 41)</code></td><td>ran, returned <code>2</code></td></tr>
 <tr><td>Scheme</td><td><code>(add-ligand-delete-residue-copy-molecule 0 "B" 41 0 "A" 41)</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="chain_id">chain_id</h3>
 <p>Python: <code>chain_id(imol, ichain)</code><br>
 Scheme: <code>(chain-id imol ichain)</code></p>
@@ -48,6 +49,7 @@ Also available in Scheme as <code>chain-id-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>chain_id(0, 1)</code></td><td>ran, returned <code>'B'</code></td></tr>
 <tr><td>Scheme</td><td><code>(chain-id 0 1)</code></td><td>ran, returned <code>"B"</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="chain_n_residues">chain_n_residues</h3>
 <p>Python: <code>chain_n_residues(chain_id, imol)</code><br>
 Scheme: <code>(chain-n-residues chain-id imol)</code></p>
@@ -57,6 +59,7 @@ Scheme: <code>(chain-n-residues chain-id imol)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>chain_n_residues("A", 0)</code></td><td>ran, returned <code>93</code></td></tr>
 <tr><td>Scheme</td><td><code>(chain-n-residues "A" 0)</code></td><td>ran, returned <code>93</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="copy_molecule">copy_molecule</h3>
 <p>Python: <code>copy_molecule(imol)</code><br>
 Scheme: <code>(copy-molecule imol)</code></p>
@@ -68,6 +71,7 @@ closed)</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>copy_molecule(0)</code></td><td>ran, returned <code>2</code></td></tr>
 <tr><td>Scheme</td><td><code>(copy-molecule 0)</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="exchange_chain_ids_for_seg_ids">exchange_chain_ids_for_seg_ids</h3>
 <p>Python: <code>exchange_chain_ids_for_seg_ids(imol)</code><br>
 Scheme: <code>(exchange-chain-ids-for-seg-ids imol)</code></p>
@@ -81,6 +85,7 @@ chain ids with the segids. Will that help?</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>exchange_chain_ids_for_seg_ids(0)</code></td><td>ran, returned <code>0</code></td></tr>
 <tr><td>Scheme</td><td><code>(exchange-chain-ids-for-seg-ids 0)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="insertion_code_from_serial_number">insertion_code_from_serial_number</h3>
 <p>Python: <code>insertion_code_from_serial_number(imol, chain_id, serial_num)</code><br>
 Scheme: <code>(insertion-code-from-serial-number imol chain-id serial-num)</code></p>
@@ -88,8 +93,9 @@ Scheme: <code>(insertion-code-from-serial-number imol chain-id serial-num)</code
 <p> Returns NULL (scheme False) on failure.</p>
 <p>Arguments: imol (a whole number), chain_id (text), serial_num (a whole number). Returns: text.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>insertion_code_from_serial_number(0, "A", 1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(insertion-code-from-serial-number 0 "A" 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>insertion_code_from_serial_number(0, "A", 1)</code></td><td>ran, returned <code>''</code></td></tr>
+<tr><td>Scheme</td><td><code>(insertion-code-from-serial-number 0 "A" 1)</code></td><td>ran, returned <code>""</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="is_nucleotide_chain_p">is_nucleotide_chain_p</h3>
 <p>Python: <code>is_nucleotide_chain_p(imol, chain_id)</code><br>
 Scheme: <code>(is-nucleotide-chain-p imol chain-id)</code></p>
@@ -103,8 +109,9 @@ Scheme: <code>(is-nucleotide-chain-p imol chain-id)</code></p>
  For completeness.</p>
 <p>Arguments: imol (a whole number), chain_id (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>is_nucleotide_chain_p(0, "A")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(is-nucleotide-chain-p 0 "A")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>is_nucleotide_chain_p(0, "A")</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(is-nucleotide-chain-p 0 "A")</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="is_protein_chain_p">is_protein_chain_p</h3>
 <p>Python: <code>is_protein_chain_p(imol, chain_id)</code><br>
 Scheme: <code>(is-protein-chain-p imol chain-id)</code></p>
@@ -117,8 +124,9 @@ Scheme: <code>(is-protein-chain-p imol chain-id)</code></p>
 <p> This wraps the mmdb function isAminoacidChain().</p>
 <p>Arguments: imol (a whole number), chain_id (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>is_protein_chain_p(0, "A")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(is-protein-chain-p 0 "A")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>is_protein_chain_p(0, "A")</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(is-protein-chain-p 0 "A")</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="is_solvent_chain_p">is_solvent_chain_p</h3>
 <p>Python: <code>is_solvent_chain_p(imol, chain_id)</code><br>
 Scheme: <code>(is-solvent-chain-p imol chain-id)</code></p>
@@ -131,15 +139,17 @@ Scheme: <code>(is-solvent-chain-p imol chain-id)</code></p>
 <p> This wraps the mmdb function isSolventChain().</p>
 <p>Arguments: imol (a whole number), chain_id (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>is_solvent_chain_p(0, "A")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(is-solvent-chain-p 0 "A")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>is_solvent_chain_p(0, "A")</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(is-solvent-chain-p 0 "A")</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="model_composition_statistics_py">model_composition_statistics_py</h3>
 <p>Python: <code>model_composition_statistics_py(imol)</code><br>
 Scheme: <code>(model-composition-statistics-scm imol)</code></p>
 <p>Arguments: imol (a whole number). Returns: a value (see the result of the example).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>model_composition_statistics_py(0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(model-composition-statistics-scm 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>model_composition_statistics_py(0)</code></td><td>ran, returned <code>False</code></td></tr>
+<tr><td>Scheme</td><td><code>(model-composition-statistics-scm 0)</code></td><td>ran, returned <code>()</code></td></tr></tbody></table>
+<p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 <h3 id="molecule_centre_internal">molecule_centre_internal</h3>
 <p>Python: <code>molecule_centre_internal(imol, iaxis)</code><br>
 Scheme: <code>(molecule-centre-internal imol iaxis)</code></p>
@@ -147,8 +157,9 @@ Scheme: <code>(molecule-centre-internal imol iaxis)</code></p>
 <p>Returns status, less than -9999 is for failure (eg. bad imol);</p>
 <p>Arguments: imol (a whole number), iaxis (a whole number). Returns: a number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>molecule_centre_internal(0, 1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(molecule-centre-internal 0 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>molecule_centre_internal(0, 1)</code></td><td>ran, returned <code>8.679085731506348</code></td></tr>
+<tr><td>Scheme</td><td><code>(molecule-centre-internal 0 1)</code></td><td>ran, returned <code>8.679085731506348</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="n_atoms">n_atoms</h3>
 <p>Python: <code>n_atoms(imol)</code><br>
 Scheme: <code>(n-atoms imol)</code></p>
@@ -156,8 +167,9 @@ Scheme: <code>(n-atoms imol)</code></p>
 <p>return -1 if this is a map or closed. HETATMs are not counted.</p>
 <p>Arguments: imol (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>n_atoms(0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(n-atoms 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>n_atoms(0)</code></td><td>ran, returned <code>1465</code></td></tr>
+<tr><td>Scheme</td><td><code>(n-atoms 0)</code></td><td>ran, returned <code>1465</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="n_chains">n_chains</h3>
 <p>Python: <code>n_chains(imol)</code><br>
 Scheme: <code>(n-chains imol)</code></p>
@@ -165,8 +177,9 @@ Scheme: <code>(n-chains imol)</code></p>
 <p> Returns the number of chains</p>
 <p>Arguments: imol (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>n_chains(0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(n-chains 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>n_chains(0)</code></td><td>ran, returned <code>2</code></td></tr>
+<tr><td>Scheme</td><td><code>(n-chains 0)</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="n_models">n_models</h3>
 <p>Python: <code>n_models(imol)</code><br>
 Scheme: <code>(n-models imol)</code></p>
@@ -176,8 +189,9 @@ Scheme: <code>(n-models imol)</code></p>
 given molecule.</p>
 <p>Arguments: imol (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>n_models(0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(n-models 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>n_models(0)</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(n-models 0)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="n_residues">n_residues</h3>
 <p>Python: <code>n_residues(imol)</code><br>
 Scheme: <code>(n-residues imol)</code></p>
@@ -185,8 +199,9 @@ Scheme: <code>(n-residues imol)</code></p>
 <p>return -1 if this is a map or closed.</p>
 <p>Arguments: imol (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>n_residues(0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(n-residues 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>n_residues(0)</code></td><td>ran, returned <code>189</code></td></tr>
+<tr><td>Scheme</td><td><code>(n-residues 0)</code></td><td>ran, returned <code>189</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="print_header_secondary_structure_info">print_header_secondary_structure_info</h3>
 <p>Python: <code>print_header_secondary_structure_info(imol)</code><br>
 Scheme: <code>(print-header-secondary-structure-info imol)</code></p>
@@ -194,14 +209,14 @@ Scheme: <code>(print-header-secondary-structure-info imol)</code></p>
  terminal/console. In future, this could/should return the info.</p>
 <p>Arguments: imol (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>print_header_secondary_structure_info(0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(print-header-secondary-structure-info 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>print_header_secondary_structure_info(0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(print-header-secondary-structure-info 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="python_representation_kk">python_representation_kk</h3>
 <p>Python: <code>python_representation_kk(imol)</code></p>
 <p>Arguments: imol (a whole number). Returns: a value (see the result of the example).
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>python_representation_kk(0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>python_representation_kk(0)</code></td><td>ran, returned <code>[[['A', [[1, '', 'ASP', [[[' N  ', ''], [1.0, 30.17, ' N', ''], [44.878, 12.955, 8.761]], [[' CA ', ''], [1.0, 31.68, '  ...</code></td></tr></tbody></table>
 <h3 id="remarks">remarks</h3>
 <p>Python: <code>remarks(imol)</code><br>
 Scheme: <code>(remarks imol)</code></p>
@@ -210,16 +225,17 @@ Scheme: <code>(remarks imol)</code></p>
 Also available in Python as <code>remarks_py</code>.
 Also available in Scheme as <code>remarks-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>remarks(0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(remarks 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>remarks(0)</code></td><td>ran, returned <code>[[3, ' '], [3, 'REFINEMENT.'], [3, '  PROGRAM     : REFMAC 5.2.0003'], [3, '  AUTHORS     : MURSHUDOV,VAGIN,DODSON'], [3 ...</code></td></tr>
+<tr><td>Scheme</td><td><code>(remarks 0)</code></td><td>ran, returned <code>((3 " ") (3 "REFINEMENT.") (3 "  PROGRAM     : REFMAC 5.2.0003") (3 "  AUTHORS     : MURSHUDOV,VAGIN,DODSON") (3 " ") (3 ...</code></td></tr></tbody></table>
+<p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 <h3 id="remarks_dialog">remarks_dialog</h3>
 <p>Python: <code>remarks_dialog(imol)</code><br>
 Scheme: <code>(remarks-dialog imol)</code></p>
 <p>a gui dialog showing remarks header info (for a model molecule).</p>
 <p>Arguments: imol (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>remarks_dialog(0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(remarks-dialog 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>remarks_dialog(0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(remarks-dialog 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="residue_centre">residue_centre</h3>
 <p>Python: <code>residue_centre(imol, chain_id, resno, ins_code)</code><br>
 Scheme: <code>(residue-centre imol chain-id resno ins-code)</code></p>
@@ -227,8 +243,9 @@ Scheme: <code>(residue-centre imol chain-id resno ins-code)</code></p>
 Also available in Python as <code>residue_centre_py</code>.
 Also available in Scheme as <code>residue-centre-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>residue_centre(0, "A", 41, "")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(residue-centre 0 "A" 41 "")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>residue_centre(0, "A", 41, "")</code></td><td>ran, returned <code>[48.17811111111111, 11.594, 17.793222222222226]</code></td></tr>
+<tr><td>Scheme</td><td><code>(residue-centre 0 "A" 41 "")</code></td><td>ran, returned <code>(48.17811111111111 11.594 17.793222222222226)</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="seqnum_from_serial_number">seqnum_from_serial_number</h3>
 <p>Python: <code>seqnum_from_serial_number(imol, chain_id, serial_num)</code><br>
 Scheme: <code>(seqnum-from-serial-number imol chain-id serial-num)</code></p>
@@ -237,32 +254,33 @@ Scheme: <code>(seqnum-from-serial-number imol chain-id serial-num)</code></p>
 <p> Returns &lt; -9999 on failure</p>
 <p>Arguments: imol (a whole number), chain_id (text), serial_num (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>seqnum_from_serial_number(0, "A", 1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(seqnum-from-serial-number 0 "A" 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>seqnum_from_serial_number(0, "A", 1)</code></td><td>ran, returned <code>2</code></td></tr>
+<tr><td>Scheme</td><td><code>(seqnum-from-serial-number 0 "A" 1)</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="show_remarks_browswer">show_remarks_browswer</h3>
 <p>Python: <code>show_remarks_browswer()</code><br>
 Scheme: <code>(show-remarks-browswer)</code></p>
 <p>show the remarks browser</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>show_remarks_browswer()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(show-remarks-browswer)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>show_remarks_browswer()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(show-remarks-browswer)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="sort_chains">sort_chains</h3>
 <p>Python: <code>sort_chains(imol)</code><br>
 Scheme: <code>(sort-chains imol)</code></p>
 <p>sort the chain ids of the imol-th molecule in lexographical order</p>
 <p>Arguments: imol (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>sort_chains(0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(sort-chains 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>sort_chains(0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(sort-chains 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="sort_residues">sort_residues</h3>
 <p>Python: <code>sort_residues(imol)</code><br>
 Scheme: <code>(sort-residues imol)</code></p>
 <p>sort the residues of the imol-th molecule</p>
 <p>Arguments: imol (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>sort_residues(0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(sort-residues 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>sort_residues(0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(sort-residues 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="write_header_secondary_structure_info">write_header_secondary_structure_info</h3>
 <p>Python: <code>write_header_secondary_structure_info(imol, file_name)</code><br>
 Scheme: <code>(write-header-secondary-structure-info imol file-name)</code></p>
@@ -272,6 +290,6 @@ Scheme: <code>(write-header-secondary-structure-info imol file-name)</code></p>
  CHelix, CStrand, CSheet records.</p>
 <p>Arguments: imol (a whole number), file_name (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>write_header_secondary_structure_info(0, "tutorial-modern.pdb")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(write-header-secondary-structure-info 0 "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>write_header_secondary_structure_info(0, "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(write-header-secondary-structure-info 0 "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr></tbody></table>
 </body></html>

@@ -39,6 +39,8 @@ Arguments: imol_ligand_new (a whole number), chain_id_ligand_new (text), resno_l
 | Python | `add_ligand_delete_residue_copy_molecule(0, "B", 41, 0, "A", 41)` | ran, returned `2` |
 | Scheme | `(add-ligand-delete-residue-copy-molecule 0 "B" 41 0 "A" 41)` | ran, returned `2` |
 
+Python and Scheme gave the same answer.
+
 ### chain_id
 
 Python: `chain_id(imol, ichain)`  
@@ -52,6 +54,8 @@ Also available in Scheme as `chain-id-scm`.
 |---|---|---|
 | Python | `chain_id(0, 1)` | ran, returned `'B'` |
 | Scheme | `(chain-id 0 1)` | ran, returned `"B"` |
+
+Python and Scheme gave the same answer.
 
 ### chain_n_residues
 
@@ -67,6 +71,8 @@ Arguments: chain_id (text), imol (a whole number). Returns: a whole number.
 |---|---|---|
 | Python | `chain_n_residues("A", 0)` | ran, returned `93` |
 | Scheme | `(chain-n-residues "A" 0)` | ran, returned `93` |
+
+Python and Scheme gave the same answer.
 
 ### copy_molecule
 
@@ -85,6 +91,8 @@ Arguments: imol (a whole number). Returns: a whole number.
 |---|---|---|
 | Python | `copy_molecule(0)` | ran, returned `2` |
 | Scheme | `(copy-molecule 0)` | ran, returned `2` |
+
+Python and Scheme gave the same answer.
 
 ### exchange_chain_ids_for_seg_ids
 
@@ -106,6 +114,8 @@ Arguments: imol (a whole number). Returns: a whole number.
 | Python | `exchange_chain_ids_for_seg_ids(0)` | ran, returned `0` |
 | Scheme | `(exchange-chain-ids-for-seg-ids 0)` | ran, returned `0` |
 
+Python and Scheme gave the same answer.
+
 ### insertion_code_from_serial_number
 
 Python: `insertion_code_from_serial_number(imol, chain_id, serial_num)`  
@@ -119,8 +129,10 @@ Arguments: imol (a whole number), chain_id (text), serial_num (a whole number). 
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `insertion_code_from_serial_number(0, "A", 1)` | not tried |
-| Scheme | `(insertion-code-from-serial-number 0 "A" 1)` | not tried |
+| Python | `insertion_code_from_serial_number(0, "A", 1)` | ran, returned `''` |
+| Scheme | `(insertion-code-from-serial-number 0 "A" 1)` | ran, returned `""` |
+
+Python and Scheme gave the same answer.
 
 ### is_nucleotide_chain_p
 
@@ -143,8 +155,10 @@ Arguments: imol (a whole number), chain_id (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `is_nucleotide_chain_p(0, "A")` | not tried |
-| Scheme | `(is-nucleotide-chain-p 0 "A")` | not tried |
+| Python | `is_nucleotide_chain_p(0, "A")` | ran, returned `0` |
+| Scheme | `(is-nucleotide-chain-p 0 "A")` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### is_protein_chain_p
 
@@ -166,8 +180,10 @@ Arguments: imol (a whole number), chain_id (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `is_protein_chain_p(0, "A")` | not tried |
-| Scheme | `(is-protein-chain-p 0 "A")` | not tried |
+| Python | `is_protein_chain_p(0, "A")` | ran, returned `1` |
+| Scheme | `(is-protein-chain-p 0 "A")` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 
 ### is_solvent_chain_p
 
@@ -189,8 +205,10 @@ Arguments: imol (a whole number), chain_id (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `is_solvent_chain_p(0, "A")` | not tried |
-| Scheme | `(is-solvent-chain-p 0 "A")` | not tried |
+| Python | `is_solvent_chain_p(0, "A")` | ran, returned `0` |
+| Scheme | `(is-solvent-chain-p 0 "A")` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### model_composition_statistics_py
 
@@ -201,8 +219,10 @@ Arguments: imol (a whole number). Returns: a value (see the result of the exampl
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `model_composition_statistics_py(0)` | not tried |
-| Scheme | `(model-composition-statistics-scm 0)` | not tried |
+| Python | `model_composition_statistics_py(0)` | ran, returned `False` |
+| Scheme | `(model-composition-statistics-scm 0)` | ran, returned `()` |
+
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
 ### molecule_centre_internal
 
@@ -217,8 +237,10 @@ Arguments: imol (a whole number), iaxis (a whole number). Returns: a number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `molecule_centre_internal(0, 1)` | not tried |
-| Scheme | `(molecule-centre-internal 0 1)` | not tried |
+| Python | `molecule_centre_internal(0, 1)` | ran, returned `8.679085731506348` |
+| Scheme | `(molecule-centre-internal 0 1)` | ran, returned `8.679085731506348` |
+
+Python and Scheme gave the same answer.
 
 ### n_atoms
 
@@ -233,8 +255,10 @@ Arguments: imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `n_atoms(0)` | not tried |
-| Scheme | `(n-atoms 0)` | not tried |
+| Python | `n_atoms(0)` | ran, returned `1465` |
+| Scheme | `(n-atoms 0)` | ran, returned `1465` |
+
+Python and Scheme gave the same answer.
 
 ### n_chains
 
@@ -249,8 +273,10 @@ Arguments: imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `n_chains(0)` | not tried |
-| Scheme | `(n-chains 0)` | not tried |
+| Python | `n_chains(0)` | ran, returned `2` |
+| Scheme | `(n-chains 0)` | ran, returned `2` |
+
+Python and Scheme gave the same answer.
 
 ### n_models
 
@@ -268,8 +294,10 @@ Arguments: imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `n_models(0)` | not tried |
-| Scheme | `(n-models 0)` | not tried |
+| Python | `n_models(0)` | ran, returned `1` |
+| Scheme | `(n-models 0)` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 
 ### n_residues
 
@@ -284,8 +312,10 @@ Arguments: imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `n_residues(0)` | not tried |
-| Scheme | `(n-residues 0)` | not tried |
+| Python | `n_residues(0)` | ran, returned `189` |
+| Scheme | `(n-residues 0)` | ran, returned `189` |
+
+Python and Scheme gave the same answer.
 
 ### print_header_secondary_structure_info
 
@@ -299,8 +329,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `print_header_secondary_structure_info(0)` | not tried |
-| Scheme | `(print-header-secondary-structure-info 0)` | not tried |
+| Python | `print_header_secondary_structure_info(0)` | ran (no return value) |
+| Scheme | `(print-header-secondary-structure-info 0)` | ran (no return value) |
 
 ### python_representation_kk
 
@@ -311,7 +341,7 @@ Arguments: imol (a whole number). Returns: a value (see the result of the exampl
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `python_representation_kk(0)` | not tried |
+| Python | `python_representation_kk(0)` | ran, returned `[[['A', [[1, '', 'ASP', [[[' N  ', ''], [1.0, 30.17, ' N', ''], [44.878, 12.955, 8.761]], [[' CA ', ''], [1.0, 31.68, '  ...` |
 
 ### remarks
 
@@ -326,8 +356,10 @@ Also available in Scheme as `remarks-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `remarks(0)` | not tried |
-| Scheme | `(remarks 0)` | not tried |
+| Python | `remarks(0)` | ran, returned `[[3, ' '], [3, 'REFINEMENT.'], [3, '  PROGRAM     : REFMAC 5.2.0003'], [3, '  AUTHORS     : MURSHUDOV,VAGIN,DODSON'], [3 ...` |
+| Scheme | `(remarks 0)` | ran, returned `((3 " ") (3 "REFINEMENT.") (3 "  PROGRAM     : REFMAC 5.2.0003") (3 "  AUTHORS     : MURSHUDOV,VAGIN,DODSON") (3 " ") (3 ...` |
+
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
 ### remarks_dialog
 
@@ -340,8 +372,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `remarks_dialog(0)` | not tried |
-| Scheme | `(remarks-dialog 0)` | not tried |
+| Python | `remarks_dialog(0)` | ran (no return value) |
+| Scheme | `(remarks-dialog 0)` | ran (no return value) |
 
 ### residue_centre
 
@@ -354,8 +386,10 @@ Also available in Scheme as `residue-centre-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `residue_centre(0, "A", 41, "")` | not tried |
-| Scheme | `(residue-centre 0 "A" 41 "")` | not tried |
+| Python | `residue_centre(0, "A", 41, "")` | ran, returned `[48.17811111111111, 11.594, 17.793222222222226]` |
+| Scheme | `(residue-centre 0 "A" 41 "")` | ran, returned `(48.17811111111111 11.594 17.793222222222226)` |
+
+Python and Scheme gave the same answer.
 
 ### seqnum_from_serial_number
 
@@ -371,8 +405,10 @@ Arguments: imol (a whole number), chain_id (text), serial_num (a whole number). 
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `seqnum_from_serial_number(0, "A", 1)` | not tried |
-| Scheme | `(seqnum-from-serial-number 0 "A" 1)` | not tried |
+| Python | `seqnum_from_serial_number(0, "A", 1)` | ran, returned `2` |
+| Scheme | `(seqnum-from-serial-number 0 "A" 1)` | ran, returned `2` |
+
+Python and Scheme gave the same answer.
 
 ### show_remarks_browswer
 
@@ -385,8 +421,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `show_remarks_browswer()` | not tried |
-| Scheme | `(show-remarks-browswer)` | not tried |
+| Python | `show_remarks_browswer()` | ran (no return value) |
+| Scheme | `(show-remarks-browswer)` | ran (no return value) |
 
 ### sort_chains
 
@@ -399,8 +435,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `sort_chains(0)` | not tried |
-| Scheme | `(sort-chains 0)` | not tried |
+| Python | `sort_chains(0)` | ran (no return value) |
+| Scheme | `(sort-chains 0)` | ran (no return value) |
 
 ### sort_residues
 
@@ -413,8 +449,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `sort_residues(0)` | not tried |
-| Scheme | `(sort-residues 0)` | not tried |
+| Python | `sort_residues(0)` | ran (no return value) |
+| Scheme | `(sort-residues 0)` | ran (no return value) |
 
 ### write_header_secondary_structure_info
 
@@ -431,6 +467,6 @@ Arguments: imol (a whole number), file_name (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `write_header_secondary_structure_info(0, "tutorial-modern.pdb")` | not tried |
-| Scheme | `(write-header-secondary-structure-info 0 "tutorial-modern.pdb")` | not tried |
+| Python | `write_header_secondary_structure_info(0, "tutorial-modern.pdb")` | ran (no return value) |
+| Scheme | `(write-header-secondary-structure-info 0 "tutorial-modern.pdb")` | ran (no return value) |
 

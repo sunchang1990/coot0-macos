@@ -18,6 +18,8 @@ Arguments: imol (a whole number). Returns: a number.
 | Python | `get_molecule_bonds_colour_map_rotation(0)` | ran, returned `21.0` |
 | Scheme | `(get-molecule-bonds-colour-map-rotation 0)` | ran, returned `21.0` |
 
+Python and Scheme gave the same answer.
+
 ### set_colour_map_rotation_for_map
 
 Python: `set_colour_map_rotation_for_map(f)`  
@@ -31,8 +33,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_colour_map_rotation_for_map(1.0)` | not tried |
-| Scheme | `(set-colour-map-rotation-for-map 1.0)` | not tried |
+| Python | `set_colour_map_rotation_for_map(1.0)` | ran (no return value) |
+| Scheme | `(set-colour-map-rotation-for-map 1.0)` | ran (no return value) |
 
 ### set_molecule_bonds_colour_map_rotation
 
@@ -47,6 +49,6 @@ Arguments: imol (a whole number), theta (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_molecule_bonds_colour_map_rotation(0, 10.0)` | not tried |
-| Scheme | `(set-molecule-bonds-colour-map-rotation 0 10.0)` | not tried |
+| Python | `set_molecule_bonds_colour_map_rotation(0, 10.0)` | ran (no return value) |
+| Scheme | `(set-molecule-bonds-colour-map-rotation 0 10.0)` | ran (no return value) |
 

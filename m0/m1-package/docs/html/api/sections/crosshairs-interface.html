@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="33c9d9c15f80032a29a8e2e9c09025625e6cdf1f">
+<meta name="coot0-source-sha1" content="e810dee47f274ecb5f009f70a24f2bd01021802e">
 <title>Crosshairs Interface - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -26,12 +26,13 @@ Scheme: <code>(draw-crosshairs-state)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>draw_crosshairs_state()</code></td><td>ran, returned <code>0</code></td></tr>
 <tr><td>Scheme</td><td><code>(draw-crosshairs-state)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="set_draw_crosshairs">set_draw_crosshairs</h3>
 <p>Python: <code>set_draw_crosshairs(i)</code><br>
 Scheme: <code>(set-draw-crosshairs i)</code></p>
 <p>draw the distance crosshairs, 0 for off, 1 for on.</p>
 <p>Arguments: i (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_draw_crosshairs(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-draw-crosshairs 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_draw_crosshairs(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-draw-crosshairs 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 </body></html>

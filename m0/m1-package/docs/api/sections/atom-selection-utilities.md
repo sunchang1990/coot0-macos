@@ -18,6 +18,8 @@ Arguments: imol (a whole number), chain_id (text), iresno (a whole number), atom
 | Python | `atom_index(0, "A", 41, "hello")` | ran, returned `-1` |
 | Scheme | `(atom-index 0 "A" 41 "hello")` | ran, returned `-1` |
 
+Python and Scheme gave the same answer.
+
 ### atom_index_first_atom_in_residue
 
 Python: `atom_index_first_atom_in_residue(imol, chain_id, iresno, ins_code)`  
@@ -31,6 +33,8 @@ Arguments: imol (a whole number), chain_id (text), iresno (a whole number), ins_
 |---|---|---|
 | Python | `atom_index_first_atom_in_residue(0, "A", 41, "")` | ran, returned `294` |
 | Scheme | `(atom-index-first-atom-in-residue 0 "A" 41 "")` | ran, returned `294` |
+
+Python and Scheme gave the same answer.
 
 ### atom_index_first_atom_in_residue_with_altconf
 
@@ -48,6 +52,8 @@ Arguments: imol (a whole number), chain_id (text), iresno (a whole number), ins_
 | Python | `atom_index_first_atom_in_residue_with_altconf(0, "A", 41, "", "")` | ran, returned `294` |
 | Scheme | `(atom-index-first-atom-in-residue-with-altconf 0 "A" 41 "" "")` | ran, returned `294` |
 
+Python and Scheme gave the same answer.
+
 ### atom_index_full
 
 Python: `atom_index_full(imol, chain_id, iresno, inscode, atom_id, altconf)`  
@@ -61,6 +67,8 @@ Arguments: imol (a whole number), chain_id (text), iresno (a whole number), insc
 |---|---|---|
 | Python | `atom_index_full(0, "A", 41, "", "hello", "")` | ran, returned `-1` |
 | Scheme | `(atom-index-full 0 "A" 41 "" "hello" "")` | ran, returned `-1` |
+
+Python and Scheme gave the same answer.
 
 ### average_temperature_factor
 
@@ -76,6 +84,8 @@ Arguments: imol (a whole number). Returns: a number.
 | Python | `average_temperature_factor(0)` | ran, returned `17.467004776000977` |
 | Scheme | `(average-temperature-factor 0)` | ran, returned `17.467004776000977` |
 
+Python and Scheme gave the same answer.
+
 ### centre_of_mass_string
 
 Python: `centre_of_mass_string(imol)`  
@@ -87,6 +97,8 @@ Arguments: imol (a whole number). Returns: text.
 |---|---|---|
 | Python | `centre_of_mass_string(0)` | ran, returned `'[41.53,8.73,12.87]'` |
 | Scheme | `(centre-of-mass-string 0)` | ran, returned `"(41.53 8.73 12.87)"` |
+
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
 ### clear_pending_picks
 
@@ -116,6 +128,8 @@ Arguments: none. Returns: a number.
 | Python | `default_new_atoms_b_factor()` | ran, returned `30.0` |
 | Scheme | `(default-new-atoms-b-factor)` | ran, returned `30.0` |
 
+Python and Scheme gave the same answer.
+
 ### get_reset_b_factor_moved_atoms_state
 
 Python: `get_reset_b_factor_moved_atoms_state()`  
@@ -131,6 +145,8 @@ Arguments: none. Returns: a whole number.
 | Python | `get_reset_b_factor_moved_atoms_state()` | ran, returned `0` |
 | Scheme | `(get-reset-b-factor-moved-atoms-state)` | ran, returned `0` |
 
+Python and Scheme gave the same answer.
+
 ### median_temperature_factor
 
 Python: `median_temperature_factor(imol)`  
@@ -142,8 +158,10 @@ Arguments: imol (a whole number). Returns: a number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `median_temperature_factor(0)` | not tried |
-| Scheme | `(median-temperature-factor 0)` | not tried |
+| Python | `median_temperature_factor(0)` | ran, returned `16.040000915527344` |
+| Scheme | `(median-temperature-factor 0)` | ran, returned `16.040000915527344` |
+
+Python and Scheme gave the same answer.
 
 ### set_atom_attribute
 
@@ -158,8 +176,10 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_c
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_atom_attribute(0, "A", 41, "", " CA ", "", "my-name", 1.0)` | not tried |
-| Scheme | `(set-atom-attribute 0 "A" 41 "" " CA " "" "my-name" 1.0)` | not tried |
+| Python | `set_atom_attribute(0, "A", 41, "", " CA ", "", "my-name", 1.0)` | ran, returned `0` |
+| Scheme | `(set-atom-attribute 0 "A" 41 "" " CA " "" "my-name" 1.0)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### set_atom_attributes
 
@@ -173,8 +193,8 @@ Also available in Python as `set_atom_attributes_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### set_atom_string_attribute
 
@@ -189,8 +209,10 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_c
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_atom_string_attribute(0, "A", 41, "", " CA ", "", "my-name", "hello")` | not tried |
-| Scheme | `(set-atom-string-attribute 0 "A" 41 "" " CA " "" "my-name" "hello")` | not tried |
+| Python | `set_atom_string_attribute(0, "A", 41, "", " CA ", "", "my-name", "hello")` | ran, returned `0` |
+| Scheme | `(set-atom-string-attribute 0 "A" 41 "" " CA " "" "my-name" "hello")` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### set_default_temperature_factor_for_new_atoms
 
@@ -204,8 +226,8 @@ Arguments: new_b (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_default_temperature_factor_for_new_atoms(1.0)` | not tried |
-| Scheme | `(set-default-temperature-factor-for-new-atoms 1.0)` | not tried |
+| Python | `set_default_temperature_factor_for_new_atoms(1.0)` | ran (no return value) |
+| Scheme | `(set-default-temperature-factor-for-new-atoms 1.0)` | ran (no return value) |
 
 ### set_reset_b_factor_moved_atoms
 
@@ -219,8 +241,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_reset_b_factor_moved_atoms(1)` | not tried |
-| Scheme | `(set-reset-b-factor-moved-atoms 1)` | not tried |
+| Python | `set_reset_b_factor_moved_atoms(1)` | ran (no return value) |
+| Scheme | `(set-reset-b-factor-moved-atoms 1)` | ran (no return value) |
 
 ### set_residue_name
 
@@ -233,8 +255,8 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_residue_name(0, "A", 41, "", "my-name")` | not tried |
-| Scheme | `(set-residue-name 0 "A" 41 "" "my-name")` | not tried |
+| Python | `set_residue_name(0, "A", 41, "", "my-name")` | ran (no return value) |
+| Scheme | `(set-residue-name 0 "A" 41 "" "my-name")` | ran (no return value) |
 
 ### set-temperature-factors-for-atoms-in-residue-scm
 
@@ -245,7 +267,7 @@ Arguments: imol (a whole number), residue-spec-scm (a list or value), bf (a numb
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Scheme | `(set-temperature-factors-for-atoms-in-residue-scm 0 (list "A" 41 "") 20.0)` | not tried |
+| Scheme | `(set-temperature-factors-for-atoms-in-residue-scm 0 (list "A" 41 "") 20.0)` | ran (no return value) |
 
 ### standard_deviation_temperature_factor
 
@@ -258,6 +280,8 @@ Arguments: imol (a whole number). Returns: a number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `standard_deviation_temperature_factor(0)` | not tried |
-| Scheme | `(standard-deviation-temperature-factor 0)` | not tried |
+| Python | `standard_deviation_temperature_factor(0)` | ran, returned `6.685909748077393` |
+| Scheme | `(standard-deviation-temperature-factor 0)` | ran, returned `6.685909748077393` |
+
+Python and Scheme gave the same answer.
 

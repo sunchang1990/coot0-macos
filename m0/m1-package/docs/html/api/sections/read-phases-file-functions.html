@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="f9de7e63f7299c48d00e5cb4282598d9b3ed1d2e">
+<meta name="coot0-source-sha1" content="17bc1b0907035d736bd80177f5444f7ab119b425">
 <title>Read Phases File Functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -23,8 +23,8 @@ Scheme: <code>(get-text-for-phs-cell-chooser imol field)</code></p>
 <p>MOVE-ME to c-interface-gtk-widgets.h</p>
 <p>Arguments: imol (a whole number), field (text). Returns: text.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>get_text_for_phs_cell_chooser(0, "hello")</code></td><td>ran, returned <code>&lt;Swig Object of type 'gchar *' at 0x1086e9920&gt;</code></td></tr>
-<tr><td>Scheme</td><td><code>(get-text-for-phs-cell-chooser 0 "hello")</code></td><td>ran, returned <code>#&lt;swig-pointer gchar * 9231460d0&gt;</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>get_text_for_phs_cell_chooser(0, "hello")</code></td><td>ran, returned <code>&lt;Swig Object of type 'gchar *' at 0x10a26d740&gt;</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-text-for-phs-cell-chooser 0 "hello")</code></td><td>ran, returned <code>#&lt;swig-pointer gchar * 814768050&gt;</code></td></tr></tbody></table>
 <h3 id="graphics_store_phs_filename">graphics_store_phs_filename</h3>
 <p>Python: <code>graphics_store_phs_filename(phs_filename)</code><br>
 Scheme: <code>(graphics-store-phs-filename phs-filename)</code></p>
@@ -38,8 +38,9 @@ Scheme: <code>(graphics-store-phs-filename phs-filename)</code></p>
 Scheme: <code>(possible-cell-symm-for-phs-file)</code></p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>possible_cell_symm_for_phs_file()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(possible-cell-symm-for-phs-file)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>possible_cell_symm_for_phs_file()</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(possible-cell-symm-for-phs-file)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="read_phs_and_coords_and_make_map">read_phs_and_coords_and_make_map</h3>
 <p>Python: <code>read_phs_and_coords_and_make_map(pdb_filename)</code><br>
 Scheme: <code>(read-phs-and-coords-and-make-map pdb-filename)</code></p>
@@ -47,16 +48,16 @@ Scheme: <code>(read-phs-and-coords-and-make-map pdb-filename)</code></p>
 <p>uses pending data to make the map.</p>
 <p>Arguments: pdb_filename (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_phs_and_coords_and_make_map("tutorial-modern.pdb")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(read-phs-and-coords-and-make-map "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>read_phs_and_coords_and_make_map("tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(read-phs-and-coords-and-make-map "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="read_phs_and_make_map_using_cell_symm">read_phs_and_make_map_using_cell_symm</h3>
 <p>Python: <code>read_phs_and_make_map_using_cell_symm(phs_file_name, hm_spacegroup, a, b, c, alpha, beta, gamma)</code><br>
 Scheme: <code>(read-phs-and-make-map-using-cell-symm phs-file-name hm-spacegroup a b c alpha beta gamma)</code></p>
 <p>read phs file use coords to use cell and symm to make map</p>
 <p>Arguments: phs_file_name (text), hm_spacegroup (text), a (a number), b (a number), c (a number), alpha (a number), beta (a number), gamma (a number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_phs_and_make_map_using_cell_symm("tutorial-modern.pdb", "hello", 1.0, 0.5, 1.0, 1.0, 1.0, 1.0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(read-phs-and-make-map-using-cell-symm "tutorial-modern.pdb" "hello" 1.0 0.5 1.0 1.0 1.0 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>read_phs_and_make_map_using_cell_symm("tutorial-modern.pdb", "hello", 1.0, 0.5, 1.0, 1.0, 1.0, 1.0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
+<tr><td>Scheme</td><td><code>(read-phs-and-make-map-using-cell-symm "tutorial-modern.pdb" "hello" 1.0 0.5 1.0 1.0 1.0 1.0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
 <h3 id="read_phs_and_make_map_using_cell_symm_from_mol">read_phs_and_make_map_using_cell_symm_from_mol</h3>
 <p>Python: <code>read_phs_and_make_map_using_cell_symm_from_mol(phs_filename, imol)</code><br>
 Scheme: <code>(read-phs-and-make-map-using-cell-symm-from-mol phs-filename imol)</code></p>
@@ -66,15 +67,16 @@ Scheme: <code>(read-phs-and-make-map-using-cell-symm-from-mol phs-filename imol)
 (e.g. not phs data, file not found etc).</p>
 <p>Arguments: phs_filename (text), imol (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_phs_and_make_map_using_cell_symm_from_mol("tutorial-modern.pdb", 0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(read-phs-and-make-map-using-cell-symm-from-mol "tutorial-modern.pdb" 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>read_phs_and_make_map_using_cell_symm_from_mol("tutorial-modern.pdb", 0)</code></td><td>no answer within 60 s (slow, or waits for something)</td></tr>
+<tr><td>Scheme</td><td><code>(read-phs-and-make-map-using-cell-symm-from-mol "tutorial-modern.pdb" 0)</code></td><td>no answer within 60 s (slow, or waits for something)</td></tr></tbody></table>
 <h3 id="read_phs_and_make_map_using_cell_symm_from_mol_using_implicit_phs_filename">read_phs_and_make_map_using_cell_symm_from_mol_using_implicit_phs_filename</h3>
 <p>Python: <code>read_phs_and_make_map_using_cell_symm_from_mol_using_implicit_phs_filename(imol)</code><br>
 Scheme: <code>(read-phs-and-make-map-using-cell-symm-from-mol-using-implicit-phs-filename imol)</code></p>
 <p>Arguments: imol (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_phs_and_make_map_using_cell_symm_from_mol_using_implicit_phs_filename(0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(read-phs-and-make-map-using-cell-symm-from-mol-using-implicit-phs-filename 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>read_phs_and_make_map_using_cell_symm_from_mol_using_implicit_phs_filename(0)</code></td><td>ran, returned <code>2</code></td></tr>
+<tr><td>Scheme</td><td><code>(read-phs-and-make-map-using-cell-symm-from-mol-using-implicit-phs-filename 0)</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="read_phs_and_make_map_using_cell_symm_from_previous_mol">read_phs_and_make_map_using_cell_symm_from_previous_mol</h3>
 <p>Python: <code>read_phs_and_make_map_using_cell_symm_from_previous_mol(phs_filename)</code><br>
 Scheme: <code>(read-phs-and-make-map-using-cell-symm-from-previous-mol phs-filename)</code></p>
@@ -83,8 +85,8 @@ Scheme: <code>(read-phs-and-make-map-using-cell-symm-from-previous-mol phs-filen
 <p> For use with phs data filename provided on the command line</p>
 <p>Arguments: phs_filename (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_phs_and_make_map_using_cell_symm_from_previous_mol("tutorial-modern.pdb")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(read-phs-and-make-map-using-cell-symm-from-previous-mol "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>read_phs_and_make_map_using_cell_symm_from_previous_mol("tutorial-modern.pdb")</code></td><td>no answer within 60 s (slow, or waits for something)</td></tr>
+<tr><td>Scheme</td><td><code>(read-phs-and-make-map-using-cell-symm-from-previous-mol "tutorial-modern.pdb")</code></td><td>no answer within 60 s (slow, or waits for something)</td></tr></tbody></table>
 <h3 id="read_phs_and_make_map_with_reso_limits">read_phs_and_make_map_with_reso_limits</h3>
 <p>Python: <code>read_phs_and_make_map_with_reso_limits(imol, phs_file_name, reso_lim_low, reso_lim_high)</code><br>
 Scheme: <code>(read-phs-and-make-map-with-reso-limits imol phs-file-name reso-lim-low reso-lim-high)</code></p>
@@ -97,6 +99,7 @@ molecule from which the cell and symmetry can be obtained.</p>
 <p>@param reso_lim_low the low resoluion limit (currently ignored).</p>
 <p>Arguments: imol (a whole number), phs_file_name (text), reso_lim_low (a number), reso_lim_high (a number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_phs_and_make_map_with_reso_limits(0, "tutorial-modern.pdb", 2.0, 2.0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(read-phs-and-make-map-with-reso-limits 0 "tutorial-modern.pdb" 2.0 2.0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>read_phs_and_make_map_with_reso_limits(0, "tutorial-modern.pdb", 2.0, 2.0)</code></td><td>ran, returned <code>2</code></td></tr>
+<tr><td>Scheme</td><td><code>(read-phs-and-make-map-with-reso-limits 0 "tutorial-modern.pdb" 2.0 2.0)</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 </body></html>

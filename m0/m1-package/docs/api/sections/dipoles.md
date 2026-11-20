@@ -17,8 +17,10 @@ Also available in Scheme as `add-dipole-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `add_dipole(0, "A", 41, "")` | ran, returned `[-1, [2.3836891226e-314, 3.0428733255e-314, 2.1617066947e-314]]` |
-| Scheme | `(add-dipole 0 "A" 41 "")` | ran, returned `(-1 (5.0e-323 2.1584990723e-314 2.3856689583e-314))` |
+| Python | `add_dipole(0, "A", 41, "")` | ran, returned `[-1, [0.0, 6.5193059465536e-311, 3.56e-322]]` |
+| Scheme | `(add-dipole 0 "A" 41 "")` | ran, returned `(-1 (0.0 6.5193059465536e-311 3.56e-322))` |
+
+Python and Scheme gave the same answer.
 
 ### add_dipole_for_residues
 
@@ -34,8 +36,10 @@ Also available in Scheme as `add-dipole-for-residues-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `add_dipole_for_residues(0, [["A", 41, ""], ["A", 42, ""]])` | ran, returned `[-1, [1e-323, 2.46527736567e-313, 2.46477814396e-313]]` |
-| Scheme | `(add-dipole-for-residues 0 (list (list "A" 41 "") (list "A" 42 "")))` | ran, returned `(-1 (1.0e-323 2.4652773064e-313 2.46477814396e-313))` |
+| Python | `add_dipole_for_residues(0, [["A", 41, ""], ["A", 42, ""]])` | ran, returned `[-1, [1e-323, 2.1537237812e-313, 2.15390748945e-313]]` |
+| Scheme | `(add-dipole-for-residues 0 (list (list "A" 41 "") (list "A" 42 "")))` | ran, returned `(-1 (1.0e-323 2.1537237338e-313 2.1539075685e-313))` |
+
+Python and Scheme gave the same answer.
 
 ### delete_dipole
 
@@ -62,8 +66,10 @@ Arguments: mtz_file_name (text), f_col (text), sigf_col (text). Returns: a whole
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `make_and_draw_patterson("rnasa-1.8-all_refmac1.mtz", "FWT", "hello")` | not tried |
-| Scheme | `(make-and-draw-patterson "rnasa-1.8-all_refmac1.mtz" "FWT" "hello")` | not tried |
+| Python | `make_and_draw_patterson("rnasa-1.8-all_refmac1.mtz", "FWT", "hello")` | ran, returned `-1` |
+| Scheme | `(make-and-draw-patterson "rnasa-1.8-all_refmac1.mtz" "FWT" "hello")` | ran, returned `-1` |
+
+Python and Scheme gave the same answer.
 
 ### make_and_draw_patterson_using_intensities
 
@@ -78,6 +84,8 @@ Arguments: mtz_file_name (text), i_col (text), sigi_col (text). Returns: a whole
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `make_and_draw_patterson_using_intensities("rnasa-1.8-all_refmac1.mtz", "hello", "hello")` | not tried |
-| Scheme | `(make-and-draw-patterson-using-intensities "rnasa-1.8-all_refmac1.mtz" "hello" "hello")` | not tried |
+| Python | `make_and_draw_patterson_using_intensities("rnasa-1.8-all_refmac1.mtz", "hello", "hello")` | ran, returned `-1` |
+| Scheme | `(make-and-draw-patterson-using-intensities "rnasa-1.8-all_refmac1.mtz" "hello" "hello")` | ran, returned `-1` |
+
+Python and Scheme gave the same answer.
 

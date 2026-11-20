@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="84fc89b8877d50e626a778dbcdf430f0c1de907a">
+<meta name="coot0-source-sha1" content="e37fafd0a3d5bbc7c5b52aa0f06fc251b6064e76">
 <title>Residue Info - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -73,44 +73,45 @@ Scheme: <code>(do-torsion-define)</code></p>
 Scheme: <code>(output-residue-info-as-text atom-index imol)</code></p>
 <p>Arguments: atom_index (a whole number), imol (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>output_residue_info_as_text(0, 0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(output-residue-info-as-text 0 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>output_residue_info_as_text(0, 0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(output-residue-info-as-text 0 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="output_residue_info_dialog">output_residue_info_dialog</h3>
 <p>Python: <code>output_residue_info_dialog(imol, atom_index)</code><br>
 Scheme: <code>(output-residue-info-dialog imol atom-index)</code></p>
 <p>MOVE-ME to c-interface-gtk-widgets.h</p>
 <p>Arguments: imol (a whole number), atom_index (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>output_residue_info_dialog(0, 0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(output-residue-info-dialog 0 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>output_residue_info_dialog(0, 0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
+<tr><td>Scheme</td><td><code>(output-residue-info-dialog 0 0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
 <h3 id="residue_info_apply_all_checkbutton_toggled">residue_info_apply_all_checkbutton_toggled</h3>
 <p>Python: <code>residue_info_apply_all_checkbutton_toggled()</code><br>
 Scheme: <code>(residue-info-apply-all-checkbutton-toggled)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>residue_info_apply_all_checkbutton_toggled()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(residue-info-apply-all-checkbutton-toggled)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>residue_info_apply_all_checkbutton_toggled()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(residue-info-apply-all-checkbutton-toggled)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="residue_info_dialog">residue_info_dialog</h3>
 <p>Python: <code>residue_info_dialog(imol, chain_id, resno, ins_code)</code><br>
 Scheme: <code>(residue-info-dialog imol chain-id resno ins-code)</code></p>
 <p>show residue info dialog for given residue</p>
 <p>Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_code (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>residue_info_dialog(0, "A", 41, "")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(residue-info-dialog 0 "A" 41 "")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>residue_info_dialog(0, "A", 41, "")</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
+<tr><td>Scheme</td><td><code>(residue-info-dialog 0 "A" 41 "")</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
 <h3 id="residue_info_dialog_is_displayed">residue_info_dialog_is_displayed</h3>
 <p>Python: <code>residue_info_dialog_is_displayed()</code><br>
 Scheme: <code>(residue-info-dialog-is-displayed)</code></p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>residue_info_dialog_is_displayed()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(residue-info-dialog-is-displayed)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>residue_info_dialog_is_displayed()</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(residue-info-dialog-is-displayed)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="unset_residue_info_widget">unset_residue_info_widget</h3>
 <p>Python: <code>unset_residue_info_widget()</code><br>
 Scheme: <code>(unset-residue-info-widget)</code></p>
 <p>a graphics_info_t function wrapper:</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>unset_residue_info_widget()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(unset-residue-info-widget)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>unset_residue_info_widget()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(unset-residue-info-widget)</code></td><td>ran (no return value)</td></tr></tbody></table>
 </body></html>

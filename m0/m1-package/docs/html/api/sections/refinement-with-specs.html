@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="90358d43f3bdd5de77966634ceb7e27b4c499455">
+<meta name="coot0-source-sha1" content="c18bb6f3b39de9c31fa6aece275183f911c961e2">
 <title>Refinement with specs - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -26,6 +26,7 @@ Also available in Scheme as <code>accept-moving-atoms-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>accept_moving_atoms()</code></td><td>ran, returned <code>False</code></td></tr>
 <tr><td>Scheme</td><td><code>(accept-moving-atoms)</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="all_residues_with_serial_numbers">all_residues_with_serial_numbers</h3>
 <p>Python: <code>all_residues_with_serial_numbers(imol)</code><br>
 Scheme: <code>(all-residues-with-serial-numbers imol)</code></p>
@@ -35,6 +36,7 @@ Also available in Scheme as <code>all-residues-with-serial-numbers-scm</code>.</
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>all_residues_with_serial_numbers(0)</code></td><td>ran, returned <code>[[0, True, 'A', 1, ''], [1, True, 'A', 2, ''], [2, True, 'A', 3, ''], [3, True, 'A', 4, ''], [4, True, 'A', 5, ''], [5,  ...</code></td></tr>
 <tr><td>Scheme</td><td><code>(all-residues-with-serial-numbers 0)</code></td><td>ran, returned <code>((0 #t "A" 1 "") (1 #t "A" 2 "") (2 #t "A" 3 "") (3 #t "A" 4 "") (4 #t "A" 5 "") (5 #t "A" 6 "") (6 #t "A" 7 "") (7 #t " ...</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="b_factor_distribution_graph">b_factor_distribution_graph</h3>
 <p>Python: <code>b_factor_distribution_graph(imol)</code><br>
 Scheme: <code>(b-factor-distribution-graph imol)</code></p>
@@ -50,6 +52,7 @@ Scheme: <code>(check-waters-baddies imol b-factor-lim map-sigma-lim min-dist max
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>check_waters_baddies(0, 20.0, 1.5, 1.0, 1.0, 1, 1, 1)</code></td><td>ran, returned <code>()</code></td></tr>
 <tr><td>Scheme</td><td><code>(check-waters-baddies 0 20.0 1.5 1.0 1.0 1 1 1)</code></td><td>ran, returned <code>#()</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="find_blobs">find_blobs</h3>
 <p>Python: <code>find_blobs(imol_model, imol_map, cut_off_density_level)</code><br>
 Scheme: <code>(find-blobs imol-model imol-map cut-off-density-level)</code></p>
@@ -58,6 +61,7 @@ Scheme: <code>(find-blobs imol-model imol-map cut-off-density-level)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>find_blobs(0, 1, 1.5)</code></td><td>ran, returned <code>[[[59.897255080580464, 2.932044945000125, -4.155281760924597], 58.12772232083223], [[53.775366015612754, 9.0783475008877 ...</code></td></tr>
 <tr><td>Scheme</td><td><code>(find-blobs 0 1 1.5)</code></td><td>ran, returned <code>((58.12772232083223 59.897255080580464 2.932044945000125 -4.155281760924597) (22.504935971005438 53.775366015612754 9.07 ...</code></td></tr></tbody></table>
+<p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 <h3 id="get_cryo_em_refinement">get_cryo_em_refinement</h3>
 <p>Python: <code>get_cryo_em_refinement()</code><br>
 Scheme: <code>(get-cryo-em-refinement)</code></p>
@@ -65,6 +69,7 @@ Scheme: <code>(get-cryo-em-refinement)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>get_cryo_em_refinement()</code></td><td>ran, returned <code>False</code></td></tr>
 <tr><td>Scheme</td><td><code>(get-cryo-em-refinement)</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="get_regenerate_bonds_needs_make_bonds_type_checked_state">get_regenerate_bonds_needs_make_bonds_type_checked_state</h3>
 <p>Python: <code>get_regenerate_bonds_needs_make_bonds_type_checked_state()</code><br>
 Scheme: <code>(get-regenerate-bonds-needs-make-bonds-type-checked-state)</code></p>
@@ -72,6 +77,7 @@ Scheme: <code>(get-regenerate-bonds-needs-make-bonds-type-checked-state)</code><
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>get_regenerate_bonds_needs_make_bonds_type_checked_state()</code></td><td>ran, returned <code>True</code></td></tr>
 <tr><td>Scheme</td><td><code>(get-regenerate-bonds-needs-make-bonds-type-checked-state)</code></td><td>ran, returned <code>#t</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="morph_fit_all">morph_fit_all</h3>
 <p>Python: <code>morph_fit_all(imol, transformation_averaging_radius)</code><br>
 Scheme: <code>(morph-fit-all imol transformation-averaging-radius)</code></p>
@@ -80,8 +86,9 @@ atoms within shift_average_radius A of the central residue).
 return 0 on fail to move atoms and 1 on fitting happened.</p>
 <p>Arguments: imol (a whole number), transformation_averaging_radius (a number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>morph_fit_all(0, 5.0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(morph-fit-all 0 5.0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>morph_fit_all(0, 5.0)</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(morph-fit-all 0 5.0)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="morph_fit_by_secondary_structure_elements">morph_fit_by_secondary_structure_elements</h3>
 <p>Python: <code>morph_fit_by_secondary_structure_elements(imol, chain_id)</code><br>
 Scheme: <code>(morph-fit-by-secondary-structure-elements imol chain-id)</code></p>
@@ -89,32 +96,36 @@ Scheme: <code>(morph-fit-by-secondary-structure-elements imol chain-id)</code></
 of the secondary structure elements.</p>
 <p>Arguments: imol (a whole number), chain_id (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>morph_fit_by_secondary_structure_elements(0, "A")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(morph-fit-by-secondary-structure-elements 0 "A")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>morph_fit_by_secondary_structure_elements(0, "A")</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(morph-fit-by-secondary-structure-elements 0 "A")</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="morph_fit_chain">morph_fit_chain</h3>
 <p>Python: <code>morph_fit_chain(imol, chain_id, transformation_averaging_radius)</code><br>
 Scheme: <code>(morph-fit-chain imol chain-id transformation-averaging-radius)</code></p>
 <p>Morph the given chain</p>
 <p>Arguments: imol (a whole number), chain_id (text), transformation_averaging_radius (a number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>morph_fit_chain(0, "A", 5.0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(morph-fit-chain 0 "A" 5.0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>morph_fit_chain(0, "A", 5.0)</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(morph-fit-chain 0 "A" 5.0)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="morph_fit_residues">morph_fit_residues</h3>
 <p>Python: <code>morph_fit_residues(imol, residue_specs, transformation_averaging_radius)</code><br>
 Scheme: <code>(morph-fit-residues imol residue-specs transformation-averaging-radius)</code></p>
 <p>morph the given residues.</p>
 <p>Arguments: imol (a whole number), residue_specs (a list or value), transformation_averaging_radius (a number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>morph_fit_residues(0, [["A", 41, ""], ["A", 42, ""]], 5.0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(morph-fit-residues 0 (list (list "A" 41 "") (list "A" 42 "")) 5.0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>morph_fit_residues(0, [["A", 41, ""], ["A", 42, ""]], 5.0)</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(morph-fit-residues 0 (list (list "A" 41 "") (list "A" 42 "")) 5.0)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="mtz_file_name">mtz_file_name</h3>
 <p>Python: <code>mtz_file_name(imol)</code><br>
 Scheme: <code>(mtz-file-name imol)</code></p>
 <p>presumes that imol_Refinement_Map has been set</p>
 <p>Arguments: imol (a whole number). Returns: text.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>mtz_file_name(0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(mtz-file-name 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>mtz_file_name(0)</code></td><td>ran, returned <code>''</code></td></tr>
+<tr><td>Scheme</td><td><code>(mtz-file-name 0)</code></td><td>ran, returned <code>""</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="refine_zone_with_full_residue_spec">refine_zone_with_full_residue_spec</h3>
 <p>Python: <code>refine_zone_with_full_residue_spec(imol, chain_id, resno1, inscode_1, resno2, inscode_2, altconf)</code><br>
 Scheme: <code>(refine-zone-with-full-residue-spec imol chain-id resno1 inscode-1 resno2 inscode-2 altconf)</code></p>
@@ -122,22 +133,24 @@ Scheme: <code>(refine-zone-with-full-residue-spec imol chain-id resno1 inscode-1
 Also available in Python as <code>refine_zone_with_full_residue_spec_py</code>.
 Also available in Scheme as <code>refine-zone-with-full-residue-spec-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>refine_zone_with_full_residue_spec(0, "A", 41, "", 45, "", "")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(refine-zone-with-full-residue-spec 0 "A" 41 "" 45 "" "")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>refine_zone_with_full_residue_spec(0, "A", 41, "", 45, "", "")</code></td><td>ran, returned <code>['', -2, False]</code></td></tr>
+<tr><td>Scheme</td><td><code>(refine-zone-with-full-residue-spec 0 "A" 41 "" 45 "" "")</code></td><td>ran, returned <code>("" -2 ())</code></td></tr></tbody></table>
+<p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 <h3 id="register_post_intermediate_atoms_moved_hook">register_post_intermediate_atoms_moved_hook</h3>
 <p>Python: <code>register_post_intermediate_atoms_moved_hook(function_name)</code></p>
 <p>Arguments: function_name (a list or value). Returns: nothing.
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 <h3 id="regularize_residues">regularize_residues</h3>
 <p>Python: <code>regularize_residues(imol, r)</code><br>
 Scheme: <code>(regularize-residues imol r)</code></p>
 <p>regularize the given residues</p>
 <p>Arguments: imol (a whole number), r (a list or value). Returns: a value (see the result of the example).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>regularize_residues(0, [["A", 41, ""], ["A", 42, ""]])</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(regularize-residues 0 (list (list "A" 41 "") (list "A" 42 "")))</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>regularize_residues(0, [["A", 41, ""], ["A", 42, ""]])</code></td><td>ran, returned <code>['', -2, False]</code></td></tr>
+<tr><td>Scheme</td><td><code>(regularize-residues 0 (list (list "A" 41 "") (list "A" 42 "")))</code></td><td>ran, returned <code>("" -2 ())</code></td></tr></tbody></table>
+<p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 <h3 id="rigid_body_fit_with_residue_ranges">rigid_body_fit_with_residue_ranges</h3>
 <p>Python: <code>rigid_body_fit_with_residue_ranges(imol, ranges)</code><br>
 Scheme: <code>(rigid-body-fit-with-residue-ranges imol ranges)</code></p>
@@ -145,34 +158,34 @@ Scheme: <code>(rigid-body-fit-with-residue-ranges imol ranges)</code></p>
 on fitting happened.</p>
 <p>Arguments: imol (a whole number), ranges (a list). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 <h3 id="set_cryo_em_refinement">set_cryo_em_refinement</h3>
 <p>Python: <code>set_cryo_em_refinement(mode)</code><br>
 Scheme: <code>(set-cryo-em-refinement mode)</code></p>
 <p>Arguments: mode (true or false). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_cryo_em_refinement(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-cryo-em-refinement 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_cryo_em_refinement(True)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-cryo-em-refinement 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_regenerate_bonds_needs_make_bonds_type_checked">set_regenerate_bonds_needs_make_bonds_type_checked</h3>
 <p>Python: <code>set_regenerate_bonds_needs_make_bonds_type_checked(state)</code><br>
 Scheme: <code>(set-regenerate-bonds-needs-make-bonds-type-checked state)</code></p>
 <p>Arguments: state (true or false). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_regenerate_bonds_needs_make_bonds_type_checked(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-regenerate-bonds-needs-make-bonds-type-checked 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_regenerate_bonds_needs_make_bonds_type_checked(True)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-regenerate-bonds-needs-make-bonds-type-checked 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_show_intermediate_atoms_rama_markup">set_show_intermediate_atoms_rama_markup</h3>
 <p>Python: <code>set_show_intermediate_atoms_rama_markup(state)</code><br>
 Scheme: <code>(set-show-intermediate-atoms-rama-markup state)</code></p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_show_intermediate_atoms_rama_markup(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-show-intermediate-atoms-rama-markup 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_show_intermediate_atoms_rama_markup(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-show-intermediate-atoms-rama-markup 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_show_intermediate_atoms_rota_markup">set_show_intermediate_atoms_rota_markup</h3>
 <p>Python: <code>set_show_intermediate_atoms_rota_markup(state)</code><br>
 Scheme: <code>(set-show-intermediate-atoms-rota-markup state)</code></p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_show_intermediate_atoms_rota_markup(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-show-intermediate-atoms-rota-markup 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_show_intermediate_atoms_rota_markup(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-show-intermediate-atoms-rota-markup 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 </body></html>

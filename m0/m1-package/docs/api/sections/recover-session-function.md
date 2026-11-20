@@ -22,6 +22,6 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `recover_session()` | not tried |
-| Scheme | `(recover-session)` | not tried |
+| Python | `recover_session()` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(recover-session)` | stopped Coot when tried without a window (not checked with a window) |
 

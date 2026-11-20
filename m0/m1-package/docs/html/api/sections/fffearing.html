@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="412d9ed471e6971245cf929c851b1a8dc19a8d1c">
+<meta name="coot0-source-sha1" content="1470905ea4eda99b0e86793b051555f9d3b12f0e">
 <title>FFFearing - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -25,6 +25,7 @@ Scheme: <code>(fffear-angular-resolution)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>fffear_angular_resolution()</code></td><td>ran, returned <code>15.0</code></td></tr>
 <tr><td>Scheme</td><td><code>(fffear-angular-resolution)</code></td><td>ran, returned <code>15.0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="fffear_search">fffear_search</h3>
 <p>Python: <code>fffear_search(imol_model, imol_map)</code><br>
 Scheme: <code>(fffear-search imol-model imol-map)</code></p>
@@ -32,14 +33,14 @@ Scheme: <code>(fffear-search imol-model imol-map)</code></p>
  number imol_map</p>
 <p>Arguments: imol_model (a whole number), imol_map (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>fffear_search(0, 1)</code></td><td>ran, returned <code>2</code></td></tr>
-<tr><td>Scheme</td><td><code>(fffear-search 0 1)</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>fffear_search(0, 1)</code></td><td>no answer within 60 s (slow, or waits for something)</td></tr>
+<tr><td>Scheme</td><td><code>(fffear-search 0 1)</code></td><td>no answer within 60 s (slow, or waits for something)</td></tr></tbody></table>
 <h3 id="set_fffear_angular_resolution">set_fffear_angular_resolution</h3>
 <p>Python: <code>set_fffear_angular_resolution(f)</code><br>
 Scheme: <code>(set-fffear-angular-resolution f)</code></p>
 <p>set and return the fffear angular resolution in degrees</p>
 <p>Arguments: f (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_fffear_angular_resolution(1.0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-fffear-angular-resolution 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_fffear_angular_resolution(1.0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-fffear-angular-resolution 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
 </body></html>

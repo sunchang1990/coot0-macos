@@ -70,6 +70,8 @@ Arguments: imol (a whole number). Returns: a number.
 | Python | `data_resolution(0)` | ran, returned `-1.0` |
 | Scheme | `(data-resolution 0)` | ran, returned `-1.0` |
 
+Python and Scheme gave the same answer.
+
 ### difference_map
 
 Python: `difference_map(imol1, imol2, map_scale)`  
@@ -85,6 +87,8 @@ Arguments: imol1 (a whole number), imol2 (a whole number), map_scale (a number).
 |---|---|---|
 | Python | `difference_map(0, 0, 1.0)` | ran, returned `-1` |
 | Scheme | `(difference-map 0 0 1.0)` | ran, returned `-1` |
+
+Python and Scheme gave the same answer.
 
 ### export_map
 
@@ -103,6 +107,8 @@ Arguments: imol (a whole number), filename (text). Returns: a whole number.
 | Python | `export_map(0, "tutorial-modern.pdb")` | ran, returned `0` |
 | Scheme | `(export-map 0 "tutorial-modern.pdb")` | ran, returned `0` |
 
+Python and Scheme gave the same answer.
+
 ### export_map_fragment
 
 Python: `export_map_fragment(imol, x, y, z, radius, filename)`  
@@ -116,6 +122,8 @@ Arguments: imol (a whole number), x (a number), y (a number), z (a number), radi
 |---|---|---|
 | Python | `export_map_fragment(0, 54.5, 9.4, 12.3, 5.0, "tutorial-modern.pdb")` | ran, returned `0` |
 | Scheme | `(export-map-fragment 0 54.5 9.4 12.3 5.0 "tutorial-modern.pdb")` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### export_map_fragment_to_plain_file
 
@@ -131,6 +139,8 @@ Arguments: imol (a whole number), x (a number), y (a number), z (a number), radi
 | Python | `export_map_fragment_to_plain_file(0, 54.5, 9.4, 12.3, 5.0, "tutorial-modern.pdb")` | ran, returned `0` |
 | Scheme | `(export-map-fragment-to-plain-file 0 54.5 9.4 12.3 5.0 "tutorial-modern.pdb")` | ran, returned `0` |
 
+Python and Scheme gave the same answer.
+
 ### export_map_fragment_with_origin_shift
 
 Python: `export_map_fragment_with_origin_shift(imol, x, y, z, radius, filename)`  
@@ -144,6 +154,8 @@ Arguments: imol (a whole number), x (a number), y (a number), z (a number), radi
 |---|---|---|
 | Python | `export_map_fragment_with_origin_shift(0, 54.5, 9.4, 12.3, 5.0, "tutorial-modern.pdb")` | ran, returned `0` |
 | Scheme | `(export-map-fragment-with-origin-shift 0 54.5 9.4 12.3 5.0 "tutorial-modern.pdb")` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### export_map_fragment_with_text_radius
 
@@ -173,6 +185,8 @@ Arguments: none. Returns: a whole number.
 | Python | `get_active_map_drag_flag()` | ran, returned `1` |
 | Scheme | `(get-active-map-drag-flag)` | ran, returned `1` |
 
+Python and Scheme gave the same answer.
+
 ### get_contour_level_absolute
 
 Python: `get_contour_level_absolute(imol)`  
@@ -186,6 +200,8 @@ Arguments: imol (a whole number). Returns: a number.
 |---|---|---|
 | Python | `get_contour_level_absolute(0)` | ran, returned `0.0` |
 | Scheme | `(get-contour-level-absolute 0)` | ran, returned `0.0` |
+
+Python and Scheme gave the same answer.
 
 ### get_contour_level_in_sigma
 
@@ -201,6 +217,8 @@ Arguments: imol (a whole number). Returns: a number.
 | Python | `get_contour_level_in_sigma(0)` | ran, returned `0.0` |
 | Scheme | `(get-contour-level-in-sigma 0)` | ran, returned `0.0` |
 
+Python and Scheme gave the same answer.
+
 ### get_map_colour
 
 Python: `get_map_colour(imol)`  
@@ -212,6 +230,8 @@ Arguments: imol (a whole number). Returns: a value (see the result of the exampl
 |---|---|---|
 | Python | `get_map_colour(0)` | ran, returned `False` |
 | Scheme | `(get-map-colour 0)` | ran, returned `#f` |
+
+Python and Scheme gave the same answer.
 
 ### map_from_mtz_by_calc_phases
 
@@ -225,8 +245,8 @@ Arguments: mtz_file_name (text), f_col (text), sigf_col (text), imol_coords (a w
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `map_from_mtz_by_calc_phases("rnasa-1.8-all_refmac1.mtz", "FWT", "hello", 0)` | not tried |
-| Scheme | `(map-from-mtz-by-calc-phases "rnasa-1.8-all_refmac1.mtz" "FWT" "hello" 0)` | not tried |
+| Python | `map_from_mtz_by_calc_phases("rnasa-1.8-all_refmac1.mtz", "FWT", "hello", 0)` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(map-from-mtz-by-calc-phases "rnasa-1.8-all_refmac1.mtz" "FWT" "hello" 0)` | stopped Coot when tried without a window (not checked with a window) |
 
 ### map_from_mtz_by_refmac_calc_phases
 
@@ -243,8 +263,8 @@ Arguments: mtz_file_name (text), f_col (text), sigf_col (text), imol_coords (a w
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `map_from_mtz_by_refmac_calc_phases("rnasa-1.8-all_refmac1.mtz", "FWT", "hello", 0)` | not tried |
-| Scheme | `(map-from-mtz-by-refmac-calc-phases "rnasa-1.8-all_refmac1.mtz" "FWT" "hello" 0)` | not tried |
+| Python | `map_from_mtz_by_refmac_calc_phases("rnasa-1.8-all_refmac1.mtz", "FWT", "hello", 0)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(map-from-mtz-by-refmac-calc-phases "rnasa-1.8-all_refmac1.mtz" "FWT" "hello" 0)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
 
 ### model_resolution
 
@@ -259,8 +279,10 @@ Arguments: imol (a whole number). Returns: a number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `model_resolution(0)` | not tried |
-| Scheme | `(model-resolution 0)` | not tried |
+| Python | `model_resolution(0)` | ran, returned `-1.0` |
+| Scheme | `(model-resolution 0)` | ran, returned `-1.0` |
+
+Python and Scheme gave the same answer.
 
 ### reinterp_map
 
@@ -276,8 +298,10 @@ Arguments: map_no (a whole number), reference_map_no (a whole number). Returns: 
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `reinterp_map(1, 1)` | not tried |
-| Scheme | `(reinterp-map 1 1)` | not tried |
+| Python | `reinterp_map(1, 1)` | ran, returned `2` |
+| Scheme | `(reinterp-map 1 1)` | ran, returned `2` |
+
+Python and Scheme gave the same answer.
 
 ### restore_previous_map_colour
 
@@ -290,8 +314,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `restore_previous_map_colour(0)` | not tried |
-| Scheme | `(restore-previous-map-colour 0)` | not tried |
+| Python | `restore_previous_map_colour(0)` | ran (no return value) |
+| Scheme | `(restore-previous-map-colour 0)` | ran (no return value) |
 
 ### save_previous_map_colour
 
@@ -304,8 +328,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `save_previous_map_colour(0)` | not tried |
-| Scheme | `(save-previous-map-colour 0)` | not tried |
+| Python | `save_previous_map_colour(0)` | ran (no return value) |
+| Scheme | `(save-previous-map-colour 0)` | ran (no return value) |
 
 ### scroll_wheel_map
 
@@ -318,8 +342,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `scroll_wheel_map()` | not tried |
-| Scheme | `(scroll-wheel-map)` | not tried |
+| Python | `scroll_wheel_map()` | ran, returned `1` |
+| Scheme | `(scroll-wheel-map)` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 
 ### set_active_map_drag_flag
 
@@ -335,8 +361,8 @@ Arguments: t (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_active_map_drag_flag(1)` | not tried |
-| Scheme | `(set-active-map-drag-flag 1)` | not tried |
+| Python | `set_active_map_drag_flag(1)` | ran (no return value) |
+| Scheme | `(set-active-map-drag-flag 1)` | ran (no return value) |
 
 ### set_auto_updating_sfcalc_genmap
 
@@ -351,8 +377,8 @@ Arguments: imol_model (a whole number), imol_map_with_data_attached (a whole num
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_auto_updating_sfcalc_genmap(0, 1, 1)` | not tried |
-| Scheme | `(set-auto-updating-sfcalc-genmap 0 1 1)` | not tried |
+| Python | `set_auto_updating_sfcalc_genmap(0, 1, 1)` | ran (no return value) |
+| Scheme | `(set-auto-updating-sfcalc-genmap 0 1 1)` | ran (no return value) |
 
 ### set_auto_updating_sfcalc_genmaps
 
@@ -367,8 +393,8 @@ Arguments: imol_model (a whole number), imol_map_with_data_attached (a whole num
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_auto_updating_sfcalc_genmaps(0, 1, 1, 1)` | not tried |
-| Scheme | `(set-auto-updating-sfcalc-genmaps 0 1 1 1)` | not tried |
+| Python | `set_auto_updating_sfcalc_genmaps(0, 1, 1, 1)` | ran (no return value) |
+| Scheme | `(set-auto-updating-sfcalc-genmaps 0 1 1 1)` | ran (no return value) |
 
 ### set_contour_by_sigma_step_by_mol
 
@@ -385,8 +411,8 @@ Arguments: f (a number), state (a whole number), imol (a whole number). Returns:
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_contour_by_sigma_step_by_mol(1.0, 1, 0)` | not tried |
-| Scheme | `(set-contour-by-sigma-step-by-mol 1.0 1 0)` | not tried |
+| Python | `set_contour_by_sigma_step_by_mol(1.0, 1, 0)` | ran (no return value) |
+| Scheme | `(set-contour-by-sigma-step-by-mol 1.0 1 0)` | ran (no return value) |
 
 ### set_contour_level_absolute
 
@@ -399,8 +425,8 @@ Arguments: imol_map (a whole number), level (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_contour_level_absolute(1, 1.5)` | not tried |
-| Scheme | `(set-contour-level-absolute 1 1.5)` | not tried |
+| Python | `set_contour_level_absolute(1, 1.5)` | ran (no return value) |
+| Scheme | `(set-contour-level-absolute 1 1.5)` | ran (no return value) |
 
 ### set_contour_level_in_sigma
 
@@ -413,8 +439,8 @@ Arguments: imol_map (a whole number), level (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_contour_level_in_sigma(1, 1.5)` | not tried |
-| Scheme | `(set-contour-level-in-sigma 1 1.5)` | not tried |
+| Python | `set_contour_level_in_sigma(1, 1.5)` | ran (no return value) |
+| Scheme | `(set-contour-level-in-sigma 1 1.5)` | ran (no return value) |
 
 ### set_last_map_colour
 
@@ -427,8 +453,8 @@ Arguments: f1 (a number), f2 (a number), f3 (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_last_map_colour(1.0, 1.0, 1.0)` | not tried |
-| Scheme | `(set-last-map-colour 1.0 1.0 1.0)` | not tried |
+| Python | `set_last_map_colour(1.0, 1.0, 1.0)` | ran (no return value) |
+| Scheme | `(set-last-map-colour 1.0 1.0 1.0)` | ran (no return value) |
 
 ### set_last_map_sigma_step
 
@@ -441,8 +467,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_last_map_sigma_step(1.0)` | not tried |
-| Scheme | `(set-last-map-sigma-step 1.0)` | not tried |
+| Python | `set_last_map_sigma_step(1.0)` | ran (no return value) |
+| Scheme | `(set-last-map-sigma-step 1.0)` | ran (no return value) |
 
 ### set_map_colour
 
@@ -455,8 +481,8 @@ Arguments: imol (a whole number), red (a number), green (a number), blue (a numb
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_map_colour(0, 0.5, 0.5, 0.5)` | not tried |
-| Scheme | `(set-map-colour 0 0.5 0.5 0.5)` | not tried |
+| Python | `set_map_colour(0, 0.5, 0.5, 0.5)` | ran (no return value) |
+| Scheme | `(set-map-colour 0 0.5 0.5 0.5)` | ran (no return value) |
 
 ### set_scroll_wheel_map
 
@@ -470,8 +496,8 @@ Arguments: imap (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_scroll_wheel_map(1)` | not tried |
-| Scheme | `(set-scroll-wheel-map 1)` | not tried |
+| Python | `set_scroll_wheel_map(1)` | ran (no return value) |
+| Scheme | `(set-scroll-wheel-map 1)` | ran (no return value) |
 
 ### set_scrollable_map
 
@@ -485,8 +511,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_scrollable_map(0)` | not tried |
-| Scheme | `(set-scrollable-map 0)` | not tried |
+| Python | `set_scrollable_map(0)` | ran (no return value) |
+| Scheme | `(set-scrollable-map 0)` | ran (no return value) |
 
 ### sfcalc_genmap
 
@@ -500,8 +526,8 @@ Arguments: imol_model (a whole number), imol_map_with_data_attached (a whole num
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `sfcalc_genmap(0, 1, 1)` | not tried |
-| Scheme | `(sfcalc-genmap 0 1 1)` | not tried |
+| Python | `sfcalc_genmap(0, 1, 1)` | ran (no return value) |
+| Scheme | `(sfcalc-genmap 0 1 1)` | ran (no return value) |
 
 ### smooth_map
 
@@ -516,8 +542,10 @@ Arguments: map_no (a whole number), sampling_multiplier (a number). Returns: a w
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `smooth_map(1, 1.0)` | not tried |
-| Scheme | `(smooth-map 1 1.0)` | not tried |
+| Python | `smooth_map(1, 1.0)` | ran, returned `2` |
+| Scheme | `(smooth-map 1 1.0)` | ran, returned `2` |
+
+Python and Scheme gave the same answer.
 
 ### transform_map_raw
 
@@ -532,6 +560,8 @@ Arguments: imol (a whole number), r00 (a number), r01 (a number), r02 (a number)
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `transform_map_raw(0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, "hello", 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)` | not tried |
-| Scheme | `(transform-map-raw 0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 "hello" 1.0 1.0 1.0 1.0 1.0 1.0)` | not tried |
+| Python | `transform_map_raw(0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, "hello", 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)` | ran, returned `-1` |
+| Scheme | `(transform-map-raw 0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 "hello" 1.0 1.0 1.0 1.0 1.0 1.0)` | ran, returned `-1` |
+
+Python and Scheme gave the same answer.
 

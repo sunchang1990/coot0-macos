@@ -39,8 +39,10 @@ Also available in Scheme as `ligand-search-make-conformers-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `ligand_search_make_conformers()` | not tried |
-| Scheme | `(ligand-search-make-conformers)` | not tried |
+| Python | `ligand_search_make_conformers()` | ran, returned `[]` |
+| Scheme | `(ligand-search-make-conformers)` | ran, returned `()` |
+
+Python and Scheme gave the same answer.
 
 ### ligand_search_make_conformers_internal
 
@@ -51,6 +53,8 @@ Arguments: none. Returns: a list.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `ligand_search_make_conformers_internal()` | not tried |
-| Scheme | `(ligand-search-make-conformers-internal)` | not tried |
+| Python | `ligand_search_make_conformers_internal()` | ran, returned `()` |
+| Scheme | `(ligand-search-make-conformers-internal)` | ran, returned `#()` |
+
+Python and Scheme gave the same answer.
 

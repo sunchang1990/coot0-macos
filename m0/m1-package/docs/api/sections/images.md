@@ -16,5 +16,5 @@ Arguments: text_info_dict (a list or value). Returns: text.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 

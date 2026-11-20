@@ -15,8 +15,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `post_model_fit_refine_dialog()` | not tried |
-| Scheme | `(post-model-fit-refine-dialog)` | not tried |
+| Python | `post_model_fit_refine_dialog()` | ran (no return value) |
+| Scheme | `(post-model-fit-refine-dialog)` | stopped Coot when tried without a window (not checked with a window) |
 
 ### post_other_modelling_tools_dialog
 
@@ -29,8 +29,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `post_other_modelling_tools_dialog()` | not tried |
-| Scheme | `(post-other-modelling-tools-dialog)` | not tried |
+| Python | `post_other_modelling_tools_dialog()` | ran (no return value) |
+| Scheme | `(post-other-modelling-tools-dialog)` | stopped Coot when tried without a window (not checked with a window) |
 
 ### refinement_move_atoms_with_zero_occupancy_state
 
@@ -44,8 +44,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `refinement_move_atoms_with_zero_occupancy_state()` | not tried |
-| Scheme | `(refinement-move-atoms-with-zero-occupancy-state)` | not tried |
+| Python | `refinement_move_atoms_with_zero_occupancy_state()` | ran, returned `1` |
+| Scheme | `(refinement-move-atoms-with-zero-occupancy-state)` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 
 ### set_model_fit_refine_place_atom_at_pointer_label
 
@@ -59,8 +61,8 @@ Arguments: txt (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_model_fit_refine_place_atom_at_pointer_label("hello")` | not tried |
-| Scheme | `(set-model-fit-refine-place-atom-at-pointer-label "hello")` | not tried |
+| Python | `set_model_fit_refine_place_atom_at_pointer_label("hello")` | ran (no return value) |
+| Scheme | `(set-model-fit-refine-place-atom-at-pointer-label "hello")` | ran (no return value) |
 
 ### set_model_fit_refine_rotate_translate_zone_label
 
@@ -74,8 +76,8 @@ Arguments: txt (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_model_fit_refine_rotate_translate_zone_label("hello")` | not tried |
-| Scheme | `(set-model-fit-refine-rotate-translate-zone-label "hello")` | not tried |
+| Python | `set_model_fit_refine_rotate_translate_zone_label("hello")` | ran (no return value) |
+| Scheme | `(set-model-fit-refine-rotate-translate-zone-label "hello")` | ran (no return value) |
 
 ### set_refinement_move_atoms_with_zero_occupancy
 
@@ -88,8 +90,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_refinement_move_atoms_with_zero_occupancy(1)` | not tried |
-| Scheme | `(set-refinement-move-atoms-with-zero-occupancy 1)` | not tried |
+| Python | `set_refinement_move_atoms_with_zero_occupancy(1)` | ran (no return value) |
+| Scheme | `(set-refinement-move-atoms-with-zero-occupancy 1)` | ran (no return value) |
 
 ### show_select_map_dialog
 
@@ -102,8 +104,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `show_select_map_dialog()` | not tried |
-| Scheme | `(show-select-map-dialog)` | not tried |
+| Python | `show_select_map_dialog()` | ran (no return value) |
+| Scheme | `(show-select-map-dialog)` | ran (no return value) |
 
 ### unset_model_fit_refine_dialog
 
@@ -116,8 +118,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `unset_model_fit_refine_dialog()` | not tried |
-| Scheme | `(unset-model-fit-refine-dialog)` | not tried |
+| Python | `unset_model_fit_refine_dialog()` | ran (no return value) |
+| Scheme | `(unset-model-fit-refine-dialog)` | ran (no return value) |
 
 ### unset_refine_params_dialog
 
@@ -130,6 +132,6 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `unset_refine_params_dialog()` | not tried |
-| Scheme | `(unset-refine-params-dialog)` | not tried |
+| Python | `unset_refine_params_dialog()` | ran (no return value) |
+| Scheme | `(unset-refine-params-dialog)` | ran (no return value) |
 

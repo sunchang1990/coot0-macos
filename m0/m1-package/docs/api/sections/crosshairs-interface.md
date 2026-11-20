@@ -19,6 +19,8 @@ Arguments: none. Returns: a whole number.
 | Python | `draw_crosshairs_state()` | ran, returned `0` |
 | Scheme | `(draw-crosshairs-state)` | ran, returned `0` |
 
+Python and Scheme gave the same answer.
+
 ### set_draw_crosshairs
 
 Python: `set_draw_crosshairs(i)`  
@@ -30,6 +32,6 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_draw_crosshairs(1)` | not tried |
-| Scheme | `(set-draw-crosshairs 1)` | not tried |
+| Python | `set_draw_crosshairs(1)` | ran (no return value) |
+| Scheme | `(set-draw-crosshairs 1)` | ran (no return value) |
 

@@ -59,6 +59,8 @@ Also available in Python as `analyse_ligand_differences_py`.
 | Python | `analyse_ligand_differences(0, 0, "A", 41)` | ran, returned `[[[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], [0.0, 0.0, 0.0]], [78.85041640521314, 7]]` |
 | Scheme | `(analyse-ligand-differences 0 0 "A" 41)` | ran, returned `(((0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0) (0.0 0.0 0.0)) (78.85041640521314 7))` |
 
+Python and Scheme gave the same answer.
+
 ### compare_ligand_atom_types_py
 
 Python: `compare_ligand_atom_types_py(imol_ligand, imol_ref, chain_id_ref, resno_ref)`  
@@ -70,6 +72,8 @@ Arguments: imol_ligand (a whole number), imol_ref (a whole number), chain_id_ref
 |---|---|---|
 | Python | `compare_ligand_atom_types_py(0, 0, "A", 41)` | ran, returned `2` |
 | Scheme | `(compare-ligand-atom-types-scm 0 0 "A" 41)` | ran, returned `2` |
+
+Python and Scheme gave the same answer.
 
 ### do_find_ligands_dialog
 
@@ -108,6 +112,8 @@ Arguments: imol_lig (a whole number), chain_id_lig (text), resno_lig (a whole nu
 | Python | `exchange_ligand(0, "A", 41, "")` | ran, returned `-1` |
 | Scheme | `(exchange-ligand 0 "A" 41 "")` | ran, returned `-1` |
 
+Python and Scheme gave the same answer.
+
 ### execute_ligand_search
 
 Python: `execute_ligand_search()`  
@@ -119,6 +125,8 @@ Arguments: none. Returns: a value (see the result of the example).
 |---|---|---|
 | Python | `execute_ligand_search()` | ran, returned `[]` |
 | Scheme | `(execute-ligand-search)` | ran (no return value) |
+
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
 ### flip_ligand
 
@@ -145,8 +153,8 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `jed_flip(0, "A", 41, "", " CA ", "", 1)` | not tried |
-| Scheme | `(jed-flip 0 "A" 41 "" " CA " "" 1)` | not tried |
+| Python | `jed_flip(0, "A", 41, "", " CA ", "", 1)` | ran (no return value) |
+| Scheme | `(jed-flip 0 "A" 41 "" " CA " "" 1)` | ran (no return value) |
 
 ### ligand_expert
 
@@ -160,8 +168,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `ligand_expert()` | not tried |
-| Scheme | `(ligand-expert)` | not tried |
+| Python | `ligand_expert()` | ran (no return value) |
+| Scheme | `(ligand-expert)` | ran (no return value) |
 
 ### match_ligand_atom_names
 
@@ -179,8 +187,8 @@ Arguments: imol_ligand (a whole number), chain_id_ligand (text), resno_ligand (a
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `match_ligand_atom_names(0, "A", 41, "", 0, "A", 41, "")` | not tried |
-| Scheme | `(match-ligand-atom-names 0 "A" 41 "" 0 "A" 41 "")` | not tried |
+| Python | `match_ligand_atom_names(0, "A", 41, "", 0, "A", 41, "")` | ran (no return value) |
+| Scheme | `(match-ligand-atom-names 0 "A" 41 "" 0 "A" 41 "")` | ran (no return value) |
 
 ### match_ligand_atom_names_to_comp_id
 
@@ -201,8 +209,8 @@ Arguments: imol_ligand (a whole number), chain_id_ligand (text), resno_ligand (a
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `match_ligand_atom_names_to_comp_id(0, "A", 41, "", "hello")` | not tried |
-| Scheme | `(match-ligand-atom-names-to-comp-id 0 "A" 41 "" "hello")` | not tried |
+| Python | `match_ligand_atom_names_to_comp_id(0, "A", 41, "", "hello")` | ran (no return value) |
+| Scheme | `(match-ligand-atom-names-to-comp-id 0 "A" 41 "" "hello")` | ran (no return value) |
 
 ### match_ligand_torsions
 
@@ -213,8 +221,8 @@ Arguments: imol_ligand (a whole number), imol_ref (a whole number), chain_id_ref
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `match_ligand_torsions(0, 0, "A", 41)` | not tried |
-| Scheme | `(match-ligand-torsions 0 0 "A" 41)` | not tried |
+| Python | `match_ligand_torsions(0, 0, "A", 41)` | ran (no return value) |
+| Scheme | `(match-ligand-torsions 0 0 "A" 41)` | ran (no return value) |
 
 ### overlap_ligands
 
@@ -235,8 +243,10 @@ Also available in Python as `overlap_ligands_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `overlap_ligands(0, 0, "A", 41)` | not tried |
-| Scheme | `(overlap-ligands 0 0 "A" 41)` | not tried |
+| Python | `overlap_ligands(0, 0, "A", 41)` | ran, returned `[[[-0.3411510827580073, 0.9094183451757436, -0.23785334176935846, -0.3879130702516574, -0.36668437654081165, -0.84561576 ...` |
+| Scheme | `(overlap-ligands 0 0 "A" 41)` | ran, returned `(((-0.3411510827580073 0.9094183451757436 -0.23785334176935846 -0.3879130702516574 -0.36668437654081165 -0.8456157625829 ...` |
+
+Python and Scheme gave the same answer.
 
 ### set_find_ligand_do_real_space_refinement
 
@@ -251,8 +261,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_find_ligand_do_real_space_refinement(1)` | not tried |
-| Scheme | `(set-find-ligand-do-real-space-refinement 1)` | not tried |
+| Python | `set_find_ligand_do_real_space_refinement(1)` | ran (no return value) |
+| Scheme | `(set-find-ligand-do-real-space-refinement 1)` | ran (no return value) |
 
 ### set_find_ligand_here_cluster
 
@@ -265,8 +275,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_find_ligand_here_cluster(1)` | not tried |
-| Scheme | `(set-find-ligand-here-cluster 1)` | not tried |
+| Python | `set_find_ligand_here_cluster(1)` | ran (no return value) |
+| Scheme | `(set-find-ligand-here-cluster 1)` | ran (no return value) |
 
 ### set_find_ligand_mask_waters
 
@@ -282,8 +292,8 @@ Arguments: istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_find_ligand_mask_waters(1)` | not tried |
-| Scheme | `(set-find-ligand-mask-waters 1)` | not tried |
+| Python | `set_find_ligand_mask_waters(1)` | ran (no return value) |
+| Scheme | `(set-find-ligand-mask-waters 1)` | ran (no return value) |
 
 ### set_find_ligand_multi_solutions_per_cluster
 
@@ -309,8 +319,8 @@ Arguments: lim_1 (a number), lim_2 (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_find_ligand_multi_solutions_per_cluster(1.0, 1.0)` | not tried |
-| Scheme | `(set-find-ligand-multi-solutions-per-cluster 1.0 1.0)` | not tried |
+| Python | `set_find_ligand_multi_solutions_per_cluster(1.0, 1.0)` | ran (no return value) |
+| Scheme | `(set-find-ligand-multi-solutions-per-cluster 1.0 1.0)` | ran (no return value) |
 
 ### set_find_ligand_n_top_ligands
 
@@ -325,8 +335,8 @@ Arguments: n (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_find_ligand_n_top_ligands(1)` | not tried |
-| Scheme | `(set-find-ligand-n-top-ligands 1)` | not tried |
+| Python | `set_find_ligand_n_top_ligands(1)` | ran (no return value) |
+| Scheme | `(set-find-ligand-n-top-ligands 1)` | ran (no return value) |
 
 ### set_ligand_acceptable_fit_fraction
 
@@ -340,8 +350,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_ligand_acceptable_fit_fraction(1.0)` | not tried |
-| Scheme | `(set-ligand-acceptable-fit-fraction 1.0)` | not tried |
+| Python | `set_ligand_acceptable_fit_fraction(1.0)` | ran (no return value) |
+| Scheme | `(set-ligand-acceptable-fit-fraction 1.0)` | ran (no return value) |
 
 ### set_ligand_cluster_sigma_level
 
@@ -355,8 +365,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_ligand_cluster_sigma_level(1.0)` | not tried |
-| Scheme | `(set-ligand-cluster-sigma-level 1.0)` | not tried |
+| Python | `set_ligand_cluster_sigma_level(1.0)` | ran (no return value) |
+| Scheme | `(set-ligand-cluster-sigma-level 1.0)` | ran (no return value) |
 
 ### set_ligand_flexible_ligand_n_samples
 
@@ -371,8 +381,8 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_ligand_flexible_ligand_n_samples(1)` | not tried |
-| Scheme | `(set-ligand-flexible-ligand-n-samples 1)` | not tried |
+| Python | `set_ligand_flexible_ligand_n_samples(1)` | ran (no return value) |
+| Scheme | `(set-ligand-flexible-ligand-n-samples 1)` | ran (no return value) |
 
 ### set_ligand_search_map_molecule
 
@@ -385,8 +395,8 @@ Arguments: imol_map (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_ligand_search_map_molecule(1)` | not tried |
-| Scheme | `(set-ligand-search-map-molecule 1)` | not tried |
+| Python | `set_ligand_search_map_molecule(1)` | ran (no return value) |
+| Scheme | `(set-ligand-search-map-molecule 1)` | ran (no return value) |
 
 ### set_ligand_search_protein_molecule
 
@@ -399,8 +409,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_ligand_search_protein_molecule(0)` | not tried |
-| Scheme | `(set-ligand-search-protein-molecule 0)` | not tried |
+| Python | `set_ligand_search_protein_molecule(0)` | ran (no return value) |
+| Scheme | `(set-ligand-search-protein-molecule 0)` | ran (no return value) |
 
 ### set_ligand_verbose_reporting
 
@@ -413,6 +423,6 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_ligand_verbose_reporting(1)` | not tried |
-| Scheme | `(set-ligand-verbose-reporting 1)` | not tried |
+| Python | `set_ligand_verbose_reporting(1)` | ran (no return value) |
+| Scheme | `(set-ligand-verbose-reporting 1)` | ran (no return value) |
 

@@ -18,6 +18,8 @@ Arguments: imol (a whole number). Returns: a number.
 | Python | `atom_overlap_score(0)` | ran, returned `218.46453857421875` |
 | Scheme | `(atom-overlap-score 0)` | ran, returned `218.46453857421875` |
 
+Python and Scheme gave the same answer.
+
 ### c_beta_deviations_py
 
 Python: `c_beta_deviations_py(imol)`  
@@ -30,8 +32,10 @@ Also available in Scheme as `c-beta-deviations-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `c_beta_deviations_py(0)` | ran, returned `[[[True, 'A', 2, ''], {'': 0.12761455152709072}], [[True, 'A', 1, ''], {'': 0.16953483228562496}], [[True, 'A', 3, ''],  ...` |
-| Scheme | `(c-beta-deviations 0)` | ran, returned `(((#t "B" 96 "") (("" 0.1133771061611323))) ((#t "B" 95 "") (("" 0.04492830156277413))) ((#t "B" 94 "") (("" 0.085321917 ...` |
+| Python | `c_beta_deviations_py(0)` | ran, returned `[[[True, 'A', 20, ''], {'': 0.07846646398291499}], [[True, 'A', 21, ''], {'': 0.08318442018770937}], [[True, 'A', 22, '' ...` |
+| Scheme | `(c-beta-deviations 0)` | ran, returned `(((#t "A" 19 "") (("" 0.07497434605080751))) ((#t "A" 18 "") (("" 0.08964755866427819))) ((#t "A" 17 "") (("" 0.13465415 ...` |
+
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
 ### clear_diff_map_peaks
 
@@ -103,6 +107,8 @@ Arguments: none. Returns: a number.
 | Python | `difference_map_peaks_max_closeness()` | ran, returned `2.0` |
 | Scheme | `(difference-map-peaks-max-closeness)` | ran, returned `2.0` |
 
+Python and Scheme gave the same answer.
+
 ### get_torsion
 
 Python: `get_torsion(imol, atom_spec_1, atom_spec_2, atom_spec_3, atom_spec_4)`  
@@ -116,6 +122,8 @@ Also available in Scheme as `get-torsion-scm`.
 |---|---|---|
 | Python | `get_torsion(0, ["A", 41, "", " CA ", ""], ["A", 41, "", " CA ", ""], ["A", 41, "", " CA ", ""], ["A", 41, "", " CA ", ""])` | ran, returned `nan` |
 | Scheme | `(get-torsion 0 (list "A" 41 "" " CA " "") (list "A" 41 "" " CA " "") (list "A" 41 "" " CA " "") (list "A" 41 "" " CA " ""))` | ran, returned `+nan.0` |
+
+Python and Scheme gave the same answer.
 
 ### gln_asn_b_factor_outliers
 
@@ -142,8 +150,10 @@ Arguments: imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `is_valid_map_molecule(0)` | not tried |
-| Scheme | `(is-valid-map-molecule 0)` | not tried |
+| Python | `is_valid_map_molecule(0)` | ran, returned `0` |
+| Scheme | `(is-valid-map-molecule 0)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### is_valid_model_molecule
 
@@ -154,8 +164,10 @@ Arguments: imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `is_valid_model_molecule(0)` | not tried |
-| Scheme | `(is-valid-model-molecule 0)` | not tried |
+| Python | `is_valid_model_molecule(0)` | ran, returned `1` |
+| Scheme | `(is-valid-model-molecule 0)` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 
 ### map_peaks
 
@@ -173,8 +185,10 @@ Also available in Scheme as `map-peaks-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `map_peaks(1, 1.5)` | not tried |
-| Scheme | `(map-peaks 1 1.5)` | not tried |
+| Python | `map_peaks(1, 1.5)` | ran, returned `[[58.71012697972355, 8.723667220957577, 32.92142303206025], [58.09156606964766, 11.74520870289532, 27.625261377819815],  ...` |
+| Scheme | `(map-peaks 1 1.5)` | ran, returned `((58.71012697972355 8.723667220957577 32.92142303206025) (58.09156606964766 11.74520870289532 27.625261377819815) (5.139 ...` |
+
+Python and Scheme gave the same answer.
 
 ### map_peaks_around_molecule
 
@@ -186,7 +200,7 @@ Also available in Python as `map_peaks_around_molecule_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `map_peaks_around_molecule(1, 1.5, 1, 0)` | not tried |
+| Python | `map_peaks_around_molecule(1, 1.5, 1, 0)` | ran, returned `[[3.4549152851104736, [58.71012697972355, 8.723667220957578, -5.8705767848342845]], [3.000621795654297, [25.643064482733 ...` |
 
 ### map_peaks_near_point
 
@@ -199,8 +213,10 @@ Also available in Scheme as `map-peaks-near-point-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `map_peaks_near_point(1, 1.5, 54.5, 9.4, 12.3, 5.0)` | not tried |
-| Scheme | `(map-peaks-near-point 1 1.5 54.5 9.4 12.3 5.0)` | not tried |
+| Python | `map_peaks_near_point(1, 1.5, 54.5, 9.4, 12.3, 5.0)` | ran, returned `[]` |
+| Scheme | `(map-peaks-near-point 1 1.5 54.5 9.4 12.3 5.0)` | ran, returned `()` |
+
+Python and Scheme gave the same answer.
 
 ### map_peaks_near_point_from_list
 
@@ -212,7 +228,7 @@ Also available in Python as `map_peaks_near_point_from_list_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### multi_residue_torsion
 
@@ -227,8 +243,8 @@ Also available in Scheme as `multi-residue-torsion-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `multi_residue_torsion(0, ["A", 41, ""])` | not tried |
-| Scheme | `(multi-residue-torsion 0 (list "A" 41 ""))` | not tried |
+| Python | `multi_residue_torsion(0, ["A", 41, ""])` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(multi-residue-torsion 0 (list "A" 41 ""))` | error: In procedure length: Wrong type argument in position 1: "A" |
 
 ### probe_clash_score_as_py
 
@@ -239,8 +255,8 @@ Arguments: p (`coot::probe_clash_score_t`). Returns: a value (see the result of 
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### probe_clash_score_from_py
 
@@ -251,8 +267,8 @@ Arguments: p (a list or value). Returns: `coot::probe_clash_score_t`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### screen_vectors
 
@@ -266,7 +282,7 @@ Also available in Python as `screen_vectors_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `screen_vectors()` | not tried |
+| Python | `screen_vectors()` | ran (no return value) |
 
 ### set_difference_map_peaks_max_closeness
 
@@ -283,8 +299,8 @@ Arguments: m (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_difference_map_peaks_max_closeness(1.0)` | not tried |
-| Scheme | `(set-difference-map-peaks-max-closeness 1.0)` | not tried |
+| Python | `set_difference_map_peaks_max_closeness(1.0)` | ran (no return value) |
+| Scheme | `(set-difference-map-peaks-max-closeness 1.0)` | ran (no return value) |
 
 ### set_multi_residue_torsion_reverse_mode
 
@@ -295,8 +311,8 @@ Arguments: mode (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_multi_residue_torsion_reverse_mode(1)` | not tried |
-| Scheme | `(set-multi-residue-torsion-reverse-mode 1)` | not tried |
+| Python | `set_multi_residue_torsion_reverse_mode(1)` | ran (no return value) |
+| Scheme | `(set-multi-residue-torsion-reverse-mode 1)` | ran (no return value) |
 
 ### set_torsion
 
@@ -312,8 +328,10 @@ Also available in Scheme as `set-torsion-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_torsion(0, "A", 41, "", "", " CA ", " CA ", " CA ", " CA ", 1.0)` | not tried |
-| Scheme | `(set-torsion 0 "A" 41 "" "" " CA " " CA " " CA " " CA " 1.0)` | not tried |
+| Python | `set_torsion(0, "A", 41, "", "", " CA ", " CA ", " CA ", " CA ", 1.0)` | ran, returned `nan` |
+| Scheme | `(set-torsion 0 "A" 41 "" "" " CA " " CA " " CA " " CA " 1.0)` | ran, returned `+nan.0` |
+
+Python and Scheme gave the same answer.
 
 ### setup_multi_residue_torsion
 
@@ -326,8 +344,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `setup_multi_residue_torsion()` | not tried |
-| Scheme | `(setup-multi-residue-torsion)` | not tried |
+| Python | `setup_multi_residue_torsion()` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(setup-multi-residue-torsion)` | stopped Coot when tried without a window (not checked with a window) |
 
 ### show_multi_residue_torsion_dialog
 
@@ -338,6 +356,6 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `show_multi_residue_torsion_dialog()` | not tried |
-| Scheme | `(show-multi-residue-torsion-dialog)` | not tried |
+| Python | `show_multi_residue_torsion_dialog()` | ran (no return value) |
+| Scheme | `(show-multi-residue-torsion-dialog)` | ran (no return value) |
 

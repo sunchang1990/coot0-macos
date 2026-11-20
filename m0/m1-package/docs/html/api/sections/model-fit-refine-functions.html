@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="66fad9cb793d649ed10c7d2c95eb77c53dc06217">
+<meta name="coot0-source-sha1" content="2cb23b5b4821a80ce52f635cca08da64983c0023">
 <title>Model/Fit/Refine Functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -23,16 +23,16 @@ Scheme: <code>(post-model-fit-refine-dialog)</code></p>
 <p>display the Model/Fit/Refine dialog</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>post_model_fit_refine_dialog()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(post-model-fit-refine-dialog)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>post_model_fit_refine_dialog()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(post-model-fit-refine-dialog)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
 <h3 id="post_other_modelling_tools_dialog">post_other_modelling_tools_dialog</h3>
 <p>Python: <code>post_other_modelling_tools_dialog()</code><br>
 Scheme: <code>(post-other-modelling-tools-dialog)</code></p>
 <p>display the Other Modelling Tools dialog</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>post_other_modelling_tools_dialog()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(post-other-modelling-tools-dialog)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>post_other_modelling_tools_dialog()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(post-other-modelling-tools-dialog)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
 <h3 id="refinement_move_atoms_with_zero_occupancy_state">refinement_move_atoms_with_zero_occupancy_state</h3>
 <p>Python: <code>refinement_move_atoms_with_zero_occupancy_state()</code><br>
 Scheme: <code>(refinement-move-atoms-with-zero-occupancy-state)</code></p>
@@ -40,8 +40,9 @@ Scheme: <code>(refinement-move-atoms-with-zero-occupancy-state)</code></p>
  when refining?"</p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>refinement_move_atoms_with_zero_occupancy_state()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(refinement-move-atoms-with-zero-occupancy-state)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>refinement_move_atoms_with_zero_occupancy_state()</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(refinement-move-atoms-with-zero-occupancy-state)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="set_model_fit_refine_place_atom_at_pointer_label">set_model_fit_refine_place_atom_at_pointer_label</h3>
 <p>Python: <code>set_model_fit_refine_place_atom_at_pointer_label(txt)</code><br>
 Scheme: <code>(set-model-fit-refine-place-atom-at-pointer-label txt)</code></p>
@@ -49,8 +50,8 @@ Scheme: <code>(set-model-fit-refine-place-atom-at-pointer-label txt)</code></p>
  "Place Atom at Pointer"</p>
 <p>Arguments: txt (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_model_fit_refine_place_atom_at_pointer_label("hello")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-model-fit-refine-place-atom-at-pointer-label "hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_model_fit_refine_place_atom_at_pointer_label("hello")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-model-fit-refine-place-atom-at-pointer-label "hello")</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_model_fit_refine_rotate_translate_zone_label">set_model_fit_refine_rotate_translate_zone_label</h3>
 <p>Python: <code>set_model_fit_refine_rotate_translate_zone_label(txt)</code><br>
 Scheme: <code>(set-model-fit-refine-rotate-translate-zone-label txt)</code></p>
@@ -58,38 +59,38 @@ Scheme: <code>(set-model-fit-refine-rotate-translate-zone-label txt)</code></p>
  "Rotate/Translate Zone"</p>
 <p>Arguments: txt (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_model_fit_refine_rotate_translate_zone_label("hello")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-model-fit-refine-rotate-translate-zone-label "hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_model_fit_refine_rotate_translate_zone_label("hello")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-model-fit-refine-rotate-translate-zone-label "hello")</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_refinement_move_atoms_with_zero_occupancy">set_refinement_move_atoms_with_zero_occupancy</h3>
 <p>Python: <code>set_refinement_move_atoms_with_zero_occupancy(state)</code><br>
 Scheme: <code>(set-refinement-move-atoms-with-zero-occupancy state)</code></p>
 <p>shall atoms with zero occupancy be moved when refining? (default 1, yes)</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_refinement_move_atoms_with_zero_occupancy(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-refinement-move-atoms-with-zero-occupancy 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_refinement_move_atoms_with_zero_occupancy(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-refinement-move-atoms-with-zero-occupancy 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="show_select_map_dialog">show_select_map_dialog</h3>
 <p>Python: <code>show_select_map_dialog()</code><br>
 Scheme: <code>(show-select-map-dialog)</code></p>
 <p>display the Display Manager dialog</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>show_select_map_dialog()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(show-select-map-dialog)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>show_select_map_dialog()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(show-select-map-dialog)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="unset_model_fit_refine_dialog">unset_model_fit_refine_dialog</h3>
 <p>Python: <code>unset_model_fit_refine_dialog()</code><br>
 Scheme: <code>(unset-model-fit-refine-dialog)</code></p>
 <p>unset model/fit/refine dialog</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>unset_model_fit_refine_dialog()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(unset-model-fit-refine-dialog)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>unset_model_fit_refine_dialog()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(unset-model-fit-refine-dialog)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="unset_refine_params_dialog">unset_refine_params_dialog</h3>
 <p>Python: <code>unset_refine_params_dialog()</code><br>
 Scheme: <code>(unset-refine-params-dialog)</code></p>
 <p>unset refine params dialog</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>unset_refine_params_dialog()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(unset-refine-params-dialog)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>unset_refine_params_dialog()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(unset-refine-params-dialog)</code></td><td>ran (no return value)</td></tr></tbody></table>
 </body></html>

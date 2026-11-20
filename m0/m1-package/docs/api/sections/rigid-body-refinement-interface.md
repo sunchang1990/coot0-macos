@@ -39,8 +39,8 @@ Arguments: imol (a whole number), atom_selection_string (text). Returns: nothing
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `rigid_body_refine_by_atom_selection(0, "//A/41-45")` | not tried |
-| Scheme | `(rigid-body-refine-by-atom-selection 0 "//A/41-45")` | not tried |
+| Python | `rigid_body_refine_by_atom_selection(0, "//A/41-45")` | ran (no return value) |
+| Scheme | `(rigid-body-refine-by-atom-selection 0 "//A/41-45")` | ran (no return value) |
 
 ### rigid_body_refine_by_residue_ranges
 
@@ -57,8 +57,8 @@ Also available in Scheme as `rigid-body-refine-by-residue-ranges-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### rigid_body_refine_zone
 
@@ -75,8 +75,8 @@ Arguments: reso_start (a whole number), resno_end (a whole number), chain_id (te
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `rigid_body_refine_zone(1, 45, "A", 0)` | not tried |
-| Scheme | `(rigid-body-refine-zone 1 45 "A" 0)` | not tried |
+| Python | `rigid_body_refine_zone(1, 45, "A", 0)` | ran (no return value) |
+| Scheme | `(rigid-body-refine-zone 1 45 "A" 0)` | ran (no return value) |
 
 ### set_rigid_body_fit_acceptable_fit_fraction
 
@@ -91,6 +91,6 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_rigid_body_fit_acceptable_fit_fraction(1.0)` | not tried |
-| Scheme | `(set-rigid-body-fit-acceptable-fit-fraction 1.0)` | not tried |
+| Python | `set_rigid_body_fit_acceptable_fit_fraction(1.0)` | ran (no return value) |
+| Scheme | `(set-rigid-body-fit-acceptable-fit-fraction 1.0)` | ran (no return value) |
 

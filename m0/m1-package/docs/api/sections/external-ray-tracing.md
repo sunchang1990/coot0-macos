@@ -25,8 +25,8 @@ Arguments: filename (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `make_image_povray("tutorial-modern.pdb")` | not tried |
-| Scheme | `(make-image-povray "tutorial-modern.pdb")` | not tried |
+| Python | `make_image_povray("tutorial-modern.pdb")` | not run: not run automatically (povray: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(make-image-povray "tutorial-modern.pdb")` | not run: not run automatically (povray: exits, uses the network, an external program, files or a screen) |
 
 ### make_image_raster3d
 
@@ -40,8 +40,8 @@ Arguments: filename (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `make_image_raster3d("tutorial-modern.pdb")` | not tried |
-| Scheme | `(make-image-raster3d "tutorial-modern.pdb")` | not tried |
+| Python | `make_image_raster3d("tutorial-modern.pdb")` | not run: not run automatically (raster3d: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(make-image-raster3d "tutorial-modern.pdb")` | not run: not run automatically (raster3d: exits, uses the network, an external program, files or a screen) |
 
 ### povray
 
@@ -52,8 +52,8 @@ Arguments: filename (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `povray("tutorial-modern.pdb")` | not tried |
-| Scheme | `(povray "tutorial-modern.pdb")` | not tried |
+| Python | `povray("tutorial-modern.pdb")` | not run: not run automatically (povray: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(povray "tutorial-modern.pdb")` | not run: not run automatically (povray: exits, uses the network, an external program, files or a screen) |
 
 ### raster3d
 
@@ -66,8 +66,8 @@ Arguments: rd3_filename (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `raster3d("tutorial-modern.pdb")` | not tried |
-| Scheme | `(raster3d "tutorial-modern.pdb")` | not tried |
+| Python | `raster3d("tutorial-modern.pdb")` | not run: not run automatically (raster3d: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(raster3d "tutorial-modern.pdb")` | not run: not run automatically (raster3d: exits, uses the network, an external program, files or a screen) |
 
 ### raster_screen_shot
 
@@ -80,8 +80,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `raster_screen_shot()` | not tried |
-| Scheme | `(raster-screen-shot)` | not tried |
+| Python | `raster_screen_shot()` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(raster-screen-shot)` | stopped Coot when tried without a window (not checked with a window) |
 
 ### renderman
 
@@ -92,8 +92,8 @@ Arguments: rib_filename (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `renderman("tutorial-modern.pdb")` | not tried |
-| Scheme | `(renderman "tutorial-modern.pdb")` | not tried |
+| Python | `renderman("tutorial-modern.pdb")` | not run: not run automatically (render: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(renderman "tutorial-modern.pdb")` | not run: not run automatically (render: exits, uses the network, an external program, files or a screen) |
 
 ### set_raster3d_atom_radius
 
@@ -106,8 +106,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_raster3d_atom_radius(1.0)` | not tried |
-| Scheme | `(set-raster3d-atom-radius 1.0)` | not tried |
+| Python | `set_raster3d_atom_radius(1.0)` | not run: not run automatically (raster3d: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(set-raster3d-atom-radius 1.0)` | not run: not run automatically (raster3d: exits, uses the network, an external program, files or a screen) |
 
 ### set_raster3d_bond_thickness
 
@@ -120,8 +120,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_raster3d_bond_thickness(1.0)` | not tried |
-| Scheme | `(set-raster3d-bond-thickness 1.0)` | not tried |
+| Python | `set_raster3d_bond_thickness(1.0)` | not run: not run automatically (raster3d: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(set-raster3d-bond-thickness 1.0)` | not run: not run automatically (raster3d: exits, uses the network, an external program, files or a screen) |
 
 ### set_raster3d_bone_thickness
 
@@ -134,8 +134,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_raster3d_bone_thickness(1.0)` | not tried |
-| Scheme | `(set-raster3d-bone-thickness 1.0)` | not tried |
+| Python | `set_raster3d_bone_thickness(1.0)` | not run: not run automatically (raster3d: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(set-raster3d-bone-thickness 1.0)` | not run: not run automatically (raster3d: exits, uses the network, an external program, files or a screen) |
 
 ### set_raster3d_density_thickness
 
@@ -148,8 +148,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_raster3d_density_thickness(1.0)` | not tried |
-| Scheme | `(set-raster3d-density-thickness 1.0)` | not tried |
+| Python | `set_raster3d_density_thickness(1.0)` | not run: not run automatically (raster3d: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(set-raster3d-density-thickness 1.0)` | not run: not run automatically (raster3d: exits, uses the network, an external program, files or a screen) |
 
 ### set_raster3d_font_size
 
@@ -162,8 +162,8 @@ Arguments: size_in (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_raster3d_font_size("hello")` | not tried |
-| Scheme | `(set-raster3d-font-size "hello")` | not tried |
+| Python | `set_raster3d_font_size("hello")` | not run: not run automatically (raster3d: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(set-raster3d-font-size "hello")` | not run: not run automatically (raster3d: exits, uses the network, an external program, files or a screen) |
 
 ### set_raster3d_shadows_enabled
 
@@ -176,8 +176,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_raster3d_shadows_enabled(1)` | not tried |
-| Scheme | `(set-raster3d-shadows-enabled 1)` | not tried |
+| Python | `set_raster3d_shadows_enabled(1)` | not run: not run automatically (raster3d: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(set-raster3d-shadows-enabled 1)` | not run: not run automatically (raster3d: exits, uses the network, an external program, files or a screen) |
 
 ### set_raster3d_water_sphere
 
@@ -191,8 +191,8 @@ Arguments: istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_raster3d_water_sphere(1)` | not tried |
-| Scheme | `(set-raster3d-water-sphere 1)` | not tried |
+| Python | `set_raster3d_water_sphere(1)` | not run: not run automatically (raster3d: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(set-raster3d-water-sphere 1)` | not run: not run automatically (raster3d: exits, uses the network, an external program, files or a screen) |
 
 ### set_renderer_show_atoms
 
@@ -205,6 +205,6 @@ Arguments: istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_renderer_show_atoms(1)` | not tried |
-| Scheme | `(set-renderer-show-atoms 1)` | not tried |
+| Python | `set_renderer_show_atoms(1)` | not run: not run automatically (render: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(set-renderer-show-atoms 1)` | not run: not run automatically (render: exits, uses the network, an external program, files or a screen) |
 

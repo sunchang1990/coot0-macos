@@ -31,8 +31,8 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `keep_map_colour_after_refmac_state()` | not tried |
-| Scheme | `(keep-map-colour-after-refmac-state)` | not tried |
+| Python | `keep_map_colour_after_refmac_state()` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(keep-map-colour-after-refmac-state)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
 
 ### refmac_runs_with_nolabels
 
@@ -45,8 +45,8 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `refmac_runs_with_nolabels()` | not tried |
-| Scheme | `(refmac-runs-with-nolabels)` | not tried |
+| Python | `refmac_runs_with_nolabels()` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(refmac-runs-with-nolabels)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
 
 ### set_keep_map_colour_after_refmac
 
@@ -61,8 +61,8 @@ Arguments: istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_keep_map_colour_after_refmac(1)` | not tried |
-| Scheme | `(set-keep-map-colour-after-refmac 1)` | not tried |
+| Python | `set_keep_map_colour_after_refmac(1)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(set-keep-map-colour-after-refmac 1)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
 
 ### set_refmac_counter
 
@@ -76,8 +76,8 @@ Arguments: imol (a whole number), refmac_count (a whole number). Returns: nothin
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_refmac_counter(0, 1)` | not tried |
-| Scheme | `(set-refmac-counter 0 1)` | not tried |
+| Python | `set_refmac_counter(0, 1)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(set-refmac-counter 0 1)` | not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen) |
 
 ### swap_map_colours
 
@@ -94,6 +94,6 @@ Arguments: imol1 (a whole number), imol2 (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `swap_map_colours(0, 0)` | not tried |
-| Scheme | `(swap-map-colours 0 0)` | not tried |
+| Python | `swap_map_colours(0, 0)` | ran (no return value) |
+| Scheme | `(swap-map-colours 0 0)` | ran (no return value) |
 

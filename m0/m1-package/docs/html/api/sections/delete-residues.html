@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="f8d88f268cc9db45136c83f65afa2755ea2dbf67">
+<meta name="coot0-source-sha1" content="3bc5aaa310bf3ad3462f1d59b4e47957d7c68103">
 <title>Delete Residues - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -27,6 +27,7 @@ Also available in Python as <code>cis_peptides_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>cis_peptides(0)</code></td><td>ran, returned <code>[[[True, 'A', 26, ''], [True, 'A', 27, ''], 6.120067119598389], [[True, 'A', 40, ''], [True, 'A', 41, ''], 47.1598320007 ...</code></td></tr>
 <tr><td>Scheme</td><td><code>(cis-peptides 0)</code></td><td>ran, returned <code>(((#t "A" 26 "") (#t "A" 27 "") 6.120067119598389) ((#t "A" 40 "") (#t "A" 41 "") 47.15983200073242) ((#t "B" 26 "") (#t ...</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="cis_trans_convert">cis_trans_convert</h3>
 <p>Python: <code>cis_trans_convert(imol, chain_id, resno, altconf)</code><br>
 Scheme: <code>(cis-trans-convert imol chain-id resno altconf)</code></p>
@@ -43,6 +44,7 @@ Scheme: <code>(cis-trans-convert-intermediate-atoms)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>cis_trans_convert_intermediate_atoms()</code></td><td>ran, returned <code>0</code></td></tr>
 <tr><td>Scheme</td><td><code>(cis-trans-convert-intermediate-atoms)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="clear_delete_item_widget">clear_delete_item_widget</h3>
 <p>Python: <code>clear_delete_item_widget()</code><br>
 Scheme: <code>(clear-delete-item-widget)</code></p>
@@ -90,6 +92,7 @@ Scheme: <code>(delete-hydrogen-atoms imol)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>delete_hydrogen_atoms(0)</code></td><td>ran, returned <code>0</code></td></tr>
 <tr><td>Scheme</td><td><code>(delete-hydrogen-atoms 0)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="delete_hydrogens">delete_hydrogens</h3>
 <p>Python: <code>delete_hydrogens(imol)</code><br>
 Scheme: <code>(delete-hydrogens imol)</code></p>
@@ -99,6 +102,7 @@ Scheme: <code>(delete-hydrogens imol)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>delete_hydrogens(0)</code></td><td>ran, returned <code>0</code></td></tr>
 <tr><td>Scheme</td><td><code>(delete-hydrogens 0)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="delete_item_mode_is_atom_p">delete_item_mode_is_atom_p</h3>
 <p>Python: <code>delete_item_mode_is_atom_p()</code><br>
 Scheme: <code>(delete-item-mode-is-atom-p)</code></p>
@@ -106,6 +110,7 @@ Scheme: <code>(delete-item-mode-is-atom-p)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>delete_item_mode_is_atom_p()</code></td><td>ran, returned <code>0</code></td></tr>
 <tr><td>Scheme</td><td><code>(delete-item-mode-is-atom-p)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="delete_item_mode_is_chain_p">delete_item_mode_is_chain_p</h3>
 <p>Python: <code>delete_item_mode_is_chain_p()</code><br>
 Scheme: <code>(delete-item-mode-is-chain-p)</code></p>
@@ -113,6 +118,7 @@ Scheme: <code>(delete-item-mode-is-chain-p)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>delete_item_mode_is_chain_p()</code></td><td>ran, returned <code>0</code></td></tr>
 <tr><td>Scheme</td><td><code>(delete-item-mode-is-chain-p)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="delete_item_mode_is_residue_p">delete_item_mode_is_residue_p</h3>
 <p>Python: <code>delete_item_mode_is_residue_p()</code><br>
 Scheme: <code>(delete-item-mode-is-residue-p)</code></p>
@@ -121,6 +127,7 @@ Scheme: <code>(delete-item-mode-is-residue-p)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>delete_item_mode_is_residue_p()</code></td><td>ran, returned <code>1</code></td></tr>
 <tr><td>Scheme</td><td><code>(delete-item-mode-is-residue-p)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="delete_item_mode_is_sidechain_p">delete_item_mode_is_sidechain_p</h3>
 <p>Python: <code>delete_item_mode_is_sidechain_p()</code><br>
 Scheme: <code>(delete-item-mode-is-sidechain-p)</code></p>
@@ -128,6 +135,7 @@ Scheme: <code>(delete-item-mode-is-sidechain-p)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>delete_item_mode_is_sidechain_p()</code></td><td>ran, returned <code>0</code></td></tr>
 <tr><td>Scheme</td><td><code>(delete-item-mode-is-sidechain-p)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="delete_item_mode_is_sidechain_range_p">delete_item_mode_is_sidechain_range_p</h3>
 <p>Python: <code>delete_item_mode_is_sidechain_range_p()</code><br>
 Scheme: <code>(delete-item-mode-is-sidechain-range-p)</code></p>
@@ -135,6 +143,7 @@ Scheme: <code>(delete-item-mode-is-sidechain-range-p)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>delete_item_mode_is_sidechain_range_p()</code></td><td>ran, returned <code>0</code></td></tr>
 <tr><td>Scheme</td><td><code>(delete-item-mode-is-sidechain-range-p)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="delete_item_mode_is_water_p">delete_item_mode_is_water_p</h3>
 <p>Python: <code>delete_item_mode_is_water_p()</code><br>
 Scheme: <code>(delete-item-mode-is-water-p)</code></p>
@@ -143,6 +152,7 @@ Scheme: <code>(delete-item-mode-is-water-p)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>delete_item_mode_is_water_p()</code></td><td>ran, returned <code>0</code></td></tr>
 <tr><td>Scheme</td><td><code>(delete-item-mode-is-water-p)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="delete_item_widget_is_being_shown">delete_item_widget_is_being_shown</h3>
 <p>Python: <code>delete_item_widget_is_being_shown()</code><br>
 Scheme: <code>(delete-item-widget-is-being-shown)</code></p>
@@ -150,6 +160,7 @@ Scheme: <code>(delete-item-widget-is-being-shown)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>delete_item_widget_is_being_shown()</code></td><td>ran, returned <code>0</code></td></tr>
 <tr><td>Scheme</td><td><code>(delete-item-widget-is-being-shown)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="delete_item_widget_keep_active_on">delete_item_widget_keep_active_on</h3>
 <p>Python: <code>delete_item_widget_keep_active_on()</code><br>
 Scheme: <code>(delete-item-widget-keep-active-on)</code></p>
@@ -157,6 +168,7 @@ Scheme: <code>(delete-item-widget-keep-active-on)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>delete_item_widget_keep_active_on()</code></td><td>ran, returned <code>0</code></td></tr>
 <tr><td>Scheme</td><td><code>(delete-item-widget-keep-active-on)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="delete_object_handle_delete_dialog">delete_object_handle_delete_dialog</h3>
 <p>Python: <code>delete_object_handle_delete_dialog(do_delete_dialog)</code><br>
 Scheme: <code>(delete-object-handle-delete-dialog do-delete-dialog)</code></p>
@@ -246,6 +258,7 @@ Scheme: <code>(delete-waters imol)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>delete_waters(0)</code></td><td>ran, returned <code>0</code></td></tr>
 <tr><td>Scheme</td><td><code>(delete-waters 0)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="do_cis_trans_conversion_setup">do_cis_trans_conversion_setup</h3>
 <p>Python: <code>do_cis_trans_conversion_setup(istate)</code><br>
 Scheme: <code>(do-cis-trans-conversion-setup istate)</code></p>
@@ -269,104 +282,106 @@ Scheme: <code>(get-rot-trans-object-type)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>get_rot_trans_object_type()</code></td><td>ran, returned <code>12</code></td></tr>
 <tr><td>Scheme</td><td><code>(get-rot-trans-object-type)</code></td><td>ran, returned <code>12</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="post_delete_item_dialog">post_delete_item_dialog</h3>
 <p>Python: <code>post_delete_item_dialog()</code><br>
 Scheme: <code>(post-delete-item-dialog)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>post_delete_item_dialog()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(post-delete-item-dialog)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>post_delete_item_dialog()</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
+<tr><td>Scheme</td><td><code>(post-delete-item-dialog)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
 <h3 id="rot_trans_reset_previous">rot_trans_reset_previous</h3>
 <p>Python: <code>rot_trans_reset_previous()</code><br>
 Scheme: <code>(rot-trans-reset-previous)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>rot_trans_reset_previous()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(rot-trans-reset-previous)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>rot_trans_reset_previous()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(rot-trans-reset-previous)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_delete_atom_mode">set_delete_atom_mode</h3>
 <p>Python: <code>set_delete_atom_mode()</code><br>
 Scheme: <code>(set-delete-atom-mode)</code></p>
 <p>toggle callbacks</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_delete_atom_mode()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-delete-atom-mode)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_delete_atom_mode()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-delete-atom-mode)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_delete_chain_mode">set_delete_chain_mode</h3>
 <p>Python: <code>set_delete_chain_mode()</code><br>
 Scheme: <code>(set-delete-chain-mode)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_delete_chain_mode()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-delete-chain-mode)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_delete_chain_mode()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-delete-chain-mode)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_delete_residue_hydrogens_mode">set_delete_residue_hydrogens_mode</h3>
 <p>Python: <code>set_delete_residue_hydrogens_mode()</code><br>
 Scheme: <code>(set-delete-residue-hydrogens-mode)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_delete_residue_hydrogens_mode()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-delete-residue-hydrogens-mode)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_delete_residue_hydrogens_mode()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-delete-residue-hydrogens-mode)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_delete_residue_mode">set_delete_residue_mode</h3>
 <p>Python: <code>set_delete_residue_mode()</code><br>
 Scheme: <code>(set-delete-residue-mode)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_delete_residue_mode()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-delete-residue-mode)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_delete_residue_mode()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-delete-residue-mode)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_delete_residue_zone_mode">set_delete_residue_zone_mode</h3>
 <p>Python: <code>set_delete_residue_zone_mode()</code><br>
 Scheme: <code>(set-delete-residue-zone-mode)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_delete_residue_zone_mode()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-delete-residue-zone-mode)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_delete_residue_zone_mode()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-delete-residue-zone-mode)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_delete_sidechain_mode">set_delete_sidechain_mode</h3>
 <p>Python: <code>set_delete_sidechain_mode()</code><br>
 Scheme: <code>(set-delete-sidechain-mode)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_delete_sidechain_mode()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-delete-sidechain-mode)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_delete_sidechain_mode()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-delete-sidechain-mode)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_delete_sidechain_range_mode">set_delete_sidechain_range_mode</h3>
 <p>Python: <code>set_delete_sidechain_range_mode()</code><br>
 Scheme: <code>(set-delete-sidechain-range-mode)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_delete_sidechain_range_mode()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-delete-sidechain-range-mode)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_delete_sidechain_range_mode()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-delete-sidechain-range-mode)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_delete_water_mode">set_delete_water_mode</h3>
 <p>Python: <code>set_delete_water_mode()</code><br>
 Scheme: <code>(set-delete-water-mode)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_delete_water_mode()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-delete-water-mode)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_delete_water_mode()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-delete-water-mode)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_rot_trans_object_type">set_rot_trans_object_type</h3>
 <p>Python: <code>set_rot_trans_object_type(rt_type)</code><br>
 Scheme: <code>(set-rot-trans-object-type rt-type)</code></p>
 <p>Arguments: rt_type (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_rot_trans_object_type(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-rot-trans-object-type 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_rot_trans_object_type(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-rot-trans-object-type 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_rotate_translate_zone_rotates_about_zone_centre">set_rotate_translate_zone_rotates_about_zone_centre</h3>
 <p>Python: <code>set_rotate_translate_zone_rotates_about_zone_centre(istate)</code><br>
 Scheme: <code>(set-rotate-translate-zone-rotates-about-zone-centre istate)</code></p>
 <p>Arguments: istate (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_rotate_translate_zone_rotates_about_zone_centre(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-rotate-translate-zone-rotates-about-zone-centre 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_rotate_translate_zone_rotates_about_zone_centre(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-rotate-translate-zone-rotates-about-zone-centre 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="store_delete_item_widget_position">store_delete_item_widget_position</h3>
 <p>Python: <code>store_delete_item_widget_position()</code><br>
 Scheme: <code>(store-delete-item-widget-position)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>store_delete_item_widget_position()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(store-delete-item-widget-position)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>store_delete_item_widget_position()</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
+<tr><td>Scheme</td><td><code>(store-delete-item-widget-position)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
 <h3 id="twisted_trans_peptides">twisted_trans_peptides</h3>
 <p>Python: <code>twisted_trans_peptides(imol)</code><br>
 Scheme: <code>(twisted-trans-peptides imol)</code></p>
 <p>Arguments: imol (a whole number). Returns: a value (see the result of the example).
 Also available in Python as <code>twisted_trans_peptides_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>twisted_trans_peptides(0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(twisted-trans-peptides 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>twisted_trans_peptides(0)</code></td><td>ran, returned <code>[[[True, 'A', 41, ''], [True, 'A', 42, ''], -134.07498676511048]]</code></td></tr>
+<tr><td>Scheme</td><td><code>(twisted-trans-peptides 0)</code></td><td>ran, returned <code>(((#t "A" 41 "") (#t "A" 42 "") -134.07498676511048))</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 </body></html>

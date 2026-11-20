@@ -23,6 +23,8 @@ Also available in Scheme as `cell-scm`.
 | Python | `cell(0)` | ran, returned `[64.897, 78.323, 38.792, 90.0, 90.0, 90.0]` |
 | Scheme | `(cell 0)` | ran, returned `(64.897 78.323 38.792 90.0 90.0 90.0)` |
 
+Python and Scheme gave the same answer.
+
 ### map_parameters
 
 Python: `map_parameters(imol)`  
@@ -39,8 +41,10 @@ Also available in Scheme as `map-parameters-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `map_parameters(0)` | not tried |
-| Scheme | `(map-parameters 0)` | not tried |
+| Python | `map_parameters(0)` | ran, returned `False` |
+| Scheme | `(map-parameters 0)` | ran, returned `#f` |
+
+Python and Scheme gave the same answer.
 
 ### mtz_fp_for_map
 
@@ -59,8 +63,10 @@ Arguments: imol_map (a whole number). Returns: text.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `mtz_fp_for_map(1)` | not tried |
-| Scheme | `(mtz-fp-for-map 1)` | not tried |
+| Python | `mtz_fp_for_map(1)` | ran, returned `'FWT'` |
+| Scheme | `(mtz-fp-for-map 1)` | ran, returned `"FWT"` |
+
+Python and Scheme gave the same answer.
 
 ### mtz_hklin_for_map
 
@@ -76,8 +82,10 @@ Arguments: imol_map (a whole number). Returns: text.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `mtz_hklin_for_map(1)` | not tried |
-| Scheme | `(mtz-hklin-for-map 1)` | not tried |
+| Python | `mtz_hklin_for_map(1)` | ran, returned `'rnasa-1.8-all_refmac1.mtz'` |
+| Scheme | `(mtz-hklin-for-map 1)` | ran, returned `"rnasa-1.8-all_refmac1.mtz"` |
+
+Python and Scheme gave the same answer.
 
 ### mtz_phi_for_map
 
@@ -95,8 +103,10 @@ Arguments: imol_map (a whole number). Returns: text.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `mtz_phi_for_map(1)` | not tried |
-| Scheme | `(mtz-phi-for-map 1)` | not tried |
+| Python | `mtz_phi_for_map(1)` | ran, returned `'PHWT'` |
+| Scheme | `(mtz-phi-for-map 1)` | ran, returned `"PHWT"` |
+
+Python and Scheme gave the same answer.
 
 ### mtz_use_weight_for_map
 
@@ -113,8 +123,10 @@ Arguments: imol_map (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `mtz_use_weight_for_map(1)` | not tried |
-| Scheme | `(mtz-use-weight-for-map 1)` | not tried |
+| Python | `mtz_use_weight_for_map(1)` | ran, returned `0` |
+| Scheme | `(mtz-use-weight-for-map 1)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### mtz_weight_for_map
 
@@ -132,6 +144,8 @@ Arguments: imol_map (a whole number). Returns: text.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `mtz_weight_for_map(1)` | not tried |
-| Scheme | `(mtz-weight-for-map 1)` | not tried |
+| Python | `mtz_weight_for_map(1)` | ran, returned `''` |
+| Scheme | `(mtz-weight-for-map 1)` | ran, returned `""` |
+
+Python and Scheme gave the same answer.
 

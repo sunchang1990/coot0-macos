@@ -15,8 +15,8 @@ Arguments: istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_show_pointer_distances(1)` | not tried |
-| Scheme | `(set-show-pointer-distances 1)` | not tried |
+| Python | `set_show_pointer_distances(1)` | ran (no return value) |
+| Scheme | `(set-show-pointer-distances 1)` | ran (no return value) |
 
 ### show_pointer_distances_state
 
@@ -29,6 +29,8 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `show_pointer_distances_state()` | not tried |
-| Scheme | `(show-pointer-distances-state)` | not tried |
+| Python | `show_pointer_distances_state()` | ran, returned `0` |
+| Scheme | `(show-pointer-distances-state)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 

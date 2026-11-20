@@ -30,6 +30,8 @@ Arguments: imol (a whole number), chain_id_1 (text), res_no_1 (a whole number), 
 | Python | `add_extra_angle_restraint(0, "A", 41, "", " CA ", "", "B", 45, "", " CA ", "", "A", 41, "", " CA ", "", 10.0, 1.0)` | ran, returned `0` |
 | Scheme | `(add-extra-angle-restraint 0 "A" 41 "" " CA " "" "B" 45 "" " CA " "" "A" 41 "" " CA " "" 10.0 1.0)` | ran, returned `1` |
 
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
+
 ### add_extra_bond_restraint
 
 Python: `add_extra_bond_restraint(imol, chain_id_1, res_no_1, ins_code_1, atom_name_1, alt_conf_1, chain_id_2, res_no_2, ins_code_2, atom_name_2, alt_conf_2, bond_dist, esd)`  
@@ -51,6 +53,8 @@ Arguments: imol (a whole number), chain_id_1 (text), res_no_1 (a whole number), 
 |---|---|---|
 | Python | `add_extra_bond_restraint(0, "A", 41, "", " CA ", "", "B", 45, "", " CA ", "", 1.0, 1.0)` | ran, returned `0` |
 | Scheme | `(add-extra-bond-restraint 0 "A" 41 "" " CA " "" "B" 45 "" " CA " "" 1.0 1.0)` | ran, returned `1` |
+
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
 ### add_extra_bond_restraints
 
@@ -88,6 +92,8 @@ Arguments: imol (a whole number), chain_id_1 (text), res_no_1 (a whole number), 
 | Python | `add_extra_geman_mcclure_restraint(0, "A", 41, "", " CA ", "", "B", 45, "", " CA ", "", 1.0, 1.0)` | ran, returned `0` |
 | Scheme | `(add-extra-geman-mcclure-restraint 0 "A" 41 "" " CA " "" "B" 45 "" " CA " "" 1.0 1.0)` | ran, returned `1` |
 
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
+
 ### add_extra_start_pos_restraint
 
 Python: `add_extra_start_pos_restraint(imol, chain_id_1, res_no_1, ins_code_1, atom_name_1, alt_conf_1, esd)`  
@@ -99,6 +105,8 @@ Arguments: imol (a whole number), chain_id_1 (text), res_no_1 (a whole number), 
 |---|---|---|
 | Python | `add_extra_start_pos_restraint(0, "A", 41, "", " CA ", "", 1.0)` | ran, returned `0` |
 | Scheme | `(add-extra-start-pos-restraint 0 "A" 41 "" " CA " "" 1.0)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### add_extra_target_position_restraint
 
@@ -112,6 +120,8 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_
 | Python | `add_extra_target_position_restraint(0, "A", 41, "", " CA ", "", 54.5, 9.4, 12.3, 1.0)` | ran, returned `1` |
 | Scheme | `(add-extra-target-position-restraint 0 "A" 41 "" " CA " "" 54.5 9.4 12.3 1.0)` | ran, returned `1` |
 
+Python and Scheme gave the same answer.
+
 ### add_extra_torsion_restraint
 
 Python: `add_extra_torsion_restraint(imol, chain_id_1, res_no_1, ins_code_1, atom_name_1, alt_conf_1, chain_id_2, res_no_2, ins_code_2, atom_name_2, alt_conf_2, chain_id_3, res_no_3, ins_code_3, atom_name_3, alt_conf_3, chain_id_4, res_no_4, ins_code_4, atom_name_4, alt_conf_4, torsion_angle, esd, period)`  
@@ -123,6 +133,8 @@ Arguments: imol (a whole number), chain_id_1 (text), res_no_1 (a whole number), 
 |---|---|---|
 | Python | `add_extra_torsion_restraint(0, "A", 41, "", " CA ", "", "B", 45, "", " CA ", "", "A", 41, "", " CA ", "", "A", 41, "", " CA ", "", 10.0, 1.0, 1)` | ran, returned `0` |
 | Scheme | `(add-extra-torsion-restraint 0 "A" 41 "" " CA " "" "B" 45 "" " CA " "" "A" 41 "" " CA " "" "A" 41 "" " CA " "" 10.0 1.0 1)` | ran, returned `1` |
+
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
 ### add_initial_position_restraints
 
@@ -246,6 +258,8 @@ Also available in Scheme as `chiral-volume-errors-scm`.
 | Python | `chiral_volume_errors(0)` | ran, returned `[[-1, 'A', 41, '', ' CA ', '']]` |
 | Scheme | `(chiral-volume-errors 0)` | ran, returned `((-1 "A" 41 "" " CA " ""))` |
 
+Python and Scheme gave the same answer.
+
 ### clear_all_atom_pull_restraints
 
 Python: `clear_all_atom_pull_restraints()`  
@@ -297,6 +311,8 @@ Arguments: none. Returns: `BEGIN_C_DECLS int`.
 |---|---|---|
 | Python | `crankshaft_peptide_rotation_optimization_intermediate_atoms()` | ran, returned `0` |
 | Scheme | `(crankshaft-peptide-rotation-optimization-intermediate-atoms)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### curlew
 
@@ -412,6 +428,8 @@ Arguments: comp_id (text). Returns: a whole number.
 | Python | `delete_restraints("ALA")` | ran, returned `1` |
 | Scheme | `(delete-restraints "ALA")` | ran, returned `0` |
 
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
+
 ### do_refine
 
 Python: `do_refine(state)`  
@@ -468,6 +486,8 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), insco
 | Python | `does_residue_exist_p(0, "A", 41, "")` | ran, returned `1` |
 | Scheme | `(does-residue-exist-p 0 "A" 41 "")` | ran, returned `1` |
 
+Python and Scheme gave the same answer.
+
 ### dragged_refinement_steps_per_frame
 
 Python: `dragged_refinement_steps_per_frame()`  
@@ -482,6 +502,8 @@ Arguments: none. Returns: a whole number.
 | Python | `dragged_refinement_steps_per_frame()` | ran, returned `10` |
 | Scheme | `(dragged-refinement-steps-per-frame)` | ran, returned `10` |
 
+Python and Scheme gave the same answer.
+
 ### estimate_map_weight
 
 Python: `estimate_map_weight(imol_map)`  
@@ -494,6 +516,8 @@ Arguments: imol_map (a whole number). Returns: a number.
 | Python | `estimate_map_weight(1)` | ran, returned `40.161048889160156` |
 | Scheme | `(estimate-map-weight 1)` | ran, returned `40.161048889160156` |
 
+Python and Scheme gave the same answer.
+
 ### extra_restraints_are_shown
 
 Python: `extra_restraints_are_shown(imol)`  
@@ -505,6 +529,8 @@ Arguments: imol (a whole number). Returns: a whole number.
 |---|---|---|
 | Python | `extra_restraints_are_shown(0)` | ran, returned `1` |
 | Scheme | `(extra-restraints-are-shown 0)` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 
 ### generate_local_self_restraints
 
@@ -562,6 +588,8 @@ Arguments: none. Returns: a whole number.
 | Python | `get_auto_clear_atom_pull_restraint_state()` | ran, returned `1` |
 | Scheme | `(get-auto-clear-atom-pull-restraint-state)` | ran, returned `1` |
 
+Python and Scheme gave the same answer.
+
 ### get_map_weight
 
 Python: `get_map_weight()`  
@@ -578,6 +606,8 @@ Arguments: none. Returns: a number.
 | Python | `get_map_weight()` | ran, returned `60.0` |
 | Scheme | `(get-map-weight)` | ran, returned `60.0` |
 
+Python and Scheme gave the same answer.
+
 ### imol_refinement_map
 
 Python: `imol_refinement_map()`  
@@ -592,8 +622,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `imol_refinement_map()` | not tried |
-| Scheme | `(imol-refinement-map)` | not tried |
+| Python | `imol_refinement_map()` | ran, returned `1` |
+| Scheme | `(imol-refinement-map)` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 
 ### increase_proportional_editing_radius
 
@@ -606,8 +638,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `increase_proportional_editing_radius()` | not tried |
-| Scheme | `(increase-proportional-editing-radius)` | not tried |
+| Python | `increase_proportional_editing_radius()` | ran (no return value) |
+| Scheme | `(increase-proportional-editing-radius)` | ran (no return value) |
 
 ### list_extra_restraints
 
@@ -620,8 +652,10 @@ Also available in Scheme as `list-extra-restraints-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `list_extra_restraints(0)` | not tried |
-| Scheme | `(list-extra-restraints 0)` | not tried |
+| Python | `list_extra_restraints(0)` | ran, returned `False` |
+| Scheme | `(list-extra-restraints 0)` | ran, returned `#f` |
+
+Python and Scheme gave the same answer.
 
 ### make_tight_planar_peptide_restraints
 
@@ -636,8 +670,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `make_tight_planar_peptide_restraints()` | not tried |
-| Scheme | `(make-tight-planar-peptide-restraints)` | not tried |
+| Python | `make_tight_planar_peptide_restraints()` | ran (no return value) |
+| Scheme | `(make-tight-planar-peptide-restraints)` | ran (no return value) |
 
 ### matrix_state
 
@@ -650,8 +684,10 @@ Arguments: none. Returns: a number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `matrix_state()` | not tried |
-| Scheme | `(matrix-state)` | not tried |
+| Python | `matrix_state()` | ran, returned `60.0` |
+| Scheme | `(matrix-state)` | ran, returned `60.0` |
+
+Python and Scheme gave the same answer.
 
 ### parallel_plane_restraints_are_shown
 
@@ -662,8 +698,10 @@ Arguments: imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `parallel_plane_restraints_are_shown(0)` | not tried |
-| Scheme | `(parallel-plane-restraints-are-shown 0)` | not tried |
+| Python | `parallel_plane_restraints_are_shown(0)` | ran, returned `0` |
+| Scheme | `(parallel-plane-restraints-are-shown 0)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### planar_peptide_restraints_state
 
@@ -676,8 +714,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `planar_peptide_restraints_state()` | not tried |
-| Scheme | `(planar-peptide-restraints-state)` | not tried |
+| Python | `planar_peptide_restraints_state()` | ran, returned `1` |
+| Scheme | `(planar-peptide-restraints-state)` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 
 ### refine_auto_range
 
@@ -692,8 +732,8 @@ Arguments: imol (a whole number), chain_id (text), resno1 (a whole number), altc
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `refine_auto_range(0, "A", 41, "")` | not tried |
-| Scheme | `(refine-auto-range 0 "A" 41 "")` | not tried |
+| Python | `refine_auto_range(0, "A", 41, "")` | ran (no return value) |
+| Scheme | `(refine-auto-range 0 "A" 41 "")` | ran (no return value) |
 
 ### refine_ramachandran_angles_state
 
@@ -704,8 +744,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `refine_ramachandran_angles_state()` | not tried |
-| Scheme | `(refine-ramachandran-angles-state)` | not tried |
+| Python | `refine_ramachandran_angles_state()` | ran, returned `0` |
+| Scheme | `(refine-ramachandran-angles-state)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### refine_ramachandran_restraints_weight
 
@@ -720,8 +762,10 @@ Arguments: none. Returns: a number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `refine_ramachandran_restraints_weight()` | not tried |
-| Scheme | `(refine-ramachandran-restraints-weight)` | not tried |
+| Python | `refine_ramachandran_restraints_weight()` | ran, returned `40.0` |
+| Scheme | `(refine-ramachandran-restraints-weight)` | ran, returned `40.0` |
+
+Python and Scheme gave the same answer.
 
 ### refine_residues
 
@@ -738,8 +782,10 @@ Also available in Scheme as `refine-residues-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `refine_residues(0, [["A", 41, ""], ["A", 42, ""]])` | not tried |
-| Scheme | `(refine-residues 0 (list (list "A" 41 "") (list "A" 42 "")))` | not tried |
+| Python | `refine_residues(0, [["A", 41, ""], ["A", 42, ""]])` | ran, returned `['', -2, False]` |
+| Scheme | `(refine-residues 0 (list (list "A" 41 "") (list "A" 42 "")))` | ran, returned `("" -2 ())` |
+
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
 ### refine_residues_with_alt_conf
 
@@ -752,8 +798,10 @@ Also available in Scheme as `refine-residues-with-alt-conf-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `refine_residues_with_alt_conf(0, [["A", 41, ""], ["A", 42, ""]], "")` | not tried |
-| Scheme | `(refine-residues-with-alt-conf 0 (list (list "A" 41 "") (list "A" 42 "")) "")` | not tried |
+| Python | `refine_residues_with_alt_conf(0, [["A", 41, ""], ["A", 42, ""]], "")` | ran, returned `['', -2, False]` |
+| Scheme | `(refine-residues-with-alt-conf 0 (list (list "A" 41 "") (list "A" 42 "")) "")` | ran, returned `("" -2 ())` |
+
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
 ### refine_residues_with_modes_with_alt_conf
 
@@ -767,8 +815,8 @@ Also available in Python as `refine_residues_with_modes_with_alt_conf_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### refine_with_torsion_restraints_state
 
@@ -781,8 +829,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `refine_with_torsion_restraints_state()` | not tried |
-| Scheme | `(refine-with-torsion-restraints-state)` | not tried |
+| Python | `refine_with_torsion_restraints_state()` | ran, returned `0` |
+| Scheme | `(refine-with-torsion-restraints-state)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### refine_zone
 
@@ -797,8 +847,8 @@ Arguments: imol (a whole number), chain_id (text), resno1 (a whole number), resn
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `refine_zone(0, "A", 41, 45, "")` | not tried |
-| Scheme | `(refine-zone 0 "A" 41 45 "")` | not tried |
+| Python | `refine_zone(0, "A", 41, 45, "")` | ran (no return value) |
+| Scheme | `(refine-zone 0 "A" 41 45 "")` | ran (no return value) |
 
 ### refine_zone_atom_index_define
 
@@ -811,8 +861,8 @@ Arguments: imol (a whole number), ind1 (a whole number), ind2 (a whole number). 
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `refine_zone_atom_index_define(0, 1, 1)` | not tried |
-| Scheme | `(refine-zone-atom-index-define 0 1 1)` | not tried |
+| Python | `refine_zone_atom_index_define(0, 1, 1)` | ran (no return value) |
+| Scheme | `(refine-zone-atom-index-define 0 1 1)` | ran (no return value) |
 
 ### refine_zone_with_score
 
@@ -825,8 +875,10 @@ Also available in Scheme as `refine-zone-with-score-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `refine_zone_with_score(0, "A", 41, 45, "")` | not tried |
-| Scheme | `(refine-zone-with-score 0 "A" 41 45 "")` | not tried |
+| Python | `refine_zone_with_score(0, "A", 41, 45, "")` | ran, returned `['', -2, False]` |
+| Scheme | `(refine-zone-with-score 0 "A" 41 45 "")` | ran, returned `("" -2 ())` |
+
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
 ### refinement_already_ongoing_p
 
@@ -845,8 +897,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `refinement_already_ongoing_p()` | not tried |
-| Scheme | `(refinement-already-ongoing-p)` | not tried |
+| Python | `refinement_already_ongoing_p()` | ran, returned `0` |
+| Scheme | `(refinement-already-ongoing-p)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### refinement_immediate_replacement_state
 
@@ -859,8 +913,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `refinement_immediate_replacement_state()` | not tried |
-| Scheme | `(refinement-immediate-replacement-state)` | not tried |
+| Python | `refinement_immediate_replacement_state()` | ran, returned `0` |
+| Scheme | `(refinement-immediate-replacement-state)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### refinement_refine_per_frame_state
 
@@ -873,8 +929,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `refinement_refine_per_frame_state()` | not tried |
-| Scheme | `(refinement-refine-per-frame-state)` | not tried |
+| Python | `refinement_refine_per_frame_state()` | ran, returned `0` |
+| Scheme | `(refinement-refine-per-frame-state)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### regularize_residues_with_alt_conf
 
@@ -888,8 +946,10 @@ Also available in Python as `regularize_residues_with_alt_conf_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `regularize_residues_with_alt_conf(0, [["A", 41, ""], ["A", 42, ""]], "")` | not tried |
-| Scheme | `(regularize-residues-with-alt-conf-scm 0 (list (list "A" 41 "") (list "A" 42 "")) "")` | not tried |
+| Python | `regularize_residues_with_alt_conf(0, [["A", 41, ""], ["A", 42, ""]], "")` | ran, returned `['', -2, False]` |
+| Scheme | `(regularize-residues-with-alt-conf-scm 0 (list (list "A" 41 "") (list "A" 42 "")) "")` | ran, returned `("" -2 ())` |
+
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
 ### regularize_zone
 
@@ -904,8 +964,10 @@ Arguments: imol (a whole number), chain_id (text), resno1 (a whole number), resn
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `regularize_zone(0, "A", 41, 45, "")` | not tried |
-| Scheme | `(regularize-zone 0 "A" 41 45 "")` | not tried |
+| Python | `regularize_zone(0, "A", 41, 45, "")` | ran, returned `1` |
+| Scheme | `(regularize-zone 0 "A" 41 45 "")` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 
 ### regularize_zone_with_score
 
@@ -918,8 +980,10 @@ Also available in Scheme as `regularize-zone-with-score-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `regularize_zone_with_score(0, "A", 41, 45, "")` | not tried |
-| Scheme | `(regularize-zone-with-score 0 "A" 41 45 "")` | not tried |
+| Python | `regularize_zone_with_score(0, "A", 41, 45, "")` | ran, returned `['', -2, False]` |
+| Scheme | `(regularize-zone-with-score 0 "A" 41 45 "")` | ran, returned `("" -2 ())` |
+
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
 ### remove_initial_position_restraints
 
@@ -932,8 +996,8 @@ Arguments: imol (a whole number), residue_specs (a list). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### remove_omega_torsion_restriants
 
@@ -946,8 +1010,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `remove_omega_torsion_restriants()` | not tried |
-| Scheme | `(remove-omega-torsion-restriants)` | not tried |
+| Python | `remove_omega_torsion_restriants()` | ran (no return value) |
+| Scheme | `(remove-omega-torsion-restriants)` | ran (no return value) |
 
 ### remove_planar_peptide_restraints
 
@@ -960,8 +1024,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `remove_planar_peptide_restraints()` | not tried |
-| Scheme | `(remove-planar-peptide-restraints)` | not tried |
+| Python | `remove_planar_peptide_restraints()` | ran (no return value) |
+| Scheme | `(remove-planar-peptide-restraints)` | ran (no return value) |
 
 ### repeat_refine_zone
 
@@ -974,8 +1038,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `repeat_refine_zone()` | not tried |
-| Scheme | `(repeat-refine-zone)` | not tried |
+| Python | `repeat_refine_zone()` | ran (no return value) |
+| Scheme | `(repeat-refine-zone)` | ran (no return value) |
 
 ### secondary_structure_restraints_type
 
@@ -988,8 +1052,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `secondary_structure_restraints_type()` | not tried |
-| Scheme | `(secondary-structure-restraints-type)` | not tried |
+| Python | `secondary_structure_restraints_type()` | ran, returned `0` |
+| Scheme | `(secondary-structure-restraints-type)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### set_auto_clear_atom_pull_restraint
 
@@ -1002,8 +1068,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_auto_clear_atom_pull_restraint(1)` | not tried |
-| Scheme | `(set-auto-clear-atom-pull-restraint 1)` | not tried |
+| Python | `set_auto_clear_atom_pull_restraint(1)` | ran (no return value) |
+| Scheme | `(set-auto-clear-atom-pull-restraint 1)` | ran (no return value) |
 
 ### set_debug_refinement
 
@@ -1014,8 +1080,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_debug_refinement(1)` | not tried |
-| Scheme | `(set-debug-refinement 1)` | not tried |
+| Python | `set_debug_refinement(1)` | ran (no return value) |
+| Scheme | `(set-debug-refinement 1)` | ran (no return value) |
 
 ### set_dragged_refinement_steps_per_frame
 
@@ -1034,8 +1100,8 @@ Arguments: v (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_dragged_refinement_steps_per_frame(1)` | not tried |
-| Scheme | `(set-dragged-refinement-steps-per-frame 1)` | not tried |
+| Python | `set_dragged_refinement_steps_per_frame(1)` | ran (no return value) |
+| Scheme | `(set-dragged-refinement-steps-per-frame 1)` | ran (no return value) |
 
 ### set_extra_restraints_prosmart_sigma_limits
 
@@ -1048,8 +1114,8 @@ Arguments: imol (a whole number), limit_high (a number), limit_low (a number). R
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_extra_restraints_prosmart_sigma_limits(0, 1.0, 1.0)` | not tried |
-| Scheme | `(set-extra-restraints-prosmart-sigma-limits 0 1.0 1.0)` | not tried |
+| Python | `set_extra_restraints_prosmart_sigma_limits(0, 1.0, 1.0)` | ran (no return value) |
+| Scheme | `(set-extra-restraints-prosmart-sigma-limits 0 1.0 1.0)` | ran (no return value) |
 
 ### set_extra_restraints_representation_for_bonds_go_to_CA
 
@@ -1060,8 +1126,8 @@ Arguments: imol (a whole number), state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_extra_restraints_representation_for_bonds_go_to_CA(0, 1)` | not tried |
-| Scheme | `(set-extra-restraints-representation-for-bonds-go-to-CA 0 1)` | not tried |
+| Python | `set_extra_restraints_representation_for_bonds_go_to_CA(0, 1)` | ran (no return value) |
+| Scheme | `(set-extra-restraints-representation-for-bonds-go-to-CA 0 1)` | ran (no return value) |
 
 ### set_fix_chiral_volumes_before_refinement
 
@@ -1078,8 +1144,8 @@ Arguments: istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_fix_chiral_volumes_before_refinement(1)` | not tried |
-| Scheme | `(set-fix-chiral-volumes-before-refinement 1)` | not tried |
+| Python | `set_fix_chiral_volumes_before_refinement(1)` | ran (no return value) |
+| Scheme | `(set-fix-chiral-volumes-before-refinement 1)` | ran (no return value) |
 
 ### set_imol_refinement_map
 
@@ -1095,8 +1161,10 @@ Arguments: imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_imol_refinement_map(0)` | not tried |
-| Scheme | `(set-imol-refinement-map 0)` | not tried |
+| Python | `set_imol_refinement_map(0)` | ran, returned `-1` |
+| Scheme | `(set-imol-refinement-map 0)` | ran, returned `-1` |
+
+Python and Scheme gave the same answer.
 
 ### set_matrix
 
@@ -1117,8 +1185,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_matrix(1.0)` | not tried |
-| Scheme | `(set-matrix 1.0)` | not tried |
+| Python | `set_matrix(1.0)` | ran (no return value) |
+| Scheme | `(set-matrix 1.0)` | ran (no return value) |
 
 ### set_numerical_gradients
 
@@ -1129,8 +1197,8 @@ Arguments: istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_numerical_gradients(1)` | not tried |
-| Scheme | `(set-numerical-gradients 1)` | not tried |
+| Python | `set_numerical_gradients(1)` | ran (no return value) |
+| Scheme | `(set-numerical-gradients 1)` | ran (no return value) |
 
 ### set_refine_auto_range_step
 
@@ -1147,8 +1215,8 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_refine_auto_range_step(1)` | not tried |
-| Scheme | `(set-refine-auto-range-step 1)` | not tried |
+| Python | `set_refine_auto_range_step(1)` | ran (no return value) |
+| Scheme | `(set-refine-auto-range-step 1)` | ran (no return value) |
 
 ### set_refine_hydrogen_bonds
 
@@ -1161,8 +1229,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_refine_hydrogen_bonds(1)` | not tried |
-| Scheme | `(set-refine-hydrogen-bonds 1)` | not tried |
+| Python | `set_refine_hydrogen_bonds(1)` | ran (no return value) |
+| Scheme | `(set-refine-hydrogen-bonds 1)` | ran (no return value) |
 
 ### set_refine_max_residues
 
@@ -1178,8 +1246,8 @@ Arguments: n (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_refine_max_residues(1)` | not tried |
-| Scheme | `(set-refine-max-residues 1)` | not tried |
+| Python | `set_refine_max_residues(1)` | ran (no return value) |
+| Scheme | `(set-refine-max-residues 1)` | ran (no return value) |
 
 ### set_refine_params_dialog_more_control_frame_is_active
 
@@ -1190,8 +1258,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_refine_params_dialog_more_control_frame_is_active(1)` | not tried |
-| Scheme | `(set-refine-params-dialog-more-control-frame-is-active 1)` | not tried |
+| Python | `set_refine_params_dialog_more_control_frame_is_active(1)` | ran (no return value) |
+| Scheme | `(set-refine-params-dialog-more-control-frame-is-active 1)` | ran (no return value) |
 
 ### set_refine_ramachandran_angles
 
@@ -1204,8 +1272,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_refine_ramachandran_angles(1)` | not tried |
-| Scheme | `(set-refine-ramachandran-angles 1)` | not tried |
+| Python | `set_refine_ramachandran_angles(1)` | ran (no return value) |
+| Scheme | `(set-refine-ramachandran-angles 1)` | ran (no return value) |
 
 ### set_refine_ramachandran_restraints_type
 
@@ -1218,8 +1286,8 @@ Arguments: type (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_refine_ramachandran_restraints_type(1)` | not tried |
-| Scheme | `(set-refine-ramachandran-restraints-type 1)` | not tried |
+| Python | `set_refine_ramachandran_restraints_type(1)` | ran (no return value) |
+| Scheme | `(set-refine-ramachandran-restraints-type 1)` | ran (no return value) |
 
 ### set_refine_ramachandran_restraints_weight
 
@@ -1234,8 +1302,8 @@ Arguments: w (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_refine_ramachandran_restraints_weight(1.0)` | not tried |
-| Scheme | `(set-refine-ramachandran-restraints-weight 1.0)` | not tried |
+| Python | `set_refine_ramachandran_restraints_weight(1.0)` | ran (no return value) |
+| Scheme | `(set-refine-ramachandran-restraints-weight 1.0)` | ran (no return value) |
 
 ### set_refine_ramachandran_torsion_angles
 
@@ -1246,8 +1314,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_refine_ramachandran_torsion_angles(1)` | not tried |
-| Scheme | `(set-refine-ramachandran-torsion-angles 1)` | not tried |
+| Python | `set_refine_ramachandran_torsion_angles(1)` | ran (no return value) |
+| Scheme | `(set-refine-ramachandran-torsion-angles 1)` | ran (no return value) |
 
 ### set_refine_rotamers
 
@@ -1262,8 +1330,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_refine_rotamers(1)` | not tried |
-| Scheme | `(set-refine-rotamers 1)` | not tried |
+| Python | `set_refine_rotamers(1)` | ran (no return value) |
+| Scheme | `(set-refine-rotamers 1)` | ran (no return value) |
 
 ### set_refine_with_torsion_restraints
 
@@ -1278,8 +1346,8 @@ Arguments: istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_refine_with_torsion_restraints(1)` | not tried |
-| Scheme | `(set-refine-with-torsion-restraints 1)` | not tried |
+| Python | `set_refine_with_torsion_restraints(1)` | ran (no return value) |
+| Scheme | `(set-refine-with-torsion-restraints 1)` | ran (no return value) |
 
 ### set_refinement_drag_elasticity
 
@@ -1296,8 +1364,8 @@ Arguments: e (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_refinement_drag_elasticity(1.0)` | not tried |
-| Scheme | `(set-refinement-drag-elasticity 1.0)` | not tried |
+| Python | `set_refinement_drag_elasticity(1.0)` | ran (no return value) |
+| Scheme | `(set-refinement-drag-elasticity 1.0)` | ran (no return value) |
 
 ### set_refinement_geman_mcclure_alpha_from_text
 
@@ -1308,8 +1376,8 @@ Arguments: combobox_item_idx (a whole number), t (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_refinement_geman_mcclure_alpha_from_text(1, "hello")` | not tried |
-| Scheme | `(set-refinement-geman-mcclure-alpha-from-text 1 "hello")` | not tried |
+| Python | `set_refinement_geman_mcclure_alpha_from_text(1, "hello")` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(set-refinement-geman-mcclure-alpha-from-text 1 "hello")` | stopped Coot when tried without a window (not checked with a window) |
 
 ### set_refinement_immediate_replacement
 
@@ -1324,8 +1392,8 @@ Arguments: istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_refinement_immediate_replacement(1)` | not tried |
-| Scheme | `(set-refinement-immediate-replacement 1)` | not tried |
+| Python | `set_refinement_immediate_replacement(1)` | ran (no return value) |
+| Scheme | `(set-refinement-immediate-replacement 1)` | ran (no return value) |
 
 ### set_refinement_lennard_jones_epsilon_from_text
 
@@ -1336,8 +1404,8 @@ Arguments: combobox_item_idx (a whole number), t (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_refinement_lennard_jones_epsilon_from_text(1, "hello")` | not tried |
-| Scheme | `(set-refinement-lennard-jones-epsilon-from-text 1 "hello")` | not tried |
+| Python | `set_refinement_lennard_jones_epsilon_from_text(1, "hello")` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(set-refinement-lennard-jones-epsilon-from-text 1 "hello")` | stopped Coot when tried without a window (not checked with a window) |
 
 ### set_refinement_overall_weight_from_text
 
@@ -1348,8 +1416,8 @@ Arguments: t (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_refinement_overall_weight_from_text("hello")` | not tried |
-| Scheme | `(set-refinement-overall-weight-from-text "hello")` | not tried |
+| Python | `set_refinement_overall_weight_from_text("hello")` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(set-refinement-overall-weight-from-text "hello")` | stopped Coot when tried without a window (not checked with a window) |
 
 ### set_refinement_ramachandran_restraints_weight_from_text
 
@@ -1360,8 +1428,8 @@ Arguments: combobox_item_idx (a whole number), t (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_refinement_ramachandran_restraints_weight_from_text(1, "hello")` | not tried |
-| Scheme | `(set-refinement-ramachandran-restraints-weight-from-text 1 "hello")` | not tried |
+| Python | `set_refinement_ramachandran_restraints_weight_from_text(1, "hello")` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(set-refinement-ramachandran-restraints-weight-from-text 1 "hello")` | stopped Coot when tried without a window (not checked with a window) |
 
 ### set_refinement_refine_per_frame
 
@@ -1380,8 +1448,8 @@ Arguments: istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_refinement_refine_per_frame(1)` | not tried |
-| Scheme | `(set-refinement-refine-per-frame 1)` | not tried |
+| Python | `set_refinement_refine_per_frame(1)` | ran (no return value) |
+| Scheme | `(set-refinement-refine-per-frame 1)` | ran (no return value) |
 
 ### set_refinement_torsion_weight_from_text
 
@@ -1392,8 +1460,8 @@ Arguments: combobox_item_index (a whole number), t (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_refinement_torsion_weight_from_text(1, "hello")` | not tried |
-| Scheme | `(set-refinement-torsion-weight-from-text 1 "hello")` | not tried |
+| Python | `set_refinement_torsion_weight_from_text(1, "hello")` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(set-refinement-torsion-weight-from-text 1 "hello")` | stopped Coot when tried without a window (not checked with a window) |
 
 ### set_refinement_use_soft_mode_nbc_restraints
 
@@ -1404,8 +1472,8 @@ Arguments: flag (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_refinement_use_soft_mode_nbc_restraints(1)` | not tried |
-| Scheme | `(set-refinement-use-soft-mode-nbc-restraints 1)` | not tried |
+| Python | `set_refinement_use_soft_mode_nbc_restraints(1)` | ran (no return value) |
+| Scheme | `(set-refinement-use-soft-mode-nbc-restraints 1)` | ran (no return value) |
 
 ### set_residue_selection_flash_frames_number
 
@@ -1422,8 +1490,8 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_residue_selection_flash_frames_number(1)` | not tried |
-| Scheme | `(set-residue-selection-flash-frames-number 1)` | not tried |
+| Python | `set_residue_selection_flash_frames_number(1)` | ran (no return value) |
+| Scheme | `(set-residue-selection-flash-frames-number 1)` | ran (no return value) |
 
 ### set_secondary_structure_restraints_type
 
@@ -1442,8 +1510,8 @@ Arguments: itype (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_secondary_structure_restraints_type(1)` | not tried |
-| Scheme | `(set-secondary-structure-restraints-type 1)` | not tried |
+| Python | `set_secondary_structure_restraints_type(1)` | ran (no return value) |
+| Scheme | `(set-secondary-structure-restraints-type 1)` | ran (no return value) |
 
 ### set_show_chiral_volume_errors_dialog
 
@@ -1457,8 +1525,8 @@ Arguments: istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_show_chiral_volume_errors_dialog(1)` | not tried |
-| Scheme | `(set-show-chiral-volume-errors-dialog 1)` | not tried |
+| Python | `set_show_chiral_volume_errors_dialog(1)` | ran (no return value) |
+| Scheme | `(set-show-chiral-volume-errors-dialog 1)` | ran (no return value) |
 
 ### set_show_extra_restraints
 
@@ -1469,8 +1537,8 @@ Arguments: imol (a whole number), state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_show_extra_restraints(0, 1)` | not tried |
-| Scheme | `(set-show-extra-restraints 0 1)` | not tried |
+| Python | `set_show_extra_restraints(0, 1)` | ran (no return value) |
+| Scheme | `(set-show-extra-restraints 0 1)` | ran (no return value) |
 
 ### set_show_parallel_plane_restraints
 
@@ -1481,8 +1549,8 @@ Arguments: imol (a whole number), state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_show_parallel_plane_restraints(0, 1)` | not tried |
-| Scheme | `(set-show-parallel-plane-restraints 0 1)` | not tried |
+| Python | `set_show_parallel_plane_restraints(0, 1)` | ran (no return value) |
+| Scheme | `(set-show-parallel-plane-restraints 0 1)` | ran (no return value) |
 
 ### set_torsion_restraints_weight
 
@@ -1495,8 +1563,8 @@ Arguments: w (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_torsion_restraints_weight(1.0)` | not tried |
-| Scheme | `(set-torsion-restraints-weight 1.0)` | not tried |
+| Python | `set_torsion_restraints_weight(1.0)` | ran (no return value) |
+| Scheme | `(set-torsion-restraints-weight 1.0)` | ran (no return value) |
 
 ### set_use_only_extra_torsion_restraints_for_torsions
 
@@ -1509,8 +1577,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_use_only_extra_torsion_restraints_for_torsions(1)` | not tried |
-| Scheme | `(set-use-only-extra-torsion-restraints-for-torsions 1)` | not tried |
+| Python | `set_use_only_extra_torsion_restraints_for_torsions(1)` | ran (no return value) |
+| Scheme | `(set-use-only-extra-torsion-restraints-for-torsions 1)` | ran (no return value) |
 
 ### set_use_trans_peptide_restraints
 
@@ -1525,8 +1593,8 @@ Arguments: on_off_state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_use_trans_peptide_restraints(1)` | not tried |
-| Scheme | `(set-use-trans-peptide-restraints 1)` | not tried |
+| Python | `set_use_trans_peptide_restraints(1)` | ran (no return value) |
+| Scheme | `(set-use-trans-peptide-restraints 1)` | ran (no return value) |
 
 ### shiftfield_b_factor_refinement
 
@@ -1539,8 +1607,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `shiftfield_b_factor_refinement(0)` | not tried |
-| Scheme | `(shiftfield-b-factor-refinement 0)` | not tried |
+| Python | `shiftfield_b_factor_refinement(0)` | ran (no return value) |
+| Scheme | `(shiftfield-b-factor-refinement 0)` | ran (no return value) |
 
 ### shiftfield_xyz_factor_refinement
 
@@ -1553,8 +1621,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `shiftfield_xyz_factor_refinement(0)` | not tried |
-| Scheme | `(shiftfield-xyz-factor-refinement 0)` | not tried |
+| Python | `shiftfield_xyz_factor_refinement(0)` | ran (no return value) |
+| Scheme | `(shiftfield-xyz-factor-refinement 0)` | ran (no return value) |
 
 ### show_restraints_editor
 
@@ -1567,8 +1635,8 @@ Arguments: monomer_type (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `show_restraints_editor("ALA")` | not tried |
-| Scheme | `(show-restraints-editor "ALA")` | not tried |
+| Python | `show_restraints_editor("ALA")` | ran (no return value) |
+| Scheme | `(show-restraints-editor "ALA")` | ran (no return value) |
 
 ### show_restraints_editor_by_index
 
@@ -1581,8 +1649,8 @@ Arguments: menu_item_index (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `show_restraints_editor_by_index(1)` | not tried |
-| Scheme | `(show-restraints-editor-by-index 1)` | not tried |
+| Python | `show_restraints_editor_by_index(1)` | ran (no return value) |
+| Scheme | `(show-restraints-editor-by-index 1)` | ran (no return value) |
 
 ### stop_refinement_internal
 
@@ -1595,8 +1663,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `stop_refinement_internal()` | not tried |
-| Scheme | `(stop-refinement-internal)` | not tried |
+| Python | `stop_refinement_internal()` | ran (no return value) |
+| Scheme | `(stop-refinement-internal)` | ran (no return value) |
 
 ### use_only_extra_torsion_restraints_for_torsions_state
 
@@ -1609,8 +1677,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `use_only_extra_torsion_restraints_for_torsions_state()` | not tried |
-| Scheme | `(use-only-extra-torsion-restraints-for-torsions-state)` | not tried |
+| Python | `use_only_extra_torsion_restraints_for_torsions_state()` | ran, returned `0` |
+| Scheme | `(use-only-extra-torsion-restraints-for-torsions-state)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### write_interpolated_extra_restraints
 
@@ -1623,8 +1693,8 @@ Arguments: imol_1 (a whole number), imol_2 (a whole number), n_steps (a whole nu
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `write_interpolated_extra_restraints(0, 0, 1, "tutorial-modern.pdb")` | not tried |
-| Scheme | `(write-interpolated-extra-restraints 0 0 1 "tutorial-modern.pdb")` | not tried |
+| Python | `write_interpolated_extra_restraints(0, 0, 1, "tutorial-modern.pdb")` | ran (no return value) |
+| Scheme | `(write-interpolated-extra-restraints 0 0 1 "tutorial-modern.pdb")` | ran (no return value) |
 
 ### write_interpolated_models_and_extra_restraints
 
@@ -1639,8 +1709,8 @@ Arguments: imol_1 (a whole number), imol_2 (a whole number), n_steps (a whole nu
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `write_interpolated_models_and_extra_restraints(0, 0, 1, "tutorial-modern.pdb", 1)` | not tried |
-| Scheme | `(write-interpolated-models-and-extra-restraints 0 0 1 "tutorial-modern.pdb" 1)` | not tried |
+| Python | `write_interpolated_models_and_extra_restraints(0, 0, 1, "tutorial-modern.pdb", 1)` | ran (no return value) |
+| Scheme | `(write-interpolated-models-and-extra-restraints 0 0 1 "tutorial-modern.pdb" 1)` | ran (no return value) |
 
 ### write_restraints_cif_dictionary
 
@@ -1653,6 +1723,6 @@ Arguments: monomer_type (text), file_name (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `write_restraints_cif_dictionary("ALA", "tutorial-modern.pdb")` | not tried |
-| Scheme | `(write-restraints-cif-dictionary "ALA" "tutorial-modern.pdb")` | not tried |
+| Python | `write_restraints_cif_dictionary("ALA", "tutorial-modern.pdb")` | ran (no return value) |
+| Scheme | `(write-restraints-cif-dictionary "ALA" "tutorial-modern.pdb")` | ran (no return value) |
 

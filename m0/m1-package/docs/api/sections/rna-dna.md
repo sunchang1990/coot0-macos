@@ -23,8 +23,10 @@ Arguments: RNA_or_DNA (text), form (text), single_stranged_flag (a whole number)
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `ideal_nucleic_acid("hello", "hello", 1, "ACDEFGHIKLMNPQRSTVWY")` | not tried |
-| Scheme | `(ideal-nucleic-acid "hello" "hello" 1 "ACDEFGHIKLMNPQRSTVWY")` | not tried |
+| Python | `ideal_nucleic_acid("hello", "hello", 1, "ACDEFGHIKLMNPQRSTVWY")` | ran, returned `-1` |
+| Scheme | `(ideal-nucleic-acid "hello" "hello" 1 "ACDEFGHIKLMNPQRSTVWY")` | ran, returned `-1` |
+
+Python and Scheme gave the same answer.
 
 ### pucker_info
 
@@ -45,8 +47,10 @@ Also available in Scheme as `pucker-info-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `pucker_info(0, ["A", 41, ""], 1)` | not tried |
-| Scheme | `(pucker-info 0 (list "A" 41 "") 1)` | not tried |
+| Python | `pucker_info(0, ["A", 41, ""], 1)` | ran, returned `False` |
+| Scheme | `(pucker-info 0 (list "A" 41 "") 1)` | ran, returned `#f` |
+
+Python and Scheme gave the same answer.
 
 ### setup_base_pairing
 
@@ -59,8 +63,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `setup_base_pairing(1)` | not tried |
-| Scheme | `(setup-base-pairing 1)` | not tried |
+| Python | `setup_base_pairing(1)` | ran (no return value) |
+| Scheme | `(setup-base-pairing 1)` | ran (no return value) |
 
 ### watson_crick_pair
 
@@ -74,8 +78,10 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number). Retur
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `watson_crick_pair(0, "A", 41)` | not tried |
-| Scheme | `(watson-crick-pair 0 "A" 41)` | not tried |
+| Python | `watson_crick_pair(0, "A", 41)` | ran, returned `-1` |
+| Scheme | `(watson-crick-pair 0 "A" 41)` | ran, returned `-1` |
+
+Python and Scheme gave the same answer.
 
 ### watson_crick_pair_for_residue_range
 
@@ -88,6 +94,8 @@ Arguments: imol (a whole number), chain_id (text), resno_start (a whole number),
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `watson_crick_pair_for_residue_range(0, "A", 41, 45)` | not tried |
-| Scheme | `(watson-crick-pair-for-residue-range 0 "A" 41 45)` | not tried |
+| Python | `watson_crick_pair_for_residue_range(0, "A", 41, 45)` | ran, returned `0` |
+| Scheme | `(watson-crick-pair-for-residue-range 0 "A" 41 45)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 

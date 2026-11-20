@@ -19,6 +19,8 @@ Arguments: imol (a whole number), chain_id (text), resno_start (a whole number),
 | Python | `additional_representation_by_attributes(0, "A", 41, 45, "", 1, 1, 1.0, 1)` | ran, returned `0` |
 | Scheme | `(additional-representation-by-attributes 0 "A" 41 45 "" 1 1 1.0 1)` | ran, returned `1` |
 
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
+
 ### additional_representation_by_string
 
 Python: `additional_representation_by_string(imol, atom_selection, representation_type, bonds_box_type, bond_width, draw_hydrogens_flag)`  
@@ -33,6 +35,8 @@ Arguments: imol (a whole number), atom_selection (text), representation_type (a 
 | Python | `additional_representation_by_string(0, "//A/41-45", 1, 1, 1.0, 1)` | ran, returned `2` |
 | Scheme | `(additional-representation-by-string 0 "//A/41-45" 1 1 1.0 1)` | ran, returned `3` |
 
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
+
 ### additional_representation_info
 
 Python: `additional_representation_info(imol)`  
@@ -46,6 +50,8 @@ Also available in Scheme as `additional-representation-info-scm`.
 |---|---|---|
 | Python | `additional_representation_info(0)` | ran, returned `[[0, 'Sticks: A 41-45', True, 1.0], [1, 'Sticks: A 41-45', True, 1.0], [2, 'Sticks: //A/41-45', True, 1.0], [3, 'Sticks: ...` |
 | Scheme | `(additional-representation-info 0)` | ran, returned `((3 "Sticks: //A/41-45" #t 1.0) (2 "Sticks: //A/41-45" #t 1.0) (1 "Sticks: A 41-45" #t 1.0) (0 "Sticks: A 41-45" #t 1.0) ...` |
+
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
 ### all_additional_representations_off_except
 
@@ -91,6 +97,8 @@ Arguments: imol (a whole number). Returns: a whole number.
 | Python | `clear_ball_and_stick(0)` | ran, returned `0` |
 | Scheme | `(clear-ball-and-stick 0)` | ran, returned `0` |
 
+Python and Scheme gave the same answer.
+
 ### delete_additional_representation
 
 Python: `delete_additional_representation(imol, representation_number)`  
@@ -121,6 +129,8 @@ Arguments: imol (a whole number). Returns: a whole number.
 | Python | `draw_hydrogens_state(0)` | ran, returned `1` |
 | Scheme | `(draw-hydrogens-state 0)` | ran, returned `1` |
 
+Python and Scheme gave the same answer.
+
 ### get_bond_colour_rotation_for_molecule
 
 Python: `get_bond_colour_rotation_for_molecule(imol)`  
@@ -137,6 +147,8 @@ Arguments: imol (a whole number). Returns: a number.
 | Python | `get_bond_colour_rotation_for_molecule(0)` | ran, returned `21.0` |
 | Scheme | `(get-bond-colour-rotation-for-molecule 0)` | ran, returned `21.0` |
 
+Python and Scheme gave the same answer.
+
 ### get_default_bond_thickness
 
 Python: `get_default_bond_thickness()`  
@@ -151,6 +163,8 @@ Arguments: none. Returns: a whole number.
 | Python | `get_default_bond_thickness()` | ran, returned `5` |
 | Scheme | `(get-default-bond-thickness)` | ran, returned `5` |
 
+Python and Scheme gave the same answer.
+
 ### graphics_molecule_bond_type
 
 Python: `graphics_molecule_bond_type(imol)`  
@@ -164,6 +178,8 @@ Arguments: imol (a whole number). Returns: a whole number.
 |---|---|---|
 | Python | `graphics_molecule_bond_type(0)` | ran, returned `1` |
 | Scheme | `(graphics-molecule-bond-type 0)` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 
 ### graphics_to_b_factor_cas_representation
 
@@ -362,8 +378,8 @@ Arguments: imol (a whole number), atom_selection_str (text), bond_thickness (a n
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `make_ball_and_stick(0, "//A/41-45", 1.0, 1.0, 1)` | not tried |
-| Scheme | `(make-ball-and-stick 0 "//A/41-45" 1.0 1.0 1)` | not tried |
+| Python | `make_ball_and_stick(0, "//A/41-45", 1.0, 1.0, 1)` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(make-ball-and-stick 0 "//A/41-45" 1.0 1.0 1)` | stopped Coot when tried without a window (not checked with a window) |
 
 ### set_b_factor_bonds_scale_factor
 
@@ -376,8 +392,10 @@ Arguments: imol (a whole number), f (a number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_b_factor_bonds_scale_factor(0, 1.0)` | not tried |
-| Scheme | `(set-b-factor-bonds-scale-factor 0 1.0)` | not tried |
+| Python | `set_b_factor_bonds_scale_factor(0, 1.0)` | ran, returned `1` |
+| Scheme | `(set-b-factor-bonds-scale-factor 0 1.0)` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 
 ### set_bond_colour_rotation_for_molecule
 
@@ -390,8 +408,8 @@ Arguments: imol (a whole number), f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_bond_colour_rotation_for_molecule(0, 1.0)` | not tried |
-| Scheme | `(set-bond-colour-rotation-for-molecule 0 1.0)` | not tried |
+| Python | `set_bond_colour_rotation_for_molecule(0, 1.0)` | ran (no return value) |
+| Scheme | `(set-bond-colour-rotation-for-molecule 0 1.0)` | ran (no return value) |
 
 ### set_bond_thickness
 
@@ -404,8 +422,8 @@ Arguments: imol (a whole number), t (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_bond_thickness(0, 1.0)` | not tried |
-| Scheme | `(set-bond-thickness 0 1.0)` | not tried |
+| Python | `set_bond_thickness(0, 1.0)` | ran (no return value) |
+| Scheme | `(set-bond-thickness 0 1.0)` | ran (no return value) |
 
 ### set_bond_thickness_intermediate_atoms
 
@@ -418,8 +436,8 @@ Arguments: t (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_bond_thickness_intermediate_atoms(1.0)` | not tried |
-| Scheme | `(set-bond-thickness-intermediate-atoms 1.0)` | not tried |
+| Python | `set_bond_thickness_intermediate_atoms(1.0)` | ran (no return value) |
+| Scheme | `(set-bond-thickness-intermediate-atoms 1.0)` | ran (no return value) |
 
 ### set_default_bond_thickness
 
@@ -432,8 +450,8 @@ Arguments: t (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_default_bond_thickness(1)` | not tried |
-| Scheme | `(set-default-bond-thickness 1)` | not tried |
+| Python | `set_default_bond_thickness(1)` | ran (no return value) |
+| Scheme | `(set-default-bond-thickness 1)` | ran (no return value) |
 
 ### set_default_representation_type
 
@@ -446,8 +464,8 @@ Arguments: type (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_default_representation_type(1)` | not tried |
-| Scheme | `(set-default-representation-type 1)` | not tried |
+| Python | `set_default_representation_type(1)` | ran (no return value) |
+| Scheme | `(set-default-representation-type 1)` | ran (no return value) |
 
 ### set_draw_cis_peptide_markups
 
@@ -462,8 +480,8 @@ Arguments: status (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_draw_cis_peptide_markups(1)` | not tried |
-| Scheme | `(set-draw-cis-peptide-markups 1)` | not tried |
+| Python | `set_draw_cis_peptide_markups(1)` | ran (no return value) |
+| Scheme | `(set-draw-cis-peptide-markups 1)` | ran (no return value) |
 
 ### set_draw_hydrogens
 
@@ -477,8 +495,8 @@ Arguments: imol (a whole number), istat (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_draw_hydrogens(0, 1)` | not tried |
-| Scheme | `(set-draw-hydrogens 0 1)` | not tried |
+| Python | `set_draw_hydrogens(0, 1)` | ran (no return value) |
+| Scheme | `(set-draw-hydrogens 0 1)` | ran (no return value) |
 
 ### set_draw_missing_residues_loops
 
@@ -493,8 +511,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_draw_missing_residues_loops(1)` | not tried |
-| Scheme | `(set-draw-missing-residues-loops 1)` | not tried |
+| Python | `set_draw_missing_residues_loops(1)` | ran (no return value) |
+| Scheme | `(set-draw-missing-residues-loops 1)` | ran (no return value) |
 
 ### set_draw_moving_atoms_restraints
 
@@ -507,8 +525,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_draw_moving_atoms_restraints(1)` | not tried |
-| Scheme | `(set-draw-moving-atoms-restraints 1)` | not tried |
+| Python | `set_draw_moving_atoms_restraints(1)` | ran (no return value) |
+| Scheme | `(set-draw-moving-atoms-restraints 1)` | ran (no return value) |
 
 ### set_draw_stick_mode_atoms
 
@@ -525,8 +543,8 @@ Arguments: imol (a whole number), state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_draw_stick_mode_atoms(0, 1)` | not tried |
-| Scheme | `(set-draw-stick-mode-atoms 0 1)` | not tried |
+| Python | `set_draw_stick_mode_atoms(0, 1)` | ran (no return value) |
+| Scheme | `(set-draw-stick-mode-atoms 0 1)` | ran (no return value) |
 
 ### set_draw_stick_mode_atoms_default
 
@@ -539,8 +557,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_draw_stick_mode_atoms_default(1)` | not tried |
-| Scheme | `(set-draw-stick-mode-atoms-default 1)` | not tried |
+| Python | `set_draw_stick_mode_atoms_default(1)` | ran (no return value) |
+| Scheme | `(set-draw-stick-mode-atoms-default 1)` | ran (no return value) |
 
 ### set_draw_zero_occ_markers
 
@@ -555,8 +573,8 @@ Arguments: status (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_draw_zero_occ_markers(1)` | not tried |
-| Scheme | `(set-draw-zero-occ-markers 1)` | not tried |
+| Python | `set_draw_zero_occ_markers(1)` | ran (no return value) |
+| Scheme | `(set-draw-zero-occ-markers 1)` | ran (no return value) |
 
 ### set_flev_idle_ligand_interactions
 
@@ -573,8 +591,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_flev_idle_ligand_interactions(1)` | not tried |
-| Scheme | `(set-flev-idle-ligand-interactions 1)` | not tried |
+| Python | `set_flev_idle_ligand_interactions(1)` | ran (no return value) |
+| Scheme | `(set-flev-idle-ligand-interactions 1)` | ran (no return value) |
 
 ### set_grey_carbon_colour
 
@@ -589,8 +607,8 @@ Arguments: imol (a whole number), r (a number), g (a number), b (a number). Retu
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_grey_carbon_colour(0, 0.5, 0.5, 0.5)` | not tried |
-| Scheme | `(set-grey-carbon-colour 0 0.5 0.5 0.5)` | not tried |
+| Python | `set_grey_carbon_colour(0, 0.5, 0.5, 0.5)` | ran (no return value) |
+| Scheme | `(set-grey-carbon-colour 0 0.5 0.5 0.5)` | ran (no return value) |
 
 ### set_show_additional_representation
 
@@ -603,8 +621,8 @@ Arguments: imol (a whole number), representation_number (a whole number), on_off
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_show_additional_representation(0, 1, 1)` | not tried |
-| Scheme | `(set-show-additional-representation 0 1 1)` | not tried |
+| Python | `set_show_additional_representation(0, 1, 1)` | ran (no return value) |
+| Scheme | `(set-show-additional-representation 0 1 1)` | ran (no return value) |
 
 ### set_show_all_additional_representations
 
@@ -617,8 +635,8 @@ Arguments: imol (a whole number), on_off_flag (a whole number). Returns: nothing
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_show_all_additional_representations(0, 1)` | not tried |
-| Scheme | `(set-show-all-additional-representations 0 1)` | not tried |
+| Python | `set_show_all_additional_representations(0, 1)` | ran (no return value) |
+| Scheme | `(set-show-all-additional-representations 0 1)` | ran (no return value) |
 
 ### set_unbonded_atom_star_size
 
@@ -629,8 +647,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_unbonded_atom_star_size(1.0)` | not tried |
-| Scheme | `(set-unbonded-atom-star-size 1.0)` | not tried |
+| Python | `set_unbonded_atom_star_size(1.0)` | ran (no return value) |
+| Scheme | `(set-unbonded-atom-star-size 1.0)` | ran (no return value) |
 
 ### set_use_grey_carbons_for_molecule
 
@@ -643,8 +661,8 @@ Arguments: imol (a whole number), state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_use_grey_carbons_for_molecule(0, 1)` | not tried |
-| Scheme | `(set-use-grey-carbons-for-molecule 0 1)` | not tried |
+| Python | `set_use_grey_carbons_for_molecule(0, 1)` | ran (no return value) |
+| Scheme | `(set-use-grey-carbons-for-molecule 0 1)` | ran (no return value) |
 
 ### set_use_variable_bond_thickness
 
@@ -657,8 +675,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_use_variable_bond_thickness(1)` | not tried |
-| Scheme | `(set-use-variable-bond-thickness 1)` | not tried |
+| Python | `set_use_variable_bond_thickness(1)` | ran (no return value) |
+| Scheme | `(set-use-variable-bond-thickness 1)` | ran (no return value) |
 
 ### toggle_idle_ligand_interactions
 
@@ -672,6 +690,6 @@ Also available in Python as `toggle_flev_idle_ligand_interactions`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `toggle_idle_ligand_interactions()` | not tried |
-| Scheme | `(toggle-flev-idle-ligand-interactions)` | not tried |
+| Python | `toggle_idle_ligand_interactions()` | ran (no return value) |
+| Scheme | `(toggle-flev-idle-ligand-interactions)` | ran (no return value) |
 

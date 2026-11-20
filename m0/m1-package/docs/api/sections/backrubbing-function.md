@@ -20,6 +20,8 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_
 | Python | `backrub_rotamer(0, "A", 41, "", "")` | ran, returned `1` |
 | Scheme | `(backrub-rotamer 0 "A" 41 "" "")` | ran, returned `1` |
 
+Python and Scheme gave the same answer.
+
 ### backrub_rotamer_intermediate_atoms
 
 Python: `backrub_rotamer_intermediate_atoms()`  
@@ -33,4 +35,6 @@ Arguments: none. Returns: a whole number.
 |---|---|---|
 | Python | `backrub_rotamer_intermediate_atoms()` | ran, returned `0` |
 | Scheme | `(backrub-rotamer-intermediate-atoms)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 

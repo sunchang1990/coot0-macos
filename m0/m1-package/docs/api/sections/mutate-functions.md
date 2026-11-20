@@ -57,8 +57,10 @@ Arguments: imol (a whole number), chain_id (text), ires (a whole number), inscod
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `mutate(0, "A", 41, "", "ALA")` | not tried |
-| Scheme | `(mutate 0 "A" 41 "" "ALA")` | not tried |
+| Python | `mutate(0, "A", 41, "", "ALA")` | ran, returned `1` |
+| Scheme | `(mutate 0 "A" 41 "" "ALA")` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 
 ### mutate_active_residue
 
@@ -71,8 +73,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `mutate_active_residue()` | not tried |
-| Scheme | `(mutate-active-residue)` | not tried |
+| Python | `mutate_active_residue()` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(mutate-active-residue)` | stopped Coot when tried without a window (not checked with a window) |
 
 ### mutate_auto_fit_do_post_refine_state
 
@@ -85,8 +87,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `mutate_auto_fit_do_post_refine_state()` | not tried |
-| Scheme | `(mutate-auto-fit-do-post-refine-state)` | not tried |
+| Python | `mutate_auto_fit_do_post_refine_state()` | ran, returned `0` |
+| Scheme | `(mutate-auto-fit-do-post-refine-state)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### mutate_base
 
@@ -99,8 +103,10 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `mutate_base(0, "A", 41, "", "ALA")` | not tried |
-| Scheme | `(mutate-base 0 "A" 41 "" "ALA")` | not tried |
+| Python | `mutate_base(0, "A", 41, "", "ALA")` | ran, returned `1` |
+| Scheme | `(mutate-base 0 "A" 41 "" "ALA")` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 
 ### mutate_single_residue_by_seqno
 
@@ -113,8 +119,8 @@ Arguments: ires (a whole number), inscode (text), chain_id (text), imol (a whole
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### mutate_single_residue_by_serial_number
 
@@ -138,8 +144,8 @@ Arguments: ires_ser (a whole number), chain_id (text), imol (a whole number), ta
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### nudge_residue_sequence
 
@@ -158,8 +164,10 @@ Arguments: imol (a whole number), chain_id (text), res_no_range_start (a whole n
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `nudge_residue_sequence(0, "A", 41, 45, 1, 1)` | not tried |
-| Scheme | `(nudge-residue-sequence 0 "A" 41 45 1 1)` | not tried |
+| Python | `nudge_residue_sequence(0, "A", 41, 45, 1, 1)` | ran, returned `1` |
+| Scheme | `(nudge-residue-sequence 0 "A" 41 45 1 1)` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 
 ### progressive_residues_in_chain_check
 
@@ -172,8 +180,10 @@ Arguments: chain_id (text), imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `progressive_residues_in_chain_check("A", 0)` | not tried |
-| Scheme | `(progressive-residues-in-chain-check "A" 0)` | not tried |
+| Python | `progressive_residues_in_chain_check("A", 0)` | ran, returned `1` |
+| Scheme | `(progressive-residues-in-chain-check "A" 0)` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 
 ### rotamer_auto_fit_do_post_refine_state
 
@@ -186,8 +196,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `rotamer_auto_fit_do_post_refine_state()` | not tried |
-| Scheme | `(rotamer-auto-fit-do-post-refine-state)` | not tried |
+| Python | `rotamer_auto_fit_do_post_refine_state()` | ran, returned `0` |
+| Scheme | `(rotamer-auto-fit-do-post-refine-state)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### set_mutate_auto_fit_do_post_refine
 
@@ -203,8 +215,8 @@ Arguments: istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_mutate_auto_fit_do_post_refine(1)` | not tried |
-| Scheme | `(set-mutate-auto-fit-do-post-refine 1)` | not tried |
+| Python | `set_mutate_auto_fit_do_post_refine(1)` | ran (no return value) |
+| Scheme | `(set-mutate-auto-fit-do-post-refine 1)` | ran (no return value) |
 
 ### set_residue_type_chooser_stub_state
 
@@ -218,8 +230,8 @@ Arguments: istat (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_residue_type_chooser_stub_state(1)` | not tried |
-| Scheme | `(set-residue-type-chooser-stub-state 1)` | not tried |
+| Python | `set_residue_type_chooser_stub_state(1)` | ran (no return value) |
+| Scheme | `(set-residue-type-chooser-stub-state 1)` | ran (no return value) |
 
 ### set_rotamer_auto_fit_do_post_refine
 
@@ -235,8 +247,8 @@ Arguments: istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_rotamer_auto_fit_do_post_refine(1)` | not tried |
-| Scheme | `(set-rotamer-auto-fit-do-post-refine 1)` | not tried |
+| Python | `set_rotamer_auto_fit_do_post_refine(1)` | ran (no return value) |
+| Scheme | `(set-rotamer-auto-fit-do-post-refine 1)` | ran (no return value) |
 
 ### setup_mutate
 
@@ -249,8 +261,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `setup_mutate(1)` | not tried |
-| Scheme | `(setup-mutate 1)` | not tried |
+| Python | `setup_mutate(1)` | ran (no return value) |
+| Scheme | `(setup-mutate 1)` | ran (no return value) |
 
 ### setup_mutate_auto_fit
 
@@ -265,6 +277,6 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `setup_mutate_auto_fit(1)` | not tried |
-| Scheme | `(setup-mutate-auto-fit 1)` | not tried |
+| Python | `setup_mutate_auto_fit(1)` | ran (no return value) |
+| Scheme | `(setup-mutate-auto-fit 1)` | ran (no return value) |
 

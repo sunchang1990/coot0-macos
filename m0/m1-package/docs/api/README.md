@@ -1,4 +1,4 @@
-# Coot scripting reference (coot0 0.9.8.96-b26)
+# Coot scripting reference (coot0 0.9.8.96-b30)
 
 Every function that Coot 0.9.8.96 offers to Python and Scheme scripts: 1735 functions, 1717 in Python and 1689 in Scheme. For each one: its Python and Scheme names, what Coot's own source says about it, a concrete example on the test data, and what happened when the example was tried.
 
@@ -10,14 +10,16 @@ For recipes that do whole tasks (refine, edit, customize the toolbar, batch scri
 - **Examples** use the test data in the package (`test-data/`): molecule **0** is `tutorial-modern.pdb` (chains A and B, residues 1-93 and 1-96; residue A41 is a glutamate), molecule **1** is the 2Fo-Fc map made from `rnasa-1.8-all_refmac1.mtz` (`make_and_draw_map("rnasa-1.8-all_refmac1.mtz", "FWT", "PHWT", "", 0, 0)`). Load them in this order in a new Coot and every example runs as written. With your own data, change the molecule number, chain, residue number and file names.
 - **Residue specs** are lists: `["A", 41, ""]` in Python, `(list "A" 41 "")` in Scheme (chain, residue number, insertion code). **Atom names** have 4 characters as in a PDB file: `" CA "`.
 - **The examples were made by a program** from the argument names (a chain gets `"A"`, a residue number 41, a flag 1, ...). For most functions that gives a sensible call; for some the values are only placeholders (`"hello"` for a text, 1 for a number) that you should replace.
-- **"When tried"** is what happened when the example was run on the test data by `tests/run-api-examples.sh`, without a window: *ran* (with the value it returned), *error* (with Coot's message; usually the example needs other values), *stopped Coot (no window)* (the function needs the graphics window; it was not checked with one), *not run* (it would quit Coot, use the network, run an external program, or needs a widget). *Ran* means only that Coot accepted the call; the result was not checked.
+- **"When tried"** is what happened when the example was run on the test data by `tests/run-api-examples.sh`, without a window: *ran* (with the value it returned), *error* (with Coot's message; usually the example needs other values), *stopped Coot (no window)* (the function needs the graphics window; it was not checked with one), *not run* (it would quit Coot, use the network, run an external program, or needs a widget). *Ran* means that Coot accepted the call; the value itself was checked only by comparing the two languages (next section) and, for the functions the cookbook uses, by the cookbook's own checks.
 
 ## Results of trying the examples
 
 | | Ran | Error | Stopped Coot (no window) | No answer in 60 s | Not run |
 |---|---|---|---|---|---|
-| Python | 522 | 6 | 18 | 3 | 84 |
-| Scheme | 511 | 7 | 17 | 3 | 80 |
+| Python | 1399 | 18 | 64 | 7 | 229 |
+| Scheme | 1369 | 26 | 62 | 7 | 225 |
+
+Where both languages ran and returned a value that can be compared (570 functions), Python and Scheme gave the same answer for 528. The other 42 are listed on their pages as *different answers*; mostly that is because the Python example ran first and changed the data (a counter, a new molecule, a restraint added), or because one language returns the same information in another shape. Values that are objects (pointers) are not compared.
 
 ## Sections
 

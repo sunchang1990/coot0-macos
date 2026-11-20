@@ -245,6 +245,8 @@ Arguments: drugname (text). Returns: text.
 | Python | `get_drug_mdl_via_wikipedia_and_drugbank("my-name")` | ran, returned `''` |
 | Scheme | `(get-drug-mdl-via-wikipedia-and-drugbank "my-name")` | ran, returned `""` |
 
+Python and Scheme gave the same answer.
+
 ### inverse_rtop
 
 Python: `inverse_rtop(rtop_py)`  
@@ -256,8 +258,8 @@ Also available in Scheme as `inverse-rtop-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### is_interesting_dots_object_next_p
 
@@ -272,8 +274,8 @@ Arguments: vs (a list). Returns: text.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `is_interesting_dots_object_next_p("hello")` | not tried |
-| Scheme | `(is-interesting-dots-object-next-p "hello")` | not tried |
+| Python | `is_interesting_dots_object_next_p("hello")` | ran, returned `<Swig Object of type 'std::pair< short,std::string > *' at 0x10a45b150>` |
+| Scheme | `(is-interesting-dots-object-next-p "hello")` | error: In procedure is-interesting-dots-object-next-p: Wrong type argument in position 1: "hello" |
 
 ### make_complementary_dotted_surfaces
 
@@ -284,8 +286,8 @@ Arguments: imol_1 (a whole number), imol_2 (a whole number), r1 (a list), r2 (a 
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### orient_view
 
@@ -299,8 +301,8 @@ Arguments: imol (a whole number), central_residue_spec (`coot::residue_spec_t`),
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### pisa_interfaces_display_only
 
@@ -311,8 +313,8 @@ Arguments: imol_1 (a whole number), imol_2 (a whole number), centre_pt (`clipper
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### residue_records_list_py_to_residue_specs
 
@@ -323,7 +325,7 @@ Arguments: mol_1_residue_records (a list or value), chain_id (text). Returns: a 
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### residue-records-list-scm-to-residue-specs
 
@@ -334,7 +336,7 @@ Arguments: mol-1-residue-records (a list or value), chain-id (text). Returns: a 
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Scheme | (no automatic example) | not tried |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### rtop-to-scm
 
@@ -345,7 +347,7 @@ Arguments: rtop (`clipper::RTop_orth`). Returns: a value (see the result of the 
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Scheme | (no automatic example) | not tried |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### rtop_to_python
 
@@ -356,7 +358,7 @@ Arguments: rtop (`clipper::RTop_orth`). Returns: a value (see the result of the 
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### sequence_from_map
 
@@ -367,8 +369,10 @@ Arguments: imol (a whole number), chain_id (text), resno_start (a whole number),
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `sequence_from_map(0, "A", 41, 45, 1)` | not tried |
-| Scheme | `(sequence-from-map 0 "A" 41 45 1)` | not tried |
+| Python | `sequence_from_map(0, "A", 41, 45, 1)` | ran, returned `'XXXXX'` |
+| Scheme | `(sequence-from-map 0 "A" 41 45 1)` | ran, returned `"XXXXX"` |
+
+Python and Scheme gave the same answer.
 
 ### set_display_control_button_state
 
@@ -379,8 +383,8 @@ Arguments: imol (a whole number), button_type (text), state (a whole number). Re
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_display_control_button_state(0, "hello", 1)` | not tried |
-| Scheme | `(set-display-control-button-state 0 "hello" 1)` | not tried |
+| Python | `set_display_control_button_state(0, "hello", 1)` | ran (no return value) |
+| Scheme | `(set-display-control-button-state 0 "hello" 1)` | ran (no return value) |
 
 ### stop_curl_download
 
@@ -391,8 +395,8 @@ Arguments: file_name (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `stop_curl_download("tutorial-modern.pdb")` | not tried |
-| Scheme | `(stop-curl-download "tutorial-modern.pdb")` | not tried |
+| Python | `stop_curl_download("tutorial-modern.pdb")` | not run: not run automatically (curl: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(stop-curl-download "tutorial-modern.pdb")` | not run: not run automatically (curl: exits, uses the network, an external program, files or a screen) |
 
 ### symbol-value-from-record
 
@@ -403,7 +407,7 @@ Arguments: record-1 (a list or value), symbol (text). Returns: a value (see the 
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Scheme | (no automatic example) | not tried |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### topological_equivalence_chiral_centres
 
@@ -417,8 +421,10 @@ Arguments: residue_type (text). Returns: a list.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `topological_equivalence_chiral_centres("ALA")` | not tried |
-| Scheme | `(topological-equivalence-chiral-centres "ALA")` | not tried |
+| Python | `topological_equivalence_chiral_centres("ALA")` | ran, returned `()` |
+| Scheme | `(topological-equivalence-chiral-centres "ALA")` | ran, returned `#()` |
+
+Python and Scheme gave the same answer.
 
 ### untangle_mmdb_chain_id_string
 
@@ -429,8 +435,10 @@ Arguments: mmdb_chain_id_in (text). Returns: text.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `untangle_mmdb_chain_id_string("A")` | not tried |
-| Scheme | `(untangle-mmdb-chain-id-string "A")` | not tried |
+| Python | `untangle_mmdb_chain_id_string("A")` | ran, returned `'A'` |
+| Scheme | `(untangle-mmdb-chain-id-string "A")` | ran, returned `"A"` |
+
+Python and Scheme gave the same answer.
 
 ### wrapped_curl_easy_perform
 
@@ -441,8 +449,8 @@ Arguments: data (`void *`). Returns: `void *`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### write_coot_curl_data
 
@@ -455,8 +463,8 @@ Arguments: buffer (`void *`), size (a whole number), nmemb (a whole number), use
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### write_coot_curl_data_to_file
 
@@ -469,6 +477,6 @@ Arguments: buffer (`void *`), size (a whole number), nmemb (a whole number), use
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 

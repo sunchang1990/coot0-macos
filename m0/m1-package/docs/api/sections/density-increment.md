@@ -35,6 +35,8 @@ Arguments: none. Returns: a number.
 | Python | `get_diff_map_iso_level_increment()` | ran, returned `0.004999999888241291` |
 | Scheme | `(get-diff-map-iso-level-increment)` | ran, returned `0.004999999888241291` |
 
+Python and Scheme gave the same answer.
+
 ### get_iso_level_increment
 
 Python: `get_iso_level_increment()`  
@@ -46,6 +48,8 @@ Arguments: none. Returns: a number.
 |---|---|---|
 | Python | `get_iso_level_increment()` | ran, returned `0.05000000074505806` |
 | Scheme | `(get-iso-level-increment)` | ran, returned `0.05000000074505806` |
+
+Python and Scheme gave the same answer.
 
 ### get_map_sampling_rate
 
@@ -61,6 +65,8 @@ Arguments: none. Returns: a number.
 | Python | `get_map_sampling_rate()` | ran, returned `1.7999999523162842` |
 | Scheme | `(get-map-sampling-rate)` | ran, returned `1.7999999523162842` |
 
+Python and Scheme gave the same answer.
+
 ### get_text_for_diff_map_iso_level_increment_entry
 
 Python: `get_text_for_diff_map_iso_level_increment_entry(imol)`  
@@ -75,6 +81,8 @@ Arguments: imol (a whole number). Returns: text.
 | Python | `get_text_for_diff_map_iso_level_increment_entry(0)` | ran, returned `'0.0050'` |
 | Scheme | `(get-text-for-diff-map-iso-level-increment-entry 0)` | ran, returned `"0.0050"` |
 
+Python and Scheme gave the same answer.
+
 ### get_text_for_iso_level_increment_entry
 
 Python: `get_text_for_iso_level_increment_entry(imol)`  
@@ -86,6 +94,8 @@ Arguments: imol (a whole number). Returns: text.
 |---|---|---|
 | Python | `get_text_for_iso_level_increment_entry(0)` | ran, returned `'0.0500'` |
 | Scheme | `(get-text-for-iso-level-increment-entry 0)` | ran, returned `"0.0500"` |
+
+Python and Scheme gave the same answer.
 
 ### get_text_for_map_sampling_rate_text
 
@@ -101,6 +111,8 @@ Arguments: none. Returns: text.
 | Python | `get_text_for_map_sampling_rate_text()` | ran, returned `'1.8000'` |
 | Scheme | `(get-text-for-map-sampling-rate-text)` | ran, returned `"1.8000"` |
 
+Python and Scheme gave the same answer.
+
 ### set_diff_map_iso_level_increment
 
 Python: `set_diff_map_iso_level_increment(val)`  
@@ -115,8 +127,8 @@ Arguments: val (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_diff_map_iso_level_increment(1.0)` | not tried |
-| Scheme | `(set-diff-map-iso-level-increment 1.0)` | not tried |
+| Python | `set_diff_map_iso_level_increment(1.0)` | ran (no return value) |
+| Scheme | `(set-diff-map-iso-level-increment 1.0)` | ran (no return value) |
 
 ### set_diff_map_iso_level_increment_from_text
 
@@ -129,8 +141,8 @@ Arguments: text (text), imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_diff_map_iso_level_increment_from_text("hello", 0)` | not tried |
-| Scheme | `(set-diff-map-iso-level-increment-from-text "hello" 0)` | not tried |
+| Python | `set_diff_map_iso_level_increment_from_text("hello", 0)` | ran (no return value) |
+| Scheme | `(set-diff-map-iso-level-increment-from-text "hello" 0)` | ran (no return value) |
 
 ### set_iso_level_increment
 
@@ -146,8 +158,8 @@ Arguments: val (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_iso_level_increment(1.0)` | not tried |
-| Scheme | `(set-iso-level-increment 1.0)` | not tried |
+| Python | `set_iso_level_increment(1.0)` | ran (no return value) |
+| Scheme | `(set-iso-level-increment 1.0)` | ran (no return value) |
 
 ### set_iso_level_increment_from_text
 
@@ -158,8 +170,8 @@ Arguments: text (text), imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_iso_level_increment_from_text("hello", 0)` | not tried |
-| Scheme | `(set-iso-level-increment-from-text "hello" 0)` | not tried |
+| Python | `set_iso_level_increment_from_text("hello", 0)` | ran (no return value) |
+| Scheme | `(set-iso-level-increment-from-text "hello" 0)` | ran (no return value) |
 
 ### set_last_map_contour_level
 
@@ -173,8 +185,8 @@ Arguments: level (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_last_map_contour_level(1.5)` | not tried |
-| Scheme | `(set-last-map-contour-level 1.5)` | not tried |
+| Python | `set_last_map_contour_level(1.5)` | ran (no return value) |
+| Scheme | `(set-last-map-contour-level 1.5)` | ran (no return value) |
 
 ### set_last_map_contour_level_by_sigma
 
@@ -188,8 +200,8 @@ Arguments: n_sigma (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_last_map_contour_level_by_sigma(1.5)` | not tried |
-| Scheme | `(set-last-map-contour-level-by-sigma 1.5)` | not tried |
+| Python | `set_last_map_contour_level_by_sigma(1.5)` | ran (no return value) |
+| Scheme | `(set-last-map-contour-level-by-sigma 1.5)` | ran (no return value) |
 
 ### set_map_sampling_rate
 
@@ -205,8 +217,8 @@ Arguments: r (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_map_sampling_rate(0.5)` | not tried |
-| Scheme | `(set-map-sampling-rate 0.5)` | not tried |
+| Python | `set_map_sampling_rate(0.5)` | ran (no return value) |
+| Scheme | `(set-map-sampling-rate 0.5)` | ran (no return value) |
 
 ### set_map_sampling_rate_text
 
@@ -222,8 +234,8 @@ Arguments: text (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_map_sampling_rate_text("hello")` | not tried |
-| Scheme | `(set-map-sampling-rate-text "hello")` | not tried |
+| Python | `set_map_sampling_rate_text("hello")` | ran (no return value) |
+| Scheme | `(set-map-sampling-rate-text "hello")` | ran (no return value) |
 
 ### set_residue_density_fit_scale_factor
 
@@ -236,8 +248,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_residue_density_fit_scale_factor(1.0)` | not tried |
-| Scheme | `(set-residue-density-fit-scale-factor 1.0)` | not tried |
+| Python | `set_residue_density_fit_scale_factor(1.0)` | ran (no return value) |
+| Scheme | `(set-residue-density-fit-scale-factor 1.0)` | ran (no return value) |
 
 ### set_stop_scroll_diff_map
 
@@ -252,8 +264,8 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_stop_scroll_diff_map(1)` | not tried |
-| Scheme | `(set-stop-scroll-diff-map 1)` | not tried |
+| Python | `set_stop_scroll_diff_map(1)` | ran (no return value) |
+| Scheme | `(set-stop-scroll-diff-map 1)` | ran (no return value) |
 
 ### set_stop_scroll_diff_map_level
 
@@ -268,8 +280,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_stop_scroll_diff_map_level(1.0)` | not tried |
-| Scheme | `(set-stop-scroll-diff-map-level 1.0)` | not tried |
+| Python | `set_stop_scroll_diff_map_level(1.0)` | ran (no return value) |
+| Scheme | `(set-stop-scroll-diff-map-level 1.0)` | ran (no return value) |
 
 ### set_stop_scroll_iso_map
 
@@ -284,8 +296,8 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_stop_scroll_iso_map(1)` | not tried |
-| Scheme | `(set-stop-scroll-iso-map 1)` | not tried |
+| Python | `set_stop_scroll_iso_map(1)` | ran (no return value) |
+| Scheme | `(set-stop-scroll-iso-map 1)` | ran (no return value) |
 
 ### set_stop_scroll_iso_map_level
 
@@ -300,6 +312,6 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_stop_scroll_iso_map_level(1.0)` | not tried |
-| Scheme | `(set-stop-scroll-iso-map-level 1.0)` | not tried |
+| Python | `set_stop_scroll_iso_map_level(1.0)` | ran (no return value) |
+| Scheme | `(set-stop-scroll-iso-map-level 1.0)` | ran (no return value) |
 

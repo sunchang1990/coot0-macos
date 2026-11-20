@@ -18,6 +18,8 @@ Also available in Scheme as `accept-moving-atoms-scm`.
 | Python | `accept_moving_atoms()` | ran, returned `False` |
 | Scheme | `(accept-moving-atoms)` | ran, returned `#f` |
 
+Python and Scheme gave the same answer.
+
 ### all_residues_with_serial_numbers
 
 Python: `all_residues_with_serial_numbers(imol)`  
@@ -31,6 +33,8 @@ Also available in Scheme as `all-residues-with-serial-numbers-scm`.
 |---|---|---|
 | Python | `all_residues_with_serial_numbers(0)` | ran, returned `[[0, True, 'A', 1, ''], [1, True, 'A', 2, ''], [2, True, 'A', 3, ''], [3, True, 'A', 4, ''], [4, True, 'A', 5, ''], [5,  ...` |
 | Scheme | `(all-residues-with-serial-numbers 0)` | ran, returned `((0 #t "A" 1 "") (1 #t "A" 2 "") (2 #t "A" 3 "") (3 #t "A" 4 "") (4 #t "A" 5 "") (5 #t "A" 6 "") (6 #t "A" 7 "") (7 #t " ...` |
+
+Python and Scheme gave the same answer.
 
 ### b_factor_distribution_graph
 
@@ -58,6 +62,8 @@ Arguments: imol (a whole number), b_factor_lim (a number), map_sigma_lim (a numb
 | Python | `check_waters_baddies(0, 20.0, 1.5, 1.0, 1.0, 1, 1, 1)` | ran, returned `()` |
 | Scheme | `(check-waters-baddies 0 20.0 1.5 1.0 1.0 1 1 1)` | ran, returned `#()` |
 
+Python and Scheme gave the same answer.
+
 ### find_blobs
 
 Python: `find_blobs(imol_model, imol_map, cut_off_density_level)`  
@@ -72,6 +78,8 @@ Arguments: imol_model (a whole number), imol_map (a whole number), cut_off_densi
 | Python | `find_blobs(0, 1, 1.5)` | ran, returned `[[[59.897255080580464, 2.932044945000125, -4.155281760924597], 58.12772232083223], [[53.775366015612754, 9.0783475008877 ...` |
 | Scheme | `(find-blobs 0 1 1.5)` | ran, returned `((58.12772232083223 59.897255080580464 2.932044945000125 -4.155281760924597) (22.504935971005438 53.775366015612754 9.07 ...` |
 
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
+
 ### get_cryo_em_refinement
 
 Python: `get_cryo_em_refinement()`  
@@ -84,6 +92,8 @@ Arguments: none. Returns: true or false.
 | Python | `get_cryo_em_refinement()` | ran, returned `False` |
 | Scheme | `(get-cryo-em-refinement)` | ran, returned `#f` |
 
+Python and Scheme gave the same answer.
+
 ### get_regenerate_bonds_needs_make_bonds_type_checked_state
 
 Python: `get_regenerate_bonds_needs_make_bonds_type_checked_state()`  
@@ -95,6 +105,8 @@ Arguments: none. Returns: true or false.
 |---|---|---|
 | Python | `get_regenerate_bonds_needs_make_bonds_type_checked_state()` | ran, returned `True` |
 | Scheme | `(get-regenerate-bonds-needs-make-bonds-type-checked-state)` | ran, returned `#t` |
+
+Python and Scheme gave the same answer.
 
 ### morph_fit_all
 
@@ -109,8 +121,10 @@ Arguments: imol (a whole number), transformation_averaging_radius (a number). Re
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `morph_fit_all(0, 5.0)` | not tried |
-| Scheme | `(morph-fit-all 0 5.0)` | not tried |
+| Python | `morph_fit_all(0, 5.0)` | ran, returned `1` |
+| Scheme | `(morph-fit-all 0 5.0)` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 
 ### morph_fit_by_secondary_structure_elements
 
@@ -124,8 +138,10 @@ Arguments: imol (a whole number), chain_id (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `morph_fit_by_secondary_structure_elements(0, "A")` | not tried |
-| Scheme | `(morph-fit-by-secondary-structure-elements 0 "A")` | not tried |
+| Python | `morph_fit_by_secondary_structure_elements(0, "A")` | ran, returned `0` |
+| Scheme | `(morph-fit-by-secondary-structure-elements 0 "A")` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### morph_fit_chain
 
@@ -138,8 +154,10 @@ Arguments: imol (a whole number), chain_id (text), transformation_averaging_radi
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `morph_fit_chain(0, "A", 5.0)` | not tried |
-| Scheme | `(morph-fit-chain 0 "A" 5.0)` | not tried |
+| Python | `morph_fit_chain(0, "A", 5.0)` | ran, returned `1` |
+| Scheme | `(morph-fit-chain 0 "A" 5.0)` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 
 ### morph_fit_residues
 
@@ -152,8 +170,10 @@ Arguments: imol (a whole number), residue_specs (a list or value), transformatio
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `morph_fit_residues(0, [["A", 41, ""], ["A", 42, ""]], 5.0)` | not tried |
-| Scheme | `(morph-fit-residues 0 (list (list "A" 41 "") (list "A" 42 "")) 5.0)` | not tried |
+| Python | `morph_fit_residues(0, [["A", 41, ""], ["A", 42, ""]], 5.0)` | ran, returned `1` |
+| Scheme | `(morph-fit-residues 0 (list (list "A" 41 "") (list "A" 42 "")) 5.0)` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 
 ### mtz_file_name
 
@@ -166,8 +186,10 @@ Arguments: imol (a whole number). Returns: text.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `mtz_file_name(0)` | not tried |
-| Scheme | `(mtz-file-name 0)` | not tried |
+| Python | `mtz_file_name(0)` | ran, returned `''` |
+| Scheme | `(mtz-file-name 0)` | ran, returned `""` |
+
+Python and Scheme gave the same answer.
 
 ### refine_zone_with_full_residue_spec
 
@@ -180,8 +202,10 @@ Also available in Scheme as `refine-zone-with-full-residue-spec-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `refine_zone_with_full_residue_spec(0, "A", 41, "", 45, "", "")` | not tried |
-| Scheme | `(refine-zone-with-full-residue-spec 0 "A" 41 "" 45 "" "")` | not tried |
+| Python | `refine_zone_with_full_residue_spec(0, "A", 41, "", 45, "", "")` | ran, returned `['', -2, False]` |
+| Scheme | `(refine-zone-with-full-residue-spec 0 "A" 41 "" 45 "" "")` | ran, returned `("" -2 ())` |
+
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
 ### register_post_intermediate_atoms_moved_hook
 
@@ -192,7 +216,7 @@ Arguments: function_name (a list or value). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### regularize_residues
 
@@ -205,8 +229,10 @@ Arguments: imol (a whole number), r (a list or value). Returns: a value (see the
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `regularize_residues(0, [["A", 41, ""], ["A", 42, ""]])` | not tried |
-| Scheme | `(regularize-residues 0 (list (list "A" 41 "") (list "A" 42 "")))` | not tried |
+| Python | `regularize_residues(0, [["A", 41, ""], ["A", 42, ""]])` | ran, returned `['', -2, False]` |
+| Scheme | `(regularize-residues 0 (list (list "A" 41 "") (list "A" 42 "")))` | ran, returned `("" -2 ())` |
+
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
 ### rigid_body_fit_with_residue_ranges
 
@@ -220,8 +246,8 @@ Arguments: imol (a whole number), ranges (a list). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### set_cryo_em_refinement
 
@@ -232,8 +258,8 @@ Arguments: mode (true or false). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_cryo_em_refinement(1)` | not tried |
-| Scheme | `(set-cryo-em-refinement 1)` | not tried |
+| Python | `set_cryo_em_refinement(True)` | ran (no return value) |
+| Scheme | `(set-cryo-em-refinement 1)` | ran (no return value) |
 
 ### set_regenerate_bonds_needs_make_bonds_type_checked
 
@@ -244,8 +270,8 @@ Arguments: state (true or false). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_regenerate_bonds_needs_make_bonds_type_checked(1)` | not tried |
-| Scheme | `(set-regenerate-bonds-needs-make-bonds-type-checked 1)` | not tried |
+| Python | `set_regenerate_bonds_needs_make_bonds_type_checked(True)` | ran (no return value) |
+| Scheme | `(set-regenerate-bonds-needs-make-bonds-type-checked 1)` | ran (no return value) |
 
 ### set_show_intermediate_atoms_rama_markup
 
@@ -256,8 +282,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_show_intermediate_atoms_rama_markup(1)` | not tried |
-| Scheme | `(set-show-intermediate-atoms-rama-markup 1)` | not tried |
+| Python | `set_show_intermediate_atoms_rama_markup(1)` | ran (no return value) |
+| Scheme | `(set-show-intermediate-atoms-rama-markup 1)` | ran (no return value) |
 
 ### set_show_intermediate_atoms_rota_markup
 
@@ -268,6 +294,6 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_show_intermediate_atoms_rota_markup(1)` | not tried |
-| Scheme | `(set-show-intermediate-atoms-rota-markup 1)` | not tried |
+| Python | `set_show_intermediate_atoms_rota_markup(1)` | ran (no return value) |
+| Scheme | `(set-show-intermediate-atoms-rota-markup 1)` | ran (no return value) |
 

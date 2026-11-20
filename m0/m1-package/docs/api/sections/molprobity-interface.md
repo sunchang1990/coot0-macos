@@ -75,8 +75,8 @@ Arguments: none. Returns: a number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `interactive_probe_dots_molprobity_radius()` | not tried |
-| Scheme | `(interactive-probe-dots-molprobity-radius)` | not tried |
+| Python | `interactive_probe_dots_molprobity_radius()` | not run: not run automatically (probe: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(interactive-probe-dots-molprobity-radius)` | not run: not run automatically (probe: exits, uses the network, an external program, files or a screen) |
 
 ### set_do_coot_probe_dots_during_refine
 
@@ -89,8 +89,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_do_coot_probe_dots_during_refine(1)` | not tried |
-| Scheme | `(set-do-coot-probe-dots-during-refine 1)` | not tried |
+| Python | `set_do_coot_probe_dots_during_refine(1)` | not run: not run automatically (probe: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(set-do-coot-probe-dots-during-refine 1)` | not run: not run automatically (probe: exits, uses the network, an external program, files or a screen) |
 
 ### set_do_probe_dots_on_rotamers_and_chis
 
@@ -103,8 +103,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_do_probe_dots_on_rotamers_and_chis(1)` | not tried |
-| Scheme | `(set-do-probe-dots-on-rotamers-and-chis 1)` | not tried |
+| Python | `set_do_probe_dots_on_rotamers_and_chis(1)` | not run: not run automatically (probe: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(set-do-probe-dots-on-rotamers-and-chis 1)` | not run: not run automatically (probe: exits, uses the network, an external program, files or a screen) |
 
 ### set_do_probe_dots_post_refine
 
@@ -117,8 +117,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_do_probe_dots_post_refine(1)` | not tried |
-| Scheme | `(set-do-probe-dots-post-refine 1)` | not tried |
+| Python | `set_do_probe_dots_post_refine(1)` | not run: not run automatically (probe: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(set-do-probe-dots-post-refine 1)` | not run: not run automatically (probe: exits, uses the network, an external program, files or a screen) |
 
 ### set_interactive_probe_dots_molprobity_radius
 
@@ -134,8 +134,8 @@ Arguments: r (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_interactive_probe_dots_molprobity_radius(0.5)` | not tried |
-| Scheme | `(set-interactive-probe-dots-molprobity-radius 0.5)` | not tried |
+| Python | `set_interactive_probe_dots_molprobity_radius(0.5)` | not run: not run automatically (probe: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(set-interactive-probe-dots-molprobity-radius 0.5)` | not run: not run automatically (probe: exits, uses the network, an external program, files or a screen) |
 
 ### unmangle_hydrogen_name
 
@@ -149,8 +149,10 @@ Arguments: pdb_hydrogen_name (text). Returns: text.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `unmangle_hydrogen_name("my-name")` | not tried |
-| Scheme | `(unmangle-hydrogen-name "my-name")` | not tried |
+| Python | `unmangle_hydrogen_name("my-name")` | ran, returned `'my-name'` |
+| Scheme | `(unmangle-hydrogen-name "my-name")` | ran, returned `"my-name"` |
+
+Python and Scheme gave the same answer.
 
 ### user_mods
 
@@ -166,6 +168,8 @@ Also available in Scheme as `user-mods-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `user_mods("tutorial-modern.pdb")` | not tried |
-| Scheme | `(user-mods "tutorial-modern.pdb")` | not tried |
+| Python | `user_mods("tutorial-modern.pdb")` | ran, returned `[[], []]` |
+| Scheme | `(user-mods "tutorial-modern.pdb")` | ran, returned `(() ())` |
+
+Python and Scheme gave the same answer.
 

@@ -25,8 +25,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `prefer_python()` | not tried |
-| Scheme | `(prefer-python)` | not tried |
+| Python | `prefer_python()` | ran, returned `1` |
+| Scheme | `(prefer-python)` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 
 ### set_prefer_python
 
@@ -40,6 +42,6 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_prefer_python()` | not tried |
-| Scheme | `(set-prefer-python)` | not tried |
+| Python | `set_prefer_python()` | ran (no return value) |
+| Scheme | `(set-prefer-python)` | ran (no return value) |
 

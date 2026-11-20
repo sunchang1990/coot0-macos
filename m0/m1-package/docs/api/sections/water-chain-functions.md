@@ -17,8 +17,10 @@ Also available in Scheme as `water-chain-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `water_chain(0)` | not tried |
-| Scheme | `(water-chain 0)` | not tried |
+| Python | `water_chain(0)` | ran, returned `False` |
+| Scheme | `(water-chain 0)` | ran, returned `#f` |
+
+Python and Scheme gave the same answer.
 
 ### water_chain_from_shelx_ins
 
@@ -35,6 +37,6 @@ Also available in Scheme as `water-chain-from-shelx-ins-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `water_chain_from_shelx_ins(0)` | not tried |
-| Scheme | `(water-chain-from-shelx-ins 0)` | not tried |
+| Python | `water_chain_from_shelx_ins(0)` | not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(water-chain-from-shelx-ins 0)` | not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen) |
 

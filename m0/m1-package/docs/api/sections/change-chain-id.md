@@ -31,3 +31,5 @@ Also available in Python as `change_chain_id_with_result_py`.
 | Python | `change_chain_id_with_result(0, "A", "A", 1, 41, 41)` | ran, returned `[0, 'CONFLICT!  Residue 41 already exists in chain A\nChange chain ID of residue range failed.\n']` |
 | Scheme | `(change-chain-id-with-result-scm 0 "A" "A" 1 41 41)` | ran, returned `(0 "CONFLICT!  Residue 41 already exists in chain A\nChange chain ID of residue range failed.\n")` |
 
+Python and Scheme gave the same answer.
+

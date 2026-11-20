@@ -19,6 +19,8 @@ Arguments: none. Returns: a whole number.
 | Python | `create_pointer_atom_molecule_maybe()` | ran, returned `2` |
 | Scheme | `(create-pointer-atom-molecule-maybe)` | ran, returned `2` |
 
+Python and Scheme gave the same answer.
+
 ### display_where_is_pointer
 
 Python: `display_where_is_pointer()`  
@@ -40,8 +42,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `place_atom_at_pointer()` | not tried |
-| Scheme | `(place-atom-at-pointer)` | not tried |
+| Python | `place_atom_at_pointer()` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(place-atom-at-pointer)` | stopped Coot when tried without a window (not checked with a window) |
 
 ### place_atom_at_pointer_by_window
 
@@ -54,8 +56,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `place_atom_at_pointer_by_window()` | not tried |
-| Scheme | `(place-atom-at-pointer-by-window)` | not tried |
+| Python | `place_atom_at_pointer_by_window()` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(place-atom-at-pointer-by-window)` | stopped Coot when tried without a window (not checked with a window) |
 
 ### place_typed_atom_at_pointer
 
@@ -66,8 +68,8 @@ Arguments: type (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `place_typed_atom_at_pointer("ALA")` | not tried |
-| Scheme | `(place-typed-atom-at-pointer "ALA")` | not tried |
+| Python | `place_typed_atom_at_pointer("ALA")` | ran (no return value) |
+| Scheme | `(place-typed-atom-at-pointer "ALA")` | ran (no return value) |
 
 ### pointer_atom_molecule
 
@@ -80,8 +82,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `pointer_atom_molecule()` | not tried |
-| Scheme | `(pointer-atom-molecule)` | not tried |
+| Python | `pointer_atom_molecule()` | ran, returned `-1` |
+| Scheme | `(pointer-atom-molecule)` | ran, returned `-1` |
+
+Python and Scheme gave the same answer.
 
 ### set_pointer_atom_is_dummy
 
@@ -94,8 +98,8 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_pointer_atom_is_dummy(1)` | not tried |
-| Scheme | `(set-pointer-atom-is-dummy 1)` | not tried |
+| Python | `set_pointer_atom_is_dummy(1)` | ran (no return value) |
+| Scheme | `(set-pointer-atom-is-dummy 1)` | ran (no return value) |
 
 ### set_pointer_atom_molecule
 
@@ -106,6 +110,6 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_pointer_atom_molecule(0)` | not tried |
-| Scheme | `(set-pointer-atom-molecule 0)` | not tried |
+| Python | `set_pointer_atom_molecule(0)` | ran (no return value) |
+| Scheme | `(set-pointer-atom-molecule 0)` | ran (no return value) |
 

@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="ac001098d762dad7d000b8c1c9888d4af66b19f9">
+<meta name="coot0-source-sha1" content="c5844cf3aad3390230ea3ed844e5052d2af958f3">
 <title>Align and Mutate - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -33,6 +33,7 @@ Also available in Python as <code>alignment_results_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>alignment_results(0, "A", "ACDEFGHIKLMNPQRSTVWY")</code></td><td>ran, returned <code>False</code></td></tr>
 <tr><td>Scheme</td><td><code>(alignment-results-scm 0 "A" "ACDEFGHIKLMNPQRSTVWY")</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="nearest_residue_by_sequence">nearest_residue_by_sequence</h3>
 <p>Python: <code>nearest_residue_by_sequence(imol, chain_id, resno, ins_code)</code><br>
 Scheme: <code>(nearest-residue-by-sequence imol chain-id resno ins-code)</code></p>
@@ -42,14 +43,15 @@ Scheme: <code>(nearest-residue-by-sequence imol chain-id resno ins-code)</code><
 Also available in Python as <code>nearest_residue_by_sequence_py</code>.
 Also available in Scheme as <code>nearest-residue-by-sequence-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>nearest_residue_by_sequence(0, "A", 41, "")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(nearest-residue-by-sequence 0 "A" 41 "")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>nearest_residue_by_sequence(0, "A", 41, "")</code></td><td>ran, returned <code>[True, 'A', 41, '']</code></td></tr>
+<tr><td>Scheme</td><td><code>(nearest-residue-by-sequence 0 "A" 41 "")</code></td><td>ran, returned <code>(#t "A" 41 "")</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="set_alignment_gap_and_space_penalty">set_alignment_gap_and_space_penalty</h3>
 <p>Python: <code>set_alignment_gap_and_space_penalty(wgap, wspace)</code><br>
 Scheme: <code>(set-alignment-gap-and-space-penalty wgap wspace)</code></p>
 <p>set the penalty for affine gap and space when aligning, defaults -3.0 and -0.4</p>
 <p>Arguments: wgap (a number), wspace (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_alignment_gap_and_space_penalty(1.0, 1.0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-alignment-gap-and-space-penalty 1.0 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_alignment_gap_and_space_penalty(1.0, 1.0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-alignment-gap-and-space-penalty 1.0 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
 </body></html>

@@ -18,6 +18,8 @@ Arguments: none. Returns: a number.
 | Python | `get_aniso_probability()` | ran, returned `50.0` |
 | Scheme | `(get-aniso-probability)` | ran, returned `50.0` |
 
+Python and Scheme gave the same answer.
+
 ### get_limit_aniso
 
 Python: `get_limit_aniso()`  
@@ -31,6 +33,8 @@ Arguments: none. Returns: a number.
 |---|---|---|
 | Python | `get_limit_aniso()` | ran, returned `12.0` |
 | Scheme | `(get-limit-aniso)` | ran, returned `12.0` |
+
+Python and Scheme gave the same answer.
 
 ### get_show_aniso
 
@@ -46,6 +50,8 @@ Arguments: none. Returns: a whole number.
 | Python | `get_show_aniso()` | ran, returned `0` |
 | Scheme | `(get-show-aniso)` | ran, returned `0` |
 
+Python and Scheme gave the same answer.
+
 ### get_show_limit_aniso
 
 Python: `get_show_limit_aniso()`  
@@ -59,6 +65,8 @@ Arguments: none. Returns: a whole number.
 |---|---|---|
 | Python | `get_show_limit_aniso()` | ran, returned `0` |
 | Scheme | `(get-show-limit-aniso)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### get_text_for_aniso_limit_radius_entry
 
@@ -74,6 +82,8 @@ Arguments: none. Returns: text.
 | Python | `get_text_for_aniso_limit_radius_entry()` | ran, returned `'12.0 '` |
 | Scheme | `(get-text-for-aniso-limit-radius-entry)` | ran, returned `"12.0 "` |
 
+Python and Scheme gave the same answer.
+
 ### set_aniso_limit_size_from_widget
 
 Python: `set_aniso_limit_size_from_widget(text)`  
@@ -85,8 +95,8 @@ Arguments: text (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_aniso_limit_size_from_widget("hello")` | not tried |
-| Scheme | `(set-aniso-limit-size-from-widget "hello")` | not tried |
+| Python | `set_aniso_limit_size_from_widget("hello")` | ran (no return value) |
+| Scheme | `(set-aniso-limit-size-from-widget "hello")` | ran (no return value) |
 
 ### set_aniso_probability
 
@@ -99,8 +109,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_aniso_probability(1.0)` | not tried |
-| Scheme | `(set-aniso-probability 1.0)` | not tried |
+| Python | `set_aniso_probability(1.0)` | ran (no return value) |
+| Scheme | `(set-aniso-probability 1.0)` | ran (no return value) |
 
 ### set_limit_aniso
 
@@ -113,8 +123,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_limit_aniso(1)` | not tried |
-| Scheme | `(set-limit-aniso 1)` | not tried |
+| Python | `set_limit_aniso(1)` | ran (no return value) |
+| Scheme | `(set-limit-aniso 1)` | ran (no return value) |
 
 ### set_show_aniso
 
@@ -127,6 +137,6 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_show_aniso(1)` | not tried |
-| Scheme | `(set-show-aniso 1)` | not tried |
+| Python | `set_show_aniso(1)` | ran (no return value) |
+| Scheme | `(set-show-aniso 1)` | ran (no return value) |
 

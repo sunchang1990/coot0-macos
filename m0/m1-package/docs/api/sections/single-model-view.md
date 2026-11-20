@@ -27,8 +27,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `run_update_self_maybe()` | not tried |
-| Scheme | `(run-update-self-maybe)` | not tried |
+| Python | `run_update_self_maybe()` | not run: not run automatically (run: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(run-update-self-maybe)` | not run: not run automatically (run: exits, uses the network, an external program, files or a screen) |
 
 ### show_go_to_residue_keyboarding_mode_window
 
@@ -39,8 +39,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `show_go_to_residue_keyboarding_mode_window()` | not tried |
-| Scheme | `(show-go-to-residue-keyboarding-mode-window)` | not tried |
+| Python | `show_go_to_residue_keyboarding_mode_window()` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(show-go-to-residue-keyboarding-mode-window)` | stopped Coot when tried without a window (not checked with a window) |
 
 ### single_model_view_model_number
 
@@ -53,8 +53,8 @@ Arguments: imol (a whole number), imodel (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `single_model_view_model_number(0, 1)` | not tried |
-| Scheme | `(single-model-view-model-number 0 1)` | not tried |
+| Python | `single_model_view_model_number(0, 1)` | ran (no return value) |
+| Scheme | `(single-model-view-model-number 0 1)` | ran (no return value) |
 
 ### single_model_view_next_model_number
 
@@ -69,8 +69,10 @@ Arguments: imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `single_model_view_next_model_number(0)` | not tried |
-| Scheme | `(single-model-view-next-model-number 0)` | not tried |
+| Python | `single_model_view_next_model_number(0)` | ran, returned `0` |
+| Scheme | `(single-model-view-next-model-number 0)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### single_model_view_prev_model_number
 
@@ -85,8 +87,10 @@ Arguments: imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `single_model_view_prev_model_number(0)` | not tried |
-| Scheme | `(single-model-view-prev-model-number 0)` | not tried |
+| Python | `single_model_view_prev_model_number(0)` | ran, returned `0` |
+| Scheme | `(single-model-view-prev-model-number 0)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### single_model_view_this_model_number
 
@@ -101,6 +105,8 @@ Arguments: imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `single_model_view_this_model_number(0)` | not tried |
-| Scheme | `(single-model-view-this-model-number 0)` | not tried |
+| Python | `single_model_view_this_model_number(0)` | ran, returned `0` |
+| Scheme | `(single-model-view-this-model-number 0)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 

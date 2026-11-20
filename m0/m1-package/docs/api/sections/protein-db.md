@@ -18,8 +18,8 @@ Arguments: specs (a list). Returns: text.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### protein_db_loops
 
@@ -37,6 +37,6 @@ Arguments: imol_coords (a whole number), residues_specs (a list or value), imol_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `protein_db_loops(0, ["A", 41, ""], 1, 1, 1)` | not tried |
-| Scheme | `(protein-db-loops 0 (list "A" 41 "") 1 1 1)` | not tried |
+| Python | `protein_db_loops(0, ["A", 41, ""], 1, 1, True)` | error: SystemError: <built-in function protein_db_loops_py> returned a result with an exception set |
+| Scheme | `(protein-db-loops 0 (list "A" 41 "") 1 1 1)` | error: In procedure length: Wrong type argument in position 1: "A" |
 

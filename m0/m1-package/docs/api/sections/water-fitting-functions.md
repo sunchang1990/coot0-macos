@@ -56,6 +56,8 @@ Arguments: none. Returns: text.
 | Python | `get_text_for_find_waters_sigma_cut_off()` | ran, returned `'  1.4'` |
 | Scheme | `(get-text-for-find-waters-sigma-cut-off)` | ran, returned `"  1.4"` |
 
+Python and Scheme gave the same answer.
+
 ### max_water_distance
 
 Python: `max_water_distance(imol)`  
@@ -69,8 +71,10 @@ Arguments: imol (a whole number). Returns: a number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `max_water_distance(0)` | not tried |
-| Scheme | `(max-water-distance 0)` | not tried |
+| Python | `max_water_distance(0)` | ran, returned `-1.0` |
+| Scheme | `(max-water-distance 0)` | ran, returned `-1.0` |
+
+Python and Scheme gave the same answer.
 
 ### move_hetgroups_to_around_protein
 
@@ -84,8 +88,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `move_hetgroups_to_around_protein(0)` | not tried |
-| Scheme | `(move-hetgroups-to-around-protein 0)` | not tried |
+| Python | `move_hetgroups_to_around_protein(0)` | ran (no return value) |
+| Scheme | `(move-hetgroups-to-around-protein 0)` | ran (no return value) |
 
 ### move_waters_to_around_protein
 
@@ -100,8 +104,10 @@ Arguments: imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `move_waters_to_around_protein(0)` | not tried |
-| Scheme | `(move-waters-to-around-protein 0)` | not tried |
+| Python | `move_waters_to_around_protein(0)` | ran, returned `0` |
+| Scheme | `(move-waters-to-around-protein 0)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### renumber_waters
 
@@ -114,8 +120,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `renumber_waters(0)` | not tried |
-| Scheme | `(renumber-waters 0)` | not tried |
+| Python | `renumber_waters(0)` | ran (no return value) |
+| Scheme | `(renumber-waters 0)` | ran (no return value) |
 
 ### set_ligand_water_n_cycles
 
@@ -128,8 +134,8 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_ligand_water_n_cycles(1)` | not tried |
-| Scheme | `(set-ligand-water-n-cycles 1)` | not tried |
+| Python | `set_ligand_water_n_cycles(1)` | ran (no return value) |
+| Scheme | `(set-ligand-water-n-cycles 1)` | ran (no return value) |
 
 ### set_ligand_water_to_protein_distance_limits
 
@@ -144,8 +150,8 @@ Arguments: f1 (a number), f2 (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_ligand_water_to_protein_distance_limits(1.0, 1.0)` | not tried |
-| Scheme | `(set-ligand-water-to-protein-distance-limits 1.0 1.0)` | not tried |
+| Python | `set_ligand_water_to_protein_distance_limits(1.0, 1.0)` | ran (no return value) |
+| Scheme | `(set-ligand-water-to-protein-distance-limits 1.0 1.0)` | ran (no return value) |
 
 ### set_value_for_find_waters_sigma_cut_off
 
@@ -156,8 +162,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_value_for_find_waters_sigma_cut_off(1.0)` | not tried |
-| Scheme | `(set-value-for-find-waters-sigma-cut-off 1.0)` | not tried |
+| Python | `set_value_for_find_waters_sigma_cut_off(1.0)` | ran (no return value) |
+| Scheme | `(set-value-for-find-waters-sigma-cut-off 1.0)` | ran (no return value) |
 
 ### set_water_check_spherical_variance_limit
 
@@ -173,8 +179,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_water_check_spherical_variance_limit(1.0)` | not tried |
-| Scheme | `(set-water-check-spherical-variance-limit 1.0)` | not tried |
+| Python | `set_water_check_spherical_variance_limit(1.0)` | ran (no return value) |
+| Scheme | `(set-water-check-spherical-variance-limit 1.0)` | ran (no return value) |
 
 ### set_write_peaksearched_waters
 
@@ -185,8 +191,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_write_peaksearched_waters()` | not tried |
-| Scheme | `(set-write-peaksearched-waters)` | not tried |
+| Python | `set_write_peaksearched_waters()` | ran (no return value) |
+| Scheme | `(set-write-peaksearched-waters)` | ran (no return value) |
 
 ### split_water
 
@@ -206,8 +212,8 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `split_water(0, "A", 41, "")` | not tried |
-| Scheme | `(split-water 0 "A" 41 "")` | not tried |
+| Python | `split_water(0, "A", 41, "")` | ran (no return value) |
+| Scheme | `(split-water 0 "A" 41 "")` | ran (no return value) |
 
 ### wrapped_create_find_waters_dialog
 
@@ -220,6 +226,6 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `wrapped_create_find_waters_dialog()` | not tried |
-| Scheme | `(wrapped-create-find-waters-dialog)` | not tried |
+| Python | `wrapped_create_find_waters_dialog()` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(wrapped-create-find-waters-dialog)` | stopped Coot when tried without a window (not checked with a window) |
 

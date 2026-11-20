@@ -13,8 +13,10 @@ Arguments: imol (a whole number). Returns: a number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `optimal_B_kurtosis(0)` | not tried |
-| Scheme | `(optimal-B-kurtosis 0)` | not tried |
+| Python | `optimal_B_kurtosis(0)` | ran, returned `0.0` |
+| Scheme | `(optimal-B-kurtosis 0)` | ran, returned `0.0` |
+
+Python and Scheme gave the same answer.
 
 ### set_map_sharpening_scale_limit
 
@@ -27,8 +29,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_map_sharpening_scale_limit(1.0)` | not tried |
-| Scheme | `(set-map-sharpening-scale-limit 1.0)` | not tried |
+| Python | `set_map_sharpening_scale_limit(1.0)` | ran (no return value) |
+| Scheme | `(set-map-sharpening-scale-limit 1.0)` | ran (no return value) |
 
 ### sharpen
 
@@ -42,8 +44,8 @@ Arguments: imol (a whole number), b_factor (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `sharpen(0, 20.0)` | not tried |
-| Scheme | `(sharpen 0 20.0)` | not tried |
+| Python | `sharpen(0, 20.0)` | ran (no return value) |
+| Scheme | `(sharpen 0 20.0)` | ran (no return value) |
 
 ### sharpen_with_gompertz_scaling
 
@@ -54,6 +56,6 @@ Arguments: imol (a whole number), b_factor (a number), try_gompertz (a whole num
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `sharpen_with_gompertz_scaling(0, 20.0, 1, 1.0)` | not tried |
-| Scheme | `(sharpen-with-gompertz-scaling 0 20.0 1 1.0)` | not tried |
+| Python | `sharpen_with_gompertz_scaling(0, 20.0, 1, 1.0)` | ran (no return value) |
+| Scheme | `(sharpen-with-gompertz-scaling 0 20.0 1 1.0)` | ran (no return value) |
 

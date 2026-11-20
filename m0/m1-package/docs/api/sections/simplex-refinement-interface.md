@@ -29,6 +29,8 @@ Arguments: res1 (a whole number), res2 (a whole number), altloc (text), chain_id
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `score_residue_range_fit_to_map(1, 1, "", "A", 0, 1)` | not tried |
-| Scheme | `(score-residue-range-fit-to-map 1 1 "" "A" 0 1)` | not tried |
+| Python | `score_residue_range_fit_to_map(1, 1, "", "A", 0, 1)` | ran, returned `5.491945266723633` |
+| Scheme | `(score-residue-range-fit-to-map 1 1 "" "A" 0 1)` | ran, returned `5.491945266723633` |
+
+Python and Scheme gave the same answer.
 

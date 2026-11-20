@@ -28,6 +28,8 @@ Arguments: imol (a whole number), file_name (text). Returns: a whole number.
 | Python | `add_molecular_symmetry_from_mtrix_from_file(0, "tutorial-modern.pdb")` | ran, returned `0` |
 | Scheme | `(add-molecular-symmetry-from-mtrix-from-file 0 "tutorial-modern.pdb")` | ran, returned `0` |
 
+Python and Scheme gave the same answer.
+
 ### add_molecular_symmetry_from_mtrix_from_self_file
 
 Python: `add_molecular_symmetry_from_mtrix_from_self_file(imol)`  
@@ -39,6 +41,8 @@ Arguments: imol (a whole number). Returns: a whole number.
 |---|---|---|
 | Python | `add_molecular_symmetry_from_mtrix_from_self_file(0)` | ran, returned `0` |
 | Scheme | `(add-molecular-symmetry-from-mtrix-from-self-file 0)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### clashes_with_symmetry
 
@@ -58,6 +62,8 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_
 | Python | `clashes_with_symmetry(0, "A", 41, "", 1.0)` | ran, returned `0` |
 | Scheme | `(clashes-with-symmetry 0 "A" 41 "" 1.0)` | ran, returned `0` |
 
+Python and Scheme gave the same answer.
+
 ### get_symmetry
 
 Python: `get_symmetry(imol)`  
@@ -72,4 +78,6 @@ Also available in Python as `get_symmetry_py`.
 |---|---|---|
 | Python | `get_symmetry(0)` | ran, returned `['x,y,z', '-x+1/2,-y,z+1/2', 'x+1/2,-y+1/2,-z', '-x,y+1/2,-z+1/2']` |
 | Scheme | `(get-symmetry 0)` | ran, returned `("x,y,z" "-x+1/2,-y,z+1/2" "x+1/2,-y+1/2,-z" "-x,y+1/2,-z+1/2")` |
+
+Python and Scheme gave the same answer.
 

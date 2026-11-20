@@ -18,6 +18,8 @@ Arguments: mol (a whole number), chain (text), resno (a whole number), atom_name
 | Python | `atom_spec_to_atom_index(0, "A", 41, " CA ")` | ran, returned `295` |
 | Scheme | `(atom-spec-to-atom-index 0 "A" 41 " CA ")` | ran, returned `295` |
 
+Python and Scheme gave the same answer.
+
 ### autobuild_ca_off
 
 Python: `autobuild_ca_off()`  
@@ -58,6 +60,8 @@ Arguments: imol (a whole number), chain (text), resno (a whole number), inscode 
 | Python | `full_atom_spec_to_atom_index(0, "A", 41, "", " CA ", "")` | ran, returned `295` |
 | Scheme | `(full-atom-spec-to-atom-index 0 "A" 41 "" " CA " "")` | ran, returned `295` |
 
+Python and Scheme gave the same answer.
+
 ### glyco_tree
 
 Python: `glyco_tree(imol, active_residue_py)`  
@@ -84,6 +88,8 @@ Also available in Python as `glyco_tree_compare_trees_py`.
 | Python | `glyco_tree_compare_trees(0, ["A", 41, ""], 0, ["A", 41, ""])` | ran, returned `True` |
 | Scheme | `(glyco-tree-compare-trees-scm 0 (list "A" 41 "") 0 (list "A" 41 ""))` | ran, returned `#t` |
 
+Python and Scheme gave the same answer.
+
 ### glyco_tree_internal_distances_fn_py
 
 Python: `glyco_tree_internal_distances_fn_py(imol, residue_spec, file_name)`  
@@ -95,6 +101,8 @@ Arguments: imol (a whole number), residue_spec (a list or value), file_name (tex
 |---|---|---|
 | Python | `glyco_tree_internal_distances_fn_py(0, ["A", 41, ""], "tutorial-modern.pdb")` | ran, returned `False` |
 | Scheme | `(glyco-tree-internal-distances-fn-scm 0 (list "A" 41 "") "tutorial-modern.pdb")` | ran, returned `#f` |
+
+Python and Scheme gave the same answer.
 
 ### glyco_tree_matched_residue_pairs
 
@@ -109,6 +117,8 @@ Also available in Python as `glyco_tree_matched_residue_pairs_py`.
 | Python | `glyco_tree_matched_residue_pairs(0, ["A", 41, ""], 0, ["A", 41, ""])` | ran, returned `False` |
 | Scheme | `(glyco-tree-matched-residue-pairs-scm 0 (list "A" 41 "") 0 (list "A" 41 ""))` | ran, returned `#f` |
 
+Python and Scheme gave the same answer.
+
 ### glyco_tree_residue_id
 
 Python: `glyco_tree_residue_id(imol, residue_spec_py)`  
@@ -122,6 +132,8 @@ Also available in Scheme as `glyco-tree-residue-id-scm`.
 |---|---|---|
 | Python | `glyco_tree_residue_id(0, ["A", 41, ""])` | ran, returned `False` |
 | Scheme | `(glyco-tree-residue-id 0 (list "A" 41 ""))` | ran, returned `#f` |
+
+Python and Scheme gave the same answer.
 
 ### glyco_tree_residues
 
@@ -165,6 +177,8 @@ Arguments: none. Returns: text.
 | Python | `go_to_atom_alt_conf()` | ran, returned `''` |
 | Scheme | `(go-to-atom-alt-conf)` | ran, returned `""` |
 
+Python and Scheme gave the same answer.
+
 ### go_to_atom_atom_name
 
 Python: `go_to_atom_atom_name()`  
@@ -178,6 +192,8 @@ Arguments: none. Returns: text.
 |---|---|---|
 | Python | `go_to_atom_atom_name()` | ran, returned `'CA'` |
 | Scheme | `(go-to-atom-atom-name)` | ran, returned `"CA"` |
+
+Python and Scheme gave the same answer.
 
 ### go_to_atom_chain_id
 
@@ -193,6 +209,8 @@ Arguments: none. Returns: text.
 | Python | `go_to_atom_chain_id()` | ran, returned `'A'` |
 | Scheme | `(go-to-atom-chain-id)` | ran, returned `"A"` |
 
+Python and Scheme gave the same answer.
+
 ### go_to_atom_ins_code
 
 Python: `go_to_atom_ins_code()`  
@@ -206,6 +224,8 @@ Arguments: none. Returns: text.
 |---|---|---|
 | Python | `go_to_atom_ins_code()` | ran, returned `''` |
 | Scheme | `(go-to-atom-ins-code)` | ran, returned `""` |
+
+Python and Scheme gave the same answer.
 
 ### go_to_atom_molecule_number
 
@@ -221,6 +241,8 @@ Arguments: none. Returns: a whole number.
 | Python | `go_to_atom_molecule_number()` | ran, returned `0` |
 | Scheme | `(go-to-atom-molecule-number)` | ran, returned `0` |
 
+Python and Scheme gave the same answer.
+
 ### go_to_atom_residue_number
 
 Python: `go_to_atom_residue_number()`  
@@ -235,6 +257,8 @@ Arguments: none. Returns: a whole number.
 | Python | `go_to_atom_residue_number()` | ran, returned `1` |
 | Scheme | `(go-to-atom-residue-number)` | ran, returned `1` |
 
+Python and Scheme gave the same answer.
+
 ### post_go_to_atom_window
 
 Python: `post_go_to_atom_window()`  
@@ -246,8 +270,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `post_go_to_atom_window()` | not tried |
-| Scheme | `(post-go-to-atom-window)` | not tried |
+| Python | `post_go_to_atom_window()` | ran (no return value) |
+| Scheme | `(post-go-to-atom-window)` | ran (no return value) |
 
 ### set_go_to_atom_chain_residue_atom_name
 
@@ -266,8 +290,10 @@ Arguments: t1_chain_id (text), iresno (a whole number), t3_atom_name (text). Ret
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_go_to_atom_chain_residue_atom_name("A", 41, " CA ")` | not tried |
-| Scheme | `(set-go-to-atom-chain-residue-atom-name "A" 41 " CA ")` | not tried |
+| Python | `set_go_to_atom_chain_residue_atom_name("A", 41, " CA ")` | ran, returned `1` |
+| Scheme | `(set-go-to-atom-chain-residue-atom-name "A" 41 " CA ")` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 
 ### set_go_to_atom_chain_residue_atom_name_full
 
@@ -286,8 +312,10 @@ Arguments: chain_id (text), resno (a whole number), ins_code (text), atom_name (
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_go_to_atom_chain_residue_atom_name_full("A", 41, "", " CA ", "")` | not tried |
-| Scheme | `(set-go-to-atom-chain-residue-atom-name-full "A" 41 "" " CA " "")` | not tried |
+| Python | `set_go_to_atom_chain_residue_atom_name_full("A", 41, "", " CA ", "")` | ran, returned `1` |
+| Scheme | `(set-go-to-atom-chain-residue-atom-name-full "A" 41 "" " CA " "")` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 
 ### set_go_to_atom_chain_residue_atom_name_no_redraw
 
@@ -300,8 +328,10 @@ Arguments: t1 (text), iresno (a whole number), t3 (text), make_the_move_flag (a 
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_go_to_atom_chain_residue_atom_name_no_redraw("hello", 41, "hello", 1)` | not tried |
-| Scheme | `(set-go-to-atom-chain-residue-atom-name-no-redraw "hello" 41 "hello" 1)` | not tried |
+| Python | `set_go_to_atom_chain_residue_atom_name_no_redraw("hello", 41, "hello", 1)` | ran, returned `0` |
+| Scheme | `(set-go-to-atom-chain-residue-atom-name-no-redraw "hello" 41 "hello" 1)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### set_go_to_atom_chain_residue_atom_name_strings
 
@@ -312,8 +342,8 @@ Arguments: t1 (text), t2 (text), txt (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_go_to_atom_chain_residue_atom_name_strings("hello", "hello", "hello")` | not tried |
-| Scheme | `(set-go-to-atom-chain-residue-atom-name-strings "hello" "hello" "hello")` | not tried |
+| Python | `set_go_to_atom_chain_residue_atom_name_strings("hello", "hello", "hello")` | error: TypeError: in method 'set_go_to_atom_chain_residue_atom_name_strings', argument 1 of type 'gchar const *' |
+| Scheme | `(set-go-to-atom-chain-residue-atom-name-strings "hello" "hello" "hello")` | error: In procedure set-go-to-atom-chain-residue-atom-name-strings: Wrong type argument in position 1: "hello" |
 
 ### set_go_to_atom_molecule
 
@@ -343,8 +373,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_go_to_atom_molecule(0)` | not tried |
-| Scheme | `(set-go-to-atom-molecule 0)` | not tried |
+| Python | `set_go_to_atom_molecule(0)` | ran (no return value) |
+| Scheme | `(set-go-to-atom-molecule 0)` | ran (no return value) |
 
 ### test_fragment
 
@@ -355,8 +385,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `test_fragment()` | not tried |
-| Scheme | `(test-fragment)` | not tried |
+| Python | `test_fragment()` | ran (no return value) |
+| Scheme | `(test-fragment)` | ran (no return value) |
 
 ### test_function
 
@@ -367,8 +397,8 @@ Arguments: i (a list or value), j (a list or value). Returns: a value (see the r
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 
 ### unset_go_to_atom_widget
 
@@ -381,8 +411,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `unset_go_to_atom_widget()` | not tried |
-| Scheme | `(unset-go-to-atom-widget)` | not tried |
+| Python | `unset_go_to_atom_widget()` | ran (no return value) |
+| Scheme | `(unset-go-to-atom-widget)` | ran (no return value) |
 
 ### update_go_to_atom_from_current_position
 
@@ -396,8 +426,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `update_go_to_atom_from_current_position()` | not tried |
-| Scheme | `(update-go-to-atom-from-current-position)` | not tried |
+| Python | `update_go_to_atom_from_current_position()` | ran (no return value) |
+| Scheme | `(update-go-to-atom-from-current-position)` | ran (no return value) |
 
 ### update_go_to_atom_residue_list
 
@@ -411,8 +441,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `update_go_to_atom_residue_list(0)` | not tried |
-| Scheme | `(update-go-to-atom-residue-list 0)` | not tried |
+| Python | `update_go_to_atom_residue_list(0)` | ran (no return value) |
+| Scheme | `(update-go-to-atom-residue-list 0)` | ran (no return value) |
 
 ### update_go_to_atom_window_on_changed_mol
 
@@ -425,8 +455,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `update_go_to_atom_window_on_changed_mol(0)` | not tried |
-| Scheme | `(update-go-to-atom-window-on-changed-mol 0)` | not tried |
+| Python | `update_go_to_atom_window_on_changed_mol(0)` | ran (no return value) |
+| Scheme | `(update-go-to-atom-window-on-changed-mol 0)` | ran (no return value) |
 
 ### update_go_to_atom_window_on_new_mol
 
@@ -440,8 +470,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `update_go_to_atom_window_on_new_mol()` | not tried |
-| Scheme | `(update-go-to-atom-window-on-new-mol)` | not tried |
+| Python | `update_go_to_atom_window_on_new_mol()` | ran (no return value) |
+| Scheme | `(update-go-to-atom-window-on-new-mol)` | ran (no return value) |
 
 ### update_go_to_atom_window_on_other_molecule_chosen
 
@@ -452,6 +482,6 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `update_go_to_atom_window_on_other_molecule_chosen(0)` | not tried |
-| Scheme | `(update-go-to-atom-window-on-other-molecule-chosen 0)` | not tried |
+| Python | `update_go_to_atom_window_on_other_molecule_chosen(0)` | ran (no return value) |
+| Scheme | `(update-go-to-atom-window-on-other-molecule-chosen 0)` | ran (no return value) |
 

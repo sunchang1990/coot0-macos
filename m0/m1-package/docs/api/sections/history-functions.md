@@ -15,8 +15,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `print_all_history_in_python()` | not tried |
-| Scheme | `(print-all-history-in-python)` | not tried |
+| Python | `print_all_history_in_python()` | ran (no return value) |
+| Scheme | `(print-all-history-in-python)` | ran (no return value) |
 
 ### print_all_history_in_scheme
 
@@ -29,8 +29,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `print_all_history_in_scheme()` | not tried |
-| Scheme | `(print-all-history-in-scheme)` | not tried |
+| Python | `print_all_history_in_scheme()` | ran (no return value) |
+| Scheme | `(print-all-history-in-scheme)` | ran (no return value) |
 
 ### set_console_display_commands_hilights
 
@@ -48,8 +48,8 @@ Arguments: bold_flag (a whole number), colour_flag (a whole number), colour_inde
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_console_display_commands_hilights(1, 1, 1)` | not tried |
-| Scheme | `(set-console-display-commands-hilights 1 1 1)` | not tried |
+| Python | `set_console_display_commands_hilights(1, 1, 1)` | ran (no return value) |
+| Scheme | `(set-console-display-commands-hilights 1 1 1)` | ran (no return value) |
 
 ### set_console_display_commands_state
 
@@ -65,6 +65,6 @@ Arguments: istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_console_display_commands_state(1)` | not tried |
-| Scheme | `(set-console-display-commands-state 1)` | not tried |
+| Python | `set_console_display_commands_state(1)` | ran (no return value) |
+| Scheme | `(set-console-display-commands-state 1)` | ran (no return value) |
 

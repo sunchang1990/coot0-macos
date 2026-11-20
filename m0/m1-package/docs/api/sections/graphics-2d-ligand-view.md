@@ -17,6 +17,6 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_show_graphics_ligand_view(1)` | not tried |
-| Scheme | `(set-show-graphics-ligand-view 1)` | not tried |
+| Python | `set_show_graphics_ligand_view(1)` | ran (no return value) |
+| Scheme | `(set-show-graphics-ligand-view 1)` | ran (no return value) |
 

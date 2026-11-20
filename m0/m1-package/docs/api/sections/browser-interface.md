@@ -47,6 +47,6 @@ Arguments: browser (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_browser_interface("hello")` | not tried |
-| Scheme | `(set-browser-interface "hello")` | not tried |
+| Python | `set_browser_interface("hello")` | not run: not run automatically (browser: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(set-browser-interface "hello")` | not run: not run automatically (browser: exits, uses the network, an external program, files or a screen) |
 

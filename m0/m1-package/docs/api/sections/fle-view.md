@@ -125,6 +125,8 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `sprout_hydrogens(0, "A", 41, "")` | not tried |
-| Scheme | `(sprout-hydrogens 0 "A" 41 "")` | not tried |
+| Python | `sprout_hydrogens(0, "A", 41, "")` | ran, returned `0` |
+| Scheme | `(sprout-hydrogens 0 "A" 41 "")` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 

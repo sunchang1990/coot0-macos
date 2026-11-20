@@ -1,0 +1,34 @@
+Build 30 regression checks: new tests on build 29 files (bin/coot-bin, coot_utils.py of build 29) and on build 30 (20 Nov 2026, headless).
+
+== python-api, build 29 coot_utils.py
+FAIL sanitise_alt_confs_active_residue clears an orphan alt conf         EXC TypeError("in method 'residue_info_py', argument 2 of type 'char const *'")
+SUMMARY 19 / 20
+== python-api, build 30
+PASS sanitise_alt_confs_active_residue clears an orphan alt conf         True
+SUMMARY 20 / 20
+
+== scheme-api, build 29 coot-bin
+FAIL map-peaks: highest peak first (was lowest first)  #f
+FAIL map-to-model-correlation-stats-per-residue-range-scm: a flat list of (residue-spec (n correlation))  #f
+FAIL ncs-chain-differences: each residue as ((resno ins) (target-resno ins) diff), as in Python  #f
+SUMMARY 27 / 30
+== scheme-api, build 30 coot-bin
+PASS map-peaks: highest peak first (was lowest first)  #t
+PASS map-to-model-correlation-stats-per-residue-range-scm: a flat list of (residue-spec (n correlation))  #t
+PASS ncs-chain-differences: each residue as ((resno ins) (target-resno ins) diff), as in Python  #t
+SUMMARY 30 / 30
+
+== map_peaks order on build 29 (Python vs Scheme, 3 sigma)
+RESULT n 345 345 same order False reversed True
+RESULT density first py 3.254 first scm 1.054
+
+== python-api: ligand_atom_overlaps on the first build-30 binary (= build 29 behaviour: upstream FIXME) and on the final build 30
+FAIL ligand_atom_overlaps returns the overlaps (as Scheme does)          False
+SUMMARY 20 / 21
+PASS ligand_atom_overlaps returns the overlaps (as Scheme does)          True
+SUMMARY 21 / 21
+== scheme-api final build 30
+SUMMARY 30 / 30
+
+== full run of every example (tests/run-api-examples.sh, build 30, headless)
+api examples: 2768 ran, 44 gave an error, 126 stopped Coot (no screen), 14 hung, 454 not run automatically (3406 calls)

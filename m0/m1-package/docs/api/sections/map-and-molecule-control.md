@@ -92,8 +92,10 @@ Arguments: imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `map_is_displayed(0)` | not tried |
-| Scheme | `(map-is-displayed 0)` | not tried |
+| Python | `map_is_displayed(0)` | ran, returned `0` |
+| Scheme | `(map-is-displayed 0)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### merge_molecules
 
@@ -115,8 +117,10 @@ Also available in Python as `merge_molecules_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `merge_molecules([0], 0)` | not tried |
-| Scheme | `(merge-molecules (list 0) 0)` | not tried |
+| Python | `merge_molecules([0], 0)` | ran, returned `[0]` |
+| Scheme | `(merge-molecules (list 0) 0)` | ran, returned `(0 ())` |
+
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
 ### mol_is_active
 
@@ -130,8 +134,10 @@ Arguments: imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `mol_is_active(0)` | not tried |
-| Scheme | `(mol-is-active 0)` | not tried |
+| Python | `mol_is_active(0)` | ran, returned `1` |
+| Scheme | `(mol-is-active 0)` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 
 ### mol_is_displayed
 
@@ -146,8 +152,10 @@ Arguments: imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `mol_is_displayed(0)` | not tried |
-| Scheme | `(mol-is-displayed 0)` | not tried |
+| Python | `mol_is_displayed(0)` | ran, returned `1` |
+| Scheme | `(mol-is-displayed 0)` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 
 ### post_display_control_window
 
@@ -160,8 +168,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `post_display_control_window()` | not tried |
-| Scheme | `(post-display-control-window)` | not tried |
+| Python | `post_display_control_window()` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(post-display-control-window)` | stopped Coot when tried without a window (not checked with a window) |
 
 ### reset_graphics_display_control_window
 
@@ -172,8 +180,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `reset_graphics_display_control_window()` | not tried |
-| Scheme | `(reset-graphics-display-control-window)` | not tried |
+| Python | `reset_graphics_display_control_window()` | ran (no return value) |
+| Scheme | `(reset-graphics-display-control-window)` | ran (no return value) |
 
 ### set_all_maps_displayed
 
@@ -187,8 +195,8 @@ Arguments: on_or_off (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_all_maps_displayed(1)` | not tried |
-| Scheme | `(set-all-maps-displayed 1)` | not tried |
+| Python | `set_all_maps_displayed(1)` | ran (no return value) |
+| Scheme | `(set-all-maps-displayed 1)` | ran (no return value) |
 
 ### set_all_models_displayed_and_active
 
@@ -202,8 +210,8 @@ Arguments: on_or_off (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_all_models_displayed_and_active(1)` | not tried |
-| Scheme | `(set-all-models-displayed-and-active 1)` | not tried |
+| Python | `set_all_models_displayed_and_active(1)` | ran (no return value) |
+| Scheme | `(set-all-models-displayed-and-active 1)` | ran (no return value) |
 
 ### set_display_only_model_mol
 
@@ -218,8 +226,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_display_only_model_mol(0)` | not tried |
-| Scheme | `(set-display-only-model-mol 0)` | not tried |
+| Python | `set_display_only_model_mol(0)` | ran (no return value) |
+| Scheme | `(set-display-only-model-mol 0)` | ran (no return value) |
 
 ### set_map_displayed
 
@@ -232,8 +240,8 @@ Arguments: imol (a whole number), state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_map_displayed(0, 1)` | not tried |
-| Scheme | `(set-map-displayed 0 1)` | not tried |
+| Python | `set_map_displayed(0, 1)` | ran (no return value) |
+| Scheme | `(set-map-displayed 0 1)` | ran (no return value) |
 
 ### set_merge_molecules_ligand_spec
 
@@ -246,8 +254,8 @@ Also available in Scheme as `set-merge-molecules-ligand-spec-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_merge_molecules_ligand_spec(["A", 41, ""])` | not tried |
-| Scheme | `(set-merge-molecules-ligand-spec (list "A" 41 ""))` | not tried |
+| Python | `set_merge_molecules_ligand_spec(["A", 41, ""])` | ran (no return value) |
+| Scheme | `(set-merge-molecules-ligand-spec (list "A" 41 ""))` | ran (no return value) |
 
 ### set_mol_active
 
@@ -261,8 +269,8 @@ Arguments: imol (a whole number), state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_mol_active(0, 1)` | not tried |
-| Scheme | `(set-mol-active 0 1)` | not tried |
+| Python | `set_mol_active(0, 1)` | ran (no return value) |
+| Scheme | `(set-mol-active 0 1)` | ran (no return value) |
 
 ### set_mol_displayed
 
@@ -275,8 +283,8 @@ Arguments: imol (a whole number), state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_mol_displayed(0, 1)` | not tried |
-| Scheme | `(set-mol-displayed 0 1)` | not tried |
+| Python | `set_mol_displayed(0, 1)` | ran (no return value) |
+| Scheme | `(set-mol-displayed 0 1)` | ran (no return value) |
 
 ### set_only_last_model_molecule_displayed
 
@@ -289,8 +297,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_only_last_model_molecule_displayed()` | not tried |
-| Scheme | `(set-only-last-model-molecule-displayed)` | not tried |
+| Python | `set_only_last_model_molecule_displayed()` | ran (no return value) |
+| Scheme | `(set-only-last-model-molecule-displayed)` | ran (no return value) |
 
 ### show_spacegroup
 
@@ -306,8 +314,10 @@ Arguments: imol (a whole number). Returns: text.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `show_spacegroup(0)` | not tried |
-| Scheme | `(show-spacegroup 0)` | not tried |
+| Python | `show_spacegroup(0)` | ran, returned `'P 21 21 21'` |
+| Scheme | `(show-spacegroup 0)` | ran, returned `"P 21 21 21"` |
+
+Python and Scheme gave the same answer.
 
 ### space_group
 
@@ -320,8 +330,10 @@ Also available in Scheme as `space-group-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `space_group(0)` | not tried |
-| Scheme | `(space-group 0)` | not tried |
+| Python | `space_group(0)` | ran, returned `'P 21 21 21'` |
+| Scheme | `(space-group 0)` | ran, returned `"P 21 21 21"` |
+
+Python and Scheme gave the same answer.
 
 ### symmetry_operators
 
@@ -337,8 +349,10 @@ Also available in Scheme as `symmetry-operators-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `symmetry_operators(0)` | not tried |
-| Scheme | `(symmetry-operators 0)` | not tried |
+| Python | `symmetry_operators(0)` | ran, returned `['x,y,z', '-x+1/2,-y,z+1/2', 'x+1/2,-y+1/2,-z', '-x,y+1/2,-z+1/2']` |
+| Scheme | `(symmetry-operators 0)` | ran, returned `("x,y,z" "-x+1/2,-y,z+1/2" "x+1/2,-y+1/2,-z" "-x,y+1/2,-z+1/2")` |
+
+Python and Scheme gave the same answer.
 
 ### symmetry_operators_to_xHM
 
@@ -354,6 +368,6 @@ Also available in Scheme as `symmetry-operators-to-xHM-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 

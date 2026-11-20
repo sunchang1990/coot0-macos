@@ -17,8 +17,8 @@ Arguments: mode (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `vt_surface(1)` | not tried |
-| Scheme | `(vt-surface 1)` | not tried |
+| Python | `vt_surface(1)` | ran (no return value) |
+| Scheme | `(vt-surface 1)` | ran (no return value) |
 
 ### vt_surface_status
 
@@ -33,6 +33,8 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `vt_surface_status()` | not tried |
-| Scheme | `(vt-surface-status)` | not tried |
+| Python | `vt_surface_status()` | ran, returned `1` |
+| Scheme | `(vt-surface-status)` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 

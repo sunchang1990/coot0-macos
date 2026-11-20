@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="4c8b7028e63db8030a3afe5d5d19c690bbadb3a3">
+<meta name="coot0-source-sha1" content="26e6515290d8fde3529982237d7ece8e7d8a9f38">
 <title>Marking Fixed Atom Interface - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -39,29 +39,30 @@ Scheme: <code>(mark-atom-as-fixed imol atom-spec state)</code></p>
 Also available in Python as <code>mark_atom_as_fixed_py</code>.
 Also available in Scheme as <code>mark-atom-as-fixed-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>mark_atom_as_fixed(0, ["A", 41, "", " CA ", ""], 1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(mark-atom-as-fixed 0 (list "A" 41 "" " CA " "") 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>mark_atom_as_fixed(0, ["A", 41, "", " CA ", ""], 1)</code></td><td>ran, returned <code>True</code></td></tr>
+<tr><td>Scheme</td><td><code>(mark-atom-as-fixed 0 (list "A" 41 "" " CA " "") 1)</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 <h3 id="mark_multiple_atoms_as_fixed">mark_multiple_atoms_as_fixed</h3>
 <p>Python: <code>mark_multiple_atoms_as_fixed(imol, atom_spec_list, state)</code><br>
 Scheme: <code>(mark-multiple-atoms-as-fixed-scm imol atom-spec-list state)</code></p>
 <p>Arguments: imol (a whole number), atom_spec_list (a list or value), state (a whole number). Returns: a whole number.
 Also available in Python as <code>mark_multiple_atoms_as_fixed_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>mark_multiple_atoms_as_fixed(0, ["A", 41, "", " CA ", ""], 1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(mark-multiple-atoms-as-fixed-scm 0 (list "A" 41 "" " CA " "") 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>mark_multiple_atoms_as_fixed(0, ["A", 41, "", " CA ", ""], 1)</code></td><td>error: SystemError: &lt;built-in function mark_multiple_atoms_as_fixed_py&gt; returned a result with an exception set</td></tr>
+<tr><td>Scheme</td><td><code>(mark-multiple-atoms-as-fixed-scm 0 (list "A" 41 "" " CA " "") 1)</code></td><td>error: In procedure length: Wrong type argument in position 1: "A"</td></tr></tbody></table>
 <h3 id="set_debug_atom_picking">set_debug_atom_picking</h3>
 <p>Python: <code>set_debug_atom_picking(istate)</code><br>
 Scheme: <code>(set-debug-atom-picking istate)</code></p>
 <p>produce debugging output from problematic atom picking</p>
 <p>Arguments: istate (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_debug_atom_picking(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-debug-atom-picking 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_debug_atom_picking(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-debug-atom-picking 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="setup_fixed_atom_pick">setup_fixed_atom_pick</h3>
 <p>Python: <code>setup_fixed_atom_pick(ipick, is_unpick)</code><br>
 Scheme: <code>(setup-fixed-atom-pick ipick is-unpick)</code></p>
 <p>Arguments: ipick (a whole number), is_unpick (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>setup_fixed_atom_pick(1, 1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(setup-fixed-atom-pick 1 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>setup_fixed_atom_pick(1, 1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(setup-fixed-atom-pick 1 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 </body></html>

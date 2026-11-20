@@ -13,6 +13,8 @@ Arguments: imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `merge_fragments(0)` | not tried |
-| Scheme | `(merge-fragments 0)` | not tried |
+| Python | `merge_fragments(0)` | ran, returned `1` |
+| Scheme | `(merge-fragments 0)` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 

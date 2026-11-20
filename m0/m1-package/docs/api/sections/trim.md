@@ -15,8 +15,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `pLDDT_to_b_factor(0)` | not tried |
-| Scheme | `(pLDDT-to-b-factor 0)` | not tried |
+| Python | `pLDDT_to_b_factor(0)` | ran (no return value) |
+| Scheme | `(pLDDT-to-b-factor 0)` | ran (no return value) |
 
 ### trim_molecule_by_b_factor
 
@@ -31,8 +31,8 @@ Arguments: imol (a whole number), limit (a number), keep_higher (a whole number)
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `trim_molecule_by_b_factor(0, 1.0, 1)` | not tried |
-| Scheme | `(trim-molecule-by-b-factor 0 1.0 1)` | not tried |
+| Python | `trim_molecule_by_b_factor(0, 1.0, 1)` | ran (no return value) |
+| Scheme | `(trim-molecule-by-b-factor 0 1.0 1)` | ran (no return value) |
 
 ### trim_molecule_by_map
 
@@ -46,6 +46,6 @@ Arguments: imol_coords (a whole number), imol_map (a whole number), map_level (a
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `trim_molecule_by_map(0, 1, 1.5, 1)` | not tried |
-| Scheme | `(trim-molecule-by-map 0 1 1.5 1)` | not tried |
+| Python | `trim_molecule_by_map(0, 1, 1.5, 1)` | ran (no return value) |
+| Scheme | `(trim-molecule-by-map 0 1 1.5 1)` | ran (no return value) |
 

@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="0d70644204a8d0058ca7a86677880cf4a0a35b00">
+<meta name="coot0-source-sha1" content="aa3927f5ae846998c5f4f2b9f16c4e6cedde4364">
 <title>Sequence File (Assignment/Association) - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -32,6 +32,7 @@ Also available in Scheme as <code>alignment-mismatches-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>alignment_mismatches(0)</code></td><td>ran, returned <code>False</code></td></tr>
 <tr><td>Scheme</td><td><code>(alignment-mismatches 0)</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="assign_fasta_sequence">assign_fasta_sequence</h3>
 <p>Python: <code>assign_fasta_sequence(imol, chain_id_in, seq)</code><br>
 Scheme: <code>(assign-fasta-sequence imol chain-id-in seq)</code></p>
@@ -105,8 +106,8 @@ Scheme: <code>(print-sequence-chain imol chain-id)</code></p>
 <p>Print the sequence to the console of the given molecule</p>
 <p>Arguments: imol (a whole number), chain_id (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>print_sequence_chain(0, "A")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(print-sequence-chain 0 "A")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>print_sequence_chain(0, "A")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(print-sequence-chain 0 "A")</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="print_sequence_chain_general">print_sequence_chain_general</h3>
 <p>Python: <code>print_sequence_chain_general(imol, chain_id, pir_format, file_output, file_name)</code><br>
 Scheme: <code>(print-sequence-chain-general imol chain-id pir-format file-output file-name)</code></p>
@@ -114,8 +115,8 @@ Scheme: <code>(print-sequence-chain-general imol chain-id pir-format file-output
  optionally in PIR format</p>
 <p>Arguments: imol (a whole number), chain_id (text), pir_format (a whole number), file_output (a whole number), file_name (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>print_sequence_chain_general(0, "A", 1, 1, "tutorial-modern.pdb")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(print-sequence-chain-general 0 "A" 1 1 "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>print_sequence_chain_general(0, "A", 1, 1, "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(print-sequence-chain-general 0 "A" 1 1 "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="sequence_info">sequence_info</h3>
 <p>Python: <code>sequence_info(imol)</code><br>
 Scheme: <code>(sequence-info imol)</code></p>
@@ -126,6 +127,7 @@ Scheme: <code>(sequence-info imol)</code></p>
 <p>Arguments: imol (a whole number). Returns: a value (see the result of the example).
 Also available in Python as <code>sequence_info_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>sequence_info(0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(sequence-info 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>sequence_info(0)</code></td><td>ran, returned <code>False</code></td></tr>
+<tr><td>Scheme</td><td><code>(sequence-info 0)</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 </body></html>

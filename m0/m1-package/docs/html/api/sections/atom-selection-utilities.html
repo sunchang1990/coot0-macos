@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="0e0f00395da18f0473854d8f1e8cb27e7d2e22a2">
+<meta name="coot0-source-sha1" content="fc4b882718d3dfecf296aae97a99cb8e12d7d677">
 <title>Atom Selection Utilities - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -25,6 +25,7 @@ Scheme: <code>(atom-index imol chain-id iresno atom-id)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>atom_index(0, "A", 41, "hello")</code></td><td>ran, returned <code>-1</code></td></tr>
 <tr><td>Scheme</td><td><code>(atom-index 0 "A" 41 "hello")</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="atom_index_first_atom_in_residue">atom_index_first_atom_in_residue</h3>
 <p>Python: <code>atom_index_first_atom_in_residue(imol, chain_id, iresno, ins_code)</code><br>
 Scheme: <code>(atom-index-first-atom-in-residue imol chain-id iresno ins-code)</code></p>
@@ -33,6 +34,7 @@ Scheme: <code>(atom-index-first-atom-in-residue imol chain-id iresno ins-code)</
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>atom_index_first_atom_in_residue(0, "A", 41, "")</code></td><td>ran, returned <code>294</code></td></tr>
 <tr><td>Scheme</td><td><code>(atom-index-first-atom-in-residue 0 "A" 41 "")</code></td><td>ran, returned <code>294</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="atom_index_first_atom_in_residue_with_altconf">atom_index_first_atom_in_residue_with_altconf</h3>
 <p>Python: <code>atom_index_first_atom_in_residue_with_altconf(imol, chain_id, iresno, ins_code, alt_conf)</code><br>
 Scheme: <code>(atom-index-first-atom-in-residue-with-altconf imol chain-id iresno ins-code alt-conf)</code></p>
@@ -43,6 +45,7 @@ Scheme: <code>(atom-index-first-atom-in-residue-with-altconf imol chain-id iresn
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>atom_index_first_atom_in_residue_with_altconf(0, "A", 41, "", "")</code></td><td>ran, returned <code>294</code></td></tr>
 <tr><td>Scheme</td><td><code>(atom-index-first-atom-in-residue-with-altconf 0 "A" 41 "" "")</code></td><td>ran, returned <code>294</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="atom_index_full">atom_index_full</h3>
 <p>Python: <code>atom_index_full(imol, chain_id, iresno, inscode, atom_id, altconf)</code><br>
 Scheme: <code>(atom-index-full imol chain-id iresno inscode atom-id altconf)</code></p>
@@ -51,6 +54,7 @@ Scheme: <code>(atom-index-full imol chain-id iresno inscode atom-id altconf)</co
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>atom_index_full(0, "A", 41, "", "hello", "")</code></td><td>ran, returned <code>-1</code></td></tr>
 <tr><td>Scheme</td><td><code>(atom-index-full 0 "A" 41 "" "hello" "")</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="average_temperature_factor">average_temperature_factor</h3>
 <p>Python: <code>average_temperature_factor(imol)</code><br>
 Scheme: <code>(average-temperature-factor imol)</code></p>
@@ -59,6 +63,7 @@ Scheme: <code>(average-temperature-factor imol)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>average_temperature_factor(0)</code></td><td>ran, returned <code>17.467004776000977</code></td></tr>
 <tr><td>Scheme</td><td><code>(average-temperature-factor 0)</code></td><td>ran, returned <code>17.467004776000977</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="centre_of_mass_string">centre_of_mass_string</h3>
 <p>Python: <code>centre_of_mass_string(imol)</code><br>
 Scheme: <code>(centre-of-mass-string imol)</code></p>
@@ -66,6 +71,7 @@ Scheme: <code>(centre-of-mass-string imol)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>centre_of_mass_string(0)</code></td><td>ran, returned <code>'[41.53,8.73,12.87]'</code></td></tr>
 <tr><td>Scheme</td><td><code>(centre-of-mass-string 0)</code></td><td>ran, returned <code>"(41.53 8.73 12.87)"</code></td></tr></tbody></table>
+<p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 <h3 id="clear_pending_picks">clear_pending_picks</h3>
 <p>Python: <code>clear_pending_picks()</code><br>
 Scheme: <code>(clear-pending-picks)</code></p>
@@ -82,6 +88,7 @@ Scheme: <code>(default-new-atoms-b-factor)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>default_new_atoms_b_factor()</code></td><td>ran, returned <code>30.0</code></td></tr>
 <tr><td>Scheme</td><td><code>(default-new-atoms-b-factor)</code></td><td>ran, returned <code>30.0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="get_reset_b_factor_moved_atoms_state">get_reset_b_factor_moved_atoms_state</h3>
 <p>Python: <code>get_reset_b_factor_moved_atoms_state()</code><br>
 Scheme: <code>(get-reset-b-factor-moved-atoms-state)</code></p>
@@ -91,14 +98,16 @@ Scheme: <code>(get-reset-b-factor-moved-atoms-state)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>get_reset_b_factor_moved_atoms_state()</code></td><td>ran, returned <code>0</code></td></tr>
 <tr><td>Scheme</td><td><code>(get-reset-b-factor-moved-atoms-state)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="median_temperature_factor">median_temperature_factor</h3>
 <p>Python: <code>median_temperature_factor(imol)</code><br>
 Scheme: <code>(median-temperature-factor imol)</code></p>
 <p>return the median temperature factor for imol</p>
 <p>Arguments: imol (a whole number). Returns: a number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>median_temperature_factor(0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(median-temperature-factor 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>median_temperature_factor(0)</code></td><td>ran, returned <code>16.040000915527344</code></td></tr>
+<tr><td>Scheme</td><td><code>(median-temperature-factor 0)</code></td><td>ran, returned <code>16.040000915527344</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="set_atom_attribute">set_atom_attribute</h3>
 <p>Python: <code>set_atom_attribute(imol, chain_id, resno, ins_code, atom_name, alt_conf, attribute_name, val)</code><br>
 Scheme: <code>(set-atom-attribute imol chain-id resno ins-code atom-name alt-conf attribute-name val)</code></p>
@@ -106,8 +115,9 @@ Scheme: <code>(set-atom-attribute imol chain-id resno ins-code atom-name alt-con
 <p>Attributes can be "x", "y","z", "B", "occ" and the attribute val is a floating point number</p>
 <p>Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_code (text), atom_name (text), alt_conf (text), attribute_name (text), val (a number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_atom_attribute(0, "A", 41, "", " CA ", "", "my-name", 1.0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-atom-attribute 0 "A" 41 "" " CA " "" "my-name" 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_atom_attribute(0, "A", 41, "", " CA ", "", "my-name", 1.0)</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(set-atom-attribute 0 "A" 41 "" " CA " "" "my-name" 1.0)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="set_atom_attributes">set_atom_attributes</h3>
 <p>Python: <code>set_atom_attributes(attribute_expression_list)</code><br>
 Scheme: <code>(set-atom-attributes attribute-expression-list)</code></p>
@@ -115,8 +125,8 @@ Scheme: <code>(set-atom-attributes attribute-expression-list)</code></p>
 <p>Arguments: attribute_expression_list (a list or value). Returns: a whole number.
 Also available in Python as <code>set_atom_attributes_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 <h3 id="set_atom_string_attribute">set_atom_string_attribute</h3>
 <p>Python: <code>set_atom_string_attribute(imol, chain_id, resno, ins_code, atom_name, alt_conf, attribute_name, attribute_value)</code><br>
 Scheme: <code>(set-atom-string-attribute imol chain-id resno ins-code atom-name alt-conf attribute-name attribute-value)</code></p>
@@ -124,8 +134,9 @@ Scheme: <code>(set-atom-string-attribute imol chain-id resno ins-code atom-name 
 <p>Attributes can be "atom-name", "alt-conf", "element" or "segid".</p>
 <p>Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_code (text), atom_name (text), alt_conf (text), attribute_name (text), attribute_value (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_atom_string_attribute(0, "A", 41, "", " CA ", "", "my-name", "hello")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-atom-string-attribute 0 "A" 41 "" " CA " "" "my-name" "hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_atom_string_attribute(0, "A", 41, "", " CA ", "", "my-name", "hello")</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(set-atom-string-attribute 0 "A" 41 "" " CA " "" "my-name" "hello")</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="set_default_temperature_factor_for_new_atoms">set_default_temperature_factor_for_new_atoms</h3>
 <p>Python: <code>set_default_temperature_factor_for_new_atoms(new_b)</code><br>
 Scheme: <code>(set-default-temperature-factor-for-new-atoms new-b)</code></p>
@@ -133,8 +144,8 @@ Scheme: <code>(set-default-temperature-factor-for-new-atoms new-b)</code></p>
  (initial default 20)</p>
 <p>Arguments: new_b (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_default_temperature_factor_for_new_atoms(1.0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-default-temperature-factor-for-new-atoms 1.0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_default_temperature_factor_for_new_atoms(1.0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-default-temperature-factor-for-new-atoms 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_reset_b_factor_moved_atoms">set_reset_b_factor_moved_atoms</h3>
 <p>Python: <code>set_reset_b_factor_moved_atoms(state)</code><br>
 Scheme: <code>(set-reset-b-factor-moved-atoms state)</code></p>
@@ -142,28 +153,29 @@ Scheme: <code>(set-reset-b-factor-moved-atoms state)</code></p>
  for new atoms (usually 30)</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_reset_b_factor_moved_atoms(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-reset-b-factor-moved-atoms 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_reset_b_factor_moved_atoms(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-reset-b-factor-moved-atoms 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_residue_name">set_residue_name</h3>
 <p>Python: <code>set_residue_name(imol, chain_id, res_no, ins_code, new_residue_name)</code><br>
 Scheme: <code>(set-residue-name imol chain-id res-no ins-code new-residue-name)</code></p>
 <p>set the residue name of the specified residue</p>
 <p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text), new_residue_name (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_residue_name(0, "A", 41, "", "my-name")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-residue-name 0 "A" 41 "" "my-name")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_residue_name(0, "A", 41, "", "my-name")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-residue-name 0 "A" 41 "" "my-name")</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set-temperature-factors-for-atoms-in-residue-scm">set-temperature-factors-for-atoms-in-residue-scm</h3>
 <p>Scheme: <code>(set-temperature-factors-for-atoms-in-residue-scm imol residue-spec-scm bf)</code></p>
 <p>Arguments: imol (a whole number), residue-spec-scm (a list or value), bf (a number). Returns: nothing.
 <strong>Scheme only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Scheme</td><td><code>(set-temperature-factors-for-atoms-in-residue-scm 0 (list "A" 41 "") 20.0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Scheme</td><td><code>(set-temperature-factors-for-atoms-in-residue-scm 0 (list "A" 41 "") 20.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="standard_deviation_temperature_factor">standard_deviation_temperature_factor</h3>
 <p>Python: <code>standard_deviation_temperature_factor(imol)</code><br>
 Scheme: <code>(standard-deviation-temperature-factor imol)</code></p>
 <p>return the standard deviation of the atom temperature factors for imol</p>
 <p>Arguments: imol (a whole number). Returns: a number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>standard_deviation_temperature_factor(0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(standard-deviation-temperature-factor 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>standard_deviation_temperature_factor(0)</code></td><td>ran, returned <code>6.685909748077393</code></td></tr>
+<tr><td>Scheme</td><td><code>(standard-deviation-temperature-factor 0)</code></td><td>ran, returned <code>6.685909748077393</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 </body></html>

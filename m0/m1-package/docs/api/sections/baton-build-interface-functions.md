@@ -71,8 +71,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `lengthen_baton()` | not tried |
-| Scheme | `(lengthen-baton)` | not tried |
+| Python | `lengthen_baton()` | ran (no return value) |
+| Scheme | `(lengthen-baton)` | ran (no return value) |
 
 ### reverse_direction_of_fragment
 
@@ -92,8 +92,8 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number). Retur
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `reverse_direction_of_fragment(0, "A", 41)` | not tried |
-| Scheme | `(reverse-direction-of-fragment 0 "A" 41)` | not tried |
+| Python | `reverse_direction_of_fragment(0, "A", 41)` | ran (no return value) |
+| Scheme | `(reverse-direction-of-fragment 0 "A" 41)` | ran (no return value) |
 
 ### set_baton_build_params
 
@@ -107,8 +107,8 @@ Arguments: istart_resno (a whole number), chain_id (text), direction (text). Ret
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_baton_build_params(41, "A", ".")` | not tried |
-| Scheme | `(set-baton-build-params 41 "A" ".")` | not tried |
+| Python | `set_baton_build_params(41, "A", ".")` | ran (no return value) |
+| Scheme | `(set-baton-build-params 41 "A" ".")` | ran (no return value) |
 
 ### set_baton_mode
 
@@ -121,8 +121,8 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_baton_mode(1)` | not tried |
-| Scheme | `(set-baton-mode 1)` | not tried |
+| Python | `set_baton_mode(1)` | ran (no return value) |
+| Scheme | `(set-baton-mode 1)` | ran (no return value) |
 
 ### setup_reverse_direction
 
@@ -133,8 +133,8 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `setup_reverse_direction(1)` | not tried |
-| Scheme | `(setup-reverse-direction 1)` | not tried |
+| Python | `setup_reverse_direction(1)` | ran (no return value) |
+| Scheme | `(setup-reverse-direction 1)` | ran (no return value) |
 
 ### shorten_baton
 
@@ -147,8 +147,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `shorten_baton()` | not tried |
-| Scheme | `(shorten-baton)` | not tried |
+| Python | `shorten_baton()` | ran (no return value) |
+| Scheme | `(shorten-baton)` | ran (no return value) |
 
 ### try_set_draw_baton
 
@@ -161,6 +161,6 @@ Arguments: i (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `try_set_draw_baton(1)` | not tried |
-| Scheme | `(try-set-draw-baton 1)` | not tried |
+| Python | `try_set_draw_baton(1)` | stopped Coot when tried without a window (not checked with a window) |
+| Scheme | `(try-set-draw-baton 1)` | stopped Coot when tried without a window (not checked with a window) |
 

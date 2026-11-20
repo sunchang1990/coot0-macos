@@ -31,8 +31,10 @@ Arguments: text (text), x (a number), y (a number), z (a number), size (a whole 
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `place_text("hello", 54.5, 9.4, 12.3, 10)` | not tried |
-| Scheme | `(place-text "hello" 54.5 9.4 12.3 10)` | not tried |
+| Python | `place_text("hello", 54.5, 9.4, 12.3, 10)` | ran, returned `0` |
+| Scheme | `(place-text "hello" 54.5 9.4 12.3 10)` | ran, returned `1` |
+
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
 ### remove_text
 
@@ -45,8 +47,8 @@ Arguments: text_handle (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `remove_text(1)` | not tried |
-| Scheme | `(remove-text 1)` | not tried |
+| Python | `remove_text(1)` | ran (no return value) |
+| Scheme | `(remove-text 1)` | ran (no return value) |
 
 ### text_index_near_position
 
@@ -60,6 +62,8 @@ Arguments: x (a number), y (a number), z (a number), r (a number). Returns: a wh
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `text_index_near_position(54.5, 9.4, 12.3, 0.5)` | not tried |
-| Scheme | `(text-index-near-position 54.5 9.4 12.3 0.5)` | not tried |
+| Python | `text_index_near_position(54.5, 9.4, 12.3, 0.5)` | ran, returned `-1` |
+| Scheme | `(text-index-near-position 54.5 9.4 12.3 0.5)` | ran, returned `-1` |
+
+Python and Scheme gave the same answer.
 

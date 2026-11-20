@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="d508dcc37260cd86d2f5eaf295f93c2789eaf184">
+<meta name="coot0-source-sha1" content="a1f164453c9aed1ad176333495e8d0f0c5ebe317">
 <title>Get Sequence - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -29,13 +29,14 @@ molecule number if not.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>align_to_closest_chain("ACDEFGHIKLMNPQRSTVWY", 0.5)</code></td><td>ran, returned <code>False</code></td></tr>
 <tr><td>Scheme</td><td><code>(align-to-closest-chain "ACDEFGHIKLMNPQRSTVWY" 0.5)</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="decode_ints">decode_ints</h3>
 <p>Python: <code>decode_ints(i)</code><br>
 Scheme: <code>(decode-ints i)</code></p>
 <p>Arguments: i (a whole number). Returns: a list.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>decode_ints(1)</code></td><td>ran, returned <code>&lt;Swig Object of type 'std::pair&lt; int,int &gt; *' at 0x10a1fd350&gt;</code></td></tr>
-<tr><td>Scheme</td><td><code>(decode-ints 1)</code></td><td>ran, returned <code>#&lt;collectable-swig-pointer std::pair&lt; int,int &gt; * 8ce4b0b60&gt;</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>decode_ints(1)</code></td><td>ran, returned <code>&lt;Swig Object of type 'std::pair&lt; int,int &gt; *' at 0x10b8e1230&gt;</code></td></tr>
+<tr><td>Scheme</td><td><code>(decode-ints 1)</code></td><td>ran, returned <code>#&lt;collectable-swig-pointer std::pair&lt; int,int &gt; * bd70e7090&gt;</code></td></tr></tbody></table>
 <h3 id="encode_ints">encode_ints</h3>
 <p>Python: <code>encode_ints(i1, i2)</code><br>
 Scheme: <code>(encode-ints i1 i2)</code></p>
@@ -46,6 +47,7 @@ number) as an int and used with GPOINTER_TO_INT and GINT_TO_POINTER.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>encode_ints(1, 1)</code></td><td>ran, returned <code>1001</code></td></tr>
 <tr><td>Scheme</td><td><code>(encode-ints 1 1)</code></td><td>ran, returned <code>1001</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="get_sequence_as_fasta_for_chain">get_sequence_as_fasta_for_chain</h3>
 <p>Python: <code>get_sequence_as_fasta_for_chain(imol, chain_id)</code><br>
 Scheme: <code>(get-sequence-as-fasta-for-chain imol chain-id)</code></p>
@@ -54,6 +56,7 @@ Scheme: <code>(get-sequence-as-fasta-for-chain imol chain-id)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>get_sequence_as_fasta_for_chain(0, "A")</code></td><td>ran, returned <code>'&gt; tutorial-modern A\n\nDVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYG\nYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLID\ ...</code></td></tr>
 <tr><td>Scheme</td><td><code>(get-sequence-as-fasta-for-chain 0 "A")</code></td><td>ran, returned <code>"&gt; tutorial-modern A\n\nDVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYG\nYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLID\ ...</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="graphics_to_phenix_geo_representation">graphics_to_phenix_geo_representation</h3>
 <p>Python: <code>graphics_to_phenix_geo_representation(imol, mode, g)</code><br>
 Scheme: <code>(graphics-to-phenix-geo-representation imol mode g)</code></p>
@@ -69,8 +72,8 @@ Scheme: <code>(key-sym-code s-scm)</code></p>
 Also available in Python as <code>key_sym_code_py</code>.
 Also available in Scheme as <code>key-sym-code-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 <h3 id="molecule_atom_overlaps">molecule_atom_overlaps</h3>
 <p>Python: <code>molecule_atom_overlaps(imol)</code><br>
 Scheme: <code>(molecule-atom-overlaps imol)</code></p>
@@ -78,14 +81,15 @@ Scheme: <code>(molecule-atom-overlaps imol)</code></p>
 Also available in Python as <code>molecule_atom_overlaps_py</code>.
 Also available in Scheme as <code>molecule-atom-overlaps-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>molecule_atom_overlaps(0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(molecule-atom-overlaps 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>molecule_atom_overlaps(0)</code></td><td>ran, returned <code>[{'atom-1-spec': [-1, 'A', 2, '', ' CA ', ''], 'atom-2-spec': [-1, 'A', 89, '', ' CZ ', ''], 'overlap-volume': 7.4502435 ...</code></td></tr>
+<tr><td>Scheme</td><td><code>(molecule-atom-overlaps 0)</code></td><td>ran, returned <code>(((-1 "A" 2 "" " CA " "") (-1 "A" 89 "" " CZ " "") 1.7000000476837158 1.7000000476837158 7.450243542341931) ((-1 "A" 2 " ...</code></td></tr></tbody></table>
+<p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 <h3 id="pathology_data">pathology_data</h3>
 <p>Python: <code>pathology_data(mtz_file_name, fp_col, sigfp_col)</code></p>
 <p>Arguments: mtz_file_name (text), fp_col (text), sigfp_col (text). Returns: a value (see the result of the example).
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>pathology_data("rnasa-1.8-all_refmac1.mtz", "hello", "hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>pathology_data("rnasa-1.8-all_refmac1.mtz", "hello", "hello")</code></td><td>ran, returned <code>False</code></td></tr></tbody></table>
 <h3 id="prodrg_import_function">prodrg_import_function</h3>
 <p>Python: <code>prodrg_import_function(file_name, comp_id)</code><br>
 Scheme: <code>(prodrg-import-function file-name comp-id)</code></p>
@@ -95,42 +99,42 @@ prodrg-in.mdl file has been made. We no longer have a timeout
 function waiting for prodrg-in.mdl to be updated/written.</p>
 <p>Arguments: file_name (text), comp_id (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>prodrg_import_function("tutorial-modern.pdb", "ALA")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(prodrg-import-function "tutorial-modern.pdb" "ALA")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>prodrg_import_function("tutorial-modern.pdb", "ALA")</code></td><td>not run: not run automatically (prodrg: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(prodrg-import-function "tutorial-modern.pdb" "ALA")</code></td><td>not run: not run automatically (prodrg: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="py_symop_strings_to_space_group">py_symop_strings_to_space_group</h3>
 <p>Python: <code>py_symop_strings_to_space_group(symop_string_list)</code></p>
 <p>Arguments: symop_string_list (a list or value). Returns: <code>clipper::Spacegroup</code>.
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 <h3 id="py_to_residue_specs">py_to_residue_specs</h3>
 <p>Python: <code>py_to_residue_specs(s)</code></p>
 <p>Arguments: s (a list or value). Returns: a list.
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 <h3 id="register_interesting_positions_list">register_interesting_positions_list</h3>
 <p>Python: <code>register_interesting_positions_list(pos_list)</code><br>
 Scheme: <code>(register-interesting-positions-list-scm pos-list)</code></p>
 <p>Arguments: pos_list (a list or value). Returns: nothing.
 Also available in Python as <code>register_interesting_positions_list_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 <h3 id="resolve_clashing_sidechains_by_deletion">resolve_clashing_sidechains_by_deletion</h3>
 <p>Python: <code>resolve_clashing_sidechains_by_deletion(imol)</code><br>
 Scheme: <code>(resolve-clashing-sidechains-by-deletion imol)</code></p>
 <p>Arguments: imol (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>resolve_clashing_sidechains_by_deletion(0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(resolve-clashing-sidechains-by-deletion 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>resolve_clashing_sidechains_by_deletion(0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(resolve-clashing-sidechains-by-deletion 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="resolve_clashing_sidechains_by_rebuilding">resolve_clashing_sidechains_by_rebuilding</h3>
 <p>Python: <code>resolve_clashing_sidechains_by_rebuilding(imol)</code><br>
 Scheme: <code>(resolve-clashing-sidechains-by-rebuilding imol)</code></p>
 <p>Arguments: imol (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>resolve_clashing_sidechains_by_rebuilding(0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(resolve-clashing-sidechains-by-rebuilding 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>resolve_clashing_sidechains_by_rebuilding(0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
+<tr><td>Scheme</td><td><code>(resolve-clashing-sidechains-by-rebuilding 0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
 <h3 id="sbase_import_function">sbase_import_function</h3>
 <p>Python: <code>sbase_import_function(comp_id)</code><br>
 Scheme: <code>(sbase-import-function comp-id)</code></p>
@@ -140,55 +144,55 @@ SBase comp_id is required. We no longer have a timeout
 function waiting for prodrg-in.mdl to be updated/written.</p>
 <p>Arguments: comp_id (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>sbase_import_function("ALA")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(sbase-import-function "ALA")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>sbase_import_function("ALA")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(sbase-import-function "ALA")</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="scm-symop-strings-to-space-group">scm-symop-strings-to-space-group</h3>
 <p>Scheme: <code>(scm-symop-strings-to-space-group symop-string-list)</code></p>
 <p>Arguments: symop-string-list (a list or value). Returns: <code>clipper::Spacegroup</code>.
 <strong>Scheme only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 <h3 id="scm-to-residue-specs">scm-to-residue-specs</h3>
 <p>Scheme: <code>(scm-to-residue-specs s)</code></p>
 <p>Arguments: s (a list or value). Returns: a list.
 <strong>Scheme only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 <h3 id="set_python_draw_function">set_python_draw_function</h3>
 <p>Python: <code>set_python_draw_function(command_string)</code></p>
 <p>client/server functions</p>
 <p>Arguments: command_string (text). Returns: nothing.
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_python_draw_function("hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_python_draw_function("hello")</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="simple_text_dialog">simple_text_dialog</h3>
 <p>Python: <code>simple_text_dialog(dialog_title, text, geom_x, geom_y)</code><br>
 Scheme: <code>(simple-text-dialog dialog-title text geom-x geom-y)</code></p>
 <p>make a simple text dialog.</p>
 <p>Arguments: dialog_title (text), text (text), geom_x (a whole number), geom_y (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>simple_text_dialog("hello", "hello", 1, 1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(simple-text-dialog "hello" "hello" 1 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>simple_text_dialog("hello", "hello", 1, 1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(simple-text-dialog "hello" "hello" 1 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="spherical-density-overlap">spherical-density-overlap</h3>
 <p>Scheme: <code>(spherical-density-overlap i-scm j-scm)</code></p>
 <p>Arguments: i-scm (a list or value), j-scm (a list or value). Returns: a value (see the result of the example).
 <strong>Scheme only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 <h3 id="store_keyed_user_name">store_keyed_user_name</h3>
 <p>Python: <code>store_keyed_user_name(key, user_name, passwd)</code><br>
 Scheme: <code>(store-keyed-user-name key user-name passwd)</code></p>
 <p>store username and password for the database.</p>
 <p>Arguments: key (text), user_name (text), passwd (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>store_keyed_user_name("hello", "my-name", "hello")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(store-keyed-user-name "hello" "my-name" "hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>store_keyed_user_name("hello", "my-name", "hello")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(store-keyed-user-name "hello" "my-name" "hello")</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="write_sequence">write_sequence</h3>
 <p>Python: <code>write_sequence(imol, file_name)</code><br>
 Scheme: <code>(write-sequence imol file-name)</code></p>
 <p>write the sequence for imol as fasta</p>
 <p>Arguments: imol (a whole number), file_name (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>write_sequence(0, "tutorial-modern.pdb")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(write-sequence 0 "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>write_sequence(0, "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(write-sequence 0 "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr></tbody></table>
 </body></html>

@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="2c5c574fabf05f5c80d7f923bc9a42e8051b4128">
+<meta name="coot0-source-sha1" content="dc199b51cb2eebb1f583301fee0002b332806ac9">
 <title>Experimental - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -40,6 +40,7 @@ Also available in Python as <code>all_molecule_ramachandran_score_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>all_molecule_ramachandran_score(0)</code></td><td>ran, returned <code>[-281.4500914078069, 183, -235.4046792835865, 123, 0, [[[-80.1338765510191, 130.8971531422487], [True, 'A', 2, ''], 0.21 ...</code></td></tr>
 <tr><td>Scheme</td><td><code>(all-molecule-ramachandran-score 0)</code></td><td>ran, returned <code>(-281.4500914078069 183 -235.4046792835865 123 0 (((-80.1338765510191 130.8971531422487) (#t "A" 2 "") 0.215748766869011 ...</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="all_molecule_rotamer_score">all_molecule_rotamer_score</h3>
 <p>Python: <code>all_molecule_rotamer_score(imol)</code><br>
 Scheme: <code>(all-molecule-rotamer-score imol)</code></p>
@@ -49,6 +50,7 @@ Also available in Python as <code>all_molecule_rotamer_score_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>all_molecule_rotamer_score(0)</code></td><td>ran, returned <code>[-197.50514814092332, 160]</code></td></tr>
 <tr><td>Scheme</td><td><code>(all-molecule-rotamer-score 0)</code></td><td>ran, returned <code>(-197.50514814092332 160)</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="fetch_and_superpose_alphafold_models_using_active_molecule">fetch_and_superpose_alphafold_models_using_active_molecule</h3>
 <p>Python: <code>fetch_and_superpose_alphafold_models_using_active_molecule()</code><br>
 Scheme: <code>(fetch-and-superpose-alphafold-models-using-active-molecule)</code></p>
@@ -79,8 +81,8 @@ Scheme: <code>(start-ligand-builder-gui)</code></p>
 <p>display the ligand builder dialog</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>start_ligand_builder_gui()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(start-ligand-builder-gui)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>start_ligand_builder_gui()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(start-ligand-builder-gui)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="user_defined_click">user_defined_click</h3>
 <p>Python: <code>user_defined_click(n_clicks, func)</code><br>
 Scheme: <code>(user-defined-click n-clicks func)</code></p>
@@ -88,6 +90,6 @@ Scheme: <code>(user-defined-click n-clicks func)</code></p>
 Also available in Python as <code>user_defined_click_py</code>.
 Also available in Scheme as <code>user-defined-click-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 </body></html>

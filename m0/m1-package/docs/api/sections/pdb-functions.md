@@ -18,6 +18,8 @@ Arguments: none. Returns: a whole number.
 | Python | `get_write_conect_record_state()` | ran, returned `0` |
 | Scheme | `(get-write-conect-record-state)` | ran, returned `0` |
 
+Python and Scheme gave the same answer.
+
 ### quick_save
 
 Python: `quick_save()`  
@@ -30,8 +32,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `quick_save()` | not tried |
-| Scheme | `(quick-save)` | not tried |
+| Python | `quick_save()` | ran, returned `0` |
+| Scheme | `(quick-save)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### set_write_conect_record_state
 
@@ -44,8 +48,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_write_conect_record_state(1)` | not tried |
-| Scheme | `(set-write-conect-record-state 1)` | not tried |
+| Python | `set_write_conect_record_state(1)` | ran (no return value) |
+| Scheme | `(set-write-conect-record-state 1)` | ran (no return value) |
 
 ### write_chain_to_pdb_file
 
@@ -58,8 +62,10 @@ Arguments: imol (a whole number), chainid (text), filename (text). Returns: a wh
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `write_chain_to_pdb_file(0, "A", "tutorial-modern.pdb")` | not tried |
-| Scheme | `(write-chain-to-pdb-file 0 "A" "tutorial-modern.pdb")` | not tried |
+| Python | `write_chain_to_pdb_file(0, "A", "tutorial-modern.pdb")` | ran, returned `0` |
+| Scheme | `(write-chain-to-pdb-file 0 "A" "tutorial-modern.pdb")` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### write_cif_file
 
@@ -72,8 +78,10 @@ Arguments: imol (a whole number), file_name (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `write_cif_file(0, "tutorial-modern.pdb")` | not tried |
-| Scheme | `(write-cif-file 0 "tutorial-modern.pdb")` | not tried |
+| Python | `write_cif_file(0, "tutorial-modern.pdb")` | ran, returned `0` |
+| Scheme | `(write-cif-file 0 "tutorial-modern.pdb")` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### write_pdb_file
 
@@ -86,8 +94,10 @@ Arguments: imol (a whole number), file_name (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `write_pdb_file(0, "tutorial-modern.pdb")` | not tried |
-| Scheme | `(write-pdb-file 0 "tutorial-modern.pdb")` | not tried |
+| Python | `write_pdb_file(0, "tutorial-modern.pdb")` | ran, returned `0` |
+| Scheme | `(write-pdb-file 0 "tutorial-modern.pdb")` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### write_residue_range_to_pdb_file
 
@@ -100,6 +110,8 @@ Arguments: imol (a whole number), chainid (text), resno_start (a whole number), 
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `write_residue_range_to_pdb_file(0, "A", 41, 45, "tutorial-modern.pdb")` | not tried |
-| Scheme | `(write-residue-range-to-pdb-file 0 "A" 41 45 "tutorial-modern.pdb")` | not tried |
+| Python | `write_residue_range_to_pdb_file(0, "A", 41, 45, "tutorial-modern.pdb")` | ran, returned `0` |
+| Scheme | `(write-residue-range-to-pdb-file 0 "A" 41 45 "tutorial-modern.pdb")` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 

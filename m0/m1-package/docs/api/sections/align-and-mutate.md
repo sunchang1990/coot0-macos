@@ -31,6 +31,8 @@ Also available in Python as `alignment_results_py`.
 | Python | `alignment_results(0, "A", "ACDEFGHIKLMNPQRSTVWY")` | ran, returned `False` |
 | Scheme | `(alignment-results-scm 0 "A" "ACDEFGHIKLMNPQRSTVWY")` | ran, returned `#f` |
 
+Python and Scheme gave the same answer.
+
 ### nearest_residue_by_sequence
 
 Python: `nearest_residue_by_sequence(imol, chain_id, resno, ins_code)`  
@@ -45,8 +47,10 @@ Also available in Scheme as `nearest-residue-by-sequence-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `nearest_residue_by_sequence(0, "A", 41, "")` | not tried |
-| Scheme | `(nearest-residue-by-sequence 0 "A" 41 "")` | not tried |
+| Python | `nearest_residue_by_sequence(0, "A", 41, "")` | ran, returned `[True, 'A', 41, '']` |
+| Scheme | `(nearest-residue-by-sequence 0 "A" 41 "")` | ran, returned `(#t "A" 41 "")` |
+
+Python and Scheme gave the same answer.
 
 ### set_alignment_gap_and_space_penalty
 
@@ -59,6 +63,6 @@ Arguments: wgap (a number), wspace (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_alignment_gap_and_space_penalty(1.0, 1.0)` | not tried |
-| Scheme | `(set-alignment-gap-and-space-penalty 1.0 1.0)` | not tried |
+| Python | `set_alignment_gap_and_space_penalty(1.0, 1.0)` | ran (no return value) |
+| Scheme | `(set-alignment-gap-and-space-penalty 1.0 1.0)` | ran (no return value) |
 

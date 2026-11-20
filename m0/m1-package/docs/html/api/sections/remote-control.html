@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="0a1e3ec2a1fa218d5c050a8781c080a07c49739f">
+<meta name="coot0-source-sha1" content="06d63265b75619f04a4cd39fdb61d4b1f65da83b">
 <title>Remote Control - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -30,44 +30,44 @@ Scheme: <code>(make-socket-listener-maybe)</code></p>
 <p>try to make socket listener</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>make_socket_listener_maybe()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(make-socket-listener-maybe)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>make_socket_listener_maybe()</code></td><td>not run: not run automatically (socket: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(make-socket-listener-maybe)</code></td><td>not run: not run automatically (socket: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="set_coot_listener_socket_state_internal">set_coot_listener_socket_state_internal</h3>
 <p>Python: <code>set_coot_listener_socket_state_internal(sock_state)</code><br>
 Scheme: <code>(set-coot-listener-socket-state-internal sock-state)</code></p>
 <p>Arguments: sock_state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_coot_listener_socket_state_internal(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-coot-listener-socket-state-internal 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_coot_listener_socket_state_internal(1)</code></td><td>not run: not run automatically (socket: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(set-coot-listener-socket-state-internal 1)</code></td><td>not run: not run automatically (socket: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="set_remote_control_port">set_remote_control_port</h3>
 <p>Python: <code>set_remote_control_port(port_number)</code><br>
 Scheme: <code>(set-remote-control-port port-number)</code></p>
 <p>Arguments: port_number (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_remote_control_port(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-remote-control-port 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_remote_control_port(1)</code></td><td>not run: not run automatically (remote: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(set-remote-control-port 1)</code></td><td>not run: not run automatically (remote: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="set_socket_python_string_waiting">set_socket_python_string_waiting</h3>
 <p>Python: <code>set_socket_python_string_waiting(s)</code><br>
 Scheme: <code>(set-socket-python-string-waiting s)</code></p>
 <p>feed the main thread a python script to evaluate</p>
 <p>Arguments: s (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_socket_python_string_waiting("hello")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-socket-python-string-waiting "hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_socket_python_string_waiting("hello")</code></td><td>not run: not run automatically (socket: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(set-socket-python-string-waiting "hello")</code></td><td>not run: not run automatically (socket: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="set_socket_string_waiting">set_socket_string_waiting</h3>
 <p>Python: <code>set_socket_string_waiting(s)</code><br>
 Scheme: <code>(set-socket-string-waiting s)</code></p>
 <p>feed the main thread a scheme script to evaluate</p>
 <p>Arguments: s (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_socket_string_waiting("hello")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-socket-string-waiting "hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_socket_string_waiting("hello")</code></td><td>not run: not run automatically (socket: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(set-socket-string-waiting "hello")</code></td><td>not run: not run automatically (socket: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="set_tip_of_the_day_flag">set_tip_of_the_day_flag</h3>
 <p>Python: <code>set_tip_of_the_day_flag(state)</code><br>
 Scheme: <code>(set-tip-of-the-day-flag state)</code></p>
 <p>tooltip</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_tip_of_the_day_flag(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-tip-of-the-day-flag 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_tip_of_the_day_flag(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-tip-of-the-day-flag 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 </body></html>

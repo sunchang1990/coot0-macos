@@ -15,6 +15,8 @@ Arguments: imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `laplacian(0)` | not tried |
-| Scheme | `(laplacian 0)` | not tried |
+| Python | `laplacian(0)` | ran, returned `-1` |
+| Scheme | `(laplacian 0)` | ran, returned `-1` |
+
+Python and Scheme gave the same answer.
 

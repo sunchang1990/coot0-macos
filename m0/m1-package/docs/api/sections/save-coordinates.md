@@ -17,8 +17,10 @@ Arguments: imol (a whole number), filename (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `save_coordinates(0, "tutorial-modern.pdb")` | not tried |
-| Scheme | `(save-coordinates 0 "tutorial-modern.pdb")` | not tried |
+| Python | `save_coordinates(0, "tutorial-modern.pdb")` | ran, returned `0` |
+| Scheme | `(save-coordinates 0 "tutorial-modern.pdb")` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### save_molecule_number_from_option_menu
 
@@ -31,8 +33,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `save_molecule_number_from_option_menu()` | not tried |
-| Scheme | `(save-molecule-number-from-option-menu)` | not tried |
+| Python | `save_molecule_number_from_option_menu()` | ran, returned `-1` |
+| Scheme | `(save-molecule-number-from-option-menu)` | ran, returned `-1` |
+
+Python and Scheme gave the same answer.
 
 ### set_save_coordinates_in_original_directory
 
@@ -45,8 +49,8 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_save_coordinates_in_original_directory(1)` | not tried |
-| Scheme | `(set-save-coordinates-in-original-directory 1)` | not tried |
+| Python | `set_save_coordinates_in_original_directory(1)` | ran (no return value) |
+| Scheme | `(set-save-coordinates-in-original-directory 1)` | ran (no return value) |
 
 ### set_save_molecule_number
 
@@ -60,6 +64,6 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_save_molecule_number(0)` | not tried |
-| Scheme | `(set-save-molecule-number 0)` | not tried |
+| Python | `set_save_molecule_number(0)` | ran (no return value) |
+| Scheme | `(set-save-molecule-number 0)` | ran (no return value) |
 

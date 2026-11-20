@@ -37,6 +37,8 @@ Arguments: comp_id (text). Returns: a whole number.
 | Python | `auto_load_dictionary("ALA")` | ran, returned `2` |
 | Scheme | `(auto-load-dictionary "ALA")` | ran, returned `2` |
 
+Python and Scheme gave the same answer.
+
 ### comp_id2name
 
 Python: `comp_id2name(comp_id)`  
@@ -55,6 +57,8 @@ Also available in Scheme as `comp-id-to-name-scm`.
 | Python | `comp_id2name("ALA")` | ran, returned `'ALANINE'` |
 | Scheme | `(comp-id->name "ALA")` | ran, returned `"ALANINE"` |
 
+Python and Scheme gave the same answer.
+
 ### get_monomer
 
 Python: `get_monomer(comp_id)`  
@@ -71,6 +75,8 @@ Arguments: comp_id (text). Returns: a whole number.
 | Python | `get_monomer("ALA")` | ran, returned `2` |
 | Scheme | `(get-monomer "ALA")` | ran, returned `2` |
 
+Python and Scheme gave the same answer.
+
 ### get_monomer_for_molecule
 
 Python: `get_monomer_for_molecule(comp_id, imol)`  
@@ -85,6 +91,8 @@ Arguments: comp_id (text), imol (a whole number). Returns: a whole number.
 | Python | `get_monomer_for_molecule("ALA", 0)` | ran, returned `2` |
 | Scheme | `(get-monomer-for-molecule "ALA" 0)` | ran, returned `2` |
 
+Python and Scheme gave the same answer.
+
 ### get_monomer_for_molecule_by_index
 
 Python: `get_monomer_for_molecule_by_index(dict_idx, imol_enc)`  
@@ -96,6 +104,8 @@ Arguments: dict_idx (a whole number), imol_enc (a whole number). Returns: a whol
 |---|---|---|
 | Python | `get_monomer_for_molecule_by_index(1, 0)` | ran, returned `2` |
 | Scheme | `(get-monomer-for-molecule-by-index 1 0)` | ran, returned `2` |
+
+Python and Scheme gave the same answer.
 
 ### get_monomer_from_dictionary
 
@@ -114,6 +124,8 @@ Arguments: comp_id (text), idealised_flag (a whole number). Returns: a whole num
 | Python | `get_monomer_from_dictionary("ALA", 1)` | ran, returned `2` |
 | Scheme | `(get-monomer-from-dictionary "ALA" 1)` | ran, returned `2` |
 
+Python and Scheme gave the same answer.
+
 ### import_python_module
 
 Python: `import_python_module(module_name, use_namespace)`  
@@ -125,8 +137,10 @@ Arguments: module_name (text), use_namespace (a whole number). Returns: a whole 
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `import_python_module("my-name", 1)` | not tried |
-| Scheme | `(import-python-module "my-name" 1)` | not tried |
+| Python | `import_python_module("my-name", 1)` | ran, returned `-1` |
+| Scheme | `(import-python-module "my-name" 1)` | ran, returned `-1` |
+
+Python and Scheme gave the same answer.
 
 ### matching_compound_names_from_dictionary
 
@@ -142,8 +156,10 @@ Also available in Scheme as `matching-compound-names-from-dictionary-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `matching_compound_names_from_dictionary("my-name", 1)` | not tried |
-| Scheme | `(matching-compound-names-from-dictionary "my-name" 1)` | not tried |
+| Python | `matching_compound_names_from_dictionary("my-name", 1)` | ran, returned `[]` |
+| Scheme | `(matching-compound-names-from-dictionary "my-name" 1)` | ran, returned `()` |
+
+Python and Scheme gave the same answer.
 
 ### reload_dictionary
 
@@ -156,8 +172,10 @@ Arguments: comp_id (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `reload_dictionary("ALA")` | not tried |
-| Scheme | `(reload-dictionary "ALA")` | not tried |
+| Python | `reload_dictionary("ALA")` | ran, returned `1` |
+| Scheme | `(reload-dictionary "ALA")` | ran, returned `1` |
+
+Python and Scheme gave the same answer.
 
 ### remove_non_auto_load_residue_name
 
@@ -171,8 +189,8 @@ Arguments: s (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `remove_non_auto_load_residue_name("hello")` | not tried |
-| Scheme | `(remove-non-auto-load-residue-name "hello")` | not tried |
+| Python | `remove_non_auto_load_residue_name("hello")` | ran (no return value) |
+| Scheme | `(remove-non-auto-load-residue-name "hello")` | ran (no return value) |
 
 ### run_guile_script
 
@@ -185,8 +203,8 @@ Arguments: filename (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `run_guile_script("tutorial-modern.pdb")` | not tried |
-| Scheme | `(run-guile-script "tutorial-modern.pdb")` | not tried |
+| Python | `run_guile_script("tutorial-modern.pdb")` | not run: not run automatically (run: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(run-guile-script "tutorial-modern.pdb")` | not run: not run automatically (run: exits, uses the network, an external program, files or a screen) |
 
 ### run_python_script
 
@@ -199,8 +217,8 @@ Arguments: filename (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `run_python_script("tutorial-modern.pdb")` | not tried |
-| Scheme | `(run-python-script "tutorial-modern.pdb")` | not tried |
+| Python | `run_python_script("tutorial-modern.pdb")` | not run: not run automatically (run: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(run-python-script "tutorial-modern.pdb")` | not run: not run automatically (run: exits, uses the network, an external program, files or a screen) |
 
 ### run_script
 
@@ -213,6 +231,6 @@ Arguments: filename (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `run_script("tutorial-modern.pdb")` | not tried |
-| Scheme | `(run-script "tutorial-modern.pdb")` | not tried |
+| Python | `run_script("tutorial-modern.pdb")` | not run: not run automatically (run: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(run-script "tutorial-modern.pdb")` | not run: not run automatically (run: exits, uses the network, an external program, files or a screen) |
 

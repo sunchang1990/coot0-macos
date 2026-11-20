@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="5a055a547efcc62f820c18df8273502b005eb29e">
+<meta name="coot0-source-sha1" content="223baeabe033056fa65b276a61dd4aabae1eb550">
 <title>Go To Atom Widget Functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -25,6 +25,7 @@ Scheme: <code>(atom-spec-to-atom-index mol chain resno atom-name)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>atom_spec_to_atom_index(0, "A", 41, " CA ")</code></td><td>ran, returned <code>295</code></td></tr>
 <tr><td>Scheme</td><td><code>(atom-spec-to-atom-index 0 "A" 41 " CA ")</code></td><td>ran, returned <code>295</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="autobuild_ca_off">autobuild_ca_off</h3>
 <p>Python: <code>autobuild_ca_off()</code><br>
 Scheme: <code>(autobuild-ca-off)</code></p>
@@ -48,6 +49,7 @@ Scheme: <code>(full-atom-spec-to-atom-index imol chain resno inscode atom-name a
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>full_atom_spec_to_atom_index(0, "A", 41, "", " CA ", "")</code></td><td>ran, returned <code>295</code></td></tr>
 <tr><td>Scheme</td><td><code>(full-atom-spec-to-atom-index 0 "A" 41 "" " CA " "")</code></td><td>ran, returned <code>295</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="glyco_tree">glyco_tree</h3>
 <p>Python: <code>glyco_tree(imol, active_residue_py)</code><br>
 Scheme: <code>(glyco-tree-scm imol active-residue-scm)</code></p>
@@ -64,6 +66,7 @@ Also available in Python as <code>glyco_tree_compare_trees_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>glyco_tree_compare_trees(0, ["A", 41, ""], 0, ["A", 41, ""])</code></td><td>ran, returned <code>True</code></td></tr>
 <tr><td>Scheme</td><td><code>(glyco-tree-compare-trees-scm 0 (list "A" 41 "") 0 (list "A" 41 ""))</code></td><td>ran, returned <code>#t</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="glyco_tree_internal_distances_fn_py">glyco_tree_internal_distances_fn_py</h3>
 <p>Python: <code>glyco_tree_internal_distances_fn_py(imol, residue_spec, file_name)</code><br>
 Scheme: <code>(glyco-tree-internal-distances-fn-scm imol residue-spec file-name)</code></p>
@@ -71,6 +74,7 @@ Scheme: <code>(glyco-tree-internal-distances-fn-scm imol residue-spec file-name)
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>glyco_tree_internal_distances_fn_py(0, ["A", 41, ""], "tutorial-modern.pdb")</code></td><td>ran, returned <code>False</code></td></tr>
 <tr><td>Scheme</td><td><code>(glyco-tree-internal-distances-fn-scm 0 (list "A" 41 "") "tutorial-modern.pdb")</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="glyco_tree_matched_residue_pairs">glyco_tree_matched_residue_pairs</h3>
 <p>Python: <code>glyco_tree_matched_residue_pairs(imol_1, res_spec_1, imol_2, res_spec_2)</code><br>
 Scheme: <code>(glyco-tree-matched-residue-pairs-scm imol-1 res-spec-1 imol-2 res-spec-2)</code></p>
@@ -79,6 +83,7 @@ Also available in Python as <code>glyco_tree_matched_residue_pairs_py</code>.</p
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>glyco_tree_matched_residue_pairs(0, ["A", 41, ""], 0, ["A", 41, ""])</code></td><td>ran, returned <code>False</code></td></tr>
 <tr><td>Scheme</td><td><code>(glyco-tree-matched-residue-pairs-scm 0 (list "A" 41 "") 0 (list "A" 41 ""))</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="glyco_tree_residue_id">glyco_tree_residue_id</h3>
 <p>Python: <code>glyco_tree_residue_id(imol, residue_spec_py)</code><br>
 Scheme: <code>(glyco-tree-residue-id imol residue-spec-scm)</code></p>
@@ -88,6 +93,7 @@ Also available in Scheme as <code>glyco-tree-residue-id-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>glyco_tree_residue_id(0, ["A", 41, ""])</code></td><td>ran, returned <code>False</code></td></tr>
 <tr><td>Scheme</td><td><code>(glyco-tree-residue-id 0 (list "A" 41 ""))</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="glyco_tree_residues">glyco_tree_residues</h3>
 <p>Python: <code>glyco_tree_residues(imol, active_residue_py)</code><br>
 Scheme: <code>(glyco-tree-residues imol active-residue-scm)</code></p>
@@ -113,6 +119,7 @@ Scheme: <code>(go-to-atom-alt-conf)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>go_to_atom_alt_conf()</code></td><td>ran, returned <code>''</code></td></tr>
 <tr><td>Scheme</td><td><code>(go-to-atom-alt-conf)</code></td><td>ran, returned <code>""</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="go_to_atom_atom_name">go_to_atom_atom_name</h3>
 <p>Python: <code>go_to_atom_atom_name()</code><br>
 Scheme: <code>(go-to-atom-atom-name)</code></p>
@@ -121,6 +128,7 @@ Scheme: <code>(go-to-atom-atom-name)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>go_to_atom_atom_name()</code></td><td>ran, returned <code>'CA'</code></td></tr>
 <tr><td>Scheme</td><td><code>(go-to-atom-atom-name)</code></td><td>ran, returned <code>"CA"</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="go_to_atom_chain_id">go_to_atom_chain_id</h3>
 <p>Python: <code>go_to_atom_chain_id()</code><br>
 Scheme: <code>(go-to-atom-chain-id)</code></p>
@@ -129,6 +137,7 @@ Scheme: <code>(go-to-atom-chain-id)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>go_to_atom_chain_id()</code></td><td>ran, returned <code>'A'</code></td></tr>
 <tr><td>Scheme</td><td><code>(go-to-atom-chain-id)</code></td><td>ran, returned <code>"A"</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="go_to_atom_ins_code">go_to_atom_ins_code</h3>
 <p>Python: <code>go_to_atom_ins_code()</code><br>
 Scheme: <code>(go-to-atom-ins-code)</code></p>
@@ -137,6 +146,7 @@ Scheme: <code>(go-to-atom-ins-code)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>go_to_atom_ins_code()</code></td><td>ran, returned <code>''</code></td></tr>
 <tr><td>Scheme</td><td><code>(go-to-atom-ins-code)</code></td><td>ran, returned <code>""</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="go_to_atom_molecule_number">go_to_atom_molecule_number</h3>
 <p>Python: <code>go_to_atom_molecule_number()</code><br>
 Scheme: <code>(go-to-atom-molecule-number)</code></p>
@@ -145,6 +155,7 @@ Scheme: <code>(go-to-atom-molecule-number)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>go_to_atom_molecule_number()</code></td><td>ran, returned <code>0</code></td></tr>
 <tr><td>Scheme</td><td><code>(go-to-atom-molecule-number)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="go_to_atom_residue_number">go_to_atom_residue_number</h3>
 <p>Python: <code>go_to_atom_residue_number()</code><br>
 Scheme: <code>(go-to-atom-residue-number)</code></p>
@@ -153,14 +164,15 @@ Scheme: <code>(go-to-atom-residue-number)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>go_to_atom_residue_number()</code></td><td>ran, returned <code>1</code></td></tr>
 <tr><td>Scheme</td><td><code>(go-to-atom-residue-number)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="post_go_to_atom_window">post_go_to_atom_window</h3>
 <p>Python: <code>post_go_to_atom_window()</code><br>
 Scheme: <code>(post-go-to-atom-window)</code></p>
 <p>Post the Go To Atom Window</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>post_go_to_atom_window()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(post-go-to-atom-window)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>post_go_to_atom_window()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(post-go-to-atom-window)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="set_go_to_atom_chain_residue_atom_name">set_go_to_atom_chain_residue_atom_name</h3>
 <p>Python: <code>set_go_to_atom_chain_residue_atom_name(t1_chain_id, iresno, t3_atom_name)</code><br>
 Scheme: <code>(set-go-to-atom-chain-residue-atom-name t1-chain-id iresno t3-atom-name)</code></p>
@@ -171,8 +183,9 @@ Scheme: <code>(set-go-to-atom-chain-residue-atom-name t1-chain-id iresno t3-atom
 <p>Returns the success status of the go to. 0 for fail, 1 for success.</p>
 <p>Arguments: t1_chain_id (text), iresno (a whole number), t3_atom_name (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_go_to_atom_chain_residue_atom_name("A", 41, " CA ")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-go-to-atom-chain-residue-atom-name "A" 41 " CA ")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_go_to_atom_chain_residue_atom_name("A", 41, " CA ")</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(set-go-to-atom-chain-residue-atom-name "A" 41 " CA ")</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="set_go_to_atom_chain_residue_atom_name_full">set_go_to_atom_chain_residue_atom_name_full</h3>
 <p>Python: <code>set_go_to_atom_chain_residue_atom_name_full(chain_id, resno, ins_code, atom_name, alt_conf)</code><br>
 Scheme: <code>(set-go-to-atom-chain-residue-atom-name-full chain-id resno ins-code atom-name alt-conf)</code></p>
@@ -183,23 +196,25 @@ Scheme: <code>(set-go-to-atom-chain-residue-atom-name-full chain-id resno ins-co
 <p>Returns the success status of the go to. 0 for fail, 1 for success.</p>
 <p>Arguments: chain_id (text), resno (a whole number), ins_code (text), atom_name (text), alt_conf (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_go_to_atom_chain_residue_atom_name_full("A", 41, "", " CA ", "")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-go-to-atom-chain-residue-atom-name-full "A" 41 "" " CA " "")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_go_to_atom_chain_residue_atom_name_full("A", 41, "", " CA ", "")</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(set-go-to-atom-chain-residue-atom-name-full "A" 41 "" " CA " "")</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="set_go_to_atom_chain_residue_atom_name_no_redraw">set_go_to_atom_chain_residue_atom_name_no_redraw</h3>
 <p>Python: <code>set_go_to_atom_chain_residue_atom_name_no_redraw(t1, iresno, t3, make_the_move_flag)</code><br>
 Scheme: <code>(set-go-to-atom-chain-residue-atom-name-no-redraw t1 iresno t3 make-the-move-flag)</code></p>
 <p>set go to atom but don't redraw</p>
 <p>Arguments: t1 (text), iresno (a whole number), t3 (text), make_the_move_flag (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_go_to_atom_chain_residue_atom_name_no_redraw("hello", 41, "hello", 1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-go-to-atom-chain-residue-atom-name-no-redraw "hello" 41 "hello" 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_go_to_atom_chain_residue_atom_name_no_redraw("hello", 41, "hello", 1)</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(set-go-to-atom-chain-residue-atom-name-no-redraw "hello" 41 "hello" 1)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="set_go_to_atom_chain_residue_atom_name_strings">set_go_to_atom_chain_residue_atom_name_strings</h3>
 <p>Python: <code>set_go_to_atom_chain_residue_atom_name_strings(t1, t2, txt)</code><br>
 Scheme: <code>(set-go-to-atom-chain-residue-atom-name-strings t1 t2 txt)</code></p>
 <p>Arguments: t1 (text), t2 (text), txt (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_go_to_atom_chain_residue_atom_name_strings("hello", "hello", "hello")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-go-to-atom-chain-residue-atom-name-strings "hello" "hello" "hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_go_to_atom_chain_residue_atom_name_strings("hello", "hello", "hello")</code></td><td>error: TypeError: in method 'set_go_to_atom_chain_residue_atom_name_strings', argument 1 of type 'gchar const *'</td></tr>
+<tr><td>Scheme</td><td><code>(set-go-to-atom-chain-residue-atom-name-strings "hello" "hello" "hello")</code></td><td>error: In procedure set-go-to-atom-chain-residue-atom-name-strings: Wrong type argument in position 1: "hello"</td></tr></tbody></table>
 <h3 id="set_go_to_atom_molecule">set_go_to_atom_molecule</h3>
 <p>Python: <code>set_go_to_atom_molecule(imol)</code><br>
 Scheme: <code>(set-go-to-atom-molecule imol)</code></p>
@@ -220,30 +235,30 @@ Scheme: <code>(set-go-to-atom-molecule imol)</code></p>
  dialog. Maybe that is surprising (maybe not).</p>
 <p>Arguments: imol (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_go_to_atom_molecule(0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-go-to-atom-molecule 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_go_to_atom_molecule(0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-go-to-atom-molecule 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="test_fragment">test_fragment</h3>
 <p>Python: <code>test_fragment()</code><br>
 Scheme: <code>(test-fragment)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>test_fragment()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(test-fragment)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>test_fragment()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(test-fragment)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="test_function">test_function</h3>
 <p>Python: <code>test_function(i, j)</code><br>
 Scheme: <code>(test-function i j)</code></p>
 <p>Arguments: i (a list or value), j (a list or value). Returns: a value (see the result of the example).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 <h3 id="unset_go_to_atom_widget">unset_go_to_atom_widget</h3>
 <p>Python: <code>unset_go_to_atom_widget()</code><br>
 Scheme: <code>(unset-go-to-atom-widget)</code></p>
 <p>MOVE-ME to c-interface-gtk-widgets.h</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>unset_go_to_atom_widget()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(unset-go-to-atom-widget)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>unset_go_to_atom_widget()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(unset-go-to-atom-widget)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="update_go_to_atom_from_current_position">update_go_to_atom_from_current_position</h3>
 <p>Python: <code>update_go_to_atom_from_current_position()</code><br>
 Scheme: <code>(update-go-to-atom-from-current-position)</code></p>
@@ -251,8 +266,8 @@ Scheme: <code>(update-go-to-atom-from-current-position)</code></p>
  screen centre.</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>update_go_to_atom_from_current_position()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(update-go-to-atom-from-current-position)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>update_go_to_atom_from_current_position()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(update-go-to-atom-from-current-position)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="update_go_to_atom_residue_list">update_go_to_atom_residue_list</h3>
 <p>Python: <code>update_go_to_atom_residue_list(imol)</code><br>
 Scheme: <code>(update-go-to-atom-residue-list imol)</code></p>
@@ -260,16 +275,16 @@ Scheme: <code>(update-go-to-atom-residue-list imol)</code></p>
  the go to atom atom list on deleting an atom</p>
 <p>Arguments: imol (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>update_go_to_atom_residue_list(0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(update-go-to-atom-residue-list 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>update_go_to_atom_residue_list(0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(update-go-to-atom-residue-list 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="update_go_to_atom_window_on_changed_mol">update_go_to_atom_window_on_changed_mol</h3>
 <p>Python: <code>update_go_to_atom_window_on_changed_mol(imol)</code><br>
 Scheme: <code>(update-go-to-atom-window-on-changed-mol imol)</code></p>
 <p>update the Go To Atom window</p>
 <p>Arguments: imol (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>update_go_to_atom_window_on_changed_mol(0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(update-go-to-atom-window-on-changed-mol 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>update_go_to_atom_window_on_changed_mol(0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(update-go-to-atom-window-on-changed-mol 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="update_go_to_atom_window_on_new_mol">update_go_to_atom_window_on_new_mol</h3>
 <p>Python: <code>update_go_to_atom_window_on_new_mol()</code><br>
 Scheme: <code>(update-go-to-atom-window-on-new-mol)</code></p>
@@ -277,13 +292,13 @@ Scheme: <code>(update-go-to-atom-window-on-new-mol)</code></p>
  for the molecules.</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>update_go_to_atom_window_on_new_mol()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(update-go-to-atom-window-on-new-mol)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>update_go_to_atom_window_on_new_mol()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(update-go-to-atom-window-on-new-mol)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="update_go_to_atom_window_on_other_molecule_chosen">update_go_to_atom_window_on_other_molecule_chosen</h3>
 <p>Python: <code>update_go_to_atom_window_on_other_molecule_chosen(imol)</code><br>
 Scheme: <code>(update-go-to-atom-window-on-other-molecule-chosen imol)</code></p>
 <p>Arguments: imol (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>update_go_to_atom_window_on_other_molecule_chosen(0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(update-go-to-atom-window-on-other-molecule-chosen 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>update_go_to_atom_window_on_other_molecule_chosen(0)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(update-go-to-atom-window-on-other-molecule-chosen 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
 </body></html>

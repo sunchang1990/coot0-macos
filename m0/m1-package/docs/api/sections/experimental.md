@@ -43,6 +43,8 @@ Also available in Python as `all_molecule_ramachandran_score_py`.
 | Python | `all_molecule_ramachandran_score(0)` | ran, returned `[-281.4500914078069, 183, -235.4046792835865, 123, 0, [[[-80.1338765510191, 130.8971531422487], [True, 'A', 2, ''], 0.21 ...` |
 | Scheme | `(all-molecule-ramachandran-score 0)` | ran, returned `(-281.4500914078069 183 -235.4046792835865 123 0 (((-80.1338765510191 130.8971531422487) (#t "A" 2 "") 0.215748766869011 ...` |
 
+Python and Scheme gave the same answer.
+
 ### all_molecule_rotamer_score
 
 Python: `all_molecule_rotamer_score(imol)`  
@@ -57,6 +59,8 @@ Also available in Python as `all_molecule_rotamer_score_py`.
 |---|---|---|
 | Python | `all_molecule_rotamer_score(0)` | ran, returned `[-197.50514814092332, 160]` |
 | Scheme | `(all-molecule-rotamer-score 0)` | ran, returned `(-197.50514814092332 160)` |
+
+Python and Scheme gave the same answer.
 
 ### fetch_and_superpose_alphafold_models_using_active_molecule
 
@@ -110,8 +114,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `start_ligand_builder_gui()` | not tried |
-| Scheme | `(start-ligand-builder-gui)` | not tried |
+| Python | `start_ligand_builder_gui()` | ran (no return value) |
+| Scheme | `(start-ligand-builder-gui)` | ran (no return value) |
 
 ### user_defined_click
 
@@ -124,6 +128,6 @@ Also available in Scheme as `user-defined-click-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not tried |
-| Scheme | (no automatic example) | not tried |
+| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
 

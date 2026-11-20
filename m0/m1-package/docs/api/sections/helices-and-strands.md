@@ -24,6 +24,8 @@ Arguments: none. Returns: a whole number.
 | Python | `find_helices()` | ran, returned `2` |
 | Scheme | `(find-helices)` | ran, returned `2` |
 
+Python and Scheme gave the same answer.
+
 ### find_secondary_structure
 
 Python: `find_secondary_structure(use_helix, helix_length, helix_target, use_strand, strand_length, strand_target)`  
@@ -82,6 +84,8 @@ Arguments: none. Returns: a whole number.
 | Python | `find_strands()` | ran, returned `2` |
 | Scheme | `(find-strands)` | ran, returned `2` |
 
+Python and Scheme gave the same answer.
+
 ### place_helix_here
 
 Python: `place_helix_here()`  
@@ -100,8 +104,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `place_helix_here()` | not tried |
-| Scheme | `(place-helix-here)` | not tried |
+| Python | `place_helix_here()` | ran, returned `2` |
+| Scheme | `(place-helix-here)` | ran, returned `2` |
+
+Python and Scheme gave the same answer.
 
 ### place_strand_here
 
@@ -124,8 +130,10 @@ Arguments: n_residues (a whole number), n_sample_strands (a whole number). Retur
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `place_strand_here(1, 1)` | not tried |
-| Scheme | `(place-strand-here 1 1)` | not tried |
+| Python | `place_strand_here(1, 1)` | ran, returned `-1` |
+| Scheme | `(place-strand-here 1 1)` | ran, returned `-1` |
+
+Python and Scheme gave the same answer.
 
 ### place_strand_here_dialog
 
@@ -141,8 +149,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `place_strand_here_dialog()` | not tried |
-| Scheme | `(place-strand-here-dialog)` | not tried |
+| Python | `place_strand_here_dialog()` | ran (no return value) |
+| Scheme | `(place-strand-here-dialog)` | ran (no return value) |
 
 ### set_place_helix_here_fudge_factor
 
@@ -153,6 +161,6 @@ Arguments: ff (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_place_helix_here_fudge_factor(1.0)` | not tried |
-| Scheme | `(set-place-helix-here-fudge-factor 1.0)` | not tried |
+| Python | `set_place_helix_here_fudge_factor(1.0)` | ran (no return value) |
+| Scheme | `(set-place-helix-here-fudge-factor 1.0)` | ran (no return value) |
 

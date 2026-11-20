@@ -23,6 +23,8 @@ Arguments: resno (a whole number), altloc (text), insertion_code (text), chain_i
 | Python | `auto_fit_best_rotamer(41, "", "", "A", 0, 1, 1, 1.0)` | ran, returned `5.950581073760986` |
 | Scheme | `(auto-fit-best-rotamer 41 "" "" "A" 0 1 1 1.0)` | ran, returned `5.950581073760986` |
 
+Python and Scheme gave the same answer.
+
 ### do_rotamers
 
 Python: `do_rotamers(atom_index, imol)`  
@@ -81,6 +83,8 @@ Also available in Scheme as `get-rotamer-name-scm`.
 | Python | `get_rotamer_name(0, "A", 41, "")` | ran, returned `''` |
 | Scheme | `(get-rotamer-name 0 "A" 41 "")` | ran, returned `""` |
 
+Python and Scheme gave the same answer.
+
 ### missing_atom_info
 
 Python: `missing_atom_info(imol)`  
@@ -92,8 +96,10 @@ Also available in Scheme as `missing-atom-info-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `missing_atom_info(0)` | not tried |
-| Scheme | `(missing-atom-info 0)` | not tried |
+| Python | `missing_atom_info(0)` | ran, returned `[['A', 72, '']]` |
+| Scheme | `(missing-atom-info 0)` | ran, returned `(("A" 72 ""))` |
+
+Python and Scheme gave the same answer.
 
 ### n_rotamers
 
@@ -107,8 +113,10 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_c
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `n_rotamers(0, "A", 41, "")` | not tried |
-| Scheme | `(n-rotamers 0 "A" 41 "")` | not tried |
+| Python | `n_rotamers(0, "A", 41, "")` | ran, returned `8` |
+| Scheme | `(n-rotamers 0 "A" 41 "")` | ran, returned `8` |
+
+Python and Scheme gave the same answer.
 
 ### rotamer_graphs
 
@@ -124,8 +132,10 @@ Also available in Python as `rotamer_graphs_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `rotamer_graphs(0)` | not tried |
-| Scheme | `(rotamer-graphs 0)` | not tried |
+| Python | `rotamer_graphs(0)` | ran, returned `[['A', 1, '', 2.0856404304504395, 'ASP'], ['A', 2, '', 49.393089294433594, 'VAL'], ['A', 3, '', 48.683773040771484, 'SER ...` |
+| Scheme | `(rotamer-graphs 0)` | ran, returned `(("A" 1 "" 2.0856404304504395 "ASP") ("A" 2 "" 49.393089294433594 "VAL") ("A" 3 "" 48.683773040771484 "SER") ("A" 5 "" 2 ...` |
+
+Python and Scheme gave the same answer.
 
 ### rotamer_score
 
@@ -138,8 +148,10 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number), inse
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `rotamer_score(0, "A", 41, "", "")` | not tried |
-| Scheme | `(rotamer-score 0 "A" 41 "" "")` | not tried |
+| Python | `rotamer_score(0, "A", 41, "", "")` | ran, returned `1.4432990550994873` |
+| Scheme | `(rotamer-score 0 "A" 41 "" "")` | ran, returned `1.4432990550994873` |
+
+Python and Scheme gave the same answer.
 
 ### rotamer_search_mode_state
 
@@ -152,8 +164,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `rotamer_search_mode_state()` | not tried |
-| Scheme | `(rotamer-search-mode-state)` | not tried |
+| Python | `rotamer_search_mode_state()` | ran, returned `0` |
+| Scheme | `(rotamer-search-mode-state)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### set_auto_fit_best_rotamer_clash_flag
 
@@ -170,8 +184,8 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_auto_fit_best_rotamer_clash_flag(1)` | not tried |
-| Scheme | `(set-auto-fit-best-rotamer-clash-flag 1)` | not tried |
+| Python | `set_auto_fit_best_rotamer_clash_flag(1)` | ran (no return value) |
+| Scheme | `(set-auto-fit-best-rotamer-clash-flag 1)` | ran (no return value) |
 
 ### set_residue_to_rotamer_name
 
@@ -188,8 +202,10 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_c
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_residue_to_rotamer_name(0, "A", 41, "", "", "my-name")` | not tried |
-| Scheme | `(set-residue-to-rotamer-name 0 "A" 41 "" "" "my-name")` | not tried |
+| Python | `set_residue_to_rotamer_name(0, "A", 41, "", "", "my-name")` | ran, returned `0` |
+| Scheme | `(set-residue-to-rotamer-name 0 "A" 41 "" "" "my-name")` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### set_residue_to_rotamer_number
 
@@ -202,8 +218,10 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_c
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_residue_to_rotamer_number(0, "A", 41, "", "", 1)` | not tried |
-| Scheme | `(set-residue-to-rotamer-number 0 "A" 41 "" "" 1)` | not tried |
+| Python | `set_residue_to_rotamer_number(0, "A", 41, "", "", 1)` | ran, returned `0` |
+| Scheme | `(set-residue-to-rotamer-number 0 "A" 41 "" "" 1)` | ran, returned `0` |
+
+Python and Scheme gave the same answer.
 
 ### set_rotamer_check_clashes
 
@@ -216,8 +234,8 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_rotamer_check_clashes(1)` | not tried |
-| Scheme | `(set-rotamer-check-clashes 1)` | not tried |
+| Python | `set_rotamer_check_clashes(1)` | ran (no return value) |
+| Scheme | `(set-rotamer-check-clashes 1)` | ran (no return value) |
 
 ### set_rotamer_lowest_probability
 
@@ -232,8 +250,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_rotamer_lowest_probability(1.0)` | not tried |
-| Scheme | `(set-rotamer-lowest-probability 1.0)` | not tried |
+| Python | `set_rotamer_lowest_probability(1.0)` | ran (no return value) |
+| Scheme | `(set-rotamer-lowest-probability 1.0)` | ran (no return value) |
 
 ### set_rotamer_search_mode
 
@@ -248,8 +266,8 @@ Arguments: mode (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_rotamer_search_mode(1)` | not tried |
-| Scheme | `(set-rotamer-search-mode 1)` | not tried |
+| Python | `set_rotamer_search_mode(1)` | ran (no return value) |
+| Scheme | `(set-rotamer-search-mode 1)` | ran (no return value) |
 
 ### setup_auto_fit_rotamer
 
@@ -260,8 +278,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `setup_auto_fit_rotamer(1)` | not tried |
-| Scheme | `(setup-auto-fit-rotamer 1)` | not tried |
+| Python | `setup_auto_fit_rotamer(1)` | ran (no return value) |
+| Scheme | `(setup-auto-fit-rotamer 1)` | ran (no return value) |
 
 ### setup_rotamers
 
@@ -272,8 +290,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `setup_rotamers(1)` | not tried |
-| Scheme | `(setup-rotamers 1)` | not tried |
+| Python | `setup_rotamers(1)` | ran (no return value) |
+| Scheme | `(setup-rotamers 1)` | ran (no return value) |
 
 ### show_rotamers_dialog
 
@@ -284,8 +302,8 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_c
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `show_rotamers_dialog(0, "A", 41, "", "")` | not tried |
-| Scheme | `(show-rotamers-dialog 0 "A" 41 "" "")` | not tried |
+| Python | `show_rotamers_dialog(0, "A", 41, "", "")` | ran (no return value) |
+| Scheme | `(show-rotamers-dialog 0 "A" 41 "" "")` | ran (no return value) |
 
 ### simple_fill_partial_residues
 
@@ -300,6 +318,6 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `simple_fill_partial_residues(0)` | not tried |
-| Scheme | `(simple-fill-partial-residues 0)` | not tried |
+| Python | `simple_fill_partial_residues(0)` | ran (no return value) |
+| Scheme | `(simple-fill-partial-residues 0)` | ran (no return value) |
 

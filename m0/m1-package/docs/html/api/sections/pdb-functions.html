@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="64b242ad485d56712c8c13620eba34ee4984a017">
+<meta name="coot0-source-sha1" content="47282ef815520b7b2b2c8d45ab515a530f048ba7">
 <title>PDB Functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -25,6 +25,7 @@ Scheme: <code>(get-write-conect-record-state)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>get_write_conect_record_state()</code></td><td>ran, returned <code>0</code></td></tr>
 <tr><td>Scheme</td><td><code>(get-write-conect-record-state)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="quick_save">quick_save</h3>
 <p>Python: <code>quick_save()</code><br>
 Scheme: <code>(quick-save)</code></p>
@@ -32,46 +33,51 @@ Scheme: <code>(quick-save)</code></p>
  names and save the state too.</p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>quick_save()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(quick-save)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>quick_save()</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(quick-save)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="set_write_conect_record_state">set_write_conect_record_state</h3>
 <p>Python: <code>set_write_conect_record_state(state)</code><br>
 Scheme: <code>(set-write-conect-record-state state)</code></p>
 <p>set the flag to write (or not) conect records to the PDB file.</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_write_conect_record_state(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(set-write-conect-record-state 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_write_conect_record_state(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(set-write-conect-record-state 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="write_chain_to_pdb_file">write_chain_to_pdb_file</h3>
 <p>Python: <code>write_chain_to_pdb_file(imol, chainid, filename)</code><br>
 Scheme: <code>(write-chain-to-pdb-file imol chainid filename)</code></p>
 <p>return 0 on success, -1 on error.</p>
 <p>Arguments: imol (a whole number), chainid (text), filename (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>write_chain_to_pdb_file(0, "A", "tutorial-modern.pdb")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(write-chain-to-pdb-file 0 "A" "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>write_chain_to_pdb_file(0, "A", "tutorial-modern.pdb")</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(write-chain-to-pdb-file 0 "A" "tutorial-modern.pdb")</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="write_cif_file">write_cif_file</h3>
 <p>Python: <code>write_cif_file(imol, file_name)</code><br>
 Scheme: <code>(write-cif-file imol file-name)</code></p>
 <p>return 0 on success, 1 on error.</p>
 <p>Arguments: imol (a whole number), file_name (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>write_cif_file(0, "tutorial-modern.pdb")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(write-cif-file 0 "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>write_cif_file(0, "tutorial-modern.pdb")</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(write-cif-file 0 "tutorial-modern.pdb")</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="write_pdb_file">write_pdb_file</h3>
 <p>Python: <code>write_pdb_file(imol, file_name)</code><br>
 Scheme: <code>(write-pdb-file imol file-name)</code></p>
 <p>return 0 on success, 1 on error.</p>
 <p>Arguments: imol (a whole number), file_name (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>write_pdb_file(0, "tutorial-modern.pdb")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(write-pdb-file 0 "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>write_pdb_file(0, "tutorial-modern.pdb")</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(write-pdb-file 0 "tutorial-modern.pdb")</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="write_residue_range_to_pdb_file">write_residue_range_to_pdb_file</h3>
 <p>Python: <code>write_residue_range_to_pdb_file(imol, chainid, resno_start, resno_end, filename)</code><br>
 Scheme: <code>(write-residue-range-to-pdb-file imol chainid resno-start resno-end filename)</code></p>
 <p>return 0 on success, 1 on error.</p>
 <p>Arguments: imol (a whole number), chainid (text), resno_start (a whole number), resno_end (a whole number), filename (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>write_residue_range_to_pdb_file(0, "A", 41, 45, "tutorial-modern.pdb")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(write-residue-range-to-pdb-file 0 "A" 41 45 "tutorial-modern.pdb")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>write_residue_range_to_pdb_file(0, "A", 41, 45, "tutorial-modern.pdb")</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(write-residue-range-to-pdb-file 0 "A" 41 45 "tutorial-modern.pdb")</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 </body></html>

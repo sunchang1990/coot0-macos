@@ -15,6 +15,8 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `score_rotamers(0, "A", 41, "", "", 1, 1, 1.0)` | not tried |
-| Scheme | `(score-rotamers 0 "A" 41 "" "" 1 1 1.0)` | not tried |
+| Python | `score_rotamers(0, "A", 41, "", "", 1, 1, 1.0)` | ran, returned `[['mt-10 ', 33.0, -0.6280274987220764, [[' N  ', 1.790576457977295], [' CA ', -0.00864859577268362], [' CB ', -0.2229364 ...` |
+| Scheme | `(score-rotamers 0 "A" 41 "" "" 1 1 1.0)` | ran, returned `(("mt-10 " 33.0 ((" N  " 1.790576457977295) (" CA " -0.00864859577268362) (" CB " -0.22293642163276672) (" CG " 0.134302 ...` |
+
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 

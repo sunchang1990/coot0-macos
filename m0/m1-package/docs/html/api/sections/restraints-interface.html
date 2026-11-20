@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="590e6311c9a9b895fe6ad517dad68c04d5e249a5">
+<meta name="coot0-source-sha1" content="8f1f0fb3f49e25e237123587a2bba72e50e6bfea">
 <title>Restraints Interface - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -24,6 +24,7 @@ Scheme: <code>(coot-can-do-lidia-p)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>coot_can_do_lidia_p()</code></td><td>ran, returned <code>True</code></td></tr>
 <tr><td>Scheme</td><td><code>(coot-can-do-lidia-p)</code></td><td>ran, returned <code>#t</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="coot_has_guile">coot_has_guile</h3>
 <p>Python: <code>coot_has_guile()</code></p>
 <p>Arguments: none. Returns: a value (see the result of the example).
@@ -44,7 +45,7 @@ Scheme: <code>(get-residue-by-type imol residue-type)</code></p>
 <p>Arguments: ? (a whole number), residue_type (text). Returns: a value (see the result of the example).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>get_residue_by_type(1, "ALA")</code></td><td>ran, returned <code>False</code></td></tr>
-<tr><td>Scheme</td><td><code>(get-residue-by-type 0 "ALA")</code></td><td>ran, returned <code>#&lt;collectable-swig-pointer coot::residue_spec_t * 9234005f0&gt;</code></td></tr></tbody></table>
+<tr><td>Scheme</td><td><code>(get-residue-by-type 0 "ALA")</code></td><td>ran, returned <code>#&lt;collectable-swig-pointer coot::residue_spec_t * 814d5bcf0&gt;</code></td></tr></tbody></table>
 <h3 id="get_residue_specs_in_mol">get_residue_specs_in_mol</h3>
 <p>Python: <code>get_residue_specs_in_mol(imol, residue_type)</code><br>
 Scheme: <code>(get-residue-specs-in-mol imol residue-type)</code></p>
@@ -52,7 +53,7 @@ Scheme: <code>(get-residue-specs-in-mol imol residue-type)</code></p>
 <p>Arguments: imol (a whole number), residue_type (text). Returns: a value (see the result of the example).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>get_residue_specs_in_mol(0, "ALA")</code></td><td>ran, returned <code>[[True, 'A', 10, ''], [True, 'A', 15, ''], [True, 'A', 23, ''], [True, 'A', 62, ''], [True, 'A', 75, ''], [True, 'A', 87 ...</code></td></tr>
-<tr><td>Scheme</td><td><code>(get-residue-specs-in-mol 0 "ALA")</code></td><td>ran, returned <code>#&lt;collectable-swig-pointer std::vector&lt; coot::residue_spec_t &gt; * 923123c20&gt;</code></td></tr></tbody></table>
+<tr><td>Scheme</td><td><code>(get-residue-specs-in-mol 0 "ALA")</code></td><td>ran, returned <code>#&lt;collectable-swig-pointer std::vector&lt; coot::residue_spec_t &gt; * 8145dfc40&gt;</code></td></tr></tbody></table>
 <h3 id="list_nomenclature_errors">list_nomenclature_errors</h3>
 <p>Python: <code>list_nomenclature_errors(imol)</code><br>
 Scheme: <code>(list-nomenclature-errors imol)</code></p>
@@ -60,23 +61,25 @@ Scheme: <code>(list-nomenclature-errors imol)</code></p>
 Also available in Python as <code>list_nomenclature_errors_py</code>.
 Also available in Scheme as <code>list-nomenclature-errors-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>list_nomenclature_errors(0)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(list-nomenclature-errors 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>list_nomenclature_errors(0)</code></td><td>ran, returned <code>[]</code></td></tr>
+<tr><td>Scheme</td><td><code>(list-nomenclature-errors 0)</code></td><td>ran, returned <code>()</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="monomer_restraints">monomer_restraints</h3>
 <p>Python: <code>monomer_restraints(monomer_type)</code><br>
 Scheme: <code>(monomer-restraints monomer-type)</code></p>
 <p>Arguments: monomer_type (text). Returns: a value (see the result of the example).
 Also available in Python as <code>monomer_restraints_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>monomer_restraints("ALA")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(monomer-restraints "ALA")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>monomer_restraints("ALA")</code></td><td>ran, returned <code>{'_chem_comp': ['ALA', 'ALA', 'ALANINE', 'peptide', 13, 6, '.'], '_chem_comp_atom': [[' N  ', 'N', 'NT3', 0.0, False], [ ...</code></td></tr>
+<tr><td>Scheme</td><td><code>(monomer-restraints "ALA")</code></td><td>ran, returned <code>(("_chem_comp" "ALA" "ALA" "ALANINE" "peptide" 13 6 ".") ("_chem_comp_atom" (" N  " "N" "NT3" 0.0 #f) (" CA " "C" "CH1"  ...</code></td></tr></tbody></table>
+<p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 <h3 id="monomer_restraints_for_molecule">monomer_restraints_for_molecule</h3>
 <p>Python: <code>monomer_restraints_for_molecule(monomer_type, imol)</code></p>
 <p>Arguments: monomer_type (text), imol (a whole number). Returns: a value (see the result of the example).
 Also available in Python as <code>monomer_restraints_for_molecule_py</code>.
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>monomer_restraints_for_molecule("ALA", 0)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>monomer_restraints_for_molecule("ALA", 0)</code></td><td>ran, returned <code>{'_chem_comp': ['ALA', 'ALA', 'ALANINE', 'peptide', 13, 6, '.'], '_chem_comp_atom': [[' N  ', 'N', 'NT3', 0.0, False], [ ...</code></td></tr></tbody></table>
 <h3 id="pyrun_simple_string">pyrun_simple_string</h3>
 <p>Python: <code>pyrun_simple_string(python_command)</code><br>
 Scheme: <code>(pyrun-simple-string python-command)</code></p>
@@ -87,22 +90,22 @@ swig when generating coot_wrap_guile.cc.
 conditionally compiled].</p>
 <p>Arguments: python_command (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>pyrun_simple_string("hello")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(pyrun-simple-string "hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>pyrun_simple_string("hello")</code></td><td>not run: not run automatically (run: exits, uses the network, an external program, files or a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(pyrun-simple-string "hello")</code></td><td>not run: not run automatically (run: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="residue_spec_from_py">residue_spec_from_py</h3>
 <p>Python: <code>residue_spec_from_py(residue_in)</code><br>
 Scheme: <code>(residue-spec-from-scm residue-in)</code></p>
 <p>Arguments: residue_in (a list or value). Returns: <code>coot::residue_spec_t</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>residue_spec_from_py(["A", 41, ""])</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(residue-spec-from-scm (list "A" 41 ""))</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>residue_spec_from_py(["A", 41, ""])</code></td><td>ran, returned <code>&lt;coot.residue_spec_t; proxy of &lt;Swig Object of type 'coot::residue_spec_t *' at 0x1077a5260&gt; &gt;</code></td></tr>
+<tr><td>Scheme</td><td><code>(residue-spec-from-scm (list "A" 41 ""))</code></td><td>ran, returned <code>#&lt;collectable-swig-pointer coot::residue_spec_t * 77f04e9e0&gt;</code></td></tr></tbody></table>
 <h3 id="residue_spec_make_triple">residue_spec_make_triple</h3>
 <p>Python: <code>residue_spec_make_triple(residue_spec_py)</code></p>
 <p>Arguments: residue_spec_py (a list or value). Returns: a value (see the result of the example).
 Also available in Python as <code>residue_spec_make_triple_py</code>.
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>residue_spec_make_triple(["A", 41, ""])</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>residue_spec_make_triple(["A", 41, ""])</code></td><td>ran, returned <code>['A', 41, '']</code></td></tr></tbody></table>
 <h3 id="residue_spec_to_py">residue_spec_to_py</h3>
 <p>Python: <code>residue_spec_to_py(res)</code><br>
 Scheme: <code>(residue-spec-to-scm res)</code></p>
@@ -113,21 +116,21 @@ It doesn't need expression at the scripting level.
 return a null list on problem</p>
 <p>Arguments: res (<code>coot::residue_spec_t</code>). Returns: a value (see the result of the example).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 <h3 id="run-python-command">run-python-command</h3>
 <p>Scheme: <code>(run-python-command python-command)</code></p>
 <p>Arguments: python-command (text). Returns: a value (see the result of the example).
 <strong>Scheme only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Scheme</td><td><code>(run-python-command "hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Scheme</td><td><code>(run-python-command "hello")</code></td><td>not run: not run automatically (run: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="run_scheme_command">run_scheme_command</h3>
 <p>Python: <code>run_scheme_command(scheme_command)</code></p>
 <p>we ignore return values for now</p>
 <p>Arguments: scheme_command (text). Returns: a value (see the result of the example).
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>run_scheme_command("hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>run_scheme_command("hello")</code></td><td>not run: not run automatically (run: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
 <h3 id="set_monomer_restraints">set_monomer_restraints</h3>
 <p>Python: <code>set_monomer_restraints(monomer_type, restraints)</code><br>
 Scheme: <code>(set-monomer-restraints monomer-type restraints)</code></p>
@@ -137,13 +140,13 @@ Scheme: <code>(set-monomer-restraints monomer-type restraints)</code></p>
 <p>Arguments: monomer_type (text), restraints (a list or value). Returns: a value (see the result of the example).
 Also available in Python as <code>set_monomer_restraints_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not tried</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
 <h3 id="show_fix_nomenclature_errors_gui">show_fix_nomenclature_errors_gui</h3>
 <p>Python: <code>show_fix_nomenclature_errors_gui(imol, nomenclature_errors)</code><br>
 Scheme: <code>(show-fix-nomenclature-errors-gui imol nomenclature-errors)</code></p>
 <p>Arguments: imol (a whole number), nomenclature_errors (a list). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>show_fix_nomenclature_errors_gui(0, "hello")</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(show-fix-nomenclature-errors-gui 0 "hello")</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>show_fix_nomenclature_errors_gui(0, "hello")</code></td><td>error: TypeError: in method 'show_fix_nomenclature_errors_gui', argument 2 of type 'std::vector&lt; std::pair&lt; std::string,coot::residue_spec_t &gt;,std: ...</td></tr>
+<tr><td>Scheme</td><td><code>(show-fix-nomenclature-errors-gui 0 "hello")</code></td><td>error: In procedure show-fix-nomenclature-errors-gui: Wrong type argument in position 2: "hello"</td></tr></tbody></table>
 </body></html>

@@ -57,8 +57,8 @@ Arguments: imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `is_shelx_molecule(0)` | not tried |
-| Scheme | `(is-shelx-molecule 0)` | not tried |
+| Python | `is_shelx_molecule(0)` | not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(is-shelx-molecule 0)` | not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen) |
 
 ### read_shelx_ins_file
 
@@ -71,8 +71,8 @@ Arguments: filename (text), recentre_flag (a whole number). Returns: a whole num
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `read_shelx_ins_file("tutorial-modern.pdb", 1)` | not tried |
-| Scheme | `(read-shelx-ins-file "tutorial-modern.pdb" 1)` | not tried |
+| Python | `read_shelx_ins_file("tutorial-modern.pdb", 1)` | not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(read-shelx-ins-file "tutorial-modern.pdb" 1)` | not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen) |
 
 ### write_shelx_ins_file
 
@@ -85,6 +85,6 @@ Arguments: imol (a whole number), filename (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `write_shelx_ins_file(0, "tutorial-modern.pdb")` | not tried |
-| Scheme | `(write-shelx-ins-file 0 "tutorial-modern.pdb")` | not tried |
+| Python | `write_shelx_ins_file(0, "tutorial-modern.pdb")` | not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(write-shelx-ins-file 0 "tutorial-modern.pdb")` | not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen) |
 

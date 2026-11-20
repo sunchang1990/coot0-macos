@@ -18,6 +18,8 @@ Arguments: none. Returns: a number.
 | Python | `fffear_angular_resolution()` | ran, returned `15.0` |
 | Scheme | `(fffear-angular-resolution)` | ran, returned `15.0` |
 
+Python and Scheme gave the same answer.
+
 ### fffear_search
 
 Python: `fffear_search(imol_model, imol_map)`  
@@ -30,8 +32,8 @@ Arguments: imol_model (a whole number), imol_map (a whole number). Returns: a wh
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `fffear_search(0, 1)` | ran, returned `2` |
-| Scheme | `(fffear-search 0 1)` | ran, returned `2` |
+| Python | `fffear_search(0, 1)` | no answer within 60 s (slow, or waits for something) |
+| Scheme | `(fffear-search 0 1)` | no answer within 60 s (slow, or waits for something) |
 
 ### set_fffear_angular_resolution
 
@@ -44,6 +46,6 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_fffear_angular_resolution(1.0)` | not tried |
-| Scheme | `(set-fffear-angular-resolution 1.0)` | not tried |
+| Python | `set_fffear_angular_resolution(1.0)` | ran (no return value) |
+| Scheme | `(set-fffear-angular-resolution 1.0)` | ran (no return value) |
 

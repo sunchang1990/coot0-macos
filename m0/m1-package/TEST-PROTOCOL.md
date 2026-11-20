@@ -1,4 +1,30 @@
-# Coot 0.9.8.96 on Apple Silicon: test round 29 (build 29 = build 28 + Help search opens what you pick + contact dots off)
+# Coot 0.9.8.96 on Apple Silicon: test round 30 (build 30 = build 29 + five scripting functions fixed + every scripting function tried)
+
+**From you** (20 Nov): KK1, KK2 pass. Asked: check the Python and Scheme functions with the test data and update the documentation
+(most functions showed "not tried").
+
+1. **Python against Scheme**: I ran the read-only functions in both languages on the same data and compared the answers. Four were wrong:
+   `sanitise_alt_confs_active_residue()` (Python) always failed; Scheme `map-peaks` gave the weakest peak first;
+   Scheme `map-to-model-correlation-stats-per-residue-range-scm` returned a deeply nested list; Scheme `ncs-chain-differences` left out
+   the residue numbers. A fifth: Python `ligand_atom_overlaps` always returned False (unfinished in Coot's C++). The last four are in
+   Coot 0.9.8.96's own C++; all five are fixed (new `bin/coot-bin`).
+2. **Scripting reference**: the run that tries every example had stopped after a third of the functions (an example overwrote the test
+   model). Now all 3,406 examples have a result: 1,399 Python and 1,369 Scheme ran on the test data; about 125 need the graphics window and
+   were not tried with one; about 450 were not run on purpose (they quit Coot, use the network or an external program). Where both
+   languages returned a comparable value (570 functions), they agreed for 528; each page says whether they agreed.
+
+**Verified without a window only** (test data, no screen): functions marked "stopped Coot (no window)" need the graphics window and were not
+tried with one. **New tests**: `python-api` 19 -> 21, `scheme-api` 27 -> 30 (build 29 fails all 5). Evidence: `evidence/checks_b29_vs_b30.txt`.
+
+## LL. Round 30 checks (about 5 minutes)
+
+| # | Do | Expected |
+|---|---|---|
+| LL1 | Help > Search Menus and Docs...: type `map_peaks`, double-click the `map_peaks` line. | The reference opens at `map_peaks`: both examples have a result ("ran, returned ..."), and a line says whether Python and Scheme agreed. |
+| LL2 | Help > Scripting Reference (all functions): look at "Results of trying the examples". | Every function has a result; few or no "not tried". |
+| LL3 | Calculate > Scripting > Scheme...: `(define imol (read-pdb "<coot0>/test-data/tutorial-modern.pdb"))` then `(list-ref (list-ref (ncs-chain-differences imol "A") 2) 0)` (use the coot0 folder path; in the installed copy: `~/.local/share/coot0/0.9.8.96-b30/test-data/...`). | Shows `((1 "") (1 "") 0.5)` (residue, master residue, difference); build 29 showed `(0.5)`. |
+
+# Earlier round (KK1, KK2 confirmed 20 Nov): Coot 0.9.8.96 on Apple Silicon: test round 29 (build 29 = build 28 + Help search opens what you pick + contact dots off)
 
 **From you** (20 Nov): JJ1, JJ2, JJ4, JJ5 pass; JJ3: the search finds things, but double-click / Enter neither ran a menu entry nor opened the
 documentation. Asked: is there a function to turn off the dots of Ctrl-1?

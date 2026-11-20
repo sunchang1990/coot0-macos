@@ -15,8 +15,8 @@ Arguments: name (text), version (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `register_extension("my-name", "hello")` | not tried |
-| Scheme | `(register-extension "my-name" "hello")` | not tried |
+| Python | `register_extension("my-name", "hello")` | ran (no return value) |
+| Scheme | `(register-extension "my-name" "hello")` | ran (no return value) |
 
 ### remove_file_curlew_menu_item_maybe
 
@@ -27,8 +27,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `remove_file_curlew_menu_item_maybe()` | not tried |
-| Scheme | `(remove-file-curlew-menu-item-maybe)` | not tried |
+| Python | `remove_file_curlew_menu_item_maybe()` | not run: not run automatically (curl: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(remove-file-curlew-menu-item-maybe)` | not run: not run automatically (curl: exits, uses the network, an external program, files or a screen) |
 
 ### version_for_extension
 
@@ -39,6 +39,8 @@ Arguments: name (text). Returns: text.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `version_for_extension("my-name")` | not tried |
-| Scheme | `(version-for-extension "my-name")` | not tried |
+| Python | `version_for_extension("my-name")` | ran, returned `''` |
+| Scheme | `(version-for-extension "my-name")` | ran, returned `""` |
+
+Python and Scheme gave the same answer.
 

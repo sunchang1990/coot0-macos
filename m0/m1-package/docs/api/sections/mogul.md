@@ -45,8 +45,8 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `mogul_markup(0, "A", 41, "", "tutorial-modern.pdb")` | not tried |
-| Scheme | `(mogul-markup 0 "A" 41 "" "tutorial-modern.pdb")` | not tried |
+| Python | `mogul_markup(0, "A", 41, "", "tutorial-modern.pdb")` | not run: not run automatically (mogul: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(mogul-markup 0 "A" 41 "" "tutorial-modern.pdb")` | not run: not run automatically (mogul: exits, uses the network, an external program, files or a screen) |
 
 ### mogul_results_py
 
@@ -57,8 +57,8 @@ Arguments: mogul_out_file_name (text). Returns: a value (see the result of the e
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `mogul_results_py("tutorial-modern.pdb")` | not tried |
-| Scheme | `(mogul-results-scm "tutorial-modern.pdb")` | not tried |
+| Python | `mogul_results_py("tutorial-modern.pdb")` | not run: not run automatically (mogul: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(mogul-results-scm "tutorial-modern.pdb")` | not run: not run automatically (mogul: exits, uses the network, an external program, files or a screen) |
 
 ### mogul-results-process-many
 
@@ -69,7 +69,7 @@ Arguments: glob-str (text), glob-dir (text). Returns: a value (see the result of
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Scheme | `(mogul-results-process-many "hello" ".")` | not tried |
+| Scheme | `(mogul-results-process-many "hello" ".")` | not run: not run automatically (mogul: exits, uses the network, an external program, files or a screen) |
 
 ### set_mogul_max_badness
 
@@ -80,8 +80,8 @@ Arguments: b (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_mogul_max_badness(0.5)` | not tried |
-| Scheme | `(set-mogul-max-badness 0.5)` | not tried |
+| Python | `set_mogul_max_badness(0.5)` | not run: not run automatically (mogul: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(set-mogul-max-badness 0.5)` | not run: not run automatically (mogul: exits, uses the network, an external program, files or a screen) |
 
 ### update_restraints_using_mogul
 
@@ -92,6 +92,6 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `update_restraints_using_mogul(0, "A", 41, "", "ALA", "tutorial-modern.pdb")` | not tried |
-| Scheme | `(update-restraints-using-mogul 0 "A" 41 "" "ALA" "tutorial-modern.pdb")` | not tried |
+| Python | `update_restraints_using_mogul(0, "A", 41, "", "ALA", "tutorial-modern.pdb")` | not run: not run automatically (mogul: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(update-restraints-using-mogul 0 "A" 41 "" "ALA" "tutorial-modern.pdb")` | not run: not run automatically (mogul: exits, uses the network, an external program, files or a screen) |
 

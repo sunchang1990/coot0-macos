@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="f3bddab971c777c0898096925e2cce42076277fb">
+<meta name="coot0-source-sha1" content="51e5726d7dd16c3cc4659d42d1e9f77da5a97db1">
 <title>Graphics Text - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -32,16 +32,17 @@ Scheme: <code>(place-text text x y z size)</code></p>
 <p>size variable is currently ignored.</p>
 <p>Arguments: text (text), x (a number), y (a number), z (a number), size (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>place_text("hello", 54.5, 9.4, 12.3, 10)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(place-text "hello" 54.5 9.4 12.3 10)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>place_text("hello", 54.5, 9.4, 12.3, 10)</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(place-text "hello" 54.5 9.4 12.3 10)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 <h3 id="remove_text">remove_text</h3>
 <p>Python: <code>remove_text(text_handle)</code><br>
 Scheme: <code>(remove-text text-handle)</code></p>
 <p>Remove "3d" text item</p>
 <p>Arguments: text_handle (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>remove_text(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(remove-text 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>remove_text(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(remove-text 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="text_index_near_position">text_index_near_position</h3>
 <p>Python: <code>text_index_near_position(x, y, z, r)</code><br>
 Scheme: <code>(text-index-near-position x y z r)</code></p>
@@ -49,6 +50,7 @@ Scheme: <code>(text-index-near-position x y z r)</code></p>
  position. If no text item is close, then return -1</p>
 <p>Arguments: x (a number), y (a number), z (a number), r (a number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>text_index_near_position(54.5, 9.4, 12.3, 0.5)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(text-index-near-position 54.5 9.4 12.3 0.5)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>text_index_near_position(54.5, 9.4, 12.3, 0.5)</code></td><td>ran, returned <code>-1</code></td></tr>
+<tr><td>Scheme</td><td><code>(text-index-near-position 54.5 9.4 12.3 0.5)</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 </body></html>

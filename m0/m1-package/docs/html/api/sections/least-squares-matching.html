@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="4f0f31bc75021c391845a8e3132f5f6465de8503">
+<meta name="coot0-source-sha1" content="79cb1701a399856d37e2acc43e9f1e45e983e969">
 <title>Least-Squares matching - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -42,6 +42,7 @@ Also available in Python as <code>apply_lsq_matches_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>apply_lsq_matches(0, 0)</code></td><td>ran, returned <code>False</code></td></tr>
 <tr><td>Scheme</td><td><code>(apply-lsq-matches 0 0)</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="apply_lsq_matches_simple">apply_lsq_matches_simple</h3>
 <p>Python: <code>apply_lsq_matches_simple(imol_reference, imol_moving)</code><br>
 Scheme: <code>(apply-lsq-matches-simple imol-reference imol-moving)</code></p>
@@ -50,6 +51,7 @@ Scheme: <code>(apply-lsq-matches-simple imol-reference imol-moving)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>apply_lsq_matches_simple(0, 0)</code></td><td>ran, returned <code>0</code></td></tr>
 <tr><td>Scheme</td><td><code>(apply-lsq-matches-simple 0 0)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="clear_lsq_matches">clear_lsq_matches</h3>
 <p>Python: <code>clear_lsq_matches()</code><br>
 Scheme: <code>(clear-lsq-matches)</code></p>
@@ -66,34 +68,35 @@ Also available in Scheme as <code>get-lsq-matrix-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>get_lsq_matrix(0, 0)</code></td><td>ran, returned <code>False</code></td></tr>
 <tr><td>Scheme</td><td><code>(get-lsq-matrix 0 0)</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="remove_last_lsq_plane_atom">remove_last_lsq_plane_atom</h3>
 <p>Python: <code>remove_last_lsq_plane_atom()</code><br>
 Scheme: <code>(remove-last-lsq-plane-atom)</code></p>
 <p>callback from destroy of widget</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>remove_last_lsq_plane_atom()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(remove-last-lsq-plane-atom)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>remove_last_lsq_plane_atom()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(remove-last-lsq-plane-atom)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="setup_lsq_deviation">setup_lsq_deviation</h3>
 <p>Python: <code>setup_lsq_deviation(state)</code><br>
 Scheme: <code>(setup-lsq-deviation state)</code></p>
 <p>section Least-Squares plane interface</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>setup_lsq_deviation(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(setup-lsq-deviation 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>setup_lsq_deviation(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(setup-lsq-deviation 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="setup_lsq_plane_define">setup_lsq_plane_define</h3>
 <p>Python: <code>setup_lsq_plane_define(state)</code><br>
 Scheme: <code>(setup-lsq-plane-define state)</code></p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>setup_lsq_plane_define(1)</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(setup-lsq-plane-define 1)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>setup_lsq_plane_define(1)</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(setup-lsq-plane-define 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
 <h3 id="unset_lsq_plane_dialog">unset_lsq_plane_dialog</h3>
 <p>Python: <code>unset_lsq_plane_dialog()</code><br>
 Scheme: <code>(unset-lsq-plane-dialog)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>unset_lsq_plane_dialog()</code></td><td>not tried</td></tr>
-<tr><td>Scheme</td><td><code>(unset-lsq-plane-dialog)</code></td><td>not tried</td></tr></tbody></table>
+<tr><td>Python</td><td><code>unset_lsq_plane_dialog()</code></td><td>ran (no return value)</td></tr>
+<tr><td>Scheme</td><td><code>(unset-lsq-plane-dialog)</code></td><td>ran (no return value)</td></tr></tbody></table>
 </body></html>
