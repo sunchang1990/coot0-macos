@@ -15,8 +15,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `fleur_cursor()` | ran (no return value) |
-| Scheme | `(fleur-cursor)` | ran (no return value) |
+| Python | `fleur_cursor()` | ran (no return value, nothing visible changed) |
+| Scheme | `(fleur-cursor)` | ran (no return value, nothing visible changed) |
 
 ### normal_cursor
 
@@ -29,8 +29,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `normal_cursor()` | ran (no return value) |
-| Scheme | `(normal-cursor)` | ran (no return value) |
+| Python | `normal_cursor()` | ran (no return value, nothing visible changed) |
+| Scheme | `(normal-cursor)` | ran (no return value, nothing visible changed) |
 
 ### pick_cursor_maybe
 
@@ -43,8 +43,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `pick_cursor_maybe()` | ran (no return value) |
-| Scheme | `(pick-cursor-maybe)` | ran (no return value) |
+| Python | `pick_cursor_maybe()` | ran (no return value, nothing visible changed) |
+| Scheme | `(pick-cursor-maybe)` | ran (no return value, nothing visible changed) |
 
 ### rotate_cursor
 
@@ -57,8 +57,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `rotate_cursor()` | ran (no return value) |
-| Scheme | `(rotate-cursor)` | ran (no return value) |
+| Python | `rotate_cursor()` | ran (no return value, nothing visible changed) |
+| Scheme | `(rotate-cursor)` | ran (no return value, nothing visible changed) |
 
 ### set_pick_cursor_index
 
@@ -74,6 +74,6 @@ Arguments: icursor_index (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_pick_cursor_index(1)` | ran (no return value) |
-| Scheme | `(set-pick-cursor-index 1)` | ran (no return value) |
+| Python | `set_pick_cursor_index(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-pick-cursor-index 1)` | ran (no return value, nothing visible changed) |
 

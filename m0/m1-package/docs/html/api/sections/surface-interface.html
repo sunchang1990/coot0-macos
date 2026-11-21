@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="86fd692e29c3d241f7a992c2cf65482347c61a2c">
+<meta name="coot0-source-sha1" content="afd32c617d405180d569201a9b64f58875c7df96">
 <title>Surface Interface - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -26,8 +26,8 @@ Scheme: <code>(do-clipped-surface imol residue-specs)</code></p>
 Also available in Python as <code>do_clipped_surface_py</code>.
 Also available in Scheme as <code>do-clipped-surface-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>do_clipped_surface(0, [["A", 41, ""], ["A", 42, ""]])</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(do-clipped-surface 0 (list (list "A" 41 "") (list "A" 42 "")))</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>do_clipped_surface(0, [["A", 41, ""], ["A", 42, ""]])</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(do-clipped-surface 0 (list (list "A" 41 "") (list "A" 42 "")))</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="do_surface">do_surface</h3>
 <p>Python: <code>do_surface(imol, istate)</code><br>
 Scheme: <code>(do-surface imol istate)</code></p>
@@ -36,8 +36,8 @@ Scheme: <code>(do-surface imol istate)</code></p>
 <p>if state = 0 don't draw surface</p>
 <p>Arguments: imol (a whole number), istate (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>do_surface(0, 1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(do-surface 0 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>do_surface(0, 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(do-surface 0 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="get_electrostatic_surface_charge_range">get_electrostatic_surface_charge_range</h3>
 <p>Python: <code>get_electrostatic_surface_charge_range()</code><br>
 Scheme: <code>(get-electrostatic-surface-charge-range)</code></p>
@@ -69,8 +69,9 @@ Scheme: <code>(molecule-is-drawn-as-surface-int imol)</code></p>
 Scheme: <code>(set-electrostatic-surface-charge-range v)</code></p>
 <p>Arguments: v (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_electrostatic_surface_charge_range(1.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-electrostatic-surface-charge-range 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_electrostatic_surface_charge_range(1.0)</code></td><td>ran (no return value); changed: get_electrostatic_surface_charge_range(): 0.5 -&gt; 1</td></tr>
+<tr><td>Scheme</td><td><code>(set-electrostatic-surface-charge-range 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Setting checked (set to another value and read back, then put back): Python: get_electrostatic_surface_charge_range was 0.5, set to 1.25, read back 1.25; Scheme: get-electrostatic-surface-charge-range was 0.5, set to 1.25, read back 1.25.</p>
 <h3 id="set_transparent_electrostatic_surface">set_transparent_electrostatic_surface</h3>
 <p>Python: <code>set_transparent_electrostatic_surface(imol, opacity)</code><br>
 Scheme: <code>(set-transparent-electrostatic-surface imol opacity)</code></p>
@@ -78,6 +79,6 @@ Scheme: <code>(set-transparent-electrostatic-surface imol opacity)</code></p>
  opacity &gt; 0.0 will turn on screendoor transparency (stippling).</p>
 <p>Arguments: imol (a whole number), opacity (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_transparent_electrostatic_surface(0, 1.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-transparent-electrostatic-surface 0 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_transparent_electrostatic_surface(0, 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-transparent-electrostatic-surface 0 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 </body></html>

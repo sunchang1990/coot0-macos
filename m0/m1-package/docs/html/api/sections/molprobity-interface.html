@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="16a59fcdec8b6ca061dfd4470e199fb2df35b1bc">
+<meta name="coot0-source-sha1" content="472856f1be7a1f438a75738384f4424f6ecd6d71">
 <title>Molprobity Interface - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -24,8 +24,10 @@ Scheme: <code>(do-probe-dots-on-rotamers-and-chis-state)</code></p>
  angles intermediate atoms?</p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>do_probe_dots_on_rotamers_and_chis_state()</code></td><td>not run: not run automatically (probe: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(do-probe-dots-on-rotamers-and-chis-state)</code></td><td>not run: not run automatically (probe: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>do_probe_dots_on_rotamers_and_chis_state()</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(do-probe-dots-on-rotamers-and-chis-state)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns 1 if probe dots are drawn while changing rotamers/chis, else 0 (default).</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="do_probe_dots_post_refine_state">do_probe_dots_post_refine_state</h3>
 <p>Python: <code>do_probe_dots_post_refine_state()</code><br>
 Scheme: <code>(do-probe-dots-post-refine-state)</code></p>
@@ -33,8 +35,10 @@ Scheme: <code>(do-probe-dots-post-refine-state)</code></p>
  refinement has happened?</p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>do_probe_dots_post_refine_state()</code></td><td>not run: not run automatically (probe: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(do-probe-dots-post-refine-state)</code></td><td>not run: not run automatically (probe: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>do_probe_dots_post_refine_state()</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(do-probe-dots-post-refine-state)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns 1 if probe dots are made after each refinement, else 0 (default).</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="handle_read_draw_probe_dots">handle_read_draw_probe_dots</h3>
 <p>Python: <code>handle_read_draw_probe_dots(dots_file)</code><br>
 Scheme: <code>(handle-read-draw-probe-dots dots-file)</code></p>
@@ -42,8 +46,9 @@ Scheme: <code>(handle-read-draw-probe-dots dots-file)</code></p>
 format</p>
 <p>Arguments: dots_file (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>handle_read_draw_probe_dots("tutorial-modern.pdb")</code></td><td>not run: not run automatically (probe: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(handle-read-draw-probe-dots "tutorial-modern.pdb")</code></td><td>not run: not run automatically (probe: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>open("dots.kin", "w").write("# so small overlap)\n47.9 11.9 18.9 48.2 12.0 19.1 yellow\n47.0 11.0 18.0 47.0 11.0 18.0 red\n")</code>, then <code>handle_read_draw_probe_dots("dots.kin")</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td>first <code>(call-with-output-file "dots.kin" (lambda (port) (display "# so small overlap)\n47.9 11.9 18.9 48.2 12.0 19.1 yellow\n47.0 11.0 18.0 47.0 11.0 18.0 red\n" port) ...</code>, then <code>(handle-read-draw-probe-dots "dots.kin")</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: reads a probe dots file ('# ... small overlap)' headers, then 'x1 y1 z1 x2 y2 z2 colour' lines) into generic objects.</p>
 <h3 id="handle_read_draw_probe_dots_unformatted">handle_read_draw_probe_dots_unformatted</h3>
 <p>Python: <code>handle_read_draw_probe_dots_unformatted(dots_file, imol, show_clash_gui_flag)</code><br>
 Scheme: <code>(handle-read-draw-probe-dots-unformatted dots-file imol show-clash-gui-flag)</code></p>
@@ -51,40 +56,49 @@ Scheme: <code>(handle-read-draw-probe-dots-unformatted dots-file imol show-clash
 format</p>
 <p>Arguments: dots_file (text), imol (a whole number), show_clash_gui_flag (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>handle_read_draw_probe_dots_unformatted("tutorial-modern.pdb", 0, 1)</code></td><td>not run: not run automatically (probe: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(handle-read-draw-probe-dots-unformatted "tutorial-modern.pdb" 0 1)</code></td><td>not run: not run automatically (probe: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>open("probe-dots.txt", "w").write(":1-&gt;1:so: A  41 GLU  C   : A  43 VAL  N   :-0.503:-0.331:45.969:11.365:14.759:0.166:-0.1036:C:N:45.911:11.420:14.613:15.36:14 ...</code>, then <code>handle_read_draw_probe_dots_unformatted("probe-dots.txt", 0, 0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td>first <code>(call-with-output-file "probe-dots.txt" (lambda (port) (display ":1-&gt;1:so: A  41 GLU  C   : A  43 VAL  N   :-0.503:-0.331:45.969:11.365:14.759:0.166:-0.1036:C:N ...</code>, then <code>(handle-read-draw-probe-dots-unformatted "probe-dots.txt" 0 0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: reads probe -u output (3 real probe lines for A41/A43 here) and draws them as generic objects per contact type.</p>
+<p>Note: the setup lines are 3 lines of real 'probe -u' output for tutorial-modern.pdb residues A41-43</p>
 <h3 id="interactive_probe_dots_molprobity_radius">interactive_probe_dots_molprobity_radius</h3>
 <p>Python: <code>interactive_probe_dots_molprobity_radius()</code><br>
 Scheme: <code>(interactive-probe-dots-molprobity-radius)</code></p>
 <p>return the radius over which we can run interactive probe.</p>
 <p>Arguments: none. Returns: a number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>interactive_probe_dots_molprobity_radius()</code></td><td>not run: not run automatically (probe: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(interactive-probe-dots-molprobity-radius)</code></td><td>not run: not run automatically (probe: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>interactive_probe_dots_molprobity_radius()</code></td><td>ran, returned <code>6.0</code></td></tr>
+<tr><td>Scheme</td><td><code>(interactive-probe-dots-molprobity-radius)</code></td><td>ran, returned <code>6.0</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the radius (A) of the interactive probe dots region (default 6.0).</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="set_do_coot_probe_dots_during_refine">set_do_coot_probe_dots_during_refine</h3>
 <p>Python: <code>set_do_coot_probe_dots_during_refine(state)</code><br>
 Scheme: <code>(set-do-coot-probe-dots-during-refine state)</code></p>
 <p>state is 1 for on and 0 for off</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_do_coot_probe_dots_during_refine(1)</code></td><td>not run: not run automatically (probe: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(set-do-coot-probe-dots-during-refine 1)</code></td><td>not run: not run automatically (probe: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_do_coot_probe_dots_during_refine(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-do-coot-probe-dots-during-refine 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: turns Coot's own contact dots during refinement on (no getter; seen only in the graphics window).</p>
 <h3 id="set_do_probe_dots_on_rotamers_and_chis">set_do_probe_dots_on_rotamers_and_chis</h3>
 <p>Python: <code>set_do_probe_dots_on_rotamers_and_chis(state)</code><br>
 Scheme: <code>(set-do-probe-dots-on-rotamers-and-chis state)</code></p>
 <p>shall we run molprobity for on edit chi angles intermediate atoms?</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_do_probe_dots_on_rotamers_and_chis(1)</code></td><td>not run: not run automatically (probe: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(set-do-probe-dots-on-rotamers-and-chis 1)</code></td><td>not run: not run automatically (probe: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_do_probe_dots_on_rotamers_and_chis(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-do-probe-dots-on-rotamers-and-chis 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: turns probe dots during rotamer/chi changes on; the _state getter then returns 1.</p>
+<p>Setting checked (set to another value and read back, then put back): Python: do_probe_dots_on_rotamers_and_chis_state was 0, set to 1, read back 1; Scheme: do-probe-dots-on-rotamers-and-chis-state was 0, set to 1, read back 1.</p>
 <h3 id="set_do_probe_dots_post_refine">set_do_probe_dots_post_refine</h3>
 <p>Python: <code>set_do_probe_dots_post_refine(state)</code><br>
 Scheme: <code>(set-do-probe-dots-post-refine state)</code></p>
 <p>shall we run molprobity after a refinement has happened?</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_do_probe_dots_post_refine(1)</code></td><td>not run: not run automatically (probe: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(set-do-probe-dots-post-refine 1)</code></td><td>not run: not run automatically (probe: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_do_probe_dots_post_refine(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-do-probe-dots-post-refine 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: turns probe dots after refinement on; do_probe_dots_post_refine_state() then returns 1.</p>
+<p>Setting checked (set to another value and read back, then put back): Python: do_probe_dots_post_refine_state was 0, set to 1, read back 1; Scheme: do-probe-dots-post-refine-state was 0, set to 1, read back 1.</p>
 <h3 id="set_interactive_probe_dots_molprobity_radius">set_interactive_probe_dots_molprobity_radius</h3>
 <p>Python: <code>set_interactive_probe_dots_molprobity_radius(r)</code><br>
 Scheme: <code>(set-interactive-probe-dots-molprobity-radius r)</code></p>
@@ -93,8 +107,10 @@ Scheme: <code>(set-interactive-probe-dots-molprobity-radius r)</code></p>
 <p> default is 6.0</p>
 <p>Arguments: r (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_interactive_probe_dots_molprobity_radius(0.5)</code></td><td>not run: not run automatically (probe: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(set-interactive-probe-dots-molprobity-radius 0.5)</code></td><td>not run: not run automatically (probe: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_interactive_probe_dots_molprobity_radius(4.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-interactive-probe-dots-molprobity-radius 4.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: sets the interactive probe dots radius; interactive_probe_dots_molprobity_radius() returns it.</p>
+<p>Setting checked (set to another value and read back, then put back): Python: interactive_probe_dots_molprobity_radius was 6.0, set to 9.5, read back 9.5; Scheme: interactive-probe-dots-molprobity-radius was 6.0, set to 9.5, read back 9.5.</p>
 <h3 id="unmangle_hydrogen_name">unmangle_hydrogen_name</h3>
 <p>Python: <code>unmangle_hydrogen_name(pdb_hydrogen_name)</code><br>
 Scheme: <code>(unmangle-hydrogen-name pdb-hydrogen-name)</code></p>

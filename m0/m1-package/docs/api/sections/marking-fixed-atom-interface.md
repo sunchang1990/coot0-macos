@@ -15,8 +15,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `clear_all_fixed_atoms(0)` | ran (no return value) |
-| Scheme | `(clear-all-fixed-atoms 0)` | ran (no return value) |
+| Python | `clear_all_fixed_atoms(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(clear-all-fixed-atoms 0)` | ran (no return value, nothing visible changed) |
 
 ### clear_fixed_atoms_all
 
@@ -27,8 +27,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `clear_fixed_atoms_all()` | ran (no return value) |
-| Scheme | `(clear-fixed-atoms-all)` | ran (no return value) |
+| Python | `clear_fixed_atoms_all()` | ran (no return value, nothing visible changed) |
+| Scheme | `(clear-fixed-atoms-all)` | ran (no return value, nothing visible changed) |
 
 ### mark_atom_as_fixed
 
@@ -56,8 +56,14 @@ Also available in Python as `mark_multiple_atoms_as_fixed_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `mark_multiple_atoms_as_fixed(0, ["A", 41, "", " CA ", ""], 1)` | error: SystemError: <built-in function mark_multiple_atoms_as_fixed_py> returned a result with an exception set |
-| Scheme | `(mark-multiple-atoms-as-fixed-scm 0 (list "A" 41 "" " CA " "") 1)` | error: In procedure length: Wrong type argument in position 1: "A" |
+| Python | `mark_multiple_atoms_as_fixed(0, [["A", 41, "", " CA ", ""], ["A", 41, "", " CB ", ""]], 1)` | ran, returned `2` |
+| Scheme | `(mark-multiple-atoms-as-fixed-scm 0 (list (list "A" 41 "" " CA " "") (list "A" 41 "" " CB " "")) 1)` | ran, returned `2` |
+
+Example written and checked by hand on the test data. Expected: returns the number of atoms marked as fixed for refinement (2 here).
+
+Note: atom specs are [chain, resno, ins, atom-name, alt-conf]
+
+Python and Scheme gave the same answer.
 
 ### set_debug_atom_picking
 
@@ -70,8 +76,8 @@ Arguments: istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_debug_atom_picking(1)` | ran (no return value) |
-| Scheme | `(set-debug-atom-picking 1)` | ran (no return value) |
+| Python | `set_debug_atom_picking(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-debug-atom-picking 1)` | ran (no return value, nothing visible changed) |
 
 ### setup_fixed_atom_pick
 
@@ -82,6 +88,6 @@ Arguments: ipick (a whole number), is_unpick (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `setup_fixed_atom_pick(1, 1)` | ran (no return value) |
-| Scheme | `(setup-fixed-atom-pick 1 1)` | ran (no return value) |
+| Python | `setup_fixed_atom_pick(1, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(setup-fixed-atom-pick 1 1)` | ran (no return value, nothing visible changed) |
 

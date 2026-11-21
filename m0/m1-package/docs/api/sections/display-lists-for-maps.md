@@ -33,8 +33,10 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_display_lists_for_maps(1)` | ran (no return value) |
-| Scheme | `(set-display-lists-for-maps 1)` | ran (no return value) |
+| Python | `set_display_lists_for_maps(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-display-lists-for-maps 1)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: display_lists_for_maps_state was 0, set to 1, read back 1; Scheme: display-lists-for-maps-state was 0, set to 1, read back 1.
 
 ### update_maps
 
@@ -47,6 +49,6 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `update_maps()` | ran (no return value) |
-| Scheme | `(update-maps)` | ran (no return value) |
+| Python | `update_maps()` | ran (no return value, nothing visible changed) |
+| Scheme | `(update-maps)` | ran (no return value, nothing visible changed) |
 

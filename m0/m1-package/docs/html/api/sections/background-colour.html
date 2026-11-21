@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="2dfa884414cfae3e9b70e4f507b3adc0b49afd1c">
+<meta name="coot0-source-sha1" content="ad340c2aeeda2474e4d280e3e3d701a56e1e247d">
 <title>Background Colour - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -34,8 +34,8 @@ Scheme: <code>(redraw-background)</code></p>
 <p>re draw the background colour when switching between mono and stereo</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>redraw_background()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(redraw-background)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>redraw_background()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(redraw-background)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_background_colour">set_background_colour</h3>
 <p>Python: <code>set_background_colour(red, green, blue)</code><br>
 Scheme: <code>(set-background-colour red green blue)</code></p>
@@ -43,6 +43,6 @@ Scheme: <code>(set-background-colour red green blue)</code></p>
 <p> red, green and blue are numbers between 0.0 and 1.0</p>
 <p>Arguments: red (a number), green (a number), blue (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_background_colour(0.5, 0.5, 0.5)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-background-colour 0.5 0.5 0.5)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_background_colour(0.5, 0.5, 0.5)</code></td><td>ran (no return value); changed: background_is_black_p(): 1 -&gt; 0</td></tr>
+<tr><td>Scheme</td><td><code>(set-background-colour 0.5 0.5 0.5)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 </body></html>

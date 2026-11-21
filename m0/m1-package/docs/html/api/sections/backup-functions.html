@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="9310d685d26c9efe3338e9a1d1fa0818e451007b">
+<meta name="coot0-source-sha1" content="0a09580bfb4b8aca7eb2d913acbeeb1d2c5bf082">
 <title>Backup Functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -23,8 +23,9 @@ Scheme: <code>(apply-redo)</code></p>
 <p>apply redo - the "Redo" button callback</p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>apply_redo()</code></td><td>ran, returned <code>0</code></td></tr>
-<tr><td>Scheme</td><td><code>(apply-redo)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>delete_residue(0, "A", 41, "")</code>, then <code>apply_undo()</code>, then <code>apply_redo()</code></td><td>ran, returned <code>1</code>; changed: molecule 0: deleted 1 residue(s) (A41); n_atoms(0): 1465 -&gt; 1456; n_residues(0): 189 -&gt; 188</td></tr>
+<tr><td>Scheme</td><td>first <code>(delete-residue 0 "A" 42 "")</code>, then <code>(apply-undo)</code>, then <code>(apply-redo)</code></td><td>ran, returned <code>1</code>; changed: molecule 0: deleted 1 residue(s) (A42); n_atoms(0): 1465 -&gt; 1459; n_residues(0): 189 -&gt; 188</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns 1 and re-applies the change that was undone.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="apply_undo">apply_undo</h3>
 <p>Python: <code>apply_undo()</code><br>
@@ -32,8 +33,9 @@ Scheme: <code>(apply-undo)</code></p>
 <p>apply undo - the "Undo" button callback</p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>apply_undo()</code></td><td>ran, returned <code>0</code></td></tr>
-<tr><td>Scheme</td><td><code>(apply-undo)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>delete_residue(0, "A", 41, "")</code>, then <code>apply_undo()</code></td><td>ran, returned <code>1</code>; changed: molecule 0: added 1 residue(s) (A41); n_atoms(0): 1456 -&gt; 1465; n_residues(0): 188 -&gt; 189</td></tr>
+<tr><td>Scheme</td><td>first <code>(delete-residue 0 "A" 42 "")</code>, then <code>(apply-undo)</code></td><td>ran, returned <code>1</code>; changed: molecule 0: added 1 residue(s) (A42); n_atoms(0): 1459 -&gt; 1465; n_residues(0): 188 -&gt; 189</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns 1 and undoes the last change (the deleted residue comes back).</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="backup_compress_files_state">backup_compress_files_state</h3>
 <p>Python: <code>backup_compress_files_state()</code><br>
@@ -79,16 +81,17 @@ Scheme: <code>(make-backup imol)</code></p>
 <p>make backup for molecule number imol</p>
 <p>Arguments: imol (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>make_backup(0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(make-backup 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>make_backup(0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(make-backup 0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_backup_compress_files">set_backup_compress_files</h3>
 <p>Python: <code>set_backup_compress_files(state)</code><br>
 Scheme: <code>(set-backup-compress-files state)</code></p>
 <p>set if backup files will be compressed or not using gzip</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_backup_compress_files(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-backup-compress-files 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_backup_compress_files(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-backup-compress-files 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Setting checked (set to another value and read back, then put back): Python: backup_compress_files_state was 1, set to 0, read back 0; Scheme: backup-compress-files-state was 1, set to 0, read back 0.</p>
 <h3 id="set_decoloned_backup_file_names">set_decoloned_backup_file_names</h3>
 <p>Python: <code>set_decoloned_backup_file_names(state)</code><br>
 Scheme: <code>(set-decoloned-backup-file-names state)</code></p>
@@ -98,16 +101,17 @@ Scheme: <code>(set-decoloned-backup-file-names state)</code></p>
  names</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_decoloned_backup_file_names(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-decoloned-backup-file-names 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_decoloned_backup_file_names(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-decoloned-backup-file-names 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Setting checked (set to another value and read back, then put back): Python: decoloned_backup_file_names_state was 0, set to 1, read back 1; Scheme: decoloned-backup-file-names-state was 0, set to 1, read back 1.</p>
 <h3 id="set_have_unsaved_changes">set_have_unsaved_changes</h3>
 <p>Python: <code>set_have_unsaved_changes(imol)</code><br>
 Scheme: <code>(set-have-unsaved-changes imol)</code></p>
 <p>set the molecule number imol to be marked as having unsaved changes</p>
 <p>Arguments: imol (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_have_unsaved_changes(0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-have-unsaved-changes 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_have_unsaved_changes(0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-have-unsaved-changes 0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_undo_molecule">set_undo_molecule</h3>
 <p>Python: <code>set_undo_molecule(imol)</code><br>
 Scheme: <code>(set-undo-molecule imol)</code></p>
@@ -115,8 +119,8 @@ Scheme: <code>(set-undo-molecule imol)</code></p>
  molecule number imol</p>
 <p>Arguments: imol (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_undo_molecule(0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-undo-molecule 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_undo_molecule(0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-undo-molecule 0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_unpathed_backup_file_names">set_unpathed_backup_file_names</h3>
 <p>Python: <code>set_unpathed_backup_file_names(state)</code><br>
 Scheme: <code>(set-unpathed-backup-file-names state)</code></p>
@@ -126,8 +130,9 @@ Scheme: <code>(set-unpathed-backup-file-names state)</code></p>
  names</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_unpathed_backup_file_names(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-unpathed-backup-file-names 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_unpathed_backup_file_names(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-unpathed-backup-file-names 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Setting checked (set to another value and read back, then put back): Python: unpathed_backup_file_names_state was 0, set to 1, read back 1; Scheme: unpathed-backup-file-names-state was 0, set to 1, read back 1.</p>
 <h3 id="show_set_undo_molecule_chooser">show_set_undo_molecule_chooser</h3>
 <p>Python: <code>show_set_undo_molecule_chooser()</code><br>
 Scheme: <code>(show-set-undo-molecule-chooser)</code></p>
@@ -135,24 +140,25 @@ Scheme: <code>(show-set-undo-molecule-chooser)</code></p>
  to which the "Undo" button applies.</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>show_set_undo_molecule_chooser()</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
-<tr><td>Scheme</td><td><code>(show-set-undo-molecule-chooser)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>show_set_undo_molecule_chooser()</code></td><td>not run: opens a dialog; needs the graphics window (stops Coot without a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(show-set-undo-molecule-chooser)</code></td><td>not run: opens a dialog; needs the graphics window (stops Coot without a screen)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: opens the dialog to choose the molecule for Undo.</p>
 <h3 id="turn_off_backup">turn_off_backup</h3>
 <p>Python: <code>turn_off_backup(imol)</code><br>
 Scheme: <code>(turn-off-backup imol)</code></p>
 <p>turn off backups for molecule number imol</p>
 <p>Arguments: imol (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>turn_off_backup(0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(turn-off-backup 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>turn_off_backup(0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(turn-off-backup 0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="turn_on_backup">turn_on_backup</h3>
 <p>Python: <code>turn_on_backup(imol)</code><br>
 Scheme: <code>(turn-on-backup imol)</code></p>
 <p>turn on backups for molecule number imol</p>
 <p>Arguments: imol (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>turn_on_backup(0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(turn-on-backup 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>turn_on_backup(0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(turn-on-backup 0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="unpathed_backup_file_names_state">unpathed_backup_file_names_state</h3>
 <p>Python: <code>unpathed_backup_file_names_state()</code><br>
 Scheme: <code>(unpathed-backup-file-names-state)</code></p>

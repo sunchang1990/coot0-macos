@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="837dcff298c527aa92105aca5cb6db5422cff59c">
+<meta name="coot0-source-sha1" content="83630c583088eaef0f0d6c3dc4b6e24b23b373d1">
 <title>Add A Residue Functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -24,5 +24,7 @@ table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; 
 <p>Arguments: imol (a whole number), residue_spec (a list or value), res_name (text), list_of_atoms (a list or value). Returns: a whole number.
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>add_residue_with_atoms_py(0, ["A", 200, ""], "HOH", [[[" O  ", ""], [1.0, 20.0, " O", ""], [10.0, 20.0, 30.0]]])</code></td><td>ran, returned <code>0</code>; changed: molecule 0: added 1 residue(s) (A200); n_atoms(0): 1465 -&gt; 1466; n_residues(0): 189 -&gt; 190</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: adds residue A200 (HOH, one O atom) to molecule 0; documented to return the number of atoms added (1).</p>
+<p>Note: Returns 0 although the atom IS added: molecule_class_info_t::add_residue_with_atoms never updates r_added (likely upstream bug). Atom format: [[name, altconf], [occ, B, element, segid], [x, y, z]].</p>
 </body></html>

@@ -15,8 +15,8 @@ Arguments: imol (a whole number), this_chain_id (text), target_chain_id (text), 
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `add_ncs_matrix(0, "A", "A", 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)` | ran (no return value) |
-| Scheme | `(add-ncs-matrix 0 "A" "A" 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0)` | ran (no return value) |
+| Python | `add_ncs_matrix(0, "A", "A", 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(add-ncs-matrix 0 "A" "A" 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0)` | ran (no return value, nothing visible changed) |
 
 ### add_strict_ncs_from_mtrix_from_self_file
 
@@ -29,6 +29,8 @@ Arguments: imol (a whole number). Returns: a whole number.
 |---|---|---|
 | Python | `add_strict_ncs_from_mtrix_from_self_file(0)` | ran, returned `0` |
 | Scheme | `(add-strict-ncs-from-mtrix-from-self-file 0)` | ran, returned `0` |
+
+Example written and checked by hand on the test data. Expected: adds strict NCS operators from the MTRIX records of the molecule's own file; always returns 0.
 
 Python and Scheme gave the same answer.
 
@@ -59,8 +61,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `clear_ncs_ghost_matrices(0)` | ran (no return value) |
-| Scheme | `(clear-ncs-ghost-matrices 0)` | ran (no return value) |
+| Python | `clear_ncs_ghost_matrices(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(clear-ncs-ghost-matrices 0)` | ran (no return value, nothing visible changed) |
 
 ### copy_chain
 
@@ -73,8 +75,8 @@ Arguments: imol (a whole number), from_chain (text), to_chain (text). Returns: n
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `copy_chain(0, "A", "B")` | ran (no return value) |
-| Scheme | `(copy-chain 0 "A" "B")` | ran (no return value) |
+| Python | `copy_chain(0, "A", "B")` | ran (no return value); changed: molecule 0: deleted 3 residue(s) (B94, B95, B96); molecule 0: B-factors of 91 residue(s) (B1, B2, B3, B4 ...); molecule 0: atoms of 2 residue(s) (B72, B89); molecule 0: coordinates of 91 residue(s) (B1, B2, B3, B4 ...) ... |
+| Scheme | `(copy-chain 0 "A" "B")` | ran (no return value); changed: molecule 0: deleted 3 residue(s) (B94, B95, B96); molecule 0: B-factors of 91 residue(s) (B1, B2, B3, B4 ...); molecule 0: atoms of 2 residue(s) (B72, B89); molecule 0: coordinates of 91 residue(s) (B1, B2, B3, B4 ...) ... |
 
 ### copy_from_ncs_master_to_chains
 
@@ -87,8 +89,12 @@ Also available in Scheme as `copy-from-ncs-master-to-chains-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | first `mutate_single_residue_by_seqno(41, "", "A", 0, "A")`, then `copy_from_ncs_master_to_chains(0, "A", ["B"])` | ran (no return value); changed: molecule 0: deleted 3 residue(s) (B94, B95, B96); molecule 0: B-factors of 90 residue(s) (B1, B2, B3, B4 ...); molecule 0: atoms of 3 residue(s) (B41, B72, B89); molecule 0: coordinates of 90 residue(s) (B1, B2, B3, B4 ...) ... |
+| Scheme | first `(mutate-single-residue-by-seqno 41 "" "A" 0 #\A)`, then `(copy-from-ncs-master-to-chains 0 "A" (list "B"))` | ran (no return value); changed: molecule 0: deleted 3 residue(s) (B94, B95, B96); molecule 0: B-factors of 90 residue(s) (B1, B2, B3, B4 ...); molecule 0: atoms of 3 residue(s) (B41, B72, B89); molecule 0: coordinates of 90 residue(s) (B1, B2, B3, B4 ...) ... |
+
+Example written and checked by hand on the test data. Expected: replaces chain B by a superposed copy of master chain A (the A41 mutation appears at B41).
+
+Note: the whole chain is replaced: B residues absent from A (B94-96) are deleted and B72's alt confs are lost
 
 ### copy_from_ncs_master_to_others
 
@@ -101,8 +107,8 @@ Arguments: imol (a whole number), chain_id (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `copy_from_ncs_master_to_others(0, "A")` | ran (no return value) |
-| Scheme | `(copy-from-ncs-master-to-others 0 "A")` | ran (no return value) |
+| Python | `copy_from_ncs_master_to_others(0, "A")` | ran (no return value); changed: molecule 0: deleted 3 residue(s) (B94, B95, B96); molecule 0: B-factors of 91 residue(s) (B1, B2, B3, B4 ...); molecule 0: atoms of 2 residue(s) (B72, B89); molecule 0: coordinates of 91 residue(s) (B1, B2, B3, B4 ...) ... |
+| Scheme | `(copy-from-ncs-master-to-others 0 "A")` | ran (no return value); changed: molecule 0: deleted 3 residue(s) (B94, B95, B96); molecule 0: B-factors of 91 residue(s) (B1, B2, B3, B4 ...); molecule 0: atoms of 2 residue(s) (B72, B89); molecule 0: coordinates of 91 residue(s) (B1, B2, B3, B4 ...) ... |
 
 ### copy_from_ncs_master_to_specific_other_chains_py
 
@@ -115,8 +121,10 @@ Arguments: imol (a whole number), chain_id (text), other_chain_id_list_py (a lis
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | first `mutate_single_residue_by_seqno(41, "", "A", 0, "A")`, then `copy_from_ncs_master_to_specific_other_chains_py(0, "A", ["B"])` | ran (no return value); changed: molecule 0: deleted 3 residue(s) (B94, B95, B96); molecule 0: B-factors of 90 residue(s) (B1, B2, B3, B4 ...); molecule 0: atoms of 3 residue(s) (B41, B72, B89); molecule 0: coordinates of 90 residue(s) (B1, B2, B3, B4 ...) ... |
+| Scheme | first `(mutate-single-residue-by-seqno 41 "" "A" 0 #\A)`, then `(copy-from-ncs-master-to-specific-other-chains-scm 0 "A" (list "B"))` | ran (no return value); changed: molecule 0: deleted 3 residue(s) (B94, B95, B96); molecule 0: B-factors of 90 residue(s) (B1, B2, B3, B4 ...); molecule 0: atoms of 3 residue(s) (B41, B72, B89); molecule 0: coordinates of 90 residue(s) (B1, B2, B3, B4 ...) ... |
+
+Example written and checked by hand on the test data. Expected: copies master chain A onto the listed NCS chains (here B), like copy_from_ncs_master_to_chains.
 
 ### copy_residue_range_from_ncs_master_to_chains
 
@@ -129,8 +137,10 @@ Also available in Scheme as `copy-residue-range-from-ncs-master-to-chains-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | first `mutate_single_residue_by_seqno(41, "", "A", 0, "A")`, then `copy_residue_range_from_ncs_master_to_chains(0, "A", 40, 45, ["B"])` | ran (no return value); changed: molecule 0: B-factors of 5 residue(s) (B40, B42, B43, B44 ...); molecule 0: atoms of 1 residue(s) (B41); molecule 0: coordinates of 5 residue(s) (B40, B42, B43, B44 ...); n_atoms(0): 1461 -> 1457 |
+| Scheme | first `(mutate-single-residue-by-seqno 41 "" "A" 0 #\A)`, then `(copy-residue-range-from-ncs-master-to-chains 0 "A" 40 45 (list "B"))` | ran (no return value); changed: molecule 0: B-factors of 5 residue(s) (B40, B42, B43, B44 ...); molecule 0: atoms of 1 residue(s) (B41); molecule 0: coordinates of 5 residue(s) (B40, B42, B43, B44 ...); n_atoms(0): 1461 -> 1457 |
+
+Example written and checked by hand on the test data. Expected: copies only residues 40-45 of master chain A onto chain B (B41 becomes ALA).
 
 ### copy_residue_range_from_ncs_master_to_others
 
@@ -147,8 +157,8 @@ Arguments: imol (a whole number), master_chain_id (text), residue_range_start (a
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `copy_residue_range_from_ncs_master_to_others(0, "A", 1, 1)` | ran (no return value) |
-| Scheme | `(copy-residue-range-from-ncs-master-to-others 0 "A" 1 1)` | ran (no return value) |
+| Python | `copy_residue_range_from_ncs_master_to_others(0, "A", 1, 1)` | ran (no return value); changed: molecule 0: B-factors of 1 residue(s) (B1); molecule 0: coordinates of 1 residue(s) (B1) |
+| Scheme | `(copy-residue-range-from-ncs-master-to-others 0 "A" 1 1)` | ran (no return value); changed: molecule 0: coordinates of 1 residue(s) (B1) |
 
 ### draw_ncs_ghosts_state
 
@@ -192,8 +202,8 @@ Arguments: imol_model (a whole number), imol_map (a whole number), overwrite_map
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `make_dynamically_transformed_ncs_maps(0, 1, 1)` | ran, returned `2` |
-| Scheme | `(make-dynamically-transformed-ncs-maps 0 1 1)` | ran, returned `2` |
+| Python | `make_dynamically_transformed_ncs_maps(0, 1, 1)` | ran, returned `2`; changed: new molecule 3 (map, Map 1 NCS found from matching Chain B onto Chain A); new molecule 4 (map, Map 1 NCS average of Chain A type molecules); graphics_n_molecules(): 3 -> 5 |
+| Scheme | `(make-dynamically-transformed-ncs-maps 0 1 1)` | ran, returned `2`; changed: new molecule 3 (map, Map 1 NCS found from matching Chain B onto Chain A); new molecule 4 (map, Map 1 NCS average of Chain A type molecules); graphics_n_molecules(): 3 -> 5 |
 
 Python and Scheme gave the same answer.
 
@@ -206,8 +216,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `make_ncs_ghosts_maybe(0)` | ran (no return value) |
-| Scheme | `(make-ncs-ghosts-maybe 0)` | ran (no return value) |
+| Python | `make_ncs_ghosts_maybe(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(make-ncs-ghosts-maybe 0)` | ran (no return value, nothing visible changed) |
 
 ### make_ncs_maps
 
@@ -218,8 +228,8 @@ Arguments: imol_model (a whole number), imol_map (a whole number). Returns: a li
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `make_ncs_maps(0, 1)` | ran, returned `(2,)` |
-| Scheme | `(make-ncs-maps 0 1)` | ran, returned `#(2)` |
+| Python | `make_ncs_maps(0, 1)` | ran, returned `(3,)`; changed: new molecule 3 (map, Transformed map); graphics_n_molecules(): 3 -> 4 |
+| Scheme | `(make-ncs-maps 0 1)` | ran, returned `#(3)`; changed: new molecule 3 (map, Transformed map); graphics_n_molecules(): 3 -> 4 |
 
 Python and Scheme gave the same answer.
 
@@ -281,8 +291,8 @@ Arguments: imol (a whole number), ichain (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `ncs_control_change_ncs_master_to_chain(0, 1)` | ran (no return value) |
-| Scheme | `(ncs-control-change-ncs-master-to-chain 0 1)` | ran (no return value) |
+| Python | `ncs_control_change_ncs_master_to_chain(0, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(ncs-control-change-ncs-master-to-chain 0 1)` | ran (no return value, nothing visible changed) |
 
 ### ncs_control_change_ncs_master_to_chain_id
 
@@ -295,8 +305,8 @@ Arguments: imol (a whole number), chain_id (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `ncs_control_change_ncs_master_to_chain_id(0, "A")` | ran (no return value) |
-| Scheme | `(ncs-control-change-ncs-master-to-chain-id 0 "A")` | ran (no return value) |
+| Python | `ncs_control_change_ncs_master_to_chain_id(0, "A")` | ran (no return value, nothing visible changed) |
+| Scheme | `(ncs-control-change-ncs-master-to-chain-id 0 "A")` | ran (no return value, nothing visible changed) |
 
 ### ncs_control_display_chain
 
@@ -309,8 +319,8 @@ Arguments: imol (a whole number), ichain (a whole number), state (a whole number
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `ncs_control_display_chain(0, 1, 1)` | ran (no return value) |
-| Scheme | `(ncs-control-display-chain 0 1 1)` | ran (no return value) |
+| Python | `ncs_control_display_chain(0, 1, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(ncs-control-display-chain 0 1 1)` | ran (no return value, nothing visible changed) |
 
 ### ncs_ghosts
 
@@ -360,8 +370,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `ncs_update_ghosts(0)` | ran (no return value) |
-| Scheme | `(ncs-update-ghosts 0)` | ran (no return value) |
+| Python | `ncs_update_ghosts(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(ncs-update-ghosts 0)` | ran (no return value, nothing visible changed) |
 
 ### set_draw_ncs_ghosts
 
@@ -374,8 +384,10 @@ Arguments: imol (a whole number), istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_draw_ncs_ghosts(0, 1)` | ran (no return value) |
-| Scheme | `(set-draw-ncs-ghosts 0 1)` | ran (no return value) |
+| Python | `set_draw_ncs_ghosts(0, 1)` | ran (no return value); changed: draw_ncs_ghosts_state(0): 0 -> 1 |
+| Scheme | `(set-draw-ncs-ghosts 0 1)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: draw_ncs_ghosts_state was 0, set to 1, read back 1; Scheme: draw-ncs-ghosts-state was 0, set to 1, read back 1.
 
 ### set_ncs_ghost_bond_thickness
 
@@ -388,8 +400,8 @@ Arguments: imol (a whole number), f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_ncs_ghost_bond_thickness(0, 1.0)` | ran (no return value) |
-| Scheme | `(set-ncs-ghost-bond-thickness 0 1.0)` | ran (no return value) |
+| Python | `set_ncs_ghost_bond_thickness(0, 1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-ncs-ghost-bond-thickness 0 1.0)` | ran (no return value, nothing visible changed) |
 
 ### set_ncs_homology_level
 
@@ -403,8 +415,8 @@ Arguments: flev (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_ncs_homology_level(1.0)` | ran (no return value) |
-| Scheme | `(set-ncs-homology-level 1.0)` | ran (no return value) |
+| Python | `set_ncs_homology_level(1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-ncs-homology-level 1.0)` | ran (no return value, nothing visible changed) |
 
 ### set_ncs_matrix_type
 
@@ -415,8 +427,8 @@ Arguments: flag (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_ncs_matrix_type(1)` | ran (no return value) |
-| Scheme | `(set-ncs-matrix-type 1)` | ran (no return value) |
+| Python | `set_ncs_matrix_type(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-ncs-matrix-type 1)` | ran (no return value, nothing visible changed) |
 
 ### set_show_strict_ncs
 
@@ -429,8 +441,10 @@ Arguments: imol (a whole number), state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_show_strict_ncs(0, 1)` | ran (no return value) |
-| Scheme | `(set-show-strict-ncs 0 1)` | ran (no return value) |
+| Python | `set_show_strict_ncs(0, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-show-strict-ncs 0 1)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: show_strict_ncs_state was 1, set to 0, read back 0; Scheme: show-strict-ncs-state was 1, set to 0, read back 0.
 
 ### show_strict_ncs_state
 

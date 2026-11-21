@@ -13,8 +13,10 @@ Arguments: imol (a whole number), chain_id (text), resno_start (a whole number),
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | `apply_fasta_multi_to_fragment(0, "A", 1, 93, 1, "tutorial-modern.fasta")` | not run: not callable from scripting: its coot::fasta_multi argument cannot be created from Python or Scheme |
+| Scheme | `(apply-fasta-multi-to-fragment 0 "A" 1 93 1 "tutorial-modern.fasta")` | not run: not callable from scripting: its coot::fasta_multi argument cannot be created from Python or Scheme |
+
+Example written and checked by hand on the test data. Expected: internal C++ helper (needs a coot::fasta_multi object that scripts cannot make); use assign_sequences_to_best_matching_chain_from_fasta("tutorial-modern.fasta").
 
 ### apply_pir_alignment
 
@@ -27,8 +29,8 @@ Arguments: imol (a whole number), chain_id (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `apply_pir_alignment(0, "A")` | ran (no return value) |
-| Scheme | `(apply-pir-alignment 0 "A")` | ran (no return value) |
+| Python | `apply_pir_alignment(0, "A")` | ran (no return value, nothing visible changed) |
+| Scheme | `(apply-pir-alignment 0 "A")` | ran (no return value, nothing visible changed) |
 
 ### assign_sequence_to_best_matching_chain
 
@@ -39,8 +41,10 @@ Arguments: sequence (text). Returns: true or false.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `assign_sequence_to_best_matching_chain("ACDEFGHIKLMNPQRSTVWY")` | ran, returned `False` |
-| Scheme | `(assign-sequence-to-best-matching-chain "ACDEFGHIKLMNPQRSTVWY")` | ran, returned `#f` |
+| Python | `assign_sequence_to_best_matching_chain("DVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLID")` | ran, returned `True` |
+| Scheme | `(assign-sequence-to-best-matching-chain "DVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLID")` | ran, returned `#t` |
+
+Example written and checked by hand on the test data. Expected: True: the sequence is assigned to the chain(s) it matches (here both NCS chains A and B); see sequence_info(0).
 
 Python and Scheme gave the same answer.
 
@@ -53,8 +57,12 @@ Arguments: fasta_file_name (text). Returns: true or false.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `assign_sequences_to_best_matching_chain_from_fasta("tutorial-modern.pdb")` | ran, returned `False` |
-| Scheme | `(assign-sequences-to-best-matching-chain-from-fasta "tutorial-modern.pdb")` | ran, returned `#f` |
+| Python | `assign_sequences_to_best_matching_chain_from_fasta("tutorial-modern.fasta")` | ran, returned `True` |
+| Scheme | `(assign-sequences-to-best-matching-chain-from-fasta "tutorial-modern.fasta")` | ran, returned `#t` |
+
+Example written and checked by hand on the test data. Expected: True; every sequence of the FASTA file is assigned to its best-matching chain(s).
+
+Note: With two near-identical sequences both are assigned to both chains (4 entries), so alignment_mismatches then reports mutations A94-96 from the longer chain_B sequence.
 
 Python and Scheme gave the same answer.
 
@@ -70,8 +78,8 @@ Arguments: imol (a whole number), chain_id (text), pir_alignment (text). Returns
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `associate_pir_alignment(0, "A", "hello")` | ran (no return value) |
-| Scheme | `(associate-pir-alignment 0 "A" "hello")` | ran (no return value) |
+| Python | `associate_pir_alignment(0, "A", "hello")` | ran (no return value, nothing visible changed) |
+| Scheme | `(associate-pir-alignment 0 "A" "hello")` | ran (no return value, nothing visible changed) |
 
 ### associate_pir_alignment_from_file
 
@@ -84,8 +92,8 @@ Arguments: imol (a whole number), chain_id (text), pir_alignment_file_name (text
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `associate_pir_alignment_from_file(0, "A", "tutorial-modern.pdb")` | ran (no return value) |
-| Scheme | `(associate-pir-alignment-from-file 0 "A" "tutorial-modern.pdb")` | ran (no return value) |
+| Python | `associate_pir_alignment_from_file(0, "A", "tutorial-modern.pdb")` | ran (no return value, nothing visible changed) |
+| Scheme | `(associate-pir-alignment-from-file 0 "A" "tutorial-modern.pdb")` | ran (no return value, nothing visible changed) |
 
 ### sequence_comparison_to_chains
 
@@ -97,5 +105,5 @@ Arguments: imol (a whole number), sequence (text). Returns: a list.
 | | Example | When tried (test data, no window) |
 |---|---|---|
 | Python | `sequence_comparison_to_chains(0, "ACDEFGHIKLMNPQRSTVWY")` | ran, returned `<Swig Object of type 'std::vector< coot::chain_mutation_info_container_t,std::allocator< coot::chain_mutation_info_conta ...` |
-| Scheme | `(sequence-comparison-to-chains 0 "ACDEFGHIKLMNPQRSTVWY")` | ran, returned `#<collectable-swig-pointer std::vector< coot::chain_mutation_info_container_t > * c3d0eef80>` |
+| Scheme | `(sequence-comparison-to-chains 0 "ACDEFGHIKLMNPQRSTVWY")` | ran, returned `#<collectable-swig-pointer std::vector< coot::chain_mutation_info_container_t > * c6ad9ec00>` |
 

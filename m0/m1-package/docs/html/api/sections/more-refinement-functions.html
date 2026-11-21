@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="b2f119af2e320f856bbba71dd6789cd4c70a7e48">
+<meta name="coot0-source-sha1" content="8b0d47daa2c764e6340111efc46a8655918e7cc4">
 <title>More Refinement Functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -22,16 +22,16 @@ table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; 
 Scheme: <code>(convert-dictionary-planes-to-improper-dihedrals)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>convert_dictionary_planes_to_improper_dihedrals()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(convert-dictionary-planes-to-improper-dihedrals)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>convert_dictionary_planes_to_improper_dihedrals()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(convert-dictionary-planes-to-improper-dihedrals)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="crankshaft_peptide_rotation_optimization_py">crankshaft_peptide_rotation_optimization_py</h3>
 <p>Python: <code>crankshaft_peptide_rotation_optimization_py(imol, residue_spec_py)</code><br>
 Scheme: <code>(crankshaft-peptide-rotation-optimization-scm imol residue-spec-smc)</code></p>
 <p>Apply crankshaft peptide rotation optimization to the specified residue</p>
 <p>Arguments: imol (a whole number), residue_spec_py (a list or value). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>crankshaft_peptide_rotation_optimization_py(0, ["A", 41, ""])</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(crankshaft-peptide-rotation-optimization-scm 0 (list "A" 41 ""))</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>crankshaft_peptide_rotation_optimization_py(0, ["A", 41, ""])</code></td><td>ran (no return value); changed: molecule 0: coordinates of 4 residue(s) (A40, A41, A42, A43)</td></tr>
+<tr><td>Scheme</td><td><code>(crankshaft-peptide-rotation-optimization-scm 0 (list "A" 41 ""))</code></td><td>ran (no return value); changed: molecule 0: coordinates of 4 residue(s) (A40, A41, A42, A43)</td></tr></tbody></table>
 <h3 id="get_refinement_geman_mcclure_alpha">get_refinement_geman_mcclure_alpha</h3>
 <p>Python: <code>get_refinement_geman_mcclure_alpha()</code><br>
 Scheme: <code>(get-refinement-geman-mcclure-alpha)</code></p>
@@ -47,24 +47,25 @@ Scheme: <code>(set-log-cosh-target-distance-scale-factor sf)</code></p>
 <p>set the log cosh scale factor for target position restraints</p>
 <p>Arguments: sf (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_log_cosh_target_distance_scale_factor(1.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-log-cosh-target-distance-scale-factor 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_log_cosh_target_distance_scale_factor(1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-log-cosh-target-distance-scale-factor 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_refinement_geman_mcclure_alpha">set_refinement_geman_mcclure_alpha</h3>
 <p>Python: <code>set_refinement_geman_mcclure_alpha(alpha)</code><br>
 Scheme: <code>(set-refinement-geman-mcclure-alpha alpha)</code></p>
 <p>set the Geman-McClure distance alpha value (weight)</p>
 <p>Arguments: alpha (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_refinement_geman_mcclure_alpha(1.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-refinement-geman-mcclure-alpha 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_refinement_geman_mcclure_alpha(1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-refinement-geman-mcclure-alpha 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Setting checked (set to another value and read back, then put back): Python: get_refinement_geman_mcclure_alpha was 1.0, set to 2.0, read back 2.0; Scheme: get-refinement-geman-mcclure-alpha was 1.0, set to 2.0, read back 2.0.</p>
 <h3 id="set_refinement_lennard_jones_epsilon">set_refinement_lennard_jones_epsilon</h3>
 <p>Python: <code>set_refinement_lennard_jones_epsilon(epsilon)</code><br>
 Scheme: <code>(set-refinement-lennard-jones-epsilon epsilon)</code></p>
 <p>set the Lennard Jones epsilon parameter</p>
 <p>Arguments: epsilon (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_refinement_lennard_jones_epsilon(1.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-refinement-lennard-jones-epsilon 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_refinement_lennard_jones_epsilon(1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-refinement-lennard-jones-epsilon 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="use_unimodal_ring_torsion_restraints">use_unimodal_ring_torsion_restraints</h3>
 <p>Python: <code>use_unimodal_ring_torsion_restraints(res_name)</code><br>
 Scheme: <code>(use-unimodal-ring-torsion-restraints res-name)</code></p>
@@ -72,8 +73,8 @@ Scheme: <code>(use-unimodal-ring-torsion-restraints res-name)</code></p>
  uses built-in list of of torsions for specific residue types</p>
 <p>Arguments: res_name (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>use_unimodal_ring_torsion_restraints("ALA")</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(use-unimodal-ring-torsion-restraints "ALA")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>use_unimodal_ring_torsion_restraints("ALA")</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(use-unimodal-ring-torsion-restraints "ALA")</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="use_unimodal_ring_torsion_restraints_for_residue">use_unimodal_ring_torsion_restraints_for_residue</h3>
 <p>Python: <code>use_unimodal_ring_torsion_restraints_for_residue(res_name, torsions_info_list)</code></p>
 <p>use unimodal ring torsion restraints (e.g. for carbohydrate pyranose)
@@ -83,5 +84,7 @@ Scheme: <code>(use-unimodal-ring-torsion-restraints res-name)</code></p>
 <p>Arguments: res_name (text), torsions_info_list (a list or value). Returns: nothing.
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>use_unimodal_ring_torsion_restraints_for_residue("NAG", [[" C1 ", " C2 ", " C3 ", " C4 ", -55.0], [" C2 ", " C3 ", " C4 ", " C5 ", 55.0]])</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: replaces the ring torsions of the NAG dictionary by the given single-minimum torsions (Python only); monomer_restraints('NAG') shows ring-torsion-N entries.</p>
+<p>Note: the torsion value must be a Python float (-55.0, not -55)</p>
 </body></html>

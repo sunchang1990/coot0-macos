@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="1be1b740f24868ed13f54279ff1a57c523435fdb">
+<meta name="coot0-source-sha1" content="a82968f637fcb547eb2dfba3eea2e749605527f0">
 <title>SBase interface - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -27,8 +27,10 @@ Scheme: <code>(add-linked-residue imol chain-id resno ins-code new-residue-comp-
 <p> return success status (0 = fail).</p>
 <p>Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_code (text), new_residue_comp_id (text), link_type (text), mode (a whole number). Returns: a value (see the result of the example).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>add_linked_residue(0, "A", 41, "", "hello", "hello", 1)</code></td><td>ran, returned <code>False</code></td></tr>
-<tr><td>Scheme</td><td><code>(add-linked-residue 0 "A" 41 "" "hello" "hello" 1)</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>add_linked_residue(0, "A", 20, "", "NAG", "NAG-ASN", 3)</code></td><td>ran, returned <code>[True, 'A', 94, '']</code>; changed: molecule 0: added 1 residue(s) (A94); molecule 0: coordinates of 1 residue(s) (A20); n_residues(0): 189 -&gt; 190</td></tr>
+<tr><td>Scheme</td><td><code>(add-linked-residue 0 "A" 20 "" "NAG" "NAG-ASN" 3)</code></td><td>ran, returned <code>(#t "A" 94 "")</code>; changed: molecule 0: added 1 residue(s) (A94); molecule 0: coordinates of 1 residue(s) (A20); n_residues(0): 189 -&gt; 190</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the residue spec of the new NAG linked to ASN A20 and the molecule gains one residue; mode 1 = add, 2 = add and fit, 3 = add, fit and refine.</p>
+<p>Note: Python ignores the mode argument (uses set_add_linked_residue_do_fit_and_refine state, default on) and returns False when that state is off; Scheme follows mode and with mode 1 returns #f even though the residue is added (seen: A94 added, #f returned). Upstream code differs between the two.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="get_ccp4srs_monomer_and_dictionary">get_ccp4srs_monomer_and_dictionary</h3>
 <p>Python: <code>get_ccp4srs_monomer_and_dictionary(comp_id)</code><br>
@@ -38,8 +40,9 @@ Scheme: <code>(get-ccp4srs-monomer-and-dictionary comp-id)</code></p>
 <p>Return -1 on failure to get monomer.</p>
 <p>Arguments: comp_id (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>get_ccp4srs_monomer_and_dictionary("ALA")</code></td><td>ran, returned <code>-1</code></td></tr>
-<tr><td>Scheme</td><td><code>(get-ccp4srs-monomer-and-dictionary "ALA")</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>get_ccp4srs_monomer_and_dictionary("ATP")</code></td><td>ran, returned <code>-1</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-ccp4srs-monomer-and-dictionary "ATP")</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: -1 here: the CCP4 SRS structure database is not part of this build; with an SRS it returns the new molecule number of the monomer. Use get_monomer("ATP") instead.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="get_sbase_monomer">get_sbase_monomer</h3>
 <p>Python: <code>get_sbase_monomer(comp_id)</code><br>
@@ -47,8 +50,9 @@ Scheme: <code>(get-sbase-monomer comp-id)</code></p>
 <p>same as above but using old name for back-compatibility</p>
 <p>Arguments: comp_id (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>get_sbase_monomer("ALA")</code></td><td>ran, returned <code>-1</code></td></tr>
-<tr><td>Scheme</td><td><code>(get-sbase-monomer "ALA")</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>get_sbase_monomer("ATP")</code></td><td>ran, returned <code>-1</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-sbase-monomer "ATP")</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: -1 here (old name of get_ccp4srs_monomer_and_dictionary; no SRS database in this build); use get_monomer("ATP").</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="matching_compound_names_from_sbase">matching_compound_names_from_sbase</h3>
 <p>Python: <code>matching_compound_names_from_sbase(compound_name_fragment)</code><br>
@@ -67,6 +71,6 @@ Also available in Scheme as <code>matching-compound-names-from-sbase-scm</code>.
 Scheme: <code>(set-add-linked-residue-do-fit-and-refine state)</code></p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_add_linked_residue_do_fit_and_refine(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-add-linked-residue-do-fit-and-refine 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_add_linked_residue_do_fit_and_refine(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-add-linked-residue-do-fit-and-refine 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 </body></html>

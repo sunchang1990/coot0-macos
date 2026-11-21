@@ -15,8 +15,8 @@ Arguments: nsteps (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `translate_scene_x(1)` | ran (no return value) |
-| Scheme | `(translate-scene-x 1)` | ran (no return value) |
+| Python | `translate_scene_x(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(translate-scene-x 1)` | ran (no return value, nothing visible changed) |
 
 ### translate_scene_y
 
@@ -29,8 +29,8 @@ Arguments: nsteps (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `translate_scene_y(1)` | ran (no return value) |
-| Scheme | `(translate-scene-y 1)` | ran (no return value) |
+| Python | `translate_scene_y(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(translate-scene-y 1)` | ran (no return value, nothing visible changed) |
 
 ### translate_scene_z
 
@@ -43,6 +43,6 @@ Arguments: nsteps (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `translate_scene_z(1)` | ran (no return value) |
-| Scheme | `(translate-scene-z 1)` | ran (no return value) |
+| Python | `translate_scene_z(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(translate-scene-z 1)` | ran (no return value, nothing visible changed) |
 

@@ -13,8 +13,10 @@ Arguments: imol (a whole number), lb (`coot::fle_ligand_bond_t`). Returns: nothi
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | (no example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no example) | not run: no automatic example (it takes a list, a widget or an object) |
+
+Example written and checked by hand on the test data. Expected: adds an animated ligand-interaction line (coot::fle_ligand_bond_t) to a molecule.
 
 ### cootaneer_internal
 
@@ -25,8 +27,12 @@ Arguments: imol_map (a whole number), imol_model (a whole number), atom_spec (`c
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | first `assign_sequence_from_string(0, "A", "DVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLIDQTC")`, then `cootaneer_internal(1, 0, atom_spec_t("A", 41, "", " CA ", ""))` | ran, returned `1`; changed: molecule 0: atoms of 83 residue(s) (A2, A3, A5, A6 ...); molecule 0: coordinates of 10 residue(s) (A1, A4, A26, A34 ...); n_atoms(0): 1465 -> 1466 |
+| Scheme | (no example) | not run: no automatic example (it takes a list, a widget or an object) |
+
+Example written and checked by hand on the test data. Expected: returns 1 when the fragment containing A41 CA was docked to the assigned sequence (0 without a sequence).
+
+Note: Python only works with a coot.atom_spec_t object; Scheme gets an unusable SWIG type: use cootaneer with a list spec instead. Without assigned sequence it returns 0.
 
 ### ligand_search_make_conformers
 

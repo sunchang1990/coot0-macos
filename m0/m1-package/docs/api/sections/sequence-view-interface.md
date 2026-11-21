@@ -15,8 +15,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `add_on_sequence_view_choices()` | ran (no return value) |
-| Scheme | `(add-on-sequence-view-choices)` | ran (no return value) |
+| Python | `add_on_sequence_view_choices()` | ran (no return value, nothing visible changed) |
+| Scheme | `(add-on-sequence-view-choices)` | ran (no return value, nothing visible changed) |
 
 ### change_peptide_carbonyl_by
 
@@ -27,8 +27,10 @@ Arguments: angle (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `change_peptide_carbonyl_by(10.0)` | stopped Coot when tried without a window (not checked with a window) |
-| Scheme | `(change-peptide-carbonyl-by 10.0)` | stopped Coot when tried without a window (not checked with a window) |
+| Python | `change_peptide_carbonyl_by(10.0)` | not run: needs the graphics window (stops Coot without a screen) |
+| Scheme | `(change-peptide-carbonyl-by 10.0)` | not run: needs the graphics window (stops Coot without a screen) |
+
+Example written and checked by hand on the test data. Expected: rotates the carbonyl of the peptide being edited by 10 degrees; only meaningful during an interactive peptide-flip edit in the graphics window.
 
 ### change_peptide_carbonyl_by_current_button_pos
 
@@ -39,8 +41,10 @@ Arguments: ix (a whole number), iy (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `change_peptide_carbonyl_by_current_button_pos(1, 1)` | stopped Coot when tried without a window (not checked with a window) |
-| Scheme | `(change-peptide-carbonyl-by-current-button-pos 1 1)` | stopped Coot when tried without a window (not checked with a window) |
+| Python | `change_peptide_carbonyl_by_current_button_pos(10, 10)` | not run: needs the graphics window (stops Coot without a screen) |
+| Scheme | `(change-peptide-carbonyl-by-current-button-pos 10 10)` | not run: needs the graphics window (stops Coot without a screen) |
+
+Example written and checked by hand on the test data. Expected: mouse-drag handler: rotates the carbonyl according to the pointer position during an interactive edit.
 
 ### change_peptide_peptide_by
 
@@ -53,8 +57,10 @@ Arguments: angle (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `change_peptide_peptide_by(10.0)` | stopped Coot when tried without a window (not checked with a window) |
-| Scheme | `(change-peptide-peptide-by 10.0)` | stopped Coot when tried without a window (not checked with a window) |
+| Python | `change_peptide_peptide_by(10.0)` | not run: needs the graphics window (stops Coot without a screen) |
+| Scheme | `(change-peptide-peptide-by 10.0)` | not run: needs the graphics window (stops Coot without a screen) |
+
+Example written and checked by hand on the test data. Expected: rotates the peptide being edited by 10 degrees; only during an interactive edit in the graphics window.
 
 ### change_peptide_peptide_by_current_button_pos
 
@@ -65,8 +71,10 @@ Arguments: ix (a whole number), iy (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `change_peptide_peptide_by_current_button_pos(1, 1)` | stopped Coot when tried without a window (not checked with a window) |
-| Scheme | `(change-peptide-peptide-by-current-button-pos 1 1)` | stopped Coot when tried without a window (not checked with a window) |
+| Python | `change_peptide_peptide_by_current_button_pos(10, 10)` | not run: needs the graphics window (stops Coot without a screen) |
+| Scheme | `(change-peptide-peptide-by-current-button-pos 10 10)` | not run: needs the graphics window (stops Coot without a screen) |
+
+Example written and checked by hand on the test data. Expected: mouse-drag handler: rotates the peptide according to the pointer position during an interactive edit.
 
 ### do_sequence_view
 
@@ -79,8 +87,10 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `do_sequence_view(0)` | stopped Coot when tried without a window (not checked with a window) |
-| Scheme | `(do-sequence-view 0)` | stopped Coot when tried without a window (not checked with a window) |
+| Python | `do_sequence_view(0)` | not run: needs the graphics window (stops Coot without a screen) |
+| Scheme | `(do-sequence-view 0)` | not run: needs the graphics window (stops Coot without a screen) |
+
+Example written and checked by hand on the test data. Expected: opens the sequence view window for molecule 0.
 
 ### execute_setup_backbone_torsion_edit
 
@@ -93,8 +103,8 @@ Arguments: imol (a whole number), atom_index (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `execute_setup_backbone_torsion_edit(0, 0)` | ran (no return value) |
-| Scheme | `(execute-setup-backbone-torsion-edit 0 0)` | ran (no return value) |
+| Python | `execute_setup_backbone_torsion_edit(0, 0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(execute-setup-backbone-torsion-edit 0 0)` | ran (no return value, nothing visible changed) |
 
 ### nsv
 
@@ -107,8 +117,10 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `nsv(0)` | stopped Coot when tried without a window (not checked with a window) |
-| Scheme | `(nsv 0)` | stopped Coot when tried without a window (not checked with a window) |
+| Python | `nsv(0)` | not run: needs the graphics window (stops Coot without a screen) |
+| Scheme | `(nsv 0)` | not run: needs the graphics window (stops Coot without a screen) |
+
+Example written and checked by hand on the test data. Expected: opens the (canvas) sequence view for molecule 0.
 
 ### sequence_view_old_style
 
@@ -121,8 +133,10 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `sequence_view_old_style(0)` | stopped Coot when tried without a window (not checked with a window) |
-| Scheme | `(sequence-view-old-style 0)` | stopped Coot when tried without a window (not checked with a window) |
+| Python | `sequence_view_old_style(0)` | not run: needs the graphics window (stops Coot without a screen) |
+| Scheme | `(sequence-view-old-style 0)` | not run: needs the graphics window (stops Coot without a screen) |
+
+Example written and checked by hand on the test data. Expected: opens the old-style sequence view for molecule 0.
 
 ### set_backbone_torsion_carbonyl_button_start_pos
 
@@ -133,8 +147,8 @@ Arguments: ix (a whole number), iy (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_backbone_torsion_carbonyl_button_start_pos(1, 1)` | ran (no return value) |
-| Scheme | `(set-backbone-torsion-carbonyl-button-start-pos 1 1)` | ran (no return value) |
+| Python | `set_backbone_torsion_carbonyl_button_start_pos(1, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-backbone-torsion-carbonyl-button-start-pos 1 1)` | ran (no return value, nothing visible changed) |
 
 ### set_backbone_torsion_peptide_button_start_pos
 
@@ -145,8 +159,8 @@ Arguments: ix (a whole number), iy (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_backbone_torsion_peptide_button_start_pos(1, 1)` | ran (no return value) |
-| Scheme | `(set-backbone-torsion-peptide-button-start-pos 1 1)` | ran (no return value) |
+| Python | `set_backbone_torsion_peptide_button_start_pos(1, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-backbone-torsion-peptide-button-start-pos 1 1)` | ran (no return value, nothing visible changed) |
 
 ### set_nsv_canvas_pixel_limit
 
@@ -159,8 +173,8 @@ Arguments: cpl (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_nsv_canvas_pixel_limit(1)` | ran (no return value) |
-| Scheme | `(set-nsv-canvas-pixel-limit 1)` | ran (no return value) |
+| Python | `set_nsv_canvas_pixel_limit(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-nsv-canvas-pixel-limit 1)` | ran (no return value, nothing visible changed) |
 
 ### set_sequence_view_is_docked
 
@@ -175,8 +189,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_sequence_view_is_docked(1)` | ran (no return value) |
-| Scheme | `(set-sequence-view-is-docked 1)` | ran (no return value) |
+| Python | `set_sequence_view_is_docked(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-sequence-view-is-docked 1)` | ran (no return value, nothing visible changed) |
 
 ### setup_backbone_torsion_edit
 
@@ -187,8 +201,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `setup_backbone_torsion_edit(1)` | ran (no return value) |
-| Scheme | `(setup-backbone-torsion-edit 1)` | ran (no return value) |
+| Python | `setup_backbone_torsion_edit(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(setup-backbone-torsion-edit 1)` | ran (no return value, nothing visible changed) |
 
 ### update_sequence_view_current_position_highlight_from_active_atom
 
@@ -201,6 +215,6 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `update_sequence_view_current_position_highlight_from_active_atom()` | ran (no return value) |
-| Scheme | `(update-sequence-view-current-position-highlight-from-active-atom)` | ran (no return value) |
+| Python | `update_sequence_view_current_position_highlight_from_active_atom()` | ran (no return value, nothing visible changed) |
+| Scheme | `(update-sequence-view-current-position-highlight-from-active-atom)` | ran (no return value, nothing visible changed) |
 

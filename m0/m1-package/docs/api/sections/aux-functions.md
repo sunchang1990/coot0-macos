@@ -15,8 +15,10 @@ Arguments: imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `laplacian(0)` | ran, returned `-1` |
-| Scheme | `(laplacian 0)` | ran, returned `-1` |
+| Python | `laplacian(1)` | ran, returned `3`; changed: new molecule 3 (map, Laplacian of rnasa-1.8-all_refmac1.mtz FWT PHWT); graphics_n_molecules(): 3 -> 4 |
+| Scheme | `(laplacian 1)` | ran, returned `3`; changed: new molecule 3 (map, Laplacian of rnasa-1.8-all_refmac1.mtz FWT PHWT); graphics_n_molecules(): 3 -> 4 |
+
+Example written and checked by hand on the test data. Expected: returns the new map molecule number; a Laplacian map of map 1 appears.
 
 Python and Scheme gave the same answer.
 

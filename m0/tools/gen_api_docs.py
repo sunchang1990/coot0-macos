@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""gen_api_docs.py INDEX.json RESULTS.jsonl OUTDIR  (build 26; build 30: Python/Scheme agreement)
+"""gen_api_docs.py INDEX.json RESULTS.jsonl OUTDIR [VERSION] [SETTERS.jsonl]  (build 26; build 30: Python/Scheme agreement;
+build 31: what each call changed, hand-written examples, setter read-back checks)
 
 Writes the scripting reference (Markdown) from the function index (gen_api_index.py) and the results of trying
 every example (tests/run-api-examples.sh):
@@ -19,6 +20,14 @@ for l in open(RES):
     try: d = json.loads(l)
     except Exception: continue
     if d.get("ev") == "end": res[(d["key"], d["lang"])] = d
+
+# (build 31) optional 6th argument: results of tests/api_setters_run.py (set a different value, read it back)
+setter = {}
+if len(sys.argv) > 5 and os.path.exists(sys.argv[5]):
+    for l in open(sys.argv[5]):
+        try: d = json.loads(l)
+        except Exception: continue
+        if d.get("ev") == "end": setter[(d["key"], d["lang"])] = d
 
 os.makedirs(os.path.join(OUT, "sections"), exist_ok=True)
 for f in os.listdir(os.path.join(OUT, "sections")):
@@ -67,8 +76,10 @@ def result_cell(key, lang):
     st = r["status"]
     if st == "ok":
         v = r.get("value", "")
-        if v in ("", "None"): return "ran (no return value)"
-        return "ran, returned `%s`" % cell(v, 120).replace("`", "'")
+        ch = [scrub(c) for c in (r.get("changed") or [])]
+        chs = ("; changed: " + "; ".join(cell(c, 90).replace("`", "'") for c in ch[:4]) + (" ..." if len(ch) > 4 else "")) if ch else ""
+        if v in ("", "None", "(statement)"): return ("ran (no return value)" + chs) if ch else "ran (no return value, nothing visible changed)"
+        return "ran, returned `%s`%s" % (cell(v, 120).replace("`", "'"), chs)
     if st == "error":
         return "error: %s" % cell(r.get("value", ""), 140).replace("`", "'")
     if st == "crash":
@@ -76,6 +87,17 @@ def result_cell(key, lang):
     if st == "hung":
         return "no answer within 60 s (slow, or waits for something)"
     return "not run: %s" % cell(r.get("why", ""), 120)
+
+# ---- build 31: what one call showed: a value, a change (molecules, maps, view, settings), or nothing visible
+def outcome(key, lang):
+    r = res.get((key, lang))
+    if not r: return "not tried"
+    if r["status"] != "ok": return r["status"]
+    v = (r.get("value") or "").strip()
+    if r.get("changed"): return "changed"
+    if v in ("#f", "False", "-1", "-1.0"): return "failvalue"
+    if v in ("", "None", "(statement)", "()", "[]", "#()", '""', "''"): return "nothing"
+    return "value"
 
 # ---- build 30: do Python and Scheme give the same answer?  Python's repr and Scheme's printed value are brought
 # to one form (lists as ( ), True/#t, None/False/#f, numbers to 3 decimals) and compared.
@@ -158,10 +180,30 @@ def fn_md(e):
     L.append("")
     L.append("| | Example | When tried (test data, no window) |")
     L.append("|---|---|---|")
+    def excell(lang):
+        ex = e.get(lang + "_ex")
+        if not ex: return "(no example)"
+        su = e.get(lang + "_setup") or []
+        return ("first " + ", then ".join("`%s`" % cell(s, 160) for s in su) + ", then " if su else "") + "`%s`" % cell(ex, 200)
     if e["py"]:
-        L.append("| Python | %s | %s |" % ("`%s`" % cell(e["py_ex"], 200) if e.get("py_ex") else "(no automatic example)", result_cell(e["key"], "py")))
+        L.append("| Python | %s | %s |" % (excell("py"), result_cell(e["key"], "py")))
     if e["scm"]:
-        L.append("| Scheme | %s | %s |" % ("`%s`" % cell(e["scm_ex"], 200) if e.get("scm_ex") else "(no automatic example)", result_cell(e["key"], "scm")))
+        L.append("| Scheme | %s | %s |" % (excell("scm"), result_cell(e["key"], "scm")))
+    if e.get("curated"):
+        L.append(""); L.append("Example written and checked by hand on the test data." + (" Expected: %s" % e["expect"].rstrip(".") + "." if e.get("expect") else ""))
+    if e.get("note"): L.append(""); L.append("Note: %s" % scrub(e["note"]))
+    sp = [(nm, setter.get((e["key"], lang))) for lang, nm in (("py", "Python"), ("scm", "Scheme"))]
+    sp = [(nm, d) for nm, d in sp if d]
+    if sp:
+        def one(nm, d):
+            v = d.get("verdict", "")
+            if v in ("read back", "not read back"):
+                return "%s: %s was %s, set to %s, read back %s%s" % (nm, d["getter"], d["before"], d["set"], d["after"],
+                       "" if v == "read back" else " (not taken)")
+            return "%s: %s" % (nm, cell(v, 120))
+        ok = all(d.get("verdict") == "read back" for nm, d in sp)
+        L.append(""); L.append("Setting checked (set to another value and read back, then put back%s): %s." %
+                               ("" if ok else "; NOT all read back", "; ".join(one(nm, d) for nm, d in sp)))
     ag = agreement(e["key"])
     if ag == "same": L.append(""); L.append("Python and Scheme gave the same answer.")
     elif ag == "different": L.append(""); L.append("Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).")
@@ -243,20 +285,37 @@ L = ["# Coot scripting reference (coot0%s)" % (" " + VERSION if VERSION else "")
      "molecule number, chain, residue number and file names.",
      "- **Residue specs** are lists: `[\"A\", 41, \"\"]` in Python, `(list \"A\" 41 \"\")` in Scheme (chain, "
      "residue number, insertion code). **Atom names** have 4 characters as in a PDB file: `\" CA \"`.",
-     "- **The examples were made by a program** from the argument names (a chain gets `\"A\"`, a residue number 41, "
-     "a flag 1, ...). For most functions that gives a sensible call; for some the values are only placeholders "
-     "(`\"hello\"` for a text, 1 for a number) that you should replace.",
+     "- **Most examples were made by a program** from the argument names (a chain gets `\"A\"`, a residue number 41, "
+     "a flag 1, ...). Where that gave no sensible call, the example was written by hand and checked on the test data "
+     "(%d functions; their pages say *written and checked by hand* and what a correct result is). Some examples "
+     "start with set-up lines (*first ..., then ...*)." % sum(1 for e in entries if e.get("curated")),
      "- **\"When tried\"** is what happened when the example was run on the test data by `tests/run-api-examples.sh`, "
      "without a window: *ran* (with the value it returned), *error* (with Coot's message; usually the example "
      "needs other values), *stopped Coot (no window)* (the function needs the graphics window; it was not checked "
      "with one), *not run* (it would quit Coot, use the network, run an external program, or needs a widget). "
-     "*Ran* means that Coot accepted the call; the value itself was checked only by comparing the two languages "
-     "(next section) and, for the functions the cookbook uses, by the cookbook's own checks.", "",
+     "For every call the run also compares Coot before and after: the atoms of every model (added, deleted, "
+     "moved, B-factors, occupancies), the maps (level, sigma, colour), new or closed molecules, the view centre and "
+     "zoom, and about 100 settings that have a getter. What changed is listed after the value (*changed: ...*); "
+     "*nothing visible changed* means none of these did (the call may still have done something these do not "
+     "show, such as a window setting).", "",
      "## Results of trying the examples", "",
      "| | Ran | Error | Stopped Coot (no window) | No answer in 60 s | Not run |", "|---|---|---|---|---|---|"]
 for lang, nm in (("py", "Python"), ("scm", "Scheme")):
     c = collections.Counter(r["status"] for (k, l), r in res.items() if l == lang)
     L.append("| %s | %d | %d | %d | %d | %d |" % (nm, c["ok"], c["error"], c["crash"], c["hung"], c["skipped"]))
+L += ["", "What the calls that ran showed (each function counted once per language; -1, #f and False are often Coot's "
+      "answer for *not found* or *failed*, but for a yes/no question False is a fine answer):", "",
+      "| | Returned a value | Changed something | Returned -1, #f or False | Nothing visible | Examples written by hand |", "|---|---|---|---|---|---|"]
+for lang, nm in (("py", "Python"), ("scm", "Scheme")):
+    oc = collections.Counter(outcome(e["key"], lang) for e in entries if e[lang])
+    L.append("| %s | %d | %d | %d | %d | %d |" % (nm, oc["value"], oc["changed"], oc["failvalue"], oc["nothing"], sum(1 for e in entries if e[lang] and e.get("curated"))))
+if setter:
+    sv = collections.Counter(d.get("verdict", "")[:13] for d in setter.values())
+    nset = len(set(k for k, l in setter))
+    L += ["", "Settings: %d `set_...` functions have a getter (`..._state`, `get_...`). Each was set to a different value, read "
+          "back and put back, in both languages: %d of %d calls read back the new value. The others were not taken (for "
+          "example a map setting given a model molecule, which Coot rightly refuses, or a window setting without a window) "
+          "or gave an error; their pages say which." % (nset, sv["read back"], sum(sv.values()))]
 ags = collections.Counter(agreement(e["key"]) for e in entries if e["py"] and e["scm"])
 L += ["", "Where both languages ran and returned a value that can be compared (%d functions), Python and Scheme gave the "
       "same answer for %d. The other %d are listed on their pages as *different answers*; mostly that is because the "
@@ -271,6 +330,10 @@ L += ["", "## How this reference is made", "",
       "`m0/tools/gen_api_index.py` reads Coot's SWIG wrappers (the functions really available) and its headers "
       "(signatures and descriptions); `tests/run-api-examples.sh` tries every example in Python and Scheme; "
       "`m0/tools/gen_api_docs.py` writes these pages. To check your own installation run "
-      "`tests/run-api-examples.sh` (30-90 minutes)."]
+      "`tests/run-api-examples.sh` (1-2 hours). The hand-written examples are in `m0/tools/api_examples_curated.json` "
+      "of the source repository.", "",
+      "To try calls of your own the same way, without a window, write them in a text file (`py: ...` or `scm: ...`, one per "
+      "line; a blank line starts a fresh Coot) and run `tests/api-try.sh FILE`: it prints each value and what the call "
+      "changed, on the same test data as this reference."]
 open(os.path.join(OUT, "README.md"), "w").write("\n".join(L) + "\n")
 print("sections", len(secs), "functions", len(entries), "results", len(res), dict(tot))

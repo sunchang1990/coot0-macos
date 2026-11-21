@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="13332c39495018532afe35442606a65491037c9d">
+<meta name="coot0-source-sha1" content="60cd7129b571c62842604c001d5cdfb6d5a8db5f">
 <title>Atom Labelling - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -23,8 +23,9 @@ Scheme: <code>(add-atom-label imol chain-id iresno atom-id)</code></p>
 <p>Note we have to search for " CA " etc</p>
 <p>Arguments: imol (a whole number), chain_id (text), iresno (a whole number), atom_id (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>add_atom_label(0, "A", 41, "hello")</code></td><td>ran, returned <code>-1</code></td></tr>
-<tr><td>Scheme</td><td><code>(add-atom-label 0 "A" 41 "hello")</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>add_atom_label(0, "A", 41, " CA ")</code></td><td>ran, returned <code>295</code></td></tr>
+<tr><td>Scheme</td><td><code>(add-atom-label 0 "A" 41 " CA ")</code></td><td>ran, returned <code>295</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the atom index of the labelled atom; the label shows in the graphics window.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="brief_atom_labels_state">brief_atom_labels_state</h3>
 <p>Python: <code>brief_atom_labels_state()</code><br>
@@ -49,15 +50,16 @@ Scheme: <code>(centre-atom-label-status)</code></p>
 Scheme: <code>(remove-all-atom-labels)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>remove_all_atom_labels()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(remove-all-atom-labels)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>remove_all_atom_labels()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(remove-all-atom-labels)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="remove_atom_label">remove_atom_label</h3>
 <p>Python: <code>remove_atom_label(imol, chain_id, iresno, atom_id)</code><br>
 Scheme: <code>(remove-atom-label imol chain-id iresno atom-id)</code></p>
 <p>Arguments: imol (a whole number), chain_id (text), iresno (a whole number), atom_id (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>remove_atom_label(0, "A", 41, "hello")</code></td><td>ran, returned <code>-1</code></td></tr>
-<tr><td>Scheme</td><td><code>(remove-atom-label 0 "A" 41 "hello")</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>add_atom_label(0, "A", 41, " CA ")</code>, then <code>remove_atom_label(0, "A", 41, " CA ")</code></td><td>ran, returned <code>295</code></td></tr>
+<tr><td>Scheme</td><td>first <code>(add-atom-label 0 "A" 41 " CA ")</code>, then <code>(remove-atom-label 0 "A" 41 " CA ")</code></td><td>ran, returned <code>295</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the atom index of the atom whose label was removed.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="set_brief_atom_labels">set_brief_atom_labels</h3>
 <p>Python: <code>set_brief_atom_labels(istat)</code><br>
@@ -66,21 +68,22 @@ Scheme: <code>(set-brief-atom-labels istat)</code></p>
 <p> call with istat=1 to use brief labels, istat=0 for normal labels</p>
 <p>Arguments: istat (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_brief_atom_labels(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-brief-atom-labels 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_brief_atom_labels(1)</code></td><td>ran (no return value); changed: brief_atom_labels_state(): 0 -&gt; 1</td></tr>
+<tr><td>Scheme</td><td><code>(set-brief-atom-labels 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Setting checked (set to another value and read back, then put back): Python: brief_atom_labels_state was 0, set to 1, read back 1; Scheme: brief-atom-labels-state was 0, set to 1, read back 1.</p>
 <h3 id="set_label_on_recentre_flag">set_label_on_recentre_flag</h3>
 <p>Python: <code>set_label_on_recentre_flag(i)</code><br>
 Scheme: <code>(set-label-on-recentre-flag i)</code></p>
 <p>Arguments: i (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_label_on_recentre_flag(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-label-on-recentre-flag 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_label_on_recentre_flag(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-label-on-recentre-flag 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_seg_ids_in_atom_labels">set_seg_ids_in_atom_labels</h3>
 <p>Python: <code>set_seg_ids_in_atom_labels(istat)</code><br>
 Scheme: <code>(set-seg-ids-in-atom-labels istat)</code></p>
 <p>set if brief atom labels should have seg-ids also</p>
 <p>Arguments: istat (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_seg_ids_in_atom_labels(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-seg-ids-in-atom-labels 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_seg_ids_in_atom_labels(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-seg-ids-in-atom-labels 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 </body></html>

@@ -16,8 +16,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `clear_generic_objects_dialog_pointer()` | ran (no return value) |
-| Scheme | `(clear-generic-objects-dialog-pointer)` | ran (no return value) |
+| Python | `clear_generic_objects_dialog_pointer()` | ran (no return value, nothing visible changed) |
+| Scheme | `(clear-generic-objects-dialog-pointer)` | ran (no return value, nothing visible changed) |
 
 ### close_all_generic_objects
 
@@ -30,8 +30,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `close_all_generic_objects()` | ran (no return value) |
-| Scheme | `(close-all-generic-objects)` | ran (no return value) |
+| Python | `close_all_generic_objects()` | ran (no return value, nothing visible changed) |
+| Scheme | `(close-all-generic-objects)` | ran (no return value, nothing visible changed) |
 
 ### compare_atom_specs_user_float
 
@@ -42,8 +42,14 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `compare_atom_specs_user_float()` | error: TypeError: compare_atom_specs_user_float() missing 2 required positional arguments: 'a1' and 'a2' |
-| Scheme | `(compare-atom-specs-user-float)` | error: Wrong number of arguments to #<procedure compare-atom-specs-user-float (_ _)> |
+| Python | first `spec1 = atom_spec_t("A", 41, "", " CA ", ""); spec1.float_user_data = 1.0`, then `spec2 = atom_spec_t("A", 42, "", " CA ", ""); spec2.float_user_data = 2.0`, then `compare_atom_specs_user_float(spec1, spec2)` | ran, returned `True` |
+| Scheme | first `(define s1 (new-atom-spec-t "A" 41 "" " CA " ""))`, then `(define s2 (new-atom-spec-t "A" 42 "" " CA " ""))`, then `(atom-spec-t-float-user-data-set s1 1.0)`, then `(atom-spec-t-float-user-data-set s2 2.0)`, then `(compare-atom-specs-user-float s1 s2)` | ran, returned `#t` |
+
+Example written and checked by hand on the test data. Expected: C++ sort helper: True when the first spec's float_user_data is smaller than the second's.
+
+Note: Takes atom_spec_t objects (from atom_spec_from_python_expression), not lists.
+
+Python and Scheme gave the same answer.
 
 ### compare_atom_specs_user_float_in_pair
 
@@ -54,8 +60,10 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `compare_atom_specs_user_float_in_pair()` | error: TypeError: compare_atom_specs_user_float_in_pair() missing 2 required positional arguments: 'a' and 'b' |
-| Scheme | `(compare-atom-specs-user-float-in-pair)` | error: Wrong number of arguments to #<procedure compare-atom-specs-user-float-in-pair (_ _)> |
+| Python | `compare_atom_specs_user_float_in_pair()` | not run: internal C++ helper: needs a std::pair<atom_spec_t, std::string>, which scripts cannot build |
+| Scheme | `(compare-atom-specs-user-float-in-pair)` | not run: internal C++ helper: needs a std::pair<atom_spec_t, std::string>, which scripts cannot build |
+
+Example written and checked by hand on the test data. Expected: C++ sort helper on (atom_spec_t, string) pairs.
 
 ### coot_version
 
@@ -102,8 +110,10 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `generic_objects_gui_wrapper()` | stopped Coot when tried without a window (not checked with a window) |
-| Scheme | `(generic-objects-gui-wrapper)` | stopped Coot when tried without a window (not checked with a window) |
+| Python | `generic_objects_gui_wrapper()` | not run: needs the graphics window (stops Coot without a screen) |
+| Scheme | `(generic-objects-gui-wrapper)` | not run: needs the graphics window (stops Coot without a screen) |
+
+Example written and checked by hand on the test data. Expected: opens the Generic Display Objects window.
 
 ### link_atoms
 
@@ -114,8 +124,10 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `link_atoms()` | error: TypeError: Wrong number or type of arguments for overloaded function 'link_atoms'.   Possible C/C++ prototypes are:     coot::link_atoms(mmd ... |
-| Scheme | `(link-atoms)` | error: In procedure link-atoms: No matching method for generic function 'link_atoms' |
+| Python | `link_atoms()` | not run: internal C++ helper: needs an mmdb::Link/LinkR pointer, which scripts cannot obtain |
+| Scheme | `(link-atoms)` | not run: internal C++ helper: needs an mmdb::Link/LinkR pointer, which scripts cannot obtain |
+
+Example written and checked by hand on the test data. Expected: C++ helper returning the two atom specs of an mmdb Link record.
 
 ### set_display_all_generic_objects
 
@@ -128,8 +140,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_display_all_generic_objects(1)` | ran (no return value) |
-| Scheme | `(set-display-all-generic-objects 1)` | ran (no return value) |
+| Python | `set_display_all_generic_objects(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-display-all-generic-objects 1)` | ran (no return value, nothing visible changed) |
 
 ### try_load_python_extras_dir
 
@@ -140,7 +152,7 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `try_load_python_extras_dir()` | ran (no return value) |
+| Python | `try_load_python_extras_dir()` | ran (no return value, nothing visible changed) |
 
 ### try-load-scheme-extras-dir
 
@@ -151,5 +163,5 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Scheme | `(try-load-scheme-extras-dir)` | ran (no return value) |
+| Scheme | `(try-load-scheme-extras-dir)` | ran (no return value, nothing visible changed) |
 

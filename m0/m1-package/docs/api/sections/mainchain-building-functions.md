@@ -21,8 +21,10 @@ Arguments: imol (a whole number), chain_id (text), iresno_start (a whole number)
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `db_mainchain(0, "A", 41, 45, ".")` | ran, returned `-1` |
-| Scheme | `(db-mainchain 0 "A" 41 45 ".")` | ran, returned `-1` |
+| Python | `db_mainchain(0, "A", 10, 30, "forwards")` | ran, returned `3`; changed: new molecule 3 (model, mainchain-forwards); first_small_coords_imol(): -1 -> 3; graphics_n_molecules(): 3 -> 4 |
+| Scheme | `(db-mainchain 0 "A" 10 30 "forwards")` | ran, returned `3`; changed: new molecule 3 (model, mainchain-forwards); first_small_coords_imol(): -1 -> 3; graphics_n_molecules(): 3 -> 4 |
+
+Example written and checked by hand on the test data. Expected: returns a new molecule with main chain built from the CA trace of the range by database fragments; -1 on error.
 
 Python and Scheme gave the same answer.
 
@@ -39,8 +41,8 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number). Retu
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `db_mainchains_fragment(0, "A", 41)` | ran, returned `2` |
-| Scheme | `(db-mainchains-fragment 0 "A" 41)` | ran, returned `2` |
+| Python | `db_mainchains_fragment(0, "A", 41)` | ran, returned `3`; changed: new molecule 3 (model, mainchain-forwards); graphics_n_molecules(): 3 -> 4 |
+| Scheme | `(db-mainchains-fragment 0 "A" 41)` | ran, returned `3`; changed: new molecule 3 (model, mainchain-forwards); graphics_n_molecules(): 3 -> 4 |
 
 Python and Scheme gave the same answer.
 
@@ -53,6 +55,6 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `do_db_main(1)` | ran (no return value) |
-| Scheme | `(do-db-main 1)` | ran (no return value) |
+| Python | `do_db_main(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(do-db-main 1)` | ran (no return value, nothing visible changed) |
 

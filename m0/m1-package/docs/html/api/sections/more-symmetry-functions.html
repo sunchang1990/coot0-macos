@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="5639d552ec36c71ea1224bcf6fb4dade4f8325ec">
+<meta name="coot0-source-sha1" content="c0d4ac63446b05de81ecac559628e7aeacb5a2ee">
 <title>More Symmetry Functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -22,15 +22,16 @@ table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; 
 Scheme: <code>(add-molecular-symmetry imol r-00 r-01 r-02 r-10 r-11 r-12 r-20 r-21 r-22 about-origin-x about-origin-y about-origin-z)</code></p>
 <p>Arguments: imol (a whole number), r_00 (a number), r_01 (a number), r_02 (a number), r_10 (a number), r_11 (a number), r_12 (a number), r_20 (a number), r_21 (a number), r_22 (a number), about_origin_x (a number), about_origin_y (a number), about_origin_z (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>add_molecular_symmetry(0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(add-molecular-symmetry 0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>add_molecular_symmetry(0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(add-molecular-symmetry 0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="add_molecular_symmetry_from_mtrix_from_file">add_molecular_symmetry_from_mtrix_from_file</h3>
 <p>Python: <code>add_molecular_symmetry_from_mtrix_from_file(imol, file_name)</code><br>
 Scheme: <code>(add-molecular-symmetry-from-mtrix-from-file imol file-name)</code></p>
 <p>Arguments: imol (a whole number), file_name (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>add_molecular_symmetry_from_mtrix_from_file(0, "tutorial-modern.pdb")</code></td><td>ran, returned <code>0</code></td></tr>
-<tr><td>Scheme</td><td><code>(add-molecular-symmetry-from-mtrix-from-file 0 "tutorial-modern.pdb")</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>open("mtrix.pdb", "w").write("MTRIX1   2 -1.000000  0.000000  0.000000       60.00000\nMTRIX2   2  0.000000 -1.000000  0.000000       40.00000\nMTRIX3   2  0.00 ...</code>, then <code>add_molecular_symmetry_from_mtrix_from_file(0, "mtrix.pdb")</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td>first <code>(call-with-output-file "mtrix.pdb" (lambda (port) (display "MTRIX1   2 -1.000000  0.000000  0.000000       60.00000\nMTRIX2   2  0.000000 -1.000000  0.000000    ...</code>, then <code>(add-molecular-symmetry-from-mtrix-from-file 0 "mtrix.pdb")</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: reads MTRIX records from the file and adds them as molecular symmetry of molecule 0 (drawn as extra copies); always returns 0.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="add_molecular_symmetry_from_mtrix_from_self_file">add_molecular_symmetry_from_mtrix_from_self_file</h3>
 <p>Python: <code>add_molecular_symmetry_from_mtrix_from_self_file(imol)</code><br>
@@ -39,6 +40,7 @@ Scheme: <code>(add-molecular-symmetry-from-mtrix-from-self-file imol)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>add_molecular_symmetry_from_mtrix_from_self_file(0)</code></td><td>ran, returned <code>0</code></td></tr>
 <tr><td>Scheme</td><td><code>(add-molecular-symmetry-from-mtrix-from-self-file 0)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: adds molecular symmetry from the MTRIX records of the molecule's own PDB file; always returns 0 (nothing happens when the file has no MTRIX).</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="clashes_with_symmetry">clashes_with_symmetry</h3>
 <p>Python: <code>clashes_with_symmetry(imol, chain_id, res_no, ins_code, clash_dist)</code><br>
@@ -50,8 +52,9 @@ Scheme: <code>(clashes-with-symmetry imol chain-id res-no ins-code clash-dist)</
  was no cell and symmetry.</p>
 <p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text), clash_dist (a number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>clashes_with_symmetry(0, "A", 41, "", 1.0)</code></td><td>ran, returned <code>0</code></td></tr>
-<tr><td>Scheme</td><td><code>(clashes-with-symmetry 0 "A" 41 "" 1.0)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>clashes_with_symmetry(0, "A", 41, "", 3.5)</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(clashes-with-symmetry 0 "A" 41 "" 3.5)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns 1 if residue A41 has symmetry-related atoms closer than the distance, 0 if not, -1 for no residue/no symmetry.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="get_symmetry">get_symmetry</h3>
 <p>Python: <code>get_symmetry(imol)</code><br>

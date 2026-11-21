@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="1e91794dfc87bd606581356b8a4f4b1640ff85d8">
+<meta name="coot0-source-sha1" content="0c77f9fe552cc0704c7b7f176830a14d76d93ec8">
 <title>Alternative Conformation - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -27,8 +27,10 @@ Scheme: <code>(add-alt-conf imol chain-id res-no ins-code alt-conf rotamer-numbe
 Also available in Python as <code>add_alt_conf_py</code>.
 Also available in Scheme as <code>add-alt-conf-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>add_alt_conf(0, "A", 41, "", "", 1)</code></td><td>ran, returned <code>False</code></td></tr>
-<tr><td>Scheme</td><td><code>(add-alt-conf 0 "A" 41 "" "" 1)</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>add_alt_conf(0, "A", 41, "", "", 0)</code></td><td>ran, returned <code>False</code>; changed: molecule 0: atoms of 1 residue(s) (A41); n_atoms(0): 1465 -&gt; 1474</td></tr>
+<tr><td>Scheme</td><td><code>(add-alt-conf 0 "A" 41 "" "" 0)</code></td><td>ran, returned <code>#f</code>; changed: molecule 0: atoms of 1 residue(s) (A41); n_atoms(0): 1465 -&gt; 1474</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: splits residue A41 into two alternative conformations; documented to return the new alt conf string.</p>
+<p>Note: alt_conf must be the EXISTING alt conf of the atoms to split ("" for an ordinary residue). The split works but the return value is False/#f although the source returns the new alt conf on success; likely the bool from split_residue is false after a successful split (suspicious).</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="alt_conf_split_type_number">alt_conf_split_type_number</h3>
 <p>Python: <code>alt_conf_split_type_number()</code><br>
@@ -44,15 +46,16 @@ Scheme: <code>(altconf)</code></p>
 <p>turn off pending atom pick</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>altconf()</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
-<tr><td>Scheme</td><td><code>(altconf)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>altconf()</code></td><td>not run: needs the graphics window (stops Coot without a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(altconf)</code></td><td>not run: needs the graphics window (stops Coot without a screen)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: starts the alt-conf pick mode (click an atom in the graphics window).</p>
 <h3 id="fill_occupancy_residue_range">fill_occupancy_residue_range</h3>
 <p>Python: <code>fill_occupancy_residue_range(imol, chain_id, ires1, ires2)</code><br>
 Scheme: <code>(fill-occupancy-residue-range imol chain-id ires1 ires2)</code></p>
 <p>Arguments: imol (a whole number), chain_id (text), ires1 (a whole number), ires2 (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>fill_occupancy_residue_range(0, "A", 1, 1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(fill-occupancy-residue-range 0 "A" 1 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>fill_occupancy_residue_range(0, "A", 1, 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(fill-occupancy-residue-range 0 "A" 1 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="get_add_alt_conf_new_atoms_occupancy">get_add_alt_conf_new_atoms_occupancy</h3>
 <p>Python: <code>get_add_alt_conf_new_atoms_occupancy()</code><br>
 Scheme: <code>(get-add-alt-conf-new-atoms-occupancy)</code></p>
@@ -67,44 +70,46 @@ Scheme: <code>(get-add-alt-conf-new-atoms-occupancy)</code></p>
 Scheme: <code>(reset-b-factor-residue-range imol chain-id ires1 ires2)</code></p>
 <p>Arguments: imol (a whole number), chain_id (text), ires1 (a whole number), ires2 (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>reset_b_factor_residue_range(0, "A", 1, 1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(reset-b-factor-residue-range 0 "A" 1 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>reset_b_factor_residue_range(0, "A", 1, 1)</code></td><td>ran (no return value); changed: molecule 0: B-factors of 1 residue(s) (A1)</td></tr>
+<tr><td>Scheme</td><td><code>(reset-b-factor-residue-range 0 "A" 1 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_add_alt_conf_new_atoms_occupancy">set_add_alt_conf_new_atoms_occupancy</h3>
 <p>Python: <code>set_add_alt_conf_new_atoms_occupancy(f)</code><br>
 Scheme: <code>(set-add-alt-conf-new-atoms-occupancy f)</code></p>
 <p>temporary debugging interface.</p>
 <p>Arguments: f (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_add_alt_conf_new_atoms_occupancy(1.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-add-alt-conf-new-atoms-occupancy 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_add_alt_conf_new_atoms_occupancy(1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-add-alt-conf-new-atoms-occupancy 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Setting checked (set to another value and read back, then put back): Python: get_add_alt_conf_new_atoms_occupancy was 0.5, set to 1.25, read back 1.25; Scheme: get-add-alt-conf-new-atoms-occupancy was 0.5, set to 1.25, read back 1.25.</p>
 <h3 id="set_add_alt_conf_split_type_number">set_add_alt_conf_split_type_number</h3>
 <p>Python: <code>set_add_alt_conf_split_type_number(i)</code><br>
 Scheme: <code>(set-add-alt-conf-split-type-number i)</code></p>
 <p>Arguments: i (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_add_alt_conf_split_type_number(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-add-alt-conf-split-type-number 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_add_alt_conf_split_type_number(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-add-alt-conf-split-type-number 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_b_factor_residue_range">set_b_factor_residue_range</h3>
 <p>Python: <code>set_b_factor_residue_range(imol, chain_id, ires1, ires2, bval)</code><br>
 Scheme: <code>(set-b-factor-residue-range imol chain-id ires1 ires2 bval)</code></p>
 <p>Arguments: imol (a whole number), chain_id (text), ires1 (a whole number), ires2 (a whole number), bval (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_b_factor_residue_range(0, "A", 1, 1, 1.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-b-factor-residue-range 0 "A" 1 1 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_b_factor_residue_range(0, "A", 1, 1, 1.0)</code></td><td>ran (no return value); changed: molecule 0: B-factors of 1 residue(s) (A1)</td></tr>
+<tr><td>Scheme</td><td><code>(set-b-factor-residue-range 0 "A" 1 1 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_occupancy_residue_range">set_occupancy_residue_range</h3>
 <p>Python: <code>set_occupancy_residue_range(imol, chain_id, ires1, ires2, occ)</code><br>
 Scheme: <code>(set-occupancy-residue-range imol chain-id ires1 ires2 occ)</code></p>
 <p>Arguments: imol (a whole number), chain_id (text), ires1 (a whole number), ires2 (a whole number), occ (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_occupancy_residue_range(0, "A", 1, 1, 1.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-occupancy-residue-range 0 "A" 1 1 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_occupancy_residue_range(0, "A", 1, 1, 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-occupancy-residue-range 0 "A" 1 1 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_show_alt_conf_intermediate_atoms">set_show_alt_conf_intermediate_atoms</h3>
 <p>Python: <code>set_show_alt_conf_intermediate_atoms(i)</code><br>
 Scheme: <code>(set-show-alt-conf-intermediate-atoms i)</code></p>
 <p>Arguments: i (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_show_alt_conf_intermediate_atoms(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-show-alt-conf-intermediate-atoms 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_show_alt_conf_intermediate_atoms(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-show-alt-conf-intermediate-atoms 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Setting checked (set to another value and read back, then put back): Python: show_alt_conf_intermediate_atoms_state was 0, set to 1, read back 1; Scheme: show-alt-conf-intermediate-atoms-state was 0, set to 1, read back 1.</p>
 <h3 id="show_alt_conf_intermediate_atoms_state">show_alt_conf_intermediate_atoms_state</h3>
 <p>Python: <code>show_alt_conf_intermediate_atoms_state()</code><br>
 Scheme: <code>(show-alt-conf-intermediate-atoms-state)</code></p>
@@ -120,20 +125,20 @@ Scheme: <code>(unset-add-alt-conf-define)</code></p>
  graphics info to NULL</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>unset_add_alt_conf_define()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(unset-add-alt-conf-define)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>unset_add_alt_conf_define()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(unset-add-alt-conf-define)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="unset_add_alt_conf_dialog">unset_add_alt_conf_dialog</h3>
 <p>Python: <code>unset_add_alt_conf_dialog()</code><br>
 Scheme: <code>(unset-add-alt-conf-dialog)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>unset_add_alt_conf_dialog()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(unset-add-alt-conf-dialog)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>unset_add_alt_conf_dialog()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(unset-add-alt-conf-dialog)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="zero_occupancy_residue_range">zero_occupancy_residue_range</h3>
 <p>Python: <code>zero_occupancy_residue_range(imol, chain_id, ires1, ires2)</code><br>
 Scheme: <code>(zero-occupancy-residue-range imol chain-id ires1 ires2)</code></p>
 <p>Arguments: imol (a whole number), chain_id (text), ires1 (a whole number), ires2 (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>zero_occupancy_residue_range(0, "A", 1, 1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(zero-occupancy-residue-range 0 "A" 1 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>zero_occupancy_residue_range(0, "A", 1, 1)</code></td><td>ran (no return value); changed: molecule 0: occupancies of 1 residue(s) (A1)</td></tr>
+<tr><td>Scheme</td><td><code>(zero-occupancy-residue-range 0 "A" 1 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 </body></html>

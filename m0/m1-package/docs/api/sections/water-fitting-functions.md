@@ -15,8 +15,12 @@ Arguments: imol_model (a whole number), imol_for_map (a whole number), cut_off (
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `execute_find_blobs(0, 1, 1.0, 1)` | stopped Coot when tried without a window (not checked with a window) |
-| Scheme | `(execute-find-blobs 0 1 1.0 1)` | stopped Coot when tried without a window (not checked with a window) |
+| Python | `execute_find_blobs(0, 1, 1.5, 0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(execute-find-blobs 0 1 1.5 0)` | ran (no return value, nothing visible changed) |
+
+Example written and checked by hand on the test data. Expected: finds unmodelled density blobs above 1.5 sigma in map 1 (not covered by model 0); with interactive_flag 1 it opens the Blobs dialog (that needs a screen: Coot stopped headless).
+
+Note: interactive_flag 1 stops Coot without a screen.
 
 ### execute_find_waters_real
 
@@ -29,8 +33,8 @@ Arguments: imol_for_map (a whole number), imol_for_protein (a whole number), new
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `execute_find_waters_real(1, 0, 1, 1.5)` | ran (no return value) |
-| Scheme | `(execute-find-waters-real 1 0 1 1.5)` | ran (no return value) |
+| Python | `execute_find_waters_real(1, 0, 1, 1.5)` | ran (no return value); changed: new molecule 3 (model, waters); first_small_coords_imol(): -1 -> 3; graphics_n_molecules(): 3 -> 4 |
+| Scheme | `(execute-find-waters-real 1 0 1 1.5)` | ran (no return value); changed: new molecule 3 (model, waters); first_small_coords_imol(): -1 -> 3; graphics_n_molecules(): 3 -> 4 |
 
 ### find_waters
 
@@ -41,8 +45,8 @@ Arguments: imol_for_map (a whole number), imol_for_protein (a whole number), new
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `find_waters(1, 0, 1, 1.5, 1)` | ran (no return value) |
-| Scheme | `(find-waters 1 0 1 1.5 1)` | ran (no return value) |
+| Python | `find_waters(1, 0, 1, 1.5, 1)` | ran (no return value); changed: new molecule 3 (model, waters); first_small_coords_imol(): -1 -> 3; graphics_n_molecules(): 3 -> 4 |
+| Scheme | `(find-waters 1 0 1 1.5 1)` | ran (no return value); changed: new molecule 3 (model, waters); first_small_coords_imol(): -1 -> 3; graphics_n_molecules(): 3 -> 4 |
 
 ### get_text_for_find_waters_sigma_cut_off
 
@@ -71,8 +75,10 @@ Arguments: imol (a whole number). Returns: a number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `max_water_distance(0)` | ran, returned `-1.0` |
-| Scheme | `(max-water-distance 0)` | ran, returned `-1.0` |
+| Python | `max_water_distance(read_pdb("1ehz.pdb"))` | ran, returned `4.518393516540527`; changed: new molecule 3 (model, 1ehz.pdb); rotation centre moved 51.0 A to (67.6, 49.7, 28.6); graphics_n_molecules(): 3 -> 4 |
+| Scheme | `(max-water-distance (read-pdb "1ehz.pdb"))` | ran, returned `4.518393516540527`; changed: new molecule 3 (model, 1ehz.pdb); rotation centre moved 51.0 A to (67.6, 49.7, 28.6); graphics_n_molecules(): 3 -> 4 |
+
+Example written and checked by hand on the test data. Expected: the largest distance of any water to its nearest non-water atom in 1ehz.pdb (4.5 A); -1.0 for a molecule without waters.
 
 Python and Scheme gave the same answer.
 
@@ -88,8 +94,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `move_hetgroups_to_around_protein(0)` | ran (no return value) |
-| Scheme | `(move-hetgroups-to-around-protein 0)` | ran (no return value) |
+| Python | `move_hetgroups_to_around_protein(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(move-hetgroups-to-around-protein 0)` | ran (no return value, nothing visible changed) |
 
 ### move_waters_to_around_protein
 
@@ -104,8 +110,10 @@ Arguments: imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `move_waters_to_around_protein(0)` | ran, returned `0` |
-| Scheme | `(move-waters-to-around-protein 0)` | ran, returned `0` |
+| Python | `move_waters_to_around_protein(read_pdb("1ehz.pdb"))` | ran, returned `71`; changed: new molecule 3 (model, 1ehz.pdb); rotation centre moved 51.0 A to (67.6, 49.7, 28.6); graphics_n_molecules(): 3 -> 4 |
+| Scheme | `(move-waters-to-around-protein (read-pdb "1ehz.pdb"))` | ran, returned `71`; changed: new molecule 3 (model, 1ehz.pdb); rotation centre moved 51.0 A to (67.6, 49.7, 28.6); graphics_n_molecules(): 3 -> 4 |
+
+Example written and checked by hand on the test data. Expected: returns the number of waters moved to their symmetry copy closest to the macromolecule (71 for 1ehz.pdb).
 
 Python and Scheme gave the same answer.
 
@@ -120,8 +128,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `renumber_waters(0)` | ran (no return value) |
-| Scheme | `(renumber-waters 0)` | ran (no return value) |
+| Python | `renumber_waters(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(renumber-waters 0)` | ran (no return value, nothing visible changed) |
 
 ### set_ligand_water_n_cycles
 
@@ -134,8 +142,8 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_ligand_water_n_cycles(1)` | ran (no return value) |
-| Scheme | `(set-ligand-water-n-cycles 1)` | ran (no return value) |
+| Python | `set_ligand_water_n_cycles(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-ligand-water-n-cycles 1)` | ran (no return value, nothing visible changed) |
 
 ### set_ligand_water_to_protein_distance_limits
 
@@ -150,8 +158,8 @@ Arguments: f1 (a number), f2 (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_ligand_water_to_protein_distance_limits(1.0, 1.0)` | ran (no return value) |
-| Scheme | `(set-ligand-water-to-protein-distance-limits 1.0 1.0)` | ran (no return value) |
+| Python | `set_ligand_water_to_protein_distance_limits(1.0, 1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-ligand-water-to-protein-distance-limits 1.0 1.0)` | ran (no return value, nothing visible changed) |
 
 ### set_value_for_find_waters_sigma_cut_off
 
@@ -162,8 +170,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_value_for_find_waters_sigma_cut_off(1.0)` | ran (no return value) |
-| Scheme | `(set-value-for-find-waters-sigma-cut-off 1.0)` | ran (no return value) |
+| Python | `set_value_for_find_waters_sigma_cut_off(1.0)` | ran (no return value); changed: get_text_for_find_waters_sigma_cut_off(): '  1.4' -> '  1.0' |
+| Scheme | `(set-value-for-find-waters-sigma-cut-off 1.0)` | ran (no return value, nothing visible changed) |
 
 ### set_water_check_spherical_variance_limit
 
@@ -179,8 +187,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_water_check_spherical_variance_limit(1.0)` | ran (no return value) |
-| Scheme | `(set-water-check-spherical-variance-limit 1.0)` | ran (no return value) |
+| Python | `set_water_check_spherical_variance_limit(1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-water-check-spherical-variance-limit 1.0)` | ran (no return value, nothing visible changed) |
 
 ### set_write_peaksearched_waters
 
@@ -191,8 +199,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_write_peaksearched_waters()` | ran (no return value) |
-| Scheme | `(set-write-peaksearched-waters)` | ran (no return value) |
+| Python | `set_write_peaksearched_waters()` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-write-peaksearched-waters)` | ran (no return value, nothing visible changed) |
 
 ### split_water
 
@@ -212,8 +220,8 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `split_water(0, "A", 41, "")` | ran (no return value) |
-| Scheme | `(split-water 0 "A" 41 "")` | ran (no return value) |
+| Python | `split_water(0, "A", 41, "")` | ran (no return value, nothing visible changed) |
+| Scheme | `(split-water 0 "A" 41 "")` | ran (no return value, nothing visible changed) |
 
 ### wrapped_create_find_waters_dialog
 
@@ -226,6 +234,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `wrapped_create_find_waters_dialog()` | stopped Coot when tried without a window (not checked with a window) |
-| Scheme | `(wrapped-create-find-waters-dialog)` | stopped Coot when tried without a window (not checked with a window) |
+| Python | `wrapped_create_find_waters_dialog()` | not run: needs the graphics window (stops Coot without a screen) |
+| Scheme | `(wrapped-create-find-waters-dialog)` | not run: needs the graphics window (stops Coot without a screen) |
+
+Example written and checked by hand on the test data. Expected: opens the Find Waters dialog (Calculate > Other Modelling Tools > Find Waters...).
 

@@ -15,6 +15,6 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_c
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `print_glyco_tree(0, "A", 41, "")` | ran (no return value) |
-| Scheme | `(print-glyco-tree 0 "A" 41 "")` | ran (no return value) |
+| Python | `print_glyco_tree(0, "A", 41, "")` | ran (no return value, nothing visible changed) |
+| Scheme | `(print-glyco-tree 0 "A" 41 "")` | ran (no return value, nothing visible changed) |
 

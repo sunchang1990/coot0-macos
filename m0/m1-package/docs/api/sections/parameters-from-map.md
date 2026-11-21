@@ -41,8 +41,10 @@ Also available in Scheme as `map-parameters-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `map_parameters(0)` | ran, returned `False` |
-| Scheme | `(map-parameters 0)` | ran, returned `#f` |
+| Python | `map_parameters(1)` | ran, returned `['rnasa-1.8-all_refmac1.mtz', 'FWT', 'PHWT', '', False]` |
+| Scheme | `(map-parameters 1)` | ran, returned `("rnasa-1.8-all_refmac1.mtz" "FWT" "PHWT" "" #f)` |
+
+Example written and checked by hand on the test data. Expected: returns the MTZ file, F, phase and weight column names and the use-weights flag of map 1 (False for a model).
 
 Python and Scheme gave the same answer.
 
@@ -125,6 +127,8 @@ Arguments: imol_map (a whole number). Returns: a whole number.
 |---|---|---|
 | Python | `mtz_use_weight_for_map(1)` | ran, returned `0` |
 | Scheme | `(mtz-use-weight-for-map 1)` | ran, returned `0` |
+
+Example written and checked by hand on the test data. Expected: returns 0: map 1 was made without a weight column (1 when a FOM/weight column was used).
 
 Python and Scheme gave the same answer.
 

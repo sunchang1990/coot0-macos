@@ -1,0 +1,421 @@
+{"ev": "start", "key": "set_accept_reject_dialog_docked", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_accept_reject_dialog_docked", "lang": "py", "status": "ok", "check": "setter", "getter": "accept_reject_dialog_docked_state", "before": 0, "set": 1, "after": 0, "restored": 0, "verdict": "not read back"}
+{"ev": "start", "key": "set_accept_reject_dialog_docked", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_accept_reject_dialog_docked", "lang": "scm", "status": "ok", "check": "setter", "getter": "accept-reject-dialog-docked-state", "before": 0, "set": 1, "after": 0, "restored": 0, "verdict": "not read back"}
+{"ev": "start", "key": "set_accept_reject_dialog_docked_show", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_accept_reject_dialog_docked_show", "lang": "py", "status": "ok", "check": "setter", "getter": "accept_reject_dialog_docked_show_state", "before": 1, "set": 0, "after": 1, "restored": 1, "verdict": "not read back"}
+{"ev": "start", "key": "set_accept_reject_dialog_docked_show", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_accept_reject_dialog_docked_show", "lang": "scm", "status": "ok", "check": "setter", "getter": "accept-reject-dialog-docked-show-state", "before": 1, "set": 0, "after": 1, "restored": 1, "verdict": "not read back"}
+{"ev": "start", "key": "set_active_map_drag_flag", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_active_map_drag_flag", "lang": "py", "status": "ok", "check": "setter", "getter": "get_active_map_drag_flag", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_active_map_drag_flag", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_active_map_drag_flag", "lang": "scm", "status": "ok", "check": "setter", "getter": "get-active-map-drag-flag", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_add_alt_conf_new_atoms_occupancy", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_add_alt_conf_new_atoms_occupancy", "lang": "py", "status": "ok", "check": "setter", "getter": "get_add_alt_conf_new_atoms_occupancy", "before": 0.5, "set": 1.25, "after": 1.25, "restored": 0.5, "verdict": "read back"}
+{"ev": "start", "key": "set_add_alt_conf_new_atoms_occupancy", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_add_alt_conf_new_atoms_occupancy", "lang": "scm", "status": "ok", "check": "setter", "getter": "get-add-alt-conf-new-atoms-occupancy", "before": 0.5, "set": 1.25, "after": 1.25, "restored": 0.5, "verdict": "read back"}
+{"ev": "start", "key": "set_add_terminal_residue_do_post_refine", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_add_terminal_residue_do_post_refine", "lang": "py", "status": "ok", "check": "setter", "getter": "add_terminal_residue_do_post_refine_state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_add_terminal_residue_do_post_refine", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_add_terminal_residue_do_post_refine", "lang": "scm", "status": "ok", "check": "setter", "getter": "add-terminal-residue-do-post-refine-state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_add_terminal_residue_immediate_addition", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_add_terminal_residue_immediate_addition", "lang": "py", "status": "ok", "check": "setter", "getter": "add_terminal_residue_immediate_addition_state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_add_terminal_residue_immediate_addition", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_add_terminal_residue_immediate_addition", "lang": "scm", "status": "ok", "check": "setter", "getter": "add-terminal-residue-immediate-addition-state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_aniso_probability", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_aniso_probability", "lang": "py", "status": "ok", "check": "setter", "getter": "get_aniso_probability", "before": 50.0, "set": 75.5, "after": 75.5, "restored": 50.0, "verdict": "read back"}
+{"ev": "start", "key": "set_aniso_probability", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_aniso_probability", "lang": "scm", "status": "ok", "check": "setter", "getter": "get-aniso-probability", "before": 50.0, "set": 75.5, "after": 75.5, "restored": 50.0, "verdict": "read back"}
+{"ev": "start", "key": "set_auto_clear_atom_pull_restraint", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_auto_clear_atom_pull_restraint", "lang": "py", "status": "ok", "check": "setter", "getter": "get_auto_clear_atom_pull_restraint_state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_auto_clear_atom_pull_restraint", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_auto_clear_atom_pull_restraint", "lang": "scm", "status": "ok", "check": "setter", "getter": "get-auto-clear-atom-pull-restraint-state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_auto_read_do_difference_map_too", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_auto_read_do_difference_map_too", "lang": "py", "status": "ok", "check": "setter", "getter": "auto_read_do_difference_map_too_state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_auto_read_do_difference_map_too", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_auto_read_do_difference_map_too", "lang": "scm", "status": "ok", "check": "setter", "getter": "auto-read-do-difference-map-too-state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_auto_recontour_map", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_auto_recontour_map", "lang": "py", "status": "ok", "check": "setter", "getter": "get_auto_recontour_map", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_auto_recontour_map", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_auto_recontour_map", "lang": "scm", "status": "ok", "check": "setter", "getter": "get-auto-recontour-map", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_backup_compress_files", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_backup_compress_files", "lang": "py", "status": "ok", "check": "setter", "getter": "backup_compress_files_state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_backup_compress_files", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_backup_compress_files", "lang": "scm", "status": "ok", "check": "setter", "getter": "backup-compress-files-state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_bond_colour_rotation_for_molecule", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_bond_colour_rotation_for_molecule", "lang": "py", "status": "ok", "check": "setter", "getter": "get_bond_colour_rotation_for_molecule", "before": 21.0, "set": 32.0, "after": 32.0, "restored": 21.0, "verdict": "read back"}
+{"ev": "start", "key": "set_bond_colour_rotation_for_molecule", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_bond_colour_rotation_for_molecule", "lang": "scm", "status": "ok", "check": "setter", "getter": "get-bond-colour-rotation-for-molecule", "before": 21.0, "set": 32.0, "after": 32.0, "restored": 21.0, "verdict": "read back"}
+{"ev": "start", "key": "set_brief_atom_labels", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_brief_atom_labels", "lang": "py", "status": "ok", "check": "setter", "getter": "brief_atom_labels_state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_brief_atom_labels", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_brief_atom_labels", "lang": "scm", "status": "ok", "check": "setter", "getter": "brief-atom-labels-state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_check_waters_by_difference_map_sigma_level", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_check_waters_by_difference_map_sigma_level", "lang": "py", "status": "ok", "check": "setter", "getter": "check_waters_by_difference_map_sigma_level_state", "before": 3.5, "set": 5.75, "after": 5.75, "restored": 3.5, "verdict": "read back"}
+{"ev": "start", "key": "set_check_waters_by_difference_map_sigma_level", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_check_waters_by_difference_map_sigma_level", "lang": "scm", "status": "ok", "check": "setter", "getter": "check-waters-by-difference-map-sigma-level-state", "before": 3.5, "set": 5.75, "after": 5.75, "restored": 3.5, "verdict": "read back"}
+{"ev": "start", "key": "set_colour_map_rotation_on_read_pdb_c_only_flag", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_colour_map_rotation_on_read_pdb_c_only_flag", "lang": "py", "status": "ok", "check": "setter", "getter": "get_colour_map_rotation_on_read_pdb_c_only_flag", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_colour_map_rotation_on_read_pdb_c_only_flag", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_colour_map_rotation_on_read_pdb_c_only_flag", "lang": "scm", "status": "ok", "check": "setter", "getter": "get-colour-map-rotation-on-read-pdb-c-only-flag", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_contour_level_absolute", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_contour_level_absolute", "lang": "py", "status": "ok", "check": "setter", "getter": "get_contour_level_absolute", "before": 0.5600000023841858, "set": 1.34, "after": 1.340000033378601, "restored": 0.5600000023841858, "verdict": "read back"}
+{"ev": "start", "key": "set_contour_level_absolute", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_contour_level_absolute", "lang": "scm", "status": "ok", "check": "setter", "getter": "get-contour-level-absolute", "before": 0.5600000023841858, "set": 1.34, "after": 1.340000033378601, "restored": 0.5600000023841858, "verdict": "read back"}
+{"ev": "start", "key": "set_contour_level_in_sigma", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_contour_level_in_sigma", "lang": "py", "status": "ok", "check": "setter", "getter": "get_contour_level_in_sigma", "before": 1.4993457794189453, "set": 2.749, "after": 2.749000072479248, "restored": 1.4993457794189453, "verdict": "read back"}
+{"ev": "start", "key": "set_contour_level_in_sigma", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_contour_level_in_sigma", "lang": "scm", "status": "ok", "check": "setter", "getter": "get-contour-level-in-sigma", "before": 1.4993457794189453, "set": 2.749, "after": 2.749000072479248, "restored": 1.4993457794189453, "verdict": "read back"}
+{"ev": "start", "key": "set_control_key_for_rotate", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_control_key_for_rotate", "lang": "py", "status": "ok", "check": "setter", "getter": "control_key_for_rotate_state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_control_key_for_rotate", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_control_key_for_rotate", "lang": "scm", "status": "ok", "check": "setter", "getter": "control-key-for-rotate-state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_cryo_em_refinement", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_cryo_em_refinement", "lang": "py", "status": "ok", "check": "setter", "getter": "get_cryo_em_refinement", "before": false, "set": true, "after": true, "restored": false, "verdict": "read back"}
+{"ev": "start", "key": "set_cryo_em_refinement", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_cryo_em_refinement", "lang": "scm", "status": "ok", "check": "setter", "getter": "get-cryo-em-refinement", "before": false, "set": true, "after": true, "restored": false, "verdict": "read back"}
+{"ev": "start", "key": "set_decoloned_backup_file_names", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_decoloned_backup_file_names", "lang": "py", "status": "ok", "check": "setter", "getter": "decoloned_backup_file_names_state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_decoloned_backup_file_names", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_decoloned_backup_file_names", "lang": "scm", "status": "ok", "check": "setter", "getter": "decoloned-backup-file-names-state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_default_bond_thickness", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_default_bond_thickness", "lang": "py", "status": "ok", "check": "setter", "getter": "get_default_bond_thickness", "before": 5, "set": 0, "after": 0, "restored": 5, "verdict": "read back"}
+{"ev": "start", "key": "set_default_bond_thickness", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_default_bond_thickness", "lang": "scm", "status": "ok", "check": "setter", "getter": "get-default-bond-thickness", "before": 5, "set": 0, "after": 0, "restored": 5, "verdict": "read back"}
+{"ev": "start", "key": "set_diff_map_iso_level_increment", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_diff_map_iso_level_increment", "lang": "py", "status": "ok", "check": "setter", "getter": "get_diff_map_iso_level_increment", "before": 0.004999999888241291, "set": 0.507, "after": 0.5070000290870667, "restored": 0.004999999888241291, "verdict": "read back"}
+{"ev": "start", "key": "set_diff_map_iso_level_increment", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_diff_map_iso_level_increment", "lang": "scm", "status": "ok", "check": "setter", "getter": "get-diff-map-iso-level-increment", "before": 0.004999999888241291, "set": 0.507, "after": 0.5070000290870667, "restored": 0.004999999888241291, "verdict": "read back"}
+{"ev": "start", "key": "set_difference_map_peaks_max_closeness", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_difference_map_peaks_max_closeness", "lang": "py", "status": "ok", "check": "setter", "getter": "difference_map_peaks_max_closeness", "before": 2.0, "set": 3.5, "after": 3.5, "restored": 2.0, "verdict": "read back"}
+{"ev": "start", "key": "set_difference_map_peaks_max_closeness", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_difference_map_peaks_max_closeness", "lang": "scm", "status": "ok", "check": "setter", "getter": "difference-map-peaks-max-closeness", "before": 2.0, "set": 3.5, "after": 3.5, "restored": 2.0, "verdict": "read back"}
+{"ev": "start", "key": "set_display_lists_for_maps", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_display_lists_for_maps", "lang": "py", "status": "ok", "check": "setter", "getter": "display_lists_for_maps_state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_display_lists_for_maps", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_display_lists_for_maps", "lang": "scm", "status": "ok", "check": "setter", "getter": "display-lists-for-maps-state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_do_anti_aliasing", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_do_anti_aliasing", "lang": "py", "status": "ok", "check": "setter", "getter": "do_anti_aliasing_state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_do_anti_aliasing", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_do_anti_aliasing", "lang": "scm", "status": "ok", "check": "setter", "getter": "do-anti-aliasing-state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_do_probe_dots_on_rotamers_and_chis", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_do_probe_dots_on_rotamers_and_chis", "lang": "py", "status": "ok", "check": "setter", "getter": "do_probe_dots_on_rotamers_and_chis_state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_do_probe_dots_on_rotamers_and_chis", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_do_probe_dots_on_rotamers_and_chis", "lang": "scm", "status": "ok", "check": "setter", "getter": "do-probe-dots-on-rotamers-and-chis-state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_do_probe_dots_post_refine", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_do_probe_dots_post_refine", "lang": "py", "status": "ok", "check": "setter", "getter": "do_probe_dots_post_refine_state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_do_probe_dots_post_refine", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_do_probe_dots_post_refine", "lang": "scm", "status": "ok", "check": "setter", "getter": "do-probe-dots-post-refine-state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_dragged_refinement_steps_per_frame", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_dragged_refinement_steps_per_frame", "lang": "py", "status": "ok", "check": "setter", "getter": "dragged_refinement_steps_per_frame", "before": 10, "set": 0, "after": 0, "restored": 10, "verdict": "read back"}
+{"ev": "start", "key": "set_dragged_refinement_steps_per_frame", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_dragged_refinement_steps_per_frame", "lang": "scm", "status": "ok", "check": "setter", "getter": "dragged-refinement-steps-per-frame", "before": 10, "set": 0, "after": 0, "restored": 10, "verdict": "read back"}
+{"ev": "start", "key": "set_draw_crosshairs", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_draw_crosshairs", "lang": "py", "status": "ok", "check": "setter", "getter": "draw_crosshairs_state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_draw_crosshairs", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_draw_crosshairs", "lang": "scm", "status": "ok", "check": "setter", "getter": "draw-crosshairs-state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_draw_hydrogens", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_draw_hydrogens", "lang": "py", "status": "ok", "check": "setter", "getter": "draw_hydrogens_state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_draw_hydrogens", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_draw_hydrogens", "lang": "scm", "status": "ok", "check": "setter", "getter": "draw-hydrogens-state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_draw_ncs_ghosts", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_draw_ncs_ghosts", "lang": "py", "status": "ok", "check": "setter", "getter": "draw_ncs_ghosts_state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_draw_ncs_ghosts", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_draw_ncs_ghosts", "lang": "scm", "status": "ok", "check": "setter", "getter": "draw-ncs-ghosts-state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_electrostatic_surface_charge_range", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_electrostatic_surface_charge_range", "lang": "py", "status": "ok", "check": "setter", "getter": "get_electrostatic_surface_charge_range", "before": 0.5, "set": 1.25, "after": 1.25, "restored": 0.5, "verdict": "read back"}
+{"ev": "start", "key": "set_electrostatic_surface_charge_range", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_electrostatic_surface_charge_range", "lang": "scm", "status": "ok", "check": "setter", "getter": "get-electrostatic-surface-charge-range", "before": 0.5, "set": 1.25, "after": 1.25, "restored": 0.5, "verdict": "read back"}
+{"ev": "start", "key": "set_esoteric_depth_cue", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_esoteric_depth_cue", "lang": "py", "status": "ok", "check": "setter", "getter": "esoteric_depth_cue_state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_esoteric_depth_cue", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_esoteric_depth_cue", "lang": "scm", "status": "ok", "check": "setter", "getter": "esoteric-depth-cue-state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_fffear_angular_resolution", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_fffear_angular_resolution", "lang": "py", "status": "ok", "check": "setter", "getter": "fffear_angular_resolution", "before": 15.0, "set": 23.0, "after": 23.0, "restored": 15.0, "verdict": "read back"}
+{"ev": "start", "key": "set_fffear_angular_resolution", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_fffear_angular_resolution", "lang": "scm", "status": "ok", "check": "setter", "getter": "fffear-angular-resolution", "before": 15.0, "set": 23.0, "after": 23.0, "restored": 15.0, "verdict": "read back"}
+{"ev": "start", "key": "set_file_chooser_overwrite", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_file_chooser_overwrite", "lang": "py", "status": "ok", "check": "setter", "getter": "file_chooser_overwrite_state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_file_chooser_overwrite", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_file_chooser_overwrite", "lang": "scm", "status": "ok", "check": "setter", "getter": "file-chooser-overwrite-state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_file_chooser_selector", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_file_chooser_selector", "lang": "py", "status": "ok", "check": "setter", "getter": "file_chooser_selector_state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_file_chooser_selector", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_file_chooser_selector", "lang": "scm", "status": "ok", "check": "setter", "getter": "file-chooser-selector-state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_filter_fileselection_filenames", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_filter_fileselection_filenames", "lang": "py", "status": "ok", "check": "setter", "getter": "filter_fileselection_filenames_state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_filter_fileselection_filenames", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_filter_fileselection_filenames", "lang": "scm", "status": "ok", "check": "setter", "getter": "filter-fileselection-filenames-state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_font_size", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_font_size", "lang": "py", "status": "ok", "check": "setter", "getter": "get_font_size", "before": 2, "set": 0, "after": 0, "restored": 2, "verdict": "read back"}
+{"ev": "start", "key": "set_font_size", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_font_size", "lang": "scm", "status": "ok", "check": "setter", "getter": "get-font-size", "before": 2, "set": 0, "after": 0, "restored": 2, "verdict": "read back"}
+{"ev": "start", "key": "set_fps_flag", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_fps_flag", "lang": "py", "status": "ok", "check": "setter", "getter": "get_fps_flag", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_fps_flag", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_fps_flag", "lang": "scm", "status": "ok", "check": "setter", "getter": "get-fps-flag", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_hardware_stereo_angle_factor", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_hardware_stereo_angle_factor", "lang": "py", "status": "ok", "check": "setter", "getter": "hardware_stereo_angle_factor_state", "before": 1.0, "set": 2.0, "after": 2.0, "restored": 1.0, "verdict": "read back"}
+{"ev": "start", "key": "set_hardware_stereo_angle_factor", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_hardware_stereo_angle_factor", "lang": "scm", "status": "ok", "check": "setter", "getter": "hardware-stereo-angle-factor-state", "before": 1.0, "set": 2.0, "after": 2.0, "restored": 1.0, "verdict": "read back"}
+{"ev": "start", "key": "set_idle_function_rotate_angle", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_idle_function_rotate_angle", "lang": "py", "status": "ok", "check": "setter", "getter": "idle_function_rotate_angle", "before": 0.15000000596046448, "set": 0.725, "after": 0.7250000238418579, "restored": 0.15000000596046448, "verdict": "read back"}
+{"ev": "start", "key": "set_idle_function_rotate_angle", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_idle_function_rotate_angle", "lang": "scm", "status": "ok", "check": "setter", "getter": "idle-function-rotate-angle", "before": 0.15000000596046448, "set": 0.725, "after": 0.7250000238418579, "restored": 0.15000000596046448, "verdict": "read back"}
+{"ev": "start", "key": "set_imol_refinement_map", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_imol_refinement_map", "lang": "py", "status": "ok", "check": "setter", "getter": "imol_refinement_map", "before": 1, "set": 0, "after": 1, "restored": 1, "verdict": "not read back"}
+{"ev": "start", "key": "set_imol_refinement_map", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_imol_refinement_map", "lang": "scm", "status": "ok", "check": "setter", "getter": "imol-refinement-map", "before": 1, "set": 0, "after": 1, "restored": 1, "verdict": "not read back"}
+{"ev": "start", "key": "set_interactive_probe_dots_molprobity_radius", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_interactive_probe_dots_molprobity_radius", "lang": "py", "status": "ok", "check": "setter", "getter": "interactive_probe_dots_molprobity_radius", "before": 6.0, "set": 9.5, "after": 9.5, "restored": 6.0, "verdict": "read back"}
+{"ev": "start", "key": "set_interactive_probe_dots_molprobity_radius", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_interactive_probe_dots_molprobity_radius", "lang": "scm", "status": "ok", "check": "setter", "getter": "interactive-probe-dots-molprobity-radius", "before": 6.0, "set": 9.5, "after": 9.5, "restored": 6.0, "verdict": "read back"}
+{"ev": "start", "key": "set_iso_level_increment", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_iso_level_increment", "lang": "py", "status": "ok", "check": "setter", "getter": "get_iso_level_increment", "before": 0.05000000074505806, "set": 0.575, "after": 0.574999988079071, "restored": 0.05000000074505806, "verdict": "read back"}
+{"ev": "start", "key": "set_iso_level_increment", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_iso_level_increment", "lang": "scm", "status": "ok", "check": "setter", "getter": "get-iso-level-increment", "before": 0.05000000074505806, "set": 0.575, "after": 0.574999988079071, "restored": 0.05000000074505806, "verdict": "read back"}
+{"ev": "start", "key": "set_keep_map_colour_after_refmac", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_keep_map_colour_after_refmac", "lang": "py", "status": "ok", "check": "setter", "getter": "keep_map_colour_after_refmac_state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_keep_map_colour_after_refmac", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_keep_map_colour_after_refmac", "lang": "scm", "status": "ok", "check": "setter", "getter": "keep-map-colour-after-refmac-state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_limit_aniso", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_limit_aniso", "lang": "py", "status": "error", "check": "setter", "getter": "get_limit_aniso", "verdict": "error: in method 'set_limit_aniso', argument 1 of type 'short'"}
+{"ev": "start", "key": "set_limit_aniso", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_limit_aniso", "lang": "scm", "status": "error", "check": "setter", "getter": "get-limit-aniso", "verdict": "error: Wrong type (expecting exact integer): 12.0\n"}
+{"ev": "start", "key": "set_main_toolbar_style", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_main_toolbar_style", "lang": "py", "status": "ok", "check": "setter", "getter": "main_toolbar_style_state", "before": 2, "set": 0, "after": 0, "restored": 2, "verdict": "read back"}
+{"ev": "start", "key": "set_main_toolbar_style", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_main_toolbar_style", "lang": "scm", "status": "ok", "check": "setter", "getter": "main-toolbar-style-state", "before": 2, "set": 0, "after": 0, "restored": 2, "verdict": "read back"}
+{"ev": "start", "key": "set_map_is_difference_map", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_map_is_difference_map", "lang": "py", "status": "ok", "check": "setter", "getter": "map_is_difference_map", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_map_is_difference_map", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_map_is_difference_map", "lang": "scm", "status": "ok", "check": "setter", "getter": "map-is-difference-map", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_map_line_width", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_map_line_width", "lang": "py", "status": "ok", "check": "setter", "getter": "map_line_width_state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_map_line_width", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_map_line_width", "lang": "scm", "status": "ok", "check": "setter", "getter": "map-line-width-state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_map_mask_atom_radius", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_map_mask_atom_radius", "lang": "py", "status": "ok", "check": "setter", "getter": "map_mask_atom_radius", "before": -99.0, "set": -148.0, "after": -148.0, "restored": -99.0, "verdict": "read back"}
+{"ev": "start", "key": "set_map_mask_atom_radius", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_map_mask_atom_radius", "lang": "scm", "status": "ok", "check": "setter", "getter": "map-mask-atom-radius", "before": -99.0, "set": -148.0, "after": -148.0, "restored": -99.0, "verdict": "read back"}
+{"ev": "start", "key": "set_map_radius", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_map_radius", "lang": "py", "status": "ok", "check": "setter", "getter": "get_map_radius", "before": 16.0, "set": 24.5, "after": 24.5, "restored": 16.0, "verdict": "read back"}
+{"ev": "start", "key": "set_map_radius", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_map_radius", "lang": "scm", "status": "ok", "check": "setter", "getter": "get-map-radius", "before": 16.0, "set": 24.5, "after": 24.5, "restored": 16.0, "verdict": "read back"}
+{"ev": "start", "key": "set_map_sampling_rate", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_map_sampling_rate", "lang": "py", "status": "ok", "check": "setter", "getter": "get_map_sampling_rate", "before": 1.7999999523162842, "set": 3.2, "after": 3.200000047683716, "restored": 1.7999999523162842, "verdict": "read back"}
+{"ev": "start", "key": "set_map_sampling_rate", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_map_sampling_rate", "lang": "scm", "status": "ok", "check": "setter", "getter": "get-map-sampling-rate", "before": 1.7999999523162842, "set": 3.2, "after": 3.200000047683716, "restored": 1.7999999523162842, "verdict": "read back"}
+{"ev": "start", "key": "set_matrix", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_matrix", "lang": "py", "status": "ok", "check": "setter", "getter": "matrix_state", "before": 60.0, "set": 90.5, "after": 90.5, "restored": 60.0, "verdict": "read back"}
+{"ev": "start", "key": "set_matrix", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_matrix", "lang": "scm", "status": "ok", "check": "setter", "getter": "matrix-state", "before": 60.0, "set": 90.5, "after": 90.5, "restored": 60.0, "verdict": "read back"}
+{"ev": "start", "key": "set_model_fit_refine_dialog_stays_on_top", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_model_fit_refine_dialog_stays_on_top", "lang": "py", "status": "ok", "check": "setter", "getter": "model_fit_refine_dialog_stays_on_top_state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_model_fit_refine_dialog_stays_on_top", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_model_fit_refine_dialog_stays_on_top", "lang": "scm", "status": "ok", "check": "setter", "getter": "model-fit-refine-dialog-stays-on-top-state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_model_toolbar_style", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_model_toolbar_style", "lang": "py", "status": "ok", "check": "setter", "getter": "model_toolbar_style_state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_model_toolbar_style", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_model_toolbar_style", "lang": "scm", "status": "ok", "check": "setter", "getter": "model-toolbar-style-state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_mogul_max_badness", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_mogul_max_badness", "lang": "py", "status": "ok", "check": "setter", "getter": "get_mogul_max_badness", "before": 5.0, "set": 8.0, "after": 8.0, "restored": 5.0, "verdict": "read back"}
+{"ev": "start", "key": "set_mogul_max_badness", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_mogul_max_badness", "lang": "scm", "status": "ok", "check": "setter", "getter": "get-mogul-max-badness", "before": 5.0, "set": 8.0, "after": 8.0, "restored": 5.0, "verdict": "read back"}
+{"ev": "start", "key": "set_molecule_bonds_colour_map_rotation", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_molecule_bonds_colour_map_rotation", "lang": "py", "status": "ok", "check": "setter", "getter": "get_molecule_bonds_colour_map_rotation", "before": -1.0, "set": -1.0, "after": -1.0, "restored": -1.0, "verdict": "read back"}
+{"ev": "start", "key": "set_molecule_bonds_colour_map_rotation", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_molecule_bonds_colour_map_rotation", "lang": "scm", "status": "ok", "check": "setter", "getter": "get-molecule-bonds-colour-map-rotation", "before": -1.0, "set": -1.0, "after": -1.0, "restored": -1.0, "verdict": "read back"}
+{"ev": "start", "key": "set_movie_frame_number", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_movie_frame_number", "lang": "py", "status": "ok", "check": "setter", "getter": "movie_frame_number", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_movie_frame_number", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_movie_frame_number", "lang": "scm", "status": "ok", "check": "setter", "getter": "movie-frame-number", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_mutate_auto_fit_do_post_refine", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_mutate_auto_fit_do_post_refine", "lang": "py", "status": "ok", "check": "setter", "getter": "mutate_auto_fit_do_post_refine_state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_mutate_auto_fit_do_post_refine", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_mutate_auto_fit_do_post_refine", "lang": "scm", "status": "ok", "check": "setter", "getter": "mutate-auto-fit-do-post-refine-state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_pointer_atom_molecule", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_pointer_atom_molecule", "lang": "py", "status": "ok", "check": "setter", "getter": "pointer_atom_molecule", "before": -1, "set": 0, "after": 0, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_pointer_atom_molecule", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_pointer_atom_molecule", "lang": "scm", "status": "ok", "check": "setter", "getter": "pointer-atom-molecule", "before": 0, "set": 1, "after": 0, "restored": 0, "verdict": "not read back"}
+{"ev": "start", "key": "set_ramachandran_psi_axis_mode", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_ramachandran_psi_axis_mode", "lang": "py", "status": "ok", "check": "setter", "getter": "ramachandran_psi_axis_mode", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_ramachandran_psi_axis_mode", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_ramachandran_psi_axis_mode", "lang": "scm", "status": "ok", "check": "setter", "getter": "ramachandran-psi-axis-mode", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_recentre_on_read_pdb", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_recentre_on_read_pdb", "lang": "py", "status": "ok", "check": "setter", "getter": "recentre_on_read_pdb", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_recentre_on_read_pdb", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_recentre_on_read_pdb", "lang": "scm", "status": "ok", "check": "setter", "getter": "recentre-on-read-pdb", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_refine_ramachandran_angles", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_refine_ramachandran_angles", "lang": "py", "status": "ok", "check": "setter", "getter": "refine_ramachandran_angles_state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_refine_ramachandran_angles", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_refine_ramachandran_angles", "lang": "scm", "status": "ok", "check": "setter", "getter": "refine-ramachandran-angles-state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_refine_ramachandran_restraints_weight", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_refine_ramachandran_restraints_weight", "lang": "py", "status": "ok", "check": "setter", "getter": "refine_ramachandran_restraints_weight", "before": 40.0, "set": 60.5, "after": 60.5, "restored": 40.0, "verdict": "read back"}
+{"ev": "start", "key": "set_refine_ramachandran_restraints_weight", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_refine_ramachandran_restraints_weight", "lang": "scm", "status": "ok", "check": "setter", "getter": "refine-ramachandran-restraints-weight", "before": 40.0, "set": 60.5, "after": 60.5, "restored": 40.0, "verdict": "read back"}
+{"ev": "start", "key": "set_refine_with_torsion_restraints", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_refine_with_torsion_restraints", "lang": "py", "status": "ok", "check": "setter", "getter": "refine_with_torsion_restraints_state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_refine_with_torsion_restraints", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_refine_with_torsion_restraints", "lang": "scm", "status": "ok", "check": "setter", "getter": "refine-with-torsion-restraints-state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_refinement_geman_mcclure_alpha", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_refinement_geman_mcclure_alpha", "lang": "py", "status": "ok", "check": "setter", "getter": "get_refinement_geman_mcclure_alpha", "before": 1.0, "set": 2.0, "after": 2.0, "restored": 1.0, "verdict": "read back"}
+{"ev": "start", "key": "set_refinement_geman_mcclure_alpha", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_refinement_geman_mcclure_alpha", "lang": "scm", "status": "ok", "check": "setter", "getter": "get-refinement-geman-mcclure-alpha", "before": 1.0, "set": 2.0, "after": 2.0, "restored": 1.0, "verdict": "read back"}
+{"ev": "start", "key": "set_refinement_immediate_replacement", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_refinement_immediate_replacement", "lang": "py", "status": "ok", "check": "setter", "getter": "refinement_immediate_replacement_state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_refinement_immediate_replacement", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_refinement_immediate_replacement", "lang": "scm", "status": "ok", "check": "setter", "getter": "refinement-immediate-replacement-state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_refinement_move_atoms_with_zero_occupancy", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_refinement_move_atoms_with_zero_occupancy", "lang": "py", "status": "ok", "check": "setter", "getter": "refinement_move_atoms_with_zero_occupancy_state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_refinement_move_atoms_with_zero_occupancy", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_refinement_move_atoms_with_zero_occupancy", "lang": "scm", "status": "ok", "check": "setter", "getter": "refinement-move-atoms-with-zero-occupancy-state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_refinement_refine_per_frame", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_refinement_refine_per_frame", "lang": "py", "status": "ok", "check": "setter", "getter": "refinement_refine_per_frame_state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_refinement_refine_per_frame", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_refinement_refine_per_frame", "lang": "scm", "status": "ok", "check": "setter", "getter": "refinement-refine-per-frame-state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_refmac_ncycles", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_refmac_ncycles", "lang": "py", "status": "ok", "check": "setter", "getter": "get_refmac_ncycles", "before": 5, "set": 0, "after": 0, "restored": 5, "verdict": "read back"}
+{"ev": "start", "key": "set_refmac_ncycles", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_refmac_ncycles", "lang": "scm", "status": "ok", "check": "setter", "getter": "get-refmac-ncycles", "before": 5, "set": 0, "after": 0, "restored": 5, "verdict": "read back"}
+{"ev": "start", "key": "set_refmac_phase_input", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_refmac_phase_input", "lang": "py", "status": "ok", "check": "setter", "getter": "get_refmac_phase_input", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_refmac_phase_input", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_refmac_phase_input", "lang": "scm", "status": "ok", "check": "setter", "getter": "get-refmac-phase-input", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_refmac_refinement_method", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_refmac_refinement_method", "lang": "py", "status": "ok", "check": "setter", "getter": "get_refmac_refinement_method", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_refmac_refinement_method", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_refmac_refinement_method", "lang": "scm", "status": "ok", "check": "setter", "getter": "get-refmac-refinement-method", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_refmac_use_intensities", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_refmac_use_intensities", "lang": "py", "status": "ok", "check": "setter", "getter": "refmac_use_intensities_state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_refmac_use_intensities", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_refmac_use_intensities", "lang": "scm", "status": "ok", "check": "setter", "getter": "refmac-use-intensities-state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_refmac_use_ncs", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_refmac_use_ncs", "lang": "py", "status": "ok", "check": "setter", "getter": "refmac_use_ncs_state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_refmac_use_ncs", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_refmac_use_ncs", "lang": "scm", "status": "ok", "check": "setter", "getter": "refmac-use-ncs-state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_refmac_use_sad", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_refmac_use_sad", "lang": "py", "status": "ok", "check": "setter", "getter": "refmac_use_sad_state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_refmac_use_sad", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_refmac_use_sad", "lang": "scm", "status": "ok", "check": "setter", "getter": "refmac-use-sad-state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_refmac_use_tls", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_refmac_use_tls", "lang": "py", "status": "ok", "check": "setter", "getter": "refmac_use_tls_state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_refmac_use_tls", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_refmac_use_tls", "lang": "scm", "status": "ok", "check": "setter", "getter": "refmac-use-tls-state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_refmac_use_twin", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_refmac_use_twin", "lang": "py", "status": "ok", "check": "setter", "getter": "refmac_use_twin_state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_refmac_use_twin", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_refmac_use_twin", "lang": "scm", "status": "ok", "check": "setter", "getter": "refmac-use-twin-state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_refmac_used_mtz_file", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_refmac_used_mtz_file", "lang": "py", "status": "ok", "check": "setter", "getter": "get_refmac_used_mtz_file_state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_refmac_used_mtz_file", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_refmac_used_mtz_file", "lang": "scm", "status": "ok", "check": "setter", "getter": "get-refmac-used-mtz-file-state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_regenerate_bonds_needs_make_bonds_type_checked", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_regenerate_bonds_needs_make_bonds_type_checked", "lang": "py", "status": "ok", "check": "setter", "getter": "get_regenerate_bonds_needs_make_bonds_type_checked_state", "before": true, "set": false, "after": false, "restored": true, "verdict": "read back"}
+{"ev": "start", "key": "set_regenerate_bonds_needs_make_bonds_type_checked", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_regenerate_bonds_needs_make_bonds_type_checked", "lang": "scm", "status": "ok", "check": "setter", "getter": "get-regenerate-bonds-needs-make-bonds-type-checked-state", "before": true, "set": false, "after": false, "restored": true, "verdict": "read back"}
+{"ev": "start", "key": "set_reset_b_factor_moved_atoms", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_reset_b_factor_moved_atoms", "lang": "py", "status": "ok", "check": "setter", "getter": "get_reset_b_factor_moved_atoms_state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_reset_b_factor_moved_atoms", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_reset_b_factor_moved_atoms", "lang": "scm", "status": "ok", "check": "setter", "getter": "get-reset-b-factor-moved-atoms-state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_residue_density_fit_scale_factor", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_residue_density_fit_scale_factor", "lang": "py", "status": "ok", "check": "setter", "getter": "residue_density_fit_scale_factor", "before": 1.0, "set": 2.0, "after": 2.0, "restored": 1.0, "verdict": "read back"}
+{"ev": "start", "key": "set_residue_density_fit_scale_factor", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_residue_density_fit_scale_factor", "lang": "scm", "status": "ok", "check": "setter", "getter": "residue-density-fit-scale-factor", "before": 1.0, "set": 2.0, "after": 2.0, "restored": 1.0, "verdict": "read back"}
+{"ev": "start", "key": "set_rot_trans_object_type", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_rot_trans_object_type", "lang": "py", "status": "ok", "check": "setter", "getter": "get_rot_trans_object_type", "before": 12, "set": 0, "after": 0, "restored": 12, "verdict": "read back"}
+{"ev": "start", "key": "set_rot_trans_object_type", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_rot_trans_object_type", "lang": "scm", "status": "ok", "check": "setter", "getter": "get-rot-trans-object-type", "before": 12, "set": 0, "after": 0, "restored": 12, "verdict": "read back"}
+{"ev": "start", "key": "set_rotamer_auto_fit_do_post_refine", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_rotamer_auto_fit_do_post_refine", "lang": "py", "status": "ok", "check": "setter", "getter": "rotamer_auto_fit_do_post_refine_state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_rotamer_auto_fit_do_post_refine", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_rotamer_auto_fit_do_post_refine", "lang": "scm", "status": "ok", "check": "setter", "getter": "rotamer-auto-fit-do-post-refine-state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_rotamer_search_mode", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_rotamer_search_mode", "lang": "py", "status": "ok", "check": "setter", "getter": "rotamer_search_mode_state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_rotamer_search_mode", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_rotamer_search_mode", "lang": "scm", "status": "ok", "check": "setter", "getter": "rotamer-search-mode-state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_scroll_by_wheel_mouse", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_scroll_by_wheel_mouse", "lang": "py", "status": "ok", "check": "setter", "getter": "scroll_by_wheel_mouse_state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_scroll_by_wheel_mouse", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_scroll_by_wheel_mouse", "lang": "scm", "status": "ok", "check": "setter", "getter": "scroll-by-wheel-mouse-state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_scroll_wheel_map", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_scroll_wheel_map", "lang": "py", "status": "ok", "check": "setter", "getter": "scroll_wheel_map", "before": 1, "set": 0, "after": 1, "restored": 1, "verdict": "not read back"}
+{"ev": "start", "key": "set_scroll_wheel_map", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_scroll_wheel_map", "lang": "scm", "status": "ok", "check": "setter", "getter": "scroll-wheel-map", "before": 1, "set": 0, "after": 1, "restored": 1, "verdict": "not read back"}
+{"ev": "start", "key": "set_secondary_structure_restraints_type", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_secondary_structure_restraints_type", "lang": "py", "status": "ok", "check": "setter", "getter": "secondary_structure_restraints_type", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_secondary_structure_restraints_type", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_secondary_structure_restraints_type", "lang": "scm", "status": "ok", "check": "setter", "getter": "secondary-structure-restraints-type", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_show_alt_conf_intermediate_atoms", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_show_alt_conf_intermediate_atoms", "lang": "py", "status": "ok", "check": "setter", "getter": "show_alt_conf_intermediate_atoms_state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_show_alt_conf_intermediate_atoms", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_show_alt_conf_intermediate_atoms", "lang": "scm", "status": "ok", "check": "setter", "getter": "show-alt-conf-intermediate-atoms-state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_show_aniso", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_show_aniso", "lang": "py", "status": "ok", "check": "setter", "getter": "get_show_aniso", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_show_aniso", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_show_aniso", "lang": "scm", "status": "ok", "check": "setter", "getter": "get-show-aniso", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_show_environment_distances", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_show_environment_distances", "lang": "py", "status": "ok", "check": "setter", "getter": "show_environment_distances_state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_show_environment_distances", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_show_environment_distances", "lang": "scm", "status": "ok", "check": "setter", "getter": "show-environment-distances-state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_show_modelling_toolbar", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_show_modelling_toolbar", "lang": "py", "status": "ok", "check": "setter", "getter": "show_modelling_toolbar", "verdict": "not checked: the getter returned None"}
+{"ev": "start", "key": "set_show_modelling_toolbar", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_show_modelling_toolbar", "lang": "scm", "status": "ok", "check": "setter", "getter": "show-modelling-toolbar", "verdict": "not checked: the getter returned ''"}
+{"ev": "start", "key": "set_show_origin_marker", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_show_origin_marker", "lang": "py", "status": "ok", "check": "setter", "getter": "show_origin_marker_state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_show_origin_marker", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_show_origin_marker", "lang": "scm", "status": "ok", "check": "setter", "getter": "show-origin-marker-state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_show_paths_in_display_manager", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_show_paths_in_display_manager", "lang": "py", "status": "ok", "check": "setter", "getter": "show_paths_in_display_manager_state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_show_paths_in_display_manager", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_show_paths_in_display_manager", "lang": "scm", "status": "ok", "check": "setter", "getter": "show-paths-in-display-manager-state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_show_pointer_distances", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_show_pointer_distances", "lang": "py", "status": "ok", "check": "setter", "getter": "show_pointer_distances_state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_show_pointer_distances", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_show_pointer_distances", "lang": "scm", "status": "ok", "check": "setter", "getter": "show-pointer-distances-state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_show_strict_ncs", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_show_strict_ncs", "lang": "py", "status": "ok", "check": "setter", "getter": "show_strict_ncs_state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_show_strict_ncs", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_show_strict_ncs", "lang": "scm", "status": "ok", "check": "setter", "getter": "show-strict-ncs-state", "before": 1, "set": 0, "after": 0, "restored": 1, "verdict": "read back"}
+{"ev": "start", "key": "set_show_unit_cell", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_show_unit_cell", "lang": "py", "status": "ok", "check": "setter", "getter": "get_show_unit_cell", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_show_unit_cell", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_show_unit_cell", "lang": "scm", "status": "ok", "check": "setter", "getter": "get-show-unit-cell", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_smooth_scroll_do_zoom", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_smooth_scroll_do_zoom", "lang": "py", "status": "ok", "check": "setter", "getter": "smooth_scroll_do_zoom", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_smooth_scroll_do_zoom", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_smooth_scroll_do_zoom", "lang": "scm", "status": "ok", "check": "setter", "getter": "smooth-scroll-do-zoom", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_smooth_scroll_zoom_limit", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_smooth_scroll_zoom_limit", "lang": "py", "status": "ok", "check": "setter", "getter": "smooth_scroll_zoom_limit", "before": 30.0, "set": 45.5, "after": 45.5, "restored": 30.0, "verdict": "read back"}
+{"ev": "start", "key": "set_smooth_scroll_zoom_limit", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_smooth_scroll_zoom_limit", "lang": "scm", "status": "ok", "check": "setter", "getter": "smooth-scroll-zoom-limit", "before": 30.0, "set": 45.5, "after": 45.5, "restored": 30.0, "verdict": "read back"}
+{"ev": "start", "key": "set_solid_density_surface_opacity", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_solid_density_surface_opacity", "lang": "py", "status": "ok", "check": "setter", "getter": "get_solid_density_surface_opacity", "before": -1.0, "set": -1.0, "after": -1.0, "restored": -1.0, "verdict": "read back"}
+{"ev": "start", "key": "set_solid_density_surface_opacity", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_solid_density_surface_opacity", "lang": "scm", "status": "ok", "check": "setter", "getter": "get-solid-density-surface-opacity", "before": -1.0, "set": -1.0, "after": -1.0, "restored": -1.0, "verdict": "read back"}
+{"ev": "start", "key": "set_swap_difference_map_colours", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_swap_difference_map_colours", "lang": "py", "status": "ok", "check": "setter", "getter": "swap_difference_map_colours_state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_swap_difference_map_colours", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_swap_difference_map_colours", "lang": "scm", "status": "ok", "check": "setter", "getter": "swap-difference-map-colours-state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_symmetry_molecule_rotate_colour_map", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_symmetry_molecule_rotate_colour_map", "lang": "py", "status": "ok", "check": "setter", "getter": "symmetry_molecule_rotate_colour_map_state", "before": -1, "set": 0, "after": -1, "restored": -1, "verdict": "not read back"}
+{"ev": "start", "key": "set_symmetry_molecule_rotate_colour_map", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_symmetry_molecule_rotate_colour_map", "lang": "scm", "status": "ok", "check": "setter", "getter": "symmetry-molecule-rotate-colour-map-state", "before": -1, "set": 0, "after": -1, "restored": -1, "verdict": "not read back"}
+{"ev": "start", "key": "set_unpathed_backup_file_names", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_unpathed_backup_file_names", "lang": "py", "status": "ok", "check": "setter", "getter": "unpathed_backup_file_names_state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_unpathed_backup_file_names", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_unpathed_backup_file_names", "lang": "scm", "status": "ok", "check": "setter", "getter": "unpathed-backup-file-names-state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_use_only_extra_torsion_restraints_for_torsions", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_use_only_extra_torsion_restraints_for_torsions", "lang": "py", "status": "ok", "check": "setter", "getter": "use_only_extra_torsion_restraints_for_torsions_state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_use_only_extra_torsion_restraints_for_torsions", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_use_only_extra_torsion_restraints_for_torsions", "lang": "scm", "status": "ok", "check": "setter", "getter": "use-only-extra-torsion-restraints-for-torsions-state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_views_play_speed", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_views_play_speed", "lang": "py", "status": "ok", "check": "setter", "getter": "views_play_speed", "before": 10.0, "set": 15.5, "after": 15.5, "restored": 10.0, "verdict": "read back"}
+{"ev": "start", "key": "set_views_play_speed", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_views_play_speed", "lang": "scm", "status": "ok", "check": "setter", "getter": "views-play-speed", "before": 10.0, "set": 15.5, "after": 15.5, "restored": 10.0, "verdict": "read back"}
+{"ev": "start", "key": "set_write_conect_record_state", "lang": "py", "check": "setter"}
+{"ev": "end", "key": "set_write_conect_record_state", "lang": "py", "status": "ok", "check": "setter", "getter": "get_write_conect_record_state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "start", "key": "set_write_conect_record_state", "lang": "scm", "check": "setter"}
+{"ev": "end", "key": "set_write_conect_record_state", "lang": "scm", "status": "ok", "check": "setter", "getter": "get-write-conect-record-state", "before": 0, "set": 1, "after": 1, "restored": 0, "verdict": "read back"}
+{"ev": "done"}

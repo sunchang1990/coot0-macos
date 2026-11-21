@@ -16,8 +16,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `add_header_secondary_structure_info(0)` | ran (no return value) |
-| Scheme | `(add-header-secondary-structure-info 0)` | ran (no return value) |
+| Python | `add_header_secondary_structure_info(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(add-header-secondary-structure-info 0)` | ran (no return value, nothing visible changed) |
 
 ### add_ligand_delete_residue_copy_molecule
 
@@ -36,8 +36,8 @@ Arguments: imol_ligand_new (a whole number), chain_id_ligand_new (text), resno_l
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `add_ligand_delete_residue_copy_molecule(0, "B", 41, 0, "A", 41)` | ran, returned `2` |
-| Scheme | `(add-ligand-delete-residue-copy-molecule 0 "B" 41 0 "A" 41)` | ran, returned `2` |
+| Python | `add_ligand_delete_residue_copy_molecule(0, "B", 41, 0, "A", 41)` | ran, returned `3`; changed: new molecule 3 (model, Copy_of_0_with_A41_replaced); graphics_n_molecules(): 3 -> 4 |
+| Scheme | `(add-ligand-delete-residue-copy-molecule 0 "B" 41 0 "A" 41)` | ran, returned `3`; changed: new molecule 3 (model, Copy_of_0_with_A41_replaced); graphics_n_molecules(): 3 -> 4 |
 
 Python and Scheme gave the same answer.
 
@@ -89,8 +89,8 @@ Arguments: imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `copy_molecule(0)` | ran, returned `2` |
-| Scheme | `(copy-molecule 0)` | ran, returned `2` |
+| Python | `copy_molecule(0)` | ran, returned `3`; changed: new molecule 3 (model, Copy_of_tutorial-modern.pdb); graphics_n_molecules(): 3 -> 4 |
+| Scheme | `(copy-molecule 0)` | ran, returned `3`; changed: new molecule 3 (model, Copy_of_tutorial-modern.pdb); graphics_n_molecules(): 3 -> 4 |
 
 Python and Scheme gave the same answer.
 
@@ -111,8 +111,12 @@ Arguments: imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `exchange_chain_ids_for_seg_ids(0)` | ran, returned `0` |
-| Scheme | `(exchange-chain-ids-for-seg-ids 0)` | ran, returned `0` |
+| Python | `exchange_chain_ids_for_seg_ids(0)` | ran, returned `0`; changed: molecule 0: added 96 residue(s) (_1, _2, _3, _4 ...); molecule 0: deleted 189 residue(s) (A1, A2, A3, A4 ...); n_chains(0): 2 -> 1 |
+| Scheme | `(exchange-chain-ids-for-seg-ids 0)` | ran, returned `0`; changed: molecule 0: added 96 residue(s) (_1, _2, _3, _4 ...); molecule 0: deleted 189 residue(s) (A1, A2, A3, A4 ...); n_chains(0): 2 -> 1 |
+
+Example written and checked by hand on the test data. Expected: sets each chain id to the segment id of its atoms; with blank segids (as in this file) the chains merge into one blank chain.
+
+Note: destructive on files without segids: chains A and B collapse into one and residues with the same number are lost (189 -> 96); there is no check
 
 Python and Scheme gave the same answer.
 
@@ -222,6 +226,10 @@ Arguments: imol (a whole number). Returns: a value (see the result of the exampl
 | Python | `model_composition_statistics_py(0)` | ran, returned `False` |
 | Scheme | `(model-composition-statistics-scm 0)` | ran, returned `()` |
 
+Example written and checked by hand on the test data. Expected: unimplemented in 0.9.8.96: returns False (Python) / () (Scheme).
+
+Note: model_composition_statistics_py is a stub (c-interface-analysis.cc:307 always returns False); Scheme returns ()
+
 Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
 ### molecule_centre_internal
@@ -237,8 +245,8 @@ Arguments: imol (a whole number), iaxis (a whole number). Returns: a number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `molecule_centre_internal(0, 1)` | ran, returned `8.679085731506348` |
-| Scheme | `(molecule-centre-internal 0 1)` | ran, returned `8.679085731506348` |
+| Python | `molecule_centre_internal(0, 1)` | ran, returned `8.686544418334961` |
+| Scheme | `(molecule-centre-internal 0 1)` | ran, returned `8.686544418334961` |
 
 Python and Scheme gave the same answer.
 
@@ -329,8 +337,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `print_header_secondary_structure_info(0)` | ran (no return value) |
-| Scheme | `(print-header-secondary-structure-info 0)` | ran (no return value) |
+| Python | `print_header_secondary_structure_info(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(print-header-secondary-structure-info 0)` | ran (no return value, nothing visible changed) |
 
 ### python_representation_kk
 
@@ -372,8 +380,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `remarks_dialog(0)` | ran (no return value) |
-| Scheme | `(remarks-dialog 0)` | ran (no return value) |
+| Python | `remarks_dialog(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(remarks-dialog 0)` | ran (no return value, nothing visible changed) |
 
 ### residue_centre
 
@@ -421,8 +429,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `show_remarks_browswer()` | ran (no return value) |
-| Scheme | `(show-remarks-browswer)` | ran (no return value) |
+| Python | `show_remarks_browswer()` | ran (no return value, nothing visible changed) |
+| Scheme | `(show-remarks-browswer)` | ran (no return value, nothing visible changed) |
 
 ### sort_chains
 
@@ -435,8 +443,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `sort_chains(0)` | ran (no return value) |
-| Scheme | `(sort-chains 0)` | ran (no return value) |
+| Python | `sort_chains(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(sort-chains 0)` | ran (no return value, nothing visible changed) |
 
 ### sort_residues
 
@@ -449,8 +457,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `sort_residues(0)` | ran (no return value) |
-| Scheme | `(sort-residues 0)` | ran (no return value) |
+| Python | `sort_residues(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(sort-residues 0)` | ran (no return value, nothing visible changed) |
 
 ### write_header_secondary_structure_info
 
@@ -467,6 +475,6 @@ Arguments: imol (a whole number), file_name (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `write_header_secondary_structure_info(0, "tutorial-modern.pdb")` | ran (no return value) |
-| Scheme | `(write-header-secondary-structure-info 0 "tutorial-modern.pdb")` | ran (no return value) |
+| Python | `write_header_secondary_structure_info(0, "tutorial-modern.pdb")` | ran (no return value, nothing visible changed) |
+| Scheme | `(write-header-secondary-structure-info 0 "tutorial-modern.pdb")` | ran (no return value, nothing visible changed) |
 

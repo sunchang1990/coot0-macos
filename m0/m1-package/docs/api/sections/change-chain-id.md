@@ -15,8 +15,8 @@ Arguments: imol (a whole number), from_chain_id (text), to_chain_id (text), use_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `change_chain_id(0, "A", "A", 1, 41, 41)` | ran (no return value) |
-| Scheme | `(change-chain-id 0 "A" "A" 1 41 41)` | ran (no return value) |
+| Python | `change_chain_id(0, "A", "A", 1, 41, 41)` | ran (no return value, nothing visible changed) |
+| Scheme | `(change-chain-id 0 "A" "A" 1 41 41)` | ran (no return value, nothing visible changed) |
 
 ### change_chain_id_with_result
 

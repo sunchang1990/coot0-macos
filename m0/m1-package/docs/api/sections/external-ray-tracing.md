@@ -13,8 +13,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `citation_notice_off()` | ran (no return value) |
-| Scheme | `(citation-notice-off)` | ran (no return value) |
+| Python | `citation_notice_off()` | ran (no return value, nothing visible changed) |
+| Scheme | `(citation-notice-off)` | ran (no return value, nothing visible changed) |
 
 ### make_image_povray
 
@@ -25,8 +25,10 @@ Arguments: filename (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `make_image_povray("tutorial-modern.pdb")` | not run: not run automatically (povray: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(make-image-povray "tutorial-modern.pdb")` | not run: not run automatically (povray: exits, uses the network, an external program, files or a screen) |
+| Python | `make_image_povray("image.pov")` | not run: uses the graphics window and an external renderer (raster3d/povray); renderman() stopped Coot without a screen in the sa ... |
+| Scheme | `(make-image-povray "image.pov")` | not run: uses the graphics window and an external renderer (raster3d/povray); renderman() stopped Coot without a screen in the sa ... |
+
+Example written and checked by hand on the test data. Expected: renders the view with POV-Ray to an image.
 
 ### make_image_raster3d
 
@@ -40,8 +42,10 @@ Arguments: filename (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `make_image_raster3d("tutorial-modern.pdb")` | not run: not run automatically (raster3d: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(make-image-raster3d "tutorial-modern.pdb")` | not run: not run automatically (raster3d: exits, uses the network, an external program, files or a screen) |
+| Python | `make_image_raster3d("image.r3d")` | not run: uses the graphics window and an external renderer (raster3d/povray); renderman() stopped Coot without a screen in the sa ... |
+| Scheme | `(make-image-raster3d "image.r3d")` | not run: uses the graphics window and an external renderer (raster3d/povray); renderman() stopped Coot without a screen in the sa ... |
+
+Example written and checked by hand on the test data. Expected: renders the view with Raster3D to an image.
 
 ### povray
 
@@ -52,8 +56,10 @@ Arguments: filename (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `povray("tutorial-modern.pdb")` | not run: not run automatically (povray: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(povray "tutorial-modern.pdb")` | not run: not run automatically (povray: exits, uses the network, an external program, files or a screen) |
+| Python | `povray("image.pov")` | not run: uses the graphics window and an external renderer (raster3d/povray); renderman() stopped Coot without a screen in the sa ... |
+| Scheme | `(povray "image.pov")` | not run: uses the graphics window and an external renderer (raster3d/povray); renderman() stopped Coot without a screen in the sa ... |
+
+Example written and checked by hand on the test data. Expected: writes a POV-Ray scene file of the view.
 
 ### raster3d
 
@@ -66,8 +72,10 @@ Arguments: rd3_filename (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `raster3d("tutorial-modern.pdb")` | not run: not run automatically (raster3d: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(raster3d "tutorial-modern.pdb")` | not run: not run automatically (raster3d: exits, uses the network, an external program, files or a screen) |
+| Python | `raster3d("image.r3d")` | not run: uses the graphics window and an external renderer (raster3d/povray); renderman() stopped Coot without a screen in the sa ... |
+| Scheme | `(raster3d "image.r3d")` | not run: uses the graphics window and an external renderer (raster3d/povray); renderman() stopped Coot without a screen in the sa ... |
+
+Example written and checked by hand on the test data. Expected: writes a Raster3D scene file of the view.
 
 ### raster_screen_shot
 
@@ -80,8 +88,10 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `raster_screen_shot()` | stopped Coot when tried without a window (not checked with a window) |
-| Scheme | `(raster-screen-shot)` | stopped Coot when tried without a window (not checked with a window) |
+| Python | `raster_screen_shot()` | not run: needs the graphics window (stops Coot without a screen) and Raster3D |
+| Scheme | `(raster-screen-shot)` | not run: needs the graphics window (stops Coot without a screen) and Raster3D |
+
+Example written and checked by hand on the test data. Expected: renders the current view with Raster3D and shows the image.
 
 ### renderman
 
@@ -92,8 +102,10 @@ Arguments: rib_filename (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `renderman("tutorial-modern.pdb")` | not run: not run automatically (render: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(renderman "tutorial-modern.pdb")` | not run: not run automatically (render: exits, uses the network, an external program, files or a screen) |
+| Python | `renderman("scene.rib")` | not run: needs the graphics window (stops Coot without a screen) |
+| Scheme | `(renderman "scene.rib")` | not run: needs the graphics window (stops Coot without a screen) |
+
+Example written and checked by hand on the test data. Expected: writes a RenderMan .rib scene of the view.
 
 ### set_raster3d_atom_radius
 
@@ -106,8 +118,10 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_raster3d_atom_radius(1.0)` | not run: not run automatically (raster3d: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(set-raster3d-atom-radius 1.0)` | not run: not run automatically (raster3d: exits, uses the network, an external program, files or a screen) |
+| Python | `set_raster3d_atom_radius(0.4)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-raster3d-atom-radius 0.35)` | ran (no return value, nothing visible changed) |
+
+Example written and checked by hand on the test data. Expected: sets the atom sphere radius in Raster3D images; takes effect in the next raster3d()/povray() image.
 
 ### set_raster3d_bond_thickness
 
@@ -120,8 +134,10 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_raster3d_bond_thickness(1.0)` | not run: not run automatically (raster3d: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(set-raster3d-bond-thickness 1.0)` | not run: not run automatically (raster3d: exits, uses the network, an external program, files or a screen) |
+| Python | `set_raster3d_bond_thickness(0.3)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-raster3d-bond-thickness 0.25)` | ran (no return value, nothing visible changed) |
+
+Example written and checked by hand on the test data. Expected: sets the bond thickness in Raster3D images; takes effect in the next raster3d()/povray() image.
 
 ### set_raster3d_bone_thickness
 
@@ -134,8 +150,10 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_raster3d_bone_thickness(1.0)` | not run: not run automatically (raster3d: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(set-raster3d-bone-thickness 1.0)` | not run: not run automatically (raster3d: exits, uses the network, an external program, files or a screen) |
+| Python | `set_raster3d_bone_thickness(0.1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-raster3d-bone-thickness 0.12)` | ran (no return value, nothing visible changed) |
+
+Example written and checked by hand on the test data. Expected: sets the skeleton (bone) thickness in Raster3D images; takes effect in the next raster3d()/povray() image.
 
 ### set_raster3d_density_thickness
 
@@ -148,8 +166,10 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_raster3d_density_thickness(1.0)` | not run: not run automatically (raster3d: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(set-raster3d-density-thickness 1.0)` | not run: not run automatically (raster3d: exits, uses the network, an external program, files or a screen) |
+| Python | `set_raster3d_density_thickness(0.05)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-raster3d-density-thickness 0.04)` | ran (no return value, nothing visible changed) |
+
+Example written and checked by hand on the test data. Expected: sets the density-line thickness in Raster3D images; takes effect in the next raster3d()/povray() image.
 
 ### set_raster3d_font_size
 
@@ -162,8 +182,10 @@ Arguments: size_in (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_raster3d_font_size("hello")` | not run: not run automatically (raster3d: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(set-raster3d-font-size "hello")` | not run: not run automatically (raster3d: exits, uses the network, an external program, files or a screen) |
+| Python | `set_raster3d_font_size("12")` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-raster3d-font-size "14")` | ran (no return value, nothing visible changed) |
+
+Example written and checked by hand on the test data. Expected: sets the label font size (a string) in Raster3D images; takes effect in the next raster3d()/povray() image.
 
 ### set_raster3d_shadows_enabled
 
@@ -176,8 +198,10 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_raster3d_shadows_enabled(1)` | not run: not run automatically (raster3d: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(set-raster3d-shadows-enabled 1)` | not run: not run automatically (raster3d: exits, uses the network, an external program, files or a screen) |
+| Python | `set_raster3d_shadows_enabled(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-raster3d-shadows-enabled 1)` | ran (no return value, nothing visible changed) |
+
+Example written and checked by hand on the test data. Expected: sets the shadows on/off in Raster3D images (default on); takes effect in the next raster3d()/povray() image.
 
 ### set_raster3d_water_sphere
 
@@ -191,8 +215,10 @@ Arguments: istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_raster3d_water_sphere(1)` | not run: not run automatically (raster3d: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(set-raster3d-water-sphere 1)` | not run: not run automatically (raster3d: exits, uses the network, an external program, files or a screen) |
+| Python | `set_raster3d_water_sphere(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-raster3d-water-sphere 0)` | ran (no return value, nothing visible changed) |
+
+Example written and checked by hand on the test data. Expected: sets the waters drawn as spheres in Raster3D images; takes effect in the next raster3d()/povray() image.
 
 ### set_renderer_show_atoms
 
@@ -205,6 +231,8 @@ Arguments: istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_renderer_show_atoms(1)` | not run: not run automatically (render: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(set-renderer-show-atoms 1)` | not run: not run automatically (render: exits, uses the network, an external program, files or a screen) |
+| Python | `set_renderer_show_atoms(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-renderer-show-atoms 1)` | ran (no return value, nothing visible changed) |
+
+Example written and checked by hand on the test data. Expected: sets the atoms drawn as spheres in Raster3D/POV-Ray images; takes effect in the next raster3d()/povray() image.
 

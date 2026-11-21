@@ -20,8 +20,8 @@ Arguments: radius (a number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `find_nucleic_acids_local(5.0)` | ran, returned `2` |
-| Scheme | `(find-nucleic-acids-local 5.0)` | ran, returned `2` |
+| Python | `find_nucleic_acids_local(5.0)` | ran, returned `3`; changed: new molecule 3 (model, NuclAcid); first_small_coords_imol(): -1 -> 3; graphics_n_molecules(): 3 -> 4 |
+| Scheme | `(find-nucleic-acids-local 5.0)` | ran, returned `3`; changed: new molecule 3 (model, NuclAcid); first_small_coords_imol(): -1 -> 3; graphics_n_molecules(): 3 -> 4 |
 
 Python and Scheme gave the same answer.
 

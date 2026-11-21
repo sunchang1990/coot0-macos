@@ -46,6 +46,16 @@ def ligand_overlaps():   # build 30: the C++ of 0.9.8.96 never filled the list (
     r = g["ligand_atom_overlaps"](im, ["A", 41, ""], 5.0)
     return True if (isinstance(r, list) and r and all(len(x) == 4 and x[0][1] == "A" for x in r)) else r
 check("ligand_atom_overlaps returns the overlaps (as Scheme does)", ligand_overlaps)
+def cif_twice():          # build 31: mmdb's WriteCIFASCII kept its CIF data: each write_cif_file call wrote the model again
+    im = coot.read_pdb(os.path.join(os.environ["COOT_PREFIX"], "test-data", "tutorial-modern.pdb"))
+    p = os.path.join(os.environ["COOT_PREFIX"], "work", "twice.cif")
+    sizes = []
+    for i in range(3):
+        coot.write_cif_file(im, p); sizes.append(os.path.getsize(p))
+    back = coot.read_pdb(p)
+    if sizes[0] == sizes[2] and coot.is_valid_model_molecule(back) and g["n_atoms"](back) == g["n_atoms"](im): return True
+    raise AssertionError("sizes %r, atoms read back %r of %r" % (sizes, g["n_atoms"](back) if back >= 0 else back, g["n_atoms"](im)))
+check("write_cif_file three times: same file each time, reads back with the same atoms", cif_twice)
 nfun = sum(1 for k, v in g.items() if callable(v) and not k.startswith("_"))
 print("INFO callables visible in __main__:", nfun)
 w = max(len(r[0]) for r in res)

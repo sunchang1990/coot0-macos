@@ -13,8 +13,10 @@ Arguments: uri (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `handle_drag_and_drop_string("hello")` | ran, returned `0` |
-| Scheme | `(handle-drag-and-drop-string "hello")` | ran, returned `0` |
+| Python | `handle_drag_and_drop_string("standard-residues.pdb")` | ran, returned `1`; changed: new molecule 3 (model, standard-residues.pdb); rotation centre moved 40.1 A to (4.0, -0.8, 3.0); first_small_coords_imol(): -1 -> 3; graphics_n_molecules(): 3 -> 4 |
+| Scheme | `(handle-drag-and-drop-string "nag_only.pdb")` | ran, returned `1`; changed: new molecule 3 (model, nag_only.pdb); rotation centre moved 44.4 A to (-0.0, -0.0, -0.0); first_small_coords_imol(): -1 -> 3; graphics_n_molecules(): 3 -> 4 |
+
+Example written and checked by hand on the test data. Expected: returns 1 and opens the dropped file (coordinates, MTZ or map) as a new molecule.
 
 Python and Scheme gave the same answer.
 

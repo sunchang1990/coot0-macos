@@ -13,8 +13,8 @@ Arguments: imol (a whole number), chain_id (text), reso (a whole number), insert
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `add_OXT_to_residue(0, "A", 1, "")` | ran, returned `1` |
-| Scheme | `(add-OXT-to-residue 0 "A" 1 "")` | ran, returned `1` |
+| Python | `add_OXT_to_residue(0, "A", 1, "")` | ran, returned `1`; changed: molecule 0: atoms of 1 residue(s) (A1); n_atoms(0): 1465 -> 1466 |
+| Scheme | `(add-OXT-to-residue 0 "A" 1 "")` | ran, returned `1`; changed: molecule 0: atoms of 1 residue(s) (A1); n_atoms(0): 1465 -> 1466 |
 
 Python and Scheme gave the same answer.
 

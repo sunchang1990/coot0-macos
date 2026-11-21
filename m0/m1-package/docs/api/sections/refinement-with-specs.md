@@ -15,10 +15,12 @@ Also available in Scheme as `accept-moving-atoms-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `accept_moving_atoms()` | ran, returned `False` |
-| Scheme | `(accept-moving-atoms)` | ran, returned `#f` |
+| Python | `(refine_zone(0, "A", 41, 43, ""), accept_moving_atoms())[1]` | ran, returned `['', 0, [['Bonds', 'Bonds:  1.162', 1.1623175144195557], ['Angles', 'Angles: 1.493', 1.4932128190994263], ['Trans_peptid ...`; changed: molecule 0: coordinates of 3 residue(s) (A41, A42, A43) |
+| Scheme | `(begin (refine-zone 0 "A" 41 43 "") (accept-moving-atoms))` | ran, returned `("" 0 (("Bonds" "Bonds:  1.162" 1.1620523929595947) ("Angles" "Angles: 1.493" 1.4932188987731934) ("Trans_peptide" "Tran ...`; changed: molecule 0: coordinates of 3 residue(s) (A41, A42, A43) |
 
-Python and Scheme gave the same answer.
+Example written and checked by hand on the test data. Expected: accepts the refinement result into the molecule and returns the refinement summary (message, status, per-restraint-type scores); False when there are no moving atoms.
+
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
 ### all_residues_with_serial_numbers
 
@@ -47,8 +49,10 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `b_factor_distribution_graph(0)` | stopped Coot when tried without a window (not checked with a window) |
-| Scheme | `(b-factor-distribution-graph 0)` | stopped Coot when tried without a window (not checked with a window) |
+| Python | `b_factor_distribution_graph(0)` | not run: needs the graphics window (stops Coot without a screen) |
+| Scheme | `(b-factor-distribution-graph 0)` | not run: needs the graphics window (stops Coot without a screen) |
+
+Example written and checked by hand on the test data. Expected: opens a histogram window of the B-factors of molecule 0.
 
 ### check_waters_baddies
 
@@ -92,6 +96,8 @@ Arguments: none. Returns: true or false.
 | Python | `get_cryo_em_refinement()` | ran, returned `False` |
 | Scheme | `(get-cryo-em-refinement)` | ran, returned `#f` |
 
+Example written and checked by hand on the test data. Expected: returns True when cryo-EM refinement mode is on; False by default.
+
 Python and Scheme gave the same answer.
 
 ### get_regenerate_bonds_needs_make_bonds_type_checked_state
@@ -121,8 +127,8 @@ Arguments: imol (a whole number), transformation_averaging_radius (a number). Re
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `morph_fit_all(0, 5.0)` | ran, returned `1` |
-| Scheme | `(morph-fit-all 0 5.0)` | ran, returned `1` |
+| Python | `morph_fit_all(0, 5.0)` | ran, returned `1`; changed: molecule 0: coordinates of 189 residue(s) (A1, A2, A3, A4 ...) |
+| Scheme | `(morph-fit-all 0 5.0)` | ran, returned `1`; changed: molecule 0: coordinates of 189 residue(s) (A1, A2, A3, A4 ...) |
 
 Python and Scheme gave the same answer.
 
@@ -138,8 +144,12 @@ Arguments: imol (a whole number), chain_id (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `morph_fit_by_secondary_structure_elements(0, "A")` | ran, returned `0` |
-| Scheme | `(morph-fit-by-secondary-structure-elements 0 "A")` | ran, returned `0` |
+| Python | `morph_fit_by_secondary_structure_elements(0, "A")` | ran, returned `0`; changed: molecule 0: coordinates of 93 residue(s) (A1, A2, A3, A4 ...) |
+| Scheme | `(morph-fit-by-secondary-structure-elements 0 "A")` | ran, returned `0`; changed: molecule 0: coordinates of 93 residue(s) (A1, A2, A3, A4 ...) |
+
+Example written and checked by hand on the test data. Expected: moves the chain by rigid-body fitting its helices/strands to the refinement map, residues in between follow; returns 0.
+
+Note: returns 0 even though it worked
 
 Python and Scheme gave the same answer.
 
@@ -154,8 +164,8 @@ Arguments: imol (a whole number), chain_id (text), transformation_averaging_radi
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `morph_fit_chain(0, "A", 5.0)` | ran, returned `1` |
-| Scheme | `(morph-fit-chain 0 "A" 5.0)` | ran, returned `1` |
+| Python | `morph_fit_chain(0, "A", 5.0)` | ran, returned `1`; changed: molecule 0: coordinates of 93 residue(s) (A1, A2, A3, A4 ...) |
+| Scheme | `(morph-fit-chain 0 "A" 5.0)` | ran, returned `1`; changed: molecule 0: coordinates of 93 residue(s) (A1, A2, A3, A4 ...) |
 
 Python and Scheme gave the same answer.
 
@@ -170,8 +180,8 @@ Arguments: imol (a whole number), residue_specs (a list or value), transformatio
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `morph_fit_residues(0, [["A", 41, ""], ["A", 42, ""]], 5.0)` | ran, returned `1` |
-| Scheme | `(morph-fit-residues 0 (list (list "A" 41 "") (list "A" 42 "")) 5.0)` | ran, returned `1` |
+| Python | `morph_fit_residues(0, [["A", 41, ""], ["A", 42, ""]], 5.0)` | ran, returned `1`; changed: molecule 0: coordinates of 91 residue(s) (A1, A2, A3, A4 ...) |
+| Scheme | `(morph-fit-residues 0 (list (list "A" 41 "") (list "A" 42 "")) 5.0)` | ran, returned `1`; changed: molecule 0: coordinates of 91 residue(s) (A1, A2, A3, A4 ...) |
 
 Python and Scheme gave the same answer.
 
@@ -216,7 +226,11 @@ Arguments: function_name (a list or value). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | first `def hook(*args): print("intermediate atoms moved", args)`, then `register_post_intermediate_atoms_moved_hook(hook)` | ran (no return value, nothing visible changed) |
+
+Example written and checked by hand on the test data. Expected: registers a Python function that Coot calls after the intermediate (moving) atoms move, e.g. while dragging during refinement (Python only).
+
+Note: not seen to run headless (no interactive moving atoms); needs the window to observe
 
 ### regularize_residues
 
@@ -246,8 +260,10 @@ Arguments: imol (a whole number), ranges (a list). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | (no example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no example) | not run: no automatic example (it takes a list, a widget or an object) |
+
+Example written and checked by hand on the test data. Expected: rigid-body fits the residue ranges into the refinement map.
 
 ### set_cryo_em_refinement
 
@@ -258,8 +274,10 @@ Arguments: mode (true or false). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_cryo_em_refinement(True)` | ran (no return value) |
-| Scheme | `(set-cryo-em-refinement 1)` | ran (no return value) |
+| Python | `set_cryo_em_refinement(True)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-cryo-em-refinement 1)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: get_cryo_em_refinement was False, set to True, read back True; Scheme: get-cryo-em-refinement was False, set to True, read back True.
 
 ### set_regenerate_bonds_needs_make_bonds_type_checked
 
@@ -270,8 +288,10 @@ Arguments: state (true or false). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_regenerate_bonds_needs_make_bonds_type_checked(True)` | ran (no return value) |
-| Scheme | `(set-regenerate-bonds-needs-make-bonds-type-checked 1)` | ran (no return value) |
+| Python | `set_regenerate_bonds_needs_make_bonds_type_checked(True)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-regenerate-bonds-needs-make-bonds-type-checked 1)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: get_regenerate_bonds_needs_make_bonds_type_checked_state was True, set to False, read back False; Scheme: get-regenerate-bonds-needs-make-bonds-type-checked-state was True, set to False, read back False.
 
 ### set_show_intermediate_atoms_rama_markup
 
@@ -282,8 +302,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_show_intermediate_atoms_rama_markup(1)` | ran (no return value) |
-| Scheme | `(set-show-intermediate-atoms-rama-markup 1)` | ran (no return value) |
+| Python | `set_show_intermediate_atoms_rama_markup(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-show-intermediate-atoms-rama-markup 1)` | ran (no return value, nothing visible changed) |
 
 ### set_show_intermediate_atoms_rota_markup
 
@@ -294,6 +314,6 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_show_intermediate_atoms_rota_markup(1)` | ran (no return value) |
-| Scheme | `(set-show-intermediate-atoms-rota-markup 1)` | ran (no return value) |
+| Python | `set_show_intermediate_atoms_rota_markup(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-show-intermediate-atoms-rota-markup 1)` | ran (no return value, nothing visible changed) |
 

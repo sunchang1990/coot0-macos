@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="91aa6f21c07291af87ae2c4b4113feb638eb8035">
+<meta name="coot0-source-sha1" content="3afae26049b73f60d8c360fbe6ef337042363fa6">
 <title>protein-db - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -26,8 +26,10 @@ range from the smallest residue number to the largest (in the same
 chain)).</p>
 <p>Arguments: specs (a list). Returns: text.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>protein_db_loop_specs_to_atom_selection_string(residue_records_list_py_to_residue_specs([{"seq_num": "40", "ins_code": ""}, {"seq_num": "45", "ins_code": ""}], "A"))</code></td><td>ran, returned <code>'//A/40-45'</code></td></tr>
+<tr><td>Scheme</td><td>first <code>(define mk (record-constructor (make-record-type 'residue-rec '(seq-num ins-code))))</code>, then <code>(protein-db-loop-specs-to-atom-selection-string (residue-records-list-scm-to-residue-specs (list (mk "40" "") (mk "45" "")) "A"))</code></td><td>ran, returned <code>"//A/40-45"</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: the mmdb atom selection covering the residue range: '//A/40-45'. The argument is a C++ vector of residue specs (plain lists give a TypeError).</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="protein_db_loops">protein_db_loops</h3>
 <p>Python: <code>protein_db_loops(imol_coords, residues_specs, imol_map, nfrags, preserve_residue_names)</code><br>
 Scheme: <code>(protein-db-loops imol-coords residues-specs imol-map nfrags preserve-residue-names)</code></p>
@@ -39,6 +41,8 @@ vector of molecule indices for each of the candidate loops.
 return -1 in the first of the pair on failure</p>
 <p>Arguments: imol_coords (a whole number), residues_specs (a list or value), imol_map (a whole number), nfrags (a whole number), preserve_residue_names (true or false). Returns: a value (see the result of the example).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>protein_db_loops(0, ["A", 41, ""], 1, 1, True)</code></td><td>error: SystemError: &lt;built-in function protein_db_loops_py&gt; returned a result with an exception set</td></tr>
-<tr><td>Scheme</td><td><code>(protein-db-loops 0 (list "A" 41 "") 1 1 1)</code></td><td>error: In procedure length: Wrong type argument in position 1: "A"</td></tr></tbody></table>
+<tr><td>Python</td><td><code>protein_db_loops(0, [[True, "A", 40, ""], [True, "A", 41, ""], [True, "A", 42, ""], [True, "A", 43, ""]], 1, 10, False)</code></td><td>ran, returned <code>[[14, 13], [3, 4, 5, 6, 7, 8, 9, 10, 11, 12]]</code>; changed: new molecule 10 (model, Loop candidate #7); new molecule 11 (model, Loop candidate #8); new molecule 12 (model, Loop candidate #9); new molecule 13 (model, All Loop candidates ) ...</td></tr>
+<tr><td>Scheme</td><td><code>(protein-db-loops 0 (list (list #t "A" 40 "") (list #t "A" 41 "") (list #t "A" 42 "") (list #t "A" 43 "")) 1 10 #f)</code></td><td>ran, returned <code>((14 13) (3 4 5 6 7 8 9 10 11 12))</code>; changed: new molecule 10 (model, Loop candidate #7); new molecule 11 (model, Loop candidate #8); new molecule 12 (model, Loop candidate #9); new molecule 13 (model, All Loop candidates ) ...</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: [[original-loop molecule, all-candidates molecule], [candidate molecules]] for 10 database loops fitting residues A40-43.</p>
+<p>Python and Scheme gave the same answer.</p>
 </body></html>

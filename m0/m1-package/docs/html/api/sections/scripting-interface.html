@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="11666350cb1e5daac454ba71f434b928c6d06dc2">
+<meta name="coot0-source-sha1" content="b669a5947216c168e5b1c0349b518e84446cd788">
 <title>Scripting Interface - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -23,24 +23,27 @@ Scheme: <code>(post-python-scripting-window)</code></p>
 <p>pop-up a scripting window for pythoning</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>post_python_scripting_window()</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
-<tr><td>Scheme</td><td><code>(post-python-scripting-window)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>post_python_scripting_window()</code></td><td>not run: needs the graphics window (stops Coot without a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(post-python-scripting-window)</code></td><td>not run: needs the graphics window (stops Coot without a screen)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: opens the Python scripting window (Calculate &gt; Scripting &gt; Python...).</p>
 <h3 id="post_scheme_scripting_window">post_scheme_scripting_window</h3>
 <p>Python: <code>post_scheme_scripting_window()</code><br>
 Scheme: <code>(post-scheme-scripting-window)</code></p>
 <p>pop-up a scripting window for scheming</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>post_scheme_scripting_window()</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
-<tr><td>Scheme</td><td><code>(post-scheme-scripting-window)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>post_scheme_scripting_window()</code></td><td>not run: needs the graphics window (stops Coot without a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(post-scheme-scripting-window)</code></td><td>not run: needs the graphics window (stops Coot without a screen)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: opens the Scheme scripting window (Calculate &gt; Scripting &gt; Scheme...).</p>
 <h3 id="post_scripting_window">post_scripting_window</h3>
 <p>Python: <code>post_scripting_window()</code><br>
 Scheme: <code>(post-scripting-window)</code></p>
 <p>do nothing - compatibility function</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>post_scripting_window()</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
-<tr><td>Scheme</td><td><code>(post-scripting-window)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>post_scripting_window()</code></td><td>not run: needs the graphics window (stops Coot without a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(post-scripting-window)</code></td><td>not run: needs the graphics window (stops Coot without a screen)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: compatibility name: opens the Scheme scripting window in this build (Guile is built in).</p>
 <h3 id="probe_available_p">probe_available_p</h3>
 <p>Python: <code>probe_available_p()</code><br>
 Scheme: <code>(probe-available-p)</code></p>
@@ -49,42 +52,45 @@ Scheme: <code>(probe-available-p)</code></p>
 <p>Returns 1 for yes, 2 for no</p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>probe_available_p()</code></td><td>not run: not run automatically (probe: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(probe-available-p)</code></td><td>not run: not run automatically (probe: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>probe_available_p()</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(probe-available-p)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: 1 if the probe program is found (CCP4/Phenix found by run-coot.sh), 0 if not. Only checks; does not run probe.</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="run_command_line_scripts">run_command_line_scripts</h3>
 <p>Python: <code>run_command_line_scripts()</code><br>
 Scheme: <code>(run-command-line-scripts)</code></p>
 <p>called from c-inner-main</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>run_command_line_scripts()</code></td><td>not run: not run automatically (run: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(run-command-line-scripts)</code></td><td>not run: not run automatically (run: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>run_command_line_scripts()</code></td><td>not run: would run the start-up --script files a second time (here the test driver itself); called by Coot at start-up only</td></tr>
+<tr><td>Scheme</td><td><code>(run-command-line-scripts)</code></td><td>not run: would run the start-up --script files a second time (here the test driver itself); called by Coot at start-up only</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: runs the --script/--python/--scheme files given on the command line (done once by Coot at start-up).</p>
 <h3 id="set_found_coot_gui">set_found_coot_gui</h3>
 <p>Python: <code>set_found_coot_gui()</code><br>
 Scheme: <code>(set-found-coot-gui)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_found_coot_gui()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-found-coot-gui)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_found_coot_gui()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-found-coot-gui)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_found_coot_python_gui">set_found_coot_python_gui</h3>
 <p>Python: <code>set_found_coot_python_gui()</code><br>
 Scheme: <code>(set-found-coot-python-gui)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_found_coot_python_gui()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-found-coot-python-gui)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_found_coot_python_gui()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-found-coot-python-gui)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_guile_gui_loaded_flag">set_guile_gui_loaded_flag</h3>
 <p>Python: <code>set_guile_gui_loaded_flag()</code><br>
 Scheme: <code>(set-guile-gui-loaded-flag)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_guile_gui_loaded_flag()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-guile-gui-loaded-flag)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_guile_gui_loaded_flag()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-guile-gui-loaded-flag)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_python_gui_loaded_flag">set_python_gui_loaded_flag</h3>
 <p>Python: <code>set_python_gui_loaded_flag()</code><br>
 Scheme: <code>(set-python-gui-loaded-flag)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_python_gui_loaded_flag()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-python-gui-loaded-flag)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_python_gui_loaded_flag()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-python-gui-loaded-flag)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 </body></html>

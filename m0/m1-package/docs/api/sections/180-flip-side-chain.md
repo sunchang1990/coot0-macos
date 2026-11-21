@@ -15,8 +15,8 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), insco
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `do_180_degree_side_chain_flip(0, "A", 41, "", "")` | ran (no return value) |
-| Scheme | `(do-180-degree-side-chain-flip 0 "A" 41 "" "")` | ran (no return value) |
+| Python | `do_180_degree_side_chain_flip(0, "A", 41, "", "")` | ran (no return value); changed: molecule 0: coordinates of 1 residue(s) (A41) |
+| Scheme | `(do-180-degree-side-chain-flip 0 "A" 41 "" "")` | ran (no return value); changed: molecule 0: coordinates of 1 residue(s) (A41) |
 
 ### setup_180_degree_flip
 
@@ -27,8 +27,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `setup_180_degree_flip(1)` | ran (no return value) |
-| Scheme | `(setup-180-degree-flip 1)` | ran (no return value) |
+| Python | `setup_180_degree_flip(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(setup-180-degree-flip 1)` | ran (no return value, nothing visible changed) |
 
 ### side_chain_flip_180_intermediate_atoms
 
@@ -41,8 +41,12 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `side_chain_flip_180_intermediate_atoms()` | ran, returned `0` |
-| Scheme | `(side-chain-flip-180-intermediate-atoms)` | ran, returned `0` |
+| Python | first `refine_zone(0, "A", 41, 41, "")`, then `side_chain_flip_180_intermediate_atoms()` | ran, returned `1` |
+| Scheme | first `(refine-zone 0 "A" 41 41 "")`, then `(side-chain-flip-180-intermediate-atoms)` | ran, returned `1` |
+
+Example written and checked by hand on the test data. Expected: returns 1 when intermediate (moving) atoms exist and the active residue's last chi was flipped; 0 when no refinement is in progress.
+
+Note: Works only while a refinement's intermediate atoms exist (run in the same step as the refinement in a headless test).
 
 Python and Scheme gave the same answer.
 

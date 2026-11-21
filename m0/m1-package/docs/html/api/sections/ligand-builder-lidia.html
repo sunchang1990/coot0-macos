@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="baf9ee5ec0ccc57baf2356364224f07b395a4798">
+<meta name="coot0-source-sha1" content="fd98f7ab0a20b85aa07bd9be99aa1f86459ef1b8">
 <title>Ligand Builder (Lidia) - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -25,13 +25,13 @@ Scheme: <code>(residue-to-ligand-builder imol chain-id resno ins-code weight-for
 #ifdef MAKE_ENHANCED_LIGAND_TOOLS</p>
 <p>Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_code (text), weight_for_3d_distances (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>residue_to_ligand_builder(0, "A", 41, "", 1.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(residue-to-ligand-builder 0 "A" 41 "" 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>residue_to_ligand_builder(0, "A", 41, "", 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(residue-to-ligand-builder 0 "A" 41 "" 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="smiles_to_ligand_builder">smiles_to_ligand_builder</h3>
 <p>Python: <code>smiles_to_ligand_builder(smiles_string)</code><br>
 Scheme: <code>(smiles-to-ligand-builder smiles-string)</code></p>
 <p>Arguments: smiles_string (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>smiles_to_ligand_builder("hello")</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(smiles-to-ligand-builder "hello")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>smiles_to_ligand_builder("hello")</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(smiles-to-ligand-builder "hello")</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 </body></html>

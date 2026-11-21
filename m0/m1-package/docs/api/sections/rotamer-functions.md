@@ -20,8 +20,8 @@ Arguments: resno (a whole number), altloc (text), insertion_code (text), chain_i
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `auto_fit_best_rotamer(41, "", "", "A", 0, 1, 1, 1.0)` | ran, returned `5.950581073760986` |
-| Scheme | `(auto-fit-best-rotamer 41 "" "" "A" 0 1 1 1.0)` | ran, returned `5.950581073760986` |
+| Python | `auto_fit_best_rotamer(41, "", "", "A", 0, 1, 1, 1.0)` | ran, returned `5.950581073760986`; changed: molecule 0: coordinates of 1 residue(s) (A41) |
+| Scheme | `(auto-fit-best-rotamer 41 "" "" "A" 0 1 1 1.0)` | ran, returned `5.950581073760986`; changed: molecule 0: coordinates of 1 residue(s) (A41) |
 
 Python and Scheme gave the same answer.
 
@@ -36,8 +36,8 @@ Arguments: atom_index (a whole number), imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `do_rotamers(0, 0)` | ran (no return value) |
-| Scheme | `(do-rotamers 0 0)` | ran (no return value) |
+| Python | `do_rotamers(0, 0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(do-rotamers 0 0)` | ran (no return value, nothing visible changed) |
 
 ### fill_partial_residue
 
@@ -48,8 +48,8 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), insco
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `fill_partial_residue(0, "A", 41, "")` | ran (no return value) |
-| Scheme | `(fill-partial-residue 0 "A" 41 "")` | ran (no return value) |
+| Python | `fill_partial_residue(0, "A", 41, "")` | ran (no return value); changed: molecule 0: atoms of 1 residue(s) (A41); molecule 0: coordinates of 2 residue(s) (A40, A42) |
+| Scheme | `(fill-partial-residue 0 "A" 41 "")` | ran (no return value); changed: molecule 0: atoms of 1 residue(s) (A41); molecule 0: coordinates of 2 residue(s) (A40, A42) |
 
 ### de_chainsaw
 
@@ -66,8 +66,8 @@ Also available in Python as `fill_partial_residues`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `de_chainsaw(0)` | ran (no return value) |
-| Scheme | `(fill-partial-residues 0)` | ran (no return value) |
+| Python | `de_chainsaw(0)` | ran (no return value); changed: molecule 0: coordinates of 3 residue(s) (A71, A72, A73) |
+| Scheme | `(fill-partial-residues 0)` | ran (no return value); changed: molecule 0: coordinates of 3 residue(s) (A71, A72, A73) |
 
 ### get_rotamer_name
 
@@ -184,8 +184,8 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_auto_fit_best_rotamer_clash_flag(1)` | ran (no return value) |
-| Scheme | `(set-auto-fit-best-rotamer-clash-flag 1)` | ran (no return value) |
+| Python | `set_auto_fit_best_rotamer_clash_flag(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-auto-fit-best-rotamer-clash-flag 1)` | ran (no return value, nothing visible changed) |
 
 ### set_residue_to_rotamer_name
 
@@ -202,8 +202,12 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_c
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_residue_to_rotamer_name(0, "A", 41, "", "", "my-name")` | ran, returned `0` |
-| Scheme | `(set-residue-to-rotamer-name 0 "A" 41 "" "" "my-name")` | ran, returned `0` |
+| Python | `set_residue_to_rotamer_name(0, "A", 41, "", "", "tp10")` | ran, returned `0` |
+| Scheme | `(set-residue-to-rotamer-name 0 "A" 41 "" "" "tp10")` | ran, returned `0` |
+
+Example written and checked by hand on the test data. Expected: returns 1 and moves the side chain of GLU A41 to the tp10 rotamer; 0 (nothing moved) for a name the residue type does not have.
+
+Note: Names must match the Richardson table exactly, including a trailing space some names carry: "mt-10" returns 0, "mt-10 " returns 1 (upstream table quirk).
 
 Python and Scheme gave the same answer.
 
@@ -218,8 +222,10 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_c
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_residue_to_rotamer_number(0, "A", 41, "", "", 1)` | ran, returned `0` |
-| Scheme | `(set-residue-to-rotamer-number 0 "A" 41 "" "" 1)` | ran, returned `0` |
+| Python | `set_residue_to_rotamer_number(0, "A", 43, "", "", 1)` | ran, returned `1`; changed: molecule 0: coordinates of 1 residue(s) (A43) |
+| Scheme | `(set-residue-to-rotamer-number 0 "A" 43 "" "" 1)` | ran, returned `1` |
+
+Example written and checked by hand on the test data. Expected: returns 1 and moves the side chain of A43 to rotamer number 1 (numbers start at 0, most likely first).
 
 Python and Scheme gave the same answer.
 
@@ -234,8 +240,8 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_rotamer_check_clashes(1)` | ran (no return value) |
-| Scheme | `(set-rotamer-check-clashes 1)` | ran (no return value) |
+| Python | `set_rotamer_check_clashes(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-rotamer-check-clashes 1)` | ran (no return value, nothing visible changed) |
 
 ### set_rotamer_lowest_probability
 
@@ -250,8 +256,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_rotamer_lowest_probability(1.0)` | ran (no return value) |
-| Scheme | `(set-rotamer-lowest-probability 1.0)` | ran (no return value) |
+| Python | `set_rotamer_lowest_probability(1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-rotamer-lowest-probability 1.0)` | ran (no return value, nothing visible changed) |
 
 ### set_rotamer_search_mode
 
@@ -266,8 +272,10 @@ Arguments: mode (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_rotamer_search_mode(1)` | ran (no return value) |
-| Scheme | `(set-rotamer-search-mode 1)` | ran (no return value) |
+| Python | `set_rotamer_search_mode(1)` | ran (no return value); changed: rotamer_search_mode_state(): 0 -> 1 |
+| Scheme | `(set-rotamer-search-mode 1)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: rotamer_search_mode_state was 0, set to 1, read back 1; Scheme: rotamer-search-mode-state was 0, set to 1, read back 1.
 
 ### setup_auto_fit_rotamer
 
@@ -278,8 +286,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `setup_auto_fit_rotamer(1)` | ran (no return value) |
-| Scheme | `(setup-auto-fit-rotamer 1)` | ran (no return value) |
+| Python | `setup_auto_fit_rotamer(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(setup-auto-fit-rotamer 1)` | ran (no return value, nothing visible changed) |
 
 ### setup_rotamers
 
@@ -290,8 +298,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `setup_rotamers(1)` | ran (no return value) |
-| Scheme | `(setup-rotamers 1)` | ran (no return value) |
+| Python | `setup_rotamers(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(setup-rotamers 1)` | ran (no return value, nothing visible changed) |
 
 ### show_rotamers_dialog
 
@@ -302,8 +310,8 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_c
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `show_rotamers_dialog(0, "A", 41, "", "")` | ran (no return value) |
-| Scheme | `(show-rotamers-dialog 0 "A" 41 "" "")` | ran (no return value) |
+| Python | `show_rotamers_dialog(0, "A", 41, "", "")` | ran (no return value, nothing visible changed) |
+| Scheme | `(show-rotamers-dialog 0 "A" 41 "" "")` | ran (no return value, nothing visible changed) |
 
 ### simple_fill_partial_residues
 
@@ -318,6 +326,6 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `simple_fill_partial_residues(0)` | ran (no return value) |
-| Scheme | `(simple-fill-partial-residues 0)` | ran (no return value) |
+| Python | `simple_fill_partial_residues(0)` | ran (no return value); changed: molecule 0: coordinates of 3 residue(s) (A71, A72, A73) |
+| Scheme | `(simple-fill-partial-residues 0)` | ran (no return value, nothing visible changed) |
 

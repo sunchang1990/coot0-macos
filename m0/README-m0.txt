@@ -518,3 +518,28 @@ Round 30: scripting functions checked Python against Scheme; every example tried
   stopped at 1251/3406 calls: an example overwrote tutorial-modern.pdb, setup read_pdb -> -1, driver exit 4).  gen_api_docs.py: Python vs
   Scheme agreement per function (canon(): lists ( ), True/#t, None/#f, numbers 3 decimals; pointers not compared; 300-char cut -> prefix);
   528/570 agree (rest: counters/state from the Python call first, reversed or reshaped lists).  gen_api_index.py: bool args True/False in Python.
+
+Round 31 (build 31, 20 Nov evening; patch 0049 scheme-wrappers-write-cif-once; coot-bin m0/bin_b31 from obj_b31 = obj_b30 +
+  probe-clash-score, c-interface-ligands, c-interface-residues, coot-utils/coot-coord-utils; relinked by tools/relink_b31.sh OBJ BIN
+  (link with obj_b26/out.json + the manual relocation of rounds 26/28 as a script)).
+  User 20 Nov: LL1, LL2 ok; LL3 = my placeholder path (read-pdb -1 -> ncs-chain-differences #f -> list-ref error); real path fine.
+  Asked: check ALL functions with test data.  Build 30's "ran" hid 812 no-value calls never looked at and 253 failure values.
+  tests/api_state.py Snapshot: getters (0 args or 1 imol arg, by name pattern + every set_X partner; dropped: slow, >3000 chars,
+  changing by themselves, or making molecules: another_level() made a map per call), model atoms via write_pdb_file + per-residue
+  diff, maps (sigma/mean/level/displayed/colour), molecule list, centre, zoom.  api_examples_run.py records "changed"; examples run
+  in ns = dict(globals()) (an example's own a/b/e/f clobbered the driver); statements + last expression allowed (run_py);
+  py_setup/scm_setup lines; curated "skip" reasons.  tests/api-try.sh (+ api_try.py) for ad-hoc calls; tests/api-data.sh copies
+  test-data/*.pdb *.mtz *.fasta *.cif + NAG/ATP dictionaries.  Hand-written examples: 4 helper agents (539 functions: failure values,
+  errors, no example, over-broad word skips like "refmac"/"run", crashes) -> m0/tools/api_examples_curated.json (py, scm, *_setup,
+  expect, skip, note), merged by gen_api_index.py.  tests/api_setters_run.py (API_SCRIPT=api_setters_run.py run-api-examples.sh):
+  105 set_X with getters, set other value / read back / restore: 195/210.  gen_api_docs.py 5th arg = setters jsonl.
+  Final: Python 1595 ran / 1 error / 0 crash / 121 not run; Scheme 1558 / 6 / 0 / 125; agreement 595/657.  Evidence
+  evidence/full31.jsonl.gz (paths scrubbed), setters31.jsonl.
+  C++ fixes: probe_clash_score_from_scm n_wc from n_cc_scm; kullback_liebler_scm local r never returned; register_interesting_
+  positions_list_scm scm_list_ref(item, 0) with a C int (crash) and label = element 0; coot::write_coords_cif wrote mol itself with
+  WriteCIFASCII (mmdb keeps CIF data in the Manager: each call appended; coords/mmdb.cc already copies) -> copy first.
+  Noted upstream, not changed: stubs returning False (chain_fragments, metal_coordination, glyco_tree, alignment_results,
+  residues_torsions_match, model_composition_statistics_py); wrong return values (add_alt_conf, b_factor_from_map, scale_cell,
+  copy_residue_range, watson_crick_pair, reset_view, hetify_residue, match_residue_and_dictionary); set_go_to_atom_chain_residue_
+  atom_name_strings (gchar*: not callable); python_representation atoms carry an index add_molecule rejects; make_variance_map of
+  identical maps NaN; read_phs_* bad file -> molecule slot; map_from_mtz_by_calc_phases bad columns abort.

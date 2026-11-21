@@ -15,8 +15,10 @@ Arguments: istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_show_pointer_distances(1)` | ran (no return value) |
-| Scheme | `(set-show-pointer-distances 1)` | ran (no return value) |
+| Python | `set_show_pointer_distances(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-show-pointer-distances 1)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: show_pointer_distances_state was 0, set to 1, read back 1; Scheme: show-pointer-distances-state was 0, set to 1, read back 1.
 
 ### show_pointer_distances_state
 

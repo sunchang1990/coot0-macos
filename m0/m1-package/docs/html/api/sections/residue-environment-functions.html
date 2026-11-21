@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="3ad2a21617d20fcac9fefcd4bb0cc24d9569179b">
+<meta name="coot0-source-sha1" content="e4e58bc87487de8ad7b960c1e11b0222cb47c21b">
 <title>Residue Environment Functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -42,32 +42,32 @@ Scheme: <code>(label-atoms-in-residue)</code></p>
 <p>Label the atoms in the central residue</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>label_atoms_in_residue()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(label-atoms-in-residue)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>label_atoms_in_residue()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(label-atoms-in-residue)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="label_neighbours">label_neighbours</h3>
 <p>Python: <code>label_neighbours()</code><br>
 Scheme: <code>(label-neighbours)</code></p>
 <p>Label the atoms in the residues around the central residue</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>label_neighbours()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(label-neighbours)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>label_neighbours()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(label-neighbours)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_environment_distances_distance_limits">set_environment_distances_distance_limits</h3>
 <p>Python: <code>set_environment_distances_distance_limits(min_dist, max_dist)</code><br>
 Scheme: <code>(set-environment-distances-distance-limits min-dist max-dist)</code></p>
 <p>min and max distances for the environment distances</p>
 <p>Arguments: min_dist (a number), max_dist (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_environment_distances_distance_limits(1.0, 1.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-environment-distances-distance-limits 1.0 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_environment_distances_distance_limits(1.0, 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-environment-distances-distance-limits 1.0 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_environment_distances_label_atom">set_environment_distances_label_atom</h3>
 <p>Python: <code>set_environment_distances_label_atom(state)</code><br>
 Scheme: <code>(set-environment-distances-label-atom state)</code></p>
 <p>Label the atom on Environment Distances start/change</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_environment_distances_label_atom(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-environment-distances-label-atom 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_environment_distances_label_atom(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-environment-distances-label-atom 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_show_environment_distances">set_show_environment_distances</h3>
 <p>Python: <code>set_show_environment_distances(state)</code><br>
 Scheme: <code>(set-show-environment-distances state)</code></p>
@@ -75,16 +75,17 @@ Scheme: <code>(set-show-environment-distances state)</code></p>
  turned off, otherwise distances are turned on.</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_show_environment_distances(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-show-environment-distances 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_show_environment_distances(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-show-environment-distances 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Setting checked (set to another value and read back, then put back): Python: show_environment_distances_state was 1, set to 0, read back 0; Scheme: show-environment-distances-state was 1, set to 0, read back 0.</p>
 <h3 id="set_show_environment_distances_as_solid">set_show_environment_distances_as_solid</h3>
 <p>Python: <code>set_show_environment_distances_as_solid(state)</code><br>
 Scheme: <code>(set-show-environment-distances-as-solid state)</code></p>
 <p>show the environment distances with solid modelling</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_show_environment_distances_as_solid(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-show-environment-distances-as-solid 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_show_environment_distances_as_solid(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-show-environment-distances-as-solid 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_show_environment_distances_bumps">set_show_environment_distances_bumps</h3>
 <p>Python: <code>set_show_environment_distances_bumps(state)</code><br>
 Scheme: <code>(set-show-environment-distances-bumps state)</code></p>
@@ -92,8 +93,8 @@ Scheme: <code>(set-show-environment-distances-bumps state)</code></p>
  turned off, otherwise bump distances are turned on.</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_show_environment_distances_bumps(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-show-environment-distances-bumps 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_show_environment_distances_bumps(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-show-environment-distances-bumps 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_show_environment_distances_h_bonds">set_show_environment_distances_h_bonds</h3>
 <p>Python: <code>set_show_environment_distances_h_bonds(state)</code><br>
 Scheme: <code>(set-show-environment-distances-h-bonds state)</code></p>
@@ -101,8 +102,8 @@ Scheme: <code>(set-show-environment-distances-h-bonds state)</code></p>
  turned off, otherwise H-bond distances are turned on.</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_show_environment_distances_h_bonds(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-show-environment-distances-h-bonds 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_show_environment_distances_h_bonds(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-show-environment-distances-h-bonds 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="show_environment_distances_state">show_environment_distances_state</h3>
 <p>Python: <code>show_environment_distances_state()</code><br>
 Scheme: <code>(show-environment-distances-state)</code></p>

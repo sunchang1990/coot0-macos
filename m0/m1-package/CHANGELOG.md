@@ -6,6 +6,33 @@ applied to the pristine tree by `setup.sh`) or a change of the packaged data / s
 round, `TEST-PROTOCOL.md` has the user-facing explanation and the checks for you (newest round first).  A "build" is one delivered zip.
 "Verified" means a headless test (no window server in the build environment); what only a screen can show is marked "on screen: not verified".
 
+## Build 31  (patch 0049 scheme-wrappers-write-cif-once (C++); new `bin/coot-bin`; scripting reference: every example checked)
+- Scripting reference (docs/api): "ran" was not enough: 812 functions had returned nothing and 253 a failure value (-1, #f), mostly
+  because the program-made example used placeholders (`"hello"`, molecule 0 for a map, a PDB file where a dictionary is needed).
+  1. Every call is now compared before and after (`tests/api_state.py`): atoms of every model (added, deleted, moved, B-factors,
+     occupancies), maps (level, sigma, colour), new or closed molecules, view centre and zoom, and ~100 settings with a getter. Each
+     result says what changed, e.g. `changed: molecule 0: deleted 1 residue(s) (A41)`.
+  2. 542 examples were written by hand and tried in both languages on the test data (real atoms, the map molecule, files of the right
+     type, set-up lines where needed); each page says what a correct result is, and notes what looked wrong. New test files:
+     `tutorial-modern.fasta`, `rnasa-sf.cif` (structure factors as mmCIF), `rnasa-sm.cif` / `rnasa-sm-data.cif` (small-molecule CIF).
+  3. Every setting with a getter (105) was set to another value, read back and put back: 195 of 210 calls read back.
+  Result: Python 1,595 ran (build 30: 1,399), Scheme 1,558 (1,369); 0 stopped Coot (64 / 62: those need the window and are now marked
+  so); 595 of 657 comparable answers agree in both languages.
+- New tool: `tests/api-try.sh FILE` runs your own Python/Scheme lines without a window on the test data and prints each value and
+  what it changed.
+- Four bugs of Coot 0.9.8.96 fixed (found by this):
+  1. `write_cif_file` wrote the model once more on every call (140, 275, 410 kB; the third file read back with every atom three
+     times). It now writes a copy, as Coot's own Save Coordinates does (that menu was not affected).
+  2. Scheme `kullback-liebler` always returned #f (the result was never returned); now the two numbers, as in Python.
+  3. Scheme `probe-clash-score-from-scm` took the 5th number (wide contacts) from the 4th.
+  4. Scheme `register-interesting-positions-list-scm` stopped Coot on any call.
+- Noted, not changed (Coot's own code; the pages say so): unfinished functions that always return False (`chain_fragments`,
+  `metal_coordination`, `glyco_tree`, `alignment_results`, `residues_torsions_match`, `model_composition_statistics`), return values
+  that are wrong although the work is done (`add_alt_conf`, `b_factor_from_map`, `scale_cell`, `copy_residue_range`,
+  `watson_crick_pair`, `reset_view`, `save_coordinates` 0 = success), `exchange_chain_ids_for_seg_ids` merges chains when there are no
+  segment IDs, `copy_from_ncs_master_to_chains` replaces the whole target chain.
+- Tests: `python-api` 21 -> 22, `scheme-api` 30 -> 33, `api-docs` 8 -> 12 (build 30 fails all 8 new checks).
+
 ## Build 30  (patch 0048 scheme-list-builders-sanitise-alt-confs (C++ + Python); new `bin/coot-bin`; scripting reference: every function tried)
 - Found by running each read-only function in Python and in Scheme on the test data and comparing the answers (20 Nov). Problems 2-5
   are in Coot 0.9.8.96's own C++ source:

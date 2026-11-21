@@ -15,8 +15,10 @@ Arguments: imol (a whole number), chain_id (text), fasta_maybe (text), renumber_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `align_and_mutate(0, "A", "hello", 1)` | not run: not run automatically (align_and_mutate: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(align-and-mutate 0 "A" "hello" 1)` | not run: not run automatically (align_and_mutate: exits, uses the network, an external program, files or a screen) |
+| Python | `align_and_mutate(0, "A", "DVSGTACLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLIDQTC", 0)` | ran (no return value); changed: molecule 0: atoms of 1 residue(s) (A6); n_atoms(0): 1465 -> 1463 |
+| Scheme | `(align-and-mutate 0 "B" "DVSGTACLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLIDQTC" 0)` | ran (no return value); changed: molecule 0: atoms of 1 residue(s) (B6); n_atoms(0): 1465 -> 1463 |
+
+Example written and checked by hand on the test data. Expected: chain is aligned to the sequence and mismatching residues are mutated (here V6A).
 
 ### alignment_results
 
@@ -28,8 +30,12 @@ Also available in Python as `alignment_results_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `alignment_results(0, "A", "ACDEFGHIKLMNPQRSTVWY")` | ran, returned `False` |
-| Scheme | `(alignment-results-scm 0 "A" "ACDEFGHIKLMNPQRSTVWY")` | ran, returned `#f` |
+| Python | `alignment_results(0, "A", "DVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLIDQTC")` | ran, returned `False` |
+| Scheme | `(alignment-results-scm 0 "A" "DVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLIDQTC")` | ran, returned `#f` |
+
+Example written and checked by hand on the test data. Expected: should return the alignment of the chain against the sequence.
+
+Note: Both C++ functions (alignment_results_py / alignment_results_scm) are empty stubs in 0.9.8.96: they always return False/#f.
 
 Python and Scheme gave the same answer.
 
@@ -63,6 +69,6 @@ Arguments: wgap (a number), wspace (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_alignment_gap_and_space_penalty(1.0, 1.0)` | ran (no return value) |
-| Scheme | `(set-alignment-gap-and-space-penalty 1.0 1.0)` | ran (no return value) |
+| Python | `set_alignment_gap_and_space_penalty(1.0, 1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-alignment-gap-and-space-penalty 1.0 1.0)` | ran (no return value, nothing visible changed) |
 

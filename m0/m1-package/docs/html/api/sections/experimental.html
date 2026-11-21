@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="dc199b51cb2eebb1f583301fee0002b332806ac9">
+<meta name="coot0-source-sha1" content="639e78803cbf8557ecf2452a1888594da0886370">
 <title>Experimental - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -22,8 +22,8 @@ table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; 
 Scheme: <code>(add-ligand-builder-menu-item-maybe)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>add_ligand_builder_menu_item_maybe()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(add-ligand-builder-menu-item-maybe)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>add_ligand_builder_menu_item_maybe()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(add-ligand-builder-menu-item-maybe)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="all_molecule_ramachandran_region">all_molecule_ramachandran_region</h3>
 <p>Python: <code>all_molecule_ramachandran_region(imol)</code></p>
 <p>a stub currently</p>
@@ -48,23 +48,24 @@ Scheme: <code>(all-molecule-rotamer-score imol)</code></p>
 <p>Arguments: imol (a whole number). Returns: a value (see the result of the example).
 Also available in Python as <code>all_molecule_rotamer_score_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>all_molecule_rotamer_score(0)</code></td><td>ran, returned <code>[-197.50514814092332, 160]</code></td></tr>
-<tr><td>Scheme</td><td><code>(all-molecule-rotamer-score 0)</code></td><td>ran, returned <code>(-197.50514814092332 160)</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>all_molecule_rotamer_score(0)</code></td><td>ran, returned <code>[-195.6084282377372, 159]</code></td></tr>
+<tr><td>Scheme</td><td><code>(all-molecule-rotamer-score 0)</code></td><td>ran, returned <code>(-195.6084282377372 159)</code></td></tr></tbody></table>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="fetch_and_superpose_alphafold_models_using_active_molecule">fetch_and_superpose_alphafold_models_using_active_molecule</h3>
 <p>Python: <code>fetch_and_superpose_alphafold_models_using_active_molecule()</code><br>
 Scheme: <code>(fetch-and-superpose-alphafold-models-using-active-molecule)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>fetch_and_superpose_alphafold_models_using_active_molecule()</code></td><td>not run: not run automatically (fetch: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(fetch-and-superpose-alphafold-models-using-active-molecule)</code></td><td>not run: not run automatically (fetch: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>fetch_and_superpose_alphafold_models_using_active_molecule()</code></td><td>not run: uses the network</td></tr>
+<tr><td>Scheme</td><td><code>(fetch-and-superpose-alphafold-models-using-active-molecule)</code></td><td>not run: uses the network</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: downloads AlphaFold models for the active molecule's sequence and superposes them.</p>
 <h3 id="full_screen">full_screen</h3>
 <p>Python: <code>full_screen(mode)</code><br>
 Scheme: <code>(full-screen mode)</code></p>
 <p>Arguments: mode (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>full_screen(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(full-screen 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>full_screen(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(full-screen 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="globularize">globularize</h3>
 <p>Python: <code>globularize(imol)</code><br>
 Scheme: <code>(globularize imol)</code></p>
@@ -73,16 +74,16 @@ Scheme: <code>(globularize imol)</code></p>
 molecules (chains/domains) that are dispersed throughout the unit cell.</p>
 <p>Arguments: imol (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>globularize(0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(globularize 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>globularize(0)</code></td><td>ran (no return value); changed: molecule 0: coordinates of 76 residue(s) (A5, A6, A7, A8 ...)</td></tr>
+<tr><td>Scheme</td><td><code>(globularize 0)</code></td><td>ran (no return value); changed: molecule 0: coordinates of 76 residue(s) (A5, A6, A7, A8 ...)</td></tr></tbody></table>
 <h3 id="start_ligand_builder_gui">start_ligand_builder_gui</h3>
 <p>Python: <code>start_ligand_builder_gui()</code><br>
 Scheme: <code>(start-ligand-builder-gui)</code></p>
 <p>display the ligand builder dialog</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>start_ligand_builder_gui()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(start-ligand-builder-gui)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>start_ligand_builder_gui()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(start-ligand-builder-gui)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="user_defined_click">user_defined_click</h3>
 <p>Python: <code>user_defined_click(n_clicks, func)</code><br>
 Scheme: <code>(user-defined-click n-clicks func)</code></p>
@@ -90,6 +91,8 @@ Scheme: <code>(user-defined-click n-clicks func)</code></p>
 Also available in Python as <code>user_defined_click_py</code>.
 Also available in Scheme as <code>user-defined-click-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>user_defined_click(1, lambda *args: print("clicked", args))</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(user-defined-click 1 (lambda args (display args)))</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: the function is called with the clicked atom specs after n_clicks clicks; nothing happens until atoms are clicked.</p>
+<p>Note: Only arming verified headless; the callback itself needs clicks in the graphics window.</p>
 </body></html>

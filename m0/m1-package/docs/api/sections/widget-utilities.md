@@ -17,8 +17,8 @@ Arguments: s (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_main_window_title("hello")` | ran (no return value) |
-| Scheme | `(set-main-window-title "hello")` | ran (no return value) |
+| Python | `set_main_window_title("hello")` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-main-window-title "hello")` | ran (no return value, nothing visible changed) |
 
 ### set_show_modelling_toolbar
 
@@ -31,6 +31,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_show_modelling_toolbar(1)` | ran (no return value) |
-| Scheme | `(set-show-modelling-toolbar 1)` | ran (no return value) |
+| Python | `set_show_modelling_toolbar(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-show-modelling-toolbar 1)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back; NOT all read back): Python: not checked: the getter returned None; Scheme: not checked: the getter returned ''.
 

@@ -18,8 +18,8 @@ Also available in Scheme as `do-clipped-surface-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `do_clipped_surface(0, [["A", 41, ""], ["A", 42, ""]])` | ran (no return value) |
-| Scheme | `(do-clipped-surface 0 (list (list "A" 41 "") (list "A" 42 "")))` | ran (no return value) |
+| Python | `do_clipped_surface(0, [["A", 41, ""], ["A", 42, ""]])` | ran (no return value, nothing visible changed) |
+| Scheme | `(do-clipped-surface 0 (list (list "A" 41 "") (list "A" 42 "")))` | ran (no return value, nothing visible changed) |
 
 ### do_surface
 
@@ -36,8 +36,8 @@ Arguments: imol (a whole number), istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `do_surface(0, 1)` | ran (no return value) |
-| Scheme | `(do-surface 0 1)` | ran (no return value) |
+| Python | `do_surface(0, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(do-surface 0 1)` | ran (no return value, nothing visible changed) |
 
 ### get_electrostatic_surface_charge_range
 
@@ -93,8 +93,10 @@ Arguments: v (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_electrostatic_surface_charge_range(1.0)` | ran (no return value) |
-| Scheme | `(set-electrostatic-surface-charge-range 1.0)` | ran (no return value) |
+| Python | `set_electrostatic_surface_charge_range(1.0)` | ran (no return value); changed: get_electrostatic_surface_charge_range(): 0.5 -> 1 |
+| Scheme | `(set-electrostatic-surface-charge-range 1.0)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: get_electrostatic_surface_charge_range was 0.5, set to 1.25, read back 1.25; Scheme: get-electrostatic-surface-charge-range was 0.5, set to 1.25, read back 1.25.
 
 ### set_transparent_electrostatic_surface
 
@@ -108,6 +110,6 @@ Arguments: imol (a whole number), opacity (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_transparent_electrostatic_surface(0, 1.0)` | ran (no return value) |
-| Scheme | `(set-transparent-electrostatic-surface 0 1.0)` | ran (no return value) |
+| Python | `set_transparent_electrostatic_surface(0, 1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-transparent-electrostatic-surface 0 1.0)` | ran (no return value, nothing visible changed) |
 

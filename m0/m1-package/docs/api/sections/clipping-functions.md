@@ -15,8 +15,8 @@ Arguments: v (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_clipping_back(1.0)` | ran (no return value) |
-| Scheme | `(set-clipping-back 1.0)` | ran (no return value) |
+| Python | `set_clipping_back(1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-clipping-back 1.0)` | ran (no return value, nothing visible changed) |
 
 ### set_clipping_front
 
@@ -29,6 +29,6 @@ Arguments: v (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_clipping_front(1.0)` | ran (no return value) |
-| Scheme | `(set-clipping-front 1.0)` | ran (no return value) |
+| Python | `set_clipping_front(1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-clipping-front 1.0)` | ran (no return value, nothing visible changed) |
 

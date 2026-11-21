@@ -20,7 +20,9 @@ Also available in Python as `add_target_position_restraint_for_intermediate_atom
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | `refine_zone(0, "A", 41, 43, ""); print(add_target_position_restraint_for_intermediate_atom(["A", 42, "", " CA ", ""], [45.0, 10.4, 15.0]))` | ran (no return value, nothing visible changed) |
+
+Example written and checked by hand on the test data. Expected: during a refinement adds a target-position restraint pulling that atom to the position and refines on.
 
 ### add_target_position_restraints_for_intermediate_atoms
 
@@ -34,7 +36,11 @@ Also available in Python as `add_target_position_restraints_for_intermediate_ato
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `add_target_position_restraints_for_intermediate_atoms(["A", 41, "", " CA ", ""])` | error: SystemError: <built-in function add_target_position_restraints_for_intermediate_atoms_py> returned a result with an exception set |
+| Python | `refine_zone(0, "A", 41, 43, ""); print(add_target_position_restraints_for_intermediate_atoms([[["A", 42, "", " CA ", ""], [45.0, 10.4, 15.0]]]))` | ran (no return value, nothing visible changed) |
+
+Example written and checked by hand on the test data. Expected: during a refinement adds target-position restraints for several atoms at once and refines; the return value is always False.
+
+Note: Segmentation fault (Coot stopped, rc 139) with a two-atom list in a headless refinement; one-atom list survived. Possible bug in graphics_info_t::add_target_position_restraints_for_intermediate_atoms (threaded refinement).
 
 ### drag_intermediate_atom
 
@@ -47,6 +53,10 @@ Also available in Scheme as `drag-intermediate-atom-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | `refine_zone(0, "A", 41, 43, ""); print(drag_intermediate_atom(["A", 42, "", " CA ", ""], [45.0, 10.4, 15.0]))` | ran (no return value, nothing visible changed) |
+| Scheme | `(begin (refine-zone 0 "A" 41 43 "") (drag-intermediate-atom (list "A" 42 "" " CA " "") (list 45.0 10.4 15.0)))` | ran, returned `#f` |
+
+Example written and checked by hand on the test data. Expected: during a refinement (intermediate atoms present) moves that atom to the position and lets the refinement follow; nothing to drag otherwise.
+
+Python and Scheme gave the same answer.
 

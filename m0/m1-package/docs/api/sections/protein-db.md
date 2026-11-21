@@ -18,8 +18,12 @@ Arguments: specs (a list). Returns: text.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | `protein_db_loop_specs_to_atom_selection_string(residue_records_list_py_to_residue_specs([{"seq_num": "40", "ins_code": ""}, {"seq_num": "45", "ins_code": ""}], "A"))` | ran, returned `'//A/40-45'` |
+| Scheme | first `(define mk (record-constructor (make-record-type 'residue-rec '(seq-num ins-code))))`, then `(protein-db-loop-specs-to-atom-selection-string (residue-records-list-scm-to-residue-specs (list (mk "40" "") (mk "45" "")) "A"))` | ran, returned `"//A/40-45"` |
+
+Example written and checked by hand on the test data. Expected: the mmdb atom selection covering the residue range: '//A/40-45'. The argument is a C++ vector of residue specs (plain lists give a TypeError).
+
+Python and Scheme gave the same answer.
 
 ### protein_db_loops
 
@@ -37,6 +41,10 @@ Arguments: imol_coords (a whole number), residues_specs (a list or value), imol_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `protein_db_loops(0, ["A", 41, ""], 1, 1, True)` | error: SystemError: <built-in function protein_db_loops_py> returned a result with an exception set |
-| Scheme | `(protein-db-loops 0 (list "A" 41 "") 1 1 1)` | error: In procedure length: Wrong type argument in position 1: "A" |
+| Python | `protein_db_loops(0, [[True, "A", 40, ""], [True, "A", 41, ""], [True, "A", 42, ""], [True, "A", 43, ""]], 1, 10, False)` | ran, returned `[[14, 13], [3, 4, 5, 6, 7, 8, 9, 10, 11, 12]]`; changed: new molecule 10 (model, Loop candidate #7); new molecule 11 (model, Loop candidate #8); new molecule 12 (model, Loop candidate #9); new molecule 13 (model, All Loop candidates ) ... |
+| Scheme | `(protein-db-loops 0 (list (list #t "A" 40 "") (list #t "A" 41 "") (list #t "A" 42 "") (list #t "A" 43 "")) 1 10 #f)` | ran, returned `((14 13) (3 4 5 6 7 8 9 10 11 12))`; changed: new molecule 10 (model, Loop candidate #7); new molecule 11 (model, Loop candidate #8); new molecule 12 (model, Loop candidate #9); new molecule 13 (model, All Loop candidates ) ... |
+
+Example written and checked by hand on the test data. Expected: [[original-loop molecule, all-candidates molecule], [candidate molecules]] for 10 database loops fitting residues A40-43.
+
+Python and Scheme gave the same answer.
 

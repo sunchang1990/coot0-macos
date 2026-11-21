@@ -15,8 +15,8 @@ Arguments: imol (a whole number), dots_handle (a whole number). Returns: nothing
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `clear_dots(0, 1)` | ran (no return value) |
-| Scheme | `(clear-dots 0 1)` | ran (no return value) |
+| Python | `clear_dots(0, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(clear-dots 0 1)` | ran (no return value, nothing visible changed) |
 
 ### clear_dots_by_name
 
@@ -29,8 +29,8 @@ Arguments: imol (a whole number), dots_object_name (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `clear_dots_by_name(0, "my-name")` | ran (no return value) |
-| Scheme | `(clear-dots-by-name 0 "my-name")` | ran (no return value) |
+| Python | `clear_dots_by_name(0, "my-name")` | ran (no return value, nothing visible changed) |
+| Scheme | `(clear-dots-by-name 0 "my-name")` | ran (no return value, nothing visible changed) |
 
 ### dots
 
@@ -45,8 +45,10 @@ Arguments: imol (a whole number), atom_selection_str (text), dots_object_name (t
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `dots(0, "//A/41-45", "my-name", 1.0, 1.0)` | ran, returned `0` |
-| Scheme | `(dots 0 "//A/41-45" "my-name" 1.0 1.0)` | ran, returned `1` |
+| Python | `dots(0, "//A/41", "dots-A41", 1, 1.0)` | ran, returned `0`; changed: n_dots_sets(0): 0 -> 1 |
+| Scheme | `(dots 0 "//A/41" "dots-A41" 1 1.0)` | ran, returned `1`; changed: n_dots_sets(0): 1 -> 2 |
+
+Example written and checked by hand on the test data. Expected: returns the number of the new dots set (surface dots around residue A41).
 
 Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
@@ -61,10 +63,12 @@ Arguments: imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `n_dots_sets(0)` | ran, returned `0` |
-| Scheme | `(n-dots-sets 0)` | ran, returned `0` |
+| Python | first `dots(0, "//A/41", "dots-A41", 1, 1.0)`, then `dots(0, "//A/42", "dots-A42", 1, 1.0)`, then `n_dots_sets(0)` | ran, returned `2` |
+| Scheme | first `(dots 0 "//A/41" "dots-A41" 1 1.0)`, then `(dots 0 "//A/42" "dots-A42" 1 1.0)`, then `(n-dots-sets 0)` | ran, returned `4` |
 
-Python and Scheme gave the same answer.
+Example written and checked by hand on the test data. Expected: returns the number of dots sets of molecule 0 (0 before any dots() call).
+
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
 ### set_dots_colour
 
@@ -80,8 +84,8 @@ Arguments: imol (a whole number), r (a number), g (a number), b (a number). Retu
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_dots_colour(0, 0.5, 0.5, 0.5)` | ran (no return value) |
-| Scheme | `(set-dots-colour 0 0.5 0.5 0.5)` | ran (no return value) |
+| Python | `set_dots_colour(0, 0.5, 0.5, 0.5)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-dots-colour 0 0.5 0.5 0.5)` | ran (no return value, nothing visible changed) |
 
 ### unset_dots_colour
 
@@ -96,6 +100,6 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `unset_dots_colour(0)` | ran (no return value) |
-| Scheme | `(unset-dots-colour 0)` | ran (no return value) |
+| Python | `unset_dots_colour(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(unset-dots-colour 0)` | ran (no return value, nothing visible changed) |
 

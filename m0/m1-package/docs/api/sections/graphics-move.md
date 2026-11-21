@@ -16,8 +16,8 @@ Arguments: imol (a whole number), m11 (a number), m12 (a number), m13 (a number)
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `transform_molecule_by(0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 54.5, 9.4, 12.3)` | ran (no return value) |
-| Scheme | `(transform-molecule-by 0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 54.5 9.4 12.3)` | ran (no return value) |
+| Python | `transform_molecule_by(0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 54.5, 9.4, 12.3)` | ran (no return value); changed: molecule 0: coordinates of 189 residue(s) (A1, A2, A3, A4 ...) |
+| Scheme | `(transform-molecule-by 0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 54.5 9.4 12.3)` | ran (no return value); changed: molecule 0: coordinates of 189 residue(s) (A1, A2, A3, A4 ...) |
 
 ### transform_zone
 
@@ -31,8 +31,8 @@ Arguments: imol (a whole number), chain_id (text), resno_start (a whole number),
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `transform_zone(0, "A", 41, 45, "", 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 54.5, 9.4, 12.3)` | ran (no return value) |
-| Scheme | `(transform-zone 0 "A" 41 45 "" 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 54.5 9.4 12.3)` | ran (no return value) |
+| Python | `transform_zone(0, "A", 41, 45, "", 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 54.5, 9.4, 12.3)` | ran (no return value); changed: molecule 0: coordinates of 5 residue(s) (A41, A42, A43, A44 ...) |
+| Scheme | `(transform-zone 0 "A" 41 45 "" 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 54.5 9.4 12.3)` | ran (no return value); changed: molecule 0: coordinates of 5 residue(s) (A41, A42, A43, A44 ...) |
 
 ### translate_molecule_by
 
@@ -45,8 +45,8 @@ Arguments: imol (a whole number), x (a number), y (a number), z (a number). Retu
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `translate_molecule_by(0, 54.5, 9.4, 12.3)` | ran (no return value) |
-| Scheme | `(translate-molecule-by 0 54.5 9.4 12.3)` | ran (no return value) |
+| Python | `translate_molecule_by(0, 54.5, 9.4, 12.3)` | ran (no return value); changed: molecule 0: coordinates of 189 residue(s) (A1, A2, A3, A4 ...) |
+| Scheme | `(translate-molecule-by 0 54.5 9.4 12.3)` | ran (no return value); changed: molecule 0: coordinates of 189 residue(s) (A1, A2, A3, A4 ...) |
 
 ### undo_last_move
 
@@ -59,6 +59,6 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `undo_last_move()` | ran (no return value) |
-| Scheme | `(undo-last-move)` | ran (no return value) |
+| Python | `undo_last_move()` | ran (no return value); changed: rotation centre moved 44.4 A to (0.0, 0.0, 0.0) |
+| Scheme | `(undo-last-move)` | ran (no return value); changed: rotation centre moved 44.4 A to (41.6, 8.7, 12.9) |
 

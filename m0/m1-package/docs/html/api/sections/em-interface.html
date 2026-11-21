@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="074eccd56224b39b4fdf8a94a957e74296e19ad8">
+<meta name="coot0-source-sha1" content="5d77edd02b7efc25a88c4773e355d2011d68f335">
 <title>EM interface - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -23,8 +23,8 @@ Scheme: <code>(map-histogram imol-map)</code></p>
 <p>make a map histogram</p>
 <p>Arguments: imol_map (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>map_histogram(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(map-histogram 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>map_histogram(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(map-histogram 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="scale_cell">scale_cell</h3>
 <p>Python: <code>scale_cell(imol_map, fac_u, fac_v, fac_w)</code><br>
 Scheme: <code>(scale-cell imol-map fac-u fac-v fac-w)</code></p>
@@ -33,8 +33,10 @@ Scheme: <code>(scale-cell imol-map fac-u fac-v fac-w)</code></p>
  status, 1 means it worked, 0 means it did not work.</p>
 <p>Arguments: imol_map (a whole number), fac_u (a number), fac_v (a number), fac_w (a number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>scale_cell(1, 1.0, 1.0, 1.0)</code></td><td>ran, returned <code>0</code></td></tr>
-<tr><td>Scheme</td><td><code>(scale-cell 1 1.0 1.0 1.0)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>scale_cell(1, 1.01, 1.01, 1.01)</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(scale-cell 1 0.99 0.99 0.99)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: the cell of map 1 is scaled by 1% on each axis (see cell(1)); return value is always 0.</p>
+<p>Note: Return value is always 0 (molecule_class_info_t::scale_cell never sets it), even on success.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="segment_map">segment_map</h3>
 <p>Python: <code>segment_map(imol_map, low_level)</code><br>
@@ -44,21 +46,21 @@ Scheme: <code>(segment-map imol-map low-level)</code></p>
  map.</p>
 <p>Arguments: imol_map (a whole number), low_level (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>segment_map(1, 1.5)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(segment-map 1 1.5)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>segment_map(1, 1.5)</code></td><td>ran (no return value); changed: new molecule 10 (map, Map 1 Segment 7); new molecule 100 (map, Map 1 Segment 97); new molecule 101 (map, Map 1 Segment 98); new molecule 102 (map, Map 1 Segment 99) ...</td></tr>
+<tr><td>Scheme</td><td><code>(segment-map 1 1.5)</code></td><td>ran (no return value); changed: new molecule 10 (map, Map 1 Segment 7); new molecule 100 (map, Map 1 Segment 97); new molecule 101 (map, Map 1 Segment 98); new molecule 102 (map, Map 1 Segment 99) ...</td></tr></tbody></table>
 <h3 id="segment_map_multi_scale">segment_map_multi_scale</h3>
 <p>Python: <code>segment_map_multi_scale(imol_map, low_level, b_factor_inc, n_rounds)</code><br>
 Scheme: <code>(segment-map-multi-scale imol-map low-level b-factor-inc n-rounds)</code></p>
 <p>Arguments: imol_map (a whole number), low_level (a number), b_factor_inc (a number), n_rounds (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>segment_map_multi_scale(1, 1.5, 20.0, 1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(segment-map-multi-scale 1 1.5 20.0 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>segment_map_multi_scale(1, 1.5, 20.0, 1)</code></td><td>ran (no return value); changed: new molecule 10 (map, Map 1 Segment 7); new molecule 3 (map, Map 1 Segment 0); new molecule 4 (map, Map 1 Segment 1); new molecule 5 (map, Map 1 Segment 2) ...</td></tr>
+<tr><td>Scheme</td><td><code>(segment-map-multi-scale 1 1.5 20.0 1)</code></td><td>ran (no return value); changed: new molecule 10 (map, Map 1 Segment 7); new molecule 3 (map, Map 1 Segment 0); new molecule 4 (map, Map 1 Segment 1); new molecule 5 (map, Map 1 Segment 2) ...</td></tr></tbody></table>
 <h3 id="set_ignore_pseudo_zeros_for_map_stats">set_ignore_pseudo_zeros_for_map_stats</h3>
 <p>Python: <code>set_ignore_pseudo_zeros_for_map_stats(state)</code><br>
 Scheme: <code>(set-ignore-pseudo-zeros-for-map-stats state)</code></p>
 <p>ignore pseudo-zeros when calculationg maps stats (default 1 = true)</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_ignore_pseudo_zeros_for_map_stats(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-ignore-pseudo-zeros-for-map-stats 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_ignore_pseudo_zeros_for_map_stats(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-ignore-pseudo-zeros-for-map-stats 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 </body></html>

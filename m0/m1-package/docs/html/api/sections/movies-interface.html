@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="638751e8f3a359bd1c4e9407ce922e0d91d76538">
+<meta name="coot0-source-sha1" content="832a59f53a7ec7c0bd7dfeb2ae7868a09c6c1ec6">
 <title>Movies Interface - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -33,26 +33,28 @@ Scheme: <code>(movie-frame-number)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>movie_frame_number()</code></td><td>ran, returned <code>0</code></td></tr>
 <tr><td>Scheme</td><td><code>(movie-frame-number)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the current movie frame counter (0 at start).</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="set_make_movie_mode">set_make_movie_mode</h3>
 <p>Python: <code>set_make_movie_mode(make_movies_flag)</code><br>
 Scheme: <code>(set-make-movie-mode make-movies-flag)</code></p>
 <p>Arguments: make_movies_flag (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_make_movie_mode(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-make-movie-mode 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_make_movie_mode(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-make-movie-mode 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_movie_file_name_prefix">set_movie_file_name_prefix</h3>
 <p>Python: <code>set_movie_file_name_prefix(file_name)</code><br>
 Scheme: <code>(set-movie-file-name-prefix file-name)</code></p>
 <p>Arguments: file_name (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_movie_file_name_prefix("tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-movie-file-name-prefix "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_movie_file_name_prefix("tutorial-modern.pdb")</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-movie-file-name-prefix "tutorial-modern.pdb")</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_movie_frame_number">set_movie_frame_number</h3>
 <p>Python: <code>set_movie_frame_number(frame_number)</code><br>
 Scheme: <code>(set-movie-frame-number frame-number)</code></p>
 <p>Arguments: frame_number (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_movie_frame_number(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-movie-frame-number 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_movie_frame_number(1)</code></td><td>ran (no return value); changed: movie_frame_number(): 0 -&gt; 1</td></tr>
+<tr><td>Scheme</td><td><code>(set-movie-frame-number 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Setting checked (set to another value and read back, then put back): Python: movie_frame_number was 0, set to 1, read back 1; Scheme: movie-frame-number was 0, set to 1, read back 1.</p>
 </body></html>

@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="e838e30bca165fdc3ff08e9d4e9aeec441098541">
+<meta name="coot0-source-sha1" content="b97ddf84d42c1cd54a5c9799b300d5df957b5a31">
 <title>SHELXL Functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -22,8 +22,9 @@ table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; 
 Scheme: <code>(add-shelx-string-to-molecule imol string)</code></p>
 <p>Arguments: imol (a whole number), string (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>add_shelx_string_to_molecule(0, "hello")</code></td><td>not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(add-shelx-string-to-molecule 0 "hello")</code></td><td>not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>write_shelx_ins_file(0, "tut.ins")</code>, then <code>imol_s = read_shelx_ins_file("tut.ins", 0)</code>, then <code>add_shelx_string_to_molecule(imol_s, "DFIX 1.54 C_41 CA_41")</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td>first <code>(write-shelx-ins-file 0 "tut.ins")</code>, then <code>(define imol-s (read-shelx-ins-file "tut.ins" 0))</code>, then <code>(add-shelx-string-to-molecule imol-s "DFIX 1.54 C_41 CA_41")</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: adds the line to the SHELX molecule's instructions; it appears in the next written .ins file.</p>
 <h3 id="chain_id_for_shelxl_residue_number">chain_id_for_shelxl_residue_number</h3>
 <p>Python: <code>chain_id_for_shelxl_residue_number(imol, resno)</code><br>
 Scheme: <code>(chain-id-for-shelxl-residue-number imol resno)</code></p>
@@ -32,38 +33,49 @@ Scheme: <code>(chain-id-for-shelxl-residue-number imol resno)</code></p>
 <p>Arguments: imol (a whole number), resno (a whole number). Returns: a value (see the result of the example).
 Also available in Python as <code>chain_id_for_shelxl_residue_number_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>chain_id_for_shelxl_residue_number(0, 41)</code></td><td>not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(chain-id-for-shelxl-residue-number 0 41)</code></td><td>not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>write_shelx_ins_file(0, "tut.ins")</code>, then <code>imol_s = read_shelx_ins_file("tut.ins", 0)</code>, then <code>chain_id_for_shelxl_residue_number(imol_s, 1041)</code></td><td>ran, returned <code>'B'</code></td></tr>
+<tr><td>Scheme</td><td>first <code>(write-shelx-ins-file 0 "tut.ins")</code>, then <code>(define imol-s (read-shelx-ins-file "tut.ins" 0))</code>, then <code>(chain-id-for-shelxl-residue-number imol-s 1041)</code></td><td>ran, returned <code>"B"</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: the chain that holds SHELXL residue number 1041 (chain B's residues get +1000 in the .ins file); False if none.</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="handle_shelx_fcf_file_internal">handle_shelx_fcf_file_internal</h3>
 <p>Python: <code>handle_shelx_fcf_file_internal(filename)</code><br>
 Scheme: <code>(handle-shelx-fcf-file-internal filename)</code></p>
 <p>for shelx fcf file that needs to be filtered:</p>
 <p>Arguments: filename (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>handle_shelx_fcf_file_internal("tutorial-modern.pdb")</code></td><td>not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(handle-shelx-fcf-file-internal "tutorial-modern.pdb")</code></td><td>not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>handle_shelx_fcf_file_internal("rnasa-sm-data.cif")</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, rnasa-sm-data.cif SigmaA); new molecule 4 (map, rnasa-sm-data.cif Diff-SigmaA); graphics_n_molecules(): 3 -&gt; 5; scroll_wheel_map(): -1 -&gt; 3</td></tr>
+<tr><td>Scheme</td><td><code>(handle-shelx-fcf-file-internal "rnasa-sm-data.cif")</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, rnasa-sm-data.cif SigmaA); new molecule 4 (map, rnasa-sm-data.cif Diff-SigmaA); graphics_n_molecules(): 3 -&gt; 5; scroll_wheel_map(): -1 -&gt; 3</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: same as read_small_molecule_data_cif (that is all it does in 0.9.8.96): returns the SigmaA map molecule number of a SHELXL .fcf (LIST 6) / data CIF.</p>
+<p>Note: rnasa-sm.cif and rnasa-sm-data.cif (in test-data) are a small-molecule style CIF made from residues A39-41 of the test model and the rnasa reflections, only to show the call.</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="is_shelx_molecule">is_shelx_molecule</h3>
 <p>Python: <code>is_shelx_molecule(imol)</code><br>
 Scheme: <code>(is-shelx-molecule imol)</code></p>
 <p>return 1 for yes, 0 for invalid imol or no.</p>
 <p>Arguments: imol (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>is_shelx_molecule(0)</code></td><td>not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(is-shelx-molecule 0)</code></td><td>not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>write_shelx_ins_file(0, "tut.ins")</code>, then <code>imol_s = read_shelx_ins_file("tut.ins", 0)</code>, then <code>is_shelx_molecule(imol_s)</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td>first <code>(write-shelx-ins-file 0 "tut.ins")</code>, then <code>(define imol-s (read-shelx-ins-file "tut.ins" 0))</code>, then <code>(is-shelx-molecule imol-s)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: 1 for a molecule read from a SHELXL .ins file, 0 for a PDB model such as molecule 0.</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="read_shelx_ins_file">read_shelx_ins_file</h3>
 <p>Python: <code>read_shelx_ins_file(filename, recentre_flag)</code><br>
 Scheme: <code>(read-shelx-ins-file filename recentre-flag)</code></p>
 <p>read a SHELXL .ins file</p>
 <p>Arguments: filename (text), recentre_flag (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_shelx_ins_file("tutorial-modern.pdb", 1)</code></td><td>not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(read-shelx-ins-file "tutorial-modern.pdb" 1)</code></td><td>not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>write_shelx_ins_file(0, "tut.ins")</code>, then <code>read_shelx_ins_file("tut.ins", 0)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (model, tut.ins); graphics_n_molecules(): 3 -&gt; 4</td></tr>
+<tr><td>Scheme</td><td>first <code>(write-shelx-ins-file 0 "tut.ins")</code>, then <code>(read-shelx-ins-file "tut.ins" 0)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (model, tut.ins); graphics_n_molecules(): 3 -&gt; 4</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the new molecule number of the model read from the .ins file (recentre flag 0: the view stays).</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="write_shelx_ins_file">write_shelx_ins_file</h3>
 <p>Python: <code>write_shelx_ins_file(imol, filename)</code><br>
 Scheme: <code>(write-shelx-ins-file imol filename)</code></p>
 <p>write a SHELXL .ins file for molecule number imol</p>
 <p>Arguments: imol (a whole number), filename (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>write_shelx_ins_file(0, "tutorial-modern.pdb")</code></td><td>not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(write-shelx-ins-file 0 "tutorial-modern.pdb")</code></td><td>not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>write_shelx_ins_file(0, "tut.ins")</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(write-shelx-ins-file 0 "tut.ins")</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns 1 and writes molecule 0 as a SHELXL .ins file.</p>
+<p>Python and Scheme gave the same answer.</p>
 </body></html>

@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="bd66b5576ba20d9fec7cd2bca49bfdae299bebe1">
+<meta name="coot0-source-sha1" content="b34b8a52dc973ae0cb528a8dd506fdd5044e603f">
 <title>single-model view - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -22,31 +22,35 @@ table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; 
 Scheme: <code>(handle-go-to-residue-keyboarding-mode text)</code></p>
 <p>Arguments: text (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>handle_go_to_residue_keyboarding_mode("hello")</code></td><td>error: TypeError: in method 'handle_go_to_residue_keyboarding_mode', argument 1 of type 'gchar const *'</td></tr>
-<tr><td>Scheme</td><td><code>(handle-go-to-residue-keyboarding-mode "hello")</code></td><td>error: In procedure handle-go-to-residue-keyboarding-mode: Wrong type argument in position 1: "hello"</td></tr></tbody></table>
+<tr><td>Python</td><td><code>handle_go_to_residue_keyboarding_mode("A 41")</code></td><td>not run: not callable from scripting: the gchar* argument type is not wrapped in either language (GUI callback)</td></tr>
+<tr><td>Scheme</td><td><code>(handle-go-to-residue-keyboarding-mode "A 41")</code></td><td>not run: not callable from scripting: the gchar* argument type is not wrapped in either language (GUI callback)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: callback of the keyboarding-mode entry (goes to the typed residue); not usable from scripts: its gchar* argument is not wrapped. Use set_go_to_atom_chain_residue_atom_name("A", 41, " CA ").</p>
 <h3 id="run_update_self_maybe">run_update_self_maybe</h3>
 <p>Python: <code>run_update_self_maybe()</code><br>
 Scheme: <code>(run-update-self-maybe)</code></p>
 <p>this function is here because it is called by c_inner_main() (ie. need a c interface).</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>run_update_self_maybe()</code></td><td>not run: not run automatically (run: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(run-update-self-maybe)</code></td><td>not run: not run automatically (run: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>run_update_self_maybe()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(run-update-self-maybe)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: does nothing unless Coot was started with --update-self (then it would download a new upstream build over the network: not useful for this port).</p>
+<p>Note: Harmless when called; the --update-self path itself needs the network and would replace upstream binaries.</p>
 <h3 id="show_go_to_residue_keyboarding_mode_window">show_go_to_residue_keyboarding_mode_window</h3>
 <p>Python: <code>show_go_to_residue_keyboarding_mode_window()</code><br>
 Scheme: <code>(show-go-to-residue-keyboarding-mode-window)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>show_go_to_residue_keyboarding_mode_window()</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
-<tr><td>Scheme</td><td><code>(show-go-to-residue-keyboarding-mode-window)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>show_go_to_residue_keyboarding_mode_window()</code></td><td>not run: needs the graphics window (stops Coot without a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(show-go-to-residue-keyboarding-mode-window)</code></td><td>not run: needs the graphics window (stops Coot without a screen)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: opens the small 'go to residue' entry window used by keyboard navigation.</p>
 <h3 id="single_model_view_model_number">single_model_view_model_number</h3>
 <p>Python: <code>single_model_view_model_number(imol, imodel)</code><br>
 Scheme: <code>(single-model-view-model-number imol imodel)</code></p>
 <p>put molecule number imol to display only model number imodel</p>
 <p>Arguments: imol (a whole number), imodel (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>single_model_view_model_number(0, 1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(single-model-view-model-number 0 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>single_model_view_model_number(0, 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(single-model-view-model-number 0 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="single_model_view_next_model_number">single_model_view_next_model_number</h3>
 <p>Python: <code>single_model_view_next_model_number(imol)</code><br>
 Scheme: <code>(single-model-view-next-model-number imol)</code></p>
@@ -54,8 +58,9 @@ Scheme: <code>(single-model-view-next-model-number imol)</code></p>
 <p>return 0 on non-multimodel-molecule.</p>
 <p>Arguments: imol (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>single_model_view_next_model_number(0)</code></td><td>ran, returned <code>0</code></td></tr>
-<tr><td>Scheme</td><td><code>(single-model-view-next-model-number 0)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>L = [l for l in open("tutorial-modern.pdb") if l.startswith("ATOM")][:60]</code>, then <code>open("two-models.pdb", "w").write("MODEL        1\n" + "".join(L) + "ENDMDL\nMODEL        2\n" + "".join(L) + "ENDMDL\nEND\n")</code>, then <code>imol_m = read_pdb("two-models.pdb")</code>, then <code>single_model_view_next_model_number(imol_m)</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td>first <code>(use-modules (ice-9 rdelim))</code>, then <code>(call-with-output-file "two-models.pdb" (lambda (p) (let ((L (call-with-input-file "tutorial-modern.pdb" (lambda (i) (let loop ((acc '())) (let ((l (read-line i ...</code>, then <code>(define imol-m (read-pdb "two-models.pdb"))</code>, then <code>(single-model-view-next-model-number imol-m)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: shows only the next model and returns its number (1); 0 for a single-model molecule.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="single_model_view_prev_model_number">single_model_view_prev_model_number</h3>
 <p>Python: <code>single_model_view_prev_model_number(imol)</code><br>
@@ -64,8 +69,9 @@ Scheme: <code>(single-model-view-prev-model-number imol)</code></p>
 <p>return 0 on non-multimodel-molecule.</p>
 <p>Arguments: imol (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>single_model_view_prev_model_number(0)</code></td><td>ran, returned <code>0</code></td></tr>
-<tr><td>Scheme</td><td><code>(single-model-view-prev-model-number 0)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>L = [l for l in open("tutorial-modern.pdb") if l.startswith("ATOM")][:60]</code>, then <code>open("two-models.pdb", "w").write("MODEL        1\n" + "".join(L) + "ENDMDL\nMODEL        2\n" + "".join(L) + "ENDMDL\nEND\n")</code>, then <code>imol_m = read_pdb("two-models.pdb")</code>, then <code>single_model_view_next_model_number(imol_m)</code>, then <code>single_model_view_prev_model_number(imol_m)</code></td><td>ran, returned <code>2</code></td></tr>
+<tr><td>Scheme</td><td>first <code>(use-modules (ice-9 rdelim))</code>, then <code>(call-with-output-file "two-models.pdb" (lambda (p) (let ((L (call-with-input-file "tutorial-modern.pdb" (lambda (i) (let loop ((acc '())) (let ((l (read-line i ...</code>, then <code>(define imol-m (read-pdb "two-models.pdb"))</code>, then <code>(single-model-view-next-model-number imol-m)</code>, then <code>(single-model-view-prev-model-number imol-m)</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: shows only the previous model (wrapping round: 1 -&gt; 2) and returns its number; 0 for a single-model molecule.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="single_model_view_this_model_number">single_model_view_this_model_number</h3>
 <p>Python: <code>single_model_view_this_model_number(imol)</code><br>
@@ -74,7 +80,8 @@ Scheme: <code>(single-model-view-this-model-number imol)</code></p>
 <p>return 0 on non-multimodel-molecule.</p>
 <p>Arguments: imol (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>single_model_view_this_model_number(0)</code></td><td>ran, returned <code>0</code></td></tr>
-<tr><td>Scheme</td><td><code>(single-model-view-this-model-number 0)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>L = [l for l in open("tutorial-modern.pdb") if l.startswith("ATOM")][:60]</code>, then <code>open("two-models.pdb", "w").write("MODEL        1\n" + "".join(L) + "ENDMDL\nMODEL        2\n" + "".join(L) + "ENDMDL\nEND\n")</code>, then <code>imol_m = read_pdb("two-models.pdb")</code>, then <code>single_model_view_next_model_number(imol_m)</code>, then <code>single_model_view_this_model_number(imol_m)</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td>first <code>(use-modules (ice-9 rdelim))</code>, then <code>(call-with-output-file "two-models.pdb" (lambda (p) (let ((L (call-with-input-file "tutorial-modern.pdb" (lambda (i) (let loop ((acc '())) (let ((l (read-line i ...</code>, then <code>(define imol-m (read-pdb "two-models.pdb"))</code>, then <code>(single-model-view-next-model-number imol-m)</code>, then <code>(single-model-view-this-model-number imol-m)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: the model number shown in single-model view (1 after one 'next'); 0 when all models are shown or the molecule has one model.</p>
 <p>Python and Scheme gave the same answer.</p>
 </body></html>

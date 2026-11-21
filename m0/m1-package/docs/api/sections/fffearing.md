@@ -32,8 +32,10 @@ Arguments: imol_model (a whole number), imol_map (a whole number). Returns: a wh
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `fffear_search(0, 1)` | no answer within 60 s (slow, or waits for something) |
-| Scheme | `(fffear-search 0 1)` | no answer within 60 s (slow, or waits for something) |
+| Python | first `imol = new_molecule_by_atom_selection(0, "//A/41-45")`, then `fffear_search(imol, 1)` | not run: long run: 203 s even for a 5-residue search model |
+| Scheme | first `(new-molecule-by-atom-selection 0 "//A/41-45")`, then `(fffear-search 3 1)` | not run: long run: 203 s even for a 5-residue search model |
+
+Example written and checked by hand on the test data. Expected: returns the new map molecule of the FFFear search score of the model fragment in map 1.
 
 ### set_fffear_angular_resolution
 
@@ -46,6 +48,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_fffear_angular_resolution(1.0)` | ran (no return value) |
-| Scheme | `(set-fffear-angular-resolution 1.0)` | ran (no return value) |
+| Python | `set_fffear_angular_resolution(1.0)` | ran (no return value); changed: fffear_angular_resolution(): 15 -> 1 |
+| Scheme | `(set-fffear-angular-resolution 1.0)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: fffear_angular_resolution was 15.0, set to 23.0, read back 23.0; Scheme: fffear-angular-resolution was 15.0, set to 23.0, read back 23.0.
 

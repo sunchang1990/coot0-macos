@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="f7c1c60f0b73885ab51e63913d911a48745dfa34">
+<meta name="coot0-source-sha1" content="962a81e90e922348a813293c808084c72948325c">
 <title>Using S-expression molecules - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -89,14 +89,15 @@ Also available in Python as <code>get_environment_distances_representation_py</c
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>get_intermediate_atoms_bonds_representation()</code></td><td>ran, returned <code>False</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: False when no refinement is in progress (there are no intermediate atoms); during an interactive refinement it returns the bonds of the moving atoms. (Python only.).</p>
 <h3 id="label_closest_atoms_in_neighbour_residues_py">label_closest_atoms_in_neighbour_residues_py</h3>
 <p>Python: <code>label_closest_atoms_in_neighbour_residues_py(imol, residue_spec_py, radius)</code><br>
 Scheme: <code>(label-closest-atoms-in-neighbour-residues-scm imol residue-spec-scm radius)</code></p>
 <p>label the closest atoms in the residues that neighbour residue_spec</p>
 <p>Arguments: imol (a whole number), residue_spec_py (a list or value), radius (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>label_closest_atoms_in_neighbour_residues_py(0, ["A", 41, ""], 5.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(label-closest-atoms-in-neighbour-residues-scm 0 (list "A" 41 "") 5.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>label_closest_atoms_in_neighbour_residues_py(0, ["A", 41, ""], 5.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(label-closest-atoms-in-neighbour-residues-scm 0 (list "A" 41 "") 5.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="residues_near_position">residues_near_position</h3>
 <p>Python: <code>residues_near_position(imol, pos_in, radius)</code><br>
 Scheme: <code>(residues-near-position imol pos radius)</code></p>
@@ -106,8 +107,10 @@ closer than radius Angstroems to the given position.</p>
 Also available in Python as <code>residues_near_position_py</code>.
 Also available in Scheme as <code>residues-near-position-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>residues_near_position(0, [48.3, 7.4, 16.9], 4.0)</code></td><td>ran, returned <code>[[True, 'A', 37, ''], [True, 'A', 38, ''], [True, 'A', 39, ''], [True, 'A', 40, ''], [True, 'A', 41, '']]</code></td></tr>
+<tr><td>Scheme</td><td><code>(residues-near-position 0 (list 48.3 7.4 16.9) 4.0)</code></td><td>ran, returned <code>((#t "A" 41 "") (#t "A" 40 "") (#t "A" 39 "") (#t "A" 38 "") (#t "A" 37 ""))</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: the residue specs with an atom within 4 A of the point (the CA of A39): A37-A41. Order differs between the languages.</p>
+<p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 <h3 id="residues_near_residues">residues_near_residues</h3>
 <p>Python: <code>residues_near_residues(imol, residues_in, radius)</code><br>
 Scheme: <code>(residues-near-residues imol residues-in radius)</code></p>
@@ -118,7 +121,7 @@ specified by residues_in.</p>
 Also available in Python as <code>residues_near_residues_py</code>.
 Also available in Scheme as <code>residues-near-residues-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>residues_near_residues(0, [["A", 41, ""], ["A", 42, ""]], 5.0)</code></td><td>ran, returned <code>[[['A', 41, ''], [['A', 37, ''], ['A', 39, ''], ['A', 40, ''], ['A', 42, ''], ['A', 43, ''], ['A', 44, ''], ['A', 86, '' ...</code></td></tr>
-<tr><td>Scheme</td><td><code>(residues-near-residues 0 (list (list "A" 41 "") (list "A" 42 "")) 5.0)</code></td><td>ran, returned <code>(((#t "A" 42 "") ((#t "B" 60 "") (#t "B" 58 "") (#t "A" 46 "") (#t "A" 44 "") (#t "A" 43 "") (#t "A" 41 "") (#t "A" 40 " ...</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>residues_near_residues(0, [["A", 41, ""], ["A", 42, ""]], 5.0)</code></td><td>ran, returned <code>[[['A', 42, ''], [['A', 46, ''], ['A', 44, ''], ['A', 43, ''], ['A', 41, ''], ['A', 40, ''], ['A', 39, ''], ['B', 58, '' ...</code></td></tr>
+<tr><td>Scheme</td><td><code>(residues-near-residues 0 (list (list "A" 41 "") (list "A" 42 "")) 5.0)</code></td><td>ran, returned <code>(((#t "A" 41 "") ((#t "B" 61 "") (#t "A" 37 "") (#t "A" 39 "") (#t "A" 40 "") (#t "A" 42 "") (#t "A" 43 "") (#t "A" 44 " ...</code></td></tr></tbody></table>
 <p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 </body></html>

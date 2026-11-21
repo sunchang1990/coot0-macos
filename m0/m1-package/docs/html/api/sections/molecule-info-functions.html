@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="69fe7357d278164db7c7abe387cd9e24076d5968">
+<meta name="coot0-source-sha1" content="9e759419b90eb0f6827e7a1ef887ef840881cea1">
 <title>Molecule Info Functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -24,8 +24,8 @@ Scheme: <code>(add-header-secondary-structure-info imol)</code></p>
  internal representation of the model</p>
 <p>Arguments: imol (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>add_header_secondary_structure_info(0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(add-header-secondary-structure-info 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>add_header_secondary_structure_info(0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(add-header-secondary-structure-info 0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="add_ligand_delete_residue_copy_molecule">add_ligand_delete_residue_copy_molecule</h3>
 <p>Python: <code>add_ligand_delete_residue_copy_molecule(imol_ligand_new, chain_id_ligand_new, resno_ligand_new, imol_current, chain_id_ligand_current, resno_ligand_current)</code><br>
 Scheme: <code>(add-ligand-delete-residue-copy-molecule imol-ligand-new chain-id-ligand-new resno-ligand-new imol-current chain-id-ligand-current resno-ligand-current)</code></p>
@@ -37,8 +37,8 @@ Scheme: <code>(add-ligand-delete-residue-copy-molecule imol-ligand-new chain-id-
  ligand/residue is deleted.</p>
 <p>Arguments: imol_ligand_new (a whole number), chain_id_ligand_new (text), resno_ligand_new (a whole number), imol_current (a whole number), chain_id_ligand_current (text), resno_ligand_current (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>add_ligand_delete_residue_copy_molecule(0, "B", 41, 0, "A", 41)</code></td><td>ran, returned <code>2</code></td></tr>
-<tr><td>Scheme</td><td><code>(add-ligand-delete-residue-copy-molecule 0 "B" 41 0 "A" 41)</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>add_ligand_delete_residue_copy_molecule(0, "B", 41, 0, "A", 41)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (model, Copy_of_0_with_A41_replaced); graphics_n_molecules(): 3 -&gt; 4</td></tr>
+<tr><td>Scheme</td><td><code>(add-ligand-delete-residue-copy-molecule 0 "B" 41 0 "A" 41)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (model, Copy_of_0_with_A41_replaced); graphics_n_molecules(): 3 -&gt; 4</td></tr></tbody></table>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="chain_id">chain_id</h3>
 <p>Python: <code>chain_id(imol, ichain)</code><br>
@@ -69,8 +69,8 @@ Return -1 on failure to copy molecule (out of range, or molecule is
 closed)</p>
 <p>Arguments: imol (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>copy_molecule(0)</code></td><td>ran, returned <code>2</code></td></tr>
-<tr><td>Scheme</td><td><code>(copy-molecule 0)</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>copy_molecule(0)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (model, Copy_of_tutorial-modern.pdb); graphics_n_molecules(): 3 -&gt; 4</td></tr>
+<tr><td>Scheme</td><td><code>(copy-molecule 0)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (model, Copy_of_tutorial-modern.pdb); graphics_n_molecules(): 3 -&gt; 4</td></tr></tbody></table>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="exchange_chain_ids_for_seg_ids">exchange_chain_ids_for_seg_ids</h3>
 <p>Python: <code>exchange_chain_ids_for_seg_ids(imol)</code><br>
@@ -83,8 +83,10 @@ one char in the chainid, so after we read in a pdb, let's replace the
 chain ids with the segids. Will that help?</p>
 <p>Arguments: imol (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>exchange_chain_ids_for_seg_ids(0)</code></td><td>ran, returned <code>0</code></td></tr>
-<tr><td>Scheme</td><td><code>(exchange-chain-ids-for-seg-ids 0)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>exchange_chain_ids_for_seg_ids(0)</code></td><td>ran, returned <code>0</code>; changed: molecule 0: added 96 residue(s) (_1, _2, _3, _4 ...); molecule 0: deleted 189 residue(s) (A1, A2, A3, A4 ...); n_chains(0): 2 -&gt; 1</td></tr>
+<tr><td>Scheme</td><td><code>(exchange-chain-ids-for-seg-ids 0)</code></td><td>ran, returned <code>0</code>; changed: molecule 0: added 96 residue(s) (_1, _2, _3, _4 ...); molecule 0: deleted 189 residue(s) (A1, A2, A3, A4 ...); n_chains(0): 2 -&gt; 1</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: sets each chain id to the segment id of its atoms; with blank segids (as in this file) the chains merge into one blank chain.</p>
+<p>Note: destructive on files without segids: chains A and B collapse into one and residues with the same number are lost (189 -&gt; 96); there is no check</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="insertion_code_from_serial_number">insertion_code_from_serial_number</h3>
 <p>Python: <code>insertion_code_from_serial_number(imol, chain_id, serial_num)</code><br>
@@ -149,6 +151,8 @@ Scheme: <code>(model-composition-statistics-scm imol)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>model_composition_statistics_py(0)</code></td><td>ran, returned <code>False</code></td></tr>
 <tr><td>Scheme</td><td><code>(model-composition-statistics-scm 0)</code></td><td>ran, returned <code>()</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: unimplemented in 0.9.8.96: returns False (Python) / () (Scheme).</p>
+<p>Note: model_composition_statistics_py is a stub (c-interface-analysis.cc:307 always returns False); Scheme returns ()</p>
 <p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 <h3 id="molecule_centre_internal">molecule_centre_internal</h3>
 <p>Python: <code>molecule_centre_internal(imol, iaxis)</code><br>
@@ -157,8 +161,8 @@ Scheme: <code>(molecule-centre-internal imol iaxis)</code></p>
 <p>Returns status, less than -9999 is for failure (eg. bad imol);</p>
 <p>Arguments: imol (a whole number), iaxis (a whole number). Returns: a number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>molecule_centre_internal(0, 1)</code></td><td>ran, returned <code>8.679085731506348</code></td></tr>
-<tr><td>Scheme</td><td><code>(molecule-centre-internal 0 1)</code></td><td>ran, returned <code>8.679085731506348</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>molecule_centre_internal(0, 1)</code></td><td>ran, returned <code>8.686544418334961</code></td></tr>
+<tr><td>Scheme</td><td><code>(molecule-centre-internal 0 1)</code></td><td>ran, returned <code>8.686544418334961</code></td></tr></tbody></table>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="n_atoms">n_atoms</h3>
 <p>Python: <code>n_atoms(imol)</code><br>
@@ -209,8 +213,8 @@ Scheme: <code>(print-header-secondary-structure-info imol)</code></p>
  terminal/console. In future, this could/should return the info.</p>
 <p>Arguments: imol (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>print_header_secondary_structure_info(0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(print-header-secondary-structure-info 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>print_header_secondary_structure_info(0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(print-header-secondary-structure-info 0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="python_representation_kk">python_representation_kk</h3>
 <p>Python: <code>python_representation_kk(imol)</code></p>
 <p>Arguments: imol (a whole number). Returns: a value (see the result of the example).
@@ -234,8 +238,8 @@ Scheme: <code>(remarks-dialog imol)</code></p>
 <p>a gui dialog showing remarks header info (for a model molecule).</p>
 <p>Arguments: imol (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>remarks_dialog(0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(remarks-dialog 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>remarks_dialog(0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(remarks-dialog 0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="residue_centre">residue_centre</h3>
 <p>Python: <code>residue_centre(imol, chain_id, resno, ins_code)</code><br>
 Scheme: <code>(residue-centre imol chain-id resno ins-code)</code></p>
@@ -263,24 +267,24 @@ Scheme: <code>(show-remarks-browswer)</code></p>
 <p>show the remarks browser</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>show_remarks_browswer()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(show-remarks-browswer)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>show_remarks_browswer()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(show-remarks-browswer)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="sort_chains">sort_chains</h3>
 <p>Python: <code>sort_chains(imol)</code><br>
 Scheme: <code>(sort-chains imol)</code></p>
 <p>sort the chain ids of the imol-th molecule in lexographical order</p>
 <p>Arguments: imol (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>sort_chains(0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(sort-chains 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>sort_chains(0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(sort-chains 0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="sort_residues">sort_residues</h3>
 <p>Python: <code>sort_residues(imol)</code><br>
 Scheme: <code>(sort-residues imol)</code></p>
 <p>sort the residues of the imol-th molecule</p>
 <p>Arguments: imol (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>sort_residues(0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(sort-residues 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>sort_residues(0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(sort-residues 0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="write_header_secondary_structure_info">write_header_secondary_structure_info</h3>
 <p>Python: <code>write_header_secondary_structure_info(imol, file_name)</code><br>
 Scheme: <code>(write-header-secondary-structure-info imol file-name)</code></p>
@@ -290,6 +294,6 @@ Scheme: <code>(write-header-secondary-structure-info imol file-name)</code></p>
  CHelix, CStrand, CSheet records.</p>
 <p>Arguments: imol (a whole number), file_name (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>write_header_secondary_structure_info(0, "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(write-header-secondary-structure-info 0 "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>write_header_secondary_structure_info(0, "tutorial-modern.pdb")</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(write-header-secondary-structure-info 0 "tutorial-modern.pdb")</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 </body></html>

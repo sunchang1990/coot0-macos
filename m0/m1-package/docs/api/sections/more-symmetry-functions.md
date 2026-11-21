@@ -13,8 +13,8 @@ Arguments: imol (a whole number), r_00 (a number), r_01 (a number), r_02 (a numb
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `add_molecular_symmetry(0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)` | ran (no return value) |
-| Scheme | `(add-molecular-symmetry 0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0)` | ran (no return value) |
+| Python | `add_molecular_symmetry(0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(add-molecular-symmetry 0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0)` | ran (no return value, nothing visible changed) |
 
 ### add_molecular_symmetry_from_mtrix_from_file
 
@@ -25,8 +25,10 @@ Arguments: imol (a whole number), file_name (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `add_molecular_symmetry_from_mtrix_from_file(0, "tutorial-modern.pdb")` | ran, returned `0` |
-| Scheme | `(add-molecular-symmetry-from-mtrix-from-file 0 "tutorial-modern.pdb")` | ran, returned `0` |
+| Python | first `open("mtrix.pdb", "w").write("MTRIX1   2 -1.000000  0.000000  0.000000       60.00000\nMTRIX2   2  0.000000 -1.000000  0.000000       40.00000\nMTRIX3   2  0.00 ...`, then `add_molecular_symmetry_from_mtrix_from_file(0, "mtrix.pdb")` | ran, returned `0` |
+| Scheme | first `(call-with-output-file "mtrix.pdb" (lambda (port) (display "MTRIX1   2 -1.000000  0.000000  0.000000       60.00000\nMTRIX2   2  0.000000 -1.000000  0.000000    ...`, then `(add-molecular-symmetry-from-mtrix-from-file 0 "mtrix.pdb")` | ran, returned `0` |
+
+Example written and checked by hand on the test data. Expected: reads MTRIX records from the file and adds them as molecular symmetry of molecule 0 (drawn as extra copies); always returns 0.
 
 Python and Scheme gave the same answer.
 
@@ -41,6 +43,8 @@ Arguments: imol (a whole number). Returns: a whole number.
 |---|---|---|
 | Python | `add_molecular_symmetry_from_mtrix_from_self_file(0)` | ran, returned `0` |
 | Scheme | `(add-molecular-symmetry-from-mtrix-from-self-file 0)` | ran, returned `0` |
+
+Example written and checked by hand on the test data. Expected: adds molecular symmetry from the MTRIX records of the molecule's own PDB file; always returns 0 (nothing happens when the file has no MTRIX).
 
 Python and Scheme gave the same answer.
 
@@ -59,8 +63,10 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `clashes_with_symmetry(0, "A", 41, "", 1.0)` | ran, returned `0` |
-| Scheme | `(clashes-with-symmetry 0 "A" 41 "" 1.0)` | ran, returned `0` |
+| Python | `clashes_with_symmetry(0, "A", 41, "", 3.5)` | ran, returned `1` |
+| Scheme | `(clashes-with-symmetry 0 "A" 41 "" 3.5)` | ran, returned `1` |
+
+Example written and checked by hand on the test data. Expected: returns 1 if residue A41 has symmetry-related atoms closer than the distance, 0 if not, -1 for no residue/no symmetry.
 
 Python and Scheme gave the same answer.
 

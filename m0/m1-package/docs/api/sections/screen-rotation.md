@@ -15,8 +15,8 @@ Arguments: nsteps (a whole number), stepsize (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `rotate_x_scene(1, 1.0)` | ran (no return value) |
-| Scheme | `(rotate-x-scene 1 1.0)` | ran (no return value) |
+| Python | `rotate_x_scene(1, 1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(rotate-x-scene 1 1.0)` | ran (no return value, nothing visible changed) |
 
 ### rotate_y_scene
 
@@ -29,8 +29,8 @@ Arguments: nsteps (a whole number), stepsize (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `rotate_y_scene(1, 1.0)` | ran (no return value) |
-| Scheme | `(rotate-y-scene 1 1.0)` | ran (no return value) |
+| Python | `rotate_y_scene(1, 1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(rotate-y-scene 1 1.0)` | ran (no return value, nothing visible changed) |
 
 ### rotate_z_scene
 
@@ -43,8 +43,8 @@ Arguments: nsteps (a whole number), stepsize (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `rotate_z_scene(1, 1.0)` | ran (no return value) |
-| Scheme | `(rotate-z-scene 1 1.0)` | ran (no return value) |
+| Python | `rotate_z_scene(1, 1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(rotate-z-scene 1 1.0)` | ran (no return value, nothing visible changed) |
 
 ### spin_zoom_trans
 
@@ -64,6 +64,6 @@ Arguments: axis (a whole number), nstep (a whole number), stepsize (a number), z
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `spin_zoom_trans(1, 1, 1.0, 100.0, 1.0, 1.0, 1.0)` | ran (no return value) |
-| Scheme | `(spin-zoom-trans 1 1 1.0 100.0 1.0 1.0 1.0)` | ran (no return value) |
+| Python | `spin_zoom_trans(1, 1, 1.0, 100.0, 1.0, 1.0, 1.0)` | ran (no return value); changed: rotation centre moved 1.7 A to (42.6, 9.7, 13.9); zoom: 100.0 -> 10000.0 |
+| Scheme | `(spin-zoom-trans 1 1 1.0 100.0 1.0 1.0 1.0)` | ran (no return value); changed: rotation centre moved 1.7 A to (43.6, 10.7, 14.9); zoom: 10000.0 -> 1000000.0 |
 

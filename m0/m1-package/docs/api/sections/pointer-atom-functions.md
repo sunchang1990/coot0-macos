@@ -16,8 +16,8 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `create_pointer_atom_molecule_maybe()` | ran, returned `2` |
-| Scheme | `(create-pointer-atom-molecule-maybe)` | ran, returned `2` |
+| Python | `create_pointer_atom_molecule_maybe()` | ran, returned `3`; changed: graphics_n_molecules(): 3 -> 4 |
+| Scheme | `(create-pointer-atom-molecule-maybe)` | ran, returned `3`; changed: graphics_n_molecules(): 3 -> 4 |
 
 Python and Scheme gave the same answer.
 
@@ -30,8 +30,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `display_where_is_pointer()` | ran (no return value) |
-| Scheme | `(display-where-is-pointer)` | ran (no return value) |
+| Python | `display_where_is_pointer()` | ran (no return value, nothing visible changed) |
+| Scheme | `(display-where-is-pointer)` | ran (no return value, nothing visible changed) |
 
 ### place_atom_at_pointer
 
@@ -42,8 +42,10 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `place_atom_at_pointer()` | stopped Coot when tried without a window (not checked with a window) |
-| Scheme | `(place-atom-at-pointer)` | stopped Coot when tried without a window (not checked with a window) |
+| Python | `place_atom_at_pointer()` | not run: needs the graphics window (stops Coot without a screen) |
+| Scheme | `(place-atom-at-pointer)` | not run: needs the graphics window (stops Coot without a screen) |
+
+Example written and checked by hand on the test data. Expected: opens the Place Atom at Pointer dialog (choose atom type and molecule).
 
 ### place_atom_at_pointer_by_window
 
@@ -56,8 +58,10 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `place_atom_at_pointer_by_window()` | stopped Coot when tried without a window (not checked with a window) |
-| Scheme | `(place-atom-at-pointer-by-window)` | stopped Coot when tried without a window (not checked with a window) |
+| Python | `place_atom_at_pointer_by_window()` | not run: needs the graphics window (stops Coot without a screen) |
+| Scheme | `(place-atom-at-pointer-by-window)` | not run: needs the graphics window (stops Coot without a screen) |
+
+Example written and checked by hand on the test data. Expected: opens the Place Atom at Pointer dialog.
 
 ### place_typed_atom_at_pointer
 
@@ -68,8 +72,8 @@ Arguments: type (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `place_typed_atom_at_pointer("ALA")` | ran (no return value) |
-| Scheme | `(place-typed-atom-at-pointer "ALA")` | ran (no return value) |
+| Python | `place_typed_atom_at_pointer("ALA")` | ran (no return value); changed: molecule 0: added 1 residue(s) (C1); n_chains(0): 2 -> 3; n_residues(0): 189 -> 190 |
+| Scheme | `(place-typed-atom-at-pointer "ALA")` | ran (no return value); changed: molecule 0: added 1 residue(s) (C2); n_residues(0): 190 -> 191 |
 
 ### pointer_atom_molecule
 
@@ -85,6 +89,8 @@ Arguments: none. Returns: a whole number.
 | Python | `pointer_atom_molecule()` | ran, returned `-1` |
 | Scheme | `(pointer-atom-molecule)` | ran, returned `-1` |
 
+Example written and checked by hand on the test data. Expected: returns the molecule of the pointer atom; -1 when none is placed (fresh Coot).
+
 Python and Scheme gave the same answer.
 
 ### set_pointer_atom_is_dummy
@@ -98,8 +104,8 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_pointer_atom_is_dummy(1)` | ran (no return value) |
-| Scheme | `(set-pointer-atom-is-dummy 1)` | ran (no return value) |
+| Python | `set_pointer_atom_is_dummy(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-pointer-atom-is-dummy 1)` | ran (no return value, nothing visible changed) |
 
 ### set_pointer_atom_molecule
 
@@ -110,6 +116,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_pointer_atom_molecule(0)` | ran (no return value) |
-| Scheme | `(set-pointer-atom-molecule 0)` | ran (no return value) |
+| Python | `set_pointer_atom_molecule(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-pointer-atom-molecule 0)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back; NOT all read back): Python: pointer_atom_molecule was -1, set to 0, read back 0; Scheme: pointer-atom-molecule was 0, set to 1, read back 0 (not taken).
 

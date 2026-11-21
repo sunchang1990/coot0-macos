@@ -45,8 +45,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `debug_dictionary()` | ran (no return value) |
-| Scheme | `(debug-dictionary)` | ran (no return value) |
+| Python | `debug_dictionary()` | ran (no return value, nothing visible changed) |
+| Scheme | `(debug-dictionary)` | ran (no return value, nothing visible changed) |
 
 ### dictionaries_read
 

@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="a933af2208b43c66216091946849a11669057116">
+<meta name="coot0-source-sha1" content="7fb74b43f7e82c8142802fa232568a077c4df13f">
 <title>180 Flip Side chain - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -23,22 +23,24 @@ Scheme: <code>(do-180-degree-side-chain-flip imol chain-id resno inscode altconf
 <p>rotate 180 degrees around the last chi angle</p>
 <p>Arguments: imol (a whole number), chain_id (text), resno (a whole number), inscode (text), altconf (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>do_180_degree_side_chain_flip(0, "A", 41, "", "")</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(do-180-degree-side-chain-flip 0 "A" 41 "" "")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>do_180_degree_side_chain_flip(0, "A", 41, "", "")</code></td><td>ran (no return value); changed: molecule 0: coordinates of 1 residue(s) (A41)</td></tr>
+<tr><td>Scheme</td><td><code>(do-180-degree-side-chain-flip 0 "A" 41 "" "")</code></td><td>ran (no return value); changed: molecule 0: coordinates of 1 residue(s) (A41)</td></tr></tbody></table>
 <h3 id="setup_180_degree_flip">setup_180_degree_flip</h3>
 <p>Python: <code>setup_180_degree_flip(state)</code><br>
 Scheme: <code>(setup-180-degree-flip state)</code></p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>setup_180_degree_flip(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(setup-180-degree-flip 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>setup_180_degree_flip(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(setup-180-degree-flip 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="side_chain_flip_180_intermediate_atoms">side_chain_flip_180_intermediate_atoms</h3>
 <p>Python: <code>side_chain_flip_180_intermediate_atoms()</code><br>
 Scheme: <code>(side-chain-flip-180-intermediate-atoms)</code></p>
 <p>! side-chain 180 flip the terminal chi angle of the residue of the active atom</p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>side_chain_flip_180_intermediate_atoms()</code></td><td>ran, returned <code>0</code></td></tr>
-<tr><td>Scheme</td><td><code>(side-chain-flip-180-intermediate-atoms)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>refine_zone(0, "A", 41, 41, "")</code>, then <code>side_chain_flip_180_intermediate_atoms()</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td>first <code>(refine-zone 0 "A" 41 41 "")</code>, then <code>(side-chain-flip-180-intermediate-atoms)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns 1 when intermediate (moving) atoms exist and the active residue's last chi was flipped; 0 when no refinement is in progress.</p>
+<p>Note: Works only while a refinement's intermediate atoms exist (run in the same step as the refinement in a headless test).</p>
 <p>Python and Scheme gave the same answer.</p>
 </body></html>

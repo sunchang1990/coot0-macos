@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="b8f834911babb336c560a23c11d9a425051fa950">
+<meta name="coot0-source-sha1" content="a8e42eefa990136bc0eae9cc6cb5364ae7485f4c">
 <title>Sequence View Interface - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -23,91 +23,98 @@ Scheme: <code>(add-on-sequence-view-choices)</code></p>
 <p>this is a widget function, it shouldn't be here</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>add_on_sequence_view_choices()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(add-on-sequence-view-choices)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>add_on_sequence_view_choices()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(add-on-sequence-view-choices)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="change_peptide_carbonyl_by">change_peptide_carbonyl_by</h3>
 <p>Python: <code>change_peptide_carbonyl_by(angle)</code><br>
 Scheme: <code>(change-peptide-carbonyl-by angle)</code></p>
 <p>Arguments: angle (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>change_peptide_carbonyl_by(10.0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
-<tr><td>Scheme</td><td><code>(change-peptide-carbonyl-by 10.0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>change_peptide_carbonyl_by(10.0)</code></td><td>not run: needs the graphics window (stops Coot without a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(change-peptide-carbonyl-by 10.0)</code></td><td>not run: needs the graphics window (stops Coot without a screen)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: rotates the carbonyl of the peptide being edited by 10 degrees; only meaningful during an interactive peptide-flip edit in the graphics window.</p>
 <h3 id="change_peptide_carbonyl_by_current_button_pos">change_peptide_carbonyl_by_current_button_pos</h3>
 <p>Python: <code>change_peptide_carbonyl_by_current_button_pos(ix, iy)</code><br>
 Scheme: <code>(change-peptide-carbonyl-by-current-button-pos ix iy)</code></p>
 <p>Arguments: ix (a whole number), iy (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>change_peptide_carbonyl_by_current_button_pos(1, 1)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
-<tr><td>Scheme</td><td><code>(change-peptide-carbonyl-by-current-button-pos 1 1)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>change_peptide_carbonyl_by_current_button_pos(10, 10)</code></td><td>not run: needs the graphics window (stops Coot without a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(change-peptide-carbonyl-by-current-button-pos 10 10)</code></td><td>not run: needs the graphics window (stops Coot without a screen)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: mouse-drag handler: rotates the carbonyl according to the pointer position during an interactive edit.</p>
 <h3 id="change_peptide_peptide_by">change_peptide_peptide_by</h3>
 <p>Python: <code>change_peptide_peptide_by(angle)</code><br>
 Scheme: <code>(change-peptide-peptide-by angle)</code></p>
 <p>in degrees.</p>
 <p>Arguments: angle (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>change_peptide_peptide_by(10.0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
-<tr><td>Scheme</td><td><code>(change-peptide-peptide-by 10.0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>change_peptide_peptide_by(10.0)</code></td><td>not run: needs the graphics window (stops Coot without a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(change-peptide-peptide-by 10.0)</code></td><td>not run: needs the graphics window (stops Coot without a screen)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: rotates the peptide being edited by 10 degrees; only during an interactive edit in the graphics window.</p>
 <h3 id="change_peptide_peptide_by_current_button_pos">change_peptide_peptide_by_current_button_pos</h3>
 <p>Python: <code>change_peptide_peptide_by_current_button_pos(ix, iy)</code><br>
 Scheme: <code>(change-peptide-peptide-by-current-button-pos ix iy)</code></p>
 <p>Arguments: ix (a whole number), iy (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>change_peptide_peptide_by_current_button_pos(1, 1)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
-<tr><td>Scheme</td><td><code>(change-peptide-peptide-by-current-button-pos 1 1)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>change_peptide_peptide_by_current_button_pos(10, 10)</code></td><td>not run: needs the graphics window (stops Coot without a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(change-peptide-peptide-by-current-button-pos 10 10)</code></td><td>not run: needs the graphics window (stops Coot without a screen)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: mouse-drag handler: rotates the peptide according to the pointer position during an interactive edit.</p>
 <h3 id="do_sequence_view">do_sequence_view</h3>
 <p>Python: <code>do_sequence_view(imol)</code><br>
 Scheme: <code>(do-sequence-view imol)</code></p>
 <p>display the sequence view dialog for molecule number imol</p>
 <p>Arguments: imol (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>do_sequence_view(0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
-<tr><td>Scheme</td><td><code>(do-sequence-view 0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>do_sequence_view(0)</code></td><td>not run: needs the graphics window (stops Coot without a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(do-sequence-view 0)</code></td><td>not run: needs the graphics window (stops Coot without a screen)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: opens the sequence view window for molecule 0.</p>
 <h3 id="execute_setup_backbone_torsion_edit">execute_setup_backbone_torsion_edit</h3>
 <p>Python: <code>execute_setup_backbone_torsion_edit(imol, atom_index)</code><br>
 Scheme: <code>(execute-setup-backbone-torsion-edit imol atom-index)</code></p>
 <p>in degress</p>
 <p>Arguments: imol (a whole number), atom_index (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>execute_setup_backbone_torsion_edit(0, 0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(execute-setup-backbone-torsion-edit 0 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>execute_setup_backbone_torsion_edit(0, 0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(execute-setup-backbone-torsion-edit 0 0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="nsv">nsv</h3>
 <p>Python: <code>nsv(imol)</code><br>
 Scheme: <code>(nsv imol)</code></p>
 <p>display the sequence view for molecule number imol</p>
 <p>Arguments: imol (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>nsv(0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
-<tr><td>Scheme</td><td><code>(nsv 0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>nsv(0)</code></td><td>not run: needs the graphics window (stops Coot without a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(nsv 0)</code></td><td>not run: needs the graphics window (stops Coot without a screen)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: opens the (canvas) sequence view for molecule 0.</p>
 <h3 id="sequence_view_old_style">sequence_view_old_style</h3>
 <p>Python: <code>sequence_view_old_style(imol)</code><br>
 Scheme: <code>(sequence-view-old-style imol)</code></p>
 <p>show old style sequence view</p>
 <p>Arguments: imol (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>sequence_view_old_style(0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
-<tr><td>Scheme</td><td><code>(sequence-view-old-style 0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>sequence_view_old_style(0)</code></td><td>not run: needs the graphics window (stops Coot without a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(sequence-view-old-style 0)</code></td><td>not run: needs the graphics window (stops Coot without a screen)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: opens the old-style sequence view for molecule 0.</p>
 <h3 id="set_backbone_torsion_carbonyl_button_start_pos">set_backbone_torsion_carbonyl_button_start_pos</h3>
 <p>Python: <code>set_backbone_torsion_carbonyl_button_start_pos(ix, iy)</code><br>
 Scheme: <code>(set-backbone-torsion-carbonyl-button-start-pos ix iy)</code></p>
 <p>Arguments: ix (a whole number), iy (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_backbone_torsion_carbonyl_button_start_pos(1, 1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-backbone-torsion-carbonyl-button-start-pos 1 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_backbone_torsion_carbonyl_button_start_pos(1, 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-backbone-torsion-carbonyl-button-start-pos 1 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_backbone_torsion_peptide_button_start_pos">set_backbone_torsion_peptide_button_start_pos</h3>
 <p>Python: <code>set_backbone_torsion_peptide_button_start_pos(ix, iy)</code><br>
 Scheme: <code>(set-backbone-torsion-peptide-button-start-pos ix iy)</code></p>
 <p>Arguments: ix (a whole number), iy (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_backbone_torsion_peptide_button_start_pos(1, 1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-backbone-torsion-peptide-button-start-pos 1 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_backbone_torsion_peptide_button_start_pos(1, 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-backbone-torsion-peptide-button-start-pos 1 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_nsv_canvas_pixel_limit">set_nsv_canvas_pixel_limit</h3>
 <p>Python: <code>set_nsv_canvas_pixel_limit(cpl)</code><br>
 Scheme: <code>(set-nsv-canvas-pixel-limit cpl)</code></p>
 <p>set the pixel limit for sequence view windows</p>
 <p>Arguments: cpl (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_nsv_canvas_pixel_limit(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-nsv-canvas-pixel-limit 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_nsv_canvas_pixel_limit(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-nsv-canvas-pixel-limit 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_sequence_view_is_docked">set_sequence_view_is_docked</h3>
 <p>Python: <code>set_sequence_view_is_docked(state)</code><br>
 Scheme: <code>(set-sequence-view-is-docked state)</code></p>
@@ -115,21 +122,21 @@ Scheme: <code>(set-sequence-view-is-docked state)</code></p>
 <p>in the main application or a new dialog</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_sequence_view_is_docked(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-sequence-view-is-docked 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_sequence_view_is_docked(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-sequence-view-is-docked 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="setup_backbone_torsion_edit">setup_backbone_torsion_edit</h3>
 <p>Python: <code>setup_backbone_torsion_edit(state)</code><br>
 Scheme: <code>(setup-backbone-torsion-edit state)</code></p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>setup_backbone_torsion_edit(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(setup-backbone-torsion-edit 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>setup_backbone_torsion_edit(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(setup-backbone-torsion-edit 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="update_sequence_view_current_position_highlight_from_active_atom">update_sequence_view_current_position_highlight_from_active_atom</h3>
 <p>Python: <code>update_sequence_view_current_position_highlight_from_active_atom()</code><br>
 Scheme: <code>(update-sequence-view-current-position-highlight-from-active-atom)</code></p>
 <p>update the sequnce view current position highlight based on active atom</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>update_sequence_view_current_position_highlight_from_active_atom()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(update-sequence-view-current-position-highlight-from-active-atom)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>update_sequence_view_current_position_highlight_from_active_atom()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(update-sequence-view-current-position-highlight-from-active-atom)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 </body></html>

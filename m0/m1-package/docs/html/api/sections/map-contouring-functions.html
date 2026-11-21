@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="795a7afa6b28fdfb415c5f9b3370cd1e49fcfbc1">
+<meta name="coot0-source-sha1" content="9802a7c809c15426f8fb63ca8f70abfe37005208">
 <title>Map Contouring Functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -22,39 +22,41 @@ table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; 
 <p>Arguments: imol (a whole number), contour_level (a number). Returns: a value (see the result of the example).
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>map_contours(0, 1.5)</code></td><td>ran, returned <code>False</code></td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>set_rotation_centre(47.1, 10.6, 17.4)</code>, then <code>len(map_contours(1, 0.3))</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: should return the contour line segments [[x1,y1,z1],[x2,y2,z2]] of map 1 at that level in the box around the rotation centre.</p>
+<p>Note: Always returns an empty list here although the map is contoured normally; GenerateSurface_from_Xmap is called with isample/ream arguments (0,1) that may give nothing, or it needs the map to have been drawn. Suspicious.</p>
 <h3 id="set_radial_map_colouring_centre">set_radial_map_colouring_centre</h3>
 <p>Python: <code>set_radial_map_colouring_centre(imol, x, y, z)</code><br>
 Scheme: <code>(set-radial-map-colouring-centre imol x y z)</code></p>
 <p>radial map colouring centre</p>
 <p>Arguments: imol (a whole number), x (a number), y (a number), z (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_radial_map_colouring_centre(0, 54.5, 9.4, 12.3)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-radial-map-colouring-centre 0 54.5 9.4 12.3)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_radial_map_colouring_centre(0, 54.5, 9.4, 12.3)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-radial-map-colouring-centre 0 54.5 9.4 12.3)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_radial_map_colouring_invert">set_radial_map_colouring_invert</h3>
 <p>Python: <code>set_radial_map_colouring_invert(imol, invert_state)</code><br>
 Scheme: <code>(set-radial-map-colouring-invert imol invert-state)</code></p>
 <p>radial map colouring inverted colour map</p>
 <p>Arguments: imol (a whole number), invert_state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_radial_map_colouring_invert(0, 1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-radial-map-colouring-invert 0 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_radial_map_colouring_invert(0, 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-radial-map-colouring-invert 0 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_radial_map_colouring_max_radius">set_radial_map_colouring_max_radius</h3>
 <p>Python: <code>set_radial_map_colouring_max_radius(imol, r)</code><br>
 Scheme: <code>(set-radial-map-colouring-max-radius imol r)</code></p>
 <p>radial map colouring max</p>
 <p>Arguments: imol (a whole number), r (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_radial_map_colouring_max_radius(0, 0.5)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-radial-map-colouring-max-radius 0 0.5)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_radial_map_colouring_max_radius(0, 0.5)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-radial-map-colouring-max-radius 0 0.5)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_radial_map_colouring_min_radius">set_radial_map_colouring_min_radius</h3>
 <p>Python: <code>set_radial_map_colouring_min_radius(imol, r)</code><br>
 Scheme: <code>(set-radial-map-colouring-min-radius imol r)</code></p>
 <p>radial map colouring min</p>
 <p>Arguments: imol (a whole number), r (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_radial_map_colouring_min_radius(0, 0.5)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-radial-map-colouring-min-radius 0 0.5)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_radial_map_colouring_min_radius(0, 0.5)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-radial-map-colouring-min-radius 0 0.5)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_radial_map_colouring_saturation">set_radial_map_colouring_saturation</h3>
 <p>Python: <code>set_radial_map_colouring_saturation(imol, saturation)</code><br>
 Scheme: <code>(set-radial-map-colouring-saturation imol saturation)</code></p>
@@ -62,6 +64,6 @@ Scheme: <code>(set-radial-map-colouring-saturation imol saturation)</code></p>
 saturation is a number between 0 and 1, typically 0.5</p>
 <p>Arguments: imol (a whole number), saturation (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_radial_map_colouring_saturation(0, 1.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-radial-map-colouring-saturation 0 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_radial_map_colouring_saturation(0, 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-radial-map-colouring-saturation 0 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 </body></html>

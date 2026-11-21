@@ -37,8 +37,8 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `add_hydrogen_atoms_to_residue(0, "A", 41, "")` | ran (no return value) |
-| Scheme | `(add-hydrogen-atoms-to-residue 0 "A" 41 "")` | ran (no return value) |
+| Python | `add_hydrogen_atoms_to_residue(0, "A", 41, "")` | ran (no return value); changed: molecule 0: atoms of 1 residue(s) (A41); n_atoms(0): 1465 -> 1471 |
+| Scheme | `(add-hydrogen-atoms-to-residue 0 "A" 41 "")` | ran (no return value); changed: molecule 0: atoms of 1 residue(s) (A41); n_atoms(0): 1465 -> 1471 |
 
 ### add_hydrogens_from_file
 
@@ -51,8 +51,8 @@ Arguments: imol (a whole number), pdb_with_Hs_file_name (text). Returns: nothing
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `add_hydrogens_from_file(0, "tutorial-modern.pdb")` | ran (no return value) |
-| Scheme | `(add-hydrogens-from-file 0 "tutorial-modern.pdb")` | ran (no return value) |
+| Python | `add_hydrogens_from_file(0, "tutorial-modern.pdb")` | ran (no return value, nothing visible changed) |
+| Scheme | `(add-hydrogens-from-file 0 "tutorial-modern.pdb")` | ran (no return value, nothing visible changed) |
 
 ### add_molecule
 
@@ -66,8 +66,14 @@ Also available in Python as `add_molecule_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | `add_molecule([[[ch[0], [[r[0], r[1], r[2], [a[:3] for a in r[3]]] for r in ch[1]]] for ch in m] for m in python_representation(0)], "copy of molecule 0")` | ran, returned `3`; changed: new molecule 3 (model, copy of molecule 0); graphics_n_molecules(): 3 -> 4 |
+| Scheme | `(add-molecule (scheme-representation 0) "copy of molecule 0")` | ran, returned `3`; changed: new molecule 3 (model, copy of molecule 0); graphics_n_molecules(): 3 -> 4 |
+
+Example written and checked by hand on the test data. Expected: returns the new molecule number; a model molecule with the same atoms as molecule 0 appears.
+
+Note: python_representation() atoms carry a 4th element (atom index) that add_molecule rejects ('bad atom expression'): add_molecule(python_representation(0), ...) returns a molecule number but the molecule is EMPTY/invalid. The example strips the 4th element (a[:3]). Scheme round-trips directly. Likely bug (Python representation not compatible with its reader).
+
+Python and Scheme gave the same answer.
 
 ### atom_info_string
 
@@ -103,6 +109,10 @@ Also available in Scheme as `chain-fragments-scm`.
 | Python | `chain_fragments(0, 1)` | ran, returned `False` |
 | Scheme | `(chain-fragments 0 1)` | ran, returned `#f` |
 
+Example written and checked by hand on the test data. Expected: should return the chain fragments of molecule 0.
+
+Note: Both chain_fragments_py and chain_fragments_scm compute the fragments but never fill the return value: always False/#f (stub in 0.9.8.96).
+
 Python and Scheme gave the same answer.
 
 ### clear_and_update_molecule
@@ -119,8 +129,14 @@ Also available in Python as `clear_and_update_molecule_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | `clear_and_update_molecule(0, [[[c[0], [[r[0], r[1], r[2], [a[:3] for a in r[3]]] for r in c[1]]] for c in python_representation(0)[0] if c[0] == "A"]])` | ran, returned `1`; changed: molecule 0: deleted 96 residue(s) (B1, B2, B3, B4 ...); n_atoms(0): 1465 -> 720; n_chains(0): 2 -> 1; n_residues(0): 189 -> 93 |
+| Scheme | `(clear-and-update-molecule 0 (list (list (car (car (scheme-representation 0))))))` | ran, returned `1`; changed: molecule 0: deleted 96 residue(s) (B1, B2, B3, B4 ...); first_molecule_with_symmetry_displayed(): 0 -> -1; get_symmetry(0): ['x,y,z', '-x+1/2,-y,z+1/2', 'x+1/2,-y+1/2,-z', '-x,y+1/2,-z -> []; n_atoms(0): 1465 -> 720 ... |
+
+Example written and checked by hand on the test data. Expected: returns 1 and molecule 0 is replaced by the given representation (here only chain A is kept).
+
+Note: A malformed Python expression (e.g. residues as [[1,'','ALA'], atoms] or python_representation() atoms with the extra index) gives an empty model, still returns 1 and closes the molecule (is_valid_model_molecule -> 0). Python representation needs the a[:3] strip, see add_molecule.
+
+Python and Scheme gave the same answer.
 
 ### closest_atom
 
@@ -157,8 +173,8 @@ Arguments: radius (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `hydrogenate_region(5.0)` | ran (no return value) |
-| Scheme | `(hydrogenate-region 5.0)` | ran (no return value) |
+| Python | `hydrogenate_region(5.0)` | ran (no return value); changed: molecule 0: atoms of 10 residue(s) (A1, A39, A40, A41 ...); n_atoms(0): 1465 -> 1543 |
+| Scheme | `(hydrogenate-region 5.0)` | ran (no return value); changed: molecule 0: atoms of 10 residue(s) (A1, A39, A40, A41 ...); n_atoms(0): 1465 -> 1543 |
 
 ### molecule_to_pdb_string_py
 
@@ -292,5 +308,5 @@ Also available in Python as `set_b_factor_residues_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_b_factor_residues(0, ["A", 41, ""])` | ran (no return value) |
+| Python | `set_b_factor_residues(0, ["A", 41, ""])` | ran (no return value, nothing visible changed) |
 

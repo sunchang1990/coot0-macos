@@ -15,8 +15,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `do_smiles_gui()` | ran (no return value) |
-| Scheme | `(do-smiles-gui)` | ran (no return value) |
+| Python | `do_smiles_gui()` | ran (no return value, nothing visible changed) |
+| Scheme | `(do-smiles-gui)` | ran (no return value, nothing visible changed) |
 
 ### do_tw
 
@@ -29,6 +29,6 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `do_tw()` | ran (no return value) |
-| Scheme | `(do-tw)` | ran (no return value) |
+| Python | `do_tw()` | ran (no return value, nothing visible changed) |
+| Scheme | `(do-tw)` | ran (no return value, nothing visible changed) |
 

@@ -63,8 +63,8 @@ Arguments: v (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_smooth_scroll_flag(1)` | ran (no return value) |
-| Scheme | `(set-smooth-scroll-flag 1)` | ran (no return value) |
+| Python | `set_smooth_scroll_flag(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-smooth-scroll-flag 1)` | ran (no return value, nothing visible changed) |
 
 ### set_smooth_scroll_limit
 
@@ -77,8 +77,8 @@ Arguments: lim (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_smooth_scroll_limit(1.0)` | ran (no return value) |
-| Scheme | `(set-smooth-scroll-limit 1.0)` | ran (no return value) |
+| Python | `set_smooth_scroll_limit(1.0)` | ran (no return value); changed: get_text_for_smooth_scroll_limit(): '10.0 ' -> '1.0  ' |
+| Scheme | `(set-smooth-scroll-limit 1.0)` | ran (no return value, nothing visible changed) |
 
 ### set_smooth_scroll_limit_str
 
@@ -91,8 +91,8 @@ Arguments: t (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_smooth_scroll_limit_str("hello")` | ran (no return value) |
-| Scheme | `(set-smooth-scroll-limit-str "hello")` | ran (no return value) |
+| Python | `set_smooth_scroll_limit_str("hello")` | ran (no return value); changed: get_text_for_smooth_scroll_limit(): '1.0  ' -> '10.0 ' |
+| Scheme | `(set-smooth-scroll-limit-str "hello")` | ran (no return value, nothing visible changed) |
 
 ### set_smooth_scroll_steps
 
@@ -107,8 +107,8 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_smooth_scroll_steps(1)` | ran (no return value) |
-| Scheme | `(set-smooth-scroll-steps 1)` | ran (no return value) |
+| Python | `set_smooth_scroll_steps(1)` | ran (no return value); changed: get_text_for_smooth_scroll_steps(): '40   ' -> '1    ' |
+| Scheme | `(set-smooth-scroll-steps 1)` | ran (no return value, nothing visible changed) |
 
 ### set_smooth_scroll_steps_str
 
@@ -121,6 +121,6 @@ Arguments: t (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_smooth_scroll_steps_str("hello")` | ran (no return value) |
-| Scheme | `(set-smooth-scroll-steps-str "hello")` | ran (no return value) |
+| Python | `set_smooth_scroll_steps_str("hello")` | ran (no return value); changed: get_text_for_smooth_scroll_steps(): '1    ' -> '10   ' |
+| Scheme | `(set-smooth-scroll-steps-str "hello")` | ran (no return value, nothing visible changed) |
 

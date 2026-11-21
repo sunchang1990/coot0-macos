@@ -32,8 +32,8 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), altco
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `cis_trans_convert(0, "A", 41, "")` | ran (no return value) |
-| Scheme | `(cis-trans-convert 0 "A" 41 "")` | ran (no return value) |
+| Python | `cis_trans_convert(0, "A", 41, "")` | ran (no return value); changed: molecule 0: coordinates of 2 residue(s) (A41, A42) |
+| Scheme | `(cis-trans-convert 0 "A" 41 "")` | ran (no return value); changed: molecule 0: coordinates of 2 residue(s) (A41, A42) |
 
 ### cis_trans_convert_intermediate_atoms
 
@@ -47,8 +47,12 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `cis_trans_convert_intermediate_atoms()` | ran, returned `0` |
-| Scheme | `(cis-trans-convert-intermediate-atoms)` | ran, returned `0` |
+| Python | first `refine_zone(0, "A", 41, 42, "")`, then `cis_trans_convert_intermediate_atoms()` | ran, returned `0` |
+| Scheme | first `(refine-zone 0 "A" 41 42 "")`, then `(cis-trans-convert-intermediate-atoms)` | ran, returned `0` |
+
+Example written and checked by hand on the test data. Expected: converts the peptide at the active residue of the intermediate atoms; 0 when there is no active intermediate peptide.
+
+Note: Returned 0 headless; probably needs the active (centred) atom from the graphics window.
 
 Python and Scheme gave the same answer.
 
@@ -63,8 +67,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `clear_delete_item_widget()` | ran (no return value) |
-| Scheme | `(clear-delete-item-widget)` | ran (no return value) |
+| Python | `clear_delete_item_widget()` | ran (no return value, nothing visible changed) |
+| Scheme | `(clear-delete-item-widget)` | ran (no return value, nothing visible changed) |
 
 ### clear_pending_delete_item
 
@@ -75,8 +79,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `clear_pending_delete_item()` | ran (no return value) |
-| Scheme | `(clear-pending-delete-item)` | ran (no return value) |
+| Python | `clear_pending_delete_item()` | ran (no return value, nothing visible changed) |
+| Scheme | `(clear-pending-delete-item)` | ran (no return value, nothing visible changed) |
 
 ### delete_atom
 
@@ -89,8 +93,8 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_c
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `delete_atom(0, "A", 41, "", " CA ", "")` | ran (no return value) |
-| Scheme | `(delete-atom 0 "A" 41 "" " CA " "")` | ran (no return value) |
+| Python | `delete_atom(0, "A", 41, "", " CA ", "")` | ran (no return value); changed: molecule 0: atoms of 1 residue(s) (A41); n_atoms(0): 1465 -> 1464 |
+| Scheme | `(delete-atom 0 "A" 41 "" " CA " "")` | ran (no return value); changed: molecule 0: atoms of 1 residue(s) (A41); n_atoms(0): 1465 -> 1464 |
 
 ### delete_atom_by_atom_index
 
@@ -101,8 +105,8 @@ Arguments: imol (a whole number), index (a whole number), do_delete_dialog (a wh
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `delete_atom_by_atom_index(0, 1, 1)` | ran (no return value) |
-| Scheme | `(delete-atom-by-atom-index 0 1 1)` | ran (no return value) |
+| Python | `delete_atom_by_atom_index(0, 1, 1)` | ran (no return value); changed: molecule 0: atoms of 1 residue(s) (A1); n_atoms(0): 1465 -> 1464 |
+| Scheme | `(delete-atom-by-atom-index 0 1 1)` | ran (no return value); changed: molecule 0: atoms of 1 residue(s) (A1); n_atoms(0): 1465 -> 1464 |
 
 ### delete_chain
 
@@ -115,8 +119,8 @@ Arguments: imol (a whole number), chain_id (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `delete_chain(0, "A")` | ran (no return value) |
-| Scheme | `(delete-chain 0 "A")` | ran (no return value) |
+| Python | `delete_chain(0, "A")` | ran (no return value); changed: molecule 0: deleted 93 residue(s) (A1, A2, A3, A4 ...); n_atoms(0): 1465 -> 745; n_chains(0): 2 -> 1; n_residues(0): 189 -> 96 |
+| Scheme | `(delete-chain 0 "A")` | ran (no return value); changed: molecule 0: deleted 93 residue(s) (A1, A2, A3, A4 ...); n_atoms(0): 1465 -> 745; n_chains(0): 2 -> 1; n_residues(0): 189 -> 96 |
 
 ### delete_hydrogen_atoms
 
@@ -131,8 +135,10 @@ Arguments: imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `delete_hydrogen_atoms(0)` | ran, returned `0` |
-| Scheme | `(delete-hydrogen-atoms 0)` | ran, returned `0` |
+| Python | first `imol = get_monomer("ALA")`, then `delete_hydrogen_atoms(imol)` | ran, returned `7`; changed: molecule 3: atoms of 1 residue(s) (A1) |
+| Scheme | `(delete-hydrogen-atoms (get-monomer "SER"))` | ran, returned `7`; changed: new molecule 3 (model, SER_from_dict); first_small_coords_imol(): -1 -> 3; graphics_n_molecules(): 3 -> 4 |
+
+Example written and checked by hand on the test data. Expected: returns the number of hydrogen atoms deleted (the dictionary monomer has 7).
 
 Python and Scheme gave the same answer.
 
@@ -149,8 +155,10 @@ Arguments: imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `delete_hydrogens(0)` | ran, returned `0` |
-| Scheme | `(delete-hydrogens 0)` | ran, returned `0` |
+| Python | `delete_hydrogens(get_monomer("ALA"))` | ran, returned `7`; changed: new molecule 3 (model, ALA_from_dict); first_small_coords_imol(): -1 -> 3; graphics_n_molecules(): 3 -> 4 |
+| Scheme | `(delete-hydrogens (get-monomer "SER"))` | ran, returned `7`; changed: new molecule 3 (model, SER_from_dict); first_small_coords_imol(): -1 -> 3; graphics_n_molecules(): 3 -> 4 |
+
+Example written and checked by hand on the test data. Expected: returns the number of hydrogen atoms deleted (same as delete_hydrogen_atoms).
 
 Python and Scheme gave the same answer.
 
@@ -254,6 +262,8 @@ Arguments: none. Returns: a whole number.
 | Python | `delete_item_widget_is_being_shown()` | ran, returned `0` |
 | Scheme | `(delete-item-widget-is-being-shown)` | ran, returned `0` |
 
+Example written and checked by hand on the test data. Expected: returns 0: the Delete dialog is not open.
+
 Python and Scheme gave the same answer.
 
 ### delete_item_widget_keep_active_on
@@ -268,6 +278,8 @@ Arguments: none. Returns: a whole number.
 | Python | `delete_item_widget_keep_active_on()` | ran, returned `0` |
 | Scheme | `(delete-item-widget-keep-active-on)` | ran, returned `0` |
 
+Example written and checked by hand on the test data. Expected: returns 0: the Delete dialog (and its 'keep active' check button) is not open.
+
 Python and Scheme gave the same answer.
 
 ### delete_object_handle_delete_dialog
@@ -281,8 +293,8 @@ Arguments: do_delete_dialog (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `delete_object_handle_delete_dialog(1)` | ran (no return value) |
-| Scheme | `(delete-object-handle-delete-dialog 1)` | ran (no return value) |
+| Python | `delete_object_handle_delete_dialog(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(delete-object-handle-delete-dialog 1)` | ran (no return value, nothing visible changed) |
 
 ### delete_residue
 
@@ -295,8 +307,8 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), insco
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `delete_residue(0, "A", 41, "")` | ran (no return value) |
-| Scheme | `(delete-residue 0 "A" 41 "")` | ran (no return value) |
+| Python | `delete_residue(0, "A", 41, "")` | ran (no return value); changed: molecule 0: deleted 1 residue(s) (A41); n_atoms(0): 1465 -> 1456; n_residues(0): 189 -> 188 |
+| Scheme | `(delete-residue 0 "A" 41 "")` | ran (no return value); changed: molecule 0: deleted 1 residue(s) (A41); n_atoms(0): 1465 -> 1456; n_residues(0): 189 -> 188 |
 
 ### delete_residue_by_atom_index
 
@@ -307,8 +319,8 @@ Arguments: imol (a whole number), index (a whole number), do_delete_dialog (a wh
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `delete_residue_by_atom_index(0, 1, 1)` | ran (no return value) |
-| Scheme | `(delete-residue-by-atom-index 0 1 1)` | ran (no return value) |
+| Python | `delete_residue_by_atom_index(0, 1, 1)` | ran (no return value); changed: molecule 0: deleted 1 residue(s) (A1); n_atoms(0): 1465 -> 1457; n_residues(0): 189 -> 188 |
+| Scheme | `(delete-residue-by-atom-index 0 1 1)` | ran (no return value); changed: molecule 0: deleted 1 residue(s) (A1); n_atoms(0): 1465 -> 1457; n_residues(0): 189 -> 188 |
 
 ### delete_residue_hydrogens
 
@@ -321,8 +333,8 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), insco
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `delete_residue_hydrogens(0, "A", 41, "", "")` | ran (no return value) |
-| Scheme | `(delete-residue-hydrogens 0 "A" 41 "" "")` | ran (no return value) |
+| Python | `delete_residue_hydrogens(0, "A", 41, "", "")` | ran (no return value, nothing visible changed) |
+| Scheme | `(delete-residue-hydrogens 0 "A" 41 "" "")` | ran (no return value, nothing visible changed) |
 
 ### delete_residue_hydrogens_by_atom_index
 
@@ -333,8 +345,8 @@ Arguments: imol (a whole number), index (a whole number), do_delete_dialog (a wh
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `delete_residue_hydrogens_by_atom_index(0, 1, 1)` | ran (no return value) |
-| Scheme | `(delete-residue-hydrogens-by-atom-index 0 1 1)` | ran (no return value) |
+| Python | `delete_residue_hydrogens_by_atom_index(0, 1, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(delete-residue-hydrogens-by-atom-index 0 1 1)` | ran (no return value, nothing visible changed) |
 
 ### delete_residue_range
 
@@ -347,8 +359,8 @@ Arguments: imol (a whole number), chain_id (text), resno_start (a whole number),
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `delete_residue_range(0, "A", 41, 45)` | ran (no return value) |
-| Scheme | `(delete-residue-range 0 "A" 41 45)` | ran (no return value) |
+| Python | `delete_residue_range(0, "A", 41, 45)` | ran (no return value); changed: molecule 0: deleted 5 residue(s) (A41, A42, A43, A44 ...); n_atoms(0): 1465 -> 1428; n_residues(0): 189 -> 184 |
+| Scheme | `(delete-residue-range 0 "A" 41 45)` | ran (no return value); changed: molecule 0: deleted 5 residue(s) (A41, A42, A43, A44 ...); n_atoms(0): 1465 -> 1428; n_residues(0): 189 -> 184 |
 
 ### delete_residue_sidechain
 
@@ -361,8 +373,8 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_c
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `delete_residue_sidechain(0, "A", 41, "", 1)` | ran (no return value) |
-| Scheme | `(delete-residue-sidechain 0 "A" 41 "" 1)` | ran (no return value) |
+| Python | `delete_residue_sidechain(0, "A", 41, "", 1)` | ran (no return value); changed: molecule 0: atoms of 1 residue(s) (A41); n_atoms(0): 1465 -> 1461 |
+| Scheme | `(delete-residue-sidechain 0 "A" 41 "" 1)` | ran (no return value); changed: molecule 0: atoms of 1 residue(s) (A41); n_atoms(0): 1465 -> 1461 |
 
 ### delete_residue_with_full_spec
 
@@ -375,8 +387,8 @@ Arguments: imol (a whole number), imodel (a whole number), chain_id (text), resn
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `delete_residue_with_full_spec(0, 1, "A", 41, "", "")` | ran (no return value) |
-| Scheme | `(delete-residue-with-full-spec 0 1 "A" 41 "" "")` | ran (no return value) |
+| Python | `delete_residue_with_full_spec(0, 1, "A", 41, "", "")` | ran (no return value); changed: molecule 0: deleted 1 residue(s) (A41); n_atoms(0): 1465 -> 1456; n_residues(0): 189 -> 188 |
+| Scheme | `(delete-residue-with-full-spec 0 1 "A" 41 "" "")` | ran (no return value); changed: molecule 0: deleted 1 residue(s) (A41); n_atoms(0): 1465 -> 1456; n_residues(0): 189 -> 188 |
 
 ### delete_residues
 
@@ -391,8 +403,8 @@ Also available in Scheme as `delete-residues-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `delete_residues(0, [["A", 41, ""], ["A", 42, ""]])` | ran (no return value) |
-| Scheme | `(delete-residues 0 (list (list "A" 41 "") (list "A" 42 "")))` | ran (no return value) |
+| Python | `delete_residues(0, [["A", 41, ""], ["A", 42, ""]])` | ran (no return value); changed: molecule 0: deleted 2 residue(s) (A41, A42); n_atoms(0): 1465 -> 1450; n_residues(0): 189 -> 187 |
+| Scheme | `(delete-residues 0 (list (list "A" 41 "") (list "A" 42 "")))` | ran (no return value); changed: molecule 0: deleted 2 residue(s) (A41, A42); n_atoms(0): 1465 -> 1450; n_residues(0): 189 -> 187 |
 
 ### delete_sidechains_for_chain
 
@@ -405,8 +417,8 @@ Arguments: imol (a whole number), chain_id (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `delete_sidechains_for_chain(0, "A")` | ran (no return value) |
-| Scheme | `(delete-sidechains-for-chain 0 "A")` | ran (no return value) |
+| Python | `delete_sidechains_for_chain(0, "A")` | ran (no return value); changed: molecule 0: atoms of 78 residue(s) (A1, A2, A3, A5 ...); n_atoms(0): 1465 -> 1201 |
+| Scheme | `(delete-sidechains-for-chain 0 "A")` | ran (no return value); changed: molecule 0: atoms of 78 residue(s) (A1, A2, A3, A5 ...); n_atoms(0): 1465 -> 1201 |
 
 ### delete_waters
 
@@ -421,8 +433,10 @@ Arguments: imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `delete_waters(0)` | ran, returned `0` |
-| Scheme | `(delete-waters 0)` | ran, returned `0` |
+| Python | first `imol = read_pdb("1ehz.pdb")`, then `delete_waters(imol)` | ran, returned `160`; changed: molecule 3: deleted 160 residue(s) (A101, A102, A103, A104 ...) |
+| Scheme | `(delete-waters (read-pdb "1ehz.pdb"))` | ran, returned `160`; changed: new molecule 3 (model, 1ehz.pdb); rotation centre moved 51.0 A to (67.6, 49.7, 28.6); graphics_n_molecules(): 3 -> 4 |
+
+Example written and checked by hand on the test data. Expected: returns the number of waters deleted (tutorial-modern.pdb has none, 1ehz.pdb has 160).
 
 Python and Scheme gave the same answer.
 
@@ -435,8 +449,8 @@ Arguments: istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `do_cis_trans_conversion_setup(1)` | ran (no return value) |
-| Scheme | `(do-cis-trans-conversion-setup 1)` | ran (no return value) |
+| Python | `do_cis_trans_conversion_setup(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(do-cis-trans-conversion-setup 1)` | ran (no return value, nothing visible changed) |
 
 ### do_rot_trans_setup
 
@@ -449,8 +463,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `do_rot_trans_setup(1)` | ran (no return value) |
-| Scheme | `(do-rot-trans-setup 1)` | ran (no return value) |
+| Python | `do_rot_trans_setup(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(do-rot-trans-setup 1)` | ran (no return value, nothing visible changed) |
 
 ### get_rot_trans_object_type
 
@@ -477,8 +491,10 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `post_delete_item_dialog()` | stopped Coot when tried without a window (not checked with a window) |
-| Scheme | `(post-delete-item-dialog)` | stopped Coot when tried without a window (not checked with a window) |
+| Python | `post_delete_item_dialog()` | not run: opens a dialog; needs the graphics window (stops Coot without a screen) |
+| Scheme | `(post-delete-item-dialog)` | not run: opens a dialog; needs the graphics window (stops Coot without a screen) |
+
+Example written and checked by hand on the test data. Expected: opens the Delete item dialog.
 
 ### rot_trans_reset_previous
 
@@ -489,8 +505,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `rot_trans_reset_previous()` | ran (no return value) |
-| Scheme | `(rot-trans-reset-previous)` | ran (no return value) |
+| Python | `rot_trans_reset_previous()` | ran (no return value, nothing visible changed) |
+| Scheme | `(rot-trans-reset-previous)` | ran (no return value, nothing visible changed) |
 
 ### set_delete_atom_mode
 
@@ -503,8 +519,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_delete_atom_mode()` | ran (no return value) |
-| Scheme | `(set-delete-atom-mode)` | ran (no return value) |
+| Python | `set_delete_atom_mode()` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-delete-atom-mode)` | ran (no return value, nothing visible changed) |
 
 ### set_delete_chain_mode
 
@@ -515,8 +531,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_delete_chain_mode()` | ran (no return value) |
-| Scheme | `(set-delete-chain-mode)` | ran (no return value) |
+| Python | `set_delete_chain_mode()` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-delete-chain-mode)` | ran (no return value, nothing visible changed) |
 
 ### set_delete_residue_hydrogens_mode
 
@@ -527,8 +543,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_delete_residue_hydrogens_mode()` | ran (no return value) |
-| Scheme | `(set-delete-residue-hydrogens-mode)` | ran (no return value) |
+| Python | `set_delete_residue_hydrogens_mode()` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-delete-residue-hydrogens-mode)` | ran (no return value, nothing visible changed) |
 
 ### set_delete_residue_mode
 
@@ -539,8 +555,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_delete_residue_mode()` | ran (no return value) |
-| Scheme | `(set-delete-residue-mode)` | ran (no return value) |
+| Python | `set_delete_residue_mode()` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-delete-residue-mode)` | ran (no return value, nothing visible changed) |
 
 ### set_delete_residue_zone_mode
 
@@ -551,8 +567,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_delete_residue_zone_mode()` | ran (no return value) |
-| Scheme | `(set-delete-residue-zone-mode)` | ran (no return value) |
+| Python | `set_delete_residue_zone_mode()` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-delete-residue-zone-mode)` | ran (no return value, nothing visible changed) |
 
 ### set_delete_sidechain_mode
 
@@ -563,8 +579,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_delete_sidechain_mode()` | ran (no return value) |
-| Scheme | `(set-delete-sidechain-mode)` | ran (no return value) |
+| Python | `set_delete_sidechain_mode()` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-delete-sidechain-mode)` | ran (no return value, nothing visible changed) |
 
 ### set_delete_sidechain_range_mode
 
@@ -575,8 +591,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_delete_sidechain_range_mode()` | ran (no return value) |
-| Scheme | `(set-delete-sidechain-range-mode)` | ran (no return value) |
+| Python | `set_delete_sidechain_range_mode()` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-delete-sidechain-range-mode)` | ran (no return value, nothing visible changed) |
 
 ### set_delete_water_mode
 
@@ -587,8 +603,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_delete_water_mode()` | ran (no return value) |
-| Scheme | `(set-delete-water-mode)` | ran (no return value) |
+| Python | `set_delete_water_mode()` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-delete-water-mode)` | ran (no return value, nothing visible changed) |
 
 ### set_rot_trans_object_type
 
@@ -599,8 +615,10 @@ Arguments: rt_type (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_rot_trans_object_type(1)` | ran (no return value) |
-| Scheme | `(set-rot-trans-object-type 1)` | ran (no return value) |
+| Python | `set_rot_trans_object_type(1)` | ran (no return value); changed: get_rot_trans_object_type(): 12 -> 1 |
+| Scheme | `(set-rot-trans-object-type 1)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: get_rot_trans_object_type was 12, set to 0, read back 0; Scheme: get-rot-trans-object-type was 12, set to 0, read back 0.
 
 ### set_rotate_translate_zone_rotates_about_zone_centre
 
@@ -611,8 +629,8 @@ Arguments: istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_rotate_translate_zone_rotates_about_zone_centre(1)` | ran (no return value) |
-| Scheme | `(set-rotate-translate-zone-rotates-about-zone-centre 1)` | ran (no return value) |
+| Python | `set_rotate_translate_zone_rotates_about_zone_centre(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-rotate-translate-zone-rotates-about-zone-centre 1)` | ran (no return value, nothing visible changed) |
 
 ### store_delete_item_widget_position
 
@@ -623,8 +641,10 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `store_delete_item_widget_position()` | stopped Coot when tried without a window (not checked with a window) |
-| Scheme | `(store-delete-item-widget-position)` | stopped Coot when tried without a window (not checked with a window) |
+| Python | `store_delete_item_widget_position()` | not run: needs the Delete dialog open (stops Coot without a screen) |
+| Scheme | `(store-delete-item-widget-position)` | not run: needs the Delete dialog open (stops Coot without a screen) |
+
+Example written and checked by hand on the test data. Expected: remembers the position of the open Delete dialog.
 
 ### twisted_trans_peptides
 

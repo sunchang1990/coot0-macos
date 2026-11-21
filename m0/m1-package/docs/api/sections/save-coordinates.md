@@ -17,8 +17,12 @@ Arguments: imol (a whole number), filename (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `save_coordinates(0, "tutorial-modern.pdb")` | ran, returned `0` |
-| Scheme | `(save-coordinates 0 "tutorial-modern.pdb")` | ran, returned `0` |
+| Python | `save_coordinates(0, "saved-tut.pdb")` | ran, returned `0`; changed: molecule 0 renamed to saved-tut.pdb; molecule_name(0): 'tutorial-modern.pdb' -> 'saved-tut.pdb' |
+| Scheme | `(save-coordinates 0 "saved-tut.pdb")` | ran, returned `0` |
+
+Example written and checked by hand on the test data. Expected: writes saved-tut.pdb and the molecule takes that name; returns 0 on success.
+
+Note: The doc says 1 = success, but the code returns the mmdb error code: 0 means success (file written).
 
 Python and Scheme gave the same answer.
 
@@ -36,6 +40,8 @@ Arguments: none. Returns: a whole number.
 | Python | `save_molecule_number_from_option_menu()` | ran, returned `-1` |
 | Scheme | `(save-molecule-number-from-option-menu)` | ran, returned `-1` |
 
+Example written and checked by hand on the test data. Expected: -1 until a molecule has been chosen in the Save Coordinates dialog (internal state of that dialog).
+
 Python and Scheme gave the same answer.
 
 ### set_save_coordinates_in_original_directory
@@ -49,8 +55,8 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_save_coordinates_in_original_directory(1)` | ran (no return value) |
-| Scheme | `(set-save-coordinates-in-original-directory 1)` | ran (no return value) |
+| Python | `set_save_coordinates_in_original_directory(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-save-coordinates-in-original-directory 1)` | ran (no return value, nothing visible changed) |
 
 ### set_save_molecule_number
 
@@ -64,6 +70,6 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_save_molecule_number(0)` | ran (no return value) |
-| Scheme | `(set-save-molecule-number 0)` | ran (no return value) |
+| Python | `set_save_molecule_number(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-save-molecule-number 0)` | ran (no return value, nothing visible changed) |
 

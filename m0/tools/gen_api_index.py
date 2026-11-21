@@ -248,6 +248,21 @@ for k, e in sorted(E.items()):
     e["gui_internal"] = any(re.search(r"Gtk|Gdk|GtkWidget|void \*|GLArea", t) for t, n in alla)
     out.append(e)
 
+# ---- build 31: hand-written examples (m0/tools/api_examples_curated.json), each tried on the test data in both
+# languages: real arguments instead of the placeholders above, set-up lines, what a correct result is, and the
+# functions that must not be run automatically (with the reason).
+CUR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "api_examples_curated.json")
+if os.path.exists(CUR):
+    cur = json.load(open(CUR)); n_cur = 0
+    for e in out:
+        c = cur.get(e["key"])
+        if not c: continue
+        n_cur += 1; e["curated"] = True
+        if e["py"] and c.get("py"): e["py_ex"] = c["py"]
+        if e["scm"] and c.get("scm"): e["scm_ex"] = c["scm"]
+        for f in ("py_setup", "scm_setup", "expect", "skip", "note"):
+            if c.get(f): e[f] = c[f]
+    print("hand-written examples:", n_cur, "of", len(cur))
 json.dump(out, open(OUT, "w"), indent=1)
 n_py = sum(1 for e in out if e["py"]); n_scm = sum(1 for e in out if e["scm"])
 print("functions: %d (Python %d, Scheme %d); with header text %d; with an automatic example: Python %d, Scheme %d"

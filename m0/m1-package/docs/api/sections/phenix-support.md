@@ -15,6 +15,8 @@ Arguments: button_label (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_button_label_for_external_refinement("hello")` | not run: not run automatically (external: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(set-button-label-for-external-refinement "hello")` | not run: not run automatically (external: exits, uses the network, an external program, files or a screen) |
+| Python | `set_button_label_for_external_refinement("Run Refmac 2")` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-button-label-for-external-refinement "Run Refmac 2")` | ran (no return value, nothing visible changed) |
+
+Example written and checked by hand on the test data. Expected: sets the label of the external-refinement button (seen only in the window).
 

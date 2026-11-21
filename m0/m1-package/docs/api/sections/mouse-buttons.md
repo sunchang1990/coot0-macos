@@ -25,6 +25,8 @@ Arguments: none. Returns: a whole number.
 | Python | `blob_under_pointer_to_screen_centre()` | ran, returned `0` |
 | Scheme | `(blob-under-pointer-to-screen-centre)` | ran, returned `0` |
 
+Example written and checked by hand on the test data. Expected: with a window: moves to the density blob under the mouse and returns 1; without a pointer it returns 0 (correct here).
+
 Python and Scheme gave the same answer.
 
 ### control_key_for_rotate_state
@@ -57,8 +59,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `quanta_buttons()` | ran (no return value) |
-| Scheme | `(quanta-buttons)` | ran (no return value) |
+| Python | `quanta_buttons()` | ran (no return value, nothing visible changed) |
+| Scheme | `(quanta-buttons)` | ran (no return value, nothing visible changed) |
 
 ### quanta_like_zoom
 
@@ -74,8 +76,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `quanta_like_zoom()` | ran (no return value) |
-| Scheme | `(quanta-like-zoom)` | ran (no return value) |
+| Python | `quanta_like_zoom()` | ran (no return value, nothing visible changed) |
+| Scheme | `(quanta-like-zoom)` | ran (no return value, nothing visible changed) |
 
 ### select_atom_under_pointer
 
@@ -91,6 +93,8 @@ Also available in Python as `select_atom_under_pointer_py`.
 |---|---|---|
 | Python | `select_atom_under_pointer()` | ran, returned `False` |
 | Scheme | `(select-atom-under-pointer-scm)` | ran, returned `#f` |
+
+Example written and checked by hand on the test data. Expected: with a window: [imol, atom-spec] of the atom under the mouse; False when there is none (correct here).
 
 Python and Scheme gave the same answer.
 
@@ -108,6 +112,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_control_key_for_rotate(1)` | ran (no return value) |
-| Scheme | `(set-control-key-for-rotate 1)` | ran (no return value) |
+| Python | `set_control_key_for_rotate(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-control-key-for-rotate 1)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: control_key_for_rotate_state was 1, set to 0, read back 0; Scheme: control-key-for-rotate-state was 1, set to 0, read back 0.
 

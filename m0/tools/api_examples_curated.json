@@ -1,0 +1,3650 @@
+{
+ "accept_moving_atoms": {
+  "expect": "accepts the refinement result into the molecule and returns the refinement summary (message, status, per-restraint-type scores); False when there are no moving atoms",
+  "py": "(refine_zone(0, \"A\", 41, 43, \"\"), accept_moving_atoms())[1]",
+  "scm": "(begin (refine-zone 0 \"A\" 41 43 \"\") (accept-moving-atoms))"
+ },
+ "add_action_view": {
+  "expect": "returns the new view number; the view runs the given command when played.",
+  "note": "Playing an action view with go_to_view_number does nothing in 0.9.8.96 (the code has '// do nothing' for action views): map 1 stayed displayed.",
+  "py": "add_action_view(\"hide-map\", \"set_map_displayed(1, 0)\")",
+  "scm": "(add-action-view \"hide-map\" \"(set-map-displayed 1 0)\")"
+ },
+ "add_alt_conf": {
+  "expect": "splits residue A41 into two alternative conformations; documented to return the new alt conf string",
+  "note": "alt_conf must be the EXISTING alt conf of the atoms to split (\"\" for an ordinary residue). The split works but the return value is False/#f although the source returns the new alt conf on success; likely the bool from split_residue is false after a successful split (suspicious).",
+  "py": "add_alt_conf(0, \"A\", 41, \"\", \"\", 0)",
+  "scm": "(add-alt-conf 0 \"A\" 41 \"\" \"\" 0)"
+ },
+ "add_animated_ligand_interaction": {
+  "expect": "adds an animated ligand-interaction line (coot::fle_ligand_bond_t) to a molecule",
+  "skip": "takes a C++ coot::fle_ligand_bond_t object that scripts cannot build; drawn only in the graphics window"
+ },
+ "add_atom_label": {
+  "expect": "returns the atom index of the labelled atom; the label shows in the graphics window",
+  "py": "add_atom_label(0, \"A\", 41, \" CA \")",
+  "scm": "(add-atom-label 0 \"A\" 41 \" CA \")"
+ },
+ "add_extra_angle_restraint": {
+  "expect": "adds an angle restraint N-CA-C = 110 deg (esd 2) for A41 and returns its index",
+  "py": "add_extra_angle_restraint(0, \"A\", 41, \"\", \" N  \", \"\", \"A\", 41, \"\", \" CA \", \"\", \"A\", 41, \"\", \" C  \", \"\", 110.0, 2.0)",
+  "scm": "(add-extra-angle-restraint 0 \"A\" 41 \"\" \" N  \" \"\" \"A\" 41 \"\" \" CA \" \"\" \"A\" 41 \"\" \" C  \" \"\" 110.0 2.0)"
+ },
+ "add_extra_bond_restraint": {
+  "expect": "adds a user bond restraint of 9.5 A between the two CA atoms and returns its index (-1 on failure)",
+  "py": "add_extra_bond_restraint(0, \"A\", 41, \"\", \" CA \", \"\", \"A\", 45, \"\", \" CA \", \"\", 9.5, 0.05)",
+  "scm": "(add-extra-bond-restraint 0 \"A\" 41 \"\" \" CA \" \"\" \"A\" 45 \"\" \" CA \" \"\" 9.5 0.05)"
+ },
+ "add_extra_bond_restraints": {
+  "expect": "adds one bond restraint per list item [chain1 res1 ins1 atom1 alt1 chain2 res2 ins2 atom2 alt2 dist esd]; returns 0",
+  "py": "add_extra_bond_restraints(0, [[\"A\", 42, \"\", \" CA \", \"\", \"A\", 46, \"\", \" CA \", \"\", 9.0, 0.05]])",
+  "scm": "(add-extra-bond-restraints 0 (list (list \"A\" 42 \"\" \" CA \" \"\" \"A\" 46 \"\" \" CA \" \"\" 9.0 0.05)))"
+ },
+ "add_extra_geman_mcclure_restraint": {
+  "expect": "adds a Geman-McClure distance restraint (robust to outliers) and returns its index",
+  "py": "add_extra_geman_mcclure_restraint(0, \"A\", 41, \"\", \" CA \", \"\", \"A\", 45, \"\", \" CA \", \"\", 9.5, 0.05)",
+  "scm": "(add-extra-geman-mcclure-restraint 0 \"A\" 41 \"\" \" CA \" \"\" \"A\" 45 \"\" \" CA \" \"\" 9.5 0.05)"
+ },
+ "add_extra_start_pos_restraint": {
+  "expect": "restrains A41 CA to its current position (esd 0.1 A); returns 0",
+  "py": "add_extra_start_pos_restraint(0, \"A\", 41, \"\", \" CA \", \"\", 0.1)",
+  "scm": "(add-extra-start-pos-restraint 0 \"A\" 41 \"\" \" CA \" \"\" 0.1)"
+ },
+ "add_extra_torsion_restraint": {
+  "expect": "adds a chi1 torsion restraint (180, esd 10, period 3) on A41 and returns its index",
+  "py": "add_extra_torsion_restraint(0, \"A\", 41, \"\", \" N  \", \"\", \"A\", 41, \"\", \" CA \", \"\", \"A\", 41, \"\", \" CB \", \"\", \"A\", 41, \"\", \" CG \", \"\", 180.0, 10.0, 3)",
+  "scm": "(add-extra-torsion-restraint 0 \"A\" 41 \"\" \" N  \" \"\" \"A\" 41 \"\" \" CA \" \"\" \"A\" 41 \"\" \" CB \" \"\" \"A\" 41 \"\" \" CG \" \"\" 180.0 10.0 3)"
+ },
+ "add_generic_object_bond": {
+  "expect": "draws a dashed line between the two atoms in the generic object. The atom specs must be C++ atom_spec_t objects (made with atom_spec_from_python_expression / atom-spec-from-scm-expression); plain lists give a TypeError.",
+  "py": "add_generic_object_bond(0, 0, atom_spec_from_python_expression([\"A\", 41, \"\", \" CA \", \"\"]), atom_spec_from_python_expression([\"A\", 43, \"\", \" CA \", \"\"]), obj, \"red\")",
+  "py_setup": [
+   "obj = new_generic_object_number(\"bond\")"
+  ],
+  "scm": "(add-generic-object-bond 0 0 (atom-spec-from-scm-expression (list \"A\" 41 \"\" \" CA \" \"\")) (atom-spec-from-scm-expression (list \"A\" 43 \"\" \" CA \" \"\")) obj \"red\")",
+  "scm_setup": [
+   "(define obj (new-generic-object-number \"bond\"))"
+  ]
+ },
+ "add_initial_position_restraints": {
+  "expect": "adds position restraints for the atoms of the listed residues",
+  "note": "SWIG exposes it but there is no list conversion; use add_extra_start_pos_restraint per atom",
+  "skip": "not callable from scripts: takes a C++ std::vector<residue_spec_t> that neither Python lists nor Scheme lists convert to"
+ },
+ "add_linked_residue": {
+  "expect": "returns the residue spec of the new NAG linked to ASN A20 and the molecule gains one residue; mode 1 = add, 2 = add and fit, 3 = add, fit and refine.",
+  "note": "Python ignores the mode argument (uses set_add_linked_residue_do_fit_and_refine state, default on) and returns False when that state is off; Scheme follows mode and with mode 1 returns #f even though the residue is added (seen: A94 added, #f returned). Upstream code differs between the two.",
+  "py": "add_linked_residue(0, \"A\", 20, \"\", \"NAG\", \"NAG-ASN\", 3)",
+  "scm": "(add-linked-residue 0 \"A\" 20 \"\" \"NAG\" \"NAG-ASN\" 3)"
+ },
+ "add_map_colour_mol_menu_item": {
+  "expect": "adds a molecule entry to a GTK menu (internal menu building)",
+  "skip": "takes GTK widgets and a C callback; internal to the menus"
+ },
+ "add_map_scroll_wheel_mol_menu_item": {
+  "expect": "adds a molecule entry to a GTK menu (internal menu building)",
+  "skip": "takes GTK widgets and a C callback; internal to the menus"
+ },
+ "add_molecular_symmetry_from_mtrix_from_file": {
+  "expect": "reads MTRIX records from the file and adds them as molecular symmetry of molecule 0 (drawn as extra copies); always returns 0",
+  "py": "add_molecular_symmetry_from_mtrix_from_file(0, \"mtrix.pdb\")",
+  "py_setup": [
+   "open(\"mtrix.pdb\", \"w\").write(\"MTRIX1   2 -1.000000  0.000000  0.000000       60.00000\\nMTRIX2   2  0.000000 -1.000000  0.000000       40.00000\\nMTRIX3   2  0.000000  0.000000  1.000000        0.00000\\n\")"
+  ],
+  "scm": "(add-molecular-symmetry-from-mtrix-from-file 0 \"mtrix.pdb\")",
+  "scm_setup": [
+   "(call-with-output-file \"mtrix.pdb\" (lambda (port) (display \"MTRIX1   2 -1.000000  0.000000  0.000000       60.00000\\nMTRIX2   2  0.000000 -1.000000  0.000000       40.00000\\nMTRIX3   2  0.000000  0.000000  1.000000        0.00000\\n\" port)))"
+  ]
+ },
+ "add_molecular_symmetry_from_mtrix_from_self_file": {
+  "expect": "adds molecular symmetry from the MTRIX records of the molecule's own PDB file; always returns 0 (nothing happens when the file has no MTRIX)",
+  "py": "add_molecular_symmetry_from_mtrix_from_self_file(0)",
+  "scm": "(add-molecular-symmetry-from-mtrix-from-self-file 0)"
+ },
+ "add_molecule": {
+  "expect": "returns the new molecule number; a model molecule with the same atoms as molecule 0 appears",
+  "note": "python_representation() atoms carry a 4th element (atom index) that add_molecule rejects ('bad atom expression'): add_molecule(python_representation(0), ...) returns a molecule number but the molecule is EMPTY/invalid. The example strips the 4th element (a[:3]). Scheme round-trips directly. Likely bug (Python representation not compatible with its reader).",
+  "py": "add_molecule([[[ch[0], [[r[0], r[1], r[2], [a[:3] for a in r[3]]] for r in ch[1]]] for ch in m] for m in python_representation(0)], \"copy of molecule 0\")",
+  "scm": "(add-molecule (scheme-representation 0) \"copy of molecule 0\")"
+ },
+ "add_pisa_interface_bond": {
+  "expect": "draws a bond of the given type between the two atoms as a generic object for interface 1 (bond type is a string in Python, a symbol in Scheme)",
+  "py": "add_pisa_interface_bond(imol_a, imol_b, [\"h-bonds\", [\"A\", 41, \"\", \" OE1\", \"\"], [\"B\", 41, \"\", \" OE1\", \"\"]], 1)",
+  "py_setup": [
+   "imol_a = new_molecule_by_atom_selection(0, \"//A\")",
+   "imol_b = new_molecule_by_atom_selection(0, \"//B\")"
+  ],
+  "scm": "(add-pisa-interface-bond-scm imol-a imol-b (list 'salt-bridges (list \"A\" 41 \"\" \" OE1\" \"\") (list \"B\" 41 \"\" \" OE1\" \"\")) 1)",
+  "scm_setup": [
+   "(define imol-a (new-molecule-by-atom-selection 0 \"//A\"))",
+   "(define imol-b (new-molecule-by-atom-selection 0 \"//B\"))"
+  ]
+ },
+ "add_refmac_extra_restraints": {
+  "expect": "reads ProSMART/Refmac 'EXTE DIST ...' lines into extra restraints of molecule 0 (shown by list_extra_restraints)",
+  "note": "each line needs the INS fields (24 words); without them nothing is read and no message tells the user",
+  "py": "add_refmac_extra_restraints(0, \"extra.txt\")",
+  "py_setup": [
+   "open(\"extra.txt\", \"w\").write(\"EXTE DIST FIRST CHAIN A RESI 41 INS . ATOM CA SECOND CHAIN A RESI 45 INS . ATOM CA VALUE 9.5 SIGMA 0.05\\n\")"
+  ],
+  "scm": "(add-refmac-extra-restraints 0 \"extra.txt\")",
+  "scm_setup": [
+   "(call-with-output-file \"extra.txt\" (lambda (port) (display \"EXTE DIST FIRST CHAIN A RESI 41 INS . ATOM CA SECOND CHAIN A RESI 45 INS . ATOM CA VALUE 9.5 SIGMA 0.05\\n\" port)))"
+  ]
+ },
+ "add_refmac_ncycle_no": {
+  "expect": "adds 15 to the list of cycle numbers offered in the Run Refmac dialog",
+  "note": "Only stores a setting for the next Refmac run; does not run Refmac.",
+  "py": "add_refmac_ncycle_no(15)",
+  "scm": "(add-refmac-ncycle-no 20)"
+ },
+ "add_refmac_sad_atom": {
+  "expect": "registers Se with f' -8.0, f'' 4.5 at 0.9792 A for a SAD Refmac run",
+  "note": "Only stores a setting for the next Refmac run; does not run Refmac.",
+  "py": "add_refmac_sad_atom(\"SE\", -8.0, 4.5, 0.9792)",
+  "scm": "(add-refmac-sad-atom \"SE\" -8.0 4.5 0.9792)"
+ },
+ "add_refmac_sad_atom_fp": {
+  "expect": "registers S with f' 0.3, f'' 0.6 for a SAD Refmac run",
+  "note": "Only stores a setting for the next Refmac run; does not run Refmac.",
+  "py": "add_refmac_sad_atom_fp(\"S\", 0.3, 0.6)",
+  "scm": "(add-refmac-sad-atom-fp \"S\" 0.3 0.6)"
+ },
+ "add_refmac_sad_atom_lambda": {
+  "expect": "registers Zn at wavelength 1.2827 A (Refmac computes f'/f'') for a SAD run",
+  "note": "Only stores a setting for the next Refmac run; does not run Refmac.",
+  "py": "add_refmac_sad_atom_lambda(\"ZN\", 1.2827)",
+  "scm": "(add-refmac-sad-atom-lambda \"ZN\" 1.2827)"
+ },
+ "add_residue_with_atoms": {
+  "expect": "adds residue A200 (HOH, one O atom) to molecule 0; documented to return the number of atoms added (1)",
+  "note": "Returns 0 although the atom IS added: molecule_class_info_t::add_residue_with_atoms never updates r_added (likely upstream bug). Atom format: [[name, altconf], [occ, B, element, segid], [x, y, z]].",
+  "py": "add_residue_with_atoms_py(0, [\"A\", 200, \"\"], \"HOH\", [[[\" O  \", \"\"], [1.0, 20.0, \" O\", \"\"], [10.0, 20.0, 30.0]]])"
+ },
+ "add_shelx_string_to_molecule": {
+  "expect": "adds the line to the SHELX molecule's instructions; it appears in the next written .ins file.",
+  "py": "add_shelx_string_to_molecule(imol_s, \"DFIX 1.54 C_41 CA_41\")",
+  "py_setup": [
+   "write_shelx_ins_file(0, \"tut.ins\")",
+   "imol_s = read_shelx_ins_file(\"tut.ins\", 0)"
+  ],
+  "scm": "(add-shelx-string-to-molecule imol-s \"DFIX 1.54 C_41 CA_41\")",
+  "scm_setup": [
+   "(write-shelx-ins-file 0 \"tut.ins\")",
+   "(define imol-s (read-shelx-ins-file \"tut.ins\" 0))"
+  ]
+ },
+ "add_spin_view": {
+  "expect": "returns the new view number; a view that spins 90 degrees in 10 steps is added.",
+  "py": "add_spin_view(\"spin\", 10, 90.0)",
+  "scm": "(add-spin-view \"spin\" 10 90.0)"
+ },
+ "add_strict_ncs_from_mtrix_from_self_file": {
+  "expect": "adds strict NCS operators from the MTRIX records of the molecule's own file; always returns 0",
+  "py": "add_strict_ncs_from_mtrix_from_self_file(0)",
+  "scm": "(add-strict-ncs-from-mtrix-from-self-file 0)"
+ },
+ "add_target_position_restraint_for_intermediate_atom": {
+  "expect": "during a refinement adds a target-position restraint pulling that atom to the position and refines on",
+  "py": "refine_zone(0, \"A\", 41, 43, \"\"); print(add_target_position_restraint_for_intermediate_atom([\"A\", 42, \"\", \" CA \", \"\"], [45.0, 10.4, 15.0]))"
+ },
+ "add_target_position_restraints_for_intermediate_atoms": {
+  "expect": "during a refinement adds target-position restraints for several atoms at once and refines; the return value is always False",
+  "note": "Segmentation fault (Coot stopped, rc 139) with a two-atom list in a headless refinement; one-atom list survived. Possible bug in graphics_info_t::add_target_position_restraints_for_intermediate_atoms (threaded refinement).",
+  "py": "refine_zone(0, \"A\", 41, 43, \"\"); print(add_target_position_restraints_for_intermediate_atoms([[[\"A\", 42, \"\", \" CA \", \"\"], [45.0, 10.4, 15.0]]]))"
+ },
+ "add_terminal_residue": {
+  "expect": "returns 1 and a new residue appears after the C-terminal residue A93 (fitted to the refinement map)",
+  "py": "add_terminal_residue(0, \"A\", 93, \"auto\", 1)",
+  "scm": "(add-terminal-residue 0 \"A\" 93 \"auto\" 1)"
+ },
+ "add_terminal_residue_using_phi_psi": {
+  "expect": "returns 1 and adds a residue of the given type after A93 with helical phi/psi",
+  "py": "add_terminal_residue_using_phi_psi(0, \"A\", 93, \"ALA\", -57.0, -47.0)",
+  "scm": "(add-terminal-residue-using-phi-psi 0 \"A\" 93 \"GLY\" -57.0 -47.0)"
+ },
+ "add_to_history_typed": {
+  "expect": "C++ helper that records a command in Coot's history",
+  "note": "Exported by SWIG to both languages but unusable from scripts.",
+  "skip": "internal C++ helper: its argument (std::vector<coot::command_arg_t>) cannot be built from Python or Scheme"
+ },
+ "add_validation_mol_menu_item": {
+  "expect": "adds a molecule item to a validation-graph menu (called by the menus themselves)",
+  "skip": "needs a GTK widget made by the GUI (not something a script normally has); internal GUI callback"
+ },
+ "additional_representation_by_attributes": {
+  "expect": "returns the number of the new additional representation of residues A41-45 (e.g. ball-and-stick)",
+  "py": "additional_representation_by_attributes(0, \"A\", 41, 45, \"\", 1, 1, 8.0, 0)",
+  "scm": "(additional-representation-by-attributes 0 \"A\" 41 45 \"\" 2 1 8.0 0)",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "align_and_mutate": {
+  "expect": "chain is aligned to the sequence and mismatching residues are mutated (here V6A)",
+  "py": "align_and_mutate(0, \"A\", \"DVSGTACLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLIDQTC\", 0)",
+  "scm": "(align-and-mutate 0 \"B\" \"DVSGTACLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLIDQTC\" 0)"
+ },
+ "align_to_closest_chain": {
+  "expect": "returns [molecule, chain id] of the chain (in any molecule) whose sequence matches the target best, if at least match_fraction matches; False otherwise",
+  "py": "align_to_closest_chain(\"DVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLID\", 0.9)",
+  "scm": "(align-to-closest-chain \"DVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLID\" 0.9)"
+ },
+ "alignment_mismatches": {
+  "expect": "a list [mutations, deletions, insertions, alignment text]: chain B has 3 residues (94-96) that the 93-residue sequence lacks; False if no sequence was assigned.",
+  "py": "alignment_mismatches(0)",
+  "py_setup": [
+   "assign_sequence_to_best_matching_chain(\"DVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLID\")"
+  ],
+  "scm": "(alignment-mismatches 0)",
+  "scm_setup": [
+   "(assign-sequence-to-best-matching-chain \"DVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLID\")"
+  ]
+ },
+ "alignment_results": {
+  "expect": "should return the alignment of the chain against the sequence",
+  "note": "Both C++ functions (alignment_results_py / alignment_results_scm) are empty stubs in 0.9.8.96: they always return False/#f.",
+  "py": "alignment_results(0, \"A\", \"DVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLIDQTC\")",
+  "scm": "(alignment-results-scm 0 \"A\" \"DVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLIDQTC\")"
+ },
+ "all_additional_representations_off_except": {
+  "expect": "hides every additional representation of molecule 0 except number 0",
+  "note": "Ran without error headless (no representations to switch); creating one needs the graphics window.",
+  "py": "all_additional_representations_off_except(0, 0, 0)",
+  "scm": "(all-additional-representations-off-except 0 0 0)"
+ },
+ "altconf": {
+  "expect": "starts the alt-conf pick mode (click an atom in the graphics window)",
+  "py": "altconf()",
+  "scm": "(altconf)",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "analyse_map_point_density_change": {
+  "expect": "returns a new map of the per-point density change across the listed maps (here map 1 and two blurred copies), masked by map 1",
+  "py": "analyse_map_point_density_change_py([1, 3, 4], 1)",
+  "py_setup": [
+   "multi_sharpen_blur_map_py(1, [-20.0, 0.0])"
+  ]
+ },
+ "apply_fasta_multi_to_fragment": {
+  "expect": "internal C++ helper (needs a coot::fasta_multi object that scripts cannot make); use assign_sequences_to_best_matching_chain_from_fasta(\"tutorial-modern.fasta\").",
+  "py": "apply_fasta_multi_to_fragment(0, \"A\", 1, 93, 1, \"tutorial-modern.fasta\")",
+  "scm": "(apply-fasta-multi-to-fragment 0 \"A\" 1 93 1 \"tutorial-modern.fasta\")",
+  "skip": "not callable from scripting: its coot::fasta_multi argument cannot be created from Python or Scheme"
+ },
+ "apply_lsq_matches": {
+  "expect": "returns [rotation (9 numbers), translation (3)] and moves the moving molecule; False on a bad match",
+  "py": "apply_lsq_matches(0, imol2)",
+  "py_setup": [
+   "imol2 = read_pdb(\"tutorial-modern.pdb\")",
+   "clear_lsq_matches()",
+   "add_lsq_match(10, 50, \"A\", 10, 50, \"B\", 1)"
+  ],
+  "scm": "(apply-lsq-matches 0 imol2)",
+  "scm_setup": [
+   "(define imol2 (read-pdb \"tutorial-modern.pdb\"))",
+   "(clear-lsq-matches)",
+   "(add-lsq-match 10 50 \"A\" 10 50 \"B\" 1)"
+  ]
+ },
+ "apply_lsq_matches_simple": {
+  "expect": "returns 1 on a good match and moves the moving molecule onto the reference",
+  "py": "apply_lsq_matches_simple(0, imol2)",
+  "py_setup": [
+   "imol2 = read_pdb(\"tutorial-modern.pdb\")",
+   "clear_lsq_matches()",
+   "add_lsq_match(10, 50, \"A\", 10, 50, \"B\", 1)"
+  ],
+  "scm": "(apply-lsq-matches-simple 0 imol2)",
+  "scm_setup": [
+   "(define imol2 (read-pdb \"tutorial-modern.pdb\"))",
+   "(clear-lsq-matches)",
+   "(add-lsq-match 10 50 \"A\" 10 50 \"B\" 1)"
+  ]
+ },
+ "apply_redo": {
+  "expect": "returns 1 and re-applies the change that was undone",
+  "py": "apply_redo()",
+  "py_setup": [
+   "delete_residue(0, \"A\", 41, \"\")",
+   "apply_undo()"
+  ],
+  "scm": "(apply-redo)",
+  "scm_setup": [
+   "(delete-residue 0 \"A\" 42 \"\")",
+   "(apply-undo)"
+  ]
+ },
+ "apply_undo": {
+  "expect": "returns 1 and undoes the last change (the deleted residue comes back)",
+  "py": "apply_undo()",
+  "py_setup": [
+   "delete_residue(0, \"A\", 41, \"\")"
+  ],
+  "scm": "(apply-undo)",
+  "scm_setup": [
+   "(delete-residue 0 \"A\" 42 \"\")"
+  ]
+ },
+ "assign_hetatms": {
+  "expect": "returns the number of atoms changed to HETATM in non-standard residues; 0 for a pure protein",
+  "py": "assign_hetatms(imol_nag)",
+  "py_setup": [
+   "imol_nag = read_pdb(\"nag_only.pdb\")"
+  ],
+  "scm": "(assign-hetatms 0)"
+ },
+ "assign_sequence_to_best_matching_chain": {
+  "expect": "True: the sequence is assigned to the chain(s) it matches (here both NCS chains A and B); see sequence_info(0).",
+  "py": "assign_sequence_to_best_matching_chain(\"DVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLID\")",
+  "scm": "(assign-sequence-to-best-matching-chain \"DVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLID\")"
+ },
+ "assign_sequences_to_best_matching_chain_from_fasta": {
+  "expect": "True; every sequence of the FASTA file is assigned to its best-matching chain(s).",
+  "note": "With two near-identical sequences both are assigned to both chains (4 entries), so alignment_mismatches then reports mutations A94-96 from the longer chain_B sequence.",
+  "py": "assign_sequences_to_best_matching_chain_from_fasta(\"tutorial-modern.fasta\")",
+  "scm": "(assign-sequences-to-best-matching-chain-from-fasta \"tutorial-modern.fasta\")"
+ },
+ "atom_index": {
+  "expect": "returns the atom index of A41 CA (-1 if the atom is not found)",
+  "py": "atom_index(0, \"A\", 41, \" CA \")",
+  "scm": "(atom-index 0 \"A\" 41 \" CA \")"
+ },
+ "atom_index_full": {
+  "expect": "returns the index of the alt-conf A SG atom of Cys B72 (-1 if not found)",
+  "py": "atom_index_full(0, \"B\", 72, \"\", \" SG \", \"A\")",
+  "scm": "(atom-index-full 0 \"B\" 72 \"\" \" SG \" \"A\")"
+ },
+ "atom_spec_from_python_expression": {
+  "expect": "a C++ atom_spec_t object made from [chain, resno, ins-code, atom-name, alt-conf]; pass it to functions that need one (e.g. add_generic_object_bond). (Python only.)",
+  "py": "atom_spec_from_python_expression([\"A\", 41, \"\", \" CA \", \"\"])"
+ },
+ "atom_spec_from_scm_expression": {
+  "expect": "a C++ atom_spec_t object made from (chain resno ins-code atom-name alt-conf). (Scheme only.)",
+  "scm": "(atom-spec-from-scm-expression (list \"A\" 41 \"\" \" CA \" \"\"))"
+ },
+ "atom_spec_to": {
+  "expect": "the atom spec as a list [model/imol (-1 = unset), chain, resno, ins-code, atom-name, alt-conf].",
+  "py": "atom_spec_to_py(atom_spec_from_python_expression([\"A\", 41, \"\", \" CA \", \"\"]))",
+  "scm": "(atom-spec-to-scm (atom-spec-from-scm-expression (list \"A\" 41 \"\" \" CA \" \"\")))"
+ },
+ "auto_read_cif_data_with_phases": {
+  "expect": "returns the SigmaA map molecule number; the difference SigmaA map is made too.",
+  "note": "rnasa-sf.cif (in test-data) is a structure-factor mmCIF made from rnasa-1.8-all_refmac1.mtz with gemmi mtz2cif.",
+  "py": "auto_read_cif_data_with_phases(\"rnasa-sf.cif\")",
+  "scm": "(auto-read-cif-data-with-phases \"rnasa-sf.cif\")"
+ },
+ "average_map": {
+  "expect": "returns a new map that is the scaled average of the listed [map, scale] pairs (on the first map's grid)",
+  "py": "average_map([[1, 1.0], [imap2, 1.0]])",
+  "py_setup": [
+   "imap2 = map_from_mtz_by_calc_phases(\"rnasa-1.8-all_refmac1.mtz\", \"FGMP18\", \"SIGFGMP18\", 0)"
+  ],
+  "scm": "(average-map (list (list 1 1.0) (list imap2 1.0)))",
+  "scm_setup": [
+   "(define imap2 (map-from-mtz-by-calc-phases \"rnasa-1.8-all_refmac1.mtz\" \"FGMP18\" \"SIGFGMP18\" 0))"
+  ]
+ },
+ "b_factor_distribution_graph": {
+  "expect": "opens a histogram window of the B-factors of molecule 0",
+  "py": "b_factor_distribution_graph(0)",
+  "scm": "(b-factor-distribution-graph 0)",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "b_factor_from_map": {
+  "expect": "should return the B-factor estimated from map 1's amplitude fall-off",
+  "note": "Always returns -1: the C++ computes b and prints it but returns the unchanged b_factor = -1 (bug in 0.9.8.96).",
+  "py": "b_factor_from_map(1)",
+  "scm": "(b-factor-from-map 1)"
+ },
+ "backrub_rotamer_intermediate_atoms": {
+  "expect": "returns 1 when a backrub rotamer fit of the intermediate atoms' residue succeeds, 0 otherwise",
+  "note": "Returned 0 even with intermediate atoms present (headless; probably needs an active atom chosen in the graphics window).",
+  "py": "backrub_rotamer_intermediate_atoms()",
+  "py_setup": [
+   "refine_zone(0, \"A\", 41, 41, \"\")"
+  ],
+  "scm": "(backrub-rotamer-intermediate-atoms)",
+  "scm_setup": [
+   "(refine-zone 0 \"A\" 41 41 \"\")"
+  ]
+ },
+ "blob_under_pointer_to_screen_centre": {
+  "expect": "with a window: moves to the density blob under the mouse and returns 1; without a pointer it returns 0 (correct here)",
+  "py": "blob_under_pointer_to_screen_centre()",
+  "scm": "(blob-under-pointer-to-screen-centre)"
+ },
+ "browser_url": {
+  "expect": "opens the URL in the web browser set by set_browser_interface",
+  "py": "browser_url(\"https://www2.mrc-lmb.cam.ac.uk/personal/pemsley/coot/\")",
+  "scm": "(browser-url \"https://www2.mrc-lmb.cam.ac.uk/personal/pemsley/coot/\")",
+  "skip": "opens a web browser / uses the network"
+ },
+ "ccp4i_projects": {
+  "expect": "returns a list of [alias, directory] pairs of CCP4i projects; always contains the current directory",
+  "py": "ccp4i_projects()",
+  "scm": "(ccp4i-projects)"
+ },
+ "chain_fragments": {
+  "expect": "should return the chain fragments of molecule 0",
+  "note": "Both chain_fragments_py and chain_fragments_scm compute the fragments but never fill the return value: always False/#f (stub in 0.9.8.96).",
+  "py": "chain_fragments(0, 1)",
+  "scm": "(chain-fragments 0 1)"
+ },
+ "chain_id_for_shelxl_residue_number": {
+  "expect": "the chain that holds SHELXL residue number 1041 (chain B's residues get +1000 in the .ins file); False if none.",
+  "py": "chain_id_for_shelxl_residue_number(imol_s, 1041)",
+  "py_setup": [
+   "write_shelx_ins_file(0, \"tut.ins\")",
+   "imol_s = read_shelx_ins_file(\"tut.ins\", 0)"
+  ],
+  "scm": "(chain-id-for-shelxl-residue-number imol-s 1041)",
+  "scm_setup": [
+   "(write-shelx-ins-file 0 \"tut.ins\")",
+   "(define imol-s (read-shelx-ins-file \"tut.ins\" 0))"
+  ]
+ },
+ "change_peptide_carbonyl_by": {
+  "expect": "rotates the carbonyl of the peptide being edited by 10 degrees; only meaningful during an interactive peptide-flip edit in the graphics window.",
+  "py": "change_peptide_carbonyl_by(10.0)",
+  "scm": "(change-peptide-carbonyl-by 10.0)",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "change_peptide_carbonyl_by_current_button_pos": {
+  "expect": "mouse-drag handler: rotates the carbonyl according to the pointer position during an interactive edit.",
+  "py": "change_peptide_carbonyl_by_current_button_pos(10, 10)",
+  "scm": "(change-peptide-carbonyl-by-current-button-pos 10 10)",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "change_peptide_peptide_by": {
+  "expect": "rotates the peptide being edited by 10 degrees; only during an interactive edit in the graphics window.",
+  "py": "change_peptide_peptide_by(10.0)",
+  "scm": "(change-peptide-peptide-by 10.0)",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "change_peptide_peptide_by_current_button_pos": {
+  "expect": "mouse-drag handler: rotates the peptide according to the pointer position during an interactive edit.",
+  "py": "change_peptide_peptide_by_current_button_pos(10, 10)",
+  "scm": "(change-peptide-peptide-by-current-button-pos 10 10)",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "check_chiral_volumes": {
+  "expect": "checks the chiral centres of molecule 0 and shows the result in a dialog",
+  "py": "check_chiral_volumes(0)",
+  "scm": "(check-chiral-volumes 0)",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "cis_trans_convert_intermediate_atoms": {
+  "expect": "converts the peptide at the active residue of the intermediate atoms; 0 when there is no active intermediate peptide",
+  "note": "Returned 0 headless; probably needs the active (centred) atom from the graphics window.",
+  "py": "cis_trans_convert_intermediate_atoms()",
+  "py_setup": [
+   "refine_zone(0, \"A\", 41, 42, \"\")"
+  ],
+  "scm": "(cis-trans-convert-intermediate-atoms)",
+  "scm_setup": [
+   "(refine-zone 0 \"A\" 41 42 \"\")"
+  ]
+ },
+ "clashes_with_symmetry": {
+  "expect": "returns 1 if residue A41 has symmetry-related atoms closer than the distance, 0 if not, -1 for no residue/no symmetry",
+  "py": "clashes_with_symmetry(0, \"A\", 41, \"\", 3.5)",
+  "scm": "(clashes-with-symmetry 0 \"A\" 41 \"\" 3.5)"
+ },
+ "clear_and_update_model_molecule_from_file": {
+  "expect": "replaces the coordinates of the molecule by those in the file, keeping its molecule number; returns that number, -1 on failure",
+  "py": "clear_and_update_model_molecule_from_file(imol2, \"standard-residues.pdb\")",
+  "py_setup": [
+   "imol2 = read_pdb(\"tutorial-modern.pdb\")"
+  ],
+  "scm": "(clear-and-update-model-molecule-from-file imol2 \"standard-residues.pdb\")",
+  "scm_setup": [
+   "(define imol2 (read-pdb \"tutorial-modern.pdb\"))"
+  ]
+ },
+ "clear_and_update_molecule": {
+  "expect": "returns 1 and molecule 0 is replaced by the given representation (here only chain A is kept)",
+  "note": "A malformed Python expression (e.g. residues as [[1,'','ALA'], atoms] or python_representation() atoms with the extra index) gives an empty model, still returns 1 and closes the molecule (is_valid_model_molecule -> 0). Python representation needs the a[:3] strip, see add_molecule.",
+  "py": "clear_and_update_molecule(0, [[[c[0], [[r[0], r[1], r[2], [a[:3] for a in r[3]]] for r in c[1]]] for c in python_representation(0)[0] if c[0] == \"A\"]])",
+  "scm": "(clear-and-update-molecule 0 (list (list (car (car (scheme-representation 0))))))"
+ },
+ "clear_ball_and_stick": {
+  "expect": "removes ball-and-stick representations of molecule 0; returns 0 (nothing to clear here)",
+  "py": "clear_ball_and_stick(0)",
+  "scm": "(clear-ball-and-stick 0)"
+ },
+ "clear_refmac_sad_atoms": {
+  "expect": "removes all SAD atoms registered with add_refmac_sad_atom*",
+  "note": "Only stores a setting for the next Refmac run; does not run Refmac.",
+  "py": "clear_refmac_sad_atoms()",
+  "py_setup": [
+   "add_refmac_sad_atom(\"SE\", -8.0, 4.5, 0.9792)"
+  ],
+  "scm": "(clear-refmac-sad-atoms)",
+  "scm_setup": [
+   "(add-refmac-sad-atom \"SE\" -8.0 4.5 0.9792)"
+  ]
+ },
+ "compare_atom_specs_user_float": {
+  "expect": "C++ sort helper: True when the first spec's float_user_data is smaller than the second's",
+  "note": "Takes atom_spec_t objects (from atom_spec_from_python_expression), not lists.",
+  "py": "compare_atom_specs_user_float(spec1, spec2)",
+  "py_setup": [
+   "spec1 = atom_spec_t(\"A\", 41, \"\", \" CA \", \"\"); spec1.float_user_data = 1.0",
+   "spec2 = atom_spec_t(\"A\", 42, \"\", \" CA \", \"\"); spec2.float_user_data = 2.0"
+  ],
+  "scm": "(compare-atom-specs-user-float s1 s2)",
+  "scm_setup": [
+   "(define s1 (new-atom-spec-t \"A\" 41 \"\" \" CA \" \"\"))",
+   "(define s2 (new-atom-spec-t \"A\" 42 \"\" \" CA \" \"\"))",
+   "(atom-spec-t-float-user-data-set s1 1.0)",
+   "(atom-spec-t-float-user-data-set s2 2.0)"
+  ]
+ },
+ "compare_atom_specs_user_float_in_pair": {
+  "expect": "C++ sort helper on (atom_spec_t, string) pairs",
+  "skip": "internal C++ helper: needs a std::pair<atom_spec_t, std::string>, which scripts cannot build"
+ },
+ "compare_mtimes": {
+  "expect": "C++ sort helper: True when a is newer than b",
+  "skip": "internal C++ helper (sort predicate on coot::str_mtime); its arguments cannot be built from scripts"
+ },
+ "compare_strings": {
+  "expect": "true when the first string sorts before the second (a < b), false otherwise",
+  "py": "compare_strings(\"apple\", \"banana\")",
+  "scm": "(compare-strings \"banana\" \"apple\")"
+ },
+ "comprised_of_organic_set_p": {
+  "expect": "True when the dictionary of that residue type has only organic-set elements (C, N, O, H, ...); False if unknown",
+  "py": "comprised_of_organic_set_p(\"NAG\")",
+  "py_setup": [
+   "read_cif_dictionary(\"NAG.cif\")"
+  ],
+  "scm": "(comprised-of-organic-set-p \"NAG\")",
+  "scm_setup": [
+   "(read-cif-dictionary \"NAG.cif\")"
+  ]
+ },
+ "coot_checked_exit": {
+  "expect": "exits Coot, first asking about unsaved molecules (in the GUI)",
+  "py": "coot_checked_exit(0)",
+  "scm": "(coot-checked-exit 0)",
+  "skip": "exits Coot"
+ },
+ "coot_clear_backup_or_real_exit": {
+  "expect": "exits Coot, offering to clear old backups first",
+  "py": "coot_clear_backup_or_real_exit(0)",
+  "scm": "(coot-clear-backup-or-real-exit 0)",
+  "skip": "exits Coot"
+ },
+ "coot_get_url": {
+  "expect": "downloads the URL to the file; returns 0 on success.",
+  "py": "coot_get_url(\"https://files.rcsb.org/download/1ehz.pdb\", \"1ehz-dl.pdb\")",
+  "scm": "(coot-get-url \"https://files.rcsb.org/download/1ehz.pdb\" \"1ehz-dl.pdb\")",
+  "skip": "needs the network (downloads with libcurl)"
+ },
+ "coot_get_url_and_activate_curl_hook": {
+  "expect": "downloads the URL to the file and then runs the download-finished hook; returns 0 on success.",
+  "py": "coot_get_url_and_activate_curl_hook(\"https://files.rcsb.org/download/1ehz.pdb\", \"1ehz-dl.pdb\", 1)",
+  "scm": "(coot-get-url-and-activate-curl-hook \"https://files.rcsb.org/download/1ehz.pdb\" \"1ehz-dl.pdb\" 1)",
+  "skip": "needs the network (downloads with libcurl)"
+ },
+ "coot_get_url_as_string": {
+  "expect": "the text at the URL as a string.",
+  "py": "coot_get_url_as_string(\"https://files.rcsb.org/header/1ehz.pdb\")",
+  "scm": "(coot-get-url-as-string \"https://files.rcsb.org/header/1ehz.pdb\")",
+  "skip": "needs the network (downloads with libcurl)"
+ },
+ "coot_get_url_as_string_internal": {
+  "expect": "internal form of coot_get_url_as_string: the text at the URL.",
+  "py": "coot_get_url_as_string_internal(\"https://files.rcsb.org/header/1ehz.pdb\")",
+  "scm": "(coot-get-url-as-string-internal \"https://files.rcsb.org/header/1ehz.pdb\")",
+  "skip": "needs the network (downloads with libcurl)"
+ },
+ "coot_no_state_real_exit": {
+  "expect": "exits Coot with return value 0 without writing a state file",
+  "py": "coot_no_state_real_exit(0)",
+  "scm": "(coot-no-state-real-exit 0)",
+  "skip": "exits Coot"
+ },
+ "coot_real_exit": {
+  "expect": "exits Coot with the given return value",
+  "py": "coot_real_exit(0)",
+  "scm": "(coot-real-exit 0)",
+  "skip": "exits Coot"
+ },
+ "coot_reduce": {
+  "expect": "adds hydrogens to molecule 0 with reduce",
+  "py": "coot_reduce(0)",
+  "scm": "(coot-reduce 0)",
+  "skip": "runs the external program reduce"
+ },
+ "coot_save_state_and_exit": {
+  "expect": "writes the state file (flag 1) and exits Coot",
+  "py": "coot_save_state_and_exit(0, 1)",
+  "scm": "(coot-save-state-and-exit 0 1)",
+  "skip": "exits Coot"
+ },
+ "cootaneer": {
+  "expect": "returns 1 when the fragment containing A41 CA was docked to the assigned sequence (side chains rebuilt), 0 on failure",
+  "py": "cootaneer(1, 0, [\"A\", 41, \"\", \" CA \", \"\"])",
+  "py_setup": [
+   "assign_sequence_from_string(0, \"A\", \"DVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLIDQTC\")"
+  ],
+  "scm": "(cootaneer 1 0 (list \"A\" 41 \"\" \" CA \" \"\"))",
+  "scm_setup": [
+   "(assign-sequence-from-string 0 \"A\" \"DVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLIDQTC\")"
+  ]
+ },
+ "cootaneer_internal": {
+  "expect": "returns 1 when the fragment containing A41 CA was docked to the assigned sequence (0 without a sequence)",
+  "note": "Python only works with a coot.atom_spec_t object; Scheme gets an unusable SWIG type: use cootaneer with a list spec instead. Without assigned sequence it returns 0.",
+  "py": "cootaneer_internal(1, 0, atom_spec_t(\"A\", 41, \"\", \" CA \", \"\"))",
+  "py_setup": [
+   "assign_sequence_from_string(0, \"A\", \"DVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLIDQTC\")"
+  ]
+ },
+ "copy_from_ncs_master_to_chains": {
+  "expect": "replaces chain B by a superposed copy of master chain A (the A41 mutation appears at B41)",
+  "note": "the whole chain is replaced: B residues absent from A (B94-96) are deleted and B72's alt confs are lost",
+  "py": "copy_from_ncs_master_to_chains(0, \"A\", [\"B\"])",
+  "py_setup": [
+   "mutate_single_residue_by_seqno(41, \"\", \"A\", 0, \"A\")"
+  ],
+  "scm": "(copy-from-ncs-master-to-chains 0 \"A\" (list \"B\"))",
+  "scm_setup": [
+   "(mutate-single-residue-by-seqno 41 \"\" \"A\" 0 #\\A)"
+  ]
+ },
+ "copy_from_ncs_master_to_specific_other_chains": {
+  "expect": "copies master chain A onto the listed NCS chains (here B), like copy_from_ncs_master_to_chains",
+  "py": "copy_from_ncs_master_to_specific_other_chains_py(0, \"A\", [\"B\"])",
+  "py_setup": [
+   "mutate_single_residue_by_seqno(41, \"\", \"A\", 0, \"A\")"
+  ],
+  "scm": "(copy-from-ncs-master-to-specific-other-chains-scm 0 \"A\" (list \"B\"))",
+  "scm_setup": [
+   "(mutate-single-residue-by-seqno 41 \"\" \"A\" 0 #\\A)"
+  ]
+ },
+ "copy_residue_range": {
+  "expect": "copies coordinates of the residue range from the reference chain onto the same residues of the target chain (no superposition)",
+  "note": "Returns 0 although 11 residues were copied (the old automatic run stopped Coot only because of placeholder arguments). The return status looks unreliable.",
+  "py": "copy_residue_range(imol2, \"B\", 0, \"A\", 10, 20)",
+  "py_setup": [
+   "imol2 = read_pdb(\"tutorial-modern.pdb\")"
+  ],
+  "scm": "(copy-residue-range imol2 \"B\" 0 \"A\" 10 20)",
+  "scm_setup": [
+   "(define imol2 (read-pdb \"tutorial-modern.pdb\"))"
+  ]
+ },
+ "copy_residue_range_from_ncs_master_to_chains": {
+  "expect": "copies only residues 40-45 of master chain A onto chain B (B41 becomes ALA)",
+  "py": "copy_residue_range_from_ncs_master_to_chains(0, \"A\", 40, 45, [\"B\"])",
+  "py_setup": [
+   "mutate_single_residue_by_seqno(41, \"\", \"A\", 0, \"A\")"
+  ],
+  "scm": "(copy-residue-range-from-ncs-master-to-chains 0 \"A\" 40 45 (list \"B\"))",
+  "scm_setup": [
+   "(mutate-single-residue-by-seqno 41 \"\" \"A\" 0 #\\A)"
+  ]
+ },
+ "crankshaft_peptide_rotation_optimization_intermediate_atoms": {
+  "expect": "runs the crankshaft peptide optimisation on the moving atoms; 1 if done, 0 when there are no moving atoms",
+  "py": "(refine_zone(0, \"A\", 41, 43, \"\"), crankshaft_peptide_rotation_optimization_intermediate_atoms())[1]",
+  "scm": "(begin (refine-zone 0 \"A\" 41 43 \"\") (crankshaft-peptide-rotation-optimization-intermediate-atoms))"
+ },
+ "create_initial_validation_graph_submenu_generic": {
+  "expect": "builds a validation-graph sub-menu in the main window (internal GUI function)",
+  "skip": "needs a GTK widget made by the GUI (not something a script normally has); internal GUI callback"
+ },
+ "curl_progress_info": {
+  "expect": "progress information of a running download to that file; False when none is running.",
+  "py": "curl_progress_info(\"x.pdb\")",
+  "scm": "(curl-progress-info \"x.pdb\")"
+ },
+ "curlew": {
+  "expect": "opens the Curlew extensions browser (downloads the list from the Coot web site)",
+  "py": "curlew()",
+  "scm": "(curlew)",
+  "skip": "needs the network and opens a window"
+ },
+ "data_resolution": {
+  "expect": "returns the resolution (A) of the data behind map 1; negative on error",
+  "py": "data_resolution(1)",
+  "scm": "(data-resolution 1)"
+ },
+ "db_mainchain": {
+  "expect": "returns a new molecule with main chain built from the CA trace of the range by database fragments; -1 on error",
+  "py": "db_mainchain(0, \"A\", 10, 30, \"forwards\")",
+  "scm": "(db-mainchain 0 \"A\" 10 30 \"forwards\")"
+ },
+ "delete_hydrogen_atoms": {
+  "expect": "returns the number of hydrogen atoms deleted (the dictionary monomer has 7)",
+  "py": "delete_hydrogen_atoms(imol)",
+  "py_setup": [
+   "imol = get_monomer(\"ALA\")"
+  ],
+  "scm": "(delete-hydrogen-atoms (get-monomer \"SER\"))"
+ },
+ "delete_hydrogens": {
+  "expect": "returns the number of hydrogen atoms deleted (same as delete_hydrogen_atoms)",
+  "py": "delete_hydrogens(get_monomer(\"ALA\"))",
+  "scm": "(delete-hydrogens (get-monomer \"SER\"))"
+ },
+ "delete_item_widget_is_being_shown": {
+  "expect": "returns 0: the Delete dialog is not open",
+  "py": "delete_item_widget_is_being_shown()",
+  "scm": "(delete-item-widget-is-being-shown)"
+ },
+ "delete_item_widget_keep_active_on": {
+  "expect": "returns 0: the Delete dialog (and its 'keep active' check button) is not open",
+  "py": "delete_item_widget_keep_active_on()",
+  "scm": "(delete-item-widget-keep-active-on)"
+ },
+ "delete_waters": {
+  "expect": "returns the number of waters deleted (tutorial-modern.pdb has none, 1ehz.pdb has 160)",
+  "py": "delete_waters(imol)",
+  "py_setup": [
+   "imol = read_pdb(\"1ehz.pdb\")"
+  ],
+  "scm": "(delete-waters (read-pdb \"1ehz.pdb\"))"
+ },
+ "difference_map": {
+  "expect": "returns the new map molecule (map1 - scale*map2 on map1's grid), marked as a difference map; -1 if either is not a map",
+  "py": "difference_map(1, imap2, 1.0)",
+  "py_setup": [
+   "imap2 = map_from_mtz_by_calc_phases(\"rnasa-1.8-all_refmac1.mtz\", \"FGMP18\", \"SIGFGMP18\", 0)"
+  ],
+  "scm": "(difference-map 1 imap2 1.0)",
+  "scm_setup": [
+   "(define imap2 (map-from-mtz-by-calc-phases \"rnasa-1.8-all_refmac1.mtz\" \"FGMP18\" \"SIGFGMP18\" 0))"
+  ]
+ },
+ "dipole_to": {
+  "expect": "internal: converts a C++ (dipole, imol) pair to a script value",
+  "skip": "internal C++ helper: needs a std::pair<coot::dipole,int> that scripts cannot build; use add_dipole_for_residues"
+ },
+ "display_maps": {
+  "expect": "displays the listed maps and undisplays every other map",
+  "py": "display_maps([imap2])",
+  "py_setup": [
+   "imap2 = map_from_mtz_by_calc_phases(\"rnasa-1.8-all_refmac1.mtz\", \"FGMP18\", \"SIGFGMP18\", 0)"
+  ],
+  "scm": "(display-maps (list imap2))",
+  "scm_setup": [
+   "(define imap2 (map-from-mtz-by-calc-phases \"rnasa-1.8-all_refmac1.mtz\" \"FGMP18\" \"SIGFGMP18\" 0))"
+  ]
+ },
+ "display_python": {
+  "expect": "a printable string describing the Python object (internal helper for messages). (Python only.)",
+  "py": "display_python([1, \"a\", 2.5])"
+ },
+ "do_probe_dots_on_rotamers_and_chis_state": {
+  "expect": "returns 1 if probe dots are drawn while changing rotamers/chis, else 0 (default)",
+  "py": "do_probe_dots_on_rotamers_and_chis_state()",
+  "scm": "(do-probe-dots-on-rotamers-and-chis-state)"
+ },
+ "do_probe_dots_post_refine_state": {
+  "expect": "returns 1 if probe dots are made after each refinement, else 0 (default)",
+  "py": "do_probe_dots_post_refine_state()",
+  "scm": "(do-probe-dots-post-refine-state)"
+ },
+ "do_ramachandran_plot": {
+  "expect": "opens the Ramachandran plot window for molecule 0",
+  "py": "do_ramachandran_plot(0)",
+  "scm": "(do-ramachandran-plot 0)",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "do_sequence_view": {
+  "expect": "opens the sequence view window for molecule 0.",
+  "py": "do_sequence_view(0)",
+  "scm": "(do-sequence-view 0)",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "dots": {
+  "expect": "returns the number of the new dots set (surface dots around residue A41)",
+  "py": "dots(0, \"//A/41\", \"dots-A41\", 1, 1.0)",
+  "scm": "(dots 0 \"//A/41\" \"dots-A41\" 1 1.0)"
+ },
+ "drag_intermediate_atom": {
+  "expect": "during a refinement (intermediate atoms present) moves that atom to the position and lets the refinement follow; nothing to drag otherwise",
+  "py": "refine_zone(0, \"A\", 41, 43, \"\"); print(drag_intermediate_atom([\"A\", 42, \"\", \" CA \", \"\"], [45.0, 10.4, 15.0]))",
+  "scm": "(begin (refine-zone 0 \"A\" 41 43 \"\") (drag-intermediate-atom (list \"A\" 42 \"\" \" CA \" \"\") (list 45.0 10.4 15.0)))"
+ },
+ "edit_chi_angles": {
+  "expect": "starts chi-angle editing of A41 (dialog + moving atoms)",
+  "py": "edit_chi_angles(0, \"A\", 41, \"\", \"\")",
+  "scm": "(edit-chi-angles 0 \"A\" 41 \"\" \"\")",
+  "skip": "opens a dialog; needs the graphics window (stops Coot without a screen)"
+ },
+ "exchange_chain_ids_for_seg_ids": {
+  "expect": "sets each chain id to the segment id of its atoms; with blank segids (as in this file) the chains merge into one blank chain",
+  "note": "destructive on files without segids: chains A and B collapse into one and residues with the same number are lost (189 -> 96); there is no check",
+  "py": "exchange_chain_ids_for_seg_ids(0)",
+  "scm": "(exchange-chain-ids-for-seg-ids 0)"
+ },
+ "exchange_ligand": {
+  "expect": "a stub upstream ('just pondering'): always returns -1 and does nothing",
+  "py": "exchange_ligand(imol_nag, \"A\", 1, \"\")",
+  "py_setup": [
+   "imol_nag = read_pdb(\"nag_only.pdb\")"
+  ],
+  "scm": "(exchange-ligand imol-nag \"A\" 1 \"\")",
+  "scm_setup": [
+   "(define imol-nag (read-pdb \"nag_only.pdb\"))"
+  ]
+ },
+ "execute_find_blobs": {
+  "expect": "finds unmodelled density blobs above 1.5 sigma in map 1 (not covered by model 0); with interactive_flag 1 it opens the Blobs dialog (that needs a screen: Coot stopped headless).",
+  "note": "interactive_flag 1 stops Coot without a screen.",
+  "py": "execute_find_blobs(0, 1, 1.5, 0)",
+  "scm": "(execute-find-blobs 0 1 1.5 0)"
+ },
+ "execute_refmac_real": {
+  "expect": "runs Refmac on the given files and reads the results",
+  "skip": "runs Refmac (long external program); use run_refmac_by_filename / the Run Refmac dialog"
+ },
+ "export_map": {
+  "expect": "returns 1 and writes the whole map as a CCP4 map file; 0 on failure",
+  "py": "export_map(1, \"map1.map\")",
+  "scm": "(export-map 1 \"map1.map\")"
+ },
+ "export_map_fragment": {
+  "expect": "returns 1 and writes a CCP4 map of the density within the radius of (x, y, z)",
+  "py": "export_map_fragment(1, 47.1, 10.6, 17.4, 8.0, \"frag.map\")",
+  "scm": "(export-map-fragment 1 47.1 10.6 17.4 8.0 \"frag.map\")"
+ },
+ "export_map_fragment_to_plain_file": {
+  "expect": "returns 1 and writes the density values around the point to a plain text file",
+  "py": "export_map_fragment_to_plain_file(1, 47.1, 10.6, 17.4, 4.0, \"frag.txt\")",
+  "scm": "(export-map-fragment-to-plain-file 1 47.1 10.6 17.4 4.0 \"frag.txt\")"
+ },
+ "export_map_fragment_with_origin_shift": {
+  "expect": "returns 1 and writes a CCP4 map fragment whose origin is moved to the fragment",
+  "py": "export_map_fragment_with_origin_shift(1, 47.1, 10.6, 17.4, 8.0, \"frag-shift.map\")",
+  "scm": "(export-map-fragment-with-origin-shift 1 47.1 10.6 17.4 8.0 \"frag-shift.map\")"
+ },
+ "export_map_fragment_with_text_radius": {
+  "expect": "writes a map fragment of the given radius (as text, an integer) around the rotation centre",
+  "note": "The radius text is parsed as an integer; the earlier automatic example with a non-number string stopped Coot (uncaught exception).",
+  "py": "export_map_fragment_with_text_radius(1, \"10\", \"frag-text.map\")",
+  "py_setup": [
+   "set_rotation_centre(47.1, 10.6, 17.4)"
+  ],
+  "scm": "(export-map-fragment-with-text-radius 1 \"10\" \"frag-text.map\")",
+  "scm_setup": [
+   "(set-rotation-centre 47.1 10.6 17.4)"
+  ]
+ },
+ "export_map_gui": {
+  "expect": "opens the Export Map file chooser (1 = map fragment around the centre, 0 = whole map)",
+  "py": "export_map_gui(0)",
+  "scm": "(export-map-gui 0)",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "fetch_alphafold_model_for_uniprot_id": {
+  "expect": "downloads the AlphaFold model for the UniProt id and returns its new molecule number.",
+  "py": "fetch_alphafold_model_for_uniprot_id(\"P00698\")",
+  "scm": "(fetch-alphafold-model-for-uniprot-id \"P00698\")",
+  "skip": "needs the network (downloads with libcurl)"
+ },
+ "fetch_and_superpose_alphafold_models": {
+  "expect": "downloads the AlphaFold models for the UniProt DBREF records of molecule 0 and superposes them (tutorial-modern.pdb has no DBREF: nothing would be fetched).",
+  "py": "fetch_and_superpose_alphafold_models(0)",
+  "scm": "(fetch-and-superpose-alphafold-models 0)",
+  "skip": "needs the network (downloads with libcurl)"
+ },
+ "fetch_and_superpose_alphafold_models_using_active_molecule": {
+  "expect": "downloads AlphaFold models for the active molecule's sequence and superposes them",
+  "py": "fetch_and_superpose_alphafold_models_using_active_molecule()",
+  "scm": "(fetch-and-superpose-alphafold-models-using-active-molecule)",
+  "skip": "uses the network"
+ },
+ "fffear_search": {
+  "expect": "returns the new map molecule of the FFFear search score of the model fragment in map 1",
+  "py": "fffear_search(imol, 1)",
+  "py_setup": [
+   "imol = new_molecule_by_atom_selection(0, \"//A/41-45\")"
+  ],
+  "scm": "(fffear-search 3 1)",
+  "scm_setup": [
+   "(new-molecule-by-atom-selection 0 \"//A/41-45\")"
+  ],
+  "skip": "long run: 203 s even for a 5-residue search model"
+ },
+ "filelist_into_fileselection_clist": {
+  "expect": "fills a file selection dialog's list (internal GUI function)",
+  "skip": "needs a GTK widget made by the GUI (not something a script normally has); internal GUI callback"
+ },
+ "fill_preferences_main_toolbar_icons": {
+  "expect": "fills the toolbar-icon list of the Preferences dialog (internal GUI helper)",
+  "skip": "needs a GTK widget made by the GUI (not something a script normally has); internal GUI callback"
+ },
+ "fill_preferences_model_toolbar_icons": {
+  "expect": "fills the modelling-toolbar icon list of the Preferences dialog (internal GUI helper)",
+  "skip": "needs a GTK widget made by the GUI (not something a script normally has); internal GUI callback"
+ },
+ "find_secondary_structure": {
+  "expect": "finds helices (min length 6) and strands (min length 4) in the whole refinement map and adds them to a molecule 'SecStruc'",
+  "py": "find_secondary_structure(1, 6, 2, 1, 4, 2)",
+  "scm": "(find-secondary-structure 1 6 2 1 4 2)",
+  "skip": "searches the whole map: no answer in 60 s on the test map (use find_secondary_structure_local)"
+ },
+ "find_secondary_structure_local": {
+  "expect": "returns the molecule 'SecStruc' holding the helices/strands found in the map within the radius of the centre",
+  "py": "find_secondary_structure_local(1, 6, 2, 1, 4, 2, 6.0)",
+  "py_setup": [
+   "set_rotation_centre(47.1, 10.6, 17.4)"
+  ],
+  "scm": "(find-secondary-structure-local 1 6 2 1 4 2 6.0)",
+  "scm_setup": [
+   "(set-rotation-centre 47.1 10.6 17.4)"
+  ]
+ },
+ "find_terminal_residue_type": {
+  "expect": "returns the residue type the assigned sequence has at the new position A94 (GLN); False/#f when no sequence is assigned to the chain",
+  "note": "resno is the number of the residue to be ADDED (94), not the current terminal residue.",
+  "py": "find_terminal_residue_type(0, \"A\", 94)",
+  "py_setup": [
+   "assign_sequence_from_string(0, \"A\", \"DVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLIDQTC\")"
+  ],
+  "scm": "(find-terminal-residue-type 0 \"A\" 94)",
+  "scm_setup": [
+   "(assign-sequence-from-string 0 \"A\" \"DVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLIDQTC\")"
+  ]
+ },
+ "first_coords_imol": {
+  "expect": "the first model molecule (0); -1 if none",
+  "py": "first_coords_imol()",
+  "scm": "(first-coords-imol)"
+ },
+ "first_molecule_with_symmetry_displayed": {
+  "expect": "0 (molecule 0 shows symmetry once the master switch is on); -1 if no molecule shows symmetry.",
+  "py": "first_molecule_with_symmetry_displayed()",
+  "py_setup": [
+   "set_show_symmetry_master(1)"
+  ],
+  "scm": "(first-molecule-with-symmetry-displayed)",
+  "scm_setup": [
+   "(set-show-symmetry-master 1)"
+  ]
+ },
+ "first_small_coords_imol": {
+  "expect": "returns the first model molecule with fewer than 400 atoms, -1 if none",
+  "py": "first_small_coords_imol()",
+  "py_setup": [
+   "read_pdb(\"nag_only.pdb\")"
+  ],
+  "scm": "(first-small-coords-imol)",
+  "scm_setup": [
+   "(read-pdb \"nag_only.pdb\")"
+  ]
+ },
+ "first_unsaved_coords_imol": {
+  "expect": "returns the first model molecule with unsaved changes; -1 when nothing has changed",
+  "py": "first_unsaved_coords_imol()",
+  "py_setup": [
+   "delete_residue(0, \"A\", 41, \"\")"
+  ],
+  "scm": "(first-unsaved-coords-imol)",
+  "scm_setup": [
+   "(delete-residue 0 \"A\" 41 \"\")"
+  ]
+ },
+ "fit_residue_range_to_map_by_simplex": {
+  "expect": "rigid-body/simplex fit of residues A41-43 of model 0 into map 1; the three residues move.",
+  "note": "Earlier generated example timed out (long range); a 3-residue range takes 0.3 s.",
+  "py": "fit_residue_range_to_map_by_simplex(41, 43, \"\", \"A\", 0, 1)",
+  "scm": "(fit-residue-range-to-map-by-simplex 41 43 \"\" \"A\" 0 1)"
+ },
+ "fix_nomenclature_errors": {
+  "expect": "returns the number of residues whose atom names were swapped to fix nomenclature (e.g. PHE CD1/CD2); 0 for a clean model",
+  "py": "fix_nomenclature_errors(0)",
+  "scm": "(fix-nomenclature-errors 0)"
+ },
+ "fle_view_internal_to_png": {
+  "expect": "draws the 2D ligand environment (FLEV) from PRODRG output files into a PNG",
+  "skip": "needs PRODRG output files (flat mol/pdb, 3d pdb, dictionary) from an external program"
+ },
+ "fle_view_with_rdkit_to_png": {
+  "expect": "writes a 2D ligand-environment picture of NAG A1 (residues within 4 A) to nag-fle.png",
+  "py": "fle_view_with_rdkit_to_png(read_pdb(\"nag_only.pdb\"), \"A\", 1, \"\", 4.0, \"nag-fle.png\")",
+  "py_setup": [
+   "read_cif_dictionary(\"NAG.cif\")"
+  ],
+  "scm": "(fle-view-with-rdkit-to-png (read-pdb \"nag_only.pdb\") \"A\" 1 \"\" 4.0 \"nag-fle.png\")",
+  "scm_setup": [
+   "(read-cif-dictionary \"NAG.cif\")"
+  ]
+ },
+ "float_from_entry": {
+  "expect": "returns the number typed in a GtkEntry (internal GUI helper)",
+  "skip": "needs a GTK widget made by the GUI (not something a script normally has); internal GUI callback"
+ },
+ "generic_int_vector_to_list_internal": {
+  "expect": "the same numbers as a list (converter between C++ std::vector<int> and lists; internal helper).",
+  "py": "generic_int_vector_to_list_internal([1, 2, 3])",
+  "scm": "(generic-int-vector-to-list-internal (list 1 2 3))"
+ },
+ "generic_list_to_string_vector_internal": {
+  "expect": "the strings converted to a C++ std::vector<string>, shown as a tuple (Python) / vector (Scheme); internal helper.",
+  "py": "generic_list_to_string_vector_internal([\"a\", \"b\"])",
+  "scm": "(generic-list-to-string-vector-internal (list \"a\" \"b\"))"
+ },
+ "generic_object_index": {
+  "expect": "returns the index of the generic object with that name, -1 if there is none",
+  "py": "generic_object_index(\"my-object\")",
+  "py_setup": [
+   "new_generic_object_number(\"my-object\")"
+  ],
+  "scm": "(generic-object-index \"my-object\")",
+  "scm_setup": [
+   "(new-generic-object-number \"my-object\")"
+  ]
+ },
+ "generic_object_name": {
+  "expect": "returns the name of generic object number 0; False/#f if there is no such object",
+  "py": "generic_object_name(0)",
+  "py_setup": [
+   "new_generic_object_number(\"my-object\")"
+  ],
+  "scm": "(generic-object-name 0)",
+  "scm_setup": [
+   "(new-generic-object-number \"my-object\")"
+  ]
+ },
+ "generic_objects_gui_wrapper": {
+  "expect": "opens the Generic Display Objects window",
+  "py": "generic_objects_gui_wrapper()",
+  "scm": "(generic-objects-gui-wrapper)",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "get_ccp4srs_monomer_and_dictionary": {
+  "expect": "-1 here: the CCP4 SRS structure database is not part of this build; with an SRS it returns the new molecule number of the monomer. Use get_monomer(\"ATP\") instead.",
+  "py": "get_ccp4srs_monomer_and_dictionary(\"ATP\")",
+  "scm": "(get-ccp4srs-monomer-and-dictionary \"ATP\")"
+ },
+ "get_cryo_em_refinement": {
+  "expect": "returns True when cryo-EM refinement mode is on; False by default",
+  "py": "get_cryo_em_refinement()",
+  "scm": "(get-cryo-em-refinement)"
+ },
+ "get_dynamic_map_sampling": {
+  "expect": "returns 0: dynamic map sampling is off by default",
+  "py": "get_dynamic_map_sampling()",
+  "scm": "(get-dynamic-map-sampling)"
+ },
+ "get_dynamic_map_size_display": {
+  "expect": "returns 0: dynamic map size display is off by default",
+  "py": "get_dynamic_map_size_display()",
+  "scm": "(get-dynamic-map-size-display)"
+ },
+ "get_fps_flag": {
+  "expect": "returns the show-frames-per-second flag: 0 by default, 1 after set_fps_flag(1)",
+  "py": "get_fps_flag()",
+  "py_setup": [
+   "set_fps_flag(1)"
+  ],
+  "scm": "(get-fps-flag)",
+  "scm_setup": [
+   "(set-fps-flag 1)"
+  ]
+ },
+ "get_generic_object": {
+  "expect": "returns a dict describing the generic object (name, attached molecule, displayed/solid flags); False if no such object",
+  "py": "get_generic_object_py(0)",
+  "py_setup": [
+   "new_generic_object_number(\"my-object\")"
+  ]
+ },
+ "get_input_model_was_cif_state": {
+  "expect": "#f for a model read from PDB format, #t for mmCIF, #f for an invalid molecule",
+  "scm": "(get-input-model-was-cif-state-scm 0)"
+ },
+ "get_input_molecule_was_in_mmcif_state": {
+  "expect": "False for a molecule read from PDB format, True for one read from mmCIF",
+  "py": "get_input_molecule_was_in_mmcif_state(0)"
+ },
+ "get_intermediate_atoms_bonds_representation": {
+  "expect": "False when no refinement is in progress (there are no intermediate atoms); during an interactive refinement it returns the bonds of the moving atoms. (Python only.)",
+  "py": "get_intermediate_atoms_bonds_representation()"
+ },
+ "get_intermediate_atoms_distortions": {
+  "expect": "during a refinement returns the distortion of every restraint on the moving atoms; False when no refinement is running",
+  "py": "refine_zone(0, \"A\", 41, 43, \"\"); print(get_intermediate_atoms_distortions())"
+ },
+ "get_ligand_percentile": {
+  "expect": "returns the percentile (0-100) of the value among PDB ligands for metric density_correlation, coot_diff_map_correlation, bumps_1 or mogul_z_worst; -1 for an unknown metric",
+  "py": "get_ligand_percentile(\"density_correlation\", 0.8, 0)",
+  "scm": "(get-ligand-percentile \"density_correlation\" 0.8 0)"
+ },
+ "get_lsq_matrix": {
+  "expect": "returns the superposition matrix [rotation, translation] without moving anything; False on failure",
+  "py": "get_lsq_matrix(0, imol2)",
+  "py_setup": [
+   "imol2 = read_pdb(\"tutorial-modern.pdb\")",
+   "clear_lsq_matches()",
+   "add_lsq_match(10, 50, \"A\", 10, 50, \"B\", 1)"
+  ],
+  "scm": "(get-lsq-matrix 0 imol2)",
+  "scm_setup": [
+   "(define imol2 (read-pdb \"tutorial-modern.pdb\"))",
+   "(clear-lsq-matches)",
+   "(add-lsq-match 10 50 \"A\" 10 50 \"B\" 1)"
+  ]
+ },
+ "get_map_colour": {
+  "expect": "returns the map's RGB colour (0-1 each); False if not a map",
+  "py": "get_map_colour(1)",
+  "scm": "(get-map-colour 1)"
+ },
+ "get_mogul_max_badness": {
+  "expect": "returns the |z| above which Mogul markup shows a bond/angle as bad (default 5.0)",
+  "py": "get_mogul_max_badness()",
+  "scm": "(get-mogul-max-badness)"
+ },
+ "get_monomer_molecule_by_network_and_dict_gen": {
+  "expect": "downloads the compound and makes a dictionary; returns the new molecule number",
+  "py": "get_monomer_molecule_by_network_and_dict_gen(\"ATP\")",
+  "scm": "(get-monomer-molecule-by-network-and-dict-gen \"ATP\")",
+  "skip": "uses the network and a dictionary generator"
+ },
+ "get_pisa_interface_bond_info": {
+  "expect": "internal PISA helper: counts bond types in a list of [type, atom, atom] and returns a C++ struct (fields n_h_bonds, n_salt_bridges, n_cov_bonds, n_ss_bonds)",
+  "note": "Python takes the type as a string, Scheme as a symbol ('h-bonds). Returns a C++ struct, of little use from scripts.",
+  "py": "get_pisa_interface_bond_info_py([[\"h-bonds\", 1, 2], [\"h-bonds\", 3, 4], [\"salt-bridges\", 5, 6]])",
+  "scm": "(get-pisa-interface-bond-info-scm (list (list 'h-bonds 1 2)))"
+ },
+ "get_pointer_position_frac": {
+  "expect": "with a window: [x, y] of the mouse as fractions of the window; False without a pointer (correct here)",
+  "py": "get_pointer_position_frac()"
+ },
+ "get_refmac_ncycles": {
+  "expect": "returns the number of Refmac cycles (default 5)",
+  "note": "Only stores a setting for the next Refmac run; does not run Refmac.",
+  "py": "get_refmac_ncycles()",
+  "scm": "(get-refmac-ncycles)"
+ },
+ "get_refmac_phase_input": {
+  "expect": "returns the phase input mode: 0 none (default), 1 PHI/FOM, 2 HL, 3 SAD",
+  "note": "Only stores a setting for the next Refmac run; does not run Refmac.",
+  "py": "get_refmac_phase_input()",
+  "scm": "(get-refmac-phase-input)"
+ },
+ "get_refmac_refinement_method": {
+  "expect": "returns the refinement method: 0 restrained (default), 1 rigid body, 2 restrained + TLS",
+  "note": "Only stores a setting for the next Refmac run; does not run Refmac.",
+  "py": "get_refmac_refinement_method()",
+  "scm": "(get-refmac-refinement-method)"
+ },
+ "get_refmac_sad_atom_info": {
+  "expect": "returns the SAD atoms set for Refmac: [atom name, f', f'', wavelength] each; empty by default",
+  "py": "get_refmac_sad_atom_info()",
+  "py_setup": [
+   "add_refmac_sad_atom(\"SE\", -8.0, 3.0, 0.98)"
+  ],
+  "scm": "(get-refmac-sad-atom-info)",
+  "scm_setup": [
+   "(add-refmac-sad-atom \"SE\" -8.0 3.0 0.98)"
+  ]
+ },
+ "get_refmac_used_mtz_file_state": {
+  "expect": "returns 1 when Refmac takes its data from an MTZ file, 0 when from a map's stored parameters",
+  "note": "Only stores a setting for the next Refmac run; does not run Refmac.",
+  "py": "get_refmac_used_mtz_file_state()",
+  "scm": "(get-refmac-used-mtz-file-state)"
+ },
+ "get_remote_control_port_number": {
+  "expect": "returns the port Coot listens on for remote control; 0 when not set",
+  "py": "get_remote_control_port_number()",
+  "scm": "(get-remote-control-port-number)"
+ },
+ "get_residue_by_type": {
+  "expect": "returns the residue spec of the first residue of that type, or False if there is none",
+  "note": "Scheme: the name get-residue-by-type is the C++ function and returns a raw #<swig-pointer residue_spec_t>; use get-residue-by-type-scm",
+  "py": "get_residue_by_type(0, \"ALA\")",
+  "scm": "(get-residue-by-type-scm 0 \"ALA\")"
+ },
+ "get_saved_refmac_file_filename": {
+  "expect": "returns the MTZ file name chosen for Refmac, nothing when none was chosen",
+  "note": "Only stores a setting for the next Refmac run; does not run Refmac. Python returns None, Scheme returns '() when unset.",
+  "py": "get_saved_refmac_file_filename()",
+  "scm": "(get-saved-refmac-file-filename)"
+ },
+ "get_sbase_monomer": {
+  "expect": "-1 here (old name of get_ccp4srs_monomer_and_dictionary; no SRS database in this build); use get_monomer(\"ATP\").",
+  "py": "get_sbase_monomer(\"ATP\")",
+  "scm": "(get-sbase-monomer \"ATP\")"
+ },
+ "get_show_aniso": {
+  "expect": "returns 0: anisotropic atoms are not shown by default (set_show_aniso(1) turns them on)",
+  "py": "get_show_aniso()",
+  "scm": "(get-show-aniso)"
+ },
+ "get_show_limit_aniso": {
+  "expect": "returns 0: the anisotropic-probability limit is off by default",
+  "py": "get_show_limit_aniso()",
+  "scm": "(get-show-limit-aniso)"
+ },
+ "get_show_symmetry": {
+  "expect": "1 when the symmetry master display switch is on, 0 when off (default 0).",
+  "py": "get_show_symmetry()",
+  "py_setup": [
+   "set_show_symmetry_master(1)"
+  ],
+  "scm": "(get-show-symmetry)",
+  "scm_setup": [
+   "(set-show-symmetry-master 1)"
+  ]
+ },
+ "get_show_unit_cell": {
+  "expect": "1 when the unit cell of molecule 0 is displayed, 0 otherwise (default 0).",
+  "py": "get_show_unit_cell(0)",
+  "py_setup": [
+   "set_show_unit_cell(0, 1)"
+  ],
+  "scm": "(get-show-unit-cell 0)",
+  "scm_setup": [
+   "(set-show-unit-cell 0 1)"
+  ]
+ },
+ "get_solid_density_surface_opacity": {
+  "expect": "returns the opacity of the map's solid surface (0.5 default)",
+  "py": "get_solid_density_surface_opacity(1)",
+  "scm": "(get-solid-density-surface-opacity 1)"
+ },
+ "glyco_tree": {
+  "expect": "unfinished upstream: always returns False (the source says 'incomplete, doesn't work'); use glyco_tree_residues",
+  "note": "Always False even on a real ASN-NAG tree; the C++ body builds the tree but never fills the result.",
+  "py": "glyco_tree(0, [\"A\", 39, \"\"])",
+  "py_setup": [
+   "set_add_linked_residue_do_fit_and_refine(0)",
+   "add_linked_residue(0, \"A\", 39, \"\", \"NAG\", \"NAG-ASN\", 1)"
+  ],
+  "scm": "(glyco-tree-scm 0 (list \"A\" 39 \"\"))",
+  "scm_setup": [
+   "(set-add-linked-residue-do-fit-and-refine 0)",
+   "(add-linked-residue 0 \"A\" 39 \"\" \"NAG\" \"NAG-ASN\" 1)"
+  ]
+ },
+ "glyco_tree_internal_distances_fn": {
+  "expect": "testing function: writes the atom-pair distances inside the glycan tree to the file; the return value is always False",
+  "py": "glyco_tree_internal_distances_fn_py(0, [\"A\", 39, \"\"], \"glyco-dist.txt\")",
+  "py_setup": [
+   "set_add_linked_residue_do_fit_and_refine(0)",
+   "add_linked_residue(0, \"A\", 39, \"\", \"NAG\", \"NAG-ASN\", 1)"
+  ],
+  "scm": "(glyco-tree-internal-distances-fn-scm 0 (list \"A\" 39 \"\") \"glyco-dist.txt\")",
+  "scm_setup": [
+   "(set-add-linked-residue-do-fit-and-refine 0)",
+   "(add-linked-residue 0 \"A\" 39 \"\" \"NAG\" \"NAG-ASN\" 1)"
+  ]
+ },
+ "glyco_tree_matched_residue_pairs": {
+  "expect": "returns the pairs of matching residues of two glycan trees",
+  "py": "glyco_tree_matched_residue_pairs(0, [\"A\", 39, \"\"], imol2, [\"A\", 39, \"\"])",
+  "py_setup": [
+   "set_add_linked_residue_do_fit_and_refine(0)",
+   "add_linked_residue(0, \"A\", 39, \"\", \"NAG\", \"NAG-ASN\", 1)",
+   "imol2 = read_pdb(\"tutorial-modern.pdb\")",
+   "add_linked_residue(imol2, \"A\", 39, \"\", \"NAG\", \"NAG-ASN\", 1)"
+  ],
+  "scm": "(glyco-tree-matched-residue-pairs-scm 0 (list \"A\" 39 \"\") imol2 (list \"A\" 39 \"\"))",
+  "scm_setup": [
+   "(set-add-linked-residue-do-fit-and-refine 0)",
+   "(add-linked-residue 0 \"A\" 39 \"\" \"NAG\" \"NAG-ASN\" 1)",
+   "(define imol2 (read-pdb \"tutorial-modern.pdb\"))",
+   "(add-linked-residue imol2 \"A\" 39 \"\" \"NAG\" \"NAG-ASN\" 1)"
+  ]
+ },
+ "glyco_tree_residue_id": {
+  "expect": "returns [level, prime-arm flag, residue type, link type, parent type, parent spec] for a sugar in a glycan tree; False for a residue that is not a sugar in a tree",
+  "note": "Python gives the prime-arm flag as the string 'unset', Scheme as the symbol unset.",
+  "py": "glyco_tree_residue_id(0, [\"A\", 94, \"\"])",
+  "py_setup": [
+   "set_add_linked_residue_do_fit_and_refine(0)",
+   "add_linked_residue(0, \"A\", 39, \"\", \"NAG\", \"NAG-ASN\", 1)"
+  ],
+  "scm": "(glyco-tree-residue-id 0 (list \"A\" 94 \"\"))",
+  "scm_setup": [
+   "(set-add-linked-residue-do-fit-and-refine 0)",
+   "(add-linked-residue 0 \"A\" 39 \"\" \"NAG\" \"NAG-ASN\" 1)"
+  ]
+ },
+ "glyco_tree_residues": {
+  "expect": "returns the residue specs of the glycan tree on that ASN (the ASN itself and the sugars)",
+  "py": "glyco_tree_residues(0, [\"A\", 39, \"\"])",
+  "py_setup": [
+   "set_add_linked_residue_do_fit_and_refine(0)",
+   "add_linked_residue(0, \"A\", 39, \"\", \"NAG\", \"NAG-ASN\", 1)"
+  ],
+  "scm": "(glyco-tree-residues 0 (list \"A\" 39 \"\"))",
+  "scm_setup": [
+   "(set-add-linked-residue-do-fit-and-refine 0)",
+   "(add-linked-residue 0 \"A\" 39 \"\" \"NAG\" \"NAG-ASN\" 1)"
+  ]
+ },
+ "go_to_atom_molecule_number": {
+  "expect": "returns the molecule the Go To Atom functions work on (0 here, the model)",
+  "py": "go_to_atom_molecule_number()",
+  "py_setup": [
+   "set_go_to_atom_molecule(0)"
+  ],
+  "scm": "(go-to-atom-molecule-number)",
+  "scm_setup": [
+   "(set-go-to-atom-molecule 0)"
+  ]
+ },
+ "go_to_first_view": {
+  "expect": "jumps (snap flag 1) to the first stored view: the centre goes back to where add_view_here was called.",
+  "py": "go_to_first_view(1)",
+  "py_setup": [
+   "add_view_here(\"first\")",
+   "set_rotation_centre(10.0, 10.0, 10.0)"
+  ],
+  "scm": "(go-to-first-view 1)",
+  "scm_setup": [
+   "(add-view-here \"first\")",
+   "(set-rotation-centre 10.0 10.0 10.0)"
+  ]
+ },
+ "go_to_view": {
+  "expect": "moves to the view given as [quaternion, centre, zoom, name].",
+  "py": "go_to_view([[0.0, 0.0, 0.0, 1.0], [50.0, 5.0, 15.0], 60.0, \"my view\"])",
+  "scm": "(go-to-view (list (list 0.0 0.0 0.0 1.0) (list 50.0 5.0 15.0) 60.0 \"my view\"))"
+ },
+ "go_to_view_number": {
+  "expect": "jumps to stored view 0 (snap flag 1); returns 0.",
+  "py": "go_to_view_number(0, 1)",
+  "py_setup": [
+   "add_view_here(\"first\")",
+   "set_rotation_centre(10.0, 10.0, 10.0)"
+  ],
+  "scm": "(go-to-view-number 0 1)",
+  "scm_setup": [
+   "(add-view-here \"first\")",
+   "(set-rotation-centre 10.0 10.0 10.0)"
+  ]
+ },
+ "graphics_store_phs_filename": {
+  "expect": "internal (file chooser): remembers a .phs file name for the cell/symmetry dialog",
+  "note": "SWIG wraps it but neither language can pass a string to it",
+  "py": "graphics_store_phs_filename(\"tiny.phs\")",
+  "scm": "(graphics-store-phs-filename \"tiny.phs\")",
+  "skip": "not callable from scripts: the gchar* argument has no SWIG conversion (GUI-internal function)"
+ },
+ "graphics_to_phenix_geo_representation": {
+  "expect": "redraws molecule 0's bonds from a phenix.refine .geo restraints file (no change without such a file)",
+  "py": "graphics_to_phenix_geo_representation(0, 0, \"model.geo\")",
+  "scm": "(graphics-to-phenix-geo-representation 0 0 \"model.geo\")"
+ },
+ "gui_ligand_metrics": {
+  "expect": "shows a window with the ligand metrics and their percentiles",
+  "skip": "opens a dialog (needs a window); called by the ligand-validation scripts with a ligand spec and computed metrics"
+ },
+ "handle_cif_dictionary": {
+  "expect": "reads the NAG dictionary; returns its index in the dictionary store (> 0 is success), -1 on failure.",
+  "note": "The doc says 'number of bonds read'; the code returns the monomer index of the dictionary (36 here, varies with what was read before).",
+  "py": "handle_cif_dictionary(\"NAG.cif\")",
+  "scm": "(handle-cif-dictionary \"NAG.cif\")"
+ },
+ "handle_cif_dictionary_for_molecule": {
+  "expect": "reads the dictionary for all molecules (-999999 = IMOL_ENC_ANY) and, with the last argument 1, makes a molecule from it; returns the dictionary index. With imol_enc 0 no molecule is made.",
+  "py": "handle_cif_dictionary_for_molecule(\"NAG.cif\", -999999, 1)",
+  "scm": "(handle-cif-dictionary-for-molecule \"NAG.cif\" -999999 1)"
+ },
+ "handle_cns_data_file": {
+  "expect": "reads a CNS reflection file and makes a map using the cell of molecule 0",
+  "py": "handle_cns_data_file(\"data.hkl\", 0)",
+  "scm": "(handle-cns-data-file \"data.hkl\" 0)",
+  "skip": "needs a CNS reflection file (none in the test data); the earlier attempt stopped Coot without a screen"
+ },
+ "handle_cns_data_file_with_cell": {
+  "expect": "reads a CNS reflection file with the given cell and space group and makes a map",
+  "py": "handle_cns_data_file_with_cell(\"data.hkl\", 0, 64.9, 78.3, 38.8, 90.0, 90.0, 90.0, \"P 21 21 21\")",
+  "scm": "(handle-cns-data-file-with-cell \"data.hkl\" 0 64.9 78.3 38.8 90.0 90.0 90.0 \"P 21 21 21\")",
+  "skip": "needs a CNS reflection file (none in the test data); the earlier attempt stopped Coot without a screen"
+ },
+ "handle_drag_and_drop_string": {
+  "expect": "returns 1 and opens the dropped file (coordinates, MTZ or map) as a new molecule",
+  "py": "handle_drag_and_drop_string(\"standard-residues.pdb\")",
+  "scm": "(handle-drag-and-drop-string \"nag_only.pdb\")"
+ },
+ "handle_go_to_residue_keyboarding_mode": {
+  "expect": "callback of the keyboarding-mode entry (goes to the typed residue); not usable from scripts: its gchar* argument is not wrapped. Use set_go_to_atom_chain_residue_atom_name(\"A\", 41, \" CA \").",
+  "py": "handle_go_to_residue_keyboarding_mode(\"A 41\")",
+  "scm": "(handle-go-to-residue-keyboarding-mode \"A 41\")",
+  "skip": "not callable from scripting: the gchar* argument type is not wrapped in either language (GUI callback)"
+ },
+ "handle_pisa_interfaces": {
+  "expect": "internal: called by the PISA XML parser with the interface records; an empty list returns -1",
+  "note": "a real description is a nested record list made by parse_pisa_xml.py (molecule pairs, bonds, areas) and ends in a tree-view window; only the empty case was run",
+  "py": "handle_pisa_interfaces([])",
+  "scm": "(handle-pisa-interfaces (list))"
+ },
+ "handle_read_ccp4_map": {
+  "expect": "returns the new map molecule number; the CCP4 map file is read (second argument 1 = difference map)",
+  "py": "handle_read_ccp4_map(\"rnasa-map.map\", 0)",
+  "scm": "(handle-read-ccp4-map \"rnasa-map.map\" 0)"
+ },
+ "handle_read_draw_probe_dots": {
+  "expect": "reads a probe dots file ('# ... small overlap)' headers, then 'x1 y1 z1 x2 y2 z2 colour' lines) into generic objects",
+  "py": "handle_read_draw_probe_dots(\"dots.kin\")",
+  "py_setup": [
+   "open(\"dots.kin\", \"w\").write(\"# so small overlap)\\n47.9 11.9 18.9 48.2 12.0 19.1 yellow\\n47.0 11.0 18.0 47.0 11.0 18.0 red\\n\")"
+  ],
+  "scm": "(handle-read-draw-probe-dots \"dots.kin\")",
+  "scm_setup": [
+   "(call-with-output-file \"dots.kin\" (lambda (port) (display \"# so small overlap)\\n47.9 11.9 18.9 48.2 12.0 19.1 yellow\\n47.0 11.0 18.0 47.0 11.0 18.0 red\\n\" port)))"
+  ]
+ },
+ "handle_read_draw_probe_dots_unformatted": {
+  "expect": "reads probe -u output (3 real probe lines for A41/A43 here) and draws them as generic objects per contact type",
+  "note": "the setup lines are 3 lines of real 'probe -u' output for tutorial-modern.pdb residues A41-43",
+  "py": "handle_read_draw_probe_dots_unformatted(\"probe-dots.txt\", 0, 0)",
+  "py_setup": [
+   "open(\"probe-dots.txt\", \"w\").write(\":1->1:so: A  41 GLU  C   : A  43 VAL  N   :-0.503:-0.331:45.969:11.365:14.759:0.166:-0.1036:C:N:45.911:11.420:14.613:15.36:14.30\\n:1->1:bo: A  43 VAL  N   : A  41 GLU  C   :-0.503:-0.417:46.207:10.727:14.677:0.209:-0.1304:N:C:46.242:10.660:14.872:14.30:15.36\\n:1->1:cc: A  41 GLU  CD  : A  41 GLU  N   :0.196:0.227:47.953:11.867:18.965:0.000:0.0274:C:N:47.953:11.867:18.965:23.65:13.57\\n\")"
+  ],
+  "scm": "(handle-read-draw-probe-dots-unformatted \"probe-dots.txt\" 0 0)",
+  "scm_setup": [
+   "(call-with-output-file \"probe-dots.txt\" (lambda (port) (display \":1->1:so: A  41 GLU  C   : A  43 VAL  N   :-0.503:-0.331:45.969:11.365:14.759:0.166:-0.1036:C:N:45.911:11.420:14.613:15.36:14.30\\n:1->1:bo: A  43 VAL  N   : A  41 GLU  C   :-0.503:-0.417:46.207:10.727:14.677:0.209:-0.1304:N:C:46.242:10.660:14.872:14.30:15.36\\n:1->1:cc: A  41 GLU  CD  : A  41 GLU  N   :0.196:0.227:47.953:11.867:18.965:0.000:0.0274:C:N:47.953:11.867:18.965:23.65:13.57\\n\" port)))"
+  ]
+ },
+ "handle_read_emdb_data": {
+  "expect": "reads every map/*.map and fittedModels/PDB/*.ent of an EMDB entry directory; returns 0",
+  "note": "Return value is always 0 (status never set), also on success.",
+  "py": "handle_read_emdb_data(\"emd_0001\")",
+  "py_setup": [
+   "import os, shutil; os.makedirs(\"emd_0001/map\", exist_ok=True); shutil.copy(\"rnasa-map.map\", \"emd_0001/map/emd_0001.map\")"
+  ],
+  "scm": "(handle-read-emdb-data \"emd_0002\")",
+  "scm_setup": [
+   "(begin (mkdir \"emd_0002\") (mkdir \"emd_0002/map\") (copy-file \"rnasa-map.map\" \"emd_0002/map/emd_0002.map\"))"
+  ]
+ },
+ "handle_shelx_fcf_file_internal": {
+  "expect": "same as read_small_molecule_data_cif (that is all it does in 0.9.8.96): returns the SigmaA map molecule number of a SHELXL .fcf (LIST 6) / data CIF.",
+  "note": "rnasa-sm.cif and rnasa-sm-data.cif (in test-data) are a small-molecule style CIF made from residues A39-41 of the test model and the rnasa reflections, only to show the call.",
+  "py": "handle_shelx_fcf_file_internal(\"rnasa-sm-data.cif\")",
+  "scm": "(handle-shelx-fcf-file-internal \"rnasa-sm-data.cif\")"
+ },
+ "hetify_residue": {
+  "expect": "returns 1 when a non-standard residue's atoms are made HETATMs; a standard residue is left alone",
+  "note": "For a standard residue that exists (GLU A41) it returns -1 although the doc says -1 = residue not found and 0 = no change (the code only sets 1 when atoms changed, else keeps -1).",
+  "py": "hetify_residue(imol_nag, \"A\", 1, \"\")",
+  "py_setup": [
+   "imol_nag = read_pdb(\"nag_only.pdb\")"
+  ],
+  "scm": "(hetify-residue imol-nag \"A\" 1 \"\")",
+  "scm_setup": [
+   "(define imol-nag (read-pdb \"nag_only.pdb\"))"
+  ]
+ },
+ "ideal_nucleic_acid": {
+  "expect": "returns the new molecule number of an ideal nucleic acid with the sequence (RNA/DNA, form A/B, single-stranded flag)",
+  "py": "ideal_nucleic_acid(\"RNA\", \"A\", 0, \"GAGCUC\")",
+  "scm": "(ideal-nucleic-acid \"DNA\" \"B\" 1 \"ACGT\")"
+ },
+ "import_all_refmac_cifs": {
+  "expect": "reads every .cif dictionary under $COOT_REFMAC_LIB_DIR; does nothing when the variable is not set.",
+  "py": "import_all_refmac_cifs()",
+  "scm": "(import-all-refmac-cifs)"
+ },
+ "import_python_module": {
+  "expect": "imports a Python module into Coot's Python; returns 0 on success (-1 if it fails, e.g. no such module)",
+  "py": "import_python_module(\"json\", 1)",
+  "scm": "(import-python-module \"json\" 1)"
+ },
+ "import_rdkit_mol_from_smiles": {
+  "expect": "returns the number of a new molecule built from the SMILES by RDKit (no dictionary is made); -1 on failure",
+  "py": "import_rdkit_mol_from_smiles(\"CC(=O)Nc1ccc(O)cc1\", \"TYL\")",
+  "scm": "(import-rdkit-mol-from-smiles \"CC(=O)Nc1ccc(O)cc1\" \"TYL\")"
+ },
+ "insert_action_view_after_view": {
+  "expect": "returns 1: the action view is inserted after view 0.",
+  "py": "insert_action_view_after_view(0, \"show-map\", \"set_map_displayed(1, 1)\")",
+  "py_setup": [
+   "add_view_here(\"first\")",
+   "add_spin_view(\"spin\", 10, 90.0)"
+  ],
+  "scm": "(insert-action-view-after-view 0 \"show-map\" \"(set-map-displayed 1 1)\")",
+  "scm_setup": [
+   "(add-view-here \"first\")",
+   "(add-spin-view \"spin\" 10 90.0)"
+  ]
+ },
+ "int_from_entry": {
+  "expect": "returns the integer typed in a GtkEntry (internal GUI helper)",
+  "skip": "needs a GTK widget made by the GUI (not something a script normally has); internal GUI callback"
+ },
+ "interactive_probe_dots_molprobity_radius": {
+  "expect": "returns the radius (A) of the interactive probe dots region (default 6.0)",
+  "py": "interactive_probe_dots_molprobity_radius()",
+  "scm": "(interactive-probe-dots-molprobity-radius)"
+ },
+ "inverse_rtop": {
+  "expect": "the inverse of the operator [rotation (9 numbers, row by row), translation]: here identity and the negated shift.",
+  "py": "inverse_rtop([[1, 0, 0, 0, 1, 0, 0, 0, 1], [1.0, 2.0, 3.0]])",
+  "scm": "(inverse-rtop (list (list 1 0 0 0 1 0 0 0 1) (list 1.0 2.0 3.0)))"
+ },
+ "is_shelx_molecule": {
+  "expect": "1 for a molecule read from a SHELXL .ins file, 0 for a PDB model such as molecule 0.",
+  "py": "is_shelx_molecule(imol_s)",
+  "py_setup": [
+   "write_shelx_ins_file(0, \"tut.ins\")",
+   "imol_s = read_shelx_ins_file(\"tut.ins\", 0)"
+  ],
+  "scm": "(is-shelx-molecule imol-s)",
+  "scm_setup": [
+   "(write-shelx-ins-file 0 \"tut.ins\")",
+   "(define imol-s (read-shelx-ins-file \"tut.ins\" 0))"
+  ]
+ },
+ "is_valid_map_molecule": {
+  "expect": "1 for map molecule 1, 0 for the model molecule 0 or an unused number.",
+  "py": "is_valid_map_molecule(1)",
+  "scm": "(is-valid-map-molecule 1)"
+ },
+ "jed_flip_intermediate_atoms": {
+  "expect": "during a refinement JED-flips the active bond of the moving atoms and returns 1; 0 without intermediate atoms",
+  "py": "refine_zone(0, \"A\", 41, 43, \"\"); print(jed_flip_intermediate_atoms())",
+  "scm": "(begin (refine-zone 0 \"A\" 41 43 \"\") (jed-flip-intermediate-atoms))"
+ },
+ "keep_map_colour_after_refmac_state": {
+  "expect": "returns 1 if the map colour is kept after a Refmac run, 0 (default) if not",
+  "py": "keep_map_colour_after_refmac_state()",
+  "scm": "(keep-map-colour-after-refmac-state)"
+ },
+ "key_sym_code": {
+  "expect": "returns the GDK key code for a key name (as used by add_key_binding); -1 if not a string",
+  "py": "key_sym_code(\"F5\")",
+  "scm": "(key-sym-code \"F5\")"
+ },
+ "kolmogorov_smirnov": {
+  "expect": "returns the Kolmogorov-Smirnov statistic D (largest gap between the two cumulative distributions); -1 if the arguments are not lists",
+  "note": "Python only counts float items (ints are silently dropped).",
+  "py": "kolmogorov_smirnov([1.0, 2.0, 3.0, 4.0, 5.0], [1.5, 2.5, 3.5, 4.5, 9.0])",
+  "scm": "(kolmogorov-smirnov (list 1.0 2.0 3.0 4.0 5.0) (list 1.5 2.5 3.5 4.5 9.0))"
+ },
+ "kolmogorov_smirnov_vs_normal": {
+  "expect": "returns the Kolmogorov-Smirnov D of the values against a normal distribution with that mean and sd",
+  "py": "kolmogorov_smirnov_vs_normal([-1.2, -0.3, 0.1, 0.4, 1.1, 0.0, -0.5], 0.0, 1.0)",
+  "scm": "(kolmogorov-smirnov-vs-normal-scm (list -1.2 -0.3 0.1 0.4 1.1 0.0 -0.5) 0.0 1.0)"
+ },
+ "kullback_liebler": {
+  "expect": "returns the two Kullback-Leibler divergences of the value distributions as a list",
+  "note": "Fixed in coot0 build 31: the Scheme version computed the two numbers but returned #f (Coot 0.9.8.96).",
+  "py": "kullback_liebler([1.0, 2.0, 2.0, 3.0, 3.0, 3.0, 4.0], [1.0, 2.0, 3.0, 3.0, 4.0, 4.0, 5.0])",
+  "scm": "(kullback-liebler (list 1.0 2.0 2.0 3.0 3.0 3.0 4.0) (list 1.0 2.0 3.0 3.0 4.0 4.0 5.0))"
+ },
+ "laplacian": {
+  "expect": "returns the new map molecule number; a Laplacian map of map 1 appears",
+  "py": "laplacian(1)",
+  "scm": "(laplacian 1)"
+ },
+ "link_atoms": {
+  "expect": "C++ helper returning the two atom specs of an mmdb Link record",
+  "skip": "internal C++ helper: needs an mmdb::Link/LinkR pointer, which scripts cannot obtain"
+ },
+ "linked_residues": {
+  "expect": "returns the residues linked (atoms within close_dist_max) to the start residue and, recursively, to those: for a protein residue that is the whole chain plus attached sugars",
+  "py": "len(linked_residues([\"A\", 39, \"\"], 0, 2.0))",
+  "py_setup": [
+   "set_add_linked_residue_do_fit_and_refine(0)",
+   "add_linked_residue(0, \"A\", 39, \"\", \"NAG\", \"NAG-ASN\", 1)"
+  ],
+  "scm": "(length (linked-residues (list \"A\" 39 \"\") 0 2.0))",
+  "scm_setup": [
+   "(set-add-linked-residue-do-fit-and-refine 0)",
+   "(add-linked-residue 0 \"A\" 39 \"\" \"NAG\" \"NAG-ASN\" 1)"
+  ]
+ },
+ "list_extra_restraints": {
+  "expect": "returns the extra restraints of molecule 0 (type, atom specs with atom index, target, esd); False if there are none",
+  "py": "list_extra_restraints(0)",
+  "py_setup": [
+   "add_extra_bond_restraint(0, \"A\", 41, \"\", \" CA \", \"\", \"A\", 45, \"\", \" CA \", \"\", 9.5, 0.05)"
+  ],
+  "scm": "(list-extra-restraints 0)",
+  "scm_setup": [
+   "(add-extra-bond-restraint 0 \"A\" 41 \"\" \" CA \" \"\" \"A\" 45 \"\" \" CA \" \"\" 9.5 0.05)"
+  ]
+ },
+ "lsq_improve": {
+  "expect": "improves an existing rough superposition of the moving selection onto the reference (Kleywegt & Jones lsq_improve) and moves the molecule",
+  "note": "Not an external program (the old 'not run' classification was wrong). Starting from unsuperposed copies nothing moves; it needs a rough superposition first.",
+  "py": "lsq_improve(0, \"//A\", imol2, \"//B\", 4, 2.0)",
+  "py_setup": [
+   "imol2 = read_pdb(\"tutorial-modern.pdb\")",
+   "clear_lsq_matches()",
+   "add_lsq_match(10, 30, \"A\", 10, 30, \"B\", 1)",
+   "apply_lsq_matches_simple(0, imol2)"
+  ],
+  "scm": "(lsq-improve 0 \"//A\" imol2 \"//B\" 4 2.0)",
+  "scm_setup": [
+   "(define imol2 (read-pdb \"tutorial-modern.pdb\"))",
+   "(clear-lsq-matches)",
+   "(add-lsq-match 10 30 \"A\" 10 30 \"B\" 1)",
+   "(apply-lsq-matches-simple 0 imol2)"
+  ]
+ },
+ "make_and_draw_map": {
+  "expect": "returns the new map molecule number (-1 on bad columns); a difference map appears",
+  "note": "With weights (weight \"FOM\", use_weights 1) it returned -1 in both languages, although FOM is a W column (suspicious).",
+  "py": "make_and_draw_map(\"rnasa-1.8-all_refmac1.mtz\", \"DELFWT\", \"PHDELWT\", \"\", 0, 1)",
+  "scm": "(make-and-draw-map \"rnasa-1.8-all_refmac1.mtz\" \"DELFWT\" \"PHDELWT\" \"\" 0 1)"
+ },
+ "make_and_draw_map_with_refmac_params": {
+  "expect": "makes the map and stores Fobs/SigF/Rfree columns with it for a later Refmac run; returns the map molecule number",
+  "py": "make_and_draw_map_with_refmac_params(\"rnasa-1.8-all_refmac1.mtz\", \"FWT\", \"PHWT\", \"\", 0, 0, 1, \"FGMP18\", \"SIGFGMP18\", \"FreeR_flag\", 1)",
+  "scm": "(make-and-draw-map-with-refmac-params \"rnasa-1.8-all_refmac1.mtz\" \"FWT\" \"PHWT\" \"\" 0 0 1 \"FGMP18\" \"SIGFGMP18\" \"FreeR_flag\" 1)"
+ },
+ "make_and_draw_map_with_reso_with_refmac_params": {
+  "expect": "returns the new map molecule number; the map is calculated with data between 20 and 3 A only",
+  "py": "make_and_draw_map_with_reso_with_refmac_params(\"rnasa-1.8-all_refmac1.mtz\", \"FWT\", \"PHWT\", \"\", 0, 0, 1, \"FGMP18\", \"SIGFGMP18\", \"FreeR_flag\", 1, 0, 1, 20.0, 3.0)",
+  "scm": "(make-and-draw-map-with-reso-with-refmac-params \"rnasa-1.8-all_refmac1.mtz\" \"FWT\" \"PHWT\" \"\" 0 0 1 \"FGMP18\" \"SIGFGMP18\" \"FreeR_flag\" 1 0 1 20.0 3.0)"
+ },
+ "make_and_draw_patterson": {
+  "expect": "returns the new map molecule number of the Patterson map",
+  "py": "make_and_draw_patterson(\"rnasa-1.8-all_refmac1.mtz\", \"FGMP18\", \"SIGFGMP18\")",
+  "scm": "(make-and-draw-patterson \"rnasa-1.8-all_refmac1.mtz\" \"FGMP18\" \"SIGFGMP18\")"
+ },
+ "make_and_draw_patterson_using_intensities": {
+  "expect": "returns the new map molecule number of the Patterson map made from intensities",
+  "py": "make_and_draw_patterson_using_intensities(\"two-sigma-columns.mtz\", \"I-obs\", \"SIGI-obs\")",
+  "scm": "(make-and-draw-patterson-using-intensities \"two-sigma-columns.mtz\" \"I-obs\" \"SIGI-obs\")"
+ },
+ "make_ball_and_stick": {
+  "expect": "draws residues A41-43 as ball-and-stick",
+  "py": "make_ball_and_stick(0, \"//A/41-43\", 0.18, 0.3, 1)",
+  "scm": "(make-ball-and-stick 0 \"//A/41-43\" 0.18 0.3 1)",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "make_complementary_dotted_surfaces": {
+  "expect": "adds two dot surfaces (one per residue set) to molecule 0 and returns their mid point as a C++ Coord_orth (used by the PISA interface code). Residue lists must be C++ vectors (made with residue_records_list_*_to_residue_specs).",
+  "py": "make_complementary_dotted_surfaces(0, 0, specs_a, specs_b)",
+  "py_setup": [
+   "specs_a = residue_records_list_py_to_residue_specs([{\"seq_num\": \"40\", \"ins_code\": \"\"}], \"A\")",
+   "specs_b = residue_records_list_py_to_residue_specs([{\"seq_num\": \"40\", \"ins_code\": \"\"}], \"B\")"
+  ],
+  "scm": "(make-complementary-dotted-surfaces 0 0 (residue-records-list-scm-to-residue-specs (list (mk \"40\" \"\")) \"A\") (residue-records-list-scm-to-residue-specs (list (mk \"40\" \"\")) \"B\"))",
+  "scm_setup": [
+   "(define mk (record-constructor (make-record-type 'residue-rec '(seq-num ins-code))))"
+  ]
+ },
+ "make_directory_maybe": {
+  "expect": "returns 0 when the directory exists afterwards (created or already there), non-zero on failure",
+  "py": "make_directory_maybe(\"my-new-dir\")",
+  "scm": "(make-directory-maybe \"my-new-dir\")"
+ },
+ "make_image_povray": {
+  "expect": "renders the view with POV-Ray to an image",
+  "py": "make_image_povray(\"image.pov\")",
+  "scm": "(make-image-povray \"image.pov\")",
+  "skip": "uses the graphics window and an external renderer (raster3d/povray); renderman() stopped Coot without a screen in the same code path"
+ },
+ "make_image_raster3d": {
+  "expect": "renders the view with Raster3D to an image",
+  "py": "make_image_raster3d(\"image.r3d\")",
+  "scm": "(make-image-raster3d \"image.r3d\")",
+  "skip": "uses the graphics window and an external renderer (raster3d/povray); renderman() stopped Coot without a screen in the same code path"
+ },
+ "make_masked_maps_split_by_chain": {
+  "expect": "makes one new map molecule per chain (map 1 masked around that chain); always returns 0",
+  "py": "make_masked_maps_split_by_chain(0, 1)",
+  "scm": "(make-masked-maps-split-by-chain 0 1)"
+ },
+ "make_socket_listener_maybe": {
+  "expect": "opens the remote-control socket listener if a port was set (needs the network otherwise)",
+  "note": "only run without a port (no-op); with set_remote_control_port it would listen on a network port",
+  "py": "make_socket_listener_maybe()",
+  "scm": "(make-socket-listener-maybe)"
+ },
+ "make_variance_map": {
+  "expect": "returns the new map molecule number of the variance map of the given maps.",
+  "note": "make_variance_map([1, 1]) (two identical maps) makes a map whose sigma and mean are NaN.",
+  "py": "make_variance_map([1, imol2])",
+  "py_setup": [
+   "imol2 = sharpen_blur_map(1, 30.0)"
+  ],
+  "scm": "(make-variance-map (list 1 (sharpen-blur-map 1 30.0)))"
+ },
+ "map_colour_components": {
+  "expect": "returns the [red, green, blue] colour of map 1",
+  "py": "map_colour_components(1)",
+  "scm": "(map-colour-components 1)"
+ },
+ "map_contours": {
+  "expect": "should return the contour line segments [[x1,y1,z1],[x2,y2,z2]] of map 1 at that level in the box around the rotation centre",
+  "note": "Always returns an empty list here although the map is contoured normally; GenerateSurface_from_Xmap is called with isample/ream arguments (0,1) that may give nothing, or it needs the map to have been drawn. Suspicious.",
+  "py": "len(map_contours(1, 0.3))",
+  "py_setup": [
+   "set_rotation_centre(47.1, 10.6, 17.4)"
+  ]
+ },
+ "map_from_mtz_by_calc_phases": {
+  "expect": "returns the new map molecule made from Fobs and phases calculated from the model; -1 on failure",
+  "note": "With column names that are not in the file (\"FP\", \"SIGFP\") Coot aborts (Abort trap: uncaught exception) instead of returning -1.",
+  "py": "map_from_mtz_by_calc_phases(\"rnasa-1.8-all_refmac1.mtz\", \"FGMP18\", \"SIGFGMP18\", 0)",
+  "scm": "(map-from-mtz-by-calc-phases \"rnasa-1.8-all_refmac1.mtz\" \"FGMP18\" \"SIGFGMP18\" 0)"
+ },
+ "map_from_mtz_by_refmac_calc_phases": {
+  "expect": "returns a new map molecule calculated with refmac phases from the model (see map_from_mtz_by_calc_phases for the internal version)",
+  "py": "map_from_mtz_by_refmac_calc_phases(\"rnasa-1.8-all_refmac1.mtz\", \"FGMP18\", \"SIGFGMP18\", 0)",
+  "scm": "(map-from-mtz-by-refmac-calc-phases \"rnasa-1.8-all_refmac1.mtz\" \"FGMP18\" \"SIGFGMP18\" 0)",
+  "skip": "runs refmac"
+ },
+ "map_is_difference_map": {
+  "expect": "returns 0 for the 2mFo-DFc map 1 (1 for a difference map)",
+  "py": "map_is_difference_map(1)",
+  "scm": "(map-is-difference-map 1)"
+ },
+ "map_is_displayed": {
+  "expect": "1 when the map is displayed, 0 when not",
+  "py": "map_is_displayed(1)",
+  "scm": "(map-is-displayed 1)"
+ },
+ "map_mean": {
+  "expect": "returns the mean density of map 1 (about 0 for a 2Fo-Fc map); False if not a map",
+  "py": "map_mean(1)",
+  "scm": "(map-mean-scm 1)"
+ },
+ "map_parameters": {
+  "expect": "returns the MTZ file, F, phase and weight column names and the use-weights flag of map 1 (False for a model)",
+  "py": "map_parameters(1)",
+  "scm": "(map-parameters 1)"
+ },
+ "map_peaks_near_point_from_list": {
+  "expect": "the peaks of the given list that lie within 5 A of (48, 7, 17): only the first one. (Python only.)",
+  "py": "map_peaks_near_point_from_list(1, [[48.3, 7.4, 16.9], [10.0, 10.0, 10.0]], 48.0, 7.0, 17.0, 5.0)"
+ },
+ "map_sigma": {
+  "expect": "returns the rms (sigma) of map 1; False if not a map",
+  "py": "map_sigma(1)",
+  "scm": "(map-sigma 1)"
+ },
+ "map_statistics": {
+  "expect": "returns [mean, standard deviation, skew, kurtosis] of the map",
+  "note": "mean here (1.3e-10) differs from map_mean(1) (9.4e-05): different averaging (with/without pseudo-zeros?).",
+  "py": "map_statistics(1)",
+  "scm": "(map-statistics 1)"
+ },
+ "map_to_model_correlation": {
+  "expect": "returns the map-model correlation (a number between -1 and 1) for the residues; nothing changes",
+  "note": "neighb_residue_specs must be a LIST of residue specs (possibly empty); a single spec as in the old example raises SystemError in Python",
+  "py": "map_to_model_correlation(0, [[\"A\", 41, \"\"], [\"A\", 42, \"\"]], [], 0, 1)",
+  "scm": "(map-to-model-correlation 0 (list (list \"A\" 41 \"\") (list \"A\" 42 \"\")) (list) 0 1)"
+ },
+ "map_to_model_correlation_stats": {
+  "expect": "returns a list of statistics, first the correlation, then variances, number of grid points and sums",
+  "note": "Python returns 6 values, Scheme returns 12 (Scheme adds more sums/means); same first 6",
+  "py": "map_to_model_correlation_stats(0, [[\"A\", 41, \"\"], [\"A\", 42, \"\"]], [[\"A\", 40, \"\"]], 0, 1)",
+  "scm": "(map-to-model-correlation-stats 0 (list (list \"A\" 41 \"\") (list \"A\" 42 \"\")) (list (list \"A\" 40 \"\")) 0 1)"
+ },
+ "mark_multiple_atoms_as_fixed": {
+  "expect": "returns the number of atoms marked as fixed for refinement (2 here)",
+  "note": "atom specs are [chain, resno, ins, atom-name, alt-conf]",
+  "py": "mark_multiple_atoms_as_fixed(0, [[\"A\", 41, \"\", \" CA \", \"\"], [\"A\", 41, \"\", \" CB \", \"\"]], 1)",
+  "scm": "(mark-multiple-atoms-as-fixed-scm 0 (list (list \"A\" 41 \"\" \" CA \" \"\") (list \"A\" 41 \"\" \" CB \" \"\")) 1)"
+ },
+ "mask_map_by_atom_selection": {
+  "expect": "returns the new map molecule number: map 1 with the density around A1-20 masked out (invert_flag 1 keeps only that density)",
+  "py": "mask_map_by_atom_selection(1, 0, \"//A/1-20\", 0)",
+  "scm": "(mask-map-by-atom-selection 1 0 \"//A/1-20\" 0)"
+ },
+ "mask_map_by_molecule": {
+  "expect": "returns the new map molecule number (map 1 masked by all atoms of molecule 0; invert_flag 1 keeps only the density at the atoms)",
+  "py": "mask_map_by_molecule(1, 0, 0)",
+  "scm": "(mask-map-by-molecule 1 0 1)"
+ },
+ "match_residue_and_dictionary": {
+  "expect": "writes a new dictionary (cif_dict_out) with the atom names of cif_dict_in matched to the reference comp id; the return value is always 0 (the residue arguments are not used)",
+  "note": "Return value is always 0 even on success (result is never set in c-interface-ligands.cc).",
+  "py": "match_residue_and_dictionary(0, \"A\", 1, \"\", \"NAG.cif\", \"nag-matched.cif\", \"NAG\", \"NDG\", \"NAX\", \"my-sugar\")",
+  "scm": "(match-residue-and-dictionary 0 \"A\" 1 \"\" \"NAG.cif\" \"nag-matched.cif\" \"NAG\" \"NDG\" \"NAX\" \"my-sugar\")"
+ },
+ "match_this_residue_and_dictionary": {
+  "expect": "writes a dictionary for the residue's type with atom names matched to the reference type and the new comp id; returns 0 (not used as a status)",
+  "py": "match_this_residue_and_dictionary(imol_nag, \"A\", 1, \"\", \"nag-this.cif\", \"NDG\", \"NAY\")",
+  "py_setup": [
+   "read_cif_dictionary(\"NAG.cif\")",
+   "imol_nag = read_pdb(\"nag_only.pdb\")"
+  ],
+  "scm": "(match-this-residue-and-dictionary imol-nag \"A\" 1 \"\" \"nag-this.cif\" \"NDG\" \"NAY\")",
+  "scm_setup": [
+   "(read-cif-dictionary \"NAG.cif\")",
+   "(define imol-nag (read-pdb \"nag_only.pdb\"))"
+  ]
+ },
+ "max_water_distance": {
+  "expect": "the largest distance of any water to its nearest non-water atom in 1ehz.pdb (4.5 A); -1.0 for a molecule without waters.",
+  "py": "max_water_distance(read_pdb(\"1ehz.pdb\"))",
+  "scm": "(max-water-distance (read-pdb \"1ehz.pdb\"))"
+ },
+ "menu_item_label": {
+  "expect": "returns the text label of a menu item (internal GUI helper)",
+  "skip": "needs a GTK widget made by the GUI (not something a script normally has); internal GUI callback"
+ },
+ "merge_molecules_by_vector": {
+  "expect": "merges the listed molecules into molecule 0 (the merge works); the result is a C++ object",
+  "note": "Works, but returns an opaque SWIG pointer; scripts should use merge_molecules(list, imol) which returns a readable result.",
+  "py": "merge_molecules_by_vector([read_pdb(\"nag_only.pdb\")], 0)",
+  "scm": "(merge-molecules-by-vector (list (read-pdb \"nag_only.pdb\")) 0)"
+ },
+ "metal_coordination": {
+  "expect": "prints the metal-ligand distances up to 3 A for the MG/MN ions of 1ehz to the terminal; the return value is always False.",
+  "note": "Both versions always return False (the result list is never filled in the upstream code); the information only goes to the terminal.",
+  "py": "metal_coordination(read_pdb(\"1ehz.pdb\"), 3.0)",
+  "scm": "(metal-coordination-scm (read-pdb \"1ehz.pdb\") 3.0)"
+ },
+ "mmcif_sfs_to_mtz": {
+  "expect": "converts an mmCIF structure-factor file to MTZ: 1 = written with R-free flags, 0 = written without free flags (or failed), -1 = could not read",
+  "py": "mmcif_sfs_to_mtz(\"sf.cif\", \"sf.mtz\")",
+  "py_setup": [
+   "open(\"sf.cif\", \"w\").write(\"data_r1xyzsf\\n_cell.length_a 64.897\\n_cell.length_b 78.323\\n_cell.length_c 38.792\\n_cell.angle_alpha 90.0\\n_cell.angle_beta 90.0\\n_cell.angle_gamma 90.0\\n_symmetry.space_group_name_H-M 'P 21 21 21'\\nloop_\\n_refln.index_h\\n_refln.index_k\\n_refln.index_l\\n_refln.F_meas_au\\n_refln.F_meas_sigma_au\\n\" + \"\".join(\"%d %d %d %.1f 2.0\\n\" % (h, k, l, 100.0 + h + k + l) for h in range(0, 5) for k in range(0, 5) for l in range(1, 5)))"
+  ]
+ },
+ "model_composition_statistics": {
+  "expect": "unimplemented in 0.9.8.96: returns False (Python) / () (Scheme)",
+  "note": "model_composition_statistics_py is a stub (c-interface-analysis.cc:307 always returns False); Scheme returns ()",
+  "py": "model_composition_statistics_py(0)",
+  "scm": "(model-composition-statistics-scm 0)"
+ },
+ "model_resolution": {
+  "expect": "returns the resolution from the coordinate file header; -1 when the header has none (correct for tutorial-modern.pdb, whose REMARK 3 gives no parsed resolution)",
+  "py": "model_resolution(0)",
+  "scm": "(model-resolution 0)"
+ },
+ "mogul_markup": {
+  "expect": "draws Mogul results for residue A41 as generic display objects (atom indices in the file are 1-based within the residue)",
+  "note": "the example file is a hand-written 2-line Mogul CSV (mogul itself is not run)",
+  "py": "mogul_markup(0, \"A\", 41, \"\", \"mogul.out\")",
+  "py_setup": [
+   "open(\"mogul.out\", \"w\").write(\"BOND,1 2,1.46,500,1.459,1.459,0.012,0.08,0,1.40,1.52,0.01,12\\nANGLE,1 2 3,111.0,300,110.5,110.6,2.0,0.25,0,100,120,1,20\\n\")"
+  ],
+  "scm": "(mogul-markup 0 \"A\" 41 \"\" \"mogul.out\")",
+  "scm_setup": [
+   "(call-with-output-file \"mogul.out\" (lambda (port) (display \"BOND,1 2,1.46,500,1.459,1.459,0.012,0.08,0,1.40,1.52,0.01,12\\nANGLE,1 2 3,111.0,300,110.5,110.6,2.0,0.25,0,100,120,1,20\\n\" port)))"
+  ]
+ },
+ "mogul_results": {
+  "expect": "returns a list of z-values, one per bond/angle/torsion in the Mogul output file (False if the file has none)",
+  "py": "mogul_results_py(\"mogul.out\")",
+  "py_setup": [
+   "open(\"mogul.out\", \"w\").write(\"BOND,1 2,1.46,500,1.459,1.459,0.012,0.08,0,1.40,1.52,0.01,12\\nANGLE,1 2 3,111.0,300,110.5,110.6,2.0,0.25,0,100,120,1,20\\n\")"
+  ],
+  "scm": "(mogul-results-scm \"mogul.out\")",
+  "scm_setup": [
+   "(call-with-output-file \"mogul.out\" (lambda (port) (display \"BOND,1 2,1.46,500,1.459,1.459,0.012,0.08,0,1.40,1.52,0.01,12\\nANGLE,1 2 3,111.0,300,110.5,110.6,2.0,0.25,0,100,120,1,20\\n\" port)))"
+  ]
+ },
+ "mogul_results_process_many": {
+  "expect": "for each Mogul output file matching the glob (names like x-y-ACCESSION-COMPID-z) returns (accession-code worst-z); Scheme only",
+  "scm": "(mogul-results-process-many \".\" \"mogul-out-*\")",
+  "scm_setup": [
+   "(call-with-output-file \"mogul-out-1abc-GLU-A.out\" (lambda (port) (display \"BOND,1 2,1.46,500,1.459,1.459,0.012,0.08,0,1.40,1.52,0.01,12\\nANGLE,1 2 3,111.0,300,110.5,110.6,2.0,0.25,0,100,120,1,20\\n\" port)))"
+  ]
+ },
+ "molecule_has_hydrogens_raw": {
+  "expect": "1 if the molecule has at least one hydrogen, 0 if not (0 is correct for tutorial-modern.pdb)",
+  "py": "molecule_has_hydrogens_raw(imol_nag)",
+  "py_setup": [
+   "imol_nag = read_pdb(\"nag_only.pdb\")"
+  ],
+  "scm": "(molecule-has-hydrogens-raw imol-nag)",
+  "scm_setup": [
+   "(define imol-nag (read-pdb \"nag_only.pdb\"))"
+  ]
+ },
+ "morph_fit_by_secondary_structure_elements": {
+  "expect": "moves the chain by rigid-body fitting its helices/strands to the refinement map, residues in between follow; returns 0",
+  "note": "returns 0 even though it worked",
+  "py": "morph_fit_by_secondary_structure_elements(0, \"A\")",
+  "scm": "(morph-fit-by-secondary-structure-elements 0 \"A\")"
+ },
+ "move_reference_chain_to_symm_chain_position": {
+  "expect": "0 here: it works on the active (last-clicked) symmetry atom, which a script cannot set without a window; then it moves the chain to that symmetry position.",
+  "py": "move_reference_chain_to_symm_chain_position()",
+  "py_setup": [
+   "set_show_symmetry_master(1)"
+  ],
+  "scm": "(move-reference-chain-to-symm-chain-position)",
+  "scm_setup": [
+   "(set-show-symmetry-master 1)"
+  ]
+ },
+ "move_waters_to_around_protein": {
+  "expect": "returns the number of waters moved to their symmetry copy closest to the macromolecule (71 for 1ehz.pdb).",
+  "py": "move_waters_to_around_protein(read_pdb(\"1ehz.pdb\"))",
+  "scm": "(move-waters-to-around-protein (read-pdb \"1ehz.pdb\"))"
+ },
+ "movie_frame_number": {
+  "expect": "returns the current movie frame counter (0 at start)",
+  "py": "movie_frame_number()",
+  "scm": "(movie-frame-number)"
+ },
+ "mtz_use_weight_for_map": {
+  "expect": "returns 0: map 1 was made without a weight column (1 when a FOM/weight column was used)",
+  "py": "mtz_use_weight_for_map(1)",
+  "scm": "(mtz-use-weight-for-map 1)"
+ },
+ "multi_residue_torsion": {
+  "expect": "opens the multi-residue torsion dialog for residues A41-A42 (the torsions can then be dragged).",
+  "py": "multi_residue_torsion(0, [[True, \"A\", 41, \"\"], [True, \"A\", 42, \"\"]])",
+  "scm": "(multi-residue-torsion 0 (list (list #t \"A\" 41 \"\") (list #t \"A\" 42 \"\")))",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "multi_residue_torsion_fit": {
+  "expect": "fits the side chains/torsions of the listed residues to the refinement map (map 1); returns True and moves the residues",
+  "note": "residues_specs must be a list of residue specs; the old example passed one spec",
+  "py": "multi_residue_torsion_fit(0, [[\"A\", 41, \"\"], [\"A\", 42, \"\"]], 20)",
+  "scm": "(multi-residue-torsion-fit 0 (list (list \"A\" 41 \"\") (list \"A\" 42 \"\")) 20)"
+ },
+ "multi_sharpen_blur_map": {
+  "expect": "one new map per B-factor in the list (negative = sharpen, positive = blur)",
+  "py": "multi_sharpen_blur_map_py(1, [-20.0, 0.0, 30.0])",
+  "scm": "(multi-sharpen-blur-map-scm 1 (list -10.0 40.0))"
+ },
+ "mutate_active_residue": {
+  "expect": "opens the residue-type chooser to mutate the active residue (the one at the centre of the screen)",
+  "py": "mutate_active_residue()",
+  "scm": "(mutate-active-residue)",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "mutate_internal": {
+  "expect": "internal C++ helper, not callable from scripts (std::string& argument not wrapped); use mutate(0, \"A\", 41, \"\", \"ALA\").",
+  "py": "mutate_internal(41, \"A\", 0, \"ALA\")",
+  "scm": "(mutate-internal 41 \"A\" 0 \"ALA\")",
+  "skip": "not callable from scripting: std::string& argument is not wrapped in either language"
+ },
+ "mutate_single_residue_by_seqno": {
+  "expect": "returns 1 and mutates residue A41 to the one-letter target type (A = ALA); argument order is resno, inscode, chain, imol, type",
+  "py": "mutate_single_residue_by_seqno(41, \"\", \"A\", 0, \"A\")",
+  "scm": "(mutate-single-residue-by-seqno 41 \"\" \"A\" 0 #\\A)"
+ },
+ "mutate_single_residue_by_serial_number": {
+  "expect": "returns 1 and mutates the residue with that serial number (0-based position in the chain, not the residue number) to the one-letter type",
+  "py": "mutate_single_residue_by_serial_number(2, \"A\", 0, \"G\")",
+  "scm": "(mutate-single-residue-by-serial-number 2 \"A\" 0 #\\G)"
+ },
+ "my_combo_box_text_add_items": {
+  "expect": "adds text items to a GtkComboBox (internal GUI helper)",
+  "skip": "needs a GTK widget made by the GUI (not something a script normally has); internal GUI callback"
+ },
+ "n_dots_sets": {
+  "expect": "returns the number of dots sets of molecule 0 (0 before any dots() call)",
+  "py": "n_dots_sets(0)",
+  "py_setup": [
+   "dots(0, \"//A/41\", \"dots-A41\", 1, 1.0)",
+   "dots(0, \"//A/42\", \"dots-A42\", 1, 1.0)"
+  ],
+  "scm": "(n-dots-sets 0)",
+  "scm_setup": [
+   "(dots 0 \"//A/41\" \"dots-A41\" 1 1.0)",
+   "(dots 0 \"//A/42\" \"dots-A42\" 1 1.0)"
+  ]
+ },
+ "n_views": {
+  "expect": "the number of stored views: 1 after add_view_here.",
+  "py": "n_views()",
+  "py_setup": [
+   "add_view_here(\"first\")"
+  ],
+  "scm": "(n-views)",
+  "scm_setup": [
+   "(add-view-here \"first\")"
+  ]
+ },
+ "nsv": {
+  "expect": "opens the (canvas) sequence view for molecule 0.",
+  "py": "nsv(0)",
+  "scm": "(nsv 0)",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "number_of_generic_objects": {
+  "expect": "returns how many generic display objects exist (0 at start)",
+  "py": "number_of_generic_objects()",
+  "py_setup": [
+   "new_generic_object_number(\"my-object\")"
+  ],
+  "scm": "(number-of-generic-objects)",
+  "scm_setup": [
+   "(new-generic-object-number \"my-object\")"
+  ]
+ },
+ "on_monomer_lib_sbase_molecule_button_press": {
+  "expect": "button callback of the monomer library search dialog (takes the GTK button and its data); not for scripts.",
+  "py": "on_monomer_lib_sbase_molecule_button_press(button, user_data)",
+  "scm": "(on-monomer-lib-sbase-molecule-button-press button user-data)",
+  "skip": "GUI callback: needs a GTK button widget of the monomer search dialog"
+ },
+ "on_monomer_lib_search_results_button_press": {
+  "expect": "button callback of the monomer library search dialog (takes the GTK button and its data); not for scripts.",
+  "py": "on_monomer_lib_search_results_button_press(button, user_data)",
+  "scm": "(on-monomer-lib-search-results-button-press button user-data)",
+  "skip": "GUI callback: needs a GTK button widget of the monomer search dialog"
+ },
+ "orient_view": {
+  "expect": "turns the view so that the A41 -> A43 vector lies in the screen plane; only acts with a graphics window (no-op headless). The residues must be C++ residue_spec_t objects; plain lists give a TypeError.",
+  "py": "orient_view(0, residue_spec_t(\"A\", 41, \"\"), residue_spec_t(\"A\", 43, \"\"))",
+  "scm": "(orient-view 0 (new-residue-spec-t \"A\" 41 \"\") (new-residue-spec-t \"A\" 43 \"\"))"
+ },
+ "output_residue_info_dialog": {
+  "expect": "opens the Residue Info window for the residue of atom index 10 of molecule 0",
+  "py": "output_residue_info_dialog(0, 10)",
+  "scm": "(output-residue-info-dialog 0 10)",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "own_molecule_number": {
+  "expect": "returns the same number it was given (debug check that a molecule knows its own number)",
+  "py": "own_molecule_number(0)",
+  "scm": "(own-molecule-number 1)"
+ },
+ "parallel_plane_restraints_are_shown": {
+  "expect": "returns 1 if parallel-plane extra restraints of molecule 0 are drawn, else 0 (default)",
+  "py": "parallel_plane_restraints_are_shown(0)",
+  "scm": "(parallel-plane-restraints-are-shown 0)"
+ },
+ "parse_ccp4i_defs": {
+  "expect": "parses a CCP4i directories.def file into (alias, path) pairs",
+  "note": "Returns an opaque SWIG pointer in both languages (C++ return type not converted); use ccp4i_projects() from scripts.",
+  "py": "parse_ccp4i_defs(\"directories.def\")",
+  "py_setup": [
+   "open(\"directories.def\", \"w\").write(\"PROJECT_ALIAS,1 _text myproject\\nPROJECT_PATH,1 _text /tmp/myproject\\n\")"
+  ],
+  "scm": "(parse-ccp4i-defs \"directories.def\")",
+  "scm_setup": [
+   "(call-with-output-file \"directories.def\" (lambda (p) (display \"PROJECT_ALIAS,1 _text myproject\\nPROJECT_PATH,1 _text /tmp/myproject\\n\" p)))"
+  ]
+ },
+ "pathology_data": {
+  "expect": "returns data for the data-pathology plots: [max 1/d^2, [1/d^2, F], [1/d^2, F/sigF], [F, sigF], [F, F/sigF]]",
+  "py": "pathology_data(\"rnasa-1.8-all_refmac1.mtz\", \"FGMP18\", \"SIGFGMP18\")[0]"
+ },
+ "pepflip_intermediate_atoms": {
+  "expect": "flips the peptide at the intermediate-atom pointer during a refinement and returns 1; 0 when there are no moving atoms",
+  "note": "needs moving atoms: the example starts a refinement in the same expression (headless Coot keeps them until cleared)",
+  "py": "(refine_zone(0, \"A\", 41, 43, \"\"), pepflip_intermediate_atoms())[1]",
+  "scm": "(begin (refine-zone 0 \"A\" 41 43 \"\") (pepflip-intermediate-atoms))"
+ },
+ "pepflip_intermediate_atoms_other_peptide": {
+  "expect": "flips the other peptide of the residue during a refinement; 1 if done, 0 when there are no moving atoms",
+  "py": "(refine_zone(0, \"A\", 41, 43, \"\"), pepflip_intermediate_atoms_other_peptide())[1]",
+  "scm": "(begin (refine-zone 0 \"A\" 41 43 \"\") (pepflip-intermediate-atoms-other-peptide))"
+ },
+ "pisa_clear_interfaces": {
+  "expect": "clears and undisplays all PISA interface objects (nothing to clear in a fresh Coot)",
+  "py": "pisa_clear_interfaces()",
+  "scm": "(pisa-clear-interfaces)"
+ },
+ "pisa_interaction": {
+  "expect": "makes two new molecules with the residues of each molecule within 4 A of the other; returns the first new molecule number (-1 if none)",
+  "py": "pisa_interaction(imol_a, imol_b)",
+  "py_setup": [
+   "imol_a = new_molecule_by_atom_selection(0, \"//A\")",
+   "imol_b = new_molecule_by_atom_selection(0, \"//B\")"
+  ],
+  "scm": "(pisa-interaction imol-a imol-b)",
+  "scm_setup": [
+   "(define imol-a (new-molecule-by-atom-selection 0 \"//A\"))",
+   "(define imol-b (new-molecule-by-atom-selection 0 \"//B\"))"
+  ]
+ },
+ "pisa_interfaces_display_only": {
+  "expect": "shows only the two interface molecules and centres the view on the interface point.",
+  "note": "Python cannot pass the Coord_orth that make_complementary_dotted_surfaces returns (an untyped pointer object), so the Python version is unusable from scripts; Scheme works.",
+  "py": "pisa_interfaces_display_only(0, 0, c)",
+  "py_setup": [
+   "specs_a = residue_records_list_py_to_residue_specs([{\"seq_num\": \"40\", \"ins_code\": \"\"}], \"A\")",
+   "specs_b = residue_records_list_py_to_residue_specs([{\"seq_num\": \"40\", \"ins_code\": \"\"}], \"B\")",
+   "c = make_complementary_dotted_surfaces(0, 0, specs_a, specs_b)"
+  ],
+  "scm": "(pisa-interfaces-display-only 0 0 c)",
+  "scm_setup": [
+   "(define mk (record-constructor (make-record-type 'residue-rec '(seq-num ins-code))))",
+   "(define c (make-complementary-dotted-surfaces 0 0 (residue-records-list-scm-to-residue-specs (list (mk \"40\" \"\")) \"A\") (residue-records-list-scm-to-residue-specs (list (mk \"40\" \"\")) \"B\")))"
+  ]
+ },
+ "pisa_molecule_record_chain_id": {
+  "expect": "returns the chain-id field of a PISA molecule record (Scheme only, internal)",
+  "scm": "(pisa-molecule-record-chain-id rec)",
+  "scm_setup": [
+   "(define rt (make-record-type 'pisa-molecule '(chain-id residues)))",
+   "(define rec ((record-constructor rt) \"A\" (list (list \"A\" 41 \"\"))))"
+  ]
+ },
+ "pisa_molecule_record_residues": {
+  "expect": "returns the residues field of a PISA molecule record (Scheme only, internal)",
+  "scm": "(pisa-molecule-record-residues rec)",
+  "scm_setup": [
+   "(define rt (make-record-type 'pisa-molecule '(chain-id residues)))",
+   "(define rec ((record-constructor rt) \"A\" (list (list \"A\" 41 \"\"))))"
+  ]
+ },
+ "place_atom_at_pointer": {
+  "expect": "opens the Place Atom at Pointer dialog (choose atom type and molecule)",
+  "py": "place_atom_at_pointer()",
+  "scm": "(place-atom-at-pointer)",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "place_atom_at_pointer_by_window": {
+  "expect": "opens the Place Atom at Pointer dialog",
+  "py": "place_atom_at_pointer_by_window()",
+  "scm": "(place-atom-at-pointer-by-window)",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "place_strand_here": {
+  "expect": "returns a new molecule with a strand fitted to the map at the rotation centre; -1 when no strand fits",
+  "py": "place_strand_here(5, 5)",
+  "scm": "(place-strand-here 5 5)"
+ },
+ "place_text": {
+  "expect": "returns the handle (index) of the new text label placed at (x, y, z)",
+  "py": "place_text(\"Glu A41\", 47.1, 10.6, 17.4, 1)",
+  "scm": "(place-text \"Glu A41\" 47.1 10.6 17.4 1)"
+ },
+ "pointer_atom_molecule": {
+  "expect": "returns the molecule of the pointer atom; -1 when none is placed (fresh Coot)",
+  "py": "pointer_atom_molecule()",
+  "scm": "(pointer-atom-molecule)"
+ },
+ "post_delete_item_dialog": {
+  "expect": "opens the Delete item dialog",
+  "py": "post_delete_item_dialog()",
+  "scm": "(post-delete-item-dialog)",
+  "skip": "opens a dialog; needs the graphics window (stops Coot without a screen)"
+ },
+ "post_display_control_window": {
+  "expect": "opens the Display Manager window",
+  "py": "post_display_control_window()",
+  "scm": "(post-display-control-window)",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "post_model_fit_refine_dialog": {
+  "expect": "opens the dialog",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "post_other_modelling_tools_dialog": {
+  "expect": "opens the dialog",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "post_python_scripting_window": {
+  "expect": "opens the Python scripting window (Calculate > Scripting > Python...).",
+  "py": "post_python_scripting_window()",
+  "scm": "(post-python-scripting-window)",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "post_scheme_scripting_window": {
+  "expect": "opens the Scheme scripting window (Calculate > Scripting > Scheme...).",
+  "py": "post_scheme_scripting_window()",
+  "scm": "(post-scheme-scripting-window)",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "post_scripting_window": {
+  "expect": "compatibility name: opens the Scheme scripting window in this build (Guile is built in).",
+  "py": "post_scripting_window()",
+  "scm": "(post-scripting-window)",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "povray": {
+  "expect": "writes a POV-Ray scene file of the view",
+  "py": "povray(\"image.pov\")",
+  "scm": "(povray \"image.pov\")",
+  "skip": "uses the graphics window and an external renderer (raster3d/povray); renderman() stopped Coot without a screen in the same code path"
+ },
+ "pre_directory_file_selection": {
+  "expect": "sets up the directory part of a file chooser (internal GUI helper)",
+  "skip": "needs a GTK widget made by the GUI (not something a script normally has); internal GUI callback"
+ },
+ "preferences": {
+  "expect": "opens the Preferences dialog",
+  "py": "preferences()",
+  "scm": "(preferences)",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "preferences_internal_font_own_colour_flag": {
+  "expect": "returns the font-own-colour preference; -1 when the preferences table has no such entry (as here: the Preferences dialog has not been made)",
+  "py": "preferences_internal_font_own_colour_flag()",
+  "scm": "(preferences-internal-font-own-colour-flag)"
+ },
+ "probe_available_p": {
+  "expect": "1 if the probe program is found (CCP4/Phenix found by run-coot.sh), 0 if not. Only checks; does not run probe.",
+  "py": "probe_available_p()",
+  "scm": "(probe-available-p)"
+ },
+ "probe_clash_score": {
+  "expect": "reads a probe -u dots file (no probe run) and returns the counts [bad overlaps, H-bonds, small overlaps, close contacts, wide contacts]",
+  "note": "Scheme 'probe-clash-score' is the raw C++ function and returns a SWIG pointer; the list version probe_clash_score_scm is not exported under this name (Python redefines probe_clash_score = probe_clash_score_py). Python and Scheme disagree.",
+  "py": "probe_clash_score(\"dots.txt\")",
+  "py_setup": [
+   "open(\"dots.txt\", \"w\").write(\":1->1:bo: A   1 ASP  C   : A  89 PHE  CE2 :-0.420:-0.413:47.591:11.736:7.127:0.206:-0.1289:C:C:47.772:11.643:7.156:30.58:38.68\\n:1->1:so: A   1 ASP  C   : A  89 PHE  CE2 :-0.420:-0.384:47.690:11.938:7.138:0.192:-0.1199:C:C:47.870:11.879:7.166:30.58:38.68\\n:1->1:wc: A   2 VAL  CG1 : A   3 SER  N   :0.274:0.317:49.545:11.325:4.096:0.000:0.0126:C:N:49.545:11.325:4.096:27.22:26.99\\n\")"
+  ],
+  "scm": "(probe-clash-score \"dots.txt\")",
+  "scm_setup": [
+   "(call-with-output-file \"dots.txt\" (lambda (p) (display \":1->1:bo: A   1 ASP  C   : A  89 PHE  CE2 :-0.420:-0.413:47.591:11.736:7.127:0.206:-0.1289:C:C:47.772:11.643:7.156:30.58:38.68\\n:1->1:wc: A   2 VAL  CG1 : A   3 SER  N   :0.274:0.317:49.545:11.325:4.096:0.000:0.0126:C:N:49.545:11.325:4.096:27.22:26.99\\n\" p)))"
+  ]
+ },
+ "probe_clash_score_as": {
+  "expect": "the clash score as a list [bad overlaps, H-bonds, small overlaps, close contacts, wide contacts]; round trip gives the input back.",
+  "note": "Fixed in coot0 build 31: Scheme's probe-clash-score-from-scm took the 5th number (wide contacts) from the 4th element, so (2 10 30 400 900) came back as (2 10 30 400 400).",
+  "py": "probe_clash_score_as_py(probe_clash_score_from_py([2, 10, 30, 400, 900]))",
+  "scm": "(probe-clash-score-as-scm (probe-clash-score-from-scm (list 2 10 30 400 900)))"
+ },
+ "probe_clash_score_from": {
+  "expect": "a C++ probe clash score object from 5 numbers; prints 'debug::' lines to the terminal.",
+  "note": "Fixed in coot0 build 31: the 5th number (wide contacts) was taken from the 4th element in Scheme.",
+  "py": "probe_clash_score_from_py([2, 10, 30, 400, 900])",
+  "scm": "(probe-clash-score-from-scm (list 2 10 30 400 900))"
+ },
+ "probe_dots_short_contact_name_to_expanded_name": {
+  "expect": "returns the long name of a probe contact type (wc, cc, so, bo, hb); 'unknown' otherwise",
+  "note": "Only a string lookup; it does not run probe (old classification was wrong).",
+  "py": "probe_dots_short_contact_name_to_expanded_name(\"bo\")",
+  "scm": "(probe-dots-short-contact-name-to-expanded-name \"bo\")"
+ },
+ "probe_radius_graph_close_callback": {
+  "expect": "GTK callback that closes the HOLE probe-radius graph window",
+  "py": "probe_radius_graph_close_callback(button, dialog)",
+  "skip": "GTK button callback (takes widgets); internal to the HOLE graph window"
+ },
+ "prodrg_import_function": {
+  "expect": "imports an MDL file (e.g. from Lidia) through PRODRG/acedrg and loads the result",
+  "py": "prodrg_import_function(\"ligand.mdl\", \"LIG\")",
+  "scm": "(prodrg-import-function \"ligand.mdl\" \"LIG\")",
+  "skip": "runs an external program (PRODRG or the configured 3D generator)"
+ },
+ "protein_db_loop_specs_to_atom_selection_string": {
+  "expect": "the mmdb atom selection covering the residue range: '//A/40-45'. The argument is a C++ vector of residue specs (plain lists give a TypeError).",
+  "py": "protein_db_loop_specs_to_atom_selection_string(residue_records_list_py_to_residue_specs([{\"seq_num\": \"40\", \"ins_code\": \"\"}, {\"seq_num\": \"45\", \"ins_code\": \"\"}], \"A\"))",
+  "scm": "(protein-db-loop-specs-to-atom-selection-string (residue-records-list-scm-to-residue-specs (list (mk \"40\" \"\") (mk \"45\" \"\")) \"A\"))",
+  "scm_setup": [
+   "(define mk (record-constructor (make-record-type 'residue-rec '(seq-num ins-code))))"
+  ]
+ },
+ "protein_db_loops": {
+  "expect": "[[original-loop molecule, all-candidates molecule], [candidate molecules]] for 10 database loops fitting residues A40-43.",
+  "py": "protein_db_loops(0, [[True, \"A\", 40, \"\"], [True, \"A\", 41, \"\"], [True, \"A\", 42, \"\"], [True, \"A\", 43, \"\"]], 1, 10, False)",
+  "scm": "(protein-db-loops 0 (list (list #t \"A\" 40 \"\") (list #t \"A\" 41 \"\") (list #t \"A\" 42 \"\") (list #t \"A\" 43 \"\")) 1 10 #f)"
+ },
+ "pucker_info": {
+  "expect": "for an RNA/DNA residue returns [phosphate distance, puckered atom (C3' or C2'), out-of-plane distance, plane distortion]; False if not found",
+  "py": "pucker_info(imol_rna, [\"A\", 10, \"\"], 1)",
+  "py_setup": [
+   "imol_rna = read_pdb(\"1ehz.pdb\")"
+  ],
+  "scm": "(pucker-info imol-rna (list \"A\" 10 \"\") 1)",
+  "scm_setup": [
+   "(define imol-rna (read-pdb \"1ehz.pdb\"))"
+  ]
+ },
+ "py_clean_internal": {
+  "expect": "the same object back (it only replaces internal 'None'-like values in nested lists); internal helper. (Python only.)",
+  "py": "py_clean_internal([[1.0, \"x\"], True])"
+ },
+ "py_symop_strings_to_space_group": {
+  "expect": "internal C++ helper: returns a clipper::Spacegroup object that scripts cannot use; use symmetry_operators_to_xHM for a usable answer",
+  "py": "py_symop_strings_to_space_group([\"x,y,z\", \"-x,-y,z\"])"
+ },
+ "py_to_residue_specs": {
+  "expect": "internal C++ helper converting a list of residue specs to a C++ vector; nothing usable from a script",
+  "py": "py_to_residue_specs([[\"A\", 41, \"\"]])"
+ },
+ "pyrun_simple_string": {
+  "expect": "runs the Python text in Coot's Python; returns 0 on success",
+  "py": "pyrun_simple_string(\"print('hi from pyrun'); set_rotation_centre(5, 5, 5)\")",
+  "scm": "(pyrun-simple-string \"print('hi from scheme via pyrun')\")"
+ },
+ "qq_plot_map_and_model": {
+  "expect": "opens a Q-Q plot window of map vs model density for the residues",
+  "py": "qq_plot_map_and_model(0, [[\"A\", 41, \"\"], [\"A\", 42, \"\"]], [], 0, 1)",
+  "scm": "(qq-plot-map-and-model 0 (list (list \"A\" 41 \"\") (list \"A\" 42 \"\")) (list) 0 1)",
+  "skip": "opens a plot window (goograph); needs the graphics window (stops Coot without a screen)"
+ },
+ "quick_save": {
+  "expect": "saves every modified model to <name>-coot-N.pdb (and the state files); returns 0; unmodified models are not written",
+  "py": "quick_save()",
+  "py_setup": [
+   "delete_residue(0, \"A\", 41, \"\")"
+  ],
+  "scm": "(quick-save)",
+  "scm_setup": [
+   "(delete-residue 0 \"A\" 41 \"\")"
+  ]
+ },
+ "ramachandran_plot_differences": {
+  "expect": "opens a Kleywegt plot window (phi/psi differences between two molecules)",
+  "py": "ramachandran_plot_differences(0, 0)",
+  "scm": "(ramachandran-plot-differences 0 0)",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "ramachandran_plot_differences_by_chain": {
+  "expect": "opens a Kleywegt plot window comparing chain A with its NCS copy chain B",
+  "py": "ramachandran_plot_differences_by_chain(0, 0, \"A\", \"B\")",
+  "scm": "(ramachandran-plot-differences-by-chain 0 0 \"A\" \"B\")",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "ramachandran_psi_axis_mode": {
+  "expect": "returns the psi axis mode of the Ramachandran plot (0 = standard -180..180)",
+  "py": "ramachandran_psi_axis_mode()",
+  "scm": "(ramachandran-psi-axis-mode)"
+ },
+ "raster3d": {
+  "expect": "writes a Raster3D scene file of the view",
+  "py": "raster3d(\"image.r3d\")",
+  "scm": "(raster3d \"image.r3d\")",
+  "skip": "uses the graphics window and an external renderer (raster3d/povray); renderman() stopped Coot without a screen in the same code path"
+ },
+ "raster_screen_shot": {
+  "expect": "renders the current view with Raster3D and shows the image",
+  "py": "raster_screen_shot()",
+  "scm": "(raster-screen-shot)",
+  "skip": "needs the graphics window (stops Coot without a screen) and Raster3D"
+ },
+ "read_ccp4_map": {
+  "expect": "returns the new map molecule number",
+  "py": "read_ccp4_map(\"rnasa-map.map\", 0)",
+  "scm": "(read-ccp4-map \"rnasa-map.map\" 0)"
+ },
+ "read_cif_data": {
+  "expect": "returns the new map molecule number: a map calculated from F_meas and the phases of model molecule 0.",
+  "note": "rnasa-sf.cif (in test-data) is a structure-factor mmCIF made from rnasa-1.8-all_refmac1.mtz with gemmi mtz2cif.",
+  "py": "read_cif_data(\"rnasa-sf.cif\", 0)",
+  "scm": "(read-cif-data \"rnasa-sf.cif\" 0)"
+ },
+ "read_cif_data_2fofc_map": {
+  "expect": "returns the new map molecule number: a 2Fo-Fc map from the F_meas data and model 0.",
+  "note": "rnasa-sf.cif (in test-data) is a structure-factor mmCIF made from rnasa-1.8-all_refmac1.mtz with gemmi mtz2cif.",
+  "py": "read_cif_data_2fofc_map(\"rnasa-sf.cif\", 0)",
+  "scm": "(read-cif-data-2fofc-map \"rnasa-sf.cif\" 0)"
+ },
+ "read_cif_data_fofc_map": {
+  "expect": "returns the new map molecule number: an Fo-Fc difference map from the F_meas data and model 0.",
+  "note": "rnasa-sf.cif (in test-data) is a structure-factor mmCIF made from rnasa-1.8-all_refmac1.mtz with gemmi mtz2cif.",
+  "py": "read_cif_data_fofc_map(\"rnasa-sf.cif\", 0)",
+  "scm": "(read-cif-data-fofc-map \"rnasa-sf.cif\" 0)"
+ },
+ "read_cif_data_with_phases_2fo_fc": {
+  "expect": "returns the new map molecule number of a 2Fo-Fc map.",
+  "note": "rnasa-sf.cif (in test-data) is a structure-factor mmCIF made from rnasa-1.8-all_refmac1.mtz with gemmi mtz2cif.",
+  "py": "read_cif_data_with_phases_2fo_fc(\"rnasa-sf.cif\")",
+  "scm": "(read-cif-data-with-phases-2fo-fc \"rnasa-sf.cif\")"
+ },
+ "read_cif_data_with_phases_diff_sigmaa": {
+  "expect": "returns the new map molecule number of the difference (mFo-DFc) map from the phases in the file.",
+  "note": "rnasa-sf.cif (in test-data) is a structure-factor mmCIF made from rnasa-1.8-all_refmac1.mtz with gemmi mtz2cif.",
+  "py": "read_cif_data_with_phases_diff_sigmaa(\"rnasa-sf.cif\")",
+  "scm": "(read-cif-data-with-phases-diff-sigmaa \"rnasa-sf.cif\")"
+ },
+ "read_cif_data_with_phases_fo_alpha_calc": {
+  "expect": "returns the new map molecule number of an Fo, alpha-calc map.",
+  "note": "rnasa-sf.cif (in test-data) is a structure-factor mmCIF made from rnasa-1.8-all_refmac1.mtz with gemmi mtz2cif.",
+  "py": "read_cif_data_with_phases_fo_alpha_calc(\"rnasa-sf.cif\")",
+  "scm": "(read-cif-data-with-phases-fo-alpha-calc \"rnasa-sf.cif\")"
+ },
+ "read_cif_data_with_phases_fo_fc": {
+  "expect": "returns the new map molecule number of an Fo-Fc map.",
+  "note": "rnasa-sf.cif (in test-data) is a structure-factor mmCIF made from rnasa-1.8-all_refmac1.mtz with gemmi mtz2cif.",
+  "py": "read_cif_data_with_phases_fo_fc(\"rnasa-sf.cif\")",
+  "scm": "(read-cif-data-with-phases-fo-fc \"rnasa-sf.cif\")"
+ },
+ "read_cif_data_with_phases_nfo_fc": {
+  "expect": "map_type 0 SigmaA, 1 2Fo-Fc, 2 Fo-Fc, 3 Fo alpha-calc, 4 difference SigmaA; returns the new map molecule number.",
+  "note": "rnasa-sf.cif (in test-data) is a structure-factor mmCIF made from rnasa-1.8-all_refmac1.mtz with gemmi mtz2cif.",
+  "py": "read_cif_data_with_phases_nfo_fc(\"rnasa-sf.cif\", 1)",
+  "scm": "(read-cif-data-with-phases-nfo-fc \"rnasa-sf.cif\" 1)"
+ },
+ "read_cif_data_with_phases_sigmaa": {
+  "expect": "returns the new map molecule number of the SigmaA (2mFo-DFc) map from the phases in the file.",
+  "note": "rnasa-sf.cif (in test-data) is a structure-factor mmCIF made from rnasa-1.8-all_refmac1.mtz with gemmi mtz2cif.",
+  "py": "read_cif_data_with_phases_sigmaa(\"rnasa-sf.cif\")",
+  "scm": "(read-cif-data-with-phases-sigmaa \"rnasa-sf.cif\")"
+ },
+ "read_cif_dictionary": {
+  "expect": "same as handle_cif_dictionary: returns the dictionary index (> 0 success), -1 on failure.",
+  "note": "Returns the monomer index, not a number of bonds as documented.",
+  "py": "read_cif_dictionary(\"ATP.cif\")",
+  "scm": "(read-cif-dictionary \"ATP.cif\")"
+ },
+ "read_mtz": {
+  "expect": "returns the new map molecule number (same as make_and_draw_map)",
+  "py": "read_mtz(\"map-coefficients-only.mtz\", \"FWT\", \"PHWT\", \"\", 0, 0)",
+  "scm": "(read-mtz \"map-coefficients-only.mtz\" \"DELFWT\" \"PHDELWT\" \"\" 0 1)"
+ },
+ "read_phs_and_make_map_using_cell_symm": {
+  "expect": "returns the new map molecule made from the .phs file with the given space group and cell",
+  "note": "tiny.phs is a 5-reflection hand-made file; when the file does not exist it still returns a molecule number and leaves an empty (non-map) molecule slot instead of -1; with 'hello' as space group Coot stopped",
+  "py": "read_phs_and_make_map_using_cell_symm(\"tiny.phs\", \"P 21 21 21\", 64.897, 78.323, 38.792, 90.0, 90.0, 90.0)",
+  "py_setup": [
+   "open(\"tiny.phs\", \"w\").write(\"   1   0   0  100.0  0.9  10.0  2.0\\n   0   1   0  150.0  0.8  50.0  2.0\\n   0   0   1  80.0  0.7  120.0  2.0\\n   1   1   1  60.0  0.6  200.0  2.0\\n   2   1   0  70.0  0.6  300.0  2.0\\n\")"
+  ],
+  "scm": "(read-phs-and-make-map-using-cell-symm \"tiny.phs\" \"P 21 21 21\" 64.897 78.323 38.792 90.0 90.0 90.0)",
+  "scm_setup": [
+   "(call-with-output-file \"tiny.phs\" (lambda (port) (display \"   1   0   0  100.0  0.9  10.0  2.0\\n   0   1   0  150.0  0.8  50.0  2.0\\n   0   0   1  80.0  0.7  120.0  2.0\\n   1   1   1  60.0  0.6  200.0  2.0\\n   2   1   0  70.0  0.6  300.0  2.0\\n\" port)))"
+  ]
+ },
+ "read_phs_and_make_map_using_cell_symm_from_mol": {
+  "expect": "returns the new map molecule made from the .phs file with the cell and space group of molecule 0",
+  "note": "tiny.phs is a 5-reflection hand-made file (h k l F fom phase sigF): the map is meaningless but shows the call; the old run with a PDB file as .phs hung",
+  "py": "read_phs_and_make_map_using_cell_symm_from_mol(\"tiny.phs\", 0)",
+  "py_setup": [
+   "open(\"tiny.phs\", \"w\").write(\"   1   0   0  100.0  0.9  10.0  2.0\\n   0   1   0  150.0  0.8  50.0  2.0\\n   0   0   1  80.0  0.7  120.0  2.0\\n   1   1   1  60.0  0.6  200.0  2.0\\n   2   1   0  70.0  0.6  300.0  2.0\\n\")"
+  ],
+  "scm": "(read-phs-and-make-map-using-cell-symm-from-mol \"tiny.phs\" 0)",
+  "scm_setup": [
+   "(call-with-output-file \"tiny.phs\" (lambda (port) (display \"   1   0   0  100.0  0.9  10.0  2.0\\n   0   1   0  150.0  0.8  50.0  2.0\\n   0   0   1  80.0  0.7  120.0  2.0\\n   1   1   1  60.0  0.6  200.0  2.0\\n   2   1   0  70.0  0.6  300.0  2.0\\n\" port)))"
+  ]
+ },
+ "read_phs_and_make_map_using_cell_symm_from_previous_mol": {
+  "expect": "returns the new map molecule made from the .phs file with the cell/symmetry of the most recently read model",
+  "note": "with a non-existent file it returns a molecule number (not -1) and leaves an empty molecule slot (n_molecules 3 -> 4)",
+  "py": "read_phs_and_make_map_using_cell_symm_from_previous_mol(\"tiny.phs\")",
+  "py_setup": [
+   "open(\"tiny.phs\", \"w\").write(\"   1   0   0  100.0  0.9  10.0  2.0\\n   0   1   0  150.0  0.8  50.0  2.0\\n   0   0   1  80.0  0.7  120.0  2.0\\n   1   1   1  60.0  0.6  200.0  2.0\\n   2   1   0  70.0  0.6  300.0  2.0\\n\")"
+  ],
+  "scm": "(read-phs-and-make-map-using-cell-symm-from-previous-mol \"tiny.phs\")",
+  "scm_setup": [
+   "(call-with-output-file \"tiny.phs\" (lambda (port) (display \"   1   0   0  100.0  0.9  10.0  2.0\\n   0   1   0  150.0  0.8  50.0  2.0\\n   0   0   1  80.0  0.7  120.0  2.0\\n   1   1   1  60.0  0.6  200.0  2.0\\n   2   1   0  70.0  0.6  300.0  2.0\\n\" port)))"
+  ]
+ },
+ "read_shelx_ins_file": {
+  "expect": "returns the new molecule number of the model read from the .ins file (recentre flag 0: the view stays).",
+  "py": "read_shelx_ins_file(\"tut.ins\", 0)",
+  "py_setup": [
+   "write_shelx_ins_file(0, \"tut.ins\")"
+  ],
+  "scm": "(read-shelx-ins-file \"tut.ins\" 0)",
+  "scm_setup": [
+   "(write-shelx-ins-file 0 \"tut.ins\")"
+  ]
+ },
+ "read_small_molecule_cif": {
+  "expect": "returns the new model molecule number made from the atoms (_atom_site_fract_*) of a small-molecule CIF; -1 on failure.",
+  "note": "rnasa-sm.cif and rnasa-sm-data.cif (in test-data) are a small-molecule style CIF made from residues A39-41 of the test model and the rnasa reflections, only to show the call.",
+  "py": "read_small_molecule_cif(\"rnasa-sm.cif\")",
+  "scm": "(read-small-molecule-cif \"rnasa-sm.cif\")"
+ },
+ "read_small_molecule_data_cif": {
+  "expect": "returns the molecule number of the SigmaA map made from the reflections (F_meas + F_calc/phase_calc) of a small-molecule data CIF; a difference map is made too.",
+  "note": "rnasa-sm.cif and rnasa-sm-data.cif (in test-data) are a small-molecule style CIF made from residues A39-41 of the test model and the rnasa reflections, only to show the call.",
+  "py": "read_small_molecule_data_cif(\"rnasa-sm-data.cif\")",
+  "scm": "(read-small-molecule-data-cif \"rnasa-sm-data.cif\")"
+ },
+ "read_small_molecule_data_cif_and_make_map_using_coords": {
+  "expect": "returns the new SigmaA map molecule number, phases from the coordinates of model 0; a difference map is made too.",
+  "note": "rnasa-sm.cif and rnasa-sm-data.cif (in test-data) are a small-molecule style CIF made from residues A39-41 of the test model and the rnasa reflections, only to show the call.",
+  "py": "read_small_molecule_data_cif_and_make_map_using_coords(\"rnasa-sm-data.cif\", 0)",
+  "scm": "(read-small-molecule-data-cif-and-make-map-using-coords \"rnasa-sm-data.cif\" 0)"
+ },
+ "reattach_modelling_toolbar": {
+  "expect": "puts the detached modelling toolbar back in its last place in the main window",
+  "py": "reattach_modelling_toolbar()",
+  "scm": "(reattach-modelling-toolbar)",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "recover_session": {
+  "expect": "opens a dialog offering the newest backup of each model (or 'nothing to recover')",
+  "py": "recover_session()",
+  "scm": "(recover-session)",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "refine_residues_with_modes_with_alt_conf": {
+  "expect": "refines the listed residues (alt conf '') with optional modes; returns the refinement summary [message, status, scores]",
+  "note": "status -2 and no movement with mode None/#f: the mode values Coot expects are not documented; treat as unverified",
+  "py": "refine_residues_with_modes_with_alt_conf(0, [[\"A\", 41, \"\"], [\"A\", 42, \"\"]], \"\", None, None, None)",
+  "scm": "(refine-residues-with-modes-with-alt-conf-scm 0 (list (list \"A\" 41 \"\") (list \"A\" 42 \"\")) \"\" #f #f #f)"
+ },
+ "refmac_imol_coords": {
+  "expect": "returns the molecule chosen for Refmac (0 = tutorial-modern.pdb here)",
+  "note": "Only stores a setting for the next Refmac run; does not run Refmac.",
+  "py": "refmac_imol_coords()",
+  "py_setup": [
+   "set_refmac_molecule(0)"
+  ],
+  "scm": "(refmac-imol-coords)",
+  "scm_setup": [
+   "(set-refmac-molecule 0)"
+  ]
+ },
+ "refmac_name": {
+  "expect": "returns the file name Coot will write molecule 0 to before running Refmac",
+  "note": "Only stores a setting for the next Refmac run; does not run Refmac.",
+  "py": "refmac_name(0)",
+  "scm": "(refmac-name 0)"
+ },
+ "refmac_parameters": {
+  "expect": "returns the MTZ file and columns stored with the map; [] for a map made without Refmac parameters",
+  "note": "Does not run Refmac (only reads stored parameters).",
+  "py": "refmac_parameters(imap)",
+  "py_setup": [
+   "imap = make_and_draw_map_with_refmac_params(\"rnasa-1.8-all_refmac1.mtz\", \"FWT\", \"PHWT\", \"\", 0, 0, 1, \"FGMP18\", \"SIGFGMP18\", \"FreeR_flag\", 1)"
+  ],
+  "scm": "(refmac-parameters (make-and-draw-map-with-refmac-params \"rnasa-1.8-all_refmac1.mtz\" \"FWT\" \"PHWT\" \"\" 0 0 1 \"FGMP18\" \"SIGFGMP18\" \"FreeR_flag\" 1))"
+ },
+ "refmac_runs_with_nolabels": {
+  "expect": "returns 0 for old Refmac, 1 for >= 5.4, 2 for >= 5.5 (SAD/twin support)",
+  "note": "the doc says 1 or 0 but the code returns 2 for any modern Refmac; it runs refmac to read its version (needs CCP4)",
+  "py": "refmac_runs_with_nolabels()",
+  "scm": "(refmac-runs-with-nolabels)"
+ },
+ "refmac_use_intensities_state": {
+  "expect": "returns 1 when Refmac uses intensities (default 0, amplitudes)",
+  "note": "Only stores a setting for the next Refmac run; does not run Refmac.",
+  "py": "refmac_use_intensities_state()",
+  "scm": "(refmac-use-intensities-state)"
+ },
+ "refmac_use_ncs_state": {
+  "expect": "returns 1 when Refmac uses NCS restraints",
+  "note": "Only stores a setting for the next Refmac run; does not run Refmac.",
+  "py": "refmac_use_ncs_state()",
+  "scm": "(refmac-use-ncs-state)"
+ },
+ "refmac_use_sad_state": {
+  "expect": "returns 1 when Refmac does SAD refinement (default 0)",
+  "note": "Only stores a setting for the next Refmac run; does not run Refmac.",
+  "py": "refmac_use_sad_state()",
+  "scm": "(refmac-use-sad-state)"
+ },
+ "refmac_use_tls_state": {
+  "expect": "returns 1 when Refmac uses TLS",
+  "note": "Only stores a setting for the next Refmac run; does not run Refmac.",
+  "py": "refmac_use_tls_state()",
+  "scm": "(refmac-use-tls-state)"
+ },
+ "refmac_use_twin_state": {
+  "expect": "returns 1 when Refmac does twin refinement (default 0)",
+  "note": "Only stores a setting for the next Refmac run; does not run Refmac.",
+  "py": "refmac_use_twin_state()",
+  "scm": "(refmac-use-twin-state)"
+ },
+ "register_interesting_positions_list": {
+  "expect": "registers user-defined interesting positions [[x, y, z], label] that the 'next interesting position' key walks through",
+  "note": "Fixed in coot0 build 31: the Scheme version stopped Coot on any call (it read the list with a C integer, and took the label from the position). Call it as register-interesting-positions-list-scm.",
+  "py": "register_interesting_positions_list([[[47.1, 10.6, 17.4], \"Glu A41 CA\"], [[21.2, 9.9, 10.8], \"Cys B72 CA\"]])",
+  "scm": "(register-interesting-positions-list-scm (list (list (list 47.1 10.6 17.4) \"Glu A41 CA\")))"
+ },
+ "register_post_intermediate_atoms_moved_hook": {
+  "expect": "registers a Python function that Coot calls after the intermediate (moving) atoms move, e.g. while dragging during refinement (Python only)",
+  "note": "not seen to run headless (no interactive moving atoms); needs the window to observe",
+  "py": "register_post_intermediate_atoms_moved_hook(hook)",
+  "py_setup": [
+   "def hook(*args): print(\"intermediate atoms moved\", args)"
+  ]
+ },
+ "remove_atom_label": {
+  "expect": "returns the atom index of the atom whose label was removed",
+  "py": "remove_atom_label(0, \"A\", 41, \" CA \")",
+  "py_setup": [
+   "add_atom_label(0, \"A\", 41, \" CA \")"
+  ],
+  "scm": "(remove-atom-label 0 \"A\" 41 \" CA \")",
+  "scm_setup": [
+   "(add-atom-label 0 \"A\" 41 \" CA \")"
+  ]
+ },
+ "remove_file_curlew_menu_item_maybe": {
+  "expect": "removes File > Curlew from the menubar when Coot was built without Curlew; called at start-up, no effect when called again.",
+  "py": "remove_file_curlew_menu_item_maybe()",
+  "scm": "(remove-file-curlew-menu-item-maybe)"
+ },
+ "remove_initial_position_restraints": {
+  "expect": "removes all initial-position restraints of the molecule",
+  "skip": "not callable from scripts: takes a C++ std::vector<residue_spec_t> (no list conversion)"
+ },
+ "remove_named_view": {
+  "expect": "the view called spin is removed (n_views drops by 1); returns 0.",
+  "py": "remove_named_view(\"spin\")",
+  "py_setup": [
+   "add_view_here(\"first\")",
+   "add_spin_view(\"spin\", 10, 90.0)"
+  ],
+  "scm": "(remove-named-view \"spin\")",
+  "scm_setup": [
+   "(add-view-here \"first\")",
+   "(add-spin-view \"spin\" 10 90.0)"
+  ]
+ },
+ "renderman": {
+  "expect": "writes a RenderMan .rib scene of the view",
+  "py": "renderman(\"scene.rib\")",
+  "scm": "(renderman \"scene.rib\")",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "renumber_residue_range": {
+  "expect": "returns 1 and adds the offset to the residue numbers of A41-A45",
+  "py": "renumber_residue_range(0, \"A\", 41, 45, 100)",
+  "scm": "(renumber-residue-range 0 \"A\" 41 45 100)"
+ },
+ "replace_residues_from_mol": {
+  "expect": "replaces (or adds) the listed residues in the target molecule with those of the reference molecule; returns 1 on success",
+  "py": "replace_residues_from_mol(imol2, 0, [[\"A\", 41, \"\"], [\"A\", 42, \"\"]])",
+  "py_setup": [
+   "imol2 = read_pdb(\"tutorial-modern.pdb\")",
+   "delete_residue(imol2, \"A\", 41, \"\")"
+  ],
+  "scm": "(replace-residues-from-mol-scm imol2 0 (list (list \"A\" 41 \"\") (list \"A\" 42 \"\")))",
+  "scm_setup": [
+   "(define imol2 (read-pdb \"tutorial-modern.pdb\"))",
+   "(delete-residue imol2 \"A\" 41 \"\")"
+  ]
+ },
+ "reset_view": {
+  "expect": "centres on the last-read molecule and resets the zoom (the view does move; see note)",
+  "note": "Doc says 'return 1 if we moved', but it returned 0 although the centre moved 3.8 A and the zoom changed.",
+  "py": "reset_view()",
+  "scm": "(reset-view)"
+ },
+ "residue_has_hetatms": {
+  "expect": "1 if all atoms of the residue are HETATMs, 0 if not, -1 if no such residue",
+  "py": "residue_has_hetatms(imol_nag, \"A\", 1, \"\")",
+  "py_setup": [
+   "imol_nag = read_pdb(\"nag_only.pdb\")"
+  ],
+  "scm": "(residue-has-hetatms 0 \"A\" 41 \"\")"
+ },
+ "residue_info_dialog": {
+  "expect": "opens the Residue Info window for A41 (atom names, occupancies, B-factors)",
+  "py": "residue_info_dialog(0, \"A\", 41, \"\")",
+  "scm": "(residue-info-dialog 0 \"A\" 41 \"\")",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "residue_info_dialog_is_displayed": {
+  "expect": "returns 1 if the Residue Info window is open, else 0 (correct here)",
+  "py": "residue_info_dialog_is_displayed()",
+  "scm": "(residue-info-dialog-is-displayed)"
+ },
+ "residue_records_list_py_to_residue_specs": {
+  "expect": "a C++ vector of residue specs from PISA-style residue records (dicts with seq_num/ins_code as strings) in chain A. (Python only.)",
+  "py": "residue_records_list_py_to_residue_specs([{\"seq_num\": \"40\", \"ins_code\": \"\"}, {\"seq_num\": \"45\", \"ins_code\": \"\"}], \"A\")"
+ },
+ "residue_records_list_scm_to_residue_specs": {
+  "expect": "a C++ vector of residue specs from PISA residue records (Guile records with fields seq-num and ins-code, as strings). (Scheme only.)",
+  "scm": "(residue-records-list-scm-to-residue-specs (list (mk \"40\" \"\") (mk \"45\" \"\")) \"A\")",
+  "scm_setup": [
+   "(define mk (record-constructor (make-record-type 'residue-rec '(seq-num ins-code))))"
+  ]
+ },
+ "residue_spec_to": {
+  "expect": "converts a SWIG residue_spec_t object into a script list [True, chain, resno, ins]",
+  "py": "residue_spec_to_py(residue_spec_t(\"A\", 41, \"\"))",
+  "scm": "(residue-spec-to-scm (new-residue-spec-t \"A\" 41 \"\"))"
+ },
+ "residue_to_mdl_file_for_mogul": {
+  "expect": "writes the residue as an MDL mol file for Mogul (does not run Mogul) and returns True",
+  "note": "Only writes a file; the old 'not run (mogul)' classification was wrong.",
+  "py": "residue_to_mdl_file_for_mogul(imol_nag, \"A\", 1, \"\", \"nag.mdl\")",
+  "py_setup": [
+   "read_cif_dictionary(\"NAG.cif\")",
+   "imol_nag = read_pdb(\"nag_only.pdb\")"
+  ],
+  "scm": "(residue-to-mdl-file-for-mogul imol-nag \"A\" 1 \"\" \"nag.mdl\")",
+  "scm_setup": [
+   "(read-cif-dictionary \"NAG.cif\")",
+   "(define imol-nag (read-pdb \"nag_only.pdb\"))"
+  ]
+ },
+ "residue_to_sdf_file": {
+  "expect": "returns True and writes the residue (with its dictionary) as an SDF file, kekulized if asked",
+  "py": "residue_to_sdf_file(imol_nag, \"A\", 1, \"\", \"nag.sdf\", True)",
+  "py_setup": [
+   "read_cif_dictionary(\"NAG.cif\")",
+   "imol_nag = read_pdb(\"nag_only.pdb\")"
+  ],
+  "scm": "(residue-to-sdf-file imol-nag \"A\" 1 \"\" \"nag.sdf\" #t)",
+  "scm_setup": [
+   "(read-cif-dictionary \"NAG.cif\")",
+   "(define imol-nag (read-pdb \"nag_only.pdb\"))"
+  ]
+ },
+ "residues_distortions": {
+  "expect": "returns one entry per geometry restraint of the residues with its distortion score (needs a refinement map set)",
+  "py": "residues_distortions(0, [[\"A\", 41, \"\"], [\"A\", 42, \"\"]])[0]",
+  "scm": "(length (residues-distortions-scm 0 (list (list \"A\" 41 \"\") (list \"A\" 42 \"\"))))"
+ },
+ "residues_near_position": {
+  "expect": "the residue specs with an atom within 4 A of the point (the CA of A39): A37-A41. Order differs between the languages.",
+  "py": "residues_near_position(0, [48.3, 7.4, 16.9], 4.0)",
+  "scm": "(residues-near-position 0 (list 48.3 7.4 16.9) 4.0)"
+ },
+ "residues_torsions_match": {
+  "expect": "should be True when all torsions of the two residues agree within the tolerance (degrees)",
+  "note": "Always False: the comparison (coot::compare_residue_torsions) is commented out in the C++ (c-interface-ligands.cc ~2674), so the result is never set.",
+  "py": "residues_torsions_match(0, [\"A\", 41, \"\"], 0, [\"A\", 41, \"\"], 10.0)",
+  "scm": "(residues-torsions-match-scm 0 (list \"A\" 41 \"\") 0 (list \"A\" 41 \"\") 10.0)"
+ },
+ "resolve_clashing_sidechains_by_rebuilding": {
+  "expect": "rebuilds side chains that clash, fitting them to the refinement map",
+  "note": "Segfaults headless after the first mutation; probably a redraw/GUI call. Not checked with a window.",
+  "py": "resolve_clashing_sidechains_by_rebuilding(0)",
+  "scm": "(resolve-clashing-sidechains-by-rebuilding 0)",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "reverse_jed_flip_intermediate_atoms": {
+  "expect": "as jed_flip_intermediate_atoms with the other side moved; 1 during a refinement, 0 otherwise",
+  "py": "refine_zone(0, \"A\", 41, 43, \"\"); print(reverse_jed_flip_intermediate_atoms())",
+  "scm": "(begin (refine-zone 0 \"A\" 41 43 \"\") (reverse-jed-flip-intermediate-atoms))"
+ },
+ "rigid_body_fit_with_residue_ranges": {
+  "expect": "rigid-body fits the residue ranges into the refinement map",
+  "skip": "not callable from scripts: takes a C++ std::vector<residue_range_t>; use rigid_body_refine_by_residue_ranges instead"
+ },
+ "rigid_body_refine_by_residue_ranges": {
+  "expect": "rigid-body refines the listed ranges [chain, start, end] against the refinement map; True when the fit was done",
+  "py": "rigid_body_refine_by_residue_ranges(0, [[\"A\", 41, 45]])",
+  "scm": "(rigid-body-refine-by-residue-ranges 0 (list (list \"A\" 41 45)))"
+ },
+ "rtop_to": {
+  "expect": "converts a C++ clipper RTop_orth to a list; no script function returns an RTop_orth, so it cannot be used from scripts (inverse-rtop shows the list format).",
+  "scm": "(rtop-to-scm (list (list 1 0 0 0 1 0 0 0 1) (list 1.0 2.0 3.0)))",
+  "skip": "not callable from scripting: needs a C++ clipper::RTop_orth object that scripts cannot make"
+ },
+ "rtop_to_python": {
+  "expect": "converts a C++ clipper RTop_orth to a list; not usable from scripts (inverse_rtop shows the list format).",
+  "py": "rtop_to_python([[1, 0, 0, 0, 1, 0, 0, 0, 1], [1.0, 2.0, 3.0]])",
+  "skip": "not callable from scripting: needs a C++ clipper::RTop_orth object that scripts cannot make"
+ },
+ "run_clear_backups": {
+  "expect": "runs clear_backups_maybe() and then exits; without guile-gtk (this build) the Scheme version exits at once",
+  "py": "run_clear_backups(0)",
+  "scm": "(run-clear-backups 0)",
+  "skip": "exits Coot"
+ },
+ "run_command_line_scripts": {
+  "expect": "runs the --script/--python/--scheme files given on the command line (done once by Coot at start-up).",
+  "py": "run_command_line_scripts()",
+  "scm": "(run-command-line-scripts)",
+  "skip": "would run the start-up --script files a second time (here the test driver itself); called by Coot at start-up only"
+ },
+ "run_generic_script": {
+  "expect": "builds the Scheme command (set-rotation-centre 10 10 10) from the list (function name, then arguments) and runs it.",
+  "note": "The list is always turned into a SCHEME command (Guile is built in), also when called from Python: give Scheme names.",
+  "py": "run_generic_script([\"set-rotation-centre\", \"10\", \"10\", \"10\"])",
+  "scm": "(run-generic-script (list \"set-rotation-centre\" \"10\" \"10\" \"10\"))"
+ },
+ "run_guile_script": {
+  "expect": "runs the Scheme file: its output is printed and its calls take effect",
+  "py": "run_guile_script(\"hello.scm\")",
+  "py_setup": [
+   "open(\"hello.scm\", \"w\").write(\"(display \\\"hello from scheme\\\")(newline)(set-rotation-centre 1 2 3)\\n\")"
+  ],
+  "scm": "(run-guile-script \"hello.scm\")",
+  "scm_setup": [
+   "(call-with-output-file \"hello.scm\" (lambda (port) (display \"(display \\\"hello from scheme\\\")(newline)(set-rotation-centre 1 2 3)\\n\" port)))"
+  ]
+ },
+ "run_python_command": {
+  "expect": "evaluates a Python expression from Scheme and returns its value converted to Scheme",
+  "scm": "(run-python-command \"2 + 3\")"
+ },
+ "run_python_script": {
+  "expect": "runs the Python file: its output is printed and its calls take effect",
+  "py": "run_python_script(\"hello.py\")",
+  "py_setup": [
+   "open(\"hello.py\", \"w\").write(\"print('hello from a script')\\nset_rotation_centre(10, 20, 30)\\n\")"
+  ],
+  "scm": "(run-python-script \"hello.py\")",
+  "scm_setup": [
+   "(call-with-output-file \"hello.py\" (lambda (port) (display \"print('hello from a script')\\nset_rotation_centre(10, 20, 30)\\n\" port)))"
+  ]
+ },
+ "run_scheme_command": {
+  "expect": "evaluates a Scheme expression from Python and returns its value converted to Python",
+  "py": "run_scheme_command(\"(+ 2 3)\")"
+ },
+ "run_script": {
+  "expect": "runs a script file, Python (.py) or Scheme (.scm) chosen by the extension",
+  "py": "run_script(\"hello.py\")",
+  "py_setup": [
+   "open(\"hello.py\", \"w\").write(\"print('hello from a script')\\nset_rotation_centre(10, 20, 30)\\n\")"
+  ],
+  "scm": "(run-script \"hello.scm\")",
+  "scm_setup": [
+   "(call-with-output-file \"hello.scm\" (lambda (port) (display \"(display \\\"hello from scheme\\\")(newline)(set-rotation-centre 1 2 3)\\n\" port)))"
+  ]
+ },
+ "run_state_file": {
+  "expect": "runs the state file 0-coot.state.py/.scm of the current directory (saved by save_state()); does nothing when there is none.",
+  "py": "run_state_file()",
+  "scm": "(run-state-file)"
+ },
+ "run_state_file_maybe": {
+  "expect": "runs the state file if one exists and the run-state-file status allows it (asks with a dialog when status is 1).",
+  "py": "run_state_file_maybe()",
+  "scm": "(run-state-file-maybe)"
+ },
+ "run_update_self_maybe": {
+  "expect": "does nothing unless Coot was started with --update-self (then it would download a new upstream build over the network: not useful for this port).",
+  "note": "Harmless when called; the --update-self path itself needs the network and would replace upstream binaries.",
+  "py": "run_update_self_maybe()",
+  "scm": "(run-update-self-maybe)"
+ },
+ "safe_python_command_with_unsafe_thread": {
+  "expect": "runs a Python command string with the interpreter lock released; meant only for C++ code, not for scripts.",
+  "note": "Calling it from a script always crashes (Py_BEGIN_ALLOW_THREADS then PyRun_SimpleString). Use run_python_command / exec instead.",
+  "py": "safe_python_command_with_unsafe_thread(\"print('hello')\")",
+  "skip": "crashes Coot when called from Python: it releases the Python lock and then runs Python code without it (internal helper)"
+ },
+ "save_coordinates": {
+  "expect": "writes saved-tut.pdb and the molecule takes that name; returns 0 on success.",
+  "note": "The doc says 1 = success, but the code returns the mmdb error code: 0 means success (file written).",
+  "py": "save_coordinates(0, \"saved-tut.pdb\")",
+  "scm": "(save-coordinates 0 \"saved-tut.pdb\")"
+ },
+ "save_molecule_number_from_option_menu": {
+  "expect": "-1 until a molecule has been chosen in the Save Coordinates dialog (internal state of that dialog).",
+  "py": "save_molecule_number_from_option_menu()",
+  "scm": "(save-molecule-number-from-option-menu)"
+ },
+ "save_refmac_params_to_map": {
+  "expect": "stores Fobs/SigF/Rfree columns with map 1 (refmac_parameters(1) shows them)",
+  "note": "Only stores a setting for the next Refmac run; does not run Refmac.",
+  "py": "save_refmac_params_to_map(1, \"rnasa-1.8-all_refmac1.mtz\", \"FGMP18\", \"SIGFGMP18\", \"FreeR_flag\", 1)",
+  "scm": "(save-refmac-params-to-map 1 \"rnasa-1.8-all_refmac1.mtz\" \"FGMP18\" \"SIGFGMP18\" \"FreeR_flag\" 1)"
+ },
+ "save_refmac_phase_params_to_map": {
+  "expect": "stores phase (PHI/FOM or HL) columns with map 1 for a Refmac run with phase input",
+  "note": "Only stores a setting for the next Refmac run; does not run Refmac.",
+  "py": "save_refmac_phase_params_to_map(1, \"PHIC\", \"FOM\", \"\", \"\", \"\", \"\")",
+  "scm": "(save-refmac-phase-params-to-map 1 \"PHIC\" \"FOM\" \"\" \"\" \"\" \"\")"
+ },
+ "scale_cell": {
+  "expect": "the cell of map 1 is scaled by 1% on each axis (see cell(1)); return value is always 0",
+  "note": "Return value is always 0 (molecule_class_info_t::scale_cell never sets it), even on success.",
+  "py": "scale_cell(1, 1.01, 1.01, 1.01)",
+  "scm": "(scale-cell 1 0.99 0.99 0.99)"
+ },
+ "scm_symop_strings_to_space_group": {
+  "expect": "internal C++ helper returning a clipper::Spacegroup; use symmetry-operators->xHM for a usable answer",
+  "scm": "(scm-symop-strings-to-space-group (list \"x,y,z\" \"-x,-y,z\"))"
+ },
+ "scm_to_residue_specs": {
+  "expect": "internal C++ helper converting residue specs to a C++ vector; nothing usable from a script",
+  "scm": "(scm-to-residue-specs (list (list \"A\" 41 \"\")))"
+ },
+ "screendump_image": {
+  "expect": "writes the current graphics view to the image file",
+  "py": "screendump_image(\"view.ppm\")",
+  "scm": "(screendump-image \"view.ppm\")",
+  "skip": "needs the graphics window (reads the OpenGL frame buffer)"
+ },
+ "secondary_structure_restraints_type": {
+  "expect": "returns the secondary structure restraints type (0 = none, 1 = alpha helix, 2 = beta strand)",
+  "py": "secondary_structure_restraints_type()",
+  "scm": "(secondary-structure-restraints-type)"
+ },
+ "select_atom_under_pointer": {
+  "expect": "with a window: [imol, atom-spec] of the atom under the mouse; False when there is none (correct here)",
+  "py": "select_atom_under_pointer()",
+  "scm": "(select-atom-under-pointer-scm)"
+ },
+ "sequence_info": {
+  "expect": "the assigned sequences as [chain-id, sequence] pairs (Scheme: dotted pairs); False when no sequence has been assigned.",
+  "py": "sequence_info(0)",
+  "py_setup": [
+   "assign_sequence_to_best_matching_chain(\"DVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLID\")"
+  ],
+  "scm": "(sequence-info 0)",
+  "scm_setup": [
+   "(assign-sequence-to-best-matching-chain \"DVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLID\")"
+  ]
+ },
+ "sequence_view_old_style": {
+  "expect": "opens the old-style sequence view for molecule 0.",
+  "py": "sequence_view_old_style(0)",
+  "scm": "(sequence-view-old-style 0)",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "set_add_ccp4i_projects_to_file_dialogs": {
+  "expect": "turns off adding CCP4i project directories to the file dialogs (default on)",
+  "py": "set_add_ccp4i_projects_to_file_dialogs(0)",
+  "scm": "(set-add-ccp4i-projects-to-file-dialogs 0)"
+ },
+ "set_atom_attribute": {
+  "expect": "the B-factor of atom A41 CA becomes 55; return value is a status (0 here although it worked)",
+  "py": "set_atom_attribute(0, \"A\", 41, \"\", \" CA \", \"\", \"B\", 55.0)",
+  "scm": "(set-atom-attribute 0 \"A\" 41 \"\" \" CA \" \"\" \"B\" 55.0)"
+ },
+ "set_atom_attributes": {
+  "expect": "occupancy of A43 CA becomes 0.5 and B of A43 CB 60 (one call for many atoms)",
+  "py": "set_atom_attributes([[0, \"A\", 43, \"\", \" CA \", \"\", \"occ\", 0.5], [0, \"A\", 43, \"\", \" CB \", \"\", \"B\", 60.0]])",
+  "scm": "(set-atom-attributes (list (list 0 \"A\" 43 \"\" \" CA \" \"\" \"occ\" 0.5) (list 0 \"A\" 43 \"\" \" CB \" \"\" \"B\" 60.0)))"
+ },
+ "set_atom_string_attribute": {
+  "expect": "the alt conf of A41 CA becomes \"C\" (string attributes: atom-name, alt-conf, element, segid)",
+  "py": "set_atom_string_attribute(0, \"A\", 41, \"\", \" CA \", \"\", \"alt-conf\", \"C\")",
+  "scm": "(set-atom-string-attribute 0 \"A\" 41 \"\" \" CA \" \"\" \"alt-conf\" \"C\")"
+ },
+ "set_browser_interface": {
+  "expect": "sets the command used to open web pages (on macOS \"open\")",
+  "py": "set_browser_interface(\"open\")",
+  "scm": "(set-browser-interface \"open\")"
+ },
+ "set_button_label_for_external_refinement": {
+  "expect": "sets the label of the external-refinement button (seen only in the window)",
+  "py": "set_button_label_for_external_refinement(\"Run Refmac 2\")",
+  "scm": "(set-button-label-for-external-refinement \"Run Refmac 2\")"
+ },
+ "set_coot_listener_socket_state_internal": {
+  "expect": "internal: records whether the listener socket is open (no getter, nothing visible)",
+  "py": "set_coot_listener_socket_state_internal(0)",
+  "scm": "(set-coot-listener-socket-state-internal 0)"
+ },
+ "set_do_GL_lighting": {
+  "expect": "turns OpenGL lighting on (1) or off (0) for solid objects",
+  "py": "set_do_GL_lighting(1)",
+  "scm": "(set-do-GL-lighting 1)",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "set_do_coot_probe_dots_during_refine": {
+  "expect": "turns Coot's own contact dots during refinement on (no getter; seen only in the graphics window)",
+  "py": "set_do_coot_probe_dots_during_refine(1)",
+  "scm": "(set-do-coot-probe-dots-during-refine 1)"
+ },
+ "set_do_probe_dots_on_rotamers_and_chis": {
+  "expect": "turns probe dots during rotamer/chi changes on; the _state getter then returns 1",
+  "py": "set_do_probe_dots_on_rotamers_and_chis(1)",
+  "scm": "(set-do-probe-dots-on-rotamers-and-chis 1)"
+ },
+ "set_do_probe_dots_post_refine": {
+  "expect": "turns probe dots after refinement on; do_probe_dots_post_refine_state() then returns 1",
+  "py": "set_do_probe_dots_post_refine(1)",
+  "scm": "(set-do-probe-dots-post-refine 1)"
+ },
+ "set_go_to_atom_chain_residue_atom_name_no_redraw": {
+  "expect": "returns 1 when the atom is found; with make_the_move_flag 1 the view centres on it",
+  "py": "set_go_to_atom_chain_residue_atom_name_no_redraw(\"A\", 41, \" CA \", 1)",
+  "scm": "(set-go-to-atom-chain-residue-atom-name-no-redraw \"A\" 41 \" CA \" 1)"
+ },
+ "set_go_to_atom_chain_residue_atom_name_strings": {
+  "expect": "should return 1 and centre on SG of Cys B72; use set_go_to_atom_chain_residue_atom_name(\"B\", 72, \" SG \") instead",
+  "note": "Not callable from either scripting language: the arguments are declared gchar* and SWIG has no typemap for gchar, so every string is rejected. Likely a wrapper bug (declare const char*).",
+  "py": "set_go_to_atom_chain_residue_atom_name_strings(\"B\", \"72\", \" SG \")",
+  "scm": "(set-go-to-atom-chain-residue-atom-name-strings \"B\" \"72\" \" SG \")"
+ },
+ "set_go_to_atom_from_atom_spec": {
+  "expect": "returns 1 and centres on the atom given as an atom spec [chain, resno, inscode, atom name, altconf]",
+  "py": "set_go_to_atom_from_atom_spec([\"A\", 42, \"\", \" CA \", \"\"])",
+  "scm": "(set-go-to-atom-from-atom-spec (list \"A\" 42 \"\" \" CA \" \"\"))"
+ },
+ "set_go_to_atom_from_spec": {
+  "expect": "C++-level function taking a coot::atom_spec_t, which scripts cannot build; use set_go_to_atom_from_atom_spec with a list instead",
+  "note": "Exported to both languages but unusable from them; set_go_to_atom_from_atom_spec is the scripting version.",
+  "py": "set_go_to_atom_from_spec([\"A\", 42, \"\", \" CA \", \"\"])",
+  "scm": "(set-go-to-atom-from-spec (list \"A\" 42 \"\" \" CA \" \"\"))",
+  "skip": "takes a C++ coot::atom_spec_t object that cannot be made from Python or Scheme"
+ },
+ "set_imol_refinement_map": {
+  "expect": "sets the map used for refinement; returns the map molecule number, -1 if it is not a map",
+  "py": "set_imol_refinement_map(1)",
+  "scm": "(set-imol-refinement-map 1)"
+ },
+ "set_interactive_probe_dots_molprobity_radius": {
+  "expect": "sets the interactive probe dots radius; interactive_probe_dots_molprobity_radius() returns it",
+  "py": "set_interactive_probe_dots_molprobity_radius(4.0)",
+  "scm": "(set-interactive-probe-dots-molprobity-radius 4.0)"
+ },
+ "set_keep_map_colour_after_refmac": {
+  "expect": "keeps the map colour after Refmac; the _state getter returns 1",
+  "py": "set_keep_map_colour_after_refmac(1)",
+  "scm": "(set-keep-map-colour-after-refmac 1)"
+ },
+ "set_kleywegt_plot_n_diffs": {
+  "expect": "sets how many biggest-difference arrows the Kleywegt plot draws",
+  "py": "set_kleywegt_plot_n_diffs(10)",
+  "scm": "(set-kleywegt-plot-n-diffs 10)"
+ },
+ "set_map_is_difference_map": {
+  "expect": "map 1 is now treated as a difference map (map_is_difference_map(1) -> 1, +/- contours)",
+  "note": "Python accepts True; Scheme needs an integer (#t/#f give 'Wrong type (expecting exact integer)').",
+  "py": "set_map_is_difference_map(1, True)",
+  "scm": "(set-map-is-difference-map 1 1)"
+ },
+ "set_mogul_max_badness": {
+  "expect": "sets the Mogul badness limit; get_mogul_max_badness() returns the new value",
+  "py": "set_mogul_max_badness(3.5)",
+  "scm": "(set-mogul-max-badness 4.5)"
+ },
+ "set_monomer_restraints": {
+  "expect": "replaces the ALA dictionary restraints by the given ones (as returned by monomer_restraints); True on success",
+  "py": "set_monomer_restraints(\"ALA\", r)",
+  "py_setup": [
+   "r = monomer_restraints(\"ALA\")",
+   "r[\"_chem_comp_bond\"] = [b if b[:2] != [\" N  \", \" CA \"] else [b[0], b[1], b[2], 1.50, b[4]] for b in r[\"_chem_comp_bond\"]]"
+  ],
+  "scm": "(set-monomer-restraints \"ALA\" (monomer-restraints \"ALA\"))"
+ },
+ "set_moving_atoms": {
+  "expect": "internal (Ramachandran plot editing): sets phi/psi of the residue being edited in the plot",
+  "py": "set_moving_atoms(-60.0, -45.0)",
+  "scm": "(set-moving-atoms -60.0 -45.0)",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "set_raster3d_atom_radius": {
+  "expect": "sets the atom sphere radius in Raster3D images; takes effect in the next raster3d()/povray() image",
+  "py": "set_raster3d_atom_radius(0.4)",
+  "scm": "(set-raster3d-atom-radius 0.35)"
+ },
+ "set_raster3d_bond_thickness": {
+  "expect": "sets the bond thickness in Raster3D images; takes effect in the next raster3d()/povray() image",
+  "py": "set_raster3d_bond_thickness(0.3)",
+  "scm": "(set-raster3d-bond-thickness 0.25)"
+ },
+ "set_raster3d_bone_thickness": {
+  "expect": "sets the skeleton (bone) thickness in Raster3D images; takes effect in the next raster3d()/povray() image",
+  "py": "set_raster3d_bone_thickness(0.1)",
+  "scm": "(set-raster3d-bone-thickness 0.12)"
+ },
+ "set_raster3d_density_thickness": {
+  "expect": "sets the density-line thickness in Raster3D images; takes effect in the next raster3d()/povray() image",
+  "py": "set_raster3d_density_thickness(0.05)",
+  "scm": "(set-raster3d-density-thickness 0.04)"
+ },
+ "set_raster3d_font_size": {
+  "expect": "sets the label font size (a string) in Raster3D images; takes effect in the next raster3d()/povray() image",
+  "py": "set_raster3d_font_size(\"12\")",
+  "scm": "(set-raster3d-font-size \"14\")"
+ },
+ "set_raster3d_shadows_enabled": {
+  "expect": "sets the shadows on/off in Raster3D images (default on); takes effect in the next raster3d()/povray() image",
+  "py": "set_raster3d_shadows_enabled(0)",
+  "scm": "(set-raster3d-shadows-enabled 1)"
+ },
+ "set_raster3d_water_sphere": {
+  "expect": "sets the waters drawn as spheres in Raster3D images; takes effect in the next raster3d()/povray() image",
+  "py": "set_raster3d_water_sphere(1)",
+  "scm": "(set-raster3d-water-sphere 0)"
+ },
+ "set_refinement_geman_mcclure_alpha_from_text": {
+  "expect": "sets the Geman-McClure alpha from text (the first argument is the combobox position remembered for the dialog)",
+  "py": "set_refinement_geman_mcclure_alpha_from_text(2, \"0.5\")",
+  "scm": "(set-refinement-geman-mcclure-alpha-from-text 2 \"0.5\")"
+ },
+ "set_refinement_lennard_jones_epsilon_from_text": {
+  "expect": "sets the Lennard-Jones epsilon used in refinement from text (no getter)",
+  "py": "set_refinement_lennard_jones_epsilon_from_text(2, \"2.0\")",
+  "scm": "(set-refinement-lennard-jones-epsilon-from-text 2 \"2.0\")"
+ },
+ "set_refinement_overall_weight_from_text": {
+  "expect": "sets the refinement map weight from text; matrix_state() returns the new value",
+  "py": "set_refinement_overall_weight_from_text(\"30\")",
+  "scm": "(set-refinement-overall-weight-from-text \"20\")"
+ },
+ "set_refinement_ramachandran_restraints_weight_from_text": {
+  "expect": "sets the Ramachandran restraints weight from text; refine_ramachandran_restraints_weight() returns it",
+  "py": "set_refinement_ramachandran_restraints_weight_from_text(2, \"5.0\")",
+  "scm": "(set-refinement-ramachandran-restraints-weight-from-text 2 \"5.0\")"
+ },
+ "set_refinement_torsion_weight_from_text": {
+  "expect": "sets the torsion restraints weight used in refinement from text",
+  "py": "set_refinement_torsion_weight_from_text(2, \"5.0\")",
+  "scm": "(set-refinement-torsion-weight-from-text 2 \"5.0\")"
+ },
+ "set_refmac_counter": {
+  "expect": "sets the Refmac run counter of molecule 0, used in the next output file names",
+  "py": "set_refmac_counter(0, 5)",
+  "scm": "(set-refmac-counter 0 5)"
+ },
+ "set_refmac_molecule": {
+  "expect": "chooses molecule 0 for Refmac; returns 0 (option-menu callback)",
+  "note": "Only stores a setting for the next Refmac run; does not run Refmac.",
+  "py": "set_refmac_molecule(0)",
+  "scm": "(set-refmac-molecule 0)"
+ },
+ "set_refmac_ncycles": {
+  "expect": "sets the number of Refmac cycles",
+  "note": "Only stores a setting for the next Refmac run; does not run Refmac.",
+  "py": "set_refmac_ncycles(10)",
+  "scm": "(set-refmac-ncycles 3)"
+ },
+ "set_refmac_phase_input": {
+  "expect": "sets the phase input mode (0 none, 1 PHI/FOM, 2 HL, 3 SAD)",
+  "note": "Only stores a setting for the next Refmac run; does not run Refmac.",
+  "py": "set_refmac_phase_input(1)",
+  "scm": "(set-refmac-phase-input 2)"
+ },
+ "set_refmac_refinement_method": {
+  "expect": "sets the method (0 restrained, 1 rigid body, 2 restrained + TLS)",
+  "note": "Only stores a setting for the next Refmac run; does not run Refmac.",
+  "py": "set_refmac_refinement_method(1)",
+  "scm": "(set-refmac-refinement-method 2)"
+ },
+ "set_refmac_use_intensities": {
+  "expect": "sets the Refmac intensities option (read back with refmac_use_intensities_state())",
+  "note": "Only stores a setting for the next Refmac run; does not run Refmac.",
+  "py": "set_refmac_use_intensities(1)",
+  "scm": "(set-refmac-use-intensities 0)"
+ },
+ "set_refmac_use_ncs": {
+  "expect": "sets the Refmac ncs option (read back with refmac_use_ncs_state())",
+  "note": "Only stores a setting for the next Refmac run; does not run Refmac.",
+  "py": "set_refmac_use_ncs(0)",
+  "scm": "(set-refmac-use-ncs 1)"
+ },
+ "set_refmac_use_sad": {
+  "expect": "sets the Refmac sad option (read back with refmac_use_sad_state())",
+  "note": "Only stores a setting for the next Refmac run; does not run Refmac.",
+  "py": "set_refmac_use_sad(1)",
+  "scm": "(set-refmac-use-sad 0)"
+ },
+ "set_refmac_use_tls": {
+  "expect": "sets the Refmac tls option (read back with refmac_use_tls_state())",
+  "note": "Only stores a setting for the next Refmac run; does not run Refmac.",
+  "py": "set_refmac_use_tls(0)",
+  "scm": "(set-refmac-use-tls 1)"
+ },
+ "set_refmac_use_twin": {
+  "expect": "sets the Refmac twin option (read back with refmac_use_twin_state())",
+  "note": "Only stores a setting for the next Refmac run; does not run Refmac.",
+  "py": "set_refmac_use_twin(1)",
+  "scm": "(set-refmac-use-twin 0)"
+ },
+ "set_refmac_used_mtz_file": {
+  "expect": "chooses whether Refmac data come from an MTZ file (1) or from a map's stored parameters (0)",
+  "note": "Only stores a setting for the next Refmac run; does not run Refmac.",
+  "py": "set_refmac_used_mtz_file(0)",
+  "scm": "(set-refmac-used-mtz-file 0)"
+ },
+ "set_remote_control_port": {
+  "expect": "sets the remote-control port number (does not open a socket by itself)",
+  "py": "set_remote_control_port(5001)",
+  "scm": "(set-remote-control-port 5001)"
+ },
+ "set_renderer_show_atoms": {
+  "expect": "sets the atoms drawn as spheres in Raster3D/POV-Ray images; takes effect in the next raster3d()/povray() image",
+  "py": "set_renderer_show_atoms(0)",
+  "scm": "(set-renderer-show-atoms 1)"
+ },
+ "set_residue_to_rotamer_name": {
+  "expect": "returns 1 and moves the side chain of GLU A41 to the tp10 rotamer; 0 (nothing moved) for a name the residue type does not have.",
+  "note": "Names must match the Richardson table exactly, including a trailing space some names carry: \"mt-10\" returns 0, \"mt-10 \" returns 1 (upstream table quirk).",
+  "py": "set_residue_to_rotamer_name(0, \"A\", 41, \"\", \"\", \"tp10\")",
+  "scm": "(set-residue-to-rotamer-name 0 \"A\" 41 \"\" \"\" \"tp10\")"
+ },
+ "set_residue_to_rotamer_number": {
+  "expect": "returns 1 and moves the side chain of A43 to rotamer number 1 (numbers start at 0, most likely first).",
+  "py": "set_residue_to_rotamer_number(0, \"A\", 43, \"\", \"\", 1)",
+  "scm": "(set-residue-to-rotamer-number 0 \"A\" 43 \"\" \"\" 1)"
+ },
+ "set_rotation_centre_size_from_widget": {
+  "expect": "internal callback of the rotation-centre size entry; not usable from scripts (its gchar* argument is not wrapped); use set_rotation_centre_size(0.5) instead.",
+  "py": "set_rotation_centre_size_from_widget(\"0.5\")",
+  "scm": "(set-rotation-centre-size-from-widget \"0.5\")",
+  "skip": "not callable from scripting: the gchar* argument type is not wrapped in either language (GUI callback)"
+ },
+ "set_run_state_file_status": {
+  "expect": "0 = never run 0-coot.state.py/.scm at start, 1 = ask, 2 = run without asking; nothing visible changes at once.",
+  "py": "set_run_state_file_status(0)",
+  "scm": "(set-run-state-file-status 0)"
+ },
+ "set_show_chi_angle_bond": {
+  "expect": "sets how the rotating chi bond is highlighted while editing chi angles; returns 0 (fixed)",
+  "py": "set_show_chi_angle_bond(1)",
+  "scm": "(set-show-chi-angle-bond 2)"
+ },
+ "set_socket_python_string_waiting": {
+  "expect": "internal (remote control): queues a Python command for the main loop to run",
+  "py": "set_socket_python_string_waiting(\"set_rotation_centre(4, 5, 6)\")",
+  "scm": "(set-socket-python-string-waiting \"set_rotation_centre(4, 5, 6)\")"
+ },
+ "set_socket_string_waiting": {
+  "expect": "internal (remote control): queues a Scheme command for the main loop to run",
+  "note": "the queued command did not run during the headless try (the main-loop handler belongs to the socket listener)",
+  "py": "set_socket_string_waiting(\"(set-rotation-centre 1 2 3)\")",
+  "scm": "(set-socket-string-waiting \"(set-rotation-centre 1 2 3)\")",
+  "skip": "waits for Coot's socket listener (no answer without one)"
+ },
+ "set_space_group": {
+  "expect": "returns 1 and the model's space group becomes P 1.",
+  "py": "set_space_group(0, \"P 1\")",
+  "scm": "(set-space-group 0 \"P 1\")"
+ },
+ "set_stored_refmac_file_mtz_filename": {
+  "expect": "stores the MTZ file to use with molecule 0 in Refmac runs",
+  "note": "Only stores a setting for the next Refmac run; does not run Refmac.",
+  "py": "set_stored_refmac_file_mtz_filename(0, \"rnasa-1.8-all_refmac1.mtz\")",
+  "scm": "(set-stored-refmac-file-mtz-filename 0 \"rnasa-1.8-all_refmac1.mtz\")"
+ },
+ "set_user_defined_colours": {
+  "expect": "defines user colour indices (index, [r, g, b]) to be used by set_user_defined_atom_colour_by_selection",
+  "note": "Items must be TUPLES (index, [r, g, b]); lists are silently ignored by the C++ (PyTuple_Check).",
+  "py": "set_user_defined_colours_py([(30, [1.0, 0.0, 0.0]), (31, [0.0, 0.8, 0.2])])"
+ },
+ "setup_multi_residue_torsion": {
+  "expect": "starts the pick mode / dialog for choosing the residues of a multi-residue torsion edit.",
+  "py": "setup_multi_residue_torsion()",
+  "scm": "(setup-multi-residue-torsion)",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "show_feats": {
+  "expect": "returns True and draws the RDKit chemical features (donors, acceptors, rings) of the residue in the graphics; False if the residue type has no dictionary",
+  "py": "show_feats(imol_nag, \"A\", 1, \"\")",
+  "py_setup": [
+   "read_cif_dictionary(\"NAG.cif\")",
+   "imol_nag = read_pdb(\"nag_only.pdb\")"
+  ],
+  "scm": "(show-feats imol-nag \"A\" 1 \"\")",
+  "scm_setup": [
+   "(read-cif-dictionary \"NAG.cif\")",
+   "(define imol-nag (read-pdb \"nag_only.pdb\"))"
+  ]
+ },
+ "show_fix_nomenclature_errors_gui": {
+  "expect": "shows a dialog listing nomenclature errors to fix",
+  "skip": "needs a C++ vector of (string, residue_spec_t) pairs and opens a dialog; not callable from scripts"
+ },
+ "show_go_to_residue_keyboarding_mode_window": {
+  "expect": "opens the small 'go to residue' entry window used by keyboard navigation.",
+  "py": "show_go_to_residue_keyboarding_mode_window()",
+  "scm": "(show-go-to-residue-keyboarding-mode-window)",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "show_hide_preferences_tabs": {
+  "expect": "switches the Preferences dialog tab (toggle-button callback)",
+  "skip": "needs a GTK widget made by the GUI (not something a script normally has); internal GUI callback"
+ },
+ "show_hole_probe_radius_graph": {
+  "expect": "draws the HOLE probe-radius graph window from a path (C++ list of (position, radius))",
+  "skip": "takes a C++ std::vector of (Coord_orth, radius) not constructible from scripts and opens a window; use hole() instead"
+ },
+ "show_hole_probe_radius_graph_basic": {
+  "expect": "draws the HOLE probe-radius graph window from a path (C++ list of (position, radius))",
+  "skip": "takes a C++ std::vector of (Coord_orth, radius) not constructible from scripts and opens a window; use hole() instead"
+ },
+ "show_hole_probe_radius_graph_goocanvas": {
+  "expect": "draws the HOLE probe-radius graph window from a path (C++ list of (position, radius))",
+  "skip": "takes a C++ std::vector of (Coord_orth, radius) not constructible from scripts and opens a window; use hole() instead"
+ },
+ "show_preferences": {
+  "expect": "opens the Preferences dialog",
+  "py": "show_preferences()",
+  "scm": "(show-preferences)",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "show_set_undo_molecule_chooser": {
+  "expect": "opens the dialog to choose the molecule for Undo",
+  "py": "show_set_undo_molecule_chooser()",
+  "scm": "(show-set-undo-molecule-chooser)",
+  "skip": "opens a dialog; needs the graphics window (stops Coot without a screen)"
+ },
+ "side_chain_flip_180_intermediate_atoms": {
+  "expect": "returns 1 when intermediate (moving) atoms exist and the active residue's last chi was flipped; 0 when no refinement is in progress",
+  "note": "Works only while a refinement's intermediate atoms exist (run in the same step as the refinement in a headless test).",
+  "py": "side_chain_flip_180_intermediate_atoms()",
+  "py_setup": [
+   "refine_zone(0, \"A\", 41, 41, \"\")"
+  ],
+  "scm": "(side-chain-flip-180-intermediate-atoms)",
+  "scm_setup": [
+   "(refine-zone 0 \"A\" 41 41 \"\")"
+  ]
+ },
+ "single_model_view_next_model_number": {
+  "expect": "shows only the next model and returns its number (1); 0 for a single-model molecule.",
+  "py": "single_model_view_next_model_number(imol_m)",
+  "py_setup": [
+   "L = [l for l in open(\"tutorial-modern.pdb\") if l.startswith(\"ATOM\")][:60]",
+   "open(\"two-models.pdb\", \"w\").write(\"MODEL        1\\n\" + \"\".join(L) + \"ENDMDL\\nMODEL        2\\n\" + \"\".join(L) + \"ENDMDL\\nEND\\n\")",
+   "imol_m = read_pdb(\"two-models.pdb\")"
+  ],
+  "scm": "(single-model-view-next-model-number imol-m)",
+  "scm_setup": [
+   "(use-modules (ice-9 rdelim))",
+   "(call-with-output-file \"two-models.pdb\" (lambda (p) (let ((L (call-with-input-file \"tutorial-modern.pdb\" (lambda (i) (let loop ((acc '())) (let ((l (read-line i))) (if (or (eof-object? l) (= (length acc) 60)) (reverse acc) (loop (if (string-prefix? \"ATOM\" l) (cons l acc) acc))))))))) (for-each (lambda (m) (format p \"MODEL        ~a~%\" m) (for-each (lambda (l) (display l p) (newline p)) L) (display \"ENDMDL\\n\" p)) '(1 2)) (display \"END\\n\" p))))",
+   "(define imol-m (read-pdb \"two-models.pdb\"))"
+  ]
+ },
+ "single_model_view_prev_model_number": {
+  "expect": "shows only the previous model (wrapping round: 1 -> 2) and returns its number; 0 for a single-model molecule.",
+  "py": "single_model_view_prev_model_number(imol_m)",
+  "py_setup": [
+   "L = [l for l in open(\"tutorial-modern.pdb\") if l.startswith(\"ATOM\")][:60]",
+   "open(\"two-models.pdb\", \"w\").write(\"MODEL        1\\n\" + \"\".join(L) + \"ENDMDL\\nMODEL        2\\n\" + \"\".join(L) + \"ENDMDL\\nEND\\n\")",
+   "imol_m = read_pdb(\"two-models.pdb\")",
+   "single_model_view_next_model_number(imol_m)"
+  ],
+  "scm": "(single-model-view-prev-model-number imol-m)",
+  "scm_setup": [
+   "(use-modules (ice-9 rdelim))",
+   "(call-with-output-file \"two-models.pdb\" (lambda (p) (let ((L (call-with-input-file \"tutorial-modern.pdb\" (lambda (i) (let loop ((acc '())) (let ((l (read-line i))) (if (or (eof-object? l) (= (length acc) 60)) (reverse acc) (loop (if (string-prefix? \"ATOM\" l) (cons l acc) acc))))))))) (for-each (lambda (m) (format p \"MODEL        ~a~%\" m) (for-each (lambda (l) (display l p) (newline p)) L) (display \"ENDMDL\\n\" p)) '(1 2)) (display \"END\\n\" p))))",
+   "(define imol-m (read-pdb \"two-models.pdb\"))",
+   "(single-model-view-next-model-number imol-m)"
+  ]
+ },
+ "single_model_view_this_model_number": {
+  "expect": "the model number shown in single-model view (1 after one 'next'); 0 when all models are shown or the molecule has one model.",
+  "py": "single_model_view_this_model_number(imol_m)",
+  "py_setup": [
+   "L = [l for l in open(\"tutorial-modern.pdb\") if l.startswith(\"ATOM\")][:60]",
+   "open(\"two-models.pdb\", \"w\").write(\"MODEL        1\\n\" + \"\".join(L) + \"ENDMDL\\nMODEL        2\\n\" + \"\".join(L) + \"ENDMDL\\nEND\\n\")",
+   "imol_m = read_pdb(\"two-models.pdb\")",
+   "single_model_view_next_model_number(imol_m)"
+  ],
+  "scm": "(single-model-view-this-model-number imol-m)",
+  "scm_setup": [
+   "(use-modules (ice-9 rdelim))",
+   "(call-with-output-file \"two-models.pdb\" (lambda (p) (let ((L (call-with-input-file \"tutorial-modern.pdb\" (lambda (i) (let loop ((acc '())) (let ((l (read-line i))) (if (or (eof-object? l) (= (length acc) 60)) (reverse acc) (loop (if (string-prefix? \"ATOM\" l) (cons l acc) acc))))))))) (for-each (lambda (m) (format p \"MODEL        ~a~%\" m) (for-each (lambda (l) (display l p) (newline p)) L) (display \"ENDMDL\\n\" p)) '(1 2)) (display \"END\\n\" p))))",
+   "(define imol-m (read-pdb \"two-models.pdb\"))",
+   "(single-model-view-next-model-number imol-m)"
+  ]
+ },
+ "skeletonize_map": {
+  "expect": "computes the skeleton of map 1 (drawn in the graphics); always returns 0.",
+  "py": "skeletonize_map(1, 0)",
+  "scm": "(skeletonize-map 1 0)"
+ },
+ "smooth_scroll_do_zoom": {
+  "expect": "0: the smooth-scroll zoom setting is off by default (state query).",
+  "py": "smooth_scroll_do_zoom()",
+  "scm": "(smooth-scroll-do-zoom)"
+ },
+ "spherical_density_overlap": {
+  "expect": "experimental: overlap of model 0 (as spheres) with map 1 around the origin (hard-coded centre)",
+  "scm": "(spherical-density-overlap 0 1)",
+  "skip": "developer test: computes structure factors for the whole model and writes map-fragment-at-origin.map; did not finish in 100 s"
+ },
+ "spin_search": {
+  "expect": "spins CG/CD/OE1/OE2 of GLU A41 around the CA-CB bond to the best fit in map 1; the residue's coordinates change.",
+  "py": "spin_search(1, 0, \"A\", 41, \"\", [\" CA \", \" CB \"], [\" CG \", \" CD \", \" OE1\", \" OE2\"])",
+  "scm": "(spin-search 1 0 \"A\" 41 \"\" (list \" CA \" \" CB \") (list \" CG \" \" CD \" \" OE1\" \" OE2\"))"
+ },
+ "spin_search_by_atom_vectors": {
+  "expect": "internal C++ helper of spin_search, not callable from scripts (std::pair argument not wrapped); use spin_search(...) with the same arguments.",
+  "py": "spin_search_by_atom_vectors(1, 0, \"A\", 41, \"\", [\" CA \", \" CB \"], [\" CG \", \" CD \"])",
+  "scm": "(spin-search-by-atom-vectors 1 0 \"A\" 41 \"\" (list \" CA \" \" CB \") (list \" CG \" \" CD \"))",
+  "skip": "not callable from scripting: std::pair/std::vector arguments are not wrapped in either language"
+ },
+ "sprout_hydrogens": {
+  "expect": "returns 1 and adds the dictionary's hydrogens to the residue (needs a dictionary; the residue must have no hydrogens yet)",
+  "note": "On a protein residue (0 \"A\" 41) and on a residue that already has hydrogens it returns 0 (RDKit add_hydrogens refuses ligands with some H; the info_dialog message is invisible headless).",
+  "py": "sprout_hydrogens(imol_nag, \"A\", 1, \"\")",
+  "py_setup": [
+   "read_cif_dictionary(\"NAG.cif\")",
+   "imol_nag = read_pdb(\"nag_only.pdb\")",
+   "delete_hydrogens(imol_nag)"
+  ],
+  "scm": "(sprout-hydrogens imol-nag \"A\" 1 \"\")",
+  "scm_setup": [
+   "(read-cif-dictionary \"NAG.cif\")",
+   "(define imol-nag (read-pdb \"nag_only.pdb\"))",
+   "(delete-hydrogens imol-nag)"
+  ]
+ },
+ "start_graphics_interface": {
+  "expect": "opens the main window when Coot was started without graphics",
+  "py": "start_graphics_interface()",
+  "scm": "(start-graphics-interface)",
+  "skip": "starts the GTK main loop (blocks; for scripts run with --no-graphics that want the window); no answer in 60 s"
+ },
+ "stop_curl_download": {
+  "expect": "asks a running download to that file to stop; no effect when none is running.",
+  "py": "stop_curl_download(\"x.pdb\")",
+  "scm": "(stop-curl-download \"x.pdb\")"
+ },
+ "store_delete_item_widget_position": {
+  "expect": "remembers the position of the open Delete dialog",
+  "py": "store_delete_item_widget_position()",
+  "scm": "(store-delete-item-widget-position)",
+  "skip": "needs the Delete dialog open (stops Coot without a screen)"
+ },
+ "string_member": {
+  "expect": "returns 1 when the string is in the list, 0 when not",
+  "py": "string_member(\"b\", [\"a\", \"b\", \"c\"])",
+  "scm": "(string-member \"b\" (list \"a\" \"b\" \"c\"))"
+ },
+ "suck_model_fit_dialog": {
+  "expect": "reparents the Model/Fit/Refine dialog into the main window; always returns 0",
+  "py": "suck_model_fit_dialog()",
+  "scm": "(suck-model-fit-dialog)",
+  "skip": "needs the graphics window (moves the Model/Fit/Refine dialog into the main window); headless it does nothing"
+ },
+ "suck_model_fit_dialog_bl": {
+  "expect": "as suck_model_fit_dialog, in a detachable handle box; always returns 0",
+  "py": "suck_model_fit_dialog_bl()",
+  "scm": "(suck-model-fit-dialog-bl)",
+  "skip": "needs the graphics window; headless it does nothing"
+ },
+ "superpose_with_atom_selection": {
+  "expect": "returns the molecule number of the superposed copy (move flag 1 = copy here, despite the doc's wording); -1 on failure.",
+  "py": "superpose_with_atom_selection(0, imol2, \"//A/10-60\", \"//B/10-60\", 1)",
+  "py_setup": [
+   "imol2 = read_pdb(\"tutorial-modern.pdb\")"
+  ],
+  "scm": "(superpose-with-atom-selection 0 imol2 \"//A/10-60\" \"//B/10-60\" 1)",
+  "scm_setup": [
+   "(define imol2 (read-pdb \"tutorial-modern.pdb\"))"
+  ]
+ },
+ "symbol_value_from_record": {
+  "expect": "the value of the named field of a Guile record (helper of the PISA code). (Scheme only.)",
+  "scm": "(symbol-value-from-record (mk \"41\" \"\") \"seq-num\")",
+  "scm_setup": [
+   "(define mk (record-constructor (make-record-type 'residue-rec '(seq-num ins-code))))"
+  ]
+ },
+ "symmetry_operators_to_xHM": {
+  "expect": "returns the Hermann-Mauguin symbol of the space group made from the symmetry operator strings; False if they do not form a group",
+  "py": "symmetry_operators_to_xHM(symmetry_operators(0))",
+  "scm": "(symmetry-operators->xHM (list \"x,y,z\" \"-x+1/2,-y,z+1/2\" \"-x,y+1/2,-z+1/2\" \"x+1/2,-y+1/2,-z\"))"
+ },
+ "test_function": {
+  "expect": "developer test hook; returns False when its hard-coded test files are absent",
+  "note": "Developer test function: Python version creates an empty molecule as a side effect. Not for users.",
+  "py": "test_function(0, 1)",
+  "scm": "(test-function 0 1)"
+ },
+ "test_internal": {
+  "expect": "runs Coot's built-in developer tests; False here because they need the developer's test data (greg-data), which is not shipped",
+  "py": "test_internal()",
+  "scm": "(test-internal)"
+ },
+ "test_mol_triangles": {
+  "expect": "developer test: returns #f; it only draws a ribbon when Coot is built with MoleculesToTriangles (not in this build). (Scheme only.)",
+  "scm": "(test-mol-triangles-scm 0 0)"
+ },
+ "text_index_near_position": {
+  "expect": "returns the index of the closest text label within r A of the point, -1 if none",
+  "py": "text_index_near_position(47.0, 10.0, 17.0, 2.0)",
+  "py_setup": [
+   "place_text(\"Glu A41\", 47.1, 10.6, 17.4, 1)"
+  ],
+  "scm": "(text-index-near-position 47.0 10.0 17.0 2.0)",
+  "scm_setup": [
+   "(place-text \"Glu A41\" 47.1 10.6 17.4 1)"
+  ]
+ },
+ "text_png_as_string": {
+  "expect": "returns a PNG image (as a string) of the text with the given font, size and colours",
+  "note": "Returns the PNG data as a (binary) string; the example shows only its length.",
+  "py": "len(text_png_as_string({\"text\": \"Coot\", \"font-size\": 20, \"fg-colour\": \"#202080\"}))"
+ },
+ "transform_map_raw": {
+  "expect": "returns the number of a new map: a box of the given half-size around the point, transformed by the rotation/translation, in the given cell and space group",
+  "py": "transform_map_raw(1, 1,0,0, 0,1,0, 0,0,1, 0,0,0, 47.1,10.6,17.4, 10.0, \"P 21 21 21\", 64.897, 78.323, 38.792, 90, 90, 90)",
+  "scm": "(transform-map-raw 1 1 0 0 0 1 0 0 0 1 0 0 0 47.1 10.6 17.4 10.0 \"P 21 21 21\" 64.897 78.323 38.792 90 90 90)"
+ },
+ "try_set_draw_baton": {
+  "expect": "switches baton (CA-trace building) drawing on",
+  "py": "try_set_draw_baton(1)",
+  "scm": "(try-set-draw-baton 1)",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "undo_symmetry_view": {
+  "expect": "translates the view back from a symmetry copy to the main molecule; returns 0.",
+  "note": "Even without a previous symmetry view the centre is moved (29.6 A, to the nearest point of the main molecule's cell origin?); harmless but surprising.",
+  "py": "undo_symmetry_view()",
+  "scm": "(undo-symmetry-view)"
+ },
+ "unskeletonize_map": {
+  "expect": "hides the skeleton of map 1 and returns the map molecule number (1).",
+  "py": "unskeletonize_map(1)",
+  "py_setup": [
+   "skeletonize_map(1, 0)"
+  ],
+  "scm": "(unskeletonize-map 1)",
+  "scm_setup": [
+   "(skeletonize-map 1 0)"
+  ]
+ },
+ "update_restraints_using_mogul": {
+  "expect": "returns 1 when the monomer restraints for the residue type were updated from the Mogul output file",
+  "note": "the example file is a hand-written 2-line Mogul CSV; this changes the in-memory GLU dictionary",
+  "py": "update_restraints_using_mogul(0, \"A\", 41, \"\", \"GLU\", \"mogul.out\")",
+  "py_setup": [
+   "open(\"mogul.out\", \"w\").write(\"BOND,1 2,1.46,500,1.459,1.459,0.012,0.08,0,1.40,1.52,0.01,12\\nANGLE,1 2 3,111.0,300,110.5,110.6,2.0,0.25,0,100,120,1,20\\n\")"
+  ],
+  "scm": "(update-restraints-using-mogul 0 \"A\" 41 \"\" \"GLU\" \"mogul.out\")",
+  "scm_setup": [
+   "(call-with-output-file \"mogul.out\" (lambda (port) (display \"BOND,1 2,1.46,500,1.459,1.459,0.012,0.08,0,1.40,1.52,0.01,12\\nANGLE,1 2 3,111.0,300,110.5,110.6,2.0,0.25,0,100,120,1,20\\n\" port)))"
+  ]
+ },
+ "use_unimodal_ring_torsion_restraints_for_residue": {
+  "expect": "replaces the ring torsions of the NAG dictionary by the given single-minimum torsions (Python only); monomer_restraints('NAG') shows ring-torsion-N entries",
+  "note": "the torsion value must be a Python float (-55.0, not -55)",
+  "py": "use_unimodal_ring_torsion_restraints_for_residue(\"NAG\", [[\" C1 \", \" C2 \", \" C3 \", \" C4 \", -55.0], [\" C2 \", \" C3 \", \" C4 \", \" C5 \", 55.0]])"
+ },
+ "user_defined_click": {
+  "expect": "the function is called with the clicked atom specs after n_clicks clicks; nothing happens until atoms are clicked",
+  "note": "Only arming verified headless; the callback itself needs clicks in the graphics window.",
+  "py": "user_defined_click(1, lambda *args: print(\"clicked\", args))",
+  "scm": "(user-defined-click 1 (lambda args (display args)))"
+ },
+ "valid_labels": {
+  "expect": "returns 1 when the F and phase columns exist in the MTZ file, 0 otherwise",
+  "py": "valid_labels(\"rnasa-1.8-all_refmac1.mtz\", \"FWT\", \"PHWT\", \"\", 0)",
+  "scm": "(valid-labels \"rnasa-1.8-all_refmac1.mtz\" \"FWT\" \"PHWT\" \"\" 0)"
+ },
+ "view_description": {
+  "expect": "the description of view 0; False if the view has none or does not exist.",
+  "py": "view_description(0)",
+  "py_setup": [
+   "add_view_here(\"v0\")",
+   "add_view_description(0, \"start view\")"
+  ],
+  "scm": "(view-description 0)",
+  "scm_setup": [
+   "(add-view-here \"v0\")",
+   "(add-view-description 0 \"start view\")"
+  ]
+ },
+ "view_name": {
+  "expect": "the name of view 1; False for a view number that does not exist.",
+  "py": "view_name(1)",
+  "py_setup": [
+   "add_view_here(\"first\")",
+   "add_spin_view(\"spin\", 10, 90.0)"
+  ],
+  "scm": "(view-name 1)",
+  "scm_setup": [
+   "(add-view-here \"first\")",
+   "(add-spin-view \"spin\" 10 90.0)"
+  ]
+ },
+ "water_chain": {
+  "expect": "the chain id of a chain that holds only waters; False when there is none (as in both test models).",
+  "py": "water_chain(0)",
+  "scm": "(water-chain 0)"
+ },
+ "water_chain_from_shelx_ins": {
+  "expect": "the chain id that waters of the SHELX molecule go into; False if no chain or not a SHELX molecule.",
+  "note": "Returns 'B' although the model has no waters (B is a protein chain); it seems to report the last chain.",
+  "py": "water_chain_from_shelx_ins(imol_s)",
+  "py_setup": [
+   "write_shelx_ins_file(0, \"tut.ins\")",
+   "imol_s = read_shelx_ins_file(\"tut.ins\", 0)"
+  ],
+  "scm": "(water-chain-from-shelx-ins imol-s)",
+  "scm_setup": [
+   "(write-shelx-ins-file 0 \"tut.ins\")",
+   "(define imol-s (read-shelx-ins-file \"tut.ins\" 0))"
+  ]
+ },
+ "watson_crick_pair": {
+  "expect": "should return the new molecule number holding the base-paired partner of A2",
+  "note": "In Coot 0.9.8.96: watson_crick_pair never sets its return value (c-interface-nucleotides.cc:294), so it returns -1 even when the partner molecule is created",
+  "py": "watson_crick_pair(imol_ss, \"A\", 2)",
+  "py_setup": [
+   "imol_ss = ideal_nucleic_acid(\"RNA\", \"A\", 1, \"GAGCUC\")"
+  ],
+  "scm": "(watson-crick-pair imol-ss \"A\" 2)",
+  "scm_setup": [
+   "(define imol-ss (ideal-nucleic-acid \"RNA\" \"A\" 1 \"GAGCUC\"))"
+  ]
+ },
+ "watson_crick_pair_for_residue_range": {
+  "expect": "returns 1 and adds a new chain with Watson-Crick partners for the residue range",
+  "py": "watson_crick_pair_for_residue_range(imol_ss, \"A\", 1, 6)",
+  "py_setup": [
+   "imol_ss = ideal_nucleic_acid(\"RNA\", \"A\", 1, \"GAGCUC\")"
+  ],
+  "scm": "(watson-crick-pair-for-residue-range imol-ss \"A\" 1 3)",
+  "scm_setup": [
+   "(define imol-ss (ideal-nucleic-acid \"RNA\" \"A\" 1 \"GAGCUC\"))"
+  ]
+ },
+ "wrapped_create_find_waters_dialog": {
+  "expect": "opens the Find Waters dialog (Calculate > Other Modelling Tools > Find Waters...).",
+  "py": "wrapped_create_find_waters_dialog()",
+  "scm": "(wrapped-create-find-waters-dialog)",
+  "skip": "needs the graphics window (stops Coot without a screen)"
+ },
+ "wrapped_curl_easy_perform": {
+  "expect": "internal libcurl callback (takes raw C pointers); not for scripts.",
+  "py": "wrapped_curl_easy_perform(None)",
+  "scm": "(wrapped-curl-easy-perform #f)",
+  "skip": "internal libcurl callback with raw pointer arguments: not usable from scripts (Python call with None can crash Coot)"
+ },
+ "write_ccp4mg_picture_description": {
+  "expect": "writes a CCP4mg picture definition file of the current view and molecules",
+  "py": "write_ccp4mg_picture_description(\"picture.mgpic.py\")",
+  "scm": "(write-ccp4mg-picture-description \"picture.mgpic.py\")"
+ },
+ "write_chain_to_pdb_file": {
+  "expect": "returns 0 and writes only that chain to the file (-1 on error)",
+  "py": "write_chain_to_pdb_file(0, \"A\", \"chain-a.pdb\")",
+  "scm": "(write-chain-to-pdb-file 0 \"B\" \"chain-b.pdb\")"
+ },
+ "write_cif_file": {
+  "expect": "returns 0 and writes molecule 0 as an mmCIF file",
+  "note": "Fixed in coot0 build 31: in Coot 0.9.8.96 each call on the same molecule wrote the model once more (140, 275, 410 kB; reading the third file gave three copies of every atom). File > Save Coordinates was not affected.",
+  "py": "write_cif_file(0, \"out.cif\")",
+  "scm": "(write-cif-file 0 \"out.cif\")"
+ },
+ "write_connectivity": {
+  "expect": "returns 1 and writes a CONECT-style connectivity file for NAG; 0 when the dictionary for that type is not loaded yet (it is not loaded on demand).",
+  "py": "write_connectivity(\"NAG\", \"nag-connect.txt\")",
+  "py_setup": [
+   "handle_cif_dictionary(\"NAG.cif\")"
+  ],
+  "scm": "(write-connectivity \"NAG\" \"nag-connect.txt\")",
+  "scm_setup": [
+   "(handle-cif-dictionary \"NAG.cif\")"
+  ]
+ },
+ "write_coot_curl_data": {
+  "expect": "internal libcurl callback (takes raw C pointers); not for scripts.",
+  "py": "write_coot_curl_data(None, 1, 1, None)",
+  "scm": "(write-coot-curl-data #f 1 1 #f)",
+  "skip": "internal libcurl callback with raw pointer arguments: not usable from scripts (Python call with None can crash Coot)"
+ },
+ "write_coot_curl_data_to_file": {
+  "expect": "internal libcurl callback (takes raw C pointers); not for scripts.",
+  "note": "Python call with None arguments crashes Coot (NULL FILE pointer).",
+  "py": "write_coot_curl_data_to_file(None, 1, 1, None)",
+  "scm": "(write-coot-curl-data-to-file #f 1 1 #f)",
+  "skip": "internal libcurl callback with raw pointer arguments: not usable from scripts (Python call with None can crash Coot)"
+ },
+ "write_pdb_file": {
+  "expect": "returns 0 and writes molecule 0 as a PDB file (1 on error)",
+  "py": "write_pdb_file(0, \"out.pdb\")",
+  "scm": "(write-pdb-file 0 \"out.pdb\")"
+ },
+ "write_residue_range_to_pdb_file": {
+  "expect": "returns 0 and writes residues A41-A45 to the file",
+  "py": "write_residue_range_to_pdb_file(0, \"A\", 41, 45, \"a41-45.pdb\")",
+  "scm": "(write-residue-range-to-pdb-file 0 \"A\" 41 45 \"a41-45.pdb\")"
+ },
+ "write_shelx_ins_file": {
+  "expect": "returns 1 and writes molecule 0 as a SHELXL .ins file.",
+  "py": "write_shelx_ins_file(0, \"tut.ins\")",
+  "scm": "(write-shelx-ins-file 0 \"tut.ins\")"
+ }
+}

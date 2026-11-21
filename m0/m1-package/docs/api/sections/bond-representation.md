@@ -16,10 +16,10 @@ Arguments: imol (a whole number), chain_id (text), resno_start (a whole number),
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `additional_representation_by_attributes(0, "A", 41, 45, "", 1, 1, 1.0, 1)` | ran, returned `0` |
-| Scheme | `(additional-representation-by-attributes 0 "A" 41 45 "" 1 1 1.0 1)` | ran, returned `1` |
+| Python | `additional_representation_by_attributes(0, "A", 41, 45, "", 1, 1, 8.0, 0)` | not run: needs the graphics window (stops Coot without a screen) |
+| Scheme | `(additional-representation-by-attributes 0 "A" 41 45 "" 2 1 8.0 0)` | not run: needs the graphics window (stops Coot without a screen) |
 
-Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
+Example written and checked by hand on the test data. Expected: returns the number of the new additional representation of residues A41-45 (e.g. ball-and-stick).
 
 ### additional_representation_by_string
 
@@ -32,8 +32,8 @@ Arguments: imol (a whole number), atom_selection (text), representation_type (a 
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `additional_representation_by_string(0, "//A/41-45", 1, 1, 1.0, 1)` | ran, returned `2` |
-| Scheme | `(additional-representation-by-string 0 "//A/41-45" 1 1 1.0 1)` | ran, returned `3` |
+| Python | `additional_representation_by_string(0, "//A/41-45", 1, 1, 1.0, 1)` | ran, returned `0` |
+| Scheme | `(additional-representation-by-string 0 "//A/41-45" 1 1 1.0 1)` | ran, returned `1` |
 
 Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
@@ -48,8 +48,8 @@ Also available in Scheme as `additional-representation-info-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `additional_representation_info(0)` | ran, returned `[[0, 'Sticks: A 41-45', True, 1.0], [1, 'Sticks: A 41-45', True, 1.0], [2, 'Sticks: //A/41-45', True, 1.0], [3, 'Sticks: ...` |
-| Scheme | `(additional-representation-info 0)` | ran, returned `((3 "Sticks: //A/41-45" #t 1.0) (2 "Sticks: //A/41-45" #t 1.0) (1 "Sticks: A 41-45" #t 1.0) (0 "Sticks: A 41-45" #t 1.0) ...` |
+| Python | `additional_representation_info(0)` | ran, returned `[[0, 'Sticks: //A/41-45', True, 1.0], [1, 'Sticks: //A/41-45', True, 1.0]]` |
+| Scheme | `(additional-representation-info 0)` | ran, returned `((1 "Sticks: //A/41-45" #t 1.0) (0 "Sticks: //A/41-45" #t 1.0))` |
 
 Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
@@ -65,8 +65,12 @@ Arguments: imol (a whole number), representation_number (a whole number), ball_a
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `all_additional_representations_off_except(0, 1, 1)` | stopped Coot when tried without a window (not checked with a window) |
-| Scheme | `(all-additional-representations-off-except 0 1 1)` | ran (no return value) |
+| Python | `all_additional_representations_off_except(0, 0, 0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(all-additional-representations-off-except 0 0 0)` | ran (no return value, nothing visible changed) |
+
+Example written and checked by hand on the test data. Expected: hides every additional representation of molecule 0 except number 0.
+
+Note: Ran without error headless (no representations to switch); creating one needs the graphics window.
 
 ### change_model_molecule_representation_mode
 
@@ -80,8 +84,8 @@ Arguments: up_or_down (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `change_model_molecule_representation_mode(1)` | ran (no return value) |
-| Scheme | `(change-model-molecule-representation-mode 1)` | ran (no return value) |
+| Python | `change_model_molecule_representation_mode(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(change-model-molecule-representation-mode 1)` | ran (no return value, nothing visible changed) |
 
 ### clear_ball_and_stick
 
@@ -97,6 +101,8 @@ Arguments: imol (a whole number). Returns: a whole number.
 | Python | `clear_ball_and_stick(0)` | ran, returned `0` |
 | Scheme | `(clear-ball-and-stick 0)` | ran, returned `0` |
 
+Example written and checked by hand on the test data. Expected: removes ball-and-stick representations of molecule 0; returns 0 (nothing to clear here).
+
 Python and Scheme gave the same answer.
 
 ### delete_additional_representation
@@ -110,8 +116,8 @@ Arguments: imol (a whole number), representation_number (a whole number). Return
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `delete_additional_representation(0, 1)` | ran (no return value) |
-| Scheme | `(delete-additional-representation 0 1)` | ran (no return value) |
+| Python | `delete_additional_representation(0, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(delete-additional-representation 0 1)` | ran (no return value, nothing visible changed) |
 
 ### draw_hydrogens_state
 
@@ -192,8 +198,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `graphics_to_b_factor_cas_representation(0)` | ran (no return value) |
-| Scheme | `(graphics-to-b-factor-cas-representation 0)` | ran (no return value) |
+| Python | `graphics_to_b_factor_cas_representation(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(graphics-to-b-factor-cas-representation 0)` | ran (no return value, nothing visible changed) |
 
 ### graphics_to_b_factor_representation
 
@@ -206,8 +212,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `graphics_to_b_factor_representation(0)` | ran (no return value) |
-| Scheme | `(graphics-to-b-factor-representation 0)` | ran (no return value) |
+| Python | `graphics_to_b_factor_representation(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(graphics-to-b-factor-representation 0)` | ran (no return value, nothing visible changed) |
 
 ### graphics_to_bonds_no_waters_representation
 
@@ -220,8 +226,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `graphics_to_bonds_no_waters_representation(0)` | ran (no return value) |
-| Scheme | `(graphics-to-bonds-no-waters-representation 0)` | ran (no return value) |
+| Python | `graphics_to_bonds_no_waters_representation(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(graphics-to-bonds-no-waters-representation 0)` | ran (no return value, nothing visible changed) |
 
 ### graphics_to_bonds_representation
 
@@ -234,8 +240,8 @@ Arguments: mol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `graphics_to_bonds_representation(0)` | ran (no return value) |
-| Scheme | `(graphics-to-bonds-representation 0)` | ran (no return value) |
+| Python | `graphics_to_bonds_representation(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(graphics-to-bonds-representation 0)` | ran (no return value, nothing visible changed) |
 
 ### graphics_to_ca_plus_ligands_and_sidechains_representation
 
@@ -248,8 +254,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `graphics_to_ca_plus_ligands_and_sidechains_representation(0)` | ran (no return value) |
-| Scheme | `(graphics-to-ca-plus-ligands-and-sidechains-representation 0)` | ran (no return value) |
+| Python | `graphics_to_ca_plus_ligands_and_sidechains_representation(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(graphics-to-ca-plus-ligands-and-sidechains-representation 0)` | ran (no return value, nothing visible changed) |
 
 ### graphics_to_ca_plus_ligands_representation
 
@@ -262,8 +268,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `graphics_to_ca_plus_ligands_representation(0)` | ran (no return value) |
-| Scheme | `(graphics-to-ca-plus-ligands-representation 0)` | ran (no return value) |
+| Python | `graphics_to_ca_plus_ligands_representation(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(graphics-to-ca-plus-ligands-representation 0)` | ran (no return value, nothing visible changed) |
 
 ### graphics_to_ca_plus_ligands_sec_struct_representation
 
@@ -277,8 +283,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `graphics_to_ca_plus_ligands_sec_struct_representation(0)` | ran (no return value) |
-| Scheme | `(graphics-to-ca-plus-ligands-sec-struct-representation 0)` | ran (no return value) |
+| Python | `graphics_to_ca_plus_ligands_sec_struct_representation(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(graphics-to-ca-plus-ligands-sec-struct-representation 0)` | ran (no return value, nothing visible changed) |
 
 ### graphics_to_ca_representation
 
@@ -291,8 +297,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `graphics_to_ca_representation(0)` | ran (no return value) |
-| Scheme | `(graphics-to-ca-representation 0)` | ran (no return value) |
+| Python | `graphics_to_ca_representation(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(graphics-to-ca-representation 0)` | ran (no return value, nothing visible changed) |
 
 ### graphics_to_occupancy_representation
 
@@ -305,8 +311,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `graphics_to_occupancy_representation(0)` | ran (no return value) |
-| Scheme | `(graphics-to-occupancy-representation 0)` | ran (no return value) |
+| Python | `graphics_to_occupancy_representation(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(graphics-to-occupancy-representation 0)` | ran (no return value, nothing visible changed) |
 
 ### graphics_to_rainbow_representation
 
@@ -319,8 +325,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `graphics_to_rainbow_representation(0)` | ran (no return value) |
-| Scheme | `(graphics-to-rainbow-representation 0)` | ran (no return value) |
+| Python | `graphics_to_rainbow_representation(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(graphics-to-rainbow-representation 0)` | ran (no return value, nothing visible changed) |
 
 ### graphics_to_sec_struct_bonds_representation
 
@@ -334,8 +340,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `graphics_to_sec_struct_bonds_representation(0)` | ran (no return value) |
-| Scheme | `(graphics-to-sec-struct-bonds-representation 0)` | ran (no return value) |
+| Python | `graphics_to_sec_struct_bonds_representation(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(graphics-to-sec-struct-bonds-representation 0)` | ran (no return value, nothing visible changed) |
 
 ### graphics_to_user_defined_atom_colours_all_atoms_representation
 
@@ -348,8 +354,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `graphics_to_user_defined_atom_colours_all_atoms_representation(0)` | ran (no return value) |
-| Scheme | `(graphics-to-user-defined-atom-colours-all-atoms-representation 0)` | ran (no return value) |
+| Python | `graphics_to_user_defined_atom_colours_all_atoms_representation(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(graphics-to-user-defined-atom-colours-all-atoms-representation 0)` | ran (no return value, nothing visible changed) |
 
 ### graphics_to_user_defined_atom_colours_representation
 
@@ -362,8 +368,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `graphics_to_user_defined_atom_colours_representation(0)` | ran (no return value) |
-| Scheme | `(graphics-to-user-defined-atom-colours-representation 0)` | ran (no return value) |
+| Python | `graphics_to_user_defined_atom_colours_representation(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(graphics-to-user-defined-atom-colours-representation 0)` | ran (no return value, nothing visible changed) |
 
 ### make_ball_and_stick
 
@@ -378,8 +384,10 @@ Arguments: imol (a whole number), atom_selection_str (text), bond_thickness (a n
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `make_ball_and_stick(0, "//A/41-45", 1.0, 1.0, 1)` | stopped Coot when tried without a window (not checked with a window) |
-| Scheme | `(make-ball-and-stick 0 "//A/41-45" 1.0 1.0 1)` | stopped Coot when tried without a window (not checked with a window) |
+| Python | `make_ball_and_stick(0, "//A/41-43", 0.18, 0.3, 1)` | not run: needs the graphics window (stops Coot without a screen) |
+| Scheme | `(make-ball-and-stick 0 "//A/41-43" 0.18 0.3 1)` | not run: needs the graphics window (stops Coot without a screen) |
+
+Example written and checked by hand on the test data. Expected: draws residues A41-43 as ball-and-stick.
 
 ### set_b_factor_bonds_scale_factor
 
@@ -408,8 +416,10 @@ Arguments: imol (a whole number), f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_bond_colour_rotation_for_molecule(0, 1.0)` | ran (no return value) |
-| Scheme | `(set-bond-colour-rotation-for-molecule 0 1.0)` | ran (no return value) |
+| Python | `set_bond_colour_rotation_for_molecule(0, 1.0)` | ran (no return value); changed: get_bond_colour_rotation_for_molecule(0): 21 -> 1; get_molecule_bonds_colour_map_rotation(0): 21 -> 1 |
+| Scheme | `(set-bond-colour-rotation-for-molecule 0 1.0)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: get_bond_colour_rotation_for_molecule was 21.0, set to 32.0, read back 32.0; Scheme: get-bond-colour-rotation-for-molecule was 21.0, set to 32.0, read back 32.0.
 
 ### set_bond_thickness
 
@@ -422,8 +432,8 @@ Arguments: imol (a whole number), t (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_bond_thickness(0, 1.0)` | ran (no return value) |
-| Scheme | `(set-bond-thickness 0 1.0)` | ran (no return value) |
+| Python | `set_bond_thickness(0, 1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-bond-thickness 0 1.0)` | ran (no return value, nothing visible changed) |
 
 ### set_bond_thickness_intermediate_atoms
 
@@ -436,8 +446,8 @@ Arguments: t (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_bond_thickness_intermediate_atoms(1.0)` | ran (no return value) |
-| Scheme | `(set-bond-thickness-intermediate-atoms 1.0)` | ran (no return value) |
+| Python | `set_bond_thickness_intermediate_atoms(1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-bond-thickness-intermediate-atoms 1.0)` | ran (no return value, nothing visible changed) |
 
 ### set_default_bond_thickness
 
@@ -450,8 +460,10 @@ Arguments: t (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_default_bond_thickness(1)` | ran (no return value) |
-| Scheme | `(set-default-bond-thickness 1)` | ran (no return value) |
+| Python | `set_default_bond_thickness(1)` | ran (no return value); changed: get_default_bond_thickness(): 5 -> 1 |
+| Scheme | `(set-default-bond-thickness 1)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: get_default_bond_thickness was 5, set to 0, read back 0; Scheme: get-default-bond-thickness was 5, set to 0, read back 0.
 
 ### set_default_representation_type
 
@@ -464,8 +476,8 @@ Arguments: type (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_default_representation_type(1)` | ran (no return value) |
-| Scheme | `(set-default-representation-type 1)` | ran (no return value) |
+| Python | `set_default_representation_type(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-default-representation-type 1)` | ran (no return value, nothing visible changed) |
 
 ### set_draw_cis_peptide_markups
 
@@ -480,8 +492,8 @@ Arguments: status (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_draw_cis_peptide_markups(1)` | ran (no return value) |
-| Scheme | `(set-draw-cis-peptide-markups 1)` | ran (no return value) |
+| Python | `set_draw_cis_peptide_markups(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-draw-cis-peptide-markups 1)` | ran (no return value, nothing visible changed) |
 
 ### set_draw_hydrogens
 
@@ -495,8 +507,10 @@ Arguments: imol (a whole number), istat (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_draw_hydrogens(0, 1)` | ran (no return value) |
-| Scheme | `(set-draw-hydrogens 0 1)` | ran (no return value) |
+| Python | `set_draw_hydrogens(0, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-draw-hydrogens 0 1)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: draw_hydrogens_state was 1, set to 0, read back 0; Scheme: draw-hydrogens-state was 1, set to 0, read back 0.
 
 ### set_draw_missing_residues_loops
 
@@ -511,8 +525,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_draw_missing_residues_loops(1)` | ran (no return value) |
-| Scheme | `(set-draw-missing-residues-loops 1)` | ran (no return value) |
+| Python | `set_draw_missing_residues_loops(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-draw-missing-residues-loops 1)` | ran (no return value, nothing visible changed) |
 
 ### set_draw_moving_atoms_restraints
 
@@ -525,8 +539,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_draw_moving_atoms_restraints(1)` | ran (no return value) |
-| Scheme | `(set-draw-moving-atoms-restraints 1)` | ran (no return value) |
+| Python | `set_draw_moving_atoms_restraints(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-draw-moving-atoms-restraints 1)` | ran (no return value, nothing visible changed) |
 
 ### set_draw_stick_mode_atoms
 
@@ -543,8 +557,8 @@ Arguments: imol (a whole number), state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_draw_stick_mode_atoms(0, 1)` | ran (no return value) |
-| Scheme | `(set-draw-stick-mode-atoms 0 1)` | ran (no return value) |
+| Python | `set_draw_stick_mode_atoms(0, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-draw-stick-mode-atoms 0 1)` | ran (no return value, nothing visible changed) |
 
 ### set_draw_stick_mode_atoms_default
 
@@ -557,8 +571,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_draw_stick_mode_atoms_default(1)` | ran (no return value) |
-| Scheme | `(set-draw-stick-mode-atoms-default 1)` | ran (no return value) |
+| Python | `set_draw_stick_mode_atoms_default(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-draw-stick-mode-atoms-default 1)` | ran (no return value, nothing visible changed) |
 
 ### set_draw_zero_occ_markers
 
@@ -573,8 +587,8 @@ Arguments: status (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_draw_zero_occ_markers(1)` | ran (no return value) |
-| Scheme | `(set-draw-zero-occ-markers 1)` | ran (no return value) |
+| Python | `set_draw_zero_occ_markers(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-draw-zero-occ-markers 1)` | ran (no return value, nothing visible changed) |
 
 ### set_flev_idle_ligand_interactions
 
@@ -591,8 +605,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_flev_idle_ligand_interactions(1)` | ran (no return value) |
-| Scheme | `(set-flev-idle-ligand-interactions 1)` | ran (no return value) |
+| Python | `set_flev_idle_ligand_interactions(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-flev-idle-ligand-interactions 1)` | ran (no return value, nothing visible changed) |
 
 ### set_grey_carbon_colour
 
@@ -607,8 +621,8 @@ Arguments: imol (a whole number), r (a number), g (a number), b (a number). Retu
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_grey_carbon_colour(0, 0.5, 0.5, 0.5)` | ran (no return value) |
-| Scheme | `(set-grey-carbon-colour 0 0.5 0.5 0.5)` | ran (no return value) |
+| Python | `set_grey_carbon_colour(0, 0.5, 0.5, 0.5)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-grey-carbon-colour 0 0.5 0.5 0.5)` | ran (no return value, nothing visible changed) |
 
 ### set_show_additional_representation
 
@@ -621,8 +635,8 @@ Arguments: imol (a whole number), representation_number (a whole number), on_off
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_show_additional_representation(0, 1, 1)` | ran (no return value) |
-| Scheme | `(set-show-additional-representation 0 1 1)` | ran (no return value) |
+| Python | `set_show_additional_representation(0, 1, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-show-additional-representation 0 1 1)` | ran (no return value, nothing visible changed) |
 
 ### set_show_all_additional_representations
 
@@ -635,8 +649,8 @@ Arguments: imol (a whole number), on_off_flag (a whole number). Returns: nothing
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_show_all_additional_representations(0, 1)` | ran (no return value) |
-| Scheme | `(set-show-all-additional-representations 0 1)` | ran (no return value) |
+| Python | `set_show_all_additional_representations(0, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-show-all-additional-representations 0 1)` | ran (no return value, nothing visible changed) |
 
 ### set_unbonded_atom_star_size
 
@@ -647,8 +661,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_unbonded_atom_star_size(1.0)` | ran (no return value) |
-| Scheme | `(set-unbonded-atom-star-size 1.0)` | ran (no return value) |
+| Python | `set_unbonded_atom_star_size(1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-unbonded-atom-star-size 1.0)` | ran (no return value, nothing visible changed) |
 
 ### set_use_grey_carbons_for_molecule
 
@@ -661,8 +675,8 @@ Arguments: imol (a whole number), state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_use_grey_carbons_for_molecule(0, 1)` | ran (no return value) |
-| Scheme | `(set-use-grey-carbons-for-molecule 0 1)` | ran (no return value) |
+| Python | `set_use_grey_carbons_for_molecule(0, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-use-grey-carbons-for-molecule 0 1)` | ran (no return value, nothing visible changed) |
 
 ### set_use_variable_bond_thickness
 
@@ -675,8 +689,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_use_variable_bond_thickness(1)` | ran (no return value) |
-| Scheme | `(set-use-variable-bond-thickness 1)` | ran (no return value) |
+| Python | `set_use_variable_bond_thickness(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-use-variable-bond-thickness 1)` | ran (no return value, nothing visible changed) |
 
 ### toggle_idle_ligand_interactions
 
@@ -690,6 +704,6 @@ Also available in Python as `toggle_flev_idle_ligand_interactions`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `toggle_idle_ligand_interactions()` | ran (no return value) |
-| Scheme | `(toggle-flev-idle-ligand-interactions)` | ran (no return value) |
+| Python | `toggle_idle_ligand_interactions()` | ran (no return value, nothing visible changed) |
+| Scheme | `(toggle-flev-idle-ligand-interactions)` | ran (no return value, nothing visible changed) |
 

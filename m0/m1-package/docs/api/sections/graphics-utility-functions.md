@@ -15,8 +15,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `allow_duplicate_sequence_numbers()` | ran (no return value) |
-| Scheme | `(allow-duplicate-sequence-numbers)` | ran (no return value) |
+| Python | `allow_duplicate_sequence_numbers()` | ran (no return value, nothing visible changed) |
+| Scheme | `(allow-duplicate-sequence-numbers)` | ran (no return value, nothing visible changed) |
 
 ### assign_hetatms
 
@@ -31,10 +31,12 @@ Arguments: imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `assign_hetatms(0)` | ran, returned `0` |
+| Python | first `imol_nag = read_pdb("nag_only.pdb")`, then `assign_hetatms(imol_nag)` | ran, returned `30` |
 | Scheme | `(assign-hetatms 0)` | ran, returned `0` |
 
-Python and Scheme gave the same answer.
+Example written and checked by hand on the test data. Expected: returns the number of atoms changed to HETATM in non-standard residues; 0 for a pure protein.
+
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
 ### check_for_dark_blue_density
 
@@ -47,8 +49,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `check_for_dark_blue_density()` | ran (no return value) |
-| Scheme | `(check-for-dark-blue-density)` | ran (no return value) |
+| Python | `check_for_dark_blue_density()` | ran (no return value, nothing visible changed) |
+| Scheme | `(check-for-dark-blue-density)` | ran (no return value, nothing visible changed) |
 
 ### clear_and_update_model_molecule_from_file
 
@@ -62,8 +64,10 @@ Arguments: molecule_number (a whole number), file_name (text). Returns: a whole 
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `clear_and_update_model_molecule_from_file(0, "tutorial-modern.pdb")` | ran, returned `0` |
-| Scheme | `(clear-and-update-model-molecule-from-file 0 "tutorial-modern.pdb")` | ran, returned `0` |
+| Python | first `imol2 = read_pdb("tutorial-modern.pdb")`, then `clear_and_update_model_molecule_from_file(imol2, "standard-residues.pdb")` | ran, returned `3`; changed: molecule 3: added 26 residue(s) (A912, A957, A888, A876 ...); molecule 3: deleted 181 residue(s) (A2, A3, A4, A5 ...); molecule 3: atoms of 8 residue(s) (A1, A6, A7, A14 ...); first_small_coords_imol(): -1 -> 3 |
+| Scheme | first `(define imol2 (read-pdb "tutorial-modern.pdb"))`, then `(clear-and-update-model-molecule-from-file imol2 "standard-residues.pdb")` | ran, returned `3`; changed: molecule 3: added 26 residue(s) (A912, A957, A888, A876 ...); molecule 3: deleted 181 residue(s) (A2, A3, A4, A5 ...); molecule 3: atoms of 8 residue(s) (A1, A6, A7, A14 ...); first_small_coords_imol(): -1 -> 3 |
+
+Example written and checked by hand on the test data. Expected: replaces the coordinates of the molecule by those in the file, keeping its molecule number; returns that number, -1 on failure.
 
 Python and Scheme gave the same answer.
 
@@ -80,8 +84,14 @@ Arguments: imol_target (a whole number), chain_id_target (text), imol_reference 
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `copy_residue_range(0, "A", 0, "A", 41, 45)` | stopped Coot when tried without a window (not checked with a window) |
-| Scheme | `(copy-residue-range 0 "A" 0 "A" 41 45)` | stopped Coot when tried without a window (not checked with a window) |
+| Python | first `imol2 = read_pdb("tutorial-modern.pdb")`, then `copy_residue_range(imol2, "B", 0, "A", 10, 20)` | ran, returned `0`; changed: molecule 3: B-factors of 11 residue(s) (B10, B11, B12, B13 ...); molecule 3: coordinates of 11 residue(s) (B10, B11, B12, B13 ...) |
+| Scheme | first `(define imol2 (read-pdb "tutorial-modern.pdb"))`, then `(copy-residue-range imol2 "B" 0 "A" 10 20)` | ran, returned `0`; changed: molecule 3: B-factors of 11 residue(s) (B10, B11, B12, B13 ...); molecule 3: coordinates of 11 residue(s) (B10, B11, B12, B13 ...) |
+
+Example written and checked by hand on the test data. Expected: copies coordinates of the residue range from the reference chain onto the same residues of the target chain (no superposition).
+
+Note: Returns 0 although 11 residues were copied (the old automatic run stopped Coot only because of placeholder arguments). The return status looks unreliable.
+
+Python and Scheme gave the same answer.
 
 ### do_GL_lighting_state
 
@@ -126,10 +136,10 @@ Arguments: none. Returns: a number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `get_idle_function_rock_target_angle()` | ran, returned `0.007305599456073013` |
-| Scheme | `(get-idle-function-rock-target-angle)` | ran, returned `0.007117656556372816` |
+| Python | `get_idle_function_rock_target_angle()` | ran, returned `-0.05417729701955092` |
+| Scheme | `(get-idle-function-rock-target-angle)` | ran, returned `-0.05486917173613091` |
 
-Python and Scheme gave the same answer.
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
 ### get-input-model-was-cif-state-scm
 
@@ -143,6 +153,8 @@ Arguments: imol (a whole number). Returns: a value (see the result of the exampl
 | | Example | When tried (test data, no window) |
 |---|---|---|
 | Scheme | `(get-input-model-was-cif-state-scm 0)` | ran, returned `#f` |
+
+Example written and checked by hand on the test data. Expected: #f for a model read from PDB format, #t for mmCIF, #f for an invalid molecule.
 
 ### get_input_molecule_was_in_mmcif_state
 
@@ -158,6 +170,8 @@ Also available in Python as `get_input_molecule_was_in_mmcif_state_py`.
 |---|---|---|
 | Python | `get_input_molecule_was_in_mmcif_state(0)` | ran, returned `False` |
 
+Example written and checked by hand on the test data. Expected: False for a molecule read from PDB format, True for one read from mmCIF.
+
 ### get_solid_density_surface_opacity
 
 Python: `get_solid_density_surface_opacity(imol)`  
@@ -167,8 +181,10 @@ Arguments: imol (a whole number). Returns: a number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `get_solid_density_surface_opacity(0)` | ran, returned `-1.0` |
-| Scheme | `(get-solid-density-surface-opacity 0)` | ran, returned `-1.0` |
+| Python | `get_solid_density_surface_opacity(1)` | ran, returned `0.5` |
+| Scheme | `(get-solid-density-surface-opacity 1)` | ran, returned `0.5` |
+
+Example written and checked by hand on the test data. Expected: returns the opacity of the map's solid surface (0.5 default).
 
 Python and Scheme gave the same answer.
 
@@ -186,8 +202,8 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `graphics_n_molecules()` | ran, returned `2` |
-| Scheme | `(graphics-n-molecules)` | ran, returned `2` |
+| Python | `graphics_n_molecules()` | ran, returned `3` |
+| Scheme | `(graphics-n-molecules)` | ran, returned `3` |
 
 Python and Scheme gave the same answer.
 
@@ -203,8 +219,8 @@ Arguments: filename (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `handle_read_draw_molecule("tutorial-modern.pdb")` | ran, returned `2` |
-| Scheme | `(handle-read-draw-molecule "tutorial-modern.pdb")` | ran, returned `2` |
+| Python | `handle_read_draw_molecule("tutorial-modern.pdb")` | ran, returned `3`; changed: new molecule 3 (model, tutorial-modern.pdb); graphics_n_molecules(): 3 -> 4 |
+| Scheme | `(handle-read-draw-molecule "tutorial-modern.pdb")` | ran, returned `3`; changed: new molecule 3 (model, tutorial-modern.pdb); graphics_n_molecules(): 3 -> 4 |
 
 Python and Scheme gave the same answer.
 
@@ -220,8 +236,8 @@ Arguments: filename (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `handle_read_draw_molecule_and_move_molecule_here("tutorial-modern.pdb")` | ran, returned `2` |
-| Scheme | `(handle-read-draw-molecule-and-move-molecule-here "tutorial-modern.pdb")` | ran, returned `2` |
+| Python | `handle_read_draw_molecule_and_move_molecule_here("tutorial-modern.pdb")` | ran, returned `3`; changed: new molecule 3 (model, tutorial-modern.pdb); graphics_n_molecules(): 3 -> 4 |
+| Scheme | `(handle-read-draw-molecule-and-move-molecule-here "tutorial-modern.pdb")` | ran, returned `3`; changed: new molecule 3 (model, tutorial-modern.pdb); graphics_n_molecules(): 3 -> 4 |
 
 Python and Scheme gave the same answer.
 
@@ -239,8 +255,8 @@ Arguments: filename (text), recentre_on_read_pdb_flag (a whole number). Returns:
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `handle_read_draw_molecule_with_recentre("tutorial-modern.pdb", 1)` | ran, returned `2` |
-| Scheme | `(handle-read-draw-molecule-with-recentre "tutorial-modern.pdb" 1)` | ran, returned `2` |
+| Python | `handle_read_draw_molecule_with_recentre("tutorial-modern.pdb", 1)` | ran, returned `3`; changed: new molecule 3 (model, tutorial-modern.pdb); graphics_n_molecules(): 3 -> 4 |
+| Scheme | `(handle-read-draw-molecule-with-recentre "tutorial-modern.pdb" 1)` | ran, returned `3`; changed: new molecule 3 (model, tutorial-modern.pdb); graphics_n_molecules(): 3 -> 4 |
 
 Python and Scheme gave the same answer.
 
@@ -294,8 +310,12 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_c
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `hetify_residue(0, "A", 41, "")` | ran, returned `-1` |
-| Scheme | `(hetify-residue 0 "A" 41 "")` | ran, returned `-1` |
+| Python | first `imol_nag = read_pdb("nag_only.pdb")`, then `hetify_residue(imol_nag, "A", 1, "")` | ran, returned `1` |
+| Scheme | first `(define imol-nag (read-pdb "nag_only.pdb"))`, then `(hetify-residue imol-nag "A" 1 "")` | ran, returned `1` |
+
+Example written and checked by hand on the test data. Expected: returns 1 when a non-standard residue's atoms are made HETATMs; a standard residue is left alone.
+
+Note: For a standard residue that exists (GLU A41) it returns -1 although the doc says -1 = residue not found and 0 = no change (the code only sets 1 when atoms changed, else keeps -1).
 
 Python and Scheme gave the same answer.
 
@@ -327,8 +347,8 @@ Arguments: filename (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `make_updating_model_molecule("tutorial-modern.pdb")` | ran, returned `1` |
-| Scheme | `(make-updating-model-molecule "tutorial-modern.pdb")` | ran, returned `1` |
+| Python | `make_updating_model_molecule("tutorial-modern.pdb")` | ran, returned `1`; changed: new molecule 3 (model, tutorial-modern.pdb); graphics_n_molecules(): 3 -> 4 |
+| Scheme | `(make-updating-model-molecule "tutorial-modern.pdb")` | ran, returned `1`; changed: new molecule 3 (model, tutorial-modern.pdb); graphics_n_molecules(): 3 -> 4 |
 
 Python and Scheme gave the same answer.
 
@@ -346,8 +366,10 @@ Arguments: imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `molecule_has_hydrogens_raw(0)` | ran, returned `0` |
-| Scheme | `(molecule-has-hydrogens-raw 0)` | ran, returned `0` |
+| Python | first `imol_nag = read_pdb("nag_only.pdb")`, then `molecule_has_hydrogens_raw(imol_nag)` | ran, returned `1` |
+| Scheme | first `(define imol-nag (read-pdb "nag_only.pdb"))`, then `(molecule-has-hydrogens-raw imol-nag)` | ran, returned `1` |
+
+Example written and checked by hand on the test data. Expected: 1 if the molecule has at least one hydrogen, 0 if not (0 is correct for tutorial-modern.pdb).
 
 Python and Scheme gave the same answer.
 
@@ -366,9 +388,11 @@ Arguments: imol (a whole number). Returns: a whole number.
 | | Example | When tried (test data, no window) |
 |---|---|---|
 | Python | `own_molecule_number(0)` | ran, returned `0` |
-| Scheme | `(own-molecule-number 0)` | ran, returned `0` |
+| Scheme | `(own-molecule-number 1)` | ran, returned `1` |
 
-Python and Scheme gave the same answer.
+Example written and checked by hand on the test data. Expected: returns the same number it was given (debug check that a molecule knows its own number).
+
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
 ### python_at_prompt_at_startup_state
 
@@ -399,8 +423,8 @@ Arguments: filename (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `read_pdb("tutorial-modern.pdb")` | ran, returned `2` |
-| Scheme | `(read-pdb "tutorial-modern.pdb")` | ran, returned `2` |
+| Python | `read_pdb("tutorial-modern.pdb")` | ran, returned `3`; changed: new molecule 3 (model, tutorial-modern.pdb); graphics_n_molecules(): 3 -> 4 |
+| Scheme | `(read-pdb "tutorial-modern.pdb")` | ran, returned `3`; changed: new molecule 3 (model, tutorial-modern.pdb); graphics_n_molecules(): 3 -> 4 |
 
 Python and Scheme gave the same answer.
 
@@ -431,8 +455,12 @@ Also available in Python as `replace_residues_from_mol_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `replace_residues_from_mol(0, 0, ["A", 41, ""])` | error: SystemError: <built-in function replace_residues_from_mol_py> returned a result with an exception set |
-| Scheme | `(replace-residues-from-mol-scm 0 0 (list "A" 41 ""))` | error: In procedure length: Wrong type argument in position 1: "A" |
+| Python | first `imol2 = read_pdb("tutorial-modern.pdb")`, then `delete_residue(imol2, "A", 41, "")`, then `replace_residues_from_mol(imol2, 0, [["A", 41, ""], ["A", 42, ""]])` | ran, returned `1`; changed: molecule 3: added 1 residue(s) (A41) |
+| Scheme | first `(define imol2 (read-pdb "tutorial-modern.pdb"))`, then `(delete-residue imol2 "A" 41 "")`, then `(replace-residues-from-mol-scm imol2 0 (list (list "A" 41 "") (list "A" 42 "")))` | ran, returned `1`; changed: molecule 3: added 1 residue(s) (A41) |
+
+Example written and checked by hand on the test data. Expected: replaces (or adds) the listed residues in the target molecule with those of the reference molecule; returns 1 on success.
+
+Python and Scheme gave the same answer.
 
 ### reset_view
 
@@ -450,8 +478,12 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `reset_view()` | ran, returned `0` |
+| Python | `reset_view()` | ran, returned `0`; changed: zoom: 100.0 -> 145.85 |
 | Scheme | `(reset-view)` | ran, returned `0` |
+
+Example written and checked by hand on the test data. Expected: centres on the last-read molecule and resets the zoom (the view does move; see note).
+
+Note: Doc says 'return 1 if we moved', but it returned 0 although the centre moved 3.8 A and the zoom changed.
 
 Python and Scheme gave the same answer.
 
@@ -469,10 +501,12 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_c
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `residue_has_hetatms(0, "A", 41, "")` | ran, returned `0` |
+| Python | first `imol_nag = read_pdb("nag_only.pdb")`, then `residue_has_hetatms(imol_nag, "A", 1, "")` | ran, returned `1` |
 | Scheme | `(residue-has-hetatms 0 "A" 41 "")` | ran, returned `0` |
 
-Python and Scheme gave the same answer.
+Example written and checked by hand on the test data. Expected: 1 if all atoms of the residue are HETATMs, 0 if not, -1 if no such residue.
+
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
 ### screendump_image
 
@@ -488,8 +522,10 @@ Arguments: filename (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `screendump_image("tutorial-modern.pdb")` | not run: not run automatically (screendump: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(screendump-image "tutorial-modern.pdb")` | not run: not run automatically (screendump: exits, uses the network, an external program, files or a screen) |
+| Python | `screendump_image("view.ppm")` | not run: needs the graphics window (reads the OpenGL frame buffer) |
+| Scheme | `(screendump-image "view.ppm")` | not run: needs the graphics window (reads the OpenGL frame buffer) |
+
+Example written and checked by hand on the test data. Expected: writes the current graphics view to the image file.
 
 ### set_convert_to_v2_atom_names
 
@@ -509,8 +545,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_convert_to_v2_atom_names(1)` | ran (no return value) |
-| Scheme | `(set-convert-to-v2-atom-names 1)` | ran (no return value) |
+| Python | `set_convert_to_v2_atom_names(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-convert-to-v2-atom-names 1)` | ran (no return value, nothing visible changed) |
 
 ### set_do_GL_lighting
 
@@ -525,8 +561,10 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_do_GL_lighting(1)` | stopped Coot when tried without a window (not checked with a window) |
-| Scheme | `(set-do-GL-lighting 1)` | stopped Coot when tried without a window (not checked with a window) |
+| Python | `set_do_GL_lighting(1)` | not run: needs the graphics window (stops Coot without a screen) |
+| Scheme | `(set-do-GL-lighting 1)` | not run: needs the graphics window (stops Coot without a screen) |
+
+Example written and checked by hand on the test data. Expected: turns OpenGL lighting on (1) or off (0) for solid objects.
 
 ### set_do_anti_aliasing
 
@@ -539,8 +577,10 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_do_anti_aliasing(1)` | ran (no return value) |
-| Scheme | `(set-do-anti-aliasing 1)` | ran (no return value) |
+| Python | `set_do_anti_aliasing(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-do-anti-aliasing 1)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: do_anti_aliasing_state was 0, set to 1, read back 1; Scheme: do-anti-aliasing-state was 0, set to 1, read back 1.
 
 ### set_draw_map_standard_lines
 
@@ -559,8 +599,8 @@ Arguments: imol (a whole number), state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_draw_map_standard_lines(0, 1)` | ran (no return value) |
-| Scheme | `(set-draw-map-standard-lines 0 1)` | ran (no return value) |
+| Python | `set_draw_map_standard_lines(0, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-draw-map-standard-lines 0 1)` | ran (no return value, nothing visible changed) |
 
 ### set_draw_solid_density_surface
 
@@ -574,8 +614,8 @@ Arguments: imol (a whole number), state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_draw_solid_density_surface(0, 1)` | ran (no return value) |
-| Scheme | `(set-draw-solid-density-surface 0 1)` | ran (no return value) |
+| Python | `set_draw_solid_density_surface(0, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-draw-solid-density-surface 0 1)` | ran (no return value, nothing visible changed) |
 
 ### set_flat_shading_for_solid_density_surface
 
@@ -591,8 +631,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_flat_shading_for_solid_density_surface(1)` | ran (no return value) |
-| Scheme | `(set-flat-shading-for-solid-density-surface 1)` | ran (no return value) |
+| Python | `set_flat_shading_for_solid_density_surface(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-flat-shading-for-solid-density-surface 1)` | ran (no return value, nothing visible changed) |
 
 ### set_idle_function_rotate_angle
 
@@ -606,8 +646,10 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_idle_function_rotate_angle(1.0)` | ran (no return value) |
-| Scheme | `(set-idle-function-rotate-angle 1.0)` | ran (no return value) |
+| Python | `set_idle_function_rotate_angle(1.0)` | ran (no return value); changed: idle_function_rotate_angle(): 0.15 -> 1 |
+| Scheme | `(set-idle-function-rotate-angle 1.0)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: idle_function_rotate_angle was 0.15000000596046448, set to 0.725, read back 0.7250000238418579; Scheme: idle-function-rotate-angle was 0.15000000596046448, set to 0.725, read back 0.7250000238418579.
 
 ### set_rocking_factors
 
@@ -621,8 +663,8 @@ Arguments: width_scale (a number), frequency_scale (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_rocking_factors(1.0, 1.0)` | ran (no return value) |
-| Scheme | `(set-rocking-factors 1.0 1.0)` | ran (no return value) |
+| Python | `set_rocking_factors(1.0, 1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-rocking-factors 1.0 1.0)` | ran (no return value, nothing visible changed) |
 
 ### set_solid_density_surface_opacity
 
@@ -640,8 +682,10 @@ Arguments: imol (a whole number), opacity (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_solid_density_surface_opacity(0, 1.0)` | ran (no return value) |
-| Scheme | `(set-solid-density-surface-opacity 0 1.0)` | ran (no return value) |
+| Python | `set_solid_density_surface_opacity(0, 1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-solid-density-surface-opacity 0 1.0)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: get_solid_density_surface_opacity was -1.0, set to -1.0, read back -1.0; Scheme: get-solid-density-surface-opacity was -1.0, set to -1.0, read back -1.0.
 
 ### show_calculate_updating_maps_gui
 
@@ -656,8 +700,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `show_calculate_updating_maps_gui()` | ran (no return value) |
-| Scheme | `(show-calculate-updating-maps-gui)` | ran (no return value) |
+| Python | `show_calculate_updating_maps_gui()` | ran (no return value, nothing visible changed) |
+| Scheme | `(show-calculate-updating-maps-gui)` | ran (no return value, nothing visible changed) |
 
 ### start_graphics_interface
 
@@ -675,8 +719,10 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `start_graphics_interface()` | no answer within 60 s (slow, or waits for something) |
-| Scheme | `(start-graphics-interface)` | no answer within 60 s (slow, or waits for something) |
+| Python | `start_graphics_interface()` | not run: starts the GTK main loop (blocks; for scripts run with --no-graphics that want the window); no answer in 60 s |
+| Scheme | `(start-graphics-interface)` | not run: starts the GTK main loop (blocks; for scripts run with --no-graphics that want the window); no answer in 60 s |
+
+Example written and checked by hand on the test data. Expected: opens the main window when Coot was started without graphics.
 
 ### test_internal
 
@@ -691,6 +737,8 @@ Also available in Scheme as `test-internal-scm`.
 |---|---|---|
 | Python | `test_internal()` | ran, returned `False` |
 | Scheme | `(test-internal)` | ran, returned `#f` |
+
+Example written and checked by hand on the test data. Expected: runs Coot's built-in developer tests; False here because they need the developer's test data (greg-data), which is not shipped.
 
 Python and Scheme gave the same answer.
 
@@ -721,8 +769,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `toggle_idle_rock_function()` | ran (no return value) |
-| Scheme | `(toggle-idle-rock-function)` | ran (no return value) |
+| Python | `toggle_idle_rock_function()` | ran (no return value, nothing visible changed) |
+| Scheme | `(toggle-idle-rock-function)` | ran (no return value, nothing visible changed) |
 
 ### toggle_idle_spin_function
 
@@ -735,8 +783,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `toggle_idle_spin_function()` | ran (no return value) |
-| Scheme | `(toggle-idle-spin-function)` | ran (no return value) |
+| Python | `toggle_idle_spin_function()` | ran (no return value, nothing visible changed) |
+| Scheme | `(toggle-idle-spin-function)` | ran (no return value, nothing visible changed) |
 
 ### use_graphics_interface_state
 

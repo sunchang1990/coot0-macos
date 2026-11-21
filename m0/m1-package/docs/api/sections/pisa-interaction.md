@@ -16,8 +16,10 @@ Also available in Python as `add_pisa_interface_bond_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | first `imol_a = new_molecule_by_atom_selection(0, "//A")`, then `imol_b = new_molecule_by_atom_selection(0, "//B")`, then `add_pisa_interface_bond(imol_a, imol_b, ["h-bonds", ["A", 41, "", " OE1", ""], ["B", 41, "", " OE1", ""]], 1)` | ran (no return value, nothing visible changed) |
+| Scheme | first `(define imol-a (new-molecule-by-atom-selection 0 "//A"))`, then `(define imol-b (new-molecule-by-atom-selection 0 "//B"))`, then `(add-pisa-interface-bond-scm imol-a imol-b (list 'salt-bridges (list "A" 41 "" " OE1" "") (list "B" 41 "" " OE1" "")) 1)` | ran (no return value, nothing visible changed) |
+
+Example written and checked by hand on the test data. Expected: draws a bond of the given type between the two atoms as a generic object for interface 1 (bond type is a string in Python, a symbol in Scheme).
 
 ### handle_pisa_interfaces
 
@@ -41,8 +43,14 @@ Also available in Scheme as `handle-pisa-interfaces-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | `handle_pisa_interfaces([])` | ran, returned `-1` |
+| Scheme | `(handle-pisa-interfaces (list))` | ran, returned `-1` |
+
+Example written and checked by hand on the test data. Expected: internal: called by the PISA XML parser with the interface records; an empty list returns -1.
+
+Note: a real description is a nested record list made by parse_pisa_xml.py (molecule pairs, bonds, areas) and ends in a tree-view window; only the empty case was run
+
+Python and Scheme gave the same answer.
 
 ### pisa_clear_interfaces
 
@@ -55,8 +63,10 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `pisa_clear_interfaces()` | not run: not run automatically (pisa: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(pisa-clear-interfaces)` | not run: not run automatically (pisa: exits, uses the network, an external program, files or a screen) |
+| Python | `pisa_clear_interfaces()` | ran (no return value, nothing visible changed) |
+| Scheme | `(pisa-clear-interfaces)` | ran (no return value, nothing visible changed) |
+
+Example written and checked by hand on the test data. Expected: clears and undisplays all PISA interface objects (nothing to clear in a fresh Coot).
 
 ### pisa_interaction
 
@@ -70,8 +80,12 @@ Arguments: imol_1 (a whole number), imol_2 (a whole number). Returns: a whole nu
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `pisa_interaction(0, 0)` | not run: not run automatically (pisa: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(pisa-interaction 0 0)` | not run: not run automatically (pisa: exits, uses the network, an external program, files or a screen) |
+| Python | first `imol_a = new_molecule_by_atom_selection(0, "//A")`, then `imol_b = new_molecule_by_atom_selection(0, "//B")`, then `pisa_interaction(imol_a, imol_b)` | ran, returned `5`; changed: new molecule 5 (model, interacting residues from 3); new molecule 6 (model, interacting residues from 4); first_small_coords_imol(): -1 -> 5; graphics_n_molecules(): 5 -> 7 |
+| Scheme | first `(define imol-a (new-molecule-by-atom-selection 0 "//A"))`, then `(define imol-b (new-molecule-by-atom-selection 0 "//B"))`, then `(pisa-interaction imol-a imol-b)` | ran, returned `5`; changed: new molecule 5 (model, interacting residues from 3); new molecule 6 (model, interacting residues from 4); first_small_coords_imol(): -1 -> 5; graphics_n_molecules(): 5 -> 7 |
+
+Example written and checked by hand on the test data. Expected: makes two new molecules with the residues of each molecule within 4 A of the other; returns the first new molecule number (-1 if none).
+
+Python and Scheme gave the same answer.
 
 ### pisa-molecule-record-chain-id
 
@@ -82,7 +96,9 @@ Arguments: molecule-record-1 (a list or value). Returns: a value (see the result
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | first `(define rt (make-record-type 'pisa-molecule '(chain-id residues)))`, then `(define rec ((record-constructor rt) "A" (list (list "A" 41 ""))))`, then `(pisa-molecule-record-chain-id rec)` | ran, returned `"A"` |
+
+Example written and checked by hand on the test data. Expected: returns the chain-id field of a PISA molecule record (Scheme only, internal).
 
 ### pisa-molecule-record-residues
 
@@ -95,5 +111,7 @@ Arguments: molecule-record-1 (a list or value). Returns: a value (see the result
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | first `(define rt (make-record-type 'pisa-molecule '(chain-id residues)))`, then `(define rec ((record-constructor rt) "A" (list (list "A" 41 ""))))`, then `(pisa-molecule-record-residues rec)` | ran, returned `(("A" 41 ""))` |
+
+Example written and checked by hand on the test data. Expected: returns the residues field of a PISA molecule record (Scheme only, internal).
 

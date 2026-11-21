@@ -15,8 +15,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `do_rigid_body_refine(1)` | ran (no return value) |
-| Scheme | `(do-rigid-body-refine 1)` | ran (no return value) |
+| Python | `do_rigid_body_refine(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(do-rigid-body-refine 1)` | ran (no return value, nothing visible changed) |
 
 ### execute_rigid_body_refine
 
@@ -27,8 +27,8 @@ Arguments: auto_range_flag (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `execute_rigid_body_refine(1)` | ran (no return value) |
-| Scheme | `(execute-rigid-body-refine 1)` | ran (no return value) |
+| Python | `execute_rigid_body_refine(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(execute-rigid-body-refine 1)` | ran (no return value, nothing visible changed) |
 
 ### rigid_body_refine_by_atom_selection
 
@@ -39,8 +39,8 @@ Arguments: imol (a whole number), atom_selection_string (text). Returns: nothing
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `rigid_body_refine_by_atom_selection(0, "//A/41-45")` | ran (no return value) |
-| Scheme | `(rigid-body-refine-by-atom-selection 0 "//A/41-45")` | ran (no return value) |
+| Python | `rigid_body_refine_by_atom_selection(0, "//A/41-45")` | ran (no return value, nothing visible changed) |
+| Scheme | `(rigid-body-refine-by-atom-selection 0 "//A/41-45")` | ran (no return value, nothing visible changed) |
 
 ### rigid_body_refine_by_residue_ranges
 
@@ -57,8 +57,12 @@ Also available in Scheme as `rigid-body-refine-by-residue-ranges-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | `rigid_body_refine_by_residue_ranges(0, [["A", 41, 45]])` | ran, returned `True` |
+| Scheme | `(rigid-body-refine-by-residue-ranges 0 (list (list "A" 41 45)))` | ran, returned `#t` |
+
+Example written and checked by hand on the test data. Expected: rigid-body refines the listed ranges [chain, start, end] against the refinement map; True when the fit was done.
+
+Python and Scheme gave the same answer.
 
 ### rigid_body_refine_zone
 
@@ -75,8 +79,8 @@ Arguments: reso_start (a whole number), resno_end (a whole number), chain_id (te
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `rigid_body_refine_zone(1, 45, "A", 0)` | ran (no return value) |
-| Scheme | `(rigid-body-refine-zone 1 45 "A" 0)` | ran (no return value) |
+| Python | `rigid_body_refine_zone(1, 45, "A", 0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(rigid-body-refine-zone 1 45 "A" 0)` | ran (no return value, nothing visible changed) |
 
 ### set_rigid_body_fit_acceptable_fit_fraction
 
@@ -91,6 +95,6 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_rigid_body_fit_acceptable_fit_fraction(1.0)` | ran (no return value) |
-| Scheme | `(set-rigid-body-fit-acceptable-fit-fraction 1.0)` | ran (no return value) |
+| Python | `set_rigid_body_fit_acceptable_fit_fraction(1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-rigid-body-fit-acceptable-fit-fraction 1.0)` | ran (no return value, nothing visible changed) |
 

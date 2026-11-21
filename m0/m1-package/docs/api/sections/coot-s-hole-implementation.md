@@ -19,8 +19,8 @@ Arguments: imol (a whole number), start_x (a number), start_y (a number), start_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `hole(0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1, True, "tutorial-modern.pdb")` | ran (no return value) |
-| Scheme | `(hole 0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1 1 "tutorial-modern.pdb")` | ran (no return value) |
+| Python | `hole(0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1, True, "tutorial-modern.pdb")` | ran (no return value, nothing visible changed) |
+| Scheme | `(hole 0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1 1 "tutorial-modern.pdb")` | ran (no return value, nothing visible changed) |
 
 ### link_info
 
@@ -52,8 +52,8 @@ Arguments: imol (a whole number), spec_1 (a list or value), spec_2 (a list or va
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `make_link(0, ["A", 41, ""], ["A", 41, ""], "my-name", 1.0)` | ran (no return value) |
-| Scheme | `(make-link 0 (list "A" 41 "") (list "A" 41 "") "my-name" 1.0)` | ran (no return value) |
+| Python | `make_link(0, ["A", 41, ""], ["A", 41, ""], "my-name", 1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(make-link 0 (list "A" 41 "") (list "A" 41 "") "my-name" 1.0)` | ran (no return value, nothing visible changed) |
 
 ### probe_radius_graph_close_callback
 
@@ -66,8 +66,10 @@ Arguments: button (`GtkWidget *`), dialog (`GtkWidget *`). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | `probe_radius_graph_close_callback(button, dialog)` | not run: GTK button callback (takes widgets); internal to the HOLE graph window |
+| Scheme | (no example) | not run: no automatic example (it takes a list, a widget or an object) |
+
+Example written and checked by hand on the test data. Expected: GTK callback that closes the HOLE probe-radius graph window.
 
 ### show_hole_probe_radius_graph
 
@@ -78,8 +80,10 @@ Arguments: hole_path (a list), path_length (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | (no example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no example) | not run: no automatic example (it takes a list, a widget or an object) |
+
+Example written and checked by hand on the test data. Expected: draws the HOLE probe-radius graph window from a path (C++ list of (position, radius)).
 
 ### show_hole_probe_radius_graph_basic
 
@@ -90,8 +94,10 @@ Arguments: hole_path (a list), path_length (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | (no example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no example) | not run: no automatic example (it takes a list, a widget or an object) |
+
+Example written and checked by hand on the test data. Expected: draws the HOLE probe-radius graph window from a path (C++ list of (position, radius)).
 
 ### show_hole_probe_radius_graph_goocanvas
 
@@ -102,6 +108,8 @@ Arguments: hole_path (a list), path_length (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | (no example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no example) | not run: no automatic example (it takes a list, a widget or an object) |
+
+Example written and checked by hand on the test data. Expected: draws the HOLE probe-radius graph window from a path (C++ list of (position, radius)).
 

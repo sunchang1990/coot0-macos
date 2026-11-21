@@ -13,8 +13,10 @@ Arguments: imol (a whole number), name (text), sub_menu (`GtkWidget *`), callbac
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | (no example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no example) | not run: no automatic example (it takes a list, a widget or an object) |
+
+Example written and checked by hand on the test data. Expected: adds a molecule entry to a GTK menu (internal menu building).
 
 ### add_map_scroll_wheel_mol_menu_item
 
@@ -27,8 +29,10 @@ Arguments: imol (a whole number), name (text), menu (`GtkWidget *`), callback (`
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | (no example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no example) | not run: no automatic example (it takes a list, a widget or an object) |
+
+Example written and checked by hand on the test data. Expected: adds a molecule entry to a GTK menu (internal menu building).
 
 ### amplitude_vs_resolution_py
 
@@ -53,7 +57,9 @@ Arguments: map_number_list (a list or value), imol_map_mask (a whole number). Re
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | first `multi_sharpen_blur_map_py(1, [-20.0, 0.0])`, then `analyse_map_point_density_change_py([1, 3, 4], 1)` | ran, returned `5`; changed: new molecule 5 (map, zde); graphics_n_molecules(): 5 -> 6 |
+
+Example written and checked by hand on the test data. Expected: returns a new map of the per-point density change across the listed maps (here map 1 and two blurred copies), masked by map 1.
 
 ### auto_read_make_and_draw_maps
 
@@ -124,6 +130,10 @@ Arguments: imol_map (a whole number). Returns: a number.
 | Python | `b_factor_from_map(1)` | ran, returned `-1.0` |
 | Scheme | `(b-factor-from-map 1)` | ran, returned `-1.0` |
 
+Example written and checked by hand on the test data. Expected: should return the B-factor estimated from map 1's amplitude fall-off.
+
+Note: Always returns -1: the C++ computes b and prints it but returns the unchanged b_factor = -1 (bug in 0.9.8.96).
+
 Python and Scheme gave the same answer.
 
 ### flip_hand
@@ -139,8 +149,8 @@ Arguments: imol_map (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `flip_hand(1)` | ran, returned `2` |
-| Scheme | `(flip-hand 1)` | ran, returned `2` |
+| Python | `flip_hand(1)` | ran, returned `3`; changed: new molecule 3 (map, Map 1 Flipped Hand); graphics_n_molecules(): 3 -> 4 |
+| Scheme | `(flip-hand 1)` | ran, returned `3`; changed: new molecule 3 (map, Map 1 Flipped Hand); graphics_n_molecules(): 3 -> 4 |
 
 Python and Scheme gave the same answer.
 
@@ -156,8 +166,8 @@ Arguments: imol_map (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `go_to_map_molecule_centre(1)` | ran (no return value) |
-| Scheme | `(go-to-map-molecule-centre 1)` | ran (no return value) |
+| Python | `go_to_map_molecule_centre(1)` | ran (no return value); changed: map 1 contour level: 0.56 -> 0.8904; rotation centre moved 32.3 A to (33.2, 39.3, 18.9); get_contour_level_absolute(1): 0.56 -> 0.8904; get_contour_level_in_sigma(1): 1.499 -> 2.384 |
+| Scheme | `(go-to-map-molecule-centre 1)` | ran (no return value, nothing visible changed) |
 
 ### handle_read_ccp4_map
 
@@ -170,8 +180,10 @@ Arguments: filename (text), is_diff_map_flag (a whole number). Returns: a whole 
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `handle_read_ccp4_map("tutorial-modern.pdb", 1)` | ran, returned `-1` |
-| Scheme | `(handle-read-ccp4-map "tutorial-modern.pdb" 1)` | ran, returned `-1` |
+| Python | `handle_read_ccp4_map("rnasa-map.map", 0)` | ran, returned `3`; changed: new molecule 3 (map, rnasa-map.map); graphics_n_molecules(): 3 -> 4; scroll_wheel_map(): -1 -> 3 |
+| Scheme | `(handle-read-ccp4-map "rnasa-map.map" 0)` | ran, returned `3`; changed: new molecule 3 (map, rnasa-map.map); graphics_n_molecules(): 3 -> 4; scroll_wheel_map(): -1 -> 3 |
+
+Example written and checked by hand on the test data. Expected: returns the new map molecule number; the CCP4 map file is read (second argument 1 = difference map).
 
 Python and Scheme gave the same answer.
 
@@ -184,8 +196,12 @@ Arguments: dir_name (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `handle_read_emdb_data(".")` | ran, returned `0` |
-| Scheme | `(handle-read-emdb-data ".")` | ran, returned `0` |
+| Python | first `import os, shutil; os.makedirs("emd_0001/map", exist_ok=True); shutil.copy("rnasa-map.map", "emd_0001/map/emd_0001.map")`, then `handle_read_emdb_data("emd_0001")` | ran, returned `0`; changed: new molecule 3 (map, emd_0001.map); graphics_n_molecules(): 3 -> 4; scroll_wheel_map(): -1 -> 3 |
+| Scheme | first `(begin (mkdir "emd_0002") (mkdir "emd_0002/map") (copy-file "rnasa-map.map" "emd_0002/map/emd_0002.map"))`, then `(handle-read-emdb-data "emd_0002")` | ran, returned `0`; changed: new molecule 3 (map, emd_0002.map); graphics_n_molecules(): 3 -> 4; scroll_wheel_map(): -1 -> 3 |
+
+Example written and checked by hand on the test data. Expected: reads every map/*.map and fittedModels/PDB/*.ent of an EMDB entry directory; returns 0.
+
+Note: Return value is always 0 (status never set), also on success.
 
 Python and Scheme gave the same answer.
 
@@ -202,8 +218,10 @@ Also available in Python as `map_colour_components_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `map_colour_components(0)` | ran, returned `False` |
-| Scheme | `(map-colour-components 0)` | ran, returned `#f` |
+| Python | `map_colour_components(1)` | ran, returned `[0.19999998807907104, 0.38333338499069214, 0.699999988079071]` |
+| Scheme | `(map-colour-components 1)` | ran, returned `(0.19999998807907104 0.38333338499069214 0.699999988079071)` |
+
+Example written and checked by hand on the test data. Expected: returns the [red, green, blue] colour of map 1.
 
 Python and Scheme gave the same answer.
 
@@ -219,8 +237,10 @@ Arguments: imol_map (a whole number), b_factors_list (a list or value). Returns:
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | `multi_sharpen_blur_map_py(1, [-20.0, 0.0, 30.0])` | ran (no return value); changed: new molecule 3 (map, Map Sharpen -20.00); new molecule 4 (map, Map Blur 0.00); new molecule 5 (map, Map Blur 30.00); graphics_n_molecules(): 3 -> 6 |
+| Scheme | `(multi-sharpen-blur-map-scm 1 (list -10.0 40.0))` | ran (no return value); changed: new molecule 3 (map, Map Sharpen -10.00); new molecule 4 (map, Map Blur 40.00); graphics_n_molecules(): 3 -> 5 |
+
+Example written and checked by hand on the test data. Expected: one new map per B-factor in the list (negative = sharpen, positive = blur).
 
 ### read_ccp4_map
 
@@ -233,8 +253,10 @@ Arguments: filename (text), is_diff_map_flag (a whole number). Returns: a whole 
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `read_ccp4_map("tutorial-modern.pdb", 1)` | ran, returned `-1` |
-| Scheme | `(read-ccp4-map "tutorial-modern.pdb" 1)` | ran, returned `-1` |
+| Python | `read_ccp4_map("rnasa-map.map", 0)` | ran, returned `3`; changed: new molecule 3 (map, rnasa-map.map); graphics_n_molecules(): 3 -> 4; scroll_wheel_map(): -1 -> 3 |
+| Scheme | `(read-ccp4-map "rnasa-map.map" 0)` | ran, returned `3`; changed: new molecule 3 (map, rnasa-map.map); graphics_n_molecules(): 3 -> 4; scroll_wheel_map(): -1 -> 3 |
+
+Example written and checked by hand on the test data. Expected: returns the new map molecule number.
 
 Python and Scheme gave the same answer.
 
@@ -250,8 +272,8 @@ Arguments: imol_map (a whole number), pir_file_name (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `res_tracer(1, "tutorial-modern.pdb")` | ran (no return value) |
-| Scheme | `(res-tracer 1 "tutorial-modern.pdb")` | ran (no return value) |
+| Python | `res_tracer(1, "tutorial-modern.pdb")` | ran (no return value); changed: new molecule 4 (map, Map); graphics_n_molecules(): 3 -> 5 |
+| Scheme | `(res-tracer 1 "tutorial-modern.pdb")` | ran (no return value); changed: new molecule 4 (map, Map); graphics_n_molecules(): 3 -> 5 |
 
 ### sharpen_blur_map
 
@@ -267,8 +289,8 @@ Arguments: imol_map (a whole number), b_factor (a number). Returns: a whole numb
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `sharpen_blur_map(1, 20.0)` | ran, returned `2` |
-| Scheme | `(sharpen-blur-map 1 20.0)` | ran, returned `2` |
+| Python | `sharpen_blur_map(1, 20.0)` | ran, returned `3`; changed: new molecule 3 (map, rnasa-1.8-all_refmac1.mtz FWT PHWT Blur 20.00); graphics_n_molecules(): 3 -> 4 |
+| Scheme | `(sharpen-blur-map 1 20.0)` | ran, returned `3`; changed: new molecule 3 (map, rnasa-1.8-all_refmac1.mtz FWT PHWT Blur 20.00); graphics_n_molecules(): 3 -> 4 |
 
 Python and Scheme gave the same answer.
 
@@ -287,8 +309,8 @@ Arguments: imol_map (a whole number), b_factor (a number), resample_factor (a nu
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `sharpen_blur_map_with_resampling(1, 20.0, 1.0)` | ran, returned `2` |
-| Scheme | `(sharpen-blur-map-with-resampling 1 20.0 1.0)` | ran, returned `2` |
+| Python | `sharpen_blur_map_with_resampling(1, 20.0, 1.0)` | ran, returned `3`; changed: new molecule 3 (map, rnasa-1.8-all_refmac1.mtz FWT PHWT Blur 20.00); graphics_n_molecules(): 3 -> 4 |
+| Scheme | `(sharpen-blur-map-with-resampling 1 20.0 1.0)` | ran, returned `3`; changed: new molecule 3 (map, rnasa-1.8-all_refmac1.mtz FWT PHWT Blur 20.00); graphics_n_molecules(): 3 -> 4 |
 
 Python and Scheme gave the same answer.
 

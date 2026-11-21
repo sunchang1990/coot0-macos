@@ -15,8 +15,8 @@ Arguments: ext (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `add_coordinates_glob_extension("hello")` | ran (no return value) |
-| Scheme | `(add-coordinates-glob-extension "hello")` | ran (no return value) |
+| Python | `add_coordinates_glob_extension("hello")` | ran (no return value, nothing visible changed) |
+| Scheme | `(add-coordinates-glob-extension "hello")` | ran (no return value, nothing visible changed) |
 
 ### add_data_glob_extension
 
@@ -29,8 +29,8 @@ Arguments: ext (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `add_data_glob_extension("hello")` | ran (no return value) |
-| Scheme | `(add-data-glob-extension "hello")` | ran (no return value) |
+| Python | `add_data_glob_extension("hello")` | ran (no return value, nothing visible changed) |
+| Scheme | `(add-data-glob-extension "hello")` | ran (no return value, nothing visible changed) |
 
 ### add_dictionary_glob_extension
 
@@ -43,8 +43,8 @@ Arguments: ext (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `add_dictionary_glob_extension("hello")` | ran (no return value) |
-| Scheme | `(add-dictionary-glob-extension "hello")` | ran (no return value) |
+| Python | `add_dictionary_glob_extension("hello")` | ran (no return value, nothing visible changed) |
+| Scheme | `(add-dictionary-glob-extension "hello")` | ran (no return value, nothing visible changed) |
 
 ### add_map_glob_extension
 
@@ -57,8 +57,8 @@ Arguments: ext (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `add_map_glob_extension("hello")` | ran (no return value) |
-| Scheme | `(add-map-glob-extension "hello")` | ran (no return value) |
+| Python | `add_map_glob_extension("hello")` | ran (no return value, nothing visible changed) |
+| Scheme | `(add-map-glob-extension "hello")` | ran (no return value, nothing visible changed) |
 
 ### export_map_gui
 
@@ -71,8 +71,10 @@ Arguments: export_map_fragment (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `export_map_gui(1)` | stopped Coot when tried without a window (not checked with a window) |
-| Scheme | `(export-map-gui 1)` | stopped Coot when tried without a window (not checked with a window) |
+| Python | `export_map_gui(0)` | not run: needs the graphics window (stops Coot without a screen) |
+| Scheme | `(export-map-gui 0)` | not run: needs the graphics window (stops Coot without a screen) |
+
+Example written and checked by hand on the test data. Expected: opens the Export Map file chooser (1 = map fragment around the centre, 0 = whole map).
 
 ### file_chooser_overwrite_state
 
@@ -151,8 +153,10 @@ Arguments: dir (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `make_directory_maybe(".")` | ran, returned `0` |
-| Scheme | `(make-directory-maybe ".")` | ran, returned `0` |
+| Python | `make_directory_maybe("my-new-dir")` | ran, returned `0` |
+| Scheme | `(make-directory-maybe "my-new-dir")` | ran, returned `0` |
+
+Example written and checked by hand on the test data. Expected: returns 0 when the directory exists afterwards (created or already there), non-zero on failure.
 
 Python and Scheme gave the same answer.
 
@@ -167,8 +171,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `open_coords_dialog()` | ran (no return value) |
-| Scheme | `(open-coords-dialog)` | ran (no return value) |
+| Python | `open_coords_dialog()` | ran (no return value, nothing visible changed) |
+| Scheme | `(open-coords-dialog)` | ran (no return value, nothing visible changed) |
 
 ### remove_coordinates_glob_extension
 
@@ -181,8 +185,8 @@ Arguments: ext (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `remove_coordinates_glob_extension("hello")` | ran (no return value) |
-| Scheme | `(remove-coordinates-glob-extension "hello")` | ran (no return value) |
+| Python | `remove_coordinates_glob_extension("hello")` | ran (no return value, nothing visible changed) |
+| Scheme | `(remove-coordinates-glob-extension "hello")` | ran (no return value, nothing visible changed) |
 
 ### remove_data_glob_extension
 
@@ -195,8 +199,8 @@ Arguments: ext (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `remove_data_glob_extension("hello")` | ran (no return value) |
-| Scheme | `(remove-data-glob-extension "hello")` | ran (no return value) |
+| Python | `remove_data_glob_extension("hello")` | ran (no return value, nothing visible changed) |
+| Scheme | `(remove-data-glob-extension "hello")` | ran (no return value, nothing visible changed) |
 
 ### remove_dictionary_glob_extension
 
@@ -209,8 +213,8 @@ Arguments: ext (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `remove_dictionary_glob_extension("hello")` | ran (no return value) |
-| Scheme | `(remove-dictionary-glob-extension "hello")` | ran (no return value) |
+| Python | `remove_dictionary_glob_extension("hello")` | ran (no return value, nothing visible changed) |
+| Scheme | `(remove-dictionary-glob-extension "hello")` | ran (no return value, nothing visible changed) |
 
 ### remove_map_glob_extension
 
@@ -223,8 +227,8 @@ Arguments: ext (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `remove_map_glob_extension("hello")` | ran (no return value) |
-| Scheme | `(remove-map-glob-extension "hello")` | ran (no return value) |
+| Python | `remove_map_glob_extension("hello")` | ran (no return value, nothing visible changed) |
+| Scheme | `(remove-map-glob-extension "hello")` | ran (no return value, nothing visible changed) |
 
 ### set_file_chooser_overwrite
 
@@ -235,8 +239,10 @@ Arguments: istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_file_chooser_overwrite(1)` | ran (no return value) |
-| Scheme | `(set-file-chooser-overwrite 1)` | ran (no return value) |
+| Python | `set_file_chooser_overwrite(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-file-chooser-overwrite 1)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: file_chooser_overwrite_state was 1, set to 0, read back 0; Scheme: file-chooser-overwrite-state was 1, set to 0, read back 0.
 
 ### set_file_chooser_selector
 
@@ -249,8 +255,10 @@ Arguments: istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_file_chooser_selector(1)` | ran (no return value) |
-| Scheme | `(set-file-chooser-selector 1)` | ran (no return value) |
+| Python | `set_file_chooser_selector(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-file-chooser-selector 1)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: file_chooser_selector_state was 1, set to 0, read back 0; Scheme: file-chooser-selector-state was 1, set to 0, read back 0.
 
 ### set_filter_fileselection_filenames
 
@@ -265,8 +273,10 @@ Arguments: istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_filter_fileselection_filenames(1)` | ran (no return value) |
-| Scheme | `(set-filter-fileselection-filenames 1)` | ran (no return value) |
+| Python | `set_filter_fileselection_filenames(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-filter-fileselection-filenames 1)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: filter_fileselection_filenames_state was 0, set to 1, read back 1; Scheme: filter-fileselection-filenames-state was 0, set to 1, read back 1.
 
 ### set_show_paths_in_display_manager
 
@@ -282,8 +292,10 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_show_paths_in_display_manager(1)` | ran (no return value) |
-| Scheme | `(set-show-paths-in-display-manager 1)` | ran (no return value) |
+| Python | `set_show_paths_in_display_manager(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-show-paths-in-display-manager 1)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: show_paths_in_display_manager_state was 0, set to 1, read back 1; Scheme: show-paths-in-display-manager-state was 0, set to 1, read back 1.
 
 ### set_sticky_sort_by_date
 
@@ -298,8 +310,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_sticky_sort_by_date()` | ran (no return value) |
-| Scheme | `(set-sticky-sort-by-date)` | ran (no return value) |
+| Python | `set_sticky_sort_by_date()` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-sticky-sort-by-date)` | ran (no return value, nothing visible changed) |
 
 ### show_paths_in_display_manager_state
 
@@ -334,6 +346,6 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `unset_sticky_sort_by_date()` | ran (no return value) |
-| Scheme | `(unset-sticky-sort-by-date)` | ran (no return value) |
+| Python | `unset_sticky_sort_by_date()` | ran (no return value, nothing visible changed) |
+| Scheme | `(unset-sticky-sort-by-date)` | ran (no return value, nothing visible changed) |
 

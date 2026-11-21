@@ -31,7 +31,7 @@ Arguments: search_string (text), allow_minimal_descriptions_flag (a whole number
 | | Example | When tried (test data, no window) |
 |---|---|---|
 | Python | `monomer_lib_3_letter_codes_matching("hello", 1)` | ran, returned `<Swig Object of type 'std::vector< std::pair< std::string,std::string >,std::allocator< std::pair< std::string,std::stri ...` |
-| Scheme | `(monomer-lib-3-letter-codes-matching "hello" 1)` | ran, returned `#<collectable-swig-pointer std::vector< std::pair< std::string,std::string > > * 718d33e80>` |
+| Scheme | `(monomer-lib-3-letter-codes-matching "hello" 1)` | ran, returned `#<collectable-swig-pointer std::vector< std::pair< std::string,std::string > > * a57127ac0>` |
 
 ### mutate_internal
 
@@ -42,8 +42,10 @@ Arguments: ires (a whole number), chain_id (text), imol (a whole number), target
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `mutate_internal(41, "A", 0, "ALA")` | error: TypeError: in method 'mutate_internal', argument 4 of type 'std::string &' |
-| Scheme | `(mutate-internal 41 "A" 0 "ALA")` | error: In procedure mutate-internal: Wrong type argument in position 4: "ALA" |
+| Python | `mutate_internal(41, "A", 0, "ALA")` | not run: not callable from scripting: std::string& argument is not wrapped in either language |
+| Scheme | `(mutate-internal 41 "A" 0 "ALA")` | not run: not callable from scripting: std::string& argument is not wrapped in either language |
+
+Example written and checked by hand on the test data. Expected: internal C++ helper, not callable from scripts (std::string& argument not wrapped); use mutate(0, "A", 41, "", "ALA").
 
 ### on_monomer_lib_sbase_molecule_button_press
 
@@ -54,8 +56,10 @@ Arguments: button (`GtkButton *`), user_data (`gpointer`). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | `on_monomer_lib_sbase_molecule_button_press(button, user_data)` | not run: GUI callback: needs a GTK button widget of the monomer search dialog |
+| Scheme | `(on-monomer-lib-sbase-molecule-button-press button user-data)` | not run: GUI callback: needs a GTK button widget of the monomer search dialog |
+
+Example written and checked by hand on the test data. Expected: button callback of the monomer library search dialog (takes the GTK button and its data); not for scripts.
 
 ### on_monomer_lib_search_results_button_press
 
@@ -66,8 +70,10 @@ Arguments: button (`GtkButton *`), user_data (`gpointer`). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | `on_monomer_lib_search_results_button_press(button, user_data)` | not run: GUI callback: needs a GTK button widget of the monomer search dialog |
+| Scheme | `(on-monomer-lib-search-results-button-press button user-data)` | not run: GUI callback: needs a GTK button widget of the monomer search dialog |
+
+Example written and checked by hand on the test data. Expected: button callback of the monomer library search dialog (takes the GTK button and its data); not for scripts.
 
 ### overlap_ligands_internal
 
@@ -78,8 +84,8 @@ Arguments: imol_ligand (a whole number), imol_ref (a whole number), chain_id_ref
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `overlap_ligands_internal(0, 0, "A", 41, True)` | ran, returned `<Swig Object of type 'coot::graph_match_info_t *' at 0x10c29d1d0>` |
-| Scheme | `(overlap-ligands-internal 0 0 "A" 41 1)` | ran, returned `#<collectable-swig-pointer coot::graph_match_info_t * 7acc8b020>` |
+| Python | `overlap_ligands_internal(0, 0, "A", 41, True)` | ran, returned `<Swig Object of type 'coot::graph_match_info_t *' at 0x109c31770>`; changed: molecule 0: deleted 188 residue(s) (A2, A3, A4, A5 ...); molecule 0: coordinates of 1 residue(s) (A1); first_small_coords_imol(): -1 -> 0; n_atoms(0): 1465 -> 8 ... |
+| Scheme | `(overlap-ligands-internal 0 0 "A" 41 1)` | ran, returned `#<collectable-swig-pointer coot::graph_match_info_t * b4d1d8aa0>`; changed: molecule 0: deleted 188 residue(s) (A2, A3, A4, A5 ...); molecule 0: coordinates of 1 residue(s) (A1); first_small_coords_imol(): -1 -> 0; n_atoms(0): 1465 -> 8 ... |
 
 ### spin_N
 
@@ -96,8 +102,8 @@ Also available in Python as `spin_N_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `spin_N(0, ["A", 41, ""], 10.0)` | ran (no return value) |
-| Scheme | `(spin-N-scm 0 (list "A" 41 "") 10.0)` | ran (no return value) |
+| Python | `spin_N(0, ["A", 41, ""], 10.0)` | ran (no return value); changed: molecule 0: coordinates of 1 residue(s) (A41) |
+| Scheme | `(spin-N-scm 0 (list "A" 41 "") 10.0)` | ran (no return value); changed: molecule 0: coordinates of 1 residue(s) (A41) |
 
 ### spin_search
 
@@ -114,8 +120,10 @@ Also available in Python as `spin_search_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | `spin_search(1, 0, "A", 41, "", [" CA ", " CB "], [" CG ", " CD ", " OE1", " OE2"])` | ran (no return value); changed: molecule 0: coordinates of 1 residue(s) (A41) |
+| Scheme | `(spin-search 1 0 "A" 41 "" (list " CA " " CB ") (list " CG " " CD " " OE1" " OE2"))` | ran (no return value); changed: molecule 0: coordinates of 1 residue(s) (A41) |
+
+Example written and checked by hand on the test data. Expected: spins CG/CD/OE1/OE2 of GLU A41 around the CA-CB bond to the best fit in map 1; the residue's coordinates change.
 
 ### spin_search_by_atom_vectors
 
@@ -126,6 +134,8 @@ Arguments: imol_map (a whole number), imol (a whole number), chain_id (text), re
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `spin_search_by_atom_vectors(1, 0, "A", 41, "", ".", "hello")` | error: TypeError: in method 'spin_search_by_atom_vectors', argument 6 of type 'std::pair< std::string,std::string > const &' |
-| Scheme | `(spin-search-by-atom-vectors 1 0 "A" 41 "" "." "hello")` | error: In procedure spin-search-by-atom-vectors: Wrong type argument in position 6: "." |
+| Python | `spin_search_by_atom_vectors(1, 0, "A", 41, "", [" CA ", " CB "], [" CG ", " CD "])` | not run: not callable from scripting: std::pair/std::vector arguments are not wrapped in either language |
+| Scheme | `(spin-search-by-atom-vectors 1 0 "A" 41 "" (list " CA " " CB ") (list " CG " " CD "))` | not run: not callable from scripting: std::pair/std::vector arguments are not wrapped in either language |
+
+Example written and checked by hand on the test data. Expected: internal C++ helper of spin_search, not callable from scripts (std::pair argument not wrapped); use spin_search(...) with the same arguments.
 

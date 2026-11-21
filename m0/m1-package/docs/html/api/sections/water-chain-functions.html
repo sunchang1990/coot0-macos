@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="cf7819f5513b891273f44e6b483b74714114359a">
+<meta name="coot0-source-sha1" content="946a5fded79f5eac28700d25cf1dc0090689a6df">
 <title>Water Chain Functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -27,6 +27,7 @@ Also available in Scheme as <code>water-chain-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>water_chain(0)</code></td><td>ran, returned <code>False</code></td></tr>
 <tr><td>Scheme</td><td><code>(water-chain 0)</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: the chain id of a chain that holds only waters; False when there is none (as in both test models).</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="water_chain_from_shelx_ins">water_chain_from_shelx_ins</h3>
 <p>Python: <code>water_chain_from_shelx_ins(imol)</code><br>
@@ -37,6 +38,9 @@ Scheme: <code>(water-chain-from-shelx-ins imol)</code></p>
 Also available in Python as <code>water_chain_from_shelx_ins_py</code>.
 Also available in Scheme as <code>water-chain-from-shelx-ins-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>water_chain_from_shelx_ins(0)</code></td><td>not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(water-chain-from-shelx-ins 0)</code></td><td>not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>write_shelx_ins_file(0, "tut.ins")</code>, then <code>imol_s = read_shelx_ins_file("tut.ins", 0)</code>, then <code>water_chain_from_shelx_ins(imol_s)</code></td><td>ran, returned <code>'B'</code></td></tr>
+<tr><td>Scheme</td><td>first <code>(write-shelx-ins-file 0 "tut.ins")</code>, then <code>(define imol-s (read-shelx-ins-file "tut.ins" 0))</code>, then <code>(water-chain-from-shelx-ins imol-s)</code></td><td>ran, returned <code>"B"</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: the chain id that waters of the SHELX molecule go into; False if no chain or not a SHELX molecule.</p>
+<p>Note: Returns 'B' although the model has no waters (B is a protein chain); it seems to report the last chain.</p>
+<p>Python and Scheme gave the same answer.</p>
 </body></html>

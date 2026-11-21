@@ -22,8 +22,12 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_c
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `add_linked_residue(0, "A", 41, "", "hello", "hello", 1)` | ran, returned `False` |
-| Scheme | `(add-linked-residue 0 "A" 41 "" "hello" "hello" 1)` | ran, returned `#f` |
+| Python | `add_linked_residue(0, "A", 20, "", "NAG", "NAG-ASN", 3)` | ran, returned `[True, 'A', 94, '']`; changed: molecule 0: added 1 residue(s) (A94); molecule 0: coordinates of 1 residue(s) (A20); n_residues(0): 189 -> 190 |
+| Scheme | `(add-linked-residue 0 "A" 20 "" "NAG" "NAG-ASN" 3)` | ran, returned `(#t "A" 94 "")`; changed: molecule 0: added 1 residue(s) (A94); molecule 0: coordinates of 1 residue(s) (A20); n_residues(0): 189 -> 190 |
+
+Example written and checked by hand on the test data. Expected: returns the residue spec of the new NAG linked to ASN A20 and the molecule gains one residue; mode 1 = add, 2 = add and fit, 3 = add, fit and refine.
+
+Note: Python ignores the mode argument (uses set_add_linked_residue_do_fit_and_refine state, default on) and returns False when that state is off; Scheme follows mode and with mode 1 returns #f even though the residue is added (seen: A94 added, #f returned). Upstream code differs between the two.
 
 Python and Scheme gave the same answer.
 
@@ -42,8 +46,10 @@ Arguments: comp_id (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `get_ccp4srs_monomer_and_dictionary("ALA")` | ran, returned `-1` |
-| Scheme | `(get-ccp4srs-monomer-and-dictionary "ALA")` | ran, returned `-1` |
+| Python | `get_ccp4srs_monomer_and_dictionary("ATP")` | ran, returned `-1` |
+| Scheme | `(get-ccp4srs-monomer-and-dictionary "ATP")` | ran, returned `-1` |
+
+Example written and checked by hand on the test data. Expected: -1 here: the CCP4 SRS structure database is not part of this build; with an SRS it returns the new molecule number of the monomer. Use get_monomer("ATP") instead.
 
 Python and Scheme gave the same answer.
 
@@ -58,8 +64,10 @@ Arguments: comp_id (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `get_sbase_monomer("ALA")` | ran, returned `-1` |
-| Scheme | `(get-sbase-monomer "ALA")` | ran, returned `-1` |
+| Python | `get_sbase_monomer("ATP")` | ran, returned `-1` |
+| Scheme | `(get-sbase-monomer "ATP")` | ran, returned `-1` |
+
+Example written and checked by hand on the test data. Expected: -1 here (old name of get_ccp4srs_monomer_and_dictionary; no SRS database in this build); use get_monomer("ATP").
 
 Python and Scheme gave the same answer.
 
@@ -91,6 +99,6 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_add_linked_residue_do_fit_and_refine(1)` | ran (no return value) |
-| Scheme | `(set-add-linked-residue-do-fit-and-refine 1)` | ran (no return value) |
+| Python | `set_add_linked_residue_do_fit_and_refine(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-add-linked-residue-do-fit-and-refine 1)` | ran (no return value, nothing visible changed) |
 

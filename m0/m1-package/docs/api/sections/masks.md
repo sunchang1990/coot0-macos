@@ -17,8 +17,10 @@ Arguments: imol (a whole number), imol_map (a whole number). Returns: a whole nu
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `make_masked_maps_split_by_chain(0, 1)` | ran, returned `0` |
-| Scheme | `(make-masked-maps-split-by-chain 0 1)` | ran, returned `0` |
+| Python | `make_masked_maps_split_by_chain(0, 1)` | ran, returned `0`; changed: new molecule 3 (map, Masked Map for Chain A); new molecule 4 (map, Masked Map for Chain B); graphics_n_molecules(): 3 -> 5 |
+| Scheme | `(make-masked-maps-split-by-chain 0 1)` | ran, returned `0`; changed: new molecule 3 (map, Masked Map for Chain A); new molecule 4 (map, Masked Map for Chain B); graphics_n_molecules(): 3 -> 5 |
+
+Example written and checked by hand on the test data. Expected: makes one new map molecule per chain (map 1 masked around that chain); always returns 0.
 
 Python and Scheme gave the same answer.
 
@@ -49,8 +51,10 @@ Arguments: map_mol_no (a whole number), coords_mol_no (a whole number), mmdb_ato
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `mask_map_by_atom_selection(1, 1, "//A/41-45", 1)` | ran, returned `-1` |
-| Scheme | `(mask-map-by-atom-selection 1 1 "//A/41-45" 1)` | ran, returned `-1` |
+| Python | `mask_map_by_atom_selection(1, 0, "//A/1-20", 0)` | ran, returned `3`; changed: new molecule 3 (map, rnasa-1.8-all_refmac1.mtz FWT PHWT Masked Map); graphics_n_molecules(): 3 -> 4 |
+| Scheme | `(mask-map-by-atom-selection 1 0 "//A/1-20" 0)` | ran, returned `3`; changed: new molecule 3 (map, rnasa-1.8-all_refmac1.mtz FWT PHWT Masked Map); graphics_n_molecules(): 3 -> 4 |
+
+Example written and checked by hand on the test data. Expected: returns the new map molecule number: map 1 with the density around A1-20 masked out (invert_flag 1 keeps only that density).
 
 Python and Scheme gave the same answer.
 
@@ -70,8 +74,10 @@ Arguments: map_mol_no (a whole number), coord_mol_no (a whole number), invert_fl
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `mask_map_by_molecule(1, 1, 1)` | ran, returned `-1` |
-| Scheme | `(mask-map-by-molecule 1 1 1)` | ran, returned `-1` |
+| Python | `mask_map_by_molecule(1, 0, 0)` | ran, returned `3`; changed: new molecule 3 (map, Masked Map from rnasa-1.8-all_refmac1.mtz FWT PHWT); graphics_n_molecules(): 3 -> 4 |
+| Scheme | `(mask-map-by-molecule 1 0 1)` | ran, returned `3`; changed: new molecule 3 (map, Masked Map from rnasa-1.8-all_refmac1.mtz FWT PHWT); graphics_n_molecules(): 3 -> 4 |
+
+Example written and checked by hand on the test data. Expected: returns the new map molecule number (map 1 masked by all atoms of molecule 0; invert_flag 1 keeps only the density at the atoms).
 
 Python and Scheme gave the same answer.
 
@@ -86,6 +92,8 @@ Arguments: rad (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_map_mask_atom_radius(5.0)` | ran (no return value) |
-| Scheme | `(set-map-mask-atom-radius 5.0)` | ran (no return value) |
+| Python | `set_map_mask_atom_radius(5.0)` | ran (no return value); changed: map_mask_atom_radius(): -99 -> 5 |
+| Scheme | `(set-map-mask-atom-radius 5.0)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: map_mask_atom_radius was -99.0, set to -148.0, read back -148.0; Scheme: map-mask-atom-radius was -99.0, set to -148.0, read back -148.0.
 

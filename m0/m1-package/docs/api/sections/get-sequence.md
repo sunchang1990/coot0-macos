@@ -19,10 +19,12 @@ Arguments: target_seq (text), match_fraction (a number). Returns: a value (see t
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `align_to_closest_chain("ACDEFGHIKLMNPQRSTVWY", 0.5)` | ran, returned `False` |
-| Scheme | `(align-to-closest-chain "ACDEFGHIKLMNPQRSTVWY" 0.5)` | ran, returned `#f` |
+| Python | `align_to_closest_chain("DVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLID", 0.9)` | ran, returned `[0, 'A']` |
+| Scheme | `(align-to-closest-chain "DVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLID" 0.9)` | ran, returned `#f` |
 
-Python and Scheme gave the same answer.
+Example written and checked by hand on the test data. Expected: returns [molecule, chain id] of the chain (in any molecule) whose sequence matches the target best, if at least match_fraction matches; False otherwise.
+
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
 ### decode_ints
 
@@ -33,8 +35,8 @@ Arguments: i (a whole number). Returns: a list.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `decode_ints(1)` | ran, returned `<Swig Object of type 'std::pair< int,int > *' at 0x10b8e1230>` |
-| Scheme | `(decode-ints 1)` | ran, returned `#<collectable-swig-pointer std::pair< int,int > * bd70e7090>` |
+| Python | `decode_ints(1)` | ran, returned `<Swig Object of type 'std::pair< int,int > *' at 0x10c4230f0>` |
+| Scheme | `(decode-ints 1)` | ran, returned `#<collectable-swig-pointer std::pair< int,int > * aab178020>` |
 
 ### encode_ints
 
@@ -81,8 +83,10 @@ Arguments: imol (a whole number), mode (a whole number), g (`coot::phenix_geo_bo
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | `graphics_to_phenix_geo_representation(0, 0, "model.geo")` | ran (no return value, nothing visible changed) |
+| Scheme | `(graphics-to-phenix-geo-representation 0 0 "model.geo")` | ran (no return value, nothing visible changed) |
+
+Example written and checked by hand on the test data. Expected: redraws molecule 0's bonds from a phenix.refine .geo restraints file (no change without such a file).
 
 ### key_sym_code
 
@@ -95,8 +99,12 @@ Also available in Scheme as `key-sym-code-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | `key_sym_code("F5")` | ran, returned `65474` |
+| Scheme | `(key-sym-code "F5")` | ran, returned `65474` |
+
+Example written and checked by hand on the test data. Expected: returns the GDK key code for a key name (as used by add_key_binding); -1 if not a string.
+
+Python and Scheme gave the same answer.
 
 ### molecule_atom_overlaps
 
@@ -123,7 +131,9 @@ Arguments: mtz_file_name (text), fp_col (text), sigfp_col (text). Returns: a val
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `pathology_data("rnasa-1.8-all_refmac1.mtz", "hello", "hello")` | ran, returned `False` |
+| Python | `pathology_data("rnasa-1.8-all_refmac1.mtz", "FGMP18", "SIGFGMP18")[0]` | ran, returned `0.2933195233345032` |
+
+Example written and checked by hand on the test data. Expected: returns data for the data-pathology plots: [max 1/d^2, [1/d^2, F], [1/d^2, F/sigF], [F, sigF], [F, F/sigF]].
 
 ### prodrg_import_function
 
@@ -139,8 +149,10 @@ Arguments: file_name (text), comp_id (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `prodrg_import_function("tutorial-modern.pdb", "ALA")` | not run: not run automatically (prodrg: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(prodrg-import-function "tutorial-modern.pdb" "ALA")` | not run: not run automatically (prodrg: exits, uses the network, an external program, files or a screen) |
+| Python | `prodrg_import_function("ligand.mdl", "LIG")` | not run: runs an external program (PRODRG or the configured 3D generator) |
+| Scheme | `(prodrg-import-function "ligand.mdl" "LIG")` | not run: runs an external program (PRODRG or the configured 3D generator) |
+
+Example written and checked by hand on the test data. Expected: imports an MDL file (e.g. from Lidia) through PRODRG/acedrg and loads the result.
 
 ### py_symop_strings_to_space_group
 
@@ -151,7 +163,9 @@ Arguments: symop_string_list (a list or value). Returns: `clipper::Spacegroup`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | `py_symop_strings_to_space_group(["x,y,z", "-x,-y,z"])` | ran, returned `<Swig Object of type 'clipper::Spacegroup *' at 0x10b9517d0>` |
+
+Example written and checked by hand on the test data. Expected: internal C++ helper: returns a clipper::Spacegroup object that scripts cannot use; use symmetry_operators_to_xHM for a usable answer.
 
 ### py_to_residue_specs
 
@@ -162,7 +176,9 @@ Arguments: s (a list or value). Returns: a list.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | `py_to_residue_specs([["A", 41, ""]])` | ran, returned `<Swig Object of type 'std::vector< coot::residue_spec_t,std::allocator< coot::residue_spec_t > > *' at 0x10b953060>` |
+
+Example written and checked by hand on the test data. Expected: internal C++ helper converting a list of residue specs to a C++ vector; nothing usable from a script.
 
 ### register_interesting_positions_list
 
@@ -174,8 +190,12 @@ Also available in Python as `register_interesting_positions_list_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | `register_interesting_positions_list([[[47.1, 10.6, 17.4], "Glu A41 CA"], [[21.2, 9.9, 10.8], "Cys B72 CA"]])` | ran (no return value, nothing visible changed) |
+| Scheme | `(register-interesting-positions-list-scm (list (list (list 47.1 10.6 17.4) "Glu A41 CA")))` | ran (no return value, nothing visible changed) |
+
+Example written and checked by hand on the test data. Expected: registers user-defined interesting positions [[x, y, z], label] that the 'next interesting position' key walks through.
+
+Note: Fixed in coot0 build 31: the Scheme version stopped Coot on any call (it read the list with a C integer, and took the label from the position). Call it as register-interesting-positions-list-scm.
 
 ### resolve_clashing_sidechains_by_deletion
 
@@ -186,8 +206,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `resolve_clashing_sidechains_by_deletion(0)` | ran (no return value) |
-| Scheme | `(resolve-clashing-sidechains-by-deletion 0)` | ran (no return value) |
+| Python | `resolve_clashing_sidechains_by_deletion(0)` | ran (no return value); changed: molecule 0: atoms of 2 residue(s) (A41, A89); n_atoms(0): 1465 -> 1455 |
+| Scheme | `(resolve-clashing-sidechains-by-deletion 0)` | ran (no return value); changed: molecule 0: atoms of 2 residue(s) (A41, A89); n_atoms(0): 1465 -> 1455 |
 
 ### resolve_clashing_sidechains_by_rebuilding
 
@@ -198,8 +218,12 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `resolve_clashing_sidechains_by_rebuilding(0)` | stopped Coot when tried without a window (not checked with a window) |
-| Scheme | `(resolve-clashing-sidechains-by-rebuilding 0)` | stopped Coot when tried without a window (not checked with a window) |
+| Python | `resolve_clashing_sidechains_by_rebuilding(0)` | not run: needs the graphics window (stops Coot without a screen) |
+| Scheme | `(resolve-clashing-sidechains-by-rebuilding 0)` | not run: needs the graphics window (stops Coot without a screen) |
+
+Example written and checked by hand on the test data. Expected: rebuilds side chains that clash, fitting them to the refinement map.
+
+Note: Segfaults headless after the first mutation; probably a redraw/GUI call. Not checked with a window.
 
 ### sbase_import_function
 
@@ -215,8 +239,8 @@ Arguments: comp_id (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `sbase_import_function("ALA")` | ran (no return value) |
-| Scheme | `(sbase-import-function "ALA")` | ran (no return value) |
+| Python | `sbase_import_function("ALA")` | ran (no return value, nothing visible changed) |
+| Scheme | `(sbase-import-function "ALA")` | ran (no return value, nothing visible changed) |
 
 ### scm-symop-strings-to-space-group
 
@@ -227,7 +251,9 @@ Arguments: symop-string-list (a list or value). Returns: `clipper::Spacegroup`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | `(scm-symop-strings-to-space-group (list "x,y,z" "-x,-y,z"))` | ran, returned `#<collectable-swig-pointer clipper::Spacegroup * 88b05fe40>` |
+
+Example written and checked by hand on the test data. Expected: internal C++ helper returning a clipper::Spacegroup; use symmetry-operators->xHM for a usable answer.
 
 ### scm-to-residue-specs
 
@@ -238,7 +264,9 @@ Arguments: s (a list or value). Returns: a list.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | `(scm-to-residue-specs (list (list "A" 41 "")))` | ran, returned `#<collectable-swig-pointer std::vector< coot::residue_spec_t > * 88b19fa20>` |
+
+Example written and checked by hand on the test data. Expected: internal C++ helper converting residue specs to a C++ vector; nothing usable from a script.
 
 ### set_python_draw_function
 
@@ -251,7 +279,7 @@ Arguments: command_string (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_python_draw_function("hello")` | ran (no return value) |
+| Python | `set_python_draw_function("hello")` | ran (no return value, nothing visible changed) |
 
 ### simple_text_dialog
 
@@ -264,8 +292,8 @@ Arguments: dialog_title (text), text (text), geom_x (a whole number), geom_y (a 
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `simple_text_dialog("hello", "hello", 1, 1)` | ran (no return value) |
-| Scheme | `(simple-text-dialog "hello" "hello" 1 1)` | ran (no return value) |
+| Python | `simple_text_dialog("hello", "hello", 1, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(simple-text-dialog "hello" "hello" 1 1)` | ran (no return value, nothing visible changed) |
 
 ### spherical-density-overlap
 
@@ -276,7 +304,9 @@ Arguments: i-scm (a list or value), j-scm (a list or value). Returns: a value (s
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | `(spherical-density-overlap 0 1)` | not run: developer test: computes structure factors for the whole model and writes map-fragment-at-origin.map; did not finish in  ... |
+
+Example written and checked by hand on the test data. Expected: experimental: overlap of model 0 (as spheres) with map 1 around the origin (hard-coded centre).
 
 ### store_keyed_user_name
 
@@ -289,8 +319,8 @@ Arguments: key (text), user_name (text), passwd (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `store_keyed_user_name("hello", "my-name", "hello")` | ran (no return value) |
-| Scheme | `(store-keyed-user-name "hello" "my-name" "hello")` | ran (no return value) |
+| Python | `store_keyed_user_name("hello", "my-name", "hello")` | ran (no return value, nothing visible changed) |
+| Scheme | `(store-keyed-user-name "hello" "my-name" "hello")` | ran (no return value, nothing visible changed) |
 
 ### write_sequence
 
@@ -303,6 +333,6 @@ Arguments: imol (a whole number), file_name (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `write_sequence(0, "tutorial-modern.pdb")` | ran (no return value) |
-| Scheme | `(write-sequence 0 "tutorial-modern.pdb")` | ran (no return value) |
+| Python | `write_sequence(0, "tutorial-modern.pdb")` | ran (no return value, nothing visible changed) |
+| Scheme | `(write-sequence 0 "tutorial-modern.pdb")` | ran (no return value, nothing visible changed) |
 

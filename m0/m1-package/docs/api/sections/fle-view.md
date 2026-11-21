@@ -13,8 +13,8 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `fle_view_internal(0, "A", 41, "", 0, "tutorial-modern.pdb", "tutorial-modern.pdb", "tutorial-modern.pdb", "tutorial-modern.pdb")` | ran (no return value) |
-| Scheme | `(fle-view-internal 0 "A" 41 "" 0 "tutorial-modern.pdb" "tutorial-modern.pdb" "tutorial-modern.pdb" "tutorial-modern.pdb")` | ran (no return value) |
+| Python | `fle_view_internal(0, "A", 41, "", 0, "tutorial-modern.pdb", "tutorial-modern.pdb", "tutorial-modern.pdb", "tutorial-modern.pdb")` | ran (no return value, nothing visible changed) |
+| Scheme | `(fle-view-internal 0 "A" 41 "" 0 "tutorial-modern.pdb" "tutorial-modern.pdb" "tutorial-modern.pdb" "tutorial-modern.pdb")` | ran (no return value, nothing visible changed) |
 
 ### fle_view_internal_to_png
 
@@ -27,8 +27,10 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `fle_view_internal_to_png(0, "A", 41, "", 0, "tutorial-modern.pdb", "tutorial-modern.pdb", "tutorial-modern.pdb", "tutorial-modern.pdb", 1, "tutorial-modern.pdb")` | not run: not run automatically (png: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(fle-view-internal-to-png 0 "A" 41 "" 0 "tutorial-modern.pdb" "tutorial-modern.pdb" "tutorial-modern.pdb" "tutorial-modern.pdb" 1 "tutorial-modern.pdb")` | not run: not run automatically (png: exits, uses the network, an external program, files or a screen) |
+| Python | `fle_view_internal_to_png(0, "A", 41, "", 0, "tutorial-modern.pdb", "tutorial-modern.pdb", "tutorial-modern.pdb", "tutorial-modern.pdb", 1, "tutorial-modern.pdb")` | not run: needs PRODRG output files (flat mol/pdb, 3d pdb, dictionary) from an external program |
+| Scheme | `(fle-view-internal-to-png 0 "A" 41 "" 0 "tutorial-modern.pdb" "tutorial-modern.pdb" "tutorial-modern.pdb" "tutorial-modern.pdb" 1 "tutorial-modern.pdb")` | not run: needs PRODRG output files (flat mol/pdb, 3d pdb, dictionary) from an external program |
+
+Example written and checked by hand on the test data. Expected: draws the 2D ligand environment (FLEV) from PRODRG output files into a PNG.
 
 ### fle_view_set_h_bond_dist_max
 
@@ -43,8 +45,8 @@ Arguments: h_bond_dist_max (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `fle_view_set_h_bond_dist_max(1.0)` | ran (no return value) |
-| Scheme | `(fle-view-set-h-bond-dist-max 1.0)` | ran (no return value) |
+| Python | `fle_view_set_h_bond_dist_max(1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(fle-view-set-h-bond-dist-max 1.0)` | ran (no return value, nothing visible changed) |
 
 ### fle_view_set_water_dist_max
 
@@ -59,8 +61,8 @@ Arguments: dist_max (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `fle_view_set_water_dist_max(1.0)` | ran (no return value) |
-| Scheme | `(fle-view-set-water-dist-max 1.0)` | ran (no return value) |
+| Python | `fle_view_set_water_dist_max(1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(fle-view-set-water-dist-max 1.0)` | ran (no return value, nothing visible changed) |
 
 ### fle_view_with_rdkit
 
@@ -71,8 +73,8 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `fle_view_with_rdkit(0, "A", 41, "", 5.0)` | ran (no return value) |
-| Scheme | `(fle-view-with-rdkit 0 "A" 41 "" 5.0)` | ran (no return value) |
+| Python | `fle_view_with_rdkit(0, "A", 41, "", 5.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(fle-view-with-rdkit 0 "A" 41 "" 5.0)` | ran (no return value, nothing visible changed) |
 
 ### fle_view_with_rdkit_internal
 
@@ -83,8 +85,8 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `fle_view_with_rdkit_internal(0, "A", 41, "", 5.0, "tutorial-modern.pdb", "tutorial-modern.pdb")` | ran (no return value) |
-| Scheme | `(fle-view-with-rdkit-internal 0 "A" 41 "" 5.0 "tutorial-modern.pdb" "tutorial-modern.pdb")` | ran (no return value) |
+| Python | `fle_view_with_rdkit_internal(0, "A", 41, "", 5.0, "tutorial-modern.pdb", "tutorial-modern.pdb")` | ran (no return value, nothing visible changed) |
+| Scheme | `(fle-view-with-rdkit-internal 0 "A" 41 "" 5.0 "tutorial-modern.pdb" "tutorial-modern.pdb")` | ran (no return value, nothing visible changed) |
 
 ### fle_view_with_rdkit_to_png
 
@@ -95,8 +97,10 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `fle_view_with_rdkit_to_png(0, "A", 41, "", 5.0, "tutorial-modern.pdb")` | not run: not run automatically (png: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(fle-view-with-rdkit-to-png 0 "A" 41 "" 5.0 "tutorial-modern.pdb")` | not run: not run automatically (png: exits, uses the network, an external program, files or a screen) |
+| Python | first `read_cif_dictionary("NAG.cif")`, then `fle_view_with_rdkit_to_png(read_pdb("nag_only.pdb"), "A", 1, "", 4.0, "nag-fle.png")` | ran (no return value); changed: new molecule 3 (model, nag_only.pdb); rotation centre moved 44.4 A to (-0.0, -0.0, -0.0); first_small_coords_imol(): -1 -> 3; graphics_n_molecules(): 3 -> 4 |
+| Scheme | first `(read-cif-dictionary "NAG.cif")`, then `(fle-view-with-rdkit-to-png (read-pdb "nag_only.pdb") "A" 1 "" 4.0 "nag-fle.png")` | ran (no return value); changed: new molecule 3 (model, nag_only.pdb); rotation centre moved 44.4 A to (-0.0, -0.0, -0.0); first_small_coords_imol(): -1 -> 3; graphics_n_molecules(): 3 -> 4 |
+
+Example written and checked by hand on the test data. Expected: writes a 2D ligand-environment picture of NAG A1 (residues within 4 A) to nag-fle.png.
 
 ### fle_view_with_rdkit_to_svg
 
@@ -107,8 +111,8 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `fle_view_with_rdkit_to_svg(0, "A", 41, "", 5.0, "tutorial-modern.pdb")` | ran (no return value) |
-| Scheme | `(fle-view-with-rdkit-to-svg 0 "A" 41 "" 5.0 "tutorial-modern.pdb")` | ran (no return value) |
+| Python | `fle_view_with_rdkit_to_svg(0, "A", 41, "", 5.0, "tutorial-modern.pdb")` | ran (no return value, nothing visible changed) |
+| Scheme | `(fle-view-with-rdkit-to-svg 0 "A" 41 "" 5.0 "tutorial-modern.pdb")` | ran (no return value, nothing visible changed) |
 
 ### sprout_hydrogens
 
@@ -125,8 +129,12 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `sprout_hydrogens(0, "A", 41, "")` | ran, returned `0` |
-| Scheme | `(sprout-hydrogens 0 "A" 41 "")` | ran, returned `0` |
+| Python | first `read_cif_dictionary("NAG.cif")`, then `imol_nag = read_pdb("nag_only.pdb")`, then `delete_hydrogens(imol_nag)`, then `sprout_hydrogens(imol_nag, "A", 1, "")` | ran, returned `1`; changed: molecule 3: atoms of 1 residue(s) (A1) |
+| Scheme | first `(read-cif-dictionary "NAG.cif")`, then `(define imol-nag (read-pdb "nag_only.pdb"))`, then `(delete-hydrogens imol-nag)`, then `(sprout-hydrogens imol-nag "A" 1 "")` | ran, returned `1`; changed: molecule 3: atoms of 1 residue(s) (A1) |
+
+Example written and checked by hand on the test data. Expected: returns 1 and adds the dictionary's hydrogens to the residue (needs a dictionary; the residue must have no hydrogens yet).
+
+Note: On a protein residue (0 "A" 41) and on a residue that already has hydrogens it returns 0 (RDKit add_hydrogens refuses ligands with some H; the info_dialog message is invisible headless).
 
 Python and Scheme gave the same answer.
 

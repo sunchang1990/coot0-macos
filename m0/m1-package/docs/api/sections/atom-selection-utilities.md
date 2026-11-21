@@ -15,8 +15,10 @@ Arguments: imol (a whole number), chain_id (text), iresno (a whole number), atom
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `atom_index(0, "A", 41, "hello")` | ran, returned `-1` |
-| Scheme | `(atom-index 0 "A" 41 "hello")` | ran, returned `-1` |
+| Python | `atom_index(0, "A", 41, " CA ")` | ran, returned `295` |
+| Scheme | `(atom-index 0 "A" 41 " CA ")` | ran, returned `295` |
+
+Example written and checked by hand on the test data. Expected: returns the atom index of A41 CA (-1 if the atom is not found).
 
 Python and Scheme gave the same answer.
 
@@ -65,8 +67,10 @@ Arguments: imol (a whole number), chain_id (text), iresno (a whole number), insc
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `atom_index_full(0, "A", 41, "", "hello", "")` | ran, returned `-1` |
-| Scheme | `(atom-index-full 0 "A" 41 "" "hello" "")` | ran, returned `-1` |
+| Python | `atom_index_full(0, "B", 72, "", " SG ", "A")` | ran, returned `1270` |
+| Scheme | `(atom-index-full 0 "B" 72 "" " SG " "A")` | ran, returned `1270` |
+
+Example written and checked by hand on the test data. Expected: returns the index of the alt-conf A SG atom of Cys B72 (-1 if not found).
 
 Python and Scheme gave the same answer.
 
@@ -111,8 +115,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `clear_pending_picks()` | ran (no return value) |
-| Scheme | `(clear-pending-picks)` | ran (no return value) |
+| Python | `clear_pending_picks()` | ran (no return value, nothing visible changed) |
+| Scheme | `(clear-pending-picks)` | ran (no return value, nothing visible changed) |
 
 ### default_new_atoms_b_factor
 
@@ -176,8 +180,10 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_c
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_atom_attribute(0, "A", 41, "", " CA ", "", "my-name", 1.0)` | ran, returned `0` |
-| Scheme | `(set-atom-attribute 0 "A" 41 "" " CA " "" "my-name" 1.0)` | ran, returned `0` |
+| Python | `set_atom_attribute(0, "A", 41, "", " CA ", "", "B", 55.0)` | ran, returned `0`; changed: molecule 0: B-factors of 1 residue(s) (A41) |
+| Scheme | `(set-atom-attribute 0 "A" 41 "" " CA " "" "B" 55.0)` | ran, returned `0`; changed: molecule 0: B-factors of 1 residue(s) (A41) |
+
+Example written and checked by hand on the test data. Expected: the B-factor of atom A41 CA becomes 55; return value is a status (0 here although it worked).
 
 Python and Scheme gave the same answer.
 
@@ -193,8 +199,12 @@ Also available in Python as `set_atom_attributes_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | `set_atom_attributes([[0, "A", 43, "", " CA ", "", "occ", 0.5], [0, "A", 43, "", " CB ", "", "B", 60.0]])` | ran, returned `0`; changed: molecule 0: B-factors of 1 residue(s) (A43); molecule 0: occupancies of 1 residue(s) (A43) |
+| Scheme | `(set-atom-attributes (list (list 0 "A" 43 "" " CA " "" "occ" 0.5) (list 0 "A" 43 "" " CB " "" "B" 60.0)))` | ran, returned `0` |
+
+Example written and checked by hand on the test data. Expected: occupancy of A43 CA becomes 0.5 and B of A43 CB 60 (one call for many atoms).
+
+Python and Scheme gave the same answer.
 
 ### set_atom_string_attribute
 
@@ -209,8 +219,10 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_c
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_atom_string_attribute(0, "A", 41, "", " CA ", "", "my-name", "hello")` | ran, returned `0` |
-| Scheme | `(set-atom-string-attribute 0 "A" 41 "" " CA " "" "my-name" "hello")` | ran, returned `0` |
+| Python | `set_atom_string_attribute(0, "A", 41, "", " CA ", "", "alt-conf", "C")` | ran, returned `0`; changed: molecule 0: atoms of 1 residue(s) (A41) |
+| Scheme | `(set-atom-string-attribute 0 "A" 41 "" " CA " "" "alt-conf" "C")` | ran, returned `0`; changed: molecule 0: atoms of 1 residue(s) (A41) |
+
+Example written and checked by hand on the test data. Expected: the alt conf of A41 CA becomes "C" (string attributes: atom-name, alt-conf, element, segid).
 
 Python and Scheme gave the same answer.
 
@@ -226,8 +238,8 @@ Arguments: new_b (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_default_temperature_factor_for_new_atoms(1.0)` | ran (no return value) |
-| Scheme | `(set-default-temperature-factor-for-new-atoms 1.0)` | ran (no return value) |
+| Python | `set_default_temperature_factor_for_new_atoms(1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-default-temperature-factor-for-new-atoms 1.0)` | ran (no return value, nothing visible changed) |
 
 ### set_reset_b_factor_moved_atoms
 
@@ -241,8 +253,10 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_reset_b_factor_moved_atoms(1)` | ran (no return value) |
-| Scheme | `(set-reset-b-factor-moved-atoms 1)` | ran (no return value) |
+| Python | `set_reset_b_factor_moved_atoms(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-reset-b-factor-moved-atoms 1)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: get_reset_b_factor_moved_atoms_state was 0, set to 1, read back 1; Scheme: get-reset-b-factor-moved-atoms-state was 0, set to 1, read back 1.
 
 ### set_residue_name
 
@@ -255,8 +269,8 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_residue_name(0, "A", 41, "", "my-name")` | ran (no return value) |
-| Scheme | `(set-residue-name 0 "A" 41 "" "my-name")` | ran (no return value) |
+| Python | `set_residue_name(0, "A", 41, "", "my-name")` | ran (no return value); changed: molecule 0: atoms of 1 residue(s) (A41) |
+| Scheme | `(set-residue-name 0 "A" 41 "" "my-name")` | ran (no return value, nothing visible changed) |
 
 ### set-temperature-factors-for-atoms-in-residue-scm
 
@@ -267,7 +281,7 @@ Arguments: imol (a whole number), residue-spec-scm (a list or value), bf (a numb
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Scheme | `(set-temperature-factors-for-atoms-in-residue-scm 0 (list "A" 41 "") 20.0)` | ran (no return value) |
+| Scheme | `(set-temperature-factors-for-atoms-in-residue-scm 0 (list "A" 41 "") 20.0)` | ran (no return value); changed: molecule 0: B-factors of 1 residue(s) (A41) |
 
 ### standard_deviation_temperature_factor
 

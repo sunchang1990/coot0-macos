@@ -15,6 +15,6 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `close_molecule(0)` | ran (no return value) |
-| Scheme | `(close-molecule 0)` | ran (no return value) |
+| Python | `close_molecule(0)` | ran (no return value); changed: molecule 0 closed; first_coords_imol(): 0 -> -1; first_molecule_with_symmetry_displayed(): 0 -> -1; draw_hydrogens_state(0): 1 -> -1 ... |
+| Scheme | `(close-molecule 0)` | ran (no return value); changed: molecule 0 closed; first_coords_imol(): 0 -> -1; first_molecule_with_symmetry_displayed(): 0 -> -1; draw_hydrogens_state(0): 1 -> -1 ... |
 

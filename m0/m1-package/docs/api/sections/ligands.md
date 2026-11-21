@@ -13,8 +13,8 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `add_dictionary_from_residue(0, "A", 41, "")` | ran (no return value) |
-| Scheme | `(add-dictionary-from-residue 0 "A" 41 "")` | ran (no return value) |
+| Python | `add_dictionary_from_residue(0, "A", 41, "")` | ran (no return value, nothing visible changed) |
+| Scheme | `(add-dictionary-from-residue 0 "A" 41 "")` | ran (no return value, nothing visible changed) |
 
 ### comprised_of_organic_set_p
 
@@ -27,8 +27,10 @@ Arguments: rn (text). Returns: true or false.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `comprised_of_organic_set_p("hello")` | ran, returned `False` |
-| Scheme | `(comprised-of-organic-set-p "hello")` | ran, returned `#f` |
+| Python | first `read_cif_dictionary("NAG.cif")`, then `comprised_of_organic_set_p("NAG")` | ran, returned `True` |
+| Scheme | first `(read-cif-dictionary "NAG.cif")`, then `(comprised-of-organic-set-p "NAG")` | ran, returned `#t` |
+
+Example written and checked by hand on the test data. Expected: True when the dictionary of that residue type has only organic-set elements (C, N, O, H, ...); False if unknown.
 
 Python and Scheme gave the same answer.
 
@@ -44,8 +46,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `coot_add_hydrogen_atoms(0)` | ran (no return value) |
-| Scheme | `(coot-add-hydrogen-atoms 0)` | ran (no return value) |
+| Python | `coot_add_hydrogen_atoms(0)` | ran (no return value); changed: molecule 0: atoms of 188 residue(s) (A1, A2, A3, A4 ...); n_atoms(0): 1465 -> 2825 |
+| Scheme | `(coot-add-hydrogen-atoms 0)` | ran (no return value); changed: molecule 0: atoms of 188 residue(s) (A1, A2, A3, A4 ...); n_atoms(0): 1465 -> 2825 |
 
 ### coot_all_atom_contact_dots
 
@@ -60,8 +62,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `coot_all_atom_contact_dots(0)` | ran (no return value) |
-| Scheme | `(coot-all-atom-contact-dots 0)` | ran (no return value) |
+| Python | `coot_all_atom_contact_dots(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(coot-all-atom-contact-dots 0)` | ran (no return value, nothing visible changed) |
 
 ### coot_contact_dots_for_ligand
 
@@ -73,8 +75,8 @@ Also available in Python as `coot_contact_dots_for_ligand`, `coot_contact_dots_f
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `coot_contact_dots_for_ligand(0, ["A", 41, ""])` | ran (no return value) |
-| Scheme | `(coot-contact-dots-for-ligand-scm 0 (list "A" 41 ""))` | ran (no return value) |
+| Python | `coot_contact_dots_for_ligand(0, ["A", 41, ""])` | ran (no return value, nothing visible changed) |
+| Scheme | `(coot-contact-dots-for-ligand-scm 0 (list "A" 41 ""))` | ran (no return value, nothing visible changed) |
 
 ### coot_reduce
 
@@ -85,8 +87,10 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `coot_reduce(0)` | not run: not run automatically (reduce: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(coot-reduce 0)` | not run: not run automatically (reduce: exits, uses the network, an external program, files or a screen) |
+| Python | `coot_reduce(0)` | not run: runs the external program reduce |
+| Scheme | `(coot-reduce 0)` | not run: runs the external program reduce |
+
+Example written and checked by hand on the test data. Expected: adds hydrogens to molecule 0 with reduce.
 
 ### display_residue_distortions
 
@@ -97,8 +101,8 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `display_residue_distortions(0, "A", 41, "")` | ran (no return value) |
-| Scheme | `(display-residue-distortions 0 "A" 41 "")` | ran (no return value) |
+| Python | `display_residue_distortions(0, "A", 41, "")` | ran (no return value, nothing visible changed) |
+| Scheme | `(display-residue-distortions 0 "A" 41 "")` | ran (no return value, nothing visible changed) |
 
 ### display_residue_hydrogen_bond_atom_status_using_dictionary
 
@@ -109,8 +113,8 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `display_residue_hydrogen_bond_atom_status_using_dictionary(0, "A", 41, "")` | ran (no return value) |
-| Scheme | `(display-residue-hydrogen-bond-atom-status-using-dictionary 0 "A" 41 "")` | ran (no return value) |
+| Python | `display_residue_hydrogen_bond_atom_status_using_dictionary(0, "A", 41, "")` | ran (no return value, nothing visible changed) |
+| Scheme | `(display-residue-hydrogen-bond-atom-status-using-dictionary 0 "A" 41 "")` | ran (no return value, nothing visible changed) |
 
 ### enhanced_ligand_coot_p
 
@@ -138,7 +142,9 @@ Also available in Python as `get_intermediate_atoms_distortions_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `get_intermediate_atoms_distortions()` | ran, returned `False` |
+| Python | `refine_zone(0, "A", 41, 43, ""); print(get_intermediate_atoms_distortions())` | ran (no return value, nothing visible changed) |
+
+Example written and checked by hand on the test data. Expected: during a refinement returns the distortion of every restraint on the moving atoms; False when no refinement is running.
 
 ### get_ligand_distortion_summary_info
 
@@ -172,8 +178,10 @@ Arguments: metric_name (text), metric_value (a number), reverse_order (a whole n
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `get_ligand_percentile("my-name", 1.0, 1)` | ran, returned `-1.0` |
-| Scheme | `(get-ligand-percentile "my-name" 1.0 1)` | ran, returned `-1.0` |
+| Python | `get_ligand_percentile("density_correlation", 0.8, 0)` | ran, returned `24.48417314639074` |
+| Scheme | `(get-ligand-percentile "density_correlation" 0.8 0)` | ran, returned `24.48417314639074` |
+
+Example written and checked by hand on the test data. Expected: returns the percentile (0-100) of the value among PDB ligands for metric density_correlation, coot_diff_map_correlation, bumps_1 or mogul_z_worst; -1 for an unknown metric.
 
 Python and Scheme gave the same answer.
 
@@ -188,8 +196,10 @@ Arguments: text (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `get_monomer_molecule_by_network_and_dict_gen("hello")` | not run: not run automatically (network: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(get-monomer-molecule-by-network-and-dict-gen "hello")` | not run: not run automatically (network: exits, uses the network, an external program, files or a screen) |
+| Python | `get_monomer_molecule_by_network_and_dict_gen("ATP")` | not run: uses the network and a dictionary generator |
+| Scheme | `(get-monomer-molecule-by-network-and-dict-gen "ATP")` | not run: uses the network and a dictionary generator |
+
+Example written and checked by hand on the test data. Expected: downloads the compound and makes a dictionary; returns the new molecule number.
 
 ### gsl_sf_erf_scm
 
@@ -215,8 +225,10 @@ Also available in Python as `gui_ligand_metrics_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | (no example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no example) | not run: no automatic example (it takes a list, a widget or an object) |
+
+Example written and checked by hand on the test data. Expected: shows a window with the ligand metrics and their percentiles.
 
 ### import_rdkit_mol_from_smiles
 
@@ -232,8 +244,10 @@ Arguments: smiles (text), comp_id (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `import_rdkit_mol_from_smiles("hello", "ALA")` | ran, returned `-1` |
-| Scheme | `(import-rdkit-mol-from-smiles "hello" "ALA")` | ran, returned `-1` |
+| Python | `import_rdkit_mol_from_smiles("CC(=O)Nc1ccc(O)cc1", "TYL")` | ran, returned `3`; changed: new molecule 3 (model, Imported TYL); first_small_coords_imol(): -1 -> 3; graphics_n_molecules(): 3 -> 4 |
+| Scheme | `(import-rdkit-mol-from-smiles "CC(=O)Nc1ccc(O)cc1" "TYL")` | ran, returned `3`; changed: new molecule 3 (model, Imported TYL); first_small_coords_imol(): -1 -> 3; graphics_n_molecules(): 3 -> 4 |
+
+Example written and checked by hand on the test data. Expected: returns the number of a new molecule built from the SMILES by RDKit (no dictionary is made); -1 on failure.
 
 Python and Scheme gave the same answer.
 
@@ -246,8 +260,8 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `invert_chiral_centre(0, "A", 41, "", " CA ")` | ran (no return value) |
-| Scheme | `(invert-chiral-centre 0 "A" 41 "" " CA ")` | ran (no return value) |
+| Python | `invert_chiral_centre(0, "A", 41, "", " CA ")` | ran (no return value); changed: new molecule 3 (model, New Residue GL2); first_small_coords_imol(): -1 -> 3; graphics_n_molecules(): 3 -> 4 |
+| Scheme | `(invert-chiral-centre 0 "A" 41 "" " CA ")` | ran (no return value); changed: new molecule 3 (model, New Residue GL2); first_small_coords_imol(): -1 -> 3; graphics_n_molecules(): 3 -> 4 |
 
 ### jed_flip_intermediate_atoms
 
@@ -260,10 +274,12 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `jed_flip_intermediate_atoms()` | ran, returned `0` |
-| Scheme | `(jed-flip-intermediate-atoms)` | ran, returned `0` |
+| Python | `refine_zone(0, "A", 41, 43, ""); print(jed_flip_intermediate_atoms())` | ran (no return value, nothing visible changed) |
+| Scheme | `(begin (refine-zone 0 "A" 41 43 "") (jed-flip-intermediate-atoms))` | ran, returned `1` |
 
-Python and Scheme gave the same answer.
+Example written and checked by hand on the test data. Expected: during a refinement JED-flips the active bond of the moving atoms and returns 1; 0 without intermediate atoms.
+
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
 ### kolmogorov_smirnov
 
@@ -276,8 +292,14 @@ Also available in Scheme as `kolmogorov-smirnov-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | `kolmogorov_smirnov([1.0, 2.0, 3.0, 4.0, 5.0], [1.5, 2.5, 3.5, 4.5, 9.0])` | ran, returned `0.20000000000000007` |
+| Scheme | `(kolmogorov-smirnov (list 1.0 2.0 3.0 4.0 5.0) (list 1.5 2.5 3.5 4.5 9.0))` | ran, returned `0.20000000000000007` |
+
+Example written and checked by hand on the test data. Expected: returns the Kolmogorov-Smirnov statistic D (largest gap between the two cumulative distributions); -1 if the arguments are not lists.
+
+Note: Python only counts float items (ints are silently dropped).
+
+Python and Scheme gave the same answer.
 
 ### kolmogorov_smirnov_vs_normal
 
@@ -289,8 +311,12 @@ Also available in Python as `kolmogorov_smirnov_vs_normal_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | `kolmogorov_smirnov_vs_normal([-1.2, -0.3, 0.1, 0.4, 1.1, 0.0, -0.5], 0.0, 1.0)` | ran, returned `0.16568039586884403` |
+| Scheme | `(kolmogorov-smirnov-vs-normal-scm (list -1.2 -0.3 0.1 0.4 1.1 0.0 -0.5) 0.0 1.0)` | ran, returned `0.16568039586884403` |
+
+Example written and checked by hand on the test data. Expected: returns the Kolmogorov-Smirnov D of the values against a normal distribution with that mean and sd.
+
+Python and Scheme gave the same answer.
 
 ### kullback_liebler
 
@@ -303,8 +329,14 @@ Also available in Scheme as `kullback-liebler-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | `kullback_liebler([1.0, 2.0, 2.0, 3.0, 3.0, 3.0, 4.0], [1.0, 2.0, 3.0, 3.0, 4.0, 4.0, 5.0])` | ran, returned `[0.27279178641206264, -0.01682614795091192]` |
+| Scheme | `(kullback-liebler (list 1.0 2.0 2.0 3.0 3.0 3.0 4.0) (list 1.0 2.0 3.0 3.0 4.0 4.0 5.0))` | ran, returned `(0.27279178641206264 -0.01682614795091192)` |
+
+Example written and checked by hand on the test data. Expected: returns the two Kullback-Leibler divergences of the value distributions as a list.
+
+Note: Fixed in coot0 build 31: the Scheme version computed the two numbers but returned #f (Coot 0.9.8.96).
+
+Python and Scheme gave the same answer.
 
 ### ligand_atom_overlaps
 
@@ -338,8 +370,12 @@ Also available in Scheme as `linked-residues-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | first `set_add_linked_residue_do_fit_and_refine(0)`, then `add_linked_residue(0, "A", 39, "", "NAG", "NAG-ASN", 1)`, then `len(linked_residues(["A", 39, ""], 0, 2.0))` | ran, returned `94` |
+| Scheme | first `(set-add-linked-residue-do-fit-and-refine 0)`, then `(add-linked-residue 0 "A" 39 "" "NAG" "NAG-ASN" 1)`, then `(length (linked-residues (list "A" 39 "") 0 2.0))` | ran, returned `94` |
+
+Example written and checked by hand on the test data. Expected: returns the residues linked (atoms within close_dist_max) to the start residue and, recursively, to those: for a protein residue that is the whole chain plus attached sugars.
+
+Python and Scheme gave the same answer.
 
 ### match_residue_and_dictionary
 
@@ -355,8 +391,12 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `match_residue_and_dictionary(0, "A", 41, "", "hello", "hello", "hello", "hello", "hello", "my-name")` | ran, returned `0` |
-| Scheme | `(match-residue-and-dictionary 0 "A" 41 "" "hello" "hello" "hello" "hello" "hello" "my-name")` | ran, returned `0` |
+| Python | `match_residue_and_dictionary(0, "A", 1, "", "NAG.cif", "nag-matched.cif", "NAG", "NDG", "NAX", "my-sugar")` | ran, returned `0` |
+| Scheme | `(match-residue-and-dictionary 0 "A" 1 "" "NAG.cif" "nag-matched.cif" "NAG" "NDG" "NAX" "my-sugar")` | ran, returned `0` |
+
+Example written and checked by hand on the test data. Expected: writes a new dictionary (cif_dict_out) with the atom names of cif_dict_in matched to the reference comp id; the return value is always 0 (the residue arguments are not used).
+
+Note: Return value is always 0 even on success (result is never set in c-interface-ligands.cc).
 
 Python and Scheme gave the same answer.
 
@@ -373,8 +413,10 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `match_this_residue_and_dictionary(0, "A", 41, "", "hello", "hello", "hello")` | ran, returned `0` |
-| Scheme | `(match-this-residue-and-dictionary 0 "A" 41 "" "hello" "hello" "hello")` | ran, returned `0` |
+| Python | first `read_cif_dictionary("NAG.cif")`, then `imol_nag = read_pdb("nag_only.pdb")`, then `match_this_residue_and_dictionary(imol_nag, "A", 1, "", "nag-this.cif", "NDG", "NAY")` | ran, returned `0` |
+| Scheme | first `(read-cif-dictionary "NAG.cif")`, then `(define imol-nag (read-pdb "nag_only.pdb"))`, then `(match-this-residue-and-dictionary imol-nag "A" 1 "" "nag-this.cif" "NDG" "NAY")` | ran, returned `0` |
+
+Example written and checked by hand on the test data. Expected: writes a dictionary for the residue's type with atom names matched to the reference type and the new comp id; returns 0 (not used as a status).
 
 Python and Scheme gave the same answer.
 
@@ -408,8 +450,12 @@ Arguments: dots_file_name (text). Returns: a value (see the result of the exampl
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `probe_clash_score("tutorial-modern.pdb")` | not run: not run automatically (probe: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(probe-clash-score "tutorial-modern.pdb")` | not run: not run automatically (probe: exits, uses the network, an external program, files or a screen) |
+| Python | first `open("dots.txt", "w").write(":1->1:bo: A   1 ASP  C   : A  89 PHE  CE2 :-0.420:-0.413:47.591:11.736:7.127:0.206:-0.1289:C:C:47.772:11.643:7.156:30.58:38.68\n:1- ...`, then `probe_clash_score("dots.txt")` | ran, returned `[1, 0, 1, 0, 1]` |
+| Scheme | first `(call-with-output-file "dots.txt" (lambda (p) (display ":1->1:bo: A   1 ASP  C   : A  89 PHE  CE2 :-0.420:-0.413:47.591:11.736:7.127:0.206:-0.1289:C:C:47.772:11 ...`, then `(probe-clash-score "dots.txt")` | ran, returned `#<collectable-swig-pointer coot::probe_clash_score_t * 92e20d360>` |
+
+Example written and checked by hand on the test data. Expected: reads a probe -u dots file (no probe run) and returns the counts [bad overlaps, H-bonds, small overlaps, close contacts, wide contacts].
+
+Note: Scheme 'probe-clash-score' is the raw C++ function and returns a SWIG pointer; the list version probe_clash_score_scm is not exported under this name (Python redefines probe_clash_score = probe_clash_score_py). Python and Scheme disagree.
 
 ### residue_to_mdl_file_for_mogul
 
@@ -420,8 +466,14 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_c
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `residue_to_mdl_file_for_mogul(0, "A", 41, "", "tutorial-modern.pdb")` | not run: not run automatically (mogul: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(residue-to-mdl-file-for-mogul 0 "A" 41 "" "tutorial-modern.pdb")` | not run: not run automatically (mogul: exits, uses the network, an external program, files or a screen) |
+| Python | first `read_cif_dictionary("NAG.cif")`, then `imol_nag = read_pdb("nag_only.pdb")`, then `residue_to_mdl_file_for_mogul(imol_nag, "A", 1, "", "nag.mdl")` | ran, returned `True` |
+| Scheme | first `(read-cif-dictionary "NAG.cif")`, then `(define imol-nag (read-pdb "nag_only.pdb"))`, then `(residue-to-mdl-file-for-mogul imol-nag "A" 1 "" "nag.mdl")` | ran, returned `#t` |
+
+Example written and checked by hand on the test data. Expected: writes the residue as an MDL mol file for Mogul (does not run Mogul) and returns True.
+
+Note: Only writes a file; the old 'not run (mogul)' classification was wrong.
+
+Python and Scheme gave the same answer.
 
 ### residue_to_sdf_file
 
@@ -437,8 +489,12 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_c
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `residue_to_sdf_file(0, "A", 41, "", "tutorial-modern.pdb", True)` | ran, returned `False` |
-| Scheme | `(residue-to-sdf-file 0 "A" 41 "" "tutorial-modern.pdb" 1)` | error: In procedure residue-to-sdf-file: No matching method for generic function 'residue_to_sdf_file' |
+| Python | first `read_cif_dictionary("NAG.cif")`, then `imol_nag = read_pdb("nag_only.pdb")`, then `residue_to_sdf_file(imol_nag, "A", 1, "", "nag.sdf", True)` | ran, returned `True` |
+| Scheme | first `(read-cif-dictionary "NAG.cif")`, then `(define imol-nag (read-pdb "nag_only.pdb"))`, then `(residue-to-sdf-file imol-nag "A" 1 "" "nag.sdf" #t)` | ran, returned `#t` |
+
+Example written and checked by hand on the test data. Expected: returns True and writes the residue (with its dictionary) as an SDF file, kekulized if asked.
+
+Python and Scheme gave the same answer.
 
 ### residues_distortions
 
@@ -453,8 +509,12 @@ Also available in Python as `residues_distortions_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `residues_distortions(0, ["A", 41, ""])` | error: SystemError: <built-in function residues_distortions_py> returned a result with an exception set |
-| Scheme | `(residues-distortions-scm 0 (list "A" 41 ""))` | error: In procedure length: Wrong type argument in position 1: "A" |
+| Python | `residues_distortions(0, [["A", 41, ""], ["A", 42, ""]])[0]` | ran, returned `{'distortion_score': 54.900434002892354, 'restraint': {'restraint_type': 'Bond', 'target_value': 1.4869999885559082, 'si ...` |
+| Scheme | `(length (residues-distortions-scm 0 (list (list "A" 41 "") (list "A" 42 ""))))` | ran, returned `866` |
+
+Example written and checked by hand on the test data. Expected: returns one entry per geometry restraint of the residues with its distortion score (needs a refinement map set).
+
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
 ### residues_torsions_match
 
@@ -466,8 +526,14 @@ Also available in Python as `residues_torsions_match_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | `residues_torsions_match(0, ["A", 41, ""], 0, ["A", 41, ""], 10.0)` | ran, returned `False` |
+| Scheme | `(residues-torsions-match-scm 0 (list "A" 41 "") 0 (list "A" 41 "") 10.0)` | ran, returned `#f` |
+
+Example written and checked by hand on the test data. Expected: should be True when all torsions of the two residues agree within the tolerance (degrees).
+
+Note: Always False: the comparison (coot::compare_residue_torsions) is commented out in the C++ (c-interface-ligands.cc ~2674), so the result is never set.
+
+Python and Scheme gave the same answer.
 
 ### reverse_jed_flip_intermediate_atoms
 
@@ -480,10 +546,12 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `reverse_jed_flip_intermediate_atoms()` | ran, returned `0` |
-| Scheme | `(reverse-jed-flip-intermediate-atoms)` | ran, returned `0` |
+| Python | `refine_zone(0, "A", 41, 43, ""); print(reverse_jed_flip_intermediate_atoms())` | ran (no return value, nothing visible changed) |
+| Scheme | `(begin (refine-zone 0 "A" 41 43 "") (reverse-jed-flip-intermediate-atoms))` | ran, returned `1` |
 
-Python and Scheme gave the same answer.
+Example written and checked by hand on the test data. Expected: as jed_flip_intermediate_atoms with the other side moved; 1 during a refinement, 0 otherwise.
+
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
 ### set_all_atom_contact_dots_ignore_water
 
@@ -496,8 +564,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_all_atom_contact_dots_ignore_water(1)` | ran (no return value) |
-| Scheme | `(set-all-atom-contact-dots-ignore-water 1)` | ran (no return value) |
+| Python | `set_all_atom_contact_dots_ignore_water(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-all-atom-contact-dots-ignore-water 1)` | ran (no return value, nothing visible changed) |
 
 ### show_feats
 
@@ -510,8 +578,10 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_c
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `show_feats(0, "A", 41, "")` | ran, returned `False` |
-| Scheme | `(show-feats 0 "A" 41 "")` | ran, returned `#f` |
+| Python | first `read_cif_dictionary("NAG.cif")`, then `imol_nag = read_pdb("nag_only.pdb")`, then `show_feats(imol_nag, "A", 1, "")` | ran, returned `True` |
+| Scheme | first `(read-cif-dictionary "NAG.cif")`, then `(define imol-nag (read-pdb "nag_only.pdb"))`, then `(show-feats imol-nag "A" 1 "")` | ran, returned `#t` |
+
+Example written and checked by hand on the test data. Expected: returns True and draws the RDKit chemical features (donors, acceptors, rings) of the residue in the graphics; False if the residue type has no dictionary.
 
 Python and Scheme gave the same answer.
 
@@ -527,8 +597,8 @@ Also available in Python as `switch_HIS_protonation`, `switch_HIS_protonation_py
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `switch_HIS_protonation(0, ["A", 41, ""])` | ran (no return value) |
-| Scheme | `(switch-HIS-protonation-scm 0 (list "A" 41 ""))` | ran (no return value) |
+| Python | `switch_HIS_protonation(0, ["A", 41, ""])` | ran (no return value, nothing visible changed) |
+| Scheme | `(switch-HIS-protonation-scm 0 (list "A" 41 ""))` | ran (no return value, nothing visible changed) |
 
 ### write_dictionary_from_residue
 
@@ -539,6 +609,6 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `write_dictionary_from_residue(0, "A", 41, "", "tutorial-modern.pdb")` | ran (no return value) |
-| Scheme | `(write-dictionary-from-residue 0 "A" 41 "" "tutorial-modern.pdb")` | ran (no return value) |
+| Python | `write_dictionary_from_residue(0, "A", 41, "", "tutorial-modern.pdb")` | ran (no return value, nothing visible changed) |
+| Scheme | `(write-dictionary-from-residue 0 "A" 41 "" "tutorial-modern.pdb")` | ran (no return value, nothing visible changed) |
 

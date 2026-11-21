@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="cb7f18fc85d81faa529553315e6037964ca9aeb0">
+<meta name="coot0-source-sha1" content="e5e0a7e63489b6105b4ea10d9e9ab584f88c0f1e">
 <title>Ligand Fitting Functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -22,8 +22,8 @@ table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; 
 Scheme: <code>(add-ligand-clear-ligands)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>add_ligand_clear_ligands()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(add-ligand-clear-ligands)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>add_ligand_clear_ligands()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(add-ligand-clear-ligands)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="add_ligand_search_ligand_molecule">add_ligand_search_ligand_molecule</h3>
 <p>Python: <code>add_ligand_search_ligand_molecule(imol_ligand)</code><br>
 Scheme: <code>(add-ligand-search-ligand-molecule imol-ligand)</code></p>
@@ -31,8 +31,8 @@ Scheme: <code>(add-ligand-search-ligand-molecule imol-ligand)</code></p>
  in ligand searching</p>
 <p>Arguments: imol_ligand (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>add_ligand_search_ligand_molecule(0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(add-ligand-search-ligand-molecule 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>add_ligand_search_ligand_molecule(0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(add-ligand-search-ligand-molecule 0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="add_ligand_search_wiggly_ligand_molecule">add_ligand_search_wiggly_ligand_molecule</h3>
 <p>Python: <code>add_ligand_search_wiggly_ligand_molecule(imol_ligand)</code><br>
 Scheme: <code>(add-ligand-search-wiggly-ligand-molecule imol-ligand)</code></p>
@@ -40,8 +40,8 @@ Scheme: <code>(add-ligand-search-wiggly-ligand-molecule imol-ligand)</code></p>
  in ligand searching</p>
 <p>Arguments: imol_ligand (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>add_ligand_search_wiggly_ligand_molecule(0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(add-ligand-search-wiggly-ligand-molecule 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>add_ligand_search_wiggly_ligand_molecule(0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(add-ligand-search-wiggly-ligand-molecule 0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="analyse_ligand_differences">analyse_ligand_differences</h3>
 <p>Python: <code>analyse_ligand_differences(imol_ligand, imol_ref, chain_id_ref, resno_ref)</code><br>
 Scheme: <code>(analyse-ligand-differences imol-ligand imol-ref chain-id-ref resno-ref)</code></p>
@@ -66,8 +66,8 @@ Scheme: <code>(do-find-ligands-dialog)</code></p>
 <p> if maps, coords and ligands are available, that is.</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>do_find_ligands_dialog()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(do-find-ligands-dialog)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>do_find_ligands_dialog()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(do-find-ligands-dialog)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="exchange_ligand">exchange_ligand</h3>
 <p>Python: <code>exchange_ligand(imol_lig, chain_id_lig, resno_lig, ins_code_lig)</code><br>
 Scheme: <code>(exchange-ligand imol-lig chain-id-lig resno-lig ins-code-lig)</code></p>
@@ -80,8 +80,9 @@ Scheme: <code>(exchange-ligand imol-lig chain-id-lig resno-lig ins-code-lig)</co
  overlays - and a copy of this given ligand.</p>
 <p>Arguments: imol_lig (a whole number), chain_id_lig (text), resno_lig (a whole number), ins_code_lig (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>exchange_ligand(0, "A", 41, "")</code></td><td>ran, returned <code>-1</code></td></tr>
-<tr><td>Scheme</td><td><code>(exchange-ligand 0 "A" 41 "")</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>imol_nag = read_pdb("nag_only.pdb")</code>, then <code>exchange_ligand(imol_nag, "A", 1, "")</code></td><td>ran, returned <code>-1</code></td></tr>
+<tr><td>Scheme</td><td>first <code>(define imol-nag (read-pdb "nag_only.pdb"))</code>, then <code>(exchange-ligand imol-nag "A" 1 "")</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: a stub upstream ('just pondering'): always returns -1 and does nothing.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="execute_ligand_search">execute_ligand_search</h3>
 <p>Python: <code>execute_ligand_search()</code><br>
@@ -89,7 +90,7 @@ Scheme: <code>(execute-ligand-search)</code></p>
 <p>Arguments: none. Returns: a value (see the result of the example).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>execute_ligand_search()</code></td><td>ran, returned <code>[]</code></td></tr>
-<tr><td>Scheme</td><td><code>(execute-ligand-search)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Scheme</td><td><code>(execute-ligand-search)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 <h3 id="flip_ligand">flip_ligand</h3>
 <p>Python: <code>flip_ligand(imol, chain_id, resno)</code><br>
@@ -99,15 +100,15 @@ Scheme: <code>(flip-ligand imol chain-id resno)</code></p>
  peptide).</p>
 <p>Arguments: imol (a whole number), chain_id (text), resno (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>flip_ligand(0, "A", 41)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(flip-ligand 0 "A" 41)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>flip_ligand(0, "A", 41)</code></td><td>ran (no return value); changed: molecule 0: coordinates of 1 residue(s) (A41)</td></tr>
+<tr><td>Scheme</td><td><code>(flip-ligand 0 "A" 41)</code></td><td>ran (no return value); changed: molecule 0: coordinates of 1 residue(s) (A41)</td></tr></tbody></table>
 <h3 id="jed_flip">jed_flip</h3>
 <p>Python: <code>jed_flip(imol, chain_id, res_no, ins_code, atom_name, alt_conf, invert_selection)</code><br>
 Scheme: <code>(jed-flip imol chain-id res-no ins-code atom-name alt-conf invert-selection)</code></p>
 <p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text), atom_name (text), alt_conf (text), invert_selection (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>jed_flip(0, "A", 41, "", " CA ", "", 1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(jed-flip 0 "A" 41 "" " CA " "" 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>jed_flip(0, "A", 41, "", " CA ", "", 1)</code></td><td>ran (no return value); changed: molecule 0: coordinates of 1 residue(s) (A41)</td></tr>
+<tr><td>Scheme</td><td><code>(jed-flip 0 "A" 41 "" " CA " "" 1)</code></td><td>ran (no return value); changed: molecule 0: coordinates of 1 residue(s) (A41)</td></tr></tbody></table>
 <h3 id="ligand_expert">ligand_expert</h3>
 <p>Python: <code>ligand_expert()</code><br>
 Scheme: <code>(ligand-expert)</code></p>
@@ -115,8 +116,8 @@ Scheme: <code>(ligand-expert)</code></p>
  the Ligand Searching dialog</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>ligand_expert()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(ligand-expert)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>ligand_expert()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(ligand-expert)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="match_ligand_atom_names">match_ligand_atom_names</h3>
 <p>Python: <code>match_ligand_atom_names(imol_ligand, chain_id_ligand, resno_ligand, ins_code_ligand, imol_reference, chain_id_reference, resno_reference, ins_code_reference)</code><br>
 Scheme: <code>(match-ligand-atom-names imol-ligand chain-id-ligand resno-ligand ins-code-ligand imol-reference chain-id-reference resno-reference ins-code-reference)</code></p>
@@ -127,8 +128,8 @@ Scheme: <code>(match-ligand-atom-names imol-ligand chain-id-ligand resno-ligand 
  a new atom name.</p>
 <p>Arguments: imol_ligand (a whole number), chain_id_ligand (text), resno_ligand (a whole number), ins_code_ligand (text), imol_reference (a whole number), chain_id_reference (text), resno_reference (a whole number), ins_code_reference (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>match_ligand_atom_names(0, "A", 41, "", 0, "A", 41, "")</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(match-ligand-atom-names 0 "A" 41 "" 0 "A" 41 "")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>match_ligand_atom_names(0, "A", 41, "", 0, "A", 41, "")</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(match-ligand-atom-names 0 "A" 41 "" 0 "A" 41 "")</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="match_ligand_atom_names_to_comp_id">match_ligand_atom_names_to_comp_id</h3>
 <p>Python: <code>match_ligand_atom_names_to_comp_id(imol_ligand, chain_id_ligand, resno_ligand, ins_code_ligand, comp_id_ref)</code><br>
 Scheme: <code>(match-ligand-atom-names-to-comp-id imol-ligand chain-id-ligand resno-ligand ins-code-ligand comp-id-ref)</code></p>
@@ -141,15 +142,15 @@ Scheme: <code>(match-ligand-atom-names-to-comp-id imol-ligand chain-id-ligand re
  and that's a big problem (see match_residue_and_dictionary).</p>
 <p>Arguments: imol_ligand (a whole number), chain_id_ligand (text), resno_ligand (a whole number), ins_code_ligand (text), comp_id_ref (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>match_ligand_atom_names_to_comp_id(0, "A", 41, "", "hello")</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(match-ligand-atom-names-to-comp-id 0 "A" 41 "" "hello")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>match_ligand_atom_names_to_comp_id(0, "A", 41, "", "hello")</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(match-ligand-atom-names-to-comp-id 0 "A" 41 "" "hello")</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="match_ligand_torsions">match_ligand_torsions</h3>
 <p>Python: <code>match_ligand_torsions(imol_ligand, imol_ref, chain_id_ref, resno_ref)</code><br>
 Scheme: <code>(match-ligand-torsions imol-ligand imol-ref chain-id-ref resno-ref)</code></p>
 <p>Arguments: imol_ligand (a whole number), imol_ref (a whole number), chain_id_ref (text), resno_ref (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>match_ligand_torsions(0, 0, "A", 41)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(match-ligand-torsions 0 0 "A" 41)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>match_ligand_torsions(0, 0, "A", 41)</code></td><td>ran (no return value); changed: molecule 0: coordinates of 1 residue(s) (A1)</td></tr>
+<tr><td>Scheme</td><td><code>(match-ligand-torsions 0 0 "A" 41)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="overlap_ligands">overlap_ligands</h3>
 <p>Python: <code>overlap_ligands(imol_ligand, imol_ref, chain_id_ref, resno_ref)</code><br>
 Scheme: <code>(overlap-ligands imol-ligand imol-ref chain-id-ref resno-ref)</code></p>
@@ -162,8 +163,8 @@ imol_ligand or imo_ref. If success, return the RT operator.</p>
 <p>Arguments: imol_ligand (a whole number), imol_ref (a whole number), chain_id_ref (text), resno_ref (a whole number). Returns: a value (see the result of the example).
 Also available in Python as <code>overlap_ligands_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>overlap_ligands(0, 0, "A", 41)</code></td><td>ran, returned <code>[[[-0.3411510827580073, 0.9094183451757436, -0.23785334176935846, -0.3879130702516574, -0.36668437654081165, -0.84561576 ...</code></td></tr>
-<tr><td>Scheme</td><td><code>(overlap-ligands 0 0 "A" 41)</code></td><td>ran, returned <code>(((-0.3411510827580073 0.9094183451757436 -0.23785334176935846 -0.3879130702516574 -0.36668437654081165 -0.8456157625829 ...</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>overlap_ligands(0, 0, "A", 41)</code></td><td>ran, returned <code>[[[-0.3411510827580073, 0.9094183451757436, -0.23785334176935846, -0.3879130702516574, -0.36668437654081165, -0.84561576 ...</code>; changed: molecule 0: deleted 188 residue(s) (A2, A3, A4, A5 ...); molecule 0: coordinates of 1 residue(s) (A1); first_small_coords_imol(): -1 -&gt; 0; n_atoms(0): 1465 -&gt; 8 ...</td></tr>
+<tr><td>Scheme</td><td><code>(overlap-ligands 0 0 "A" 41)</code></td><td>ran, returned <code>(((-0.3411510827580073 0.9094183451757436 -0.23785334176935846 -0.3879130702516574 -0.36668437654081165 -0.8456157625829 ...</code>; changed: molecule 0: deleted 188 residue(s) (A2, A3, A4, A5 ...); molecule 0: coordinates of 1 residue(s) (A1); first_small_coords_imol(): -1 -&gt; 0; n_atoms(0): 1465 -&gt; 8 ...</td></tr></tbody></table>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="set_find_ligand_do_real_space_refinement">set_find_ligand_do_real_space_refinement</h3>
 <p>Python: <code>set_find_ligand_do_real_space_refinement(state)</code><br>
@@ -173,16 +174,16 @@ Scheme: <code>(set-find-ligand-do-real-space-refinement state)</code></p>
  10.</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_find_ligand_do_real_space_refinement(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-find-ligand-do-real-space-refinement 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_find_ligand_do_real_space_refinement(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-find-ligand-do-real-space-refinement 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_find_ligand_here_cluster">set_find_ligand_here_cluster</h3>
 <p>Python: <code>set_find_ligand_here_cluster(state)</code><br>
 Scheme: <code>(set-find-ligand-here-cluster state)</code></p>
 <p>Allow the user a scripting means to find ligand at the rotation centre</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_find_ligand_here_cluster(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-find-ligand-here-cluster 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_find_ligand_here_cluster(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-find-ligand-here-cluster 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_find_ligand_mask_waters">set_find_ligand_mask_waters</h3>
 <p>Python: <code>set_find_ligand_mask_waters(istate)</code><br>
 Scheme: <code>(set-find-ligand-mask-waters istate)</code></p>
@@ -191,8 +192,8 @@ Scheme: <code>(set-find-ligand-mask-waters istate)</code></p>
  protein atoms do.</p>
 <p>Arguments: istate (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_find_ligand_mask_waters(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-find-ligand-mask-waters 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_find_ligand_mask_waters(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-find-ligand-mask-waters 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_find_ligand_multi_solutions_per_cluster">set_find_ligand_multi_solutions_per_cluster</h3>
 <p>Python: <code>set_find_ligand_multi_solutions_per_cluster(lim_1, lim_2)</code><br>
 Scheme: <code>(set-find-ligand-multi-solutions-per-cluster lim-1 lim-2)</code></p>
@@ -208,8 +209,8 @@ that there should be.</p>
 <p>Nino-mode.</p>
 <p>Arguments: lim_1 (a number), lim_2 (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_find_ligand_multi_solutions_per_cluster(1.0, 1.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-find-ligand-multi-solutions-per-cluster 1.0 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_find_ligand_multi_solutions_per_cluster(1.0, 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-find-ligand-multi-solutions-per-cluster 1.0 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_find_ligand_n_top_ligands">set_find_ligand_n_top_ligands</h3>
 <p>Python: <code>set_find_ligand_n_top_ligands(n)</code><br>
 Scheme: <code>(set-find-ligand-n-top-ligands n)</code></p>
@@ -217,8 +218,8 @@ Scheme: <code>(set-find-ligand-n-top-ligands n)</code></p>
 <p> Default 10.</p>
 <p>Arguments: n (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_find_ligand_n_top_ligands(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-find-ligand-n-top-ligands 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_find_ligand_n_top_ligands(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-find-ligand-n-top-ligands 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_ligand_acceptable_fit_fraction">set_ligand_acceptable_fit_fraction</h3>
 <p>Python: <code>set_ligand_acceptable_fit_fraction(f)</code><br>
 Scheme: <code>(set-ligand-acceptable-fit-fraction f)</code></p>
@@ -226,8 +227,8 @@ Scheme: <code>(set-ligand-acceptable-fit-fraction f)</code></p>
  after a ligand fit</p>
 <p>Arguments: f (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_ligand_acceptable_fit_fraction(1.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-ligand-acceptable-fit-fraction 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_ligand_acceptable_fit_fraction(1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-ligand-acceptable-fit-fraction 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_ligand_cluster_sigma_level">set_ligand_cluster_sigma_level</h3>
 <p>Python: <code>set_ligand_cluster_sigma_level(f)</code><br>
 Scheme: <code>(set-ligand-cluster-sigma-level f)</code></p>
@@ -235,8 +236,8 @@ Scheme: <code>(set-ligand-cluster-sigma-level f)</code></p>
  find potential ligand sites</p>
 <p>Arguments: f (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_ligand_cluster_sigma_level(1.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-ligand-cluster-sigma-level 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_ligand_cluster_sigma_level(1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-ligand-cluster-sigma-level 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_ligand_flexible_ligand_n_samples">set_ligand_flexible_ligand_n_samples</h3>
 <p>Python: <code>set_ligand_flexible_ligand_n_samples(i)</code><br>
 Scheme: <code>(set-ligand-flexible-ligand-n-samples i)</code></p>
@@ -244,30 +245,30 @@ Scheme: <code>(set-ligand-flexible-ligand-n-samples i)</code></p>
 <p> big ligands require more samples. Default 10.</p>
 <p>Arguments: i (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_ligand_flexible_ligand_n_samples(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-ligand-flexible-ligand-n-samples 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_ligand_flexible_ligand_n_samples(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-ligand-flexible-ligand-n-samples 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_ligand_search_map_molecule">set_ligand_search_map_molecule</h3>
 <p>Python: <code>set_ligand_search_map_molecule(imol_map)</code><br>
 Scheme: <code>(set-ligand-search-map-molecule imol-map)</code></p>
 <p>set the map molecule for ligand searching</p>
 <p>Arguments: imol_map (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_ligand_search_map_molecule(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-ligand-search-map-molecule 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_ligand_search_map_molecule(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-ligand-search-map-molecule 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_ligand_search_protein_molecule">set_ligand_search_protein_molecule</h3>
 <p>Python: <code>set_ligand_search_protein_molecule(imol)</code><br>
 Scheme: <code>(set-ligand-search-protein-molecule imol)</code></p>
 <p>set the protein molecule for ligand searching</p>
 <p>Arguments: imol (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_ligand_search_protein_molecule(0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-ligand-search-protein-molecule 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_ligand_search_protein_molecule(0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-ligand-search-protein-molecule 0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_ligand_verbose_reporting">set_ligand_verbose_reporting</h3>
 <p>Python: <code>set_ligand_verbose_reporting(i)</code><br>
 Scheme: <code>(set-ligand-verbose-reporting i)</code></p>
 <p>default 50: Really?</p>
 <p>Arguments: i (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_ligand_verbose_reporting(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-ligand-verbose-reporting 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_ligand_verbose_reporting(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-ligand-verbose-reporting 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 </body></html>

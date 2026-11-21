@@ -33,8 +33,10 @@ Also available in Python as `map_mean_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `map_mean(0)` | ran, returned `False` |
-| Scheme | `(map-mean-scm 0)` | ran, returned `#f` |
+| Python | `map_mean(1)` | ran, returned `9.449976641917601e-05` |
+| Scheme | `(map-mean-scm 1)` | ran, returned `9.449976641917601e-5` |
+
+Example written and checked by hand on the test data. Expected: returns the mean density of map 1 (about 0 for a 2Fo-Fc map); False if not a map.
 
 Python and Scheme gave the same answer.
 
@@ -49,8 +51,10 @@ Also available in Scheme as `map-sigma-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `map_sigma(0)` | ran, returned `False` |
-| Scheme | `(map-sigma 0)` | ran, returned `#f` |
+| Python | `map_sigma(1)` | ran, returned `0.37349623441696167` |
+| Scheme | `(map-sigma 1)` | ran, returned `0.37349623441696167` |
+
+Example written and checked by hand on the test data. Expected: returns the rms (sigma) of map 1; False if not a map.
 
 Python and Scheme gave the same answer.
 
@@ -65,8 +69,12 @@ Also available in Scheme as `map-statistics-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `map_statistics(0)` | ran, returned `False` |
-| Scheme | `(map-statistics 0)` | ran, returned `#f` |
+| Python | `map_statistics(1)` | ran, returned `[1.3091280948174244e-10, 0.3733606442952185, 0.07638043081814125, 6.456661785908296]` |
+| Scheme | `(map-statistics 1)` | ran, returned `(1.3091280948174244e-10 0.3733606442952185 0.07638043081814125 6.456661785908296)` |
+
+Example written and checked by hand on the test data. Expected: returns [mean, standard deviation, skew, kurtosis] of the map.
+
+Note: mean here (1.3e-10) differs from map_mean(1) (9.4e-05): different averaging (with/without pseudo-zeros?).
 
 Python and Scheme gave the same answer.
 
@@ -88,8 +96,14 @@ Arguments: imol (a whole number), residue_specs (a list or value), neighb_residu
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `map_to_model_correlation(0, [["A", 41, ""], ["A", 42, ""]], ["A", 41, ""], 1, 1)` | error: SystemError: <built-in function map_to_model_correlation_py> returned a result with an exception set |
-| Scheme | `(map-to-model-correlation 0 (list (list "A" 41 "") (list "A" 42 "")) (list "A" 41 "") 1 1)` | error: In procedure length: Wrong type argument in position 1: "A" |
+| Python | `map_to_model_correlation(0, [["A", 41, ""], ["A", 42, ""]], [], 0, 1)` | ran, returned `0.534332811832428` |
+| Scheme | `(map-to-model-correlation 0 (list (list "A" 41 "") (list "A" 42 "")) (list) 0 1)` | ran, returned `0.534332811832428` |
+
+Example written and checked by hand on the test data. Expected: returns the map-model correlation (a number between -1 and 1) for the residues; nothing changes.
+
+Note: neighb_residue_specs must be a LIST of residue specs (possibly empty); a single spec as in the old example raises SystemError in Python
+
+Python and Scheme gave the same answer.
 
 ### map_to_model_correlation_per_residue
 
@@ -134,8 +148,14 @@ Arguments: imol (a whole number), residue_specs (a list or value), neighb_residu
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `map_to_model_correlation_stats(0, [["A", 41, ""], ["A", 42, ""]], ["A", 41, ""], 1, 1)` | error: SystemError: <built-in function map_to_model_correlation_stats_py> returned a result with an exception set |
-| Scheme | `(map-to-model-correlation-stats 0 (list (list "A" 41 "") (list "A" 42 "")) (list "A" 41 "") 1 1)` | error: In procedure length: Wrong type argument in position 1: "A" |
+| Python | `map_to_model_correlation_stats(0, [["A", 41, ""], ["A", 42, ""]], [["A", 40, ""]], 0, 1)` | ran, returned `[0.548732629869392, 0.3522034760120561, 0.20996179099783185, 1129.0, 758.1366588845849, 223.62884630216286]` |
+| Scheme | `(map-to-model-correlation-stats 0 (list (list "A" 41 "") (list "A" 42 "")) (list (list "A" 40 "")) 0 1)` | ran, returned `(0.548732629869392 0.3522034760120561 0.20996179099783185 1129 758.1366588845849 223.62884630216286 0.16908523276233844  ...` |
+
+Example written and checked by hand on the test data. Expected: returns a list of statistics, first the correlation, then variances, number of grid points and sums.
+
+Note: Python returns 6 values, Scheme returns 12 (Scheme adds more sums/means); same first 6
+
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
 ### map-to-model-correlation-stats-per-residue-scm
 
@@ -179,8 +199,10 @@ Also available in Scheme as `qq-plot-map-and-model-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `qq_plot_map_and_model(0, [["A", 41, ""], ["A", 42, ""]], ["A", 41, ""], 1, 1)` | stopped Coot when tried without a window (not checked with a window) |
-| Scheme | `(qq-plot-map-and-model 0 (list (list "A" 41 "") (list "A" 42 "")) (list "A" 41 "") 1 1)` | error: In procedure length: Wrong type argument in position 1: "A" |
+| Python | `qq_plot_map_and_model(0, [["A", 41, ""], ["A", 42, ""]], [], 0, 1)` | not run: opens a plot window (goograph); needs the graphics window (stops Coot without a screen) |
+| Scheme | `(qq-plot-map-and-model 0 (list (list "A" 41 "") (list "A" 42 "")) (list) 0 1)` | not run: opens a plot window (goograph); needs the graphics window (stops Coot without a screen) |
+
+Example written and checked by hand on the test data. Expected: opens a Q-Q plot window of map vs model density for the residues.
 
 ### set_map_correlation_atom_radius
 
@@ -194,6 +216,6 @@ Arguments: r (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_map_correlation_atom_radius(0.5)` | ran (no return value) |
-| Scheme | `(set-map-correlation-atom-radius 0.5)` | ran (no return value) |
+| Python | `set_map_correlation_atom_radius(0.5)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-map-correlation-atom-radius 0.5)` | ran (no return value, nothing visible changed) |
 

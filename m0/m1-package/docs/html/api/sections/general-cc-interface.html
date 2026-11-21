@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="9e3ac2ca6fcc1000359105f2aa1a0595b3342d99">
+<meta name="coot0-source-sha1" content="cd866644552ad96dd278c81bd04e00a31a71a1d8">
 <title>General (cc-interface) - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -24,7 +24,7 @@ Scheme: <code>(active-atom-spec)</code></p>
 <p>Arguments: none. Returns: a value (see the result of the example).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>active_atom_spec()</code></td><td>ran, returned <code>(True, (0, [True, 'A', 42, '']))</code></td></tr>
-<tr><td>Scheme</td><td><code>(active-atom-spec)</code></td><td>ran, returned <code>#&lt;collectable-swig-pointer std::pair&lt; bool,std::pair&lt; int,coot::atom_spec_t &gt; &gt; * 8ebfc06e0&gt;</code></td></tr></tbody></table>
+<tr><td>Scheme</td><td><code>(active-atom-spec)</code></td><td>ran, returned <code>#&lt;collectable-swig-pointer std::pair&lt; bool,std::pair&lt; int,coot::atom_spec_t &gt; &gt; * a24afd4a0&gt;</code></td></tr></tbody></table>
 <h3 id="add_cablam_markup">add_cablam_markup</h3>
 <p>Python: <code>add_cablam_markup(imol, cablam_log_file_name)</code><br>
 Scheme: <code>(add-cablam-markup imol cablam-log-file-name)</code></p>
@@ -39,52 +39,59 @@ Scheme: <code>(add-cablam-markup imol cablam-log-file-name)</code></p>
 Scheme: <code>(add-validation-mol-menu-item imol name menu callback)</code></p>
 <p>Arguments: imol (a whole number), name (text), menu (<code>GtkWidget *</code>), callback (<code>GtkSignalFunc</code>). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td>(no example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: adds a molecule item to a validation-graph menu (called by the menus themselves).</p>
 <h3 id="compare_strings">compare_strings</h3>
 <p>Python: <code>compare_strings(a, b)</code><br>
 Scheme: <code>(compare-strings a b)</code></p>
 <p>Arguments: a (text), b (text). Returns: true or false.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>compare_strings("hello", "hello")</code></td><td>ran, returned <code>False</code></td></tr>
-<tr><td>Scheme</td><td><code>(compare-strings "hello" "hello")</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
-<p>Python and Scheme gave the same answer.</p>
+<tr><td>Python</td><td><code>compare_strings("apple", "banana")</code></td><td>ran, returned <code>True</code></td></tr>
+<tr><td>Scheme</td><td><code>(compare-strings "banana" "apple")</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: true when the first string sorts before the second (a &lt; b), false otherwise.</p>
+<p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 <h3 id="create_initial_validation_graph_submenu_generic">create_initial_validation_graph_submenu_generic</h3>
 <p>Python: <code>create_initial_validation_graph_submenu_generic(window1, menu_name, sub_menu_name)</code><br>
 Scheme: <code>(create-initial-validation-graph-submenu-generic window1 menu-name sub-menu-name)</code></p>
 <p>Arguments: window1 (<code>GtkWidget *</code>), menu_name (text), sub_menu_name (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td>(no example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: builds a validation-graph sub-menu in the main window (internal GUI function).</p>
 <h3 id="filelist_into_fileselection_clist">filelist_into_fileselection_clist</h3>
 <p>Python: <code>filelist_into_fileselection_clist(fileselection, v)</code><br>
 Scheme: <code>(filelist-into-fileselection-clist fileselection v)</code></p>
 <p>Arguments: fileselection (<code>GtkWidget *</code>), v (a list). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td>(no example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: fills a file selection dialog's list (internal GUI function).</p>
 <h3 id="filtered_by_glob">filtered_by_glob</h3>
 <p>Python: <code>filtered_by_glob(pre_directory, data_type)</code><br>
 Scheme: <code>(filtered-by-glob pre-directory data-type)</code></p>
 <p>Arguments: pre_directory (text), data_type (a whole number). Returns: a list.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>filtered_by_glob(".", 1)</code></td><td>ran, returned <code>('./rnasa-1.8-all_refmac1.mtz',)</code></td></tr>
-<tr><td>Scheme</td><td><code>(filtered-by-glob "." 1)</code></td><td>ran, returned <code>#("./rnasa-1.8-all_refmac1.mtz")</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>filtered_by_glob(".", 1)</code></td><td>ran, returned <code>('./1ehz_map.mtz', './ATP.cif', './NAG.cif', './map-coefficients-only.mtz', './rnasa-1.8-all_refmac1.mtz', './rnasa-sf.c ...</code></td></tr>
+<tr><td>Scheme</td><td><code>(filtered-by-glob "." 1)</code></td><td>ran, returned <code>#("./1ehz_map.mtz" "./ATP.cif" "./NAG.cif" "./map-coefficients-only.mtz" "./rnasa-1.8-all_refmac1.mtz" "./rnasa-sf.cif"  ...</code></td></tr></tbody></table>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="float_from_entry">float_from_entry</h3>
 <p>Python: <code>float_from_entry(entry)</code><br>
 Scheme: <code>(float-from-entry entry)</code></p>
 <p>Arguments: entry (<code>GtkWidget *</code>). Returns: a list.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td>(no example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the number typed in a GtkEntry (internal GUI helper).</p>
 <h3 id="get_pisa_interface_bond_info_py">get_pisa_interface_bond_info_py</h3>
 <p>Python: <code>get_pisa_interface_bond_info_py(bonds_info_py)</code><br>
 Scheme: <code>(get-pisa-interface-bond-info-scm bonds-info-scm)</code></p>
 <p>Arguments: bonds_info_py (a list or value). Returns: <code>pisa_interface_bond_info_t</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>get_pisa_interface_bond_info_py([["h-bonds", 1, 2], ["h-bonds", 3, 4], ["salt-bridges", 5, 6]])</code></td><td>ran, returned <code>&lt;coot.pisa_interface_bond_info_t; proxy of &lt;Swig Object of type 'coot::pisa_interface_bond_info_t *' at 0x10b833600&gt; &gt;</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-pisa-interface-bond-info-scm (list (list 'h-bonds 1 2)))</code></td><td>ran, returned <code>#&lt;collectable-swig-pointer coot::pisa_interface_bond_info_t * 94ad7b730&gt;</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: internal PISA helper: counts bond types in a list of [type, atom, atom] and returns a C++ struct (fields n_h_bonds, n_salt_bridges, n_cov_bonds, n_ss_bonds).</p>
+<p>Note: Python takes the type as a string, Scheme as a symbol ('h-bonds). Returns a C++ struct, of little use from scripts.</p>
 <h3 id="git_commit">git_commit</h3>
 <p>Python: <code>git_commit()</code><br>
 Scheme: <code>(git-commit)</code></p>
@@ -118,8 +125,9 @@ Also available in Scheme as <code>goto-prev-atom-maybe-scm</code>.</p>
 Scheme: <code>(int-from-entry entry)</code></p>
 <p>Arguments: entry (<code>GtkWidget *</code>). Returns: a list.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td>(no example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the integer typed in a GtkEntry (internal GUI helper).</p>
 <h3 id="menu_item_label">menu_item_label</h3>
 <p>Python: <code>menu_item_label(menu_item)</code><br>
 Scheme: <code>(menu-item-label menu-item)</code></p>
@@ -129,22 +137,27 @@ GtkPositionType data. A wrapper to a static graphics_info_t
 function.</p>
 <p>Arguments: menu_item (<code>GtkWidget *</code>). Returns: text.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td>(no example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the text label of a menu item (internal GUI helper).</p>
 <h3 id="pre_directory_file_selection">pre_directory_file_selection</h3>
 <p>Python: <code>pre_directory_file_selection(sort_button)</code><br>
 Scheme: <code>(pre-directory-file-selection sort-button)</code></p>
 <p>Arguments: sort_button (<code>GtkWidget *</code>). Returns: text.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td>(no example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: sets up the directory part of a file chooser (internal GUI helper).</p>
 <h3 id="probe_dots_short_contact_name_to_expanded_name">probe_dots_short_contact_name_to_expanded_name</h3>
 <p>Python: <code>probe_dots_short_contact_name_to_expanded_name(short_name)</code><br>
 Scheme: <code>(probe-dots-short-contact-name-to-expanded-name short-name)</code></p>
 <p>Arguments: short_name (text). Returns: text.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>probe_dots_short_contact_name_to_expanded_name("my-name")</code></td><td>not run: not run automatically (probe: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(probe-dots-short-contact-name-to-expanded-name "my-name")</code></td><td>not run: not run automatically (probe: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>probe_dots_short_contact_name_to_expanded_name("bo")</code></td><td>ran, returned <code>'bad overlap'</code></td></tr>
+<tr><td>Scheme</td><td><code>(probe-dots-short-contact-name-to-expanded-name "bo")</code></td><td>ran, returned <code>"bad overlap"</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the long name of a probe contact type (wc, cc, so, bo, hb); 'unknown' otherwise.</p>
+<p>Note: Only a string lookup; it does not run probe (old classification was wrong).</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="set_go_to_atom_from_atom_spec">set_go_to_atom_from_atom_spec</h3>
 <p>Python: <code>set_go_to_atom_from_atom_spec(residue_spec)</code><br>
 Scheme: <code>(set-go-to-atom-from-atom-spec residue-spec)</code></p>
@@ -152,15 +165,16 @@ Scheme: <code>(set-go-to-atom-from-atom-spec residue-spec)</code></p>
 Also available in Python as <code>set_go_to_atom_from_atom_spec_py</code>.
 Also available in Scheme as <code>set-go-to-atom-from-atom-spec-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_go_to_atom_from_atom_spec(["A", 41, ""])</code></td><td>ran, returned <code>0</code></td></tr>
-<tr><td>Scheme</td><td><code>(set-go-to-atom-from-atom-spec (list "A" 41 ""))</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_go_to_atom_from_atom_spec(["A", 42, "", " CA ", ""])</code></td><td>ran, returned <code>1</code>; changed: rotation centre moved 3.6 A to (44.4, 10.4, 15.0)</td></tr>
+<tr><td>Scheme</td><td><code>(set-go-to-atom-from-atom-spec (list "A" 42 "" " CA " ""))</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns 1 and centres on the atom given as an atom spec [chain, resno, inscode, atom name, altconf].</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="set_go_to_atom_from_res_spec">set_go_to_atom_from_res_spec</h3>
 <p>Python: <code>set_go_to_atom_from_res_spec(residue_spec)</code><br>
 Scheme: <code>(set-go-to-atom-from-res-spec residue-spec)</code></p>
 <p>Arguments: residue_spec (a list or value). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_go_to_atom_from_res_spec(["A", 41, ""])</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Python</td><td><code>set_go_to_atom_from_res_spec(["A", 41, ""])</code></td><td>ran, returned <code>1</code>; changed: rotation centre moved 3.6 A to (47.1, 10.6, 17.4)</td></tr>
 <tr><td>Scheme</td><td><code>(set-go-to-atom-from-res-spec (list "A" 41 ""))</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="set_go_to_atom_from_spec">set_go_to_atom_from_spec</h3>
@@ -168,22 +182,26 @@ Scheme: <code>(set-go-to-atom-from-res-spec residue-spec)</code></p>
 Scheme: <code>(set-go-to-atom-from-spec atom-spec)</code></p>
 <p>Arguments: atom_spec (<code>coot::atom_spec_t</code>). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_go_to_atom_from_spec(["A", 42, "", " CA ", ""])</code></td><td>not run: takes a C++ coot::atom_spec_t object that cannot be made from Python or Scheme</td></tr>
+<tr><td>Scheme</td><td><code>(set-go-to-atom-from-spec (list "A" 42 "" " CA " ""))</code></td><td>not run: takes a C++ coot::atom_spec_t object that cannot be made from Python or Scheme</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: C++-level function taking a coot::atom_spec_t, which scripts cannot build; use set_go_to_atom_from_atom_spec with a list instead.</p>
+<p>Note: Exported to both languages but unusable from them; set_go_to_atom_from_atom_spec is the scripting version.</p>
 <h3 id="string_member">string_member</h3>
 <p>Python: <code>string_member(search, list)</code><br>
 Scheme: <code>(string-member search list)</code></p>
 <p>Return 1 if search appears in list, 0 if not)</p>
 <p>Arguments: search (text), list (a list). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>string_member("hello", "hello")</code></td><td>ran, returned <code>0</code></td></tr>
-<tr><td>Scheme</td><td><code>(string-member "hello" "hello")</code></td><td>error: In procedure string-member: Wrong type argument in position 2: "hello"</td></tr></tbody></table>
+<tr><td>Python</td><td><code>string_member("b", ["a", "b", "c"])</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(string-member "b" (list "a" "b" "c"))</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns 1 when the string is in the list, 0 when not.</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="wrapped_nothing_bad_dialog">wrapped_nothing_bad_dialog</h3>
 <p>Python: <code>wrapped_nothing_bad_dialog(label)</code><br>
 Scheme: <code>(wrapped-nothing-bad-dialog label)</code></p>
 <p>Arguments: label (text). Returns: <code>GtkWidget *</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>wrapped_nothing_bad_dialog("hello")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Python</td><td><code>wrapped_nothing_bad_dialog("hello")</code></td><td>ran (no return value, nothing visible changed)</td></tr>
 <tr><td>Scheme</td><td><code>(wrapped-nothing-bad-dialog "hello")</code></td><td>ran, returned <code>()</code></td></tr></tbody></table>
 <p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 </body></html>

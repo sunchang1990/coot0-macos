@@ -23,10 +23,10 @@ Also available in Scheme as `alignment-mismatches-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `alignment_mismatches(0)` | ran, returned `False` |
-| Scheme | `(alignment-mismatches 0)` | ran, returned `#f` |
+| Python | first `assign_sequence_to_best_matching_chain("DVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLID")`, then `alignment_mismatches(0)` | ran, returned `[[['VAL', True, 'B', 6, ''], ['VAL', True, 'B', 6, '']], [['Delete', True, 'B', 94, ''], ['Delete', True, 'B', 95, ''],  ...` |
+| Scheme | first `(assign-sequence-to-best-matching-chain "DVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLID")`, then `(alignment-mismatches 0)` | ran, returned `((("VAL" #t "B" 6 "") ("VAL" #t "B" 6 "") ("VAL" #t "B" 6 "")) (("Delete" #t "B" 94 "") ("Delete" #t "B" 95 "") ("Delete ...` |
 
-Python and Scheme gave the same answer.
+Example written and checked by hand on the test data. Expected: a list [mutations, deletions, insertions, alignment text]: chain B has 3 residues (94-96) that the 93-residue sequence lacks; False if no sequence was assigned.
 
 ### assign_fasta_sequence
 
@@ -39,8 +39,8 @@ Arguments: imol (a whole number), chain_id_in (text), seq (text). Returns: nothi
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `assign_fasta_sequence(0, "A", "ACDEFGHIKLMNPQRSTVWY")` | ran (no return value) |
-| Scheme | `(assign-fasta-sequence 0 "A" "ACDEFGHIKLMNPQRSTVWY")` | ran (no return value) |
+| Python | `assign_fasta_sequence(0, "A", "ACDEFGHIKLMNPQRSTVWY")` | ran (no return value, nothing visible changed) |
+| Scheme | `(assign-fasta-sequence 0 "A" "ACDEFGHIKLMNPQRSTVWY")` | ran (no return value, nothing visible changed) |
 
 ### assign_pir_sequence
 
@@ -55,8 +55,8 @@ Arguments: imol (a whole number), chain_id_in (text), seq (text). Returns: nothi
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `assign_pir_sequence(0, "A", "ACDEFGHIKLMNPQRSTVWY")` | ran (no return value) |
-| Scheme | `(assign-pir-sequence 0 "A" "ACDEFGHIKLMNPQRSTVWY")` | ran (no return value) |
+| Python | `assign_pir_sequence(0, "A", "ACDEFGHIKLMNPQRSTVWY")` | ran (no return value, nothing visible changed) |
+| Scheme | `(assign-pir-sequence 0 "A" "ACDEFGHIKLMNPQRSTVWY")` | ran (no return value, nothing visible changed) |
 
 ### assign_sequence
 
@@ -69,8 +69,8 @@ Arguments: imol_model (a whole number), imol_map (a whole number), chain_id (tex
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `assign_sequence(0, 1, "A")` | ran (no return value) |
-| Scheme | `(assign-sequence 0 1 "A")` | ran (no return value) |
+| Python | `assign_sequence(0, 1, "A")` | ran (no return value, nothing visible changed) |
+| Scheme | `(assign-sequence 0 1 "A")` | ran (no return value, nothing visible changed) |
 
 ### assign_sequence_from_file
 
@@ -84,8 +84,8 @@ Arguments: imol (a whole number), file (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `assign_sequence_from_file(0, "tutorial-modern.pdb")` | ran (no return value) |
-| Scheme | `(assign-sequence-from-file 0 "tutorial-modern.pdb")` | ran (no return value) |
+| Python | `assign_sequence_from_file(0, "tutorial-modern.pdb")` | ran (no return value, nothing visible changed) |
+| Scheme | `(assign-sequence-from-file 0 "tutorial-modern.pdb")` | ran (no return value, nothing visible changed) |
 
 ### assign_sequence_from_string
 
@@ -98,8 +98,8 @@ Arguments: imol (a whole number), chain_id_in (text), seq (text). Returns: nothi
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `assign_sequence_from_string(0, "A", "ACDEFGHIKLMNPQRSTVWY")` | ran (no return value) |
-| Scheme | `(assign-sequence-from-string 0 "A" "ACDEFGHIKLMNPQRSTVWY")` | ran (no return value) |
+| Python | `assign_sequence_from_string(0, "A", "ACDEFGHIKLMNPQRSTVWY")` | ran (no return value, nothing visible changed) |
+| Scheme | `(assign-sequence-from-string 0 "A" "ACDEFGHIKLMNPQRSTVWY")` | ran (no return value, nothing visible changed) |
 
 ### associate_sequence_from_file
 
@@ -112,8 +112,8 @@ Arguments: imol (a whole number), file_name (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `associate_sequence_from_file(0, "tutorial-modern.pdb")` | ran (no return value) |
-| Scheme | `(associate-sequence-from-file 0 "tutorial-modern.pdb")` | ran (no return value) |
+| Python | `associate_sequence_from_file(0, "tutorial-modern.pdb")` | ran (no return value, nothing visible changed) |
+| Scheme | `(associate-sequence-from-file 0 "tutorial-modern.pdb")` | ran (no return value, nothing visible changed) |
 
 ### delete_all_sequences_from_molecule
 
@@ -126,8 +126,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `delete_all_sequences_from_molecule(0)` | ran (no return value) |
-| Scheme | `(delete-all-sequences-from-molecule 0)` | ran (no return value) |
+| Python | `delete_all_sequences_from_molecule(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(delete-all-sequences-from-molecule 0)` | ran (no return value, nothing visible changed) |
 
 ### delete_sequence_by_chain_id
 
@@ -140,8 +140,8 @@ Arguments: imol (a whole number), chain_id_in (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `delete_sequence_by_chain_id(0, "A")` | ran (no return value) |
-| Scheme | `(delete-sequence-by-chain-id 0 "A")` | ran (no return value) |
+| Python | `delete_sequence_by_chain_id(0, "A")` | ran (no return value, nothing visible changed) |
+| Scheme | `(delete-sequence-by-chain-id 0 "A")` | ran (no return value, nothing visible changed) |
 
 ### print_sequence_chain
 
@@ -154,8 +154,8 @@ Arguments: imol (a whole number), chain_id (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `print_sequence_chain(0, "A")` | ran (no return value) |
-| Scheme | `(print-sequence-chain 0 "A")` | ran (no return value) |
+| Python | `print_sequence_chain(0, "A")` | ran (no return value, nothing visible changed) |
+| Scheme | `(print-sequence-chain 0 "A")` | ran (no return value, nothing visible changed) |
 
 ### print_sequence_chain_general
 
@@ -169,8 +169,8 @@ Arguments: imol (a whole number), chain_id (text), pir_format (a whole number), 
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `print_sequence_chain_general(0, "A", 1, 1, "tutorial-modern.pdb")` | ran (no return value) |
-| Scheme | `(print-sequence-chain-general 0 "A" 1 1 "tutorial-modern.pdb")` | ran (no return value) |
+| Python | `print_sequence_chain_general(0, "A", 1, 1, "tutorial-modern.pdb")` | ran (no return value, nothing visible changed) |
+| Scheme | `(print-sequence-chain-general 0 "A" 1 1 "tutorial-modern.pdb")` | ran (no return value, nothing visible changed) |
 
 ### sequence_info
 
@@ -187,8 +187,10 @@ Also available in Python as `sequence_info_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `sequence_info(0)` | ran, returned `False` |
-| Scheme | `(sequence-info 0)` | ran, returned `#f` |
+| Python | first `assign_sequence_to_best_matching_chain("DVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLID")`, then `sequence_info(0)` | ran, returned `[['A', 'DVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLID'], ['B', 'DVSGTVCL ...` |
+| Scheme | first `(assign-sequence-to-best-matching-chain "DVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLID")`, then `(sequence-info 0)` | ran, returned `(("A" . "DVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLID") ("B" . "DVSGTVC ...` |
 
-Python and Scheme gave the same answer.
+Example written and checked by hand on the test data. Expected: the assigned sequences as [chain-id, sequence] pairs (Scheme: dotted pairs); False when no sequence has been assigned.
+
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 

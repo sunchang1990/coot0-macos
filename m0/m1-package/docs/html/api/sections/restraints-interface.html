@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="8f1f0fb3f49e25e237123587a2bba72e50e6bfea">
+<meta name="coot0-source-sha1" content="cba3a99f2efe686ceead8a507180ed5101506522">
 <title>Restraints Interface - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -36,16 +36,20 @@ Scheme: <code>(coot-can-do-lidia-p)</code></p>
 Scheme: <code>(dipole-to-scm dp)</code></p>
 <p>Arguments: dp (a list). Returns: a value (see the result of the example).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td>(no example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: internal: converts a C++ (dipole, imol) pair to a script value.</p>
 <h3 id="get_residue_by_type">get_residue_by_type</h3>
 <p>Python: <code>get_residue_by_type(, residue_type)</code><br>
 Scheme: <code>(get-residue-by-type imol residue-type)</code></p>
 <p>return a residue spec or Python False.</p>
 <p>Arguments: ? (a whole number), residue_type (text). Returns: a value (see the result of the example).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>get_residue_by_type(1, "ALA")</code></td><td>ran, returned <code>False</code></td></tr>
-<tr><td>Scheme</td><td><code>(get-residue-by-type 0 "ALA")</code></td><td>ran, returned <code>#&lt;collectable-swig-pointer coot::residue_spec_t * 814d5bcf0&gt;</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>get_residue_by_type(0, "ALA")</code></td><td>ran, returned <code>[True, 'A', 10, '']</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-residue-by-type-scm 0 "ALA")</code></td><td>ran, returned <code>(#t "A" 10 "")</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the residue spec of the first residue of that type, or False if there is none.</p>
+<p>Note: Scheme: the name get-residue-by-type is the C++ function and returns a raw #&lt;swig-pointer residue_spec_t&gt;; use get-residue-by-type-scm</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="get_residue_specs_in_mol">get_residue_specs_in_mol</h3>
 <p>Python: <code>get_residue_specs_in_mol(imol, residue_type)</code><br>
 Scheme: <code>(get-residue-specs-in-mol imol residue-type)</code></p>
@@ -53,7 +57,7 @@ Scheme: <code>(get-residue-specs-in-mol imol residue-type)</code></p>
 <p>Arguments: imol (a whole number), residue_type (text). Returns: a value (see the result of the example).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>get_residue_specs_in_mol(0, "ALA")</code></td><td>ran, returned <code>[[True, 'A', 10, ''], [True, 'A', 15, ''], [True, 'A', 23, ''], [True, 'A', 62, ''], [True, 'A', 75, ''], [True, 'A', 87 ...</code></td></tr>
-<tr><td>Scheme</td><td><code>(get-residue-specs-in-mol 0 "ALA")</code></td><td>ran, returned <code>#&lt;collectable-swig-pointer std::vector&lt; coot::residue_spec_t &gt; * 8145dfc40&gt;</code></td></tr></tbody></table>
+<tr><td>Scheme</td><td><code>(get-residue-specs-in-mol 0 "ALA")</code></td><td>ran, returned <code>#&lt;collectable-swig-pointer std::vector&lt; coot::residue_spec_t &gt; * 94b868c20&gt;</code></td></tr></tbody></table>
 <h3 id="list_nomenclature_errors">list_nomenclature_errors</h3>
 <p>Python: <code>list_nomenclature_errors(imol)</code><br>
 Scheme: <code>(list-nomenclature-errors imol)</code></p>
@@ -90,15 +94,17 @@ swig when generating coot_wrap_guile.cc.
 conditionally compiled].</p>
 <p>Arguments: python_command (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>pyrun_simple_string("hello")</code></td><td>not run: not run automatically (run: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(pyrun-simple-string "hello")</code></td><td>not run: not run automatically (run: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>pyrun_simple_string("print('hi from pyrun'); set_rotation_centre(5, 5, 5)")</code></td><td>ran, returned <code>0</code>; changed: rotation centre moved 37.6 A to (5.0, 5.0, 5.0)</td></tr>
+<tr><td>Scheme</td><td><code>(pyrun-simple-string "print('hi from scheme via pyrun')")</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: runs the Python text in Coot's Python; returns 0 on success.</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="residue_spec_from_py">residue_spec_from_py</h3>
 <p>Python: <code>residue_spec_from_py(residue_in)</code><br>
 Scheme: <code>(residue-spec-from-scm residue-in)</code></p>
 <p>Arguments: residue_in (a list or value). Returns: <code>coot::residue_spec_t</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>residue_spec_from_py(["A", 41, ""])</code></td><td>ran, returned <code>&lt;coot.residue_spec_t; proxy of &lt;Swig Object of type 'coot::residue_spec_t *' at 0x1077a5260&gt; &gt;</code></td></tr>
-<tr><td>Scheme</td><td><code>(residue-spec-from-scm (list "A" 41 ""))</code></td><td>ran, returned <code>#&lt;collectable-swig-pointer coot::residue_spec_t * 77f04e9e0&gt;</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>residue_spec_from_py(["A", 41, ""])</code></td><td>ran, returned <code>&lt;coot.residue_spec_t; proxy of &lt;Swig Object of type 'coot::residue_spec_t *' at 0x10785f8d0&gt; &gt;</code></td></tr>
+<tr><td>Scheme</td><td><code>(residue-spec-from-scm (list "A" 41 ""))</code></td><td>ran, returned <code>#&lt;collectable-swig-pointer coot::residue_spec_t * a44c39c20&gt;</code></td></tr></tbody></table>
 <h3 id="residue_spec_make_triple">residue_spec_make_triple</h3>
 <p>Python: <code>residue_spec_make_triple(residue_spec_py)</code></p>
 <p>Arguments: residue_spec_py (a list or value). Returns: a value (see the result of the example).
@@ -116,21 +122,25 @@ It doesn't need expression at the scripting level.
 return a null list on problem</p>
 <p>Arguments: res (<code>coot::residue_spec_t</code>). Returns: a value (see the result of the example).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>residue_spec_to_py(residue_spec_t("A", 41, ""))</code></td><td>ran, returned <code>[True, 'A', 41, '']</code></td></tr>
+<tr><td>Scheme</td><td><code>(residue-spec-to-scm (new-residue-spec-t "A" 41 ""))</code></td><td>ran, returned <code>(#t "A" 41 "")</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: converts a SWIG residue_spec_t object into a script list [True, chain, resno, ins].</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="run-python-command">run-python-command</h3>
 <p>Scheme: <code>(run-python-command python-command)</code></p>
 <p>Arguments: python-command (text). Returns: a value (see the result of the example).
 <strong>Scheme only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Scheme</td><td><code>(run-python-command "hello")</code></td><td>not run: not run automatically (run: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Scheme</td><td><code>(run-python-command "2 + 3")</code></td><td>ran, returned <code>5</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: evaluates a Python expression from Scheme and returns its value converted to Scheme.</p>
 <h3 id="run_scheme_command">run_scheme_command</h3>
 <p>Python: <code>run_scheme_command(scheme_command)</code></p>
 <p>we ignore return values for now</p>
 <p>Arguments: scheme_command (text). Returns: a value (see the result of the example).
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>run_scheme_command("hello")</code></td><td>not run: not run automatically (run: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>run_scheme_command("(+ 2 3)")</code></td><td>ran, returned <code>5</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: evaluates a Scheme expression from Python and returns its value converted to Python.</p>
 <h3 id="set_monomer_restraints">set_monomer_restraints</h3>
 <p>Python: <code>set_monomer_restraints(monomer_type, restraints)</code><br>
 Scheme: <code>(set-monomer-restraints monomer-type restraints)</code></p>
@@ -140,13 +150,16 @@ Scheme: <code>(set-monomer-restraints monomer-type restraints)</code></p>
 <p>Arguments: monomer_type (text), restraints (a list or value). Returns: a value (see the result of the example).
 Also available in Python as <code>set_monomer_restraints_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>r = monomer_restraints("ALA")</code>, then <code>r["_chem_comp_bond"] = [b if b[:2] != [" N  ", " CA "] else [b[0], b[1], b[2], 1.50, b[4]] for b in r["_chem_comp_bond"]]</code>, then <code>set_monomer_restraints("ALA", r)</code></td><td>ran, returned <code>True</code></td></tr>
+<tr><td>Scheme</td><td><code>(set-monomer-restraints "ALA" (monomer-restraints "ALA"))</code></td><td>ran, returned <code>#t</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: replaces the ALA dictionary restraints by the given ones (as returned by monomer_restraints); True on success.</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="show_fix_nomenclature_errors_gui">show_fix_nomenclature_errors_gui</h3>
 <p>Python: <code>show_fix_nomenclature_errors_gui(imol, nomenclature_errors)</code><br>
 Scheme: <code>(show-fix-nomenclature-errors-gui imol nomenclature-errors)</code></p>
 <p>Arguments: imol (a whole number), nomenclature_errors (a list). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>show_fix_nomenclature_errors_gui(0, "hello")</code></td><td>error: TypeError: in method 'show_fix_nomenclature_errors_gui', argument 2 of type 'std::vector&lt; std::pair&lt; std::string,coot::residue_spec_t &gt;,std: ...</td></tr>
-<tr><td>Scheme</td><td><code>(show-fix-nomenclature-errors-gui 0 "hello")</code></td><td>error: In procedure show-fix-nomenclature-errors-gui: Wrong type argument in position 2: "hello"</td></tr></tbody></table>
+<tr><td>Python</td><td><code>show_fix_nomenclature_errors_gui(0, "hello")</code></td><td>not run: needs a C++ vector of (string, residue_spec_t) pairs and opens a dialog; not callable from scripts</td></tr>
+<tr><td>Scheme</td><td><code>(show-fix-nomenclature-errors-gui 0 "hello")</code></td><td>not run: needs a C++ vector of (string, residue_spec_t) pairs and opens a dialog; not callable from scripts</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: shows a dialog listing nomenclature errors to fix.</p>
 </body></html>

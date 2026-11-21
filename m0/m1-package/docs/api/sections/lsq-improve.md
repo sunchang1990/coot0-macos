@@ -15,8 +15,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `load_tutorial_model_and_data()` | ran (no return value) |
-| Scheme | `(load-tutorial-model-and-data)` | ran (no return value) |
+| Python | `load_tutorial_model_and_data()` | ran (no return value); changed: new molecule 3 (model, tutorial-modern.pdb); new molecule 4 (map, rnasa-1.8-all_refmac1.mtz FWT PHWT); new molecule 5 (map, rnasa-1.8-all_refmac1.mtz DELFWT PHDELWT); graphics_n_molecules(): 3 -> 6 ... |
+| Scheme | `(load-tutorial-model-and-data)` | ran (no return value); changed: new molecule 3 (model, tutorial-modern.pdb); new molecule 4 (map, rnasa-1.8-all_refmac1.mtz FWT PHWT); new molecule 5 (map, rnasa-1.8-all_refmac1.mtz DELFWT PHDELWT); graphics_n_molecules(): 3 -> 6 ... |
 
 ### lsq_improve
 
@@ -37,8 +37,12 @@ Arguments: imol_ref (a whole number), ref_selection (text), imol_moving (a whole
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `lsq_improve(0, "//A/41-45", 0, "//A/41-45", 1, 1.0)` | not run: not run automatically (lsq_improve: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(lsq-improve 0 "//A/41-45" 0 "//A/41-45" 1 1.0)` | not run: not run automatically (lsq_improve: exits, uses the network, an external program, files or a screen) |
+| Python | first `imol2 = read_pdb("tutorial-modern.pdb")`, then `clear_lsq_matches()`, then `add_lsq_match(10, 30, "A", 10, 30, "B", 1)`, then `apply_lsq_matches_simple(0, imol2)`, then `lsq_improve(0, "//A", imol2, "//B", 4, 2.0)` | ran (no return value); changed: molecule 3: coordinates of 189 residue(s) (A1, A2, A3, A4 ...) |
+| Scheme | first `(define imol2 (read-pdb "tutorial-modern.pdb"))`, then `(clear-lsq-matches)`, then `(add-lsq-match 10 30 "A" 10 30 "B" 1)`, then `(apply-lsq-matches-simple 0 imol2)`, then `(lsq-improve 0 "//A" imol2 "//B" 4 2.0)` | ran (no return value); changed: molecule 3: coordinates of 189 residue(s) (A1, A2, A3, A4 ...) |
+
+Example written and checked by hand on the test data. Expected: improves an existing rough superposition of the moving selection onto the reference (Kleywegt & Jones lsq_improve) and moves the molecule.
+
+Note: Not an external program (the old 'not run' classification was wrong). Starting from unsuperposed copies nothing moves; it needs a rough superposition first.
 
 ### set_visible_toolbar_multi_refine_cancel_button
 
@@ -49,8 +53,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_visible_toolbar_multi_refine_cancel_button(1)` | ran (no return value) |
-| Scheme | `(set-visible-toolbar-multi-refine-cancel-button 1)` | ran (no return value) |
+| Python | `set_visible_toolbar_multi_refine_cancel_button(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-visible-toolbar-multi-refine-cancel-button 1)` | ran (no return value, nothing visible changed) |
 
 ### set_visible_toolbar_multi_refine_continue_button
 
@@ -61,8 +65,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_visible_toolbar_multi_refine_continue_button(1)` | ran (no return value) |
-| Scheme | `(set-visible-toolbar-multi-refine-continue-button 1)` | ran (no return value) |
+| Python | `set_visible_toolbar_multi_refine_continue_button(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-visible-toolbar-multi-refine-continue-button 1)` | ran (no return value, nothing visible changed) |
 
 ### set_visible_toolbar_multi_refine_stop_button
 
@@ -73,8 +77,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_visible_toolbar_multi_refine_stop_button(1)` | ran (no return value) |
-| Scheme | `(set-visible-toolbar-multi-refine-stop-button 1)` | ran (no return value) |
+| Python | `set_visible_toolbar_multi_refine_stop_button(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-visible-toolbar-multi-refine-stop-button 1)` | ran (no return value, nothing visible changed) |
 
 ### toolbar_multi_refine_button_set_sensitive
 
@@ -88,8 +92,8 @@ Arguments: button_type (text), state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `toolbar_multi_refine_button_set_sensitive("hello", 1)` | ran (no return value) |
-| Scheme | `(toolbar-multi-refine-button-set-sensitive "hello" 1)` | ran (no return value) |
+| Python | `toolbar_multi_refine_button_set_sensitive("hello", 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(toolbar-multi-refine-button-set-sensitive "hello" 1)` | ran (no return value, nothing visible changed) |
 
 ### toolbar_multi_refine_cancel
 
@@ -100,8 +104,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `toolbar_multi_refine_cancel()` | ran (no return value) |
-| Scheme | `(toolbar-multi-refine-cancel)` | ran (no return value) |
+| Python | `toolbar_multi_refine_cancel()` | ran (no return value, nothing visible changed) |
+| Scheme | `(toolbar-multi-refine-cancel)` | ran (no return value, nothing visible changed) |
 
 ### toolbar_multi_refine_continue
 
@@ -112,8 +116,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `toolbar_multi_refine_continue()` | ran (no return value) |
-| Scheme | `(toolbar-multi-refine-continue)` | ran (no return value) |
+| Python | `toolbar_multi_refine_continue()` | ran (no return value, nothing visible changed) |
+| Scheme | `(toolbar-multi-refine-continue)` | ran (no return value, nothing visible changed) |
 
 ### toolbar_multi_refine_stop
 
@@ -124,6 +128,6 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `toolbar_multi_refine_stop()` | ran (no return value) |
-| Scheme | `(toolbar-multi-refine-stop)` | ran (no return value) |
+| Python | `toolbar_multi_refine_stop()` | ran (no return value, nothing visible changed) |
+| Scheme | `(toolbar-multi-refine-stop)` | ran (no return value, nothing visible changed) |
 

@@ -17,5 +17,9 @@ Arguments: imol (a whole number), residue_spec (a list or value), res_name (text
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | `add_residue_with_atoms_py(0, ["A", 200, ""], "HOH", [[[" O  ", ""], [1.0, 20.0, " O", ""], [10.0, 20.0, 30.0]]])` | ran, returned `0`; changed: molecule 0: added 1 residue(s) (A200); n_atoms(0): 1465 -> 1466; n_residues(0): 189 -> 190 |
+
+Example written and checked by hand on the test data. Expected: adds residue A200 (HOH, one O atom) to molecule 0; documented to return the number of atoms added (1).
+
+Note: Returns 0 although the atom IS added: molecule_class_info_t::add_residue_with_atoms never updates r_added (likely upstream bug). Atom format: [[name, altconf], [occ, B, element, segid], [x, y, z]].
 

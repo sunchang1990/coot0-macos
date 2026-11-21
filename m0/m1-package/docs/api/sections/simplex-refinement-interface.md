@@ -15,8 +15,12 @@ Arguments: res1 (a whole number), res2 (a whole number), altloc (text), chain_id
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `fit_residue_range_to_map_by_simplex(1, 1, "", "A", 0, 1)` | no answer within 60 s (slow, or waits for something) |
-| Scheme | `(fit-residue-range-to-map-by-simplex 1 1 "" "A" 0 1)` | no answer within 60 s (slow, or waits for something) |
+| Python | `fit_residue_range_to_map_by_simplex(41, 43, "", "A", 0, 1)` | ran (no return value); changed: molecule 0: coordinates of 3 residue(s) (A41, A42, A43) |
+| Scheme | `(fit-residue-range-to-map-by-simplex 41 43 "" "A" 0 1)` | ran (no return value); changed: molecule 0: coordinates of 3 residue(s) (A41, A42, A43) |
+
+Example written and checked by hand on the test data. Expected: rigid-body/simplex fit of residues A41-43 of model 0 into map 1; the three residues move.
+
+Note: Earlier generated example timed out (long range); a 3-residue range takes 0.3 s.
 
 ### score_residue_range_fit_to_map
 
@@ -29,8 +33,8 @@ Arguments: res1 (a whole number), res2 (a whole number), altloc (text), chain_id
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `score_residue_range_fit_to_map(1, 1, "", "A", 0, 1)` | ran, returned `5.491945266723633` |
-| Scheme | `(score-residue-range-fit-to-map 1 1 "" "A" 0 1)` | ran, returned `5.491945266723633` |
+| Python | `score_residue_range_fit_to_map(1, 1, "", "A", 0, 1)` | ran, returned `5.4941911697387695` |
+| Scheme | `(score-residue-range-fit-to-map 1 1 "" "A" 0 1)` | ran, returned `5.4941911697387695` |
 
 Python and Scheme gave the same answer.
 

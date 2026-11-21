@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="05470ff4b56b4ff307aa13a8c3a4a02a66b4d45f">
+<meta name="coot0-source-sha1" content="825a261d5929cb20ff081fd0c751c1eca7609091">
 <title>Images - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -24,5 +24,7 @@ fields: text, font, size, colour, slant, weight</p>
 <p>Arguments: text_info_dict (a list or value). Returns: text.
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>len(text_png_as_string({"text": "Coot", "font-size": 20, "fg-colour": "#202080"}))</code></td><td>ran, returned <code>1031</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns a PNG image (as a string) of the text with the given font, size and colours.</p>
+<p>Note: Returns the PNG data as a (binary) string; the example shows only its length.</p>
 </body></html>

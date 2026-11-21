@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="8e48096870cca3d668e20abced6ba098b1655e78">
+<meta name="coot0-source-sha1" content="e9a6641de98e57ae39e3353c31aa53fc910a0c46">
 <title>Pointer Functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -23,8 +23,9 @@ Scheme: <code>(set-show-pointer-distances istate)</code></p>
 <p>turn on (or off) the pointer distance by passing 1 (or 0).</p>
 <p>Arguments: istate (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_show_pointer_distances(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-show-pointer-distances 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_show_pointer_distances(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-show-pointer-distances 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Setting checked (set to another value and read back, then put back): Python: show_pointer_distances_state was 0, set to 1, read back 1; Scheme: show-pointer-distances-state was 0, set to 1, read back 1.</p>
 <h3 id="show_pointer_distances_state">show_pointer_distances_state</h3>
 <p>Python: <code>show_pointer_distances_state()</code><br>
 Scheme: <code>(show-pointer-distances-state)</code></p>

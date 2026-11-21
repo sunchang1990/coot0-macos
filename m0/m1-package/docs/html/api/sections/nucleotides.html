@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="3059d7fc9afda120313fd3cab5464e9ffcd3fa86">
+<meta name="coot0-source-sha1" content="cf5f2d1cd80f7f14cd174a675a6387a60c227aa7">
 <title>Nucleotides - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -26,7 +26,7 @@ Scheme: <code>(find-nucleic-acids-local radius)</code></p>
 <p> Returns the index of the new molecule.</p>
 <p>Arguments: radius (a number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>find_nucleic_acids_local(5.0)</code></td><td>ran, returned <code>2</code></td></tr>
-<tr><td>Scheme</td><td><code>(find-nucleic-acids-local 5.0)</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>find_nucleic_acids_local(5.0)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (model, NuclAcid); first_small_coords_imol(): -1 -&gt; 3; graphics_n_molecules(): 3 -&gt; 4</td></tr>
+<tr><td>Scheme</td><td><code>(find-nucleic-acids-local 5.0)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (model, NuclAcid); first_small_coords_imol(): -1 -&gt; 3; graphics_n_molecules(): 3 -&gt; 4</td></tr></tbody></table>
 <p>Python and Scheme gave the same answer.</p>
 </body></html>

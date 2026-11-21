@@ -18,8 +18,12 @@ Also available in Scheme as `ccp4i-projects-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `ccp4i_projects()` | not run: not run automatically (ccp4i: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(ccp4i-projects)` | not run: not run automatically (ccp4i: exits, uses the network, an external program, files or a screen) |
+| Python | `ccp4i_projects()` | ran, returned `[[' - Current Dir - ', '<folder>/']]` |
+| Scheme | `(ccp4i-projects)` | ran, returned `((" - Current Dir - " "<folder>/"))` |
+
+Example written and checked by hand on the test data. Expected: returns a list of [alias, directory] pairs of CCP4i projects; always contains the current directory.
+
+Python and Scheme gave the same answer.
 
 ### set_add_ccp4i_projects_to_file_dialogs
 
@@ -34,8 +38,10 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_add_ccp4i_projects_to_file_dialogs(1)` | not run: not run automatically (ccp4i: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(set-add-ccp4i-projects-to-file-dialogs 1)` | not run: not run automatically (ccp4i: exits, uses the network, an external program, files or a screen) |
+| Python | `set_add_ccp4i_projects_to_file_dialogs(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-add-ccp4i-projects-to-file-dialogs 0)` | ran (no return value, nothing visible changed) |
+
+Example written and checked by hand on the test data. Expected: turns off adding CCP4i project directories to the file dialogs (default on).
 
 ### write_ccp4mg_picture_description
 
@@ -48,6 +54,8 @@ Arguments: filename (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `write_ccp4mg_picture_description("tutorial-modern.pdb")` | not run: not run automatically (ccp4mg: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(write-ccp4mg-picture-description "tutorial-modern.pdb")` | not run: not run automatically (ccp4mg: exits, uses the network, an external program, files or a screen) |
+| Python | `write_ccp4mg_picture_description("picture.mgpic.py")` | ran (no return value, nothing visible changed) |
+| Scheme | `(write-ccp4mg-picture-description "picture.mgpic.py")` | ran (no return value, nothing visible changed) |
+
+Example written and checked by hand on the test data. Expected: writes a CCP4mg picture definition file of the current view and molecules.
 

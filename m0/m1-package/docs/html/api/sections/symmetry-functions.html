@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="26a1792ba7797f11ca115c44c7f6db24db7dd4d2">
+<meta name="coot0-source-sha1" content="ae2581c13b3488d6afa73496ea3c5ca4beff3e98">
 <title>Symmetry Functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -23,8 +23,8 @@ Scheme: <code>(add-symmetry-on-to-preferences-and-apply)</code></p>
 <p>a gui function really</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>add_symmetry_on_to_preferences_and_apply()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(add-symmetry-on-to-preferences-and-apply)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>add_symmetry_on_to_preferences_and_apply()</code></td><td>ran (no return value); changed: get_show_symmetry(): 0 -&gt; 1</td></tr>
+<tr><td>Scheme</td><td><code>(add-symmetry-on-to-preferences-and-apply)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="first_molecule_with_symmetry_displayed">first_molecule_with_symmetry_displayed</h3>
 <p>Python: <code>first_molecule_with_symmetry_displayed()</code><br>
 Scheme: <code>(first-molecule-with-symmetry-displayed)</code></p>
@@ -32,8 +32,9 @@ Scheme: <code>(first-molecule-with-symmetry-displayed)</code></p>
 <p>Returns -1 if there is no molecule with symmetry displayed.</p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>first_molecule_with_symmetry_displayed()</code></td><td>ran, returned <code>0</code></td></tr>
-<tr><td>Scheme</td><td><code>(first-molecule-with-symmetry-displayed)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>set_show_symmetry_master(1)</code>, then <code>first_molecule_with_symmetry_displayed()</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td>first <code>(set-show-symmetry-master 1)</code>, then <code>(first-molecule-with-symmetry-displayed)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: 0 (molecule 0 shows symmetry once the master switch is on); -1 if no molecule shows symmetry.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="get_show_symmetry">get_show_symmetry</h3>
 <p>Python: <code>get_show_symmetry()</code><br>
@@ -41,8 +42,9 @@ Scheme: <code>(get-show-symmetry)</code></p>
 <p>is symmetry master display control on?</p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>get_show_symmetry()</code></td><td>ran, returned <code>0</code></td></tr>
-<tr><td>Scheme</td><td><code>(get-show-symmetry)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>set_show_symmetry_master(1)</code>, then <code>get_show_symmetry()</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td>first <code>(set-show-symmetry-master 1)</code>, then <code>(get-show-symmetry)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: 1 when the symmetry master display switch is on, 0 when off (default 0).</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="get_symmetry_as_calphas_state">get_symmetry_as_calphas_state</h3>
 <p>Python: <code>get_symmetry_as_calphas_state(imol)</code><br>
@@ -59,8 +61,8 @@ Scheme: <code>(get-symmetry-as-calphas-state imol)</code></p>
 Scheme: <code>(get-symmetry-bonds-colour imol)</code></p>
 <p>Arguments: imol (a whole number). Returns: <code>double*</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>get_symmetry_bonds_colour(0)</code></td><td>ran, returned <code>&lt;Swig Object of type 'double *' at 0x10a26d920&gt;</code></td></tr>
-<tr><td>Scheme</td><td><code>(get-symmetry-bonds-colour 0)</code></td><td>ran, returned <code>#&lt;swig-pointer double * 8145df680&gt;</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>get_symmetry_bonds_colour(0)</code></td><td>ran, returned <code>&lt;Swig Object of type 'double *' at 0x10b833630&gt;</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-symmetry-bonds-colour 0)</code></td><td>ran, returned <code>#&lt;swig-pointer double * 94b868b40&gt;</code></td></tr></tbody></table>
 <h3 id="get_text_for_symmetry_size_widget">get_text_for_symmetry_size_widget</h3>
 <p>Python: <code>get_text_for_symmetry_size_widget()</code><br>
 Scheme: <code>(get-text-for-symmetry-size-widget)</code></p>
@@ -85,8 +87,9 @@ Scheme: <code>(move-reference-chain-to-symm-chain-position)</code></p>
 <p>This function works by active symm atom.</p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>move_reference_chain_to_symm_chain_position()</code></td><td>ran, returned <code>0</code></td></tr>
-<tr><td>Scheme</td><td><code>(move-reference-chain-to-symm-chain-position)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>set_show_symmetry_master(1)</code>, then <code>move_reference_chain_to_symm_chain_position()</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td>first <code>(set-show-symmetry-master 1)</code>, then <code>(move-reference-chain-to-symm-chain-position)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: 0 here: it works on the active (last-clicked) symmetry atom, which a script cannot set without a window; then it moves the chain to that symmetry position.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="n_symops">n_symops</h3>
 <p>Python: <code>n_symops(imol)</code><br>
@@ -121,16 +124,16 @@ expansion is apllied (this is how symmetry works in Coot
 internals).</p>
 <p>Arguments: imol (a whole number), filename (text), symop_no (a whole number), shift_a (a whole number), shift_b (a whole number), shift_c (a whole number), pre_shift_to_origin_na (a whole number), pre_shift_to_origin_nb (a whole number), pre_shift_to_origin_nc (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>save_symmetry_coords(0, "tutorial-modern.pdb", 1, 1, 1, 1, 1, 1, 1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(save-symmetry-coords 0 "tutorial-modern.pdb" 1 1 1 1 1 1 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>save_symmetry_coords(0, "tutorial-modern.pdb", 1, 1, 1, 1, 1, 1, 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(save-symmetry-coords 0 "tutorial-modern.pdb" 1 1 1 1 1 1 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_show_symmetry_master">set_show_symmetry_master</h3>
 <p>Python: <code>set_show_symmetry_master(state)</code><br>
 Scheme: <code>(set-show-symmetry-master state)</code></p>
 <p>set display symmetry, master controller</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_show_symmetry_master(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-show-symmetry-master 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_show_symmetry_master(1)</code></td><td>ran (no return value); changed: get_show_symmetry(): 0 -&gt; 1</td></tr>
+<tr><td>Scheme</td><td><code>(set-show-symmetry-master 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_show_symmetry_molecule">set_show_symmetry_molecule</h3>
 <p>Python: <code>set_show_symmetry_molecule(mol_no, state)</code><br>
 Scheme: <code>(set-show-symmetry-molecule mol-no state)</code></p>
@@ -138,8 +141,8 @@ Scheme: <code>(set-show-symmetry-molecule mol-no state)</code></p>
 <p> pass with state=0 for off, state=1 for on</p>
 <p>Arguments: mol_no (a whole number), state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_show_symmetry_molecule(1, 1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-show-symmetry-molecule 1 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_show_symmetry_molecule(1, 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-show-symmetry-molecule 1 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_space_group">set_space_group</h3>
 <p>Python: <code>set_space_group(imol, spg)</code><br>
 Scheme: <code>(set-space-group imol spg)</code></p>
@@ -151,8 +154,9 @@ Scheme: <code>(set-space-group imol spg)</code></p>
 <p>Returns the success status of the setting (1 good, 0 fail).</p>
 <p>Arguments: imol (a whole number), spg (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_space_group(0, "hello")</code></td><td>ran, returned <code>0</code></td></tr>
-<tr><td>Scheme</td><td><code>(set-space-group 0 "hello")</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_space_group(0, "P 1")</code></td><td>ran, returned <code>1</code>; changed: get_symmetry(0): ['x,y,z', '-x+1/2,-y,z+1/2', 'x+1/2,-y+1/2,-z', '-x,y+1/2,-z -&gt; ['x,y,z']; n_symops(0): 4 -&gt; 1; show_spacegroup(0): 'P 21 21 21' -&gt; 'P 1'; space_group(0): 'P 21 21 21' -&gt; 'P 1'</td></tr>
+<tr><td>Scheme</td><td><code>(set-space-group 0 "P 1")</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns 1 and the model's space group becomes P 1.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="set_symmetry_atom_labels_expanded">set_symmetry_atom_labels_expanded</h3>
 <p>Python: <code>set_symmetry_atom_labels_expanded(state)</code><br>
@@ -160,16 +164,16 @@ Scheme: <code>(set-symmetry-atom-labels-expanded state)</code></p>
 <p>set use expanded symmetry atom labels</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_symmetry_atom_labels_expanded(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-symmetry-atom-labels-expanded 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_symmetry_atom_labels_expanded(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-symmetry-atom-labels-expanded 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_symmetry_colour_by_symop">set_symmetry_colour_by_symop</h3>
 <p>Python: <code>set_symmetry_colour_by_symop(imol, state)</code><br>
 Scheme: <code>(set-symmetry-colour-by-symop imol state)</code></p>
 <p>set symmetry colour by symop mode</p>
 <p>Arguments: imol (a whole number), state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_symmetry_colour_by_symop(0, 1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-symmetry-colour-by-symop 0 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_symmetry_colour_by_symop(0, 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-symmetry-colour-by-symop 0 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_symmetry_molecule_rotate_colour_map">set_symmetry_molecule_rotate_colour_map</h3>
 <p>Python: <code>set_symmetry_molecule_rotate_colour_map(imol, state)</code><br>
 Scheme: <code>(set-symmetry-molecule-rotate-colour-map imol state)</code></p>
@@ -177,8 +181,9 @@ Scheme: <code>(set-symmetry-molecule-rotate-colour-map imol state)</code></p>
  atoms of molecule number imol</p>
 <p>Arguments: imol (a whole number), state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_symmetry_molecule_rotate_colour_map(0, 1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-symmetry-molecule-rotate-colour-map 0 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_symmetry_molecule_rotate_colour_map(0, 1)</code></td><td>ran (no return value); changed: symmetry_molecule_rotate_colour_map_state(0): 0 -&gt; 1</td></tr>
+<tr><td>Scheme</td><td><code>(set-symmetry-molecule-rotate-colour-map 0 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Setting checked (set to another value and read back, then put back; NOT all read back): Python: symmetry_molecule_rotate_colour_map_state was -1, set to 0, read back -1 (not taken); Scheme: symmetry-molecule-rotate-colour-map-state was -1, set to 0, read back -1 (not taken).</p>
 <h3 id="set_symmetry_shift_search_size">set_symmetry_shift_search_size</h3>
 <p>Python: <code>set_symmetry_shift_search_size(shift)</code><br>
 Scheme: <code>(set-symmetry-shift-search-size shift)</code></p>
@@ -189,32 +194,32 @@ Scheme: <code>(set-symmetry-shift-search-size shift)</code></p>
 set to 2 by default.</p>
 <p>Arguments: shift (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_symmetry_shift_search_size(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-symmetry-shift-search-size 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_symmetry_shift_search_size(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-symmetry-shift-search-size 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_symmetry_size">set_symmetry_size</h3>
 <p>Python: <code>set_symmetry_size(f)</code><br>
 Scheme: <code>(set-symmetry-size f)</code></p>
 <p>set the size of the displayed symmetry</p>
 <p>Arguments: f (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_symmetry_size(1.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-symmetry-size 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_symmetry_size(1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-symmetry-size 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_symmetry_size_from_widget">set_symmetry_size_from_widget</h3>
 <p>Python: <code>set_symmetry_size_from_widget(text)</code><br>
 Scheme: <code>(set-symmetry-size-from-widget text)</code></p>
 <p>MOVE-ME to c-interface-gtk-widgets.h</p>
 <p>Arguments: text (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_symmetry_size_from_widget("hello")</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-symmetry-size-from-widget "hello")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_symmetry_size_from_widget("hello")</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-symmetry-size-from-widget "hello")</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_symmetry_whole_chain">set_symmetry_whole_chain</h3>
 <p>Python: <code>set_symmetry_whole_chain(imol, state)</code><br>
 Scheme: <code>(set-symmetry-whole-chain imol state)</code></p>
 <p>set symmetry colour for the chain</p>
 <p>Arguments: imol (a whole number), state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_symmetry_whole_chain(0, 1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-symmetry-whole-chain 0 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_symmetry_whole_chain(0, 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-symmetry-whole-chain 0 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_unit_cell_and_space_group">set_unit_cell_and_space_group</h3>
 <p>Python: <code>set_unit_cell_and_space_group(imol, a, b, c, alpha, beta, gamma, space_group)</code><br>
 Scheme: <code>(set-unit-cell-and-space-group imol a b c alpha beta gamma space-group)</code></p>
@@ -223,7 +228,7 @@ Angles in degress, cell lengths in Angstroms.
 Returns the success status of the setting (1 good, 0 fail).</p>
 <p>Arguments: imol (a whole number), a (a number), b (a number), c (a number), alpha (a number), beta (a number), gamma (a number), space_group (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_unit_cell_and_space_group(0, 1.0, 0.5, 1.0, 1.0, 1.0, 1.0, "hello")</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Python</td><td><code>set_unit_cell_and_space_group(0, 1.0, 0.5, 1.0, 1.0, 1.0, 1.0, "hello")</code></td><td>ran, returned <code>1</code>; changed: first_molecule_with_symmetry_displayed(): 0 -&gt; -1; get_symmetry(0): ['x,y,z', '-x+1/2,-y,z+1/2', 'x+1/2,-y+1/2,-z', '-x,y+1/2,-z -&gt; []; n_symops(0): 4 -&gt; -1; show_spacegroup(0): 'P 21 21 21' -&gt; 'No spacegroup' ...</td></tr>
 <tr><td>Scheme</td><td><code>(set-unit-cell-and-space-group 0 1.0 0.5 1.0 1.0 1.0 1.0 "hello")</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="set_unit_cell_and_space_group_using_molecule">set_unit_cell_and_space_group_using_molecule</h3>
@@ -242,8 +247,8 @@ Returns the success status of the setting (1 good, 0 fail).</p>
 Scheme: <code>(setup-save-symmetry-coords)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>setup_save_symmetry_coords()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(setup-save-symmetry-coords)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>setup_save_symmetry_coords()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(setup-save-symmetry-coords)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="symmetry_as_calphas">symmetry_as_calphas</h3>
 <p>Python: <code>symmetry_as_calphas(mol_no, state)</code><br>
 Scheme: <code>(symmetry-as-calphas mol-no state)</code></p>
@@ -251,8 +256,8 @@ Scheme: <code>(symmetry-as-calphas mol-no state)</code></p>
 <p> pass with state=0 for off, state=1 for on</p>
 <p>Arguments: mol_no (a whole number), state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>symmetry_as_calphas(1, 1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(symmetry-as-calphas 1 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>symmetry_as_calphas(1, 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(symmetry-as-calphas 1 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="symmetry_molecule_rotate_colour_map_state">symmetry_molecule_rotate_colour_map_state</h3>
 <p>Python: <code>symmetry_molecule_rotate_colour_map_state(imol)</code><br>
 Scheme: <code>(symmetry-molecule-rotate-colour-map-state imol)</code></p>
@@ -271,7 +276,9 @@ Scheme: <code>(undo-symmetry-view)</code></p>
  this symmetry position.</p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>undo_symmetry_view()</code></td><td>ran, returned <code>0</code></td></tr>
-<tr><td>Scheme</td><td><code>(undo-symmetry-view)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>undo_symmetry_view()</code></td><td>ran, returned <code>0</code>; changed: rotation centre moved 29.6 A to (55.8, -8.7, -6.5)</td></tr>
+<tr><td>Scheme</td><td><code>(undo-symmetry-view)</code></td><td>ran, returned <code>0</code>; changed: rotation centre moved 29.6 A to (41.6, 8.7, 12.9)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: translates the view back from a symmetry copy to the main molecule; returns 0.</p>
+<p>Note: Even without a previous symmetry view the centre is moved (29.6 A, to the nearest point of the main molecule's cell origin?); harmless but surprising.</p>
 <p>Python and Scheme gave the same answer.</p>
 </body></html>

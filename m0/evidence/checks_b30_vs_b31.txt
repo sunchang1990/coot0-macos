@@ -1,0 +1,23 @@
+Build 30 files vs build 31: the 8 new checks (20 Nov 2026, headless)
+
+== python-api on build 30 coot-bin (tests of build 31):
+FAIL write_cif_file three times: same file each time, reads back with the same atoms  EXC AssertionError('sizes [140435, 275215, 409995], atoms read back 4395 of 1465')
+SUMMARY 21 / 22
+== python-api on build 31:
+SUMMARY 22 / 22
+
+== scheme-api on build 30 coot-bin: with all checks Coot stops (Segmentation fault 11 at register-interesting-positions-list-scm); without that check:
+FAIL kullback-liebler returns its two numbers (was always #f)  #f
+FAIL probe-clash-score-from-scm keeps the 5th number (wide contacts; was a copy of the 4th)  #f
+SUMMARY 30 / 32
+== scheme-api on build 31:
+SUMMARY 33 / 33
+
+== api-docs on the build 30 package:
+FAIL api-examples: a snapshot before/after a call lists a deleted residue and a changed setting EXC ModuleNotFoundError("No module named 'api_state'")
+FAIL docs/api: more than 300 examples written by hand, each with its expected result            (0, [])
+FAIL docs/api: more than 90 settings were set, read back and put back                           'only 0 settings checked'
+FAIL docs/api: the results say what each example changed (more than 300 do)                     'only 0 results list what changed'
+SUMMARY 8 / 12
+
+== write_cif_file three times, build 30 coot-bin: sizes [140435, 275215, 409995]; build 31: [140435, 140435, 140435]

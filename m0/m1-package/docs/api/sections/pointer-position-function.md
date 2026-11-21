@@ -21,3 +21,5 @@ Also available in Python as `get_pointer_position_frac_py`.
 |---|---|---|
 | Python | `get_pointer_position_frac()` | ran, returned `False` |
 
+Example written and checked by hand on the test data. Expected: with a window: [x, y] of the mouse as fractions of the window; False without a pointer (correct here).
+

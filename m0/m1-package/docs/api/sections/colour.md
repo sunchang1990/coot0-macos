@@ -13,8 +13,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `clear_user_defined_atom_colours(0)` | ran (no return value) |
-| Scheme | `(clear-user-defined-atom-colours 0)` | ran (no return value) |
+| Python | `clear_user_defined_atom_colours(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(clear-user-defined-atom-colours 0)` | ran (no return value, nothing visible changed) |
 
 ### get_colour_map_rotation_on_read_pdb_c_only_flag
 
@@ -43,8 +43,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_colour_by_chain(0)` | ran (no return value) |
-| Scheme | `(set-colour-by-chain 0)` | ran (no return value) |
+| Python | `set_colour_by_chain(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-colour-by-chain 0)` | ran (no return value, nothing visible changed) |
 
 ### set_colour_by_chain_goodsell_mode
 
@@ -57,8 +57,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_colour_by_chain_goodsell_mode(0)` | ran (no return value) |
-| Scheme | `(set-colour-by-chain-goodsell-mode 0)` | ran (no return value) |
+| Python | `set_colour_by_chain_goodsell_mode(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-colour-by-chain-goodsell-mode 0)` | ran (no return value, nothing visible changed) |
 
 ### set_colour_by_molecule
 
@@ -71,8 +71,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_colour_by_molecule(0)` | ran (no return value) |
-| Scheme | `(set-colour-by-molecule 0)` | ran (no return value) |
+| Python | `set_colour_by_molecule(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-colour-by-molecule 0)` | ran (no return value, nothing visible changed) |
 
 ### set_colour_map_rotation_on_read_pdb
 
@@ -85,8 +85,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_colour_map_rotation_on_read_pdb(1.0)` | ran (no return value) |
-| Scheme | `(set-colour-map-rotation-on-read-pdb 1.0)` | ran (no return value) |
+| Python | `set_colour_map_rotation_on_read_pdb(1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-colour-map-rotation-on-read-pdb 1.0)` | ran (no return value, nothing visible changed) |
 
 ### set_colour_map_rotation_on_read_pdb_c_only_flag
 
@@ -101,8 +101,10 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_colour_map_rotation_on_read_pdb_c_only_flag(1)` | ran (no return value) |
-| Scheme | `(set-colour-map-rotation-on-read-pdb-c-only-flag 1)` | ran (no return value) |
+| Python | `set_colour_map_rotation_on_read_pdb_c_only_flag(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-colour-map-rotation-on-read-pdb-c-only-flag 1)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: get_colour_map_rotation_on_read_pdb_c_only_flag was 1, set to 0, read back 0; Scheme: get-colour-map-rotation-on-read-pdb-c-only-flag was 1, set to 0, read back 0.
 
 ### set_colour_map_rotation_on_read_pdb_flag
 
@@ -117,8 +119,8 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_colour_map_rotation_on_read_pdb_flag(1)` | ran (no return value) |
-| Scheme | `(set-colour-map-rotation-on-read-pdb-flag 1)` | ran (no return value) |
+| Python | `set_colour_map_rotation_on_read_pdb_flag(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-colour-map-rotation-on-read-pdb-flag 1)` | ran (no return value, nothing visible changed) |
 
 ### set_symmetry_colour
 
@@ -131,8 +133,8 @@ Arguments: r (a number), g (a number), b (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_symmetry_colour(0.5, 0.5, 0.5)` | ran (no return value) |
-| Scheme | `(set-symmetry-colour 0.5 0.5 0.5)` | ran (no return value) |
+| Python | `set_symmetry_colour(0.5, 0.5, 0.5)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-symmetry-colour 0.5 0.5 0.5)` | ran (no return value, nothing visible changed) |
 
 ### set_symmetry_colour_merge
 
@@ -145,8 +147,8 @@ Arguments: v (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_symmetry_colour_merge(1.0)` | ran (no return value) |
-| Scheme | `(set-symmetry-colour-merge 1.0)` | ran (no return value) |
+| Python | `set_symmetry_colour_merge(1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-symmetry-colour-merge 1.0)` | ran (no return value, nothing visible changed) |
 
 ### set_user_defined_atom_colour_py
 
@@ -160,8 +162,8 @@ Arguments: imol (a whole number), atom_specs_colour_index_tuple_list_py (a list 
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_user_defined_atom_colour_py(0, ["A", 41, "", " CA ", ""])` | ran (no return value) |
-| Scheme | `(set-user-defined-atom-colour-scm 0 (list "A" 41 "" " CA " ""))` | ran (no return value) |
+| Python | `set_user_defined_atom_colour_py(0, ["A", 41, "", " CA ", ""])` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-user-defined-atom-colour-scm 0 (list "A" 41 "" " CA " ""))` | ran (no return value, nothing visible changed) |
 
 ### set_user_defined_atom_colour_by_residue_py
 
@@ -175,8 +177,8 @@ Arguments: imol (a whole number), residue_specs_colour_index_tuple_list_py (a li
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_user_defined_atom_colour_by_residue_py(0, ["A", 41, ""])` | ran (no return value) |
-| Scheme | `(set-user-defined-atom-colour-by-residue-scm 0 (list "A" 41 ""))` | ran (no return value) |
+| Python | `set_user_defined_atom_colour_by_residue_py(0, ["A", 41, ""])` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-user-defined-atom-colour-by-residue-scm 0 (list "A" 41 ""))` | ran (no return value, nothing visible changed) |
 
 ### set_user_defined_colours_py
 
@@ -192,5 +194,9 @@ Arguments: colour_list_py (a list or value). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | `set_user_defined_colours_py([(30, [1.0, 0.0, 0.0]), (31, [0.0, 0.8, 0.2])])` | ran (no return value, nothing visible changed) |
+
+Example written and checked by hand on the test data. Expected: defines user colour indices (index, [r, g, b]) to be used by set_user_defined_atom_colour_by_selection.
+
+Note: Items must be TUPLES (index, [r, g, b]); lists are silently ignored by the C++ (PyTuple_Check).
 

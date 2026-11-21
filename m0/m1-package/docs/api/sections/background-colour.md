@@ -34,8 +34,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `redraw_background()` | ran (no return value) |
-| Scheme | `(redraw-background)` | ran (no return value) |
+| Python | `redraw_background()` | ran (no return value, nothing visible changed) |
+| Scheme | `(redraw-background)` | ran (no return value, nothing visible changed) |
 
 ### set_background_colour
 
@@ -50,6 +50,6 @@ Arguments: red (a number), green (a number), blue (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_background_colour(0.5, 0.5, 0.5)` | ran (no return value) |
-| Scheme | `(set-background-colour 0.5 0.5 0.5)` | ran (no return value) |
+| Python | `set_background_colour(0.5, 0.5, 0.5)` | ran (no return value); changed: background_is_black_p(): 1 -> 0 |
+| Scheme | `(set-background-colour 0.5 0.5 0.5)` | ran (no return value, nothing visible changed) |
 

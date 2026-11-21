@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="1417097c7e2ff21fd30d18fdd5b356129d7b9e2b">
+<meta name="coot0-source-sha1" content="8759b14084bb7823e13f56860a0cfb87d7c96657">
 <title>check Waters Interface - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -23,8 +23,8 @@ Scheme: <code>(check-waters-by-difference-map imol-waters imol-diff-map interact
 <p>difference map variance check</p>
 <p>Arguments: imol_waters (a whole number), imol_diff_map (a whole number), interactive_flag (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>check_waters_by_difference_map(0, 1, 1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(check-waters-by-difference-map 0 1 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>check_waters_by_difference_map(0, 1, 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(check-waters-by-difference-map 0 1 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="check_waters_by_difference_map_sigma_level_state">check_waters_by_difference_map_sigma_level_state</h3>
 <p>Python: <code>check_waters_by_difference_map_sigma_level_state()</code><br>
 Scheme: <code>(check-waters-by-difference-map-sigma-level-state)</code></p>
@@ -40,8 +40,8 @@ Scheme: <code>(delete-checked-waters-baddies imol b-factor-lim map-sigma-lim min
 <p>Delete waters that are fail to meet the given criteria.</p>
 <p>Arguments: imol (a whole number), b_factor_lim (a number), map_sigma_lim (a number), min_dist (a number), max_dist (a number), part_occ_contact_flag (a whole number), zero_occ_flag (a whole number), logical_operator_and_or_flag (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>delete_checked_waters_baddies(0, 20.0, 1.5, 1.0, 1.0, 1, 1, 1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(delete-checked-waters-baddies 0 20.0 1.5 1.0 1.0 1 1 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>delete_checked_waters_baddies(0, 20.0, 1.5, 1.0, 1.0, 1, 1, 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(delete-checked-waters-baddies 0 20.0 1.5 1.0 1.0 1 1 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="highly_coordinated_waters">highly_coordinated_waters</h3>
 <p>Python: <code>highly_coordinated_waters(imol, coordination_number, dist_max)</code><br>
 Scheme: <code>(highly-coordinated-waters imol coordination-number dist-max)</code></p>
@@ -63,42 +63,45 @@ Scheme: <code>(metal-coordination-scm imol dist-max)</code></p>
 <p>Arguments: imol (a whole number), dist_max (a number). Returns: a value (see the result of the example).
 Also available in Python as <code>metal_coordination_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>metal_coordination(0, 1.0)</code></td><td>ran, returned <code>False</code></td></tr>
-<tr><td>Scheme</td><td><code>(metal-coordination-scm 0 1.0)</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>metal_coordination(read_pdb("1ehz.pdb"), 3.0)</code></td><td>ran, returned <code>False</code>; changed: new molecule 3 (model, 1ehz.pdb); rotation centre moved 51.0 A to (67.6, 49.7, 28.6); graphics_n_molecules(): 3 -&gt; 4</td></tr>
+<tr><td>Scheme</td><td><code>(metal-coordination-scm (read-pdb "1ehz.pdb") 3.0)</code></td><td>ran, returned <code>#f</code>; changed: new molecule 3 (model, 1ehz.pdb); rotation centre moved 51.0 A to (67.6, 49.7, 28.6); graphics_n_molecules(): 3 -&gt; 4</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: prints the metal-ligand distances up to 3 A for the MG/MN ions of 1ehz to the terminal; the return value is always False.</p>
+<p>Note: Both versions always return False (the result list is never filled in the upstream code); the information only goes to the terminal.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="set_check_waters_b_factor_limit">set_check_waters_b_factor_limit</h3>
 <p>Python: <code>set_check_waters_b_factor_limit(f)</code><br>
 Scheme: <code>(set-check-waters-b-factor-limit f)</code></p>
 <p>Arguments: f (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_check_waters_b_factor_limit(1.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-check-waters-b-factor-limit 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_check_waters_b_factor_limit(1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-check-waters-b-factor-limit 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_check_waters_by_difference_map_sigma_level">set_check_waters_by_difference_map_sigma_level</h3>
 <p>Python: <code>set_check_waters_by_difference_map_sigma_level(f)</code><br>
 Scheme: <code>(set-check-waters-by-difference-map-sigma-level f)</code></p>
 <p>Arguments: f (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_check_waters_by_difference_map_sigma_level(1.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-check-waters-by-difference-map-sigma-level 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_check_waters_by_difference_map_sigma_level(1.0)</code></td><td>ran (no return value); changed: check_waters_by_difference_map_sigma_level_state(): 3.5 -&gt; 1</td></tr>
+<tr><td>Scheme</td><td><code>(set-check-waters-by-difference-map-sigma-level 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Setting checked (set to another value and read back, then put back): Python: check_waters_by_difference_map_sigma_level_state was 3.5, set to 5.75, read back 5.75; Scheme: check-waters-by-difference-map-sigma-level-state was 3.5, set to 5.75, read back 5.75.</p>
 <h3 id="set_check_waters_map_sigma_limit">set_check_waters_map_sigma_limit</h3>
 <p>Python: <code>set_check_waters_map_sigma_limit(f)</code><br>
 Scheme: <code>(set-check-waters-map-sigma-limit f)</code></p>
 <p>Arguments: f (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_check_waters_map_sigma_limit(1.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-check-waters-map-sigma-limit 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_check_waters_map_sigma_limit(1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-check-waters-map-sigma-limit 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_check_waters_max_dist_limit">set_check_waters_max_dist_limit</h3>
 <p>Python: <code>set_check_waters_max_dist_limit(f)</code><br>
 Scheme: <code>(set-check-waters-max-dist-limit f)</code></p>
 <p>Arguments: f (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_check_waters_max_dist_limit(1.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-check-waters-max-dist-limit 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_check_waters_max_dist_limit(1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-check-waters-max-dist-limit 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_check_waters_min_dist_limit">set_check_waters_min_dist_limit</h3>
 <p>Python: <code>set_check_waters_min_dist_limit(f)</code><br>
 Scheme: <code>(set-check-waters-min-dist-limit f)</code></p>
 <p>Arguments: f (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_check_waters_min_dist_limit(1.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-check-waters-min-dist-limit 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_check_waters_min_dist_limit(1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-check-waters-min-dist-limit 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 </body></html>

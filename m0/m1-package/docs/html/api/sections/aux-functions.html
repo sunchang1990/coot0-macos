@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="895dca3667d426d7ac999a8a8514a5912c14a6ec">
+<meta name="coot0-source-sha1" content="962eeace509aa5c2a748770165f6b68cf487a69f">
 <title>Aux functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -23,7 +23,8 @@ Scheme: <code>(laplacian imol)</code></p>
 <p>Create the "Laplacian" (-ve second derivative) of the given map.</p>
 <p>Arguments: imol (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>laplacian(0)</code></td><td>ran, returned <code>-1</code></td></tr>
-<tr><td>Scheme</td><td><code>(laplacian 0)</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>laplacian(1)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, Laplacian of rnasa-1.8-all_refmac1.mtz FWT PHWT); graphics_n_molecules(): 3 -&gt; 4</td></tr>
+<tr><td>Scheme</td><td><code>(laplacian 1)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, Laplacian of rnasa-1.8-all_refmac1.mtz FWT PHWT); graphics_n_molecules(): 3 -&gt; 4</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the new map molecule number; a Laplacian map of map 1 appears.</p>
 <p>Python and Scheme gave the same answer.</p>
 </body></html>

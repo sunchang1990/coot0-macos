@@ -121,6 +121,8 @@ Arguments: none. Returns: a value (see the result of the example).
 |---|---|---|
 | Python | `get_intermediate_atoms_bonds_representation()` | ran, returned `False` |
 
+Example written and checked by hand on the test data. Expected: False when no refinement is in progress (there are no intermediate atoms); during an interactive refinement it returns the bonds of the moving atoms. (Python only.).
+
 ### label_closest_atoms_in_neighbour_residues_py
 
 Python: `label_closest_atoms_in_neighbour_residues_py(imol, residue_spec_py, radius)`  
@@ -132,8 +134,8 @@ Arguments: imol (a whole number), residue_spec_py (a list or value), radius (a n
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `label_closest_atoms_in_neighbour_residues_py(0, ["A", 41, ""], 5.0)` | ran (no return value) |
-| Scheme | `(label-closest-atoms-in-neighbour-residues-scm 0 (list "A" 41 "") 5.0)` | ran (no return value) |
+| Python | `label_closest_atoms_in_neighbour_residues_py(0, ["A", 41, ""], 5.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(label-closest-atoms-in-neighbour-residues-scm 0 (list "A" 41 "") 5.0)` | ran (no return value, nothing visible changed) |
 
 ### residues_near_position
 
@@ -149,8 +151,12 @@ Also available in Scheme as `residues-near-position-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | `residues_near_position(0, [48.3, 7.4, 16.9], 4.0)` | ran, returned `[[True, 'A', 37, ''], [True, 'A', 38, ''], [True, 'A', 39, ''], [True, 'A', 40, ''], [True, 'A', 41, '']]` |
+| Scheme | `(residues-near-position 0 (list 48.3 7.4 16.9) 4.0)` | ran, returned `((#t "A" 41 "") (#t "A" 40 "") (#t "A" 39 "") (#t "A" 38 "") (#t "A" 37 ""))` |
+
+Example written and checked by hand on the test data. Expected: the residue specs with an atom within 4 A of the point (the CA of A39): A37-A41. Order differs between the languages.
+
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
 ### residues_near_residues
 
@@ -167,8 +173,8 @@ Also available in Scheme as `residues-near-residues-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `residues_near_residues(0, [["A", 41, ""], ["A", 42, ""]], 5.0)` | ran, returned `[[['A', 41, ''], [['A', 37, ''], ['A', 39, ''], ['A', 40, ''], ['A', 42, ''], ['A', 43, ''], ['A', 44, ''], ['A', 86, '' ...` |
-| Scheme | `(residues-near-residues 0 (list (list "A" 41 "") (list "A" 42 "")) 5.0)` | ran, returned `(((#t "A" 42 "") ((#t "B" 60 "") (#t "B" 58 "") (#t "A" 46 "") (#t "A" 44 "") (#t "A" 43 "") (#t "A" 41 "") (#t "A" 40 " ...` |
+| Python | `residues_near_residues(0, [["A", 41, ""], ["A", 42, ""]], 5.0)` | ran, returned `[[['A', 42, ''], [['A', 46, ''], ['A', 44, ''], ['A', 43, ''], ['A', 41, ''], ['A', 40, ''], ['A', 39, ''], ['B', 58, '' ...` |
+| Scheme | `(residues-near-residues 0 (list (list "A" 41 "") (list "A" 42 "")) 5.0)` | ran, returned `(((#t "A" 41 "") ((#t "B" 61 "") (#t "A" 37 "") (#t "A" 39 "") (#t "A" 40 "") (#t "A" 42 "") (#t "A" 43 "") (#t "A" 44 " ...` |
 
 Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 

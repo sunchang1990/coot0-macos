@@ -21,8 +21,8 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `find_helices()` | ran, returned `2` |
-| Scheme | `(find-helices)` | ran, returned `2` |
+| Python | `find_helices()` | ran, returned `3`; changed: new molecule 3 (model, SecStruc); first_small_coords_imol(): -1 -> 3; graphics_n_molecules(): 3 -> 4 |
+| Scheme | `(find-helices)` | ran, returned `3`; changed: new molecule 3 (model, SecStruc); first_small_coords_imol(): -1 -> 3; graphics_n_molecules(): 3 -> 4 |
 
 Python and Scheme gave the same answer.
 
@@ -42,8 +42,10 @@ Arguments: use_helix (a whole number), helix_length (a whole number), helix_targ
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `find_secondary_structure(1, 1, 1, 1, 1, 1)` | no answer within 60 s (slow, or waits for something) |
-| Scheme | `(find-secondary-structure 1 1 1 1 1 1)` | no answer within 60 s (slow, or waits for something) |
+| Python | `find_secondary_structure(1, 6, 2, 1, 4, 2)` | not run: searches the whole map: no answer in 60 s on the test map (use find_secondary_structure_local) |
+| Scheme | `(find-secondary-structure 1 6 2 1 4 2)` | not run: searches the whole map: no answer in 60 s on the test map (use find_secondary_structure_local) |
+
+Example written and checked by hand on the test data. Expected: finds helices (min length 6) and strands (min length 4) in the whole refinement map and adds them to a molecule 'SecStruc'.
 
 ### find_secondary_structure_local
 
@@ -61,8 +63,12 @@ Arguments: use_helix (a whole number), helix_length (a whole number), helix_targ
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `find_secondary_structure_local(1, 1, 1, 1, 1, 1, 5.0)` | no answer within 60 s (slow, or waits for something) |
-| Scheme | `(find-secondary-structure-local 1 1 1 1 1 1 5.0)` | no answer within 60 s (slow, or waits for something) |
+| Python | first `set_rotation_centre(47.1, 10.6, 17.4)`, then `find_secondary_structure_local(1, 6, 2, 1, 4, 2, 6.0)` | ran, returned `3`; changed: new molecule 3 (model, SecStruc); first_small_coords_imol(): -1 -> 3; graphics_n_molecules(): 3 -> 4 |
+| Scheme | first `(set-rotation-centre 47.1 10.6 17.4)`, then `(find-secondary-structure-local 1 6 2 1 4 2 6.0)` | ran, returned `3`; changed: new molecule 3 (model, SecStruc); first_small_coords_imol(): -1 -> 3; graphics_n_molecules(): 3 -> 4 |
+
+Example written and checked by hand on the test data. Expected: returns the molecule 'SecStruc' holding the helices/strands found in the map within the radius of the centre.
+
+Python and Scheme gave the same answer.
 
 ### find_strands
 
@@ -81,8 +87,8 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `find_strands()` | ran, returned `2` |
-| Scheme | `(find-strands)` | ran, returned `2` |
+| Python | `find_strands()` | ran, returned `3`; changed: new molecule 3 (model, SecStruc); first_small_coords_imol(): -1 -> 3; graphics_n_molecules(): 3 -> 4 |
+| Scheme | `(find-strands)` | ran, returned `3`; changed: new molecule 3 (model, SecStruc); first_small_coords_imol(): -1 -> 3; graphics_n_molecules(): 3 -> 4 |
 
 Python and Scheme gave the same answer.
 
@@ -104,10 +110,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `place_helix_here()` | ran, returned `2` |
-| Scheme | `(place-helix-here)` | ran, returned `2` |
+| Python | `place_helix_here()` | ran, returned `4`; changed: new molecule 3 (model, Helix-3); new molecule 4 (model, Reverse-Helix-4); first_small_coords_imol(): -1 -> 3; graphics_n_molecules(): 3 -> 5 |
+| Scheme | `(place-helix-here)` | ran, returned `3`; changed: new molecule 3 (model, Helix-3); first_small_coords_imol(): -1 -> 3; graphics_n_molecules(): 3 -> 4 |
 
-Python and Scheme gave the same answer.
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
 ### place_strand_here
 
@@ -130,8 +136,10 @@ Arguments: n_residues (a whole number), n_sample_strands (a whole number). Retur
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `place_strand_here(1, 1)` | ran, returned `-1` |
-| Scheme | `(place-strand-here 1 1)` | ran, returned `-1` |
+| Python | `place_strand_here(5, 5)` | ran, returned `3`; changed: new molecule 3 (model, Strand-3); first_small_coords_imol(): -1 -> 3; graphics_n_molecules(): 3 -> 4 |
+| Scheme | `(place-strand-here 5 5)` | ran, returned `3`; changed: new molecule 3 (model, Strand-3); first_small_coords_imol(): -1 -> 3; graphics_n_molecules(): 3 -> 4 |
+
+Example written and checked by hand on the test data. Expected: returns a new molecule with a strand fitted to the map at the rotation centre; -1 when no strand fits.
 
 Python and Scheme gave the same answer.
 
@@ -149,8 +157,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `place_strand_here_dialog()` | ran (no return value) |
-| Scheme | `(place-strand-here-dialog)` | ran (no return value) |
+| Python | `place_strand_here_dialog()` | ran (no return value, nothing visible changed) |
+| Scheme | `(place-strand-here-dialog)` | ran (no return value, nothing visible changed) |
 
 ### set_place_helix_here_fudge_factor
 
@@ -161,6 +169,6 @@ Arguments: ff (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_place_helix_here_fudge_factor(1.0)` | ran (no return value) |
-| Scheme | `(set-place-helix-here-fudge-factor 1.0)` | ran (no return value) |
+| Python | `set_place_helix_here_fudge_factor(1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-place-helix-here-fudge-factor 1.0)` | ran (no return value, nothing visible changed) |
 

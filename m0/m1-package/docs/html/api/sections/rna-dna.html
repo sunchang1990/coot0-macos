@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="70a5773a824e04cda968f5e8c84a79bcc5239049">
+<meta name="coot0-source-sha1" content="476ff0e7f54537b9d68b18a4161a6ed2241c1b00">
 <title>RNA/DNA - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -27,8 +27,9 @@ Scheme: <code>(ideal-nucleic-acid RNA-or-DNA form single-stranged-flag sequence)
 <p>Returns the new molecule number or -1 if a problem</p>
 <p>Arguments: RNA_or_DNA (text), form (text), single_stranged_flag (a whole number), sequence (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>ideal_nucleic_acid("hello", "hello", 1, "ACDEFGHIKLMNPQRSTVWY")</code></td><td>ran, returned <code>-1</code></td></tr>
-<tr><td>Scheme</td><td><code>(ideal-nucleic-acid "hello" "hello" 1 "ACDEFGHIKLMNPQRSTVWY")</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>ideal_nucleic_acid("RNA", "A", 0, "GAGCUC")</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (model, A-form-RNA); first_small_coords_imol(): -1 -&gt; 3; graphics_n_molecules(): 3 -&gt; 4</td></tr>
+<tr><td>Scheme</td><td><code>(ideal-nucleic-acid "DNA" "B" 1 "ACGT")</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (model, B-form-DNA); first_small_coords_imol(): -1 -&gt; 3; graphics_n_molecules(): 3 -&gt; 4</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the new molecule number of an ideal nucleic acid with the sequence (RNA/DNA, form A/B, single-stranded flag).</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="pucker_info">pucker_info</h3>
 <p>Python: <code>pucker_info(imol, residue_spec, do_pukka_pucker_check)</code><br>
@@ -42,8 +43,9 @@ Scheme: <code>(pucker-info imol residue-spec do-pukka-pucker-check)</code></p>
 Also available in Python as <code>pucker_info_py</code>.
 Also available in Scheme as <code>pucker-info-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>pucker_info(0, ["A", 41, ""], 1)</code></td><td>ran, returned <code>False</code></td></tr>
-<tr><td>Scheme</td><td><code>(pucker-info 0 (list "A" 41 "") 1)</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>imol_rna = read_pdb("1ehz.pdb")</code>, then <code>pucker_info(imol_rna, ["A", 10, ""], 1)</code></td><td>ran, returned <code>[4.813389301300049, " C3'", 0.5553739070892334, 0.03498387709259987]</code></td></tr>
+<tr><td>Scheme</td><td>first <code>(define imol-rna (read-pdb "1ehz.pdb"))</code>, then <code>(pucker-info imol-rna (list "A" 10 "") 1)</code></td><td>ran, returned <code>(4.813389301300049 " C3'" 0.5553739070892334 0.03498387709259987)</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: for an RNA/DNA residue returns [phosphate distance, puckered atom (C3' or C2'), out-of-plane distance, plane distortion]; False if not found.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="setup_base_pairing">setup_base_pairing</h3>
 <p>Python: <code>setup_base_pairing(state)</code><br>
@@ -51,8 +53,8 @@ Scheme: <code>(setup-base-pairing state)</code></p>
 <p>not for user level</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>setup_base_pairing(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(setup-base-pairing 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>setup_base_pairing(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(setup-base-pairing 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="watson_crick_pair">watson_crick_pair</h3>
 <p>Python: <code>watson_crick_pair(imol, chain_id, resno)</code><br>
 Scheme: <code>(watson-crick-pair imol chain-id resno)</code></p>
@@ -60,8 +62,10 @@ Scheme: <code>(watson-crick-pair imol chain-id resno)</code></p>
  partner of the clicked/picked/selected residue</p>
 <p>Arguments: imol (a whole number), chain_id (text), resno (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>watson_crick_pair(0, "A", 41)</code></td><td>ran, returned <code>-1</code></td></tr>
-<tr><td>Scheme</td><td><code>(watson-crick-pair 0 "A" 41)</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>imol_ss = ideal_nucleic_acid("RNA", "A", 1, "GAGCUC")</code>, then <code>watson_crick_pair(imol_ss, "A", 2)</code></td><td>ran, returned <code>-1</code>; changed: new molecule 4 (model, WC partner); graphics_n_molecules(): 4 -&gt; 5</td></tr>
+<tr><td>Scheme</td><td>first <code>(define imol-ss (ideal-nucleic-acid "RNA" "A" 1 "GAGCUC"))</code>, then <code>(watson-crick-pair imol-ss "A" 2)</code></td><td>ran, returned <code>-1</code>; changed: new molecule 4 (model, WC partner); graphics_n_molecules(): 4 -&gt; 5</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: should return the new molecule number holding the base-paired partner of A2.</p>
+<p>Note: In Coot 0.9.8.96: watson_crick_pair never sets its return value (c-interface-nucleotides.cc:294), so it returns -1 even when the partner molecule is created</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="watson_crick_pair_for_residue_range">watson_crick_pair_for_residue_range</h3>
 <p>Python: <code>watson_crick_pair_for_residue_range(imol, chain_id, resno_start, resno_end)</code><br>
@@ -69,7 +73,8 @@ Scheme: <code>(watson-crick-pair-for-residue-range imol chain-id resno-start res
 <p>add base pairs for the given residue range, modify molecule imol by creating a new chain</p>
 <p>Arguments: imol (a whole number), chain_id (text), resno_start (a whole number), resno_end (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>watson_crick_pair_for_residue_range(0, "A", 41, 45)</code></td><td>ran, returned <code>0</code></td></tr>
-<tr><td>Scheme</td><td><code>(watson-crick-pair-for-residue-range 0 "A" 41 45)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>imol_ss = ideal_nucleic_acid("RNA", "A", 1, "GAGCUC")</code>, then <code>watson_crick_pair_for_residue_range(imol_ss, "A", 1, 6)</code></td><td>ran, returned <code>1</code>; changed: molecule 3: added 6 residue(s) (B6, B5, B4, B3 ...)</td></tr>
+<tr><td>Scheme</td><td>first <code>(define imol-ss (ideal-nucleic-acid "RNA" "A" 1 "GAGCUC"))</code>, then <code>(watson-crick-pair-for-residue-range imol-ss "A" 1 3)</code></td><td>ran, returned <code>1</code>; changed: molecule 3: added 3 residue(s) (B3, B2, B1)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns 1 and adds a new chain with Watson-Crick partners for the residue range.</p>
 <p>Python and Scheme gave the same answer.</p>
 </body></html>

@@ -1,0 +1,40 @@
+Build 31 verification (20 Nov 2026): tarball coot0-0.9.8.96-b31-macos-arm64.tar.gz sha256 bd458e001fa6e82f2e563713cdae5bc723a4aa51510b08712d4376fe059c36ae
+Unpacked into a folder with a space, env -i HOME=<tmp> PATH=/usr/bin:/bin:/usr/sbin:/sbin.
+
+== tests/run-headless-tests.sh
+python-api                 SUMMARY 22 / 22
+scheme-api                 SUMMARY 33 / 33
+data-and-maps              SUMMARY 39 / 39
+ondemand-read              SUMMARY 3 / 3
+refine-zone                SUMMARY 7 / 7
+process-helpers            SUMMARY 10 / 10
+api-docs                   SUMMARY 12 / 12
+bundle-python              SUMMARY 19 / 19
+bundle-scheme              SUMMARY 6 / 6
+rdkit-python               SUMMARY 10 / 10
+rdkit-scheme               SUMMARY 3 / 3
+gtk2compat                 SUMMARY 12 / 12
+gui-scripts                SUMMARY 16 / 16
+gui-dialogs                SUMMARY 89 / 89
+gui-glyco                  SUMMARY 14 / 14
+gui-toolbar                SUMMARY 13 / 13
+gui-rcrane                 SUMMARY 21 / 21
+refmac-run                 SUMMARY 11 / 11
+cookbook                   SUMMARY 166 / 166
+installer                  SUMMARY 26 / 26
+startup-dictionaries       SUMMARY 1 / 1
+
+== tests/run-gui-sweep.sh
+GUI sweep: 257 items ok, 0 items with errors, 0 items without a handler, 7 items whose activation killed the headless process (OpenGL or scr
+SWEEP 21 | Edit > Settings... > Python: Install Template Keybindings button '   X   Edit Chi Angles' | CRASH (process died: OpenGL call with
+SWEEP 36 | Calculate > Map Tools... > Brighten Maps | CRASH (process died: OpenGL call without a graphics context, or hang)
+SWEEP 108 | Draw > Representation Tools... > Ball & Stick... button '  OK  ' | CRASH (process died: OpenGL call without a graphics context, 
+SWEEP 117 | Draw > Representation Tools... > Highlight Interesting Site (here)... | CRASH (process died: OpenGL call without a graphics cont
+SWEEP 124 | Draw > Representation Tools... > 3D Annotations... > Save Annotations... | CRASH (process died: OpenGL call without a graphics c
+SWEEP 141 | Validate > Views > Views Panel... | CRASH (process died: OpenGL call without a graphics context, or hang)
+SWEEP 152 | Ligand > Find Ligands... | CRASH (process died: OpenGL call without a graphics context, or hang)
+
+== tests/run-real-window-checks.sh: SUMMARY 12 / 12 (opens Coot on screen ~10 s)
+== m0/tools/bundle_check.py: 211 Mach-O, highest minos 11.0, RESULT: OK
+== patch series 0001-0049 applied to the pristine tree by setup.sh: IDENTICAL to m0/coot-src
+== API example run (tests/run-api-examples.sh, working bundle = same files): Python 1595 ran / 1 error / 0 stopped Coot / 121 not run; Scheme 1558 / 6 / 0 / 125; setters 195/210 read back (evidence/full31.jsonl.gz, setters31.jsonl)

@@ -15,8 +15,8 @@ Also available in Scheme as `add-lsq-atom-pair-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `add_lsq_atom_pair(["A", 41, "", " CA ", ""], ["A", 41, "", " CA ", ""])` | ran (no return value) |
-| Scheme | `(add-lsq-atom-pair (list "A" 41 "" " CA " "") (list "A" 41 "" " CA " ""))` | ran (no return value) |
+| Python | `add_lsq_atom_pair(["A", 41, "", " CA ", ""], ["A", 41, "", " CA ", ""])` | ran (no return value, nothing visible changed) |
+| Scheme | `(add-lsq-atom-pair (list "A" 41 "" " CA " "") (list "A" 41 "" " CA " ""))` | ran (no return value, nothing visible changed) |
 
 ### add_lsq_match
 
@@ -27,8 +27,8 @@ Arguments: reference_resno_start (a whole number), reference_resno_end (a whole 
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `add_lsq_match(41, 45, "A", 41, 45, "A", 1)` | ran (no return value) |
-| Scheme | `(add-lsq-match 41 45 "A" 41 45 "A" 1)` | ran (no return value) |
+| Python | `add_lsq_match(41, 45, "A", 41, 45, "A", 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(add-lsq-match 41 45 "A" 41 45 "A" 1)` | ran (no return value, nothing visible changed) |
 
 ### apply_lsq_matches
 
@@ -42,8 +42,10 @@ Also available in Python as `apply_lsq_matches_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `apply_lsq_matches(0, 0)` | ran, returned `False` |
-| Scheme | `(apply-lsq-matches 0 0)` | ran, returned `#f` |
+| Python | first `imol2 = read_pdb("tutorial-modern.pdb")`, then `clear_lsq_matches()`, then `add_lsq_match(10, 50, "A", 10, 50, "B", 1)`, then `apply_lsq_matches(0, imol2)` | ran, returned `[[0.9670348999898443, -0.04933823590400259, -0.2498184154131014, 0.2492130254906893, 0.38490338667646307, 0.888674434678 ...`; changed: molecule 3: coordinates of 189 residue(s) (A1, A2, A3, A4 ...) |
+| Scheme | first `(define imol2 (read-pdb "tutorial-modern.pdb"))`, then `(clear-lsq-matches)`, then `(add-lsq-match 10 50 "A" 10 50 "B" 1)`, then `(apply-lsq-matches 0 imol2)` | ran, returned `((0.9670348999898443 -0.04933823590400259 -0.2498184154131014 0.2492130254906893 0.38490338667646307 0.8886744346782832  ...`; changed: molecule 3: coordinates of 189 residue(s) (A1, A2, A3, A4 ...) |
+
+Example written and checked by hand on the test data. Expected: returns [rotation (9 numbers), translation (3)] and moves the moving molecule; False on a bad match.
 
 Python and Scheme gave the same answer.
 
@@ -58,8 +60,10 @@ Arguments: imol_reference (a whole number), imol_moving (a whole number). Return
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `apply_lsq_matches_simple(0, 0)` | ran, returned `0` |
-| Scheme | `(apply-lsq-matches-simple 0 0)` | ran, returned `0` |
+| Python | first `imol2 = read_pdb("tutorial-modern.pdb")`, then `clear_lsq_matches()`, then `add_lsq_match(10, 50, "A", 10, 50, "B", 1)`, then `apply_lsq_matches_simple(0, imol2)` | ran, returned `1`; changed: molecule 3: coordinates of 189 residue(s) (A1, A2, A3, A4 ...) |
+| Scheme | first `(define imol2 (read-pdb "tutorial-modern.pdb"))`, then `(clear-lsq-matches)`, then `(add-lsq-match 10 50 "A" 10 50 "B" 1)`, then `(apply-lsq-matches-simple 0 imol2)` | ran, returned `1`; changed: molecule 3: coordinates of 189 residue(s) (A1, A2, A3, A4 ...) |
+
+Example written and checked by hand on the test data. Expected: returns 1 on a good match and moves the moving molecule onto the reference.
 
 Python and Scheme gave the same answer.
 
@@ -72,8 +76,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `clear_lsq_matches()` | ran (no return value) |
-| Scheme | `(clear-lsq-matches)` | ran (no return value) |
+| Python | `clear_lsq_matches()` | ran (no return value, nothing visible changed) |
+| Scheme | `(clear-lsq-matches)` | ran (no return value, nothing visible changed) |
 
 ### get_lsq_matrix
 
@@ -86,8 +90,10 @@ Also available in Scheme as `get-lsq-matrix-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `get_lsq_matrix(0, 0)` | ran, returned `False` |
-| Scheme | `(get-lsq-matrix 0 0)` | ran, returned `#f` |
+| Python | first `imol2 = read_pdb("tutorial-modern.pdb")`, then `clear_lsq_matches()`, then `add_lsq_match(10, 50, "A", 10, 50, "B", 1)`, then `get_lsq_matrix(0, imol2)` | ran, returned `[[0.9670348999898443, -0.04933823590400259, -0.2498184154131014, 0.2492130254906893, 0.38490338667646307, 0.888674434678 ...` |
+| Scheme | first `(define imol2 (read-pdb "tutorial-modern.pdb"))`, then `(clear-lsq-matches)`, then `(add-lsq-match 10 50 "A" 10 50 "B" 1)`, then `(get-lsq-matrix 0 imol2)` | ran, returned `((0.9670348999898443 -0.04933823590400259 -0.2498184154131014 0.2492130254906893 0.38490338667646307 0.8886744346782832  ...` |
+
+Example written and checked by hand on the test data. Expected: returns the superposition matrix [rotation, translation] without moving anything; False on failure.
 
 Python and Scheme gave the same answer.
 
@@ -102,8 +108,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `remove_last_lsq_plane_atom()` | ran (no return value) |
-| Scheme | `(remove-last-lsq-plane-atom)` | ran (no return value) |
+| Python | `remove_last_lsq_plane_atom()` | ran (no return value, nothing visible changed) |
+| Scheme | `(remove-last-lsq-plane-atom)` | ran (no return value, nothing visible changed) |
 
 ### setup_lsq_deviation
 
@@ -116,8 +122,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `setup_lsq_deviation(1)` | ran (no return value) |
-| Scheme | `(setup-lsq-deviation 1)` | ran (no return value) |
+| Python | `setup_lsq_deviation(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(setup-lsq-deviation 1)` | ran (no return value, nothing visible changed) |
 
 ### setup_lsq_plane_define
 
@@ -128,8 +134,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `setup_lsq_plane_define(1)` | ran (no return value) |
-| Scheme | `(setup-lsq-plane-define 1)` | ran (no return value) |
+| Python | `setup_lsq_plane_define(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(setup-lsq-plane-define 1)` | ran (no return value, nothing visible changed) |
 
 ### unset_lsq_plane_dialog
 
@@ -140,6 +146,6 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `unset_lsq_plane_dialog()` | ran (no return value) |
-| Scheme | `(unset-lsq-plane-dialog)` | ran (no return value) |
+| Python | `unset_lsq_plane_dialog()` | ran (no return value, nothing visible changed) |
+| Scheme | `(unset-lsq-plane-dialog)` | ran (no return value, nothing visible changed) |
 

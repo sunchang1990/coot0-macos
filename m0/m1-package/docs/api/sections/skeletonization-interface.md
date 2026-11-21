@@ -15,8 +15,8 @@ Arguments: none. Returns: text.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `get_text_for_skeleton_box_size_entry()` | ran, returned `<Swig Object of type 'gchar *' at 0x10a26d740>` |
-| Scheme | `(get-text-for-skeleton-box-size-entry)` | ran, returned `#<swig-pointer gchar * 814678210>` |
+| Python | `get_text_for_skeleton_box_size_entry()` | ran, returned `<Swig Object of type 'gchar *' at 0x10b8338a0>` |
+| Scheme | `(get-text-for-skeleton-box-size-entry)` | ran, returned `#<swig-pointer gchar * 94ad7b780>` |
 
 ### get_text_for_skeletonization_level_entry
 
@@ -29,8 +29,8 @@ Arguments: none. Returns: text.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `get_text_for_skeletonization_level_entry()` | ran, returned `<Swig Object of type 'gchar *' at 0x10a26c9c0>` |
-| Scheme | `(get-text-for-skeletonization-level-entry)` | ran, returned `#<swig-pointer gchar * 814768130>` |
+| Python | `get_text_for_skeletonization_level_entry()` | ran, returned `<Swig Object of type 'gchar *' at 0x10b833690>` |
+| Scheme | `(get-text-for-skeletonization-level-entry)` | ran, returned `#<swig-pointer gchar * 94e571690>` |
 
 ### set_initial_map_for_skeletonize
 
@@ -41,8 +41,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_initial_map_for_skeletonize()` | ran (no return value) |
-| Scheme | `(set-initial-map-for-skeletonize)` | ran (no return value) |
+| Python | `set_initial_map_for_skeletonize()` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-initial-map-for-skeletonize)` | ran (no return value, nothing visible changed) |
 
 ### set_max_skeleton_search_depth
 
@@ -58,8 +58,8 @@ Arguments: v (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_max_skeleton_search_depth(1)` | ran (no return value) |
-| Scheme | `(set-max-skeleton-search-depth 1)` | ran (no return value) |
+| Python | `set_max_skeleton_search_depth(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-max-skeleton-search-depth 1)` | ran (no return value, nothing visible changed) |
 
 ### set_skeleton_box_size
 
@@ -72,8 +72,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_skeleton_box_size(1.0)` | ran (no return value) |
-| Scheme | `(set-skeleton-box-size 1.0)` | ran (no return value) |
+| Python | `set_skeleton_box_size(1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-skeleton-box-size 1.0)` | ran (no return value, nothing visible changed) |
 
 ### set_skeleton_box_size_from_widget
 
@@ -86,8 +86,8 @@ Arguments: txt (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_skeleton_box_size_from_widget("hello")` | ran (no return value) |
-| Scheme | `(set-skeleton-box-size-from-widget "hello")` | ran (no return value) |
+| Python | `set_skeleton_box_size_from_widget("hello")` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-skeleton-box-size-from-widget "hello")` | ran (no return value, nothing visible changed) |
 
 ### set_skeletonization_level_from_widget
 
@@ -100,8 +100,8 @@ Arguments: txt (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_skeletonization_level_from_widget("hello")` | ran (no return value) |
-| Scheme | `(set-skeletonization-level-from-widget "hello")` | ran (no return value) |
+| Python | `set_skeletonization_level_from_widget("hello")` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-skeletonization-level-from-widget "hello")` | ran (no return value, nothing visible changed) |
 
 ### skel_greer_off
 
@@ -112,8 +112,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `skel_greer_off()` | ran (no return value) |
-| Scheme | `(skel-greer-off)` | ran (no return value) |
+| Python | `skel_greer_off()` | ran (no return value, nothing visible changed) |
+| Scheme | `(skel-greer-off)` | ran (no return value, nothing visible changed) |
 
 ### skel_greer_on
 
@@ -124,8 +124,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `skel_greer_on()` | ran (no return value) |
-| Scheme | `(skel-greer-on)` | ran (no return value) |
+| Python | `skel_greer_on()` | ran (no return value, nothing visible changed) |
+| Scheme | `(skel-greer-on)` | ran (no return value, nothing visible changed) |
 
 ### skeletonize_map
 
@@ -143,8 +143,10 @@ Arguments: imol (a whole number), prune_flag (a whole number). Returns: a whole 
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `skeletonize_map(0, 1)` | ran, returned `0` |
-| Scheme | `(skeletonize-map 0 1)` | ran, returned `0` |
+| Python | `skeletonize_map(1, 0)` | ran, returned `0` |
+| Scheme | `(skeletonize-map 1 0)` | ran, returned `0` |
+
+Example written and checked by hand on the test data. Expected: computes the skeleton of map 1 (drawn in the graphics); always returns 0.
 
 Python and Scheme gave the same answer.
 
@@ -159,8 +161,10 @@ Arguments: imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `unskeletonize_map(0)` | ran, returned `0` |
-| Scheme | `(unskeletonize-map 0)` | ran, returned `0` |
+| Python | first `skeletonize_map(1, 0)`, then `unskeletonize_map(1)` | ran, returned `1` |
+| Scheme | first `(skeletonize-map 1 0)`, then `(unskeletonize-map 1)` | ran, returned `1` |
+
+Example written and checked by hand on the test data. Expected: hides the skeleton of map 1 and returns the map molecule number (1).
 
 Python and Scheme gave the same answer.
 

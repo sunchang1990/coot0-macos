@@ -66,5 +66,13 @@
          (lambda () (let ((d (list-ref (ncs-chain-differences imol "A") 2)))
                       (and (> (length d) 80) (all-of? (lambda (x) (= (length x) 3)) d)
                            (equal? (car (car d)) (list 1 "")) (number? (caddr (car d))))))))
+;; build 31: three more Scheme wrappers that differed from their Python twins (found by trying every example)
+(check "kullback-liebler returns its two numbers (was always #f)"
+       (lambda () (let ((r (kullback-liebler (list 1.0 2.0 3.0 4.0 5.0 2.5 3.5) (list 1.5 2.0 3.0 4.0 6.0 2.2 3.1))))
+                    (and (list? r) (= (length r) 2) (all-of? number? r)))))
+(check "probe-clash-score-from-scm keeps the 5th number (wide contacts; was a copy of the 4th)"
+       (lambda () (equal? (probe-clash-score-as-scm (probe-clash-score-from-scm (list 2 10 30 400 900))) (list 2 10 30 400 900))))
+(check "register-interesting-positions-list-scm takes ((x y z) label) items (stopped Coot before)"
+       (lambda () (begin (register-interesting-positions-list-scm (list (list (list 1.0 2.0 3.0) "here"))) #t)))
 (for-each (lambda (r) (format #t "~a ~a  ~s~%" (cadr r) (car r) (caddr r))) (reverse results))
 (format #t "SUMMARY ~a / ~a~%" (length (filter (lambda (r) (eq? (cadr r) 'PASS)) results)) (length results))

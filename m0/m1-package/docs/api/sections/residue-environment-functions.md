@@ -48,8 +48,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `label_atoms_in_residue()` | ran (no return value) |
-| Scheme | `(label-atoms-in-residue)` | ran (no return value) |
+| Python | `label_atoms_in_residue()` | ran (no return value, nothing visible changed) |
+| Scheme | `(label-atoms-in-residue)` | ran (no return value, nothing visible changed) |
 
 ### label_neighbours
 
@@ -62,8 +62,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `label_neighbours()` | ran (no return value) |
-| Scheme | `(label-neighbours)` | ran (no return value) |
+| Python | `label_neighbours()` | ran (no return value, nothing visible changed) |
+| Scheme | `(label-neighbours)` | ran (no return value, nothing visible changed) |
 
 ### set_environment_distances_distance_limits
 
@@ -76,8 +76,8 @@ Arguments: min_dist (a number), max_dist (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_environment_distances_distance_limits(1.0, 1.0)` | ran (no return value) |
-| Scheme | `(set-environment-distances-distance-limits 1.0 1.0)` | ran (no return value) |
+| Python | `set_environment_distances_distance_limits(1.0, 1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-environment-distances-distance-limits 1.0 1.0)` | ran (no return value, nothing visible changed) |
 
 ### set_environment_distances_label_atom
 
@@ -90,8 +90,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_environment_distances_label_atom(1)` | ran (no return value) |
-| Scheme | `(set-environment-distances-label-atom 1)` | ran (no return value) |
+| Python | `set_environment_distances_label_atom(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-environment-distances-label-atom 1)` | ran (no return value, nothing visible changed) |
 
 ### set_show_environment_distances
 
@@ -105,8 +105,10 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_show_environment_distances(1)` | ran (no return value) |
-| Scheme | `(set-show-environment-distances 1)` | ran (no return value) |
+| Python | `set_show_environment_distances(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-show-environment-distances 1)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: show_environment_distances_state was 1, set to 0, read back 0; Scheme: show-environment-distances-state was 1, set to 0, read back 0.
 
 ### set_show_environment_distances_as_solid
 
@@ -119,8 +121,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_show_environment_distances_as_solid(1)` | ran (no return value) |
-| Scheme | `(set-show-environment-distances-as-solid 1)` | ran (no return value) |
+| Python | `set_show_environment_distances_as_solid(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-show-environment-distances-as-solid 1)` | ran (no return value, nothing visible changed) |
 
 ### set_show_environment_distances_bumps
 
@@ -134,8 +136,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_show_environment_distances_bumps(1)` | ran (no return value) |
-| Scheme | `(set-show-environment-distances-bumps 1)` | ran (no return value) |
+| Python | `set_show_environment_distances_bumps(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-show-environment-distances-bumps 1)` | ran (no return value, nothing visible changed) |
 
 ### set_show_environment_distances_h_bonds
 
@@ -149,8 +151,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_show_environment_distances_h_bonds(1)` | ran (no return value) |
-| Scheme | `(set-show-environment-distances-h-bonds 1)` | ran (no return value) |
+| Python | `set_show_environment_distances_h_bonds(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-show-environment-distances-h-bonds 1)` | ran (no return value, nothing visible changed) |
 
 ### show_environment_distances_state
 

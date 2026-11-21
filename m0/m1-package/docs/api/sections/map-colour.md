@@ -33,8 +33,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_colour_map_rotation_for_map(1.0)` | ran (no return value) |
-| Scheme | `(set-colour-map-rotation-for-map 1.0)` | ran (no return value) |
+| Python | `set_colour_map_rotation_for_map(1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-colour-map-rotation-for-map 1.0)` | ran (no return value, nothing visible changed) |
 
 ### set_molecule_bonds_colour_map_rotation
 
@@ -49,6 +49,8 @@ Arguments: imol (a whole number), theta (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_molecule_bonds_colour_map_rotation(0, 10.0)` | ran (no return value) |
-| Scheme | `(set-molecule-bonds-colour-map-rotation 0 10.0)` | ran (no return value) |
+| Python | `set_molecule_bonds_colour_map_rotation(0, 10.0)` | ran (no return value); changed: get_bond_colour_rotation_for_molecule(0): 1 -> 10; get_molecule_bonds_colour_map_rotation(0): 1 -> 10 |
+| Scheme | `(set-molecule-bonds-colour-map-rotation 0 10.0)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: get_molecule_bonds_colour_map_rotation was -1.0, set to -1.0, read back -1.0; Scheme: get-molecule-bonds-colour-map-rotation was -1.0, set to -1.0, read back -1.0.
 

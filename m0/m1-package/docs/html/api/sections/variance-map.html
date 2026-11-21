@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="4ee278f735000e5d63b0c97409dae5ab859c0fb6">
+<meta name="coot0-source-sha1" content="da6989c4db383afbbf399a72d606aeaa4a37e055">
 <title>Variance Map - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -22,6 +22,9 @@ table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; 
 Scheme: <code>(make-variance-map map-molecule-number-list)</code></p>
 <p>Arguments: map_molecule_number_list (a list or value). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>imol2 = sharpen_blur_map(1, 30.0)</code>, then <code>make_variance_map([1, imol2])</code></td><td>ran, returned <code>4</code>; changed: new molecule 4 (map, variance-map); graphics_n_molecules(): 4 -&gt; 5</td></tr>
+<tr><td>Scheme</td><td><code>(make-variance-map (list 1 (sharpen-blur-map 1 30.0)))</code></td><td>ran, returned <code>4</code>; changed: new molecule 3 (map, rnasa-1.8-all_refmac1.mtz FWT PHWT Blur 30.00); new molecule 4 (map, variance-map); graphics_n_molecules(): 3 -&gt; 5</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the new map molecule number of the variance map of the given maps.</p>
+<p>Note: make_variance_map([1, 1]) (two identical maps) makes a map whose sigma and mean are NaN.</p>
+<p>Python and Scheme gave the same answer.</p>
 </body></html>

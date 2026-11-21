@@ -15,8 +15,10 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `post_model_fit_refine_dialog()` | ran (no return value) |
-| Scheme | `(post-model-fit-refine-dialog)` | stopped Coot when tried without a window (not checked with a window) |
+| Python | `post_model_fit_refine_dialog()` | ran (no return value, nothing visible changed) |
+| Scheme | `(post-model-fit-refine-dialog)` | not run: needs the graphics window (stops Coot without a screen) |
+
+Example written and checked by hand on the test data. Expected: opens the dialog.
 
 ### post_other_modelling_tools_dialog
 
@@ -29,8 +31,10 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `post_other_modelling_tools_dialog()` | ran (no return value) |
-| Scheme | `(post-other-modelling-tools-dialog)` | stopped Coot when tried without a window (not checked with a window) |
+| Python | `post_other_modelling_tools_dialog()` | ran (no return value, nothing visible changed) |
+| Scheme | `(post-other-modelling-tools-dialog)` | not run: needs the graphics window (stops Coot without a screen) |
+
+Example written and checked by hand on the test data. Expected: opens the dialog.
 
 ### refinement_move_atoms_with_zero_occupancy_state
 
@@ -61,8 +65,8 @@ Arguments: txt (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_model_fit_refine_place_atom_at_pointer_label("hello")` | ran (no return value) |
-| Scheme | `(set-model-fit-refine-place-atom-at-pointer-label "hello")` | ran (no return value) |
+| Python | `set_model_fit_refine_place_atom_at_pointer_label("hello")` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-model-fit-refine-place-atom-at-pointer-label "hello")` | ran (no return value, nothing visible changed) |
 
 ### set_model_fit_refine_rotate_translate_zone_label
 
@@ -76,8 +80,8 @@ Arguments: txt (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_model_fit_refine_rotate_translate_zone_label("hello")` | ran (no return value) |
-| Scheme | `(set-model-fit-refine-rotate-translate-zone-label "hello")` | ran (no return value) |
+| Python | `set_model_fit_refine_rotate_translate_zone_label("hello")` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-model-fit-refine-rotate-translate-zone-label "hello")` | ran (no return value, nothing visible changed) |
 
 ### set_refinement_move_atoms_with_zero_occupancy
 
@@ -90,8 +94,10 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_refinement_move_atoms_with_zero_occupancy(1)` | ran (no return value) |
-| Scheme | `(set-refinement-move-atoms-with-zero-occupancy 1)` | ran (no return value) |
+| Python | `set_refinement_move_atoms_with_zero_occupancy(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-refinement-move-atoms-with-zero-occupancy 1)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: refinement_move_atoms_with_zero_occupancy_state was 1, set to 0, read back 0; Scheme: refinement-move-atoms-with-zero-occupancy-state was 1, set to 0, read back 0.
 
 ### show_select_map_dialog
 
@@ -104,8 +110,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `show_select_map_dialog()` | ran (no return value) |
-| Scheme | `(show-select-map-dialog)` | ran (no return value) |
+| Python | `show_select_map_dialog()` | ran (no return value, nothing visible changed) |
+| Scheme | `(show-select-map-dialog)` | ran (no return value, nothing visible changed) |
 
 ### unset_model_fit_refine_dialog
 
@@ -118,8 +124,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `unset_model_fit_refine_dialog()` | ran (no return value) |
-| Scheme | `(unset-model-fit-refine-dialog)` | ran (no return value) |
+| Python | `unset_model_fit_refine_dialog()` | ran (no return value, nothing visible changed) |
+| Scheme | `(unset-model-fit-refine-dialog)` | ran (no return value, nothing visible changed) |
 
 ### unset_refine_params_dialog
 
@@ -132,6 +138,6 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `unset_refine_params_dialog()` | ran (no return value) |
-| Scheme | `(unset-refine-params-dialog)` | ran (no return value) |
+| Python | `unset_refine_params_dialog()` | ran (no return value, nothing visible changed) |
+| Scheme | `(unset-refine-params-dialog)` | ran (no return value, nothing visible changed) |
 

@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="8cb835d42c98da4d4e204be8c3f62103f18a8fd7">
+<meta name="coot0-source-sha1" content="0edcb2a03a9339270f513219848d781c14717d54">
 <title>Sequence - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -22,31 +22,35 @@ table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; 
 Scheme: <code>(apply-fasta-multi-to-fragment imol chain-id resno-start resno-end imol-map fam)</code></p>
 <p>Arguments: imol (a whole number), chain_id (text), resno_start (a whole number), resno_end (a whole number), imol_map (a whole number), fam (<code>coot::fasta_multi</code>). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>apply_fasta_multi_to_fragment(0, "A", 1, 93, 1, "tutorial-modern.fasta")</code></td><td>not run: not callable from scripting: its coot::fasta_multi argument cannot be created from Python or Scheme</td></tr>
+<tr><td>Scheme</td><td><code>(apply-fasta-multi-to-fragment 0 "A" 1 93 1 "tutorial-modern.fasta")</code></td><td>not run: not callable from scripting: its coot::fasta_multi argument cannot be created from Python or Scheme</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: internal C++ helper (needs a coot::fasta_multi object that scripts cannot make); use assign_sequences_to_best_matching_chain_from_fasta("tutorial-modern.fasta").</p>
 <h3 id="apply_pir_alignment">apply_pir_alignment</h3>
 <p>Python: <code>apply_pir_alignment(imol, chain_id)</code><br>
 Scheme: <code>(apply-pir-alignment imol chain-id)</code></p>
 <p>apply the mutations of the associated alignment</p>
 <p>Arguments: imol (a whole number), chain_id (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>apply_pir_alignment(0, "A")</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(apply-pir-alignment 0 "A")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>apply_pir_alignment(0, "A")</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(apply-pir-alignment 0 "A")</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="assign_sequence_to_best_matching_chain">assign_sequence_to_best_matching_chain</h3>
 <p>Python: <code>assign_sequence_to_best_matching_chain(sequence)</code><br>
 Scheme: <code>(assign-sequence-to-best-matching-chain sequence)</code></p>
 <p>Arguments: sequence (text). Returns: true or false.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>assign_sequence_to_best_matching_chain("ACDEFGHIKLMNPQRSTVWY")</code></td><td>ran, returned <code>False</code></td></tr>
-<tr><td>Scheme</td><td><code>(assign-sequence-to-best-matching-chain "ACDEFGHIKLMNPQRSTVWY")</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>assign_sequence_to_best_matching_chain("DVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLID")</code></td><td>ran, returned <code>True</code></td></tr>
+<tr><td>Scheme</td><td><code>(assign-sequence-to-best-matching-chain "DVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLID")</code></td><td>ran, returned <code>#t</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: True: the sequence is assigned to the chain(s) it matches (here both NCS chains A and B); see sequence_info(0).</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="assign_sequences_to_best_matching_chain_from_fasta">assign_sequences_to_best_matching_chain_from_fasta</h3>
 <p>Python: <code>assign_sequences_to_best_matching_chain_from_fasta(fasta_file_name)</code><br>
 Scheme: <code>(assign-sequences-to-best-matching-chain-from-fasta fasta-file-name)</code></p>
 <p>Arguments: fasta_file_name (text). Returns: true or false.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>assign_sequences_to_best_matching_chain_from_fasta("tutorial-modern.pdb")</code></td><td>ran, returned <code>False</code></td></tr>
-<tr><td>Scheme</td><td><code>(assign-sequences-to-best-matching-chain-from-fasta "tutorial-modern.pdb")</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>assign_sequences_to_best_matching_chain_from_fasta("tutorial-modern.fasta")</code></td><td>ran, returned <code>True</code></td></tr>
+<tr><td>Scheme</td><td><code>(assign-sequences-to-best-matching-chain-from-fasta "tutorial-modern.fasta")</code></td><td>ran, returned <code>#t</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: True; every sequence of the FASTA file is assigned to its best-matching chain(s).</p>
+<p>Note: With two near-identical sequences both are assigned to both chains (4 entries), so alignment_mismatches then reports mutations A94-96 from the longer chain_B sequence.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="associate_pir_alignment">associate_pir_alignment</h3>
 <p>Python: <code>associate_pir_alignment(imol, chain_id, pir_alignment)</code><br>
@@ -55,21 +59,21 @@ Scheme: <code>(associate-pir-alignment imol chain-id pir-alignment)</code></p>
 The pir_alignment is a string (with newlines)</p>
 <p>Arguments: imol (a whole number), chain_id (text), pir_alignment (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>associate_pir_alignment(0, "A", "hello")</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(associate-pir-alignment 0 "A" "hello")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>associate_pir_alignment(0, "A", "hello")</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(associate-pir-alignment 0 "A" "hello")</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="associate_pir_alignment_from_file">associate_pir_alignment_from_file</h3>
 <p>Python: <code>associate_pir_alignment_from_file(imol, chain_id, pir_alignment_file_name)</code><br>
 Scheme: <code>(associate-pir-alignment-from-file imol chain-id pir-alignment-file-name)</code></p>
 <p>associate an alignment in a file with a chain in a model molecule</p>
 <p>Arguments: imol (a whole number), chain_id (text), pir_alignment_file_name (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>associate_pir_alignment_from_file(0, "A", "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(associate-pir-alignment-from-file 0 "A" "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>associate_pir_alignment_from_file(0, "A", "tutorial-modern.pdb")</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(associate-pir-alignment-from-file 0 "A" "tutorial-modern.pdb")</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="sequence_comparison_to_chains">sequence_comparison_to_chains</h3>
 <p>Python: <code>sequence_comparison_to_chains(imol, sequence)</code><br>
 Scheme: <code>(sequence-comparison-to-chains imol sequence)</code></p>
 <p>Arguments: imol (a whole number), sequence (text). Returns: a list.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>sequence_comparison_to_chains(0, "ACDEFGHIKLMNPQRSTVWY")</code></td><td>ran, returned <code>&lt;Swig Object of type 'std::vector&lt; coot::chain_mutation_info_container_t,std::allocator&lt; coot::chain_mutation_info_conta ...</code></td></tr>
-<tr><td>Scheme</td><td><code>(sequence-comparison-to-chains 0 "ACDEFGHIKLMNPQRSTVWY")</code></td><td>ran, returned <code>#&lt;collectable-swig-pointer std::vector&lt; coot::chain_mutation_info_container_t &gt; * c3d0eef80&gt;</code></td></tr></tbody></table>
+<tr><td>Scheme</td><td><code>(sequence-comparison-to-chains 0 "ACDEFGHIKLMNPQRSTVWY")</code></td><td>ran, returned <code>#&lt;collectable-swig-pointer std::vector&lt; coot::chain_mutation_info_container_t &gt; * c6ad9ec00&gt;</code></td></tr></tbody></table>
 </body></html>

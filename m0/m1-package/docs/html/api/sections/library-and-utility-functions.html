@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="ef5ea74fc0aaa164f7df4efb4037a994f5f32114">
+<meta name="coot0-source-sha1" content="8b4b367ef57d32c68431d2caff6cb6434f36fdde">
 <title>Library and Utility Functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -22,24 +22,27 @@ table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; 
 Scheme: <code>(coot-checked-exit retval)</code></p>
 <p>Arguments: retval (a whole number). Returns: <code>gboolean</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>coot_checked_exit(1)</code></td><td>not run: not run automatically (exit: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(coot-checked-exit 1)</code></td><td>not run: not run automatically (exit: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>coot_checked_exit(0)</code></td><td>not run: exits Coot</td></tr>
+<tr><td>Scheme</td><td><code>(coot-checked-exit 0)</code></td><td>not run: exits Coot</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: exits Coot, first asking about unsaved molecules (in the GUI).</p>
 <h3 id="coot_clear_backup_or_real_exit">coot_clear_backup_or_real_exit</h3>
 <p>Python: <code>coot_clear_backup_or_real_exit(retval)</code><br>
 Scheme: <code>(coot-clear-backup-or-real-exit retval)</code></p>
 <p>exit coot doing clear-backup maybe</p>
 <p>Arguments: retval (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>coot_clear_backup_or_real_exit(1)</code></td><td>not run: not run automatically (exit: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(coot-clear-backup-or-real-exit 1)</code></td><td>not run: not run automatically (exit: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>coot_clear_backup_or_real_exit(0)</code></td><td>not run: exits Coot</td></tr>
+<tr><td>Scheme</td><td><code>(coot-clear-backup-or-real-exit 0)</code></td><td>not run: exits Coot</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: exits Coot, offering to clear old backups first.</p>
 <h3 id="coot_no_state_real_exit">coot_no_state_real_exit</h3>
 <p>Python: <code>coot_no_state_real_exit(retval)</code><br>
 Scheme: <code>(coot-no-state-real-exit retval)</code></p>
 <p>exit without writing a state file</p>
 <p>Arguments: retval (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>coot_no_state_real_exit(1)</code></td><td>not run: not run automatically (exit: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(coot-no-state-real-exit 1)</code></td><td>not run: not run automatically (exit: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>coot_no_state_real_exit(0)</code></td><td>not run: exits Coot</td></tr>
+<tr><td>Scheme</td><td><code>(coot-no-state-real-exit 0)</code></td><td>not run: exits Coot</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: exits Coot with return value 0 without writing a state file.</p>
 <h3 id="coot_real_exit">coot_real_exit</h3>
 <p>Python: <code>coot_real_exit(retval)</code><br>
 Scheme: <code>(coot-real-exit retval)</code></p>
@@ -47,16 +50,18 @@ Scheme: <code>(coot-real-exit retval)</code></p>
  process.</p>
 <p>Arguments: retval (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>coot_real_exit(1)</code></td><td>not run: not run automatically (exit: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(coot-real-exit 1)</code></td><td>not run: not run automatically (exit: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>coot_real_exit(0)</code></td><td>not run: exits Coot</td></tr>
+<tr><td>Scheme</td><td><code>(coot-real-exit 0)</code></td><td>not run: exits Coot</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: exits Coot with the given return value.</p>
 <h3 id="coot_save_state_and_exit">coot_save_state_and_exit</h3>
 <p>Python: <code>coot_save_state_and_exit(retval, save_state_flag)</code><br>
 Scheme: <code>(coot-save-state-and-exit retval save-state-flag)</code></p>
 <p>exit coot, write a state file</p>
 <p>Arguments: retval (a whole number), save_state_flag (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>coot_save_state_and_exit(1, 1)</code></td><td>not run: not run automatically (exit: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(coot-save-state-and-exit 1 1)</code></td><td>not run: not run automatically (exit: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>coot_save_state_and_exit(0, 1)</code></td><td>not run: exits Coot</td></tr>
+<tr><td>Scheme</td><td><code>(coot-save-state-and-exit 0 1)</code></td><td>not run: exits Coot</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: writes the state file (flag 1) and exits Coot.</p>
 <h3 id="coot_sys_build_type">coot_sys_build_type</h3>
 <p>Python: <code>coot_sys_build_type()</code><br>
 Scheme: <code>(coot-sys-build-type)</code></p>
@@ -76,6 +81,7 @@ Scheme: <code>(first-coords-imol)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>first_coords_imol()</code></td><td>ran, returned <code>0</code></td></tr>
 <tr><td>Scheme</td><td><code>(first-coords-imol)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: the first model molecule (0); -1 if none.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="first_small_coords_imol">first_small_coords_imol</h3>
 <p>Python: <code>first_small_coords_imol()</code><br>
@@ -84,8 +90,9 @@ Scheme: <code>(first-small-coords-imol)</code></p>
 <p>return -1 on no such molecule</p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>first_small_coords_imol()</code></td><td>ran, returned <code>-1</code></td></tr>
-<tr><td>Scheme</td><td><code>(first-small-coords-imol)</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>read_pdb("nag_only.pdb")</code>, then <code>first_small_coords_imol()</code></td><td>ran, returned <code>3</code></td></tr>
+<tr><td>Scheme</td><td>first <code>(read-pdb "nag_only.pdb")</code>, then <code>(first-small-coords-imol)</code></td><td>ran, returned <code>3</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the first model molecule with fewer than 400 atoms, -1 if none.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="first_unsaved_coords_imol">first_unsaved_coords_imol</h3>
 <p>Python: <code>first_unsaved_coords_imol()</code><br>
@@ -94,8 +101,9 @@ Scheme: <code>(first-unsaved-coords-imol)</code></p>
 <p> return -1 when there is none.</p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>first_unsaved_coords_imol()</code></td><td>ran, returned <code>-1</code></td></tr>
-<tr><td>Scheme</td><td><code>(first-unsaved-coords-imol)</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>delete_residue(0, "A", 41, "")</code>, then <code>first_unsaved_coords_imol()</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td>first <code>(delete-residue 0 "A" 41 "")</code>, then <code>(first-unsaved-coords-imol)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the first model molecule with unsaved changes; -1 when nothing has changed.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="git_revision_count">git_revision_count</h3>
 <p>Python: <code>git_revision_count()</code><br>
@@ -115,9 +123,10 @@ Scheme: <code>(mmcif-sfs-to-mtz cif-file-name mtz-file-name)</code></p>
  -1 on complete failure to write a file.</p>
 <p>Arguments: cif_file_name (text), mtz_file_name (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>mmcif_sfs_to_mtz("tutorial-modern.pdb", "rnasa-1.8-all_refmac1.mtz")</code></td><td>ran, returned <code>-1</code></td></tr>
+<tr><td>Python</td><td>first <code>open("sf.cif", "w").write("data_r1xyzsf\n_cell.length_a 64.897\n_cell.length_b 78.323\n_cell.length_c 38.792\n_cell.angle_alpha 90.0\n_cell.angle_beta 90.0\n_ce ...</code>, then <code>mmcif_sfs_to_mtz("sf.cif", "sf.mtz")</code></td><td>ran, returned <code>0</code></td></tr>
 <tr><td>Scheme</td><td><code>(mmcif-sfs-to-mtz "tutorial-modern.pdb" "rnasa-1.8-all_refmac1.mtz")</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
-<p>Python and Scheme gave the same answer.</p>
+<p>Example written and checked by hand on the test data. Expected: converts an mmCIF structure-factor file to MTZ: 1 = written with R-free flags, 0 = written without free flags (or failed), -1 = could not read.</p>
+<p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 <h3 id="molecule_name">molecule_name</h3>
 <p>Python: <code>molecule_name(imol)</code><br>
 Scheme: <code>(molecule-name imol)</code></p>
@@ -147,16 +156,17 @@ Scheme: <code>(run-clear-backups retval)</code></p>
 <p>Arguments: retval (a whole number). Returns: nothing.
 Also available in Python as <code>run_clear_backups_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>run_clear_backups(1)</code></td><td>not run: not run automatically (run: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(run-clear-backups 1)</code></td><td>not run: not run automatically (run: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>run_clear_backups(0)</code></td><td>not run: exits Coot</td></tr>
+<tr><td>Scheme</td><td><code>(run-clear-backups 0)</code></td><td>not run: exits Coot</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: runs clear_backups_maybe() and then exits; without guile-gtk (this build) the Scheme version exits at once.</p>
 <h3 id="set_molecule_name">set_molecule_name</h3>
 <p>Python: <code>set_molecule_name(imol, new_name)</code><br>
 Scheme: <code>(set-molecule-name imol new-name)</code></p>
 <p>set the molecule name of the imol-th molecule</p>
 <p>Arguments: imol (a whole number), new_name (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_molecule_name(0, "my-name")</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-molecule-name 0 "my-name")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_molecule_name(0, "my-name")</code></td><td>ran (no return value); changed: molecule 0 renamed to my-name; molecule_name(0): 'tutorial-modern.pdb' -&gt; 'my-name'</td></tr>
+<tr><td>Scheme</td><td><code>(set-molecule-name 0 "my-name")</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="svn_revision">svn_revision</h3>
 <p>Python: <code>svn_revision()</code><br>
 Scheme: <code>(svn-revision)</code></p>

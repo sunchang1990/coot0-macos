@@ -13,8 +13,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `do_edit_copy_fragment()` | ran (no return value) |
-| Scheme | `(do-edit-copy-fragment)` | ran (no return value) |
+| Python | `do_edit_copy_fragment()` | ran (no return value, nothing visible changed) |
+| Scheme | `(do-edit-copy-fragment)` | ran (no return value, nothing visible changed) |
 
 ### do_edit_copy_molecule
 
@@ -25,8 +25,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `do_edit_copy_molecule()` | ran (no return value) |
-| Scheme | `(do-edit-copy-molecule)` | ran (no return value) |
+| Python | `do_edit_copy_molecule()` | ran (no return value, nothing visible changed) |
+| Scheme | `(do-edit-copy-molecule)` | ran (no return value, nothing visible changed) |
 
 ### do_edit_replace_fragment
 
@@ -37,8 +37,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `do_edit_replace_fragment()` | ran (no return value) |
-| Scheme | `(do-edit-replace-fragment)` | ran (no return value) |
+| Python | `do_edit_replace_fragment()` | ran (no return value, nothing visible changed) |
+| Scheme | `(do-edit-replace-fragment)` | ran (no return value, nothing visible changed) |
 
 ### do_edit_replace_residue
 
@@ -49,6 +49,6 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `do_edit_replace_residue()` | ran (no return value) |
-| Scheme | `(do-edit-replace-residue)` | ran (no return value) |
+| Python | `do_edit_replace_residue()` | ran (no return value, nothing visible changed) |
+| Scheme | `(do-edit-replace-residue)` | ran (no return value, nothing visible changed) |
 

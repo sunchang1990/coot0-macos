@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="17bc1b0907035d736bd80177f5444f7ab119b425">
+<meta name="coot0-source-sha1" content="1814be6e73bfb4538048747b2f55dcb50798e166">
 <title>Read Phases File Functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -23,16 +23,18 @@ Scheme: <code>(get-text-for-phs-cell-chooser imol field)</code></p>
 <p>MOVE-ME to c-interface-gtk-widgets.h</p>
 <p>Arguments: imol (a whole number), field (text). Returns: text.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>get_text_for_phs_cell_chooser(0, "hello")</code></td><td>ran, returned <code>&lt;Swig Object of type 'gchar *' at 0x10a26d740&gt;</code></td></tr>
-<tr><td>Scheme</td><td><code>(get-text-for-phs-cell-chooser 0 "hello")</code></td><td>ran, returned <code>#&lt;swig-pointer gchar * 814768050&gt;</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>get_text_for_phs_cell_chooser(0, "hello")</code></td><td>ran, returned <code>&lt;Swig Object of type 'gchar *' at 0x10b833810&gt;</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-text-for-phs-cell-chooser 0 "hello")</code></td><td>ran, returned <code>#&lt;swig-pointer gchar * 94d93d6b0&gt;</code></td></tr></tbody></table>
 <h3 id="graphics_store_phs_filename">graphics_store_phs_filename</h3>
 <p>Python: <code>graphics_store_phs_filename(phs_filename)</code><br>
 Scheme: <code>(graphics-store-phs-filename phs-filename)</code></p>
 <p>spacegroup_from_operators(const char *symm_operators_in_clipper_format);</p>
 <p>Arguments: phs_filename (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>graphics_store_phs_filename("tutorial-modern.pdb")</code></td><td>error: TypeError: in method 'graphics_store_phs_filename', argument 1 of type 'gchar const *'</td></tr>
-<tr><td>Scheme</td><td><code>(graphics-store-phs-filename "tutorial-modern.pdb")</code></td><td>error: In procedure graphics-store-phs-filename: Wrong type argument in position 1: "tutorial-modern.pdb"</td></tr></tbody></table>
+<tr><td>Python</td><td><code>graphics_store_phs_filename("tiny.phs")</code></td><td>not run: not callable from scripts: the gchar* argument has no SWIG conversion (GUI-internal function)</td></tr>
+<tr><td>Scheme</td><td><code>(graphics-store-phs-filename "tiny.phs")</code></td><td>not run: not callable from scripts: the gchar* argument has no SWIG conversion (GUI-internal function)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: internal (file chooser): remembers a .phs file name for the cell/symmetry dialog.</p>
+<p>Note: SWIG wraps it but neither language can pass a string to it</p>
 <h3 id="possible_cell_symm_for_phs_file">possible_cell_symm_for_phs_file</h3>
 <p>Python: <code>possible_cell_symm_for_phs_file()</code><br>
 Scheme: <code>(possible-cell-symm-for-phs-file)</code></p>
@@ -48,16 +50,19 @@ Scheme: <code>(read-phs-and-coords-and-make-map pdb-filename)</code></p>
 <p>uses pending data to make the map.</p>
 <p>Arguments: pdb_filename (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_phs_and_coords_and_make_map("tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(read-phs-and-coords-and-make-map "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>read_phs_and_coords_and_make_map("tutorial-modern.pdb")</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(read-phs-and-coords-and-make-map "tutorial-modern.pdb")</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="read_phs_and_make_map_using_cell_symm">read_phs_and_make_map_using_cell_symm</h3>
 <p>Python: <code>read_phs_and_make_map_using_cell_symm(phs_file_name, hm_spacegroup, a, b, c, alpha, beta, gamma)</code><br>
 Scheme: <code>(read-phs-and-make-map-using-cell-symm phs-file-name hm-spacegroup a b c alpha beta gamma)</code></p>
 <p>read phs file use coords to use cell and symm to make map</p>
 <p>Arguments: phs_file_name (text), hm_spacegroup (text), a (a number), b (a number), c (a number), alpha (a number), beta (a number), gamma (a number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_phs_and_make_map_using_cell_symm("tutorial-modern.pdb", "hello", 1.0, 0.5, 1.0, 1.0, 1.0, 1.0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
-<tr><td>Scheme</td><td><code>(read-phs-and-make-map-using-cell-symm "tutorial-modern.pdb" "hello" 1.0 0.5 1.0 1.0 1.0 1.0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>open("tiny.phs", "w").write("   1   0   0  100.0  0.9  10.0  2.0\n   0   1   0  150.0  0.8  50.0  2.0\n   0   0   1  80.0  0.7  120.0  2.0\n   1   1   1  60.0   ...</code>, then <code>read_phs_and_make_map_using_cell_symm("tiny.phs", "P 21 21 21", 64.897, 78.323, 38.792, 90.0, 90.0, 90.0)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, tiny.phs); graphics_n_molecules(): 3 -&gt; 4</td></tr>
+<tr><td>Scheme</td><td>first <code>(call-with-output-file "tiny.phs" (lambda (port) (display "   1   0   0  100.0  0.9  10.0  2.0\n   0   1   0  150.0  0.8  50.0  2.0\n   0   0   1  80.0  0.7  12 ...</code>, then <code>(read-phs-and-make-map-using-cell-symm "tiny.phs" "P 21 21 21" 64.897 78.323 38.792 90.0 90.0 90.0)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, tiny.phs); graphics_n_molecules(): 3 -&gt; 4</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the new map molecule made from the .phs file with the given space group and cell.</p>
+<p>Note: tiny.phs is a 5-reflection hand-made file; when the file does not exist it still returns a molecule number and leaves an empty (non-map) molecule slot instead of -1; with 'hello' as space group Coot stopped</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="read_phs_and_make_map_using_cell_symm_from_mol">read_phs_and_make_map_using_cell_symm_from_mol</h3>
 <p>Python: <code>read_phs_and_make_map_using_cell_symm_from_mol(phs_filename, imol)</code><br>
 Scheme: <code>(read-phs-and-make-map-using-cell-symm-from-mol phs-filename imol)</code></p>
@@ -67,15 +72,18 @@ Scheme: <code>(read-phs-and-make-map-using-cell-symm-from-mol phs-filename imol)
 (e.g. not phs data, file not found etc).</p>
 <p>Arguments: phs_filename (text), imol (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_phs_and_make_map_using_cell_symm_from_mol("tutorial-modern.pdb", 0)</code></td><td>no answer within 60 s (slow, or waits for something)</td></tr>
-<tr><td>Scheme</td><td><code>(read-phs-and-make-map-using-cell-symm-from-mol "tutorial-modern.pdb" 0)</code></td><td>no answer within 60 s (slow, or waits for something)</td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>open("tiny.phs", "w").write("   1   0   0  100.0  0.9  10.0  2.0\n   0   1   0  150.0  0.8  50.0  2.0\n   0   0   1  80.0  0.7  120.0  2.0\n   1   1   1  60.0   ...</code>, then <code>read_phs_and_make_map_using_cell_symm_from_mol("tiny.phs", 0)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, tiny.phs); graphics_n_molecules(): 3 -&gt; 4; scroll_wheel_map(): -1 -&gt; 3</td></tr>
+<tr><td>Scheme</td><td>first <code>(call-with-output-file "tiny.phs" (lambda (port) (display "   1   0   0  100.0  0.9  10.0  2.0\n   0   1   0  150.0  0.8  50.0  2.0\n   0   0   1  80.0  0.7  12 ...</code>, then <code>(read-phs-and-make-map-using-cell-symm-from-mol "tiny.phs" 0)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, tiny.phs); graphics_n_molecules(): 3 -&gt; 4; scroll_wheel_map(): -1 -&gt; 3</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the new map molecule made from the .phs file with the cell and space group of molecule 0.</p>
+<p>Note: tiny.phs is a 5-reflection hand-made file (h k l F fom phase sigF): the map is meaningless but shows the call; the old run with a PDB file as .phs hung</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="read_phs_and_make_map_using_cell_symm_from_mol_using_implicit_phs_filename">read_phs_and_make_map_using_cell_symm_from_mol_using_implicit_phs_filename</h3>
 <p>Python: <code>read_phs_and_make_map_using_cell_symm_from_mol_using_implicit_phs_filename(imol)</code><br>
 Scheme: <code>(read-phs-and-make-map-using-cell-symm-from-mol-using-implicit-phs-filename imol)</code></p>
 <p>Arguments: imol (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_phs_and_make_map_using_cell_symm_from_mol_using_implicit_phs_filename(0)</code></td><td>ran, returned <code>2</code></td></tr>
-<tr><td>Scheme</td><td><code>(read-phs-and-make-map-using-cell-symm-from-mol-using-implicit-phs-filename 0)</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>read_phs_and_make_map_using_cell_symm_from_mol_using_implicit_phs_filename(0)</code></td><td>ran, returned <code>3</code>; changed: graphics_n_molecules(): 3 -&gt; 4</td></tr>
+<tr><td>Scheme</td><td><code>(read-phs-and-make-map-using-cell-symm-from-mol-using-implicit-phs-filename 0)</code></td><td>ran, returned <code>3</code>; changed: graphics_n_molecules(): 3 -&gt; 4</td></tr></tbody></table>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="read_phs_and_make_map_using_cell_symm_from_previous_mol">read_phs_and_make_map_using_cell_symm_from_previous_mol</h3>
 <p>Python: <code>read_phs_and_make_map_using_cell_symm_from_previous_mol(phs_filename)</code><br>
@@ -85,8 +93,11 @@ Scheme: <code>(read-phs-and-make-map-using-cell-symm-from-previous-mol phs-filen
 <p> For use with phs data filename provided on the command line</p>
 <p>Arguments: phs_filename (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_phs_and_make_map_using_cell_symm_from_previous_mol("tutorial-modern.pdb")</code></td><td>no answer within 60 s (slow, or waits for something)</td></tr>
-<tr><td>Scheme</td><td><code>(read-phs-and-make-map-using-cell-symm-from-previous-mol "tutorial-modern.pdb")</code></td><td>no answer within 60 s (slow, or waits for something)</td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>open("tiny.phs", "w").write("   1   0   0  100.0  0.9  10.0  2.0\n   0   1   0  150.0  0.8  50.0  2.0\n   0   0   1  80.0  0.7  120.0  2.0\n   1   1   1  60.0   ...</code>, then <code>read_phs_and_make_map_using_cell_symm_from_previous_mol("tiny.phs")</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, tiny.phs); graphics_n_molecules(): 3 -&gt; 4; scroll_wheel_map(): -1 -&gt; 3</td></tr>
+<tr><td>Scheme</td><td>first <code>(call-with-output-file "tiny.phs" (lambda (port) (display "   1   0   0  100.0  0.9  10.0  2.0\n   0   1   0  150.0  0.8  50.0  2.0\n   0   0   1  80.0  0.7  12 ...</code>, then <code>(read-phs-and-make-map-using-cell-symm-from-previous-mol "tiny.phs")</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, tiny.phs); graphics_n_molecules(): 3 -&gt; 4; scroll_wheel_map(): -1 -&gt; 3</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the new map molecule made from the .phs file with the cell/symmetry of the most recently read model.</p>
+<p>Note: with a non-existent file it returns a molecule number (not -1) and leaves an empty molecule slot (n_molecules 3 -&gt; 4)</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="read_phs_and_make_map_with_reso_limits">read_phs_and_make_map_with_reso_limits</h3>
 <p>Python: <code>read_phs_and_make_map_with_reso_limits(imol, phs_file_name, reso_lim_low, reso_lim_high)</code><br>
 Scheme: <code>(read-phs-and-make-map-with-reso-limits imol phs-file-name reso-lim-low reso-lim-high)</code></p>
@@ -99,7 +110,7 @@ molecule from which the cell and symmetry can be obtained.</p>
 <p>@param reso_lim_low the low resoluion limit (currently ignored).</p>
 <p>Arguments: imol (a whole number), phs_file_name (text), reso_lim_low (a number), reso_lim_high (a number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_phs_and_make_map_with_reso_limits(0, "tutorial-modern.pdb", 2.0, 2.0)</code></td><td>ran, returned <code>2</code></td></tr>
-<tr><td>Scheme</td><td><code>(read-phs-and-make-map-with-reso-limits 0 "tutorial-modern.pdb" 2.0 2.0)</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>read_phs_and_make_map_with_reso_limits(0, "tutorial-modern.pdb", 2.0, 2.0)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, tutorial-modern.pdb); graphics_n_molecules(): 3 -&gt; 4; scroll_wheel_map(): -1 -&gt; 3</td></tr>
+<tr><td>Scheme</td><td><code>(read-phs-and-make-map-with-reso-limits 0 "tutorial-modern.pdb" 2.0 2.0)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, tutorial-modern.pdb); graphics_n_molecules(): 3 -&gt; 4; scroll_wheel_map(): -1 -&gt; 3</td></tr></tbody></table>
 <p>Python and Scheme gave the same answer.</p>
 </body></html>

@@ -15,8 +15,8 @@ Arguments: imol_waters (a whole number), imol_diff_map (a whole number), interac
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `check_waters_by_difference_map(0, 1, 1)` | ran (no return value) |
-| Scheme | `(check-waters-by-difference-map 0 1 1)` | ran (no return value) |
+| Python | `check_waters_by_difference_map(0, 1, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(check-waters-by-difference-map 0 1 1)` | ran (no return value, nothing visible changed) |
 
 ### check_waters_by_difference_map_sigma_level_state
 
@@ -45,8 +45,8 @@ Arguments: imol (a whole number), b_factor_lim (a number), map_sigma_lim (a numb
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `delete_checked_waters_baddies(0, 20.0, 1.5, 1.0, 1.0, 1, 1, 1)` | ran (no return value) |
-| Scheme | `(delete-checked-waters-baddies 0 20.0 1.5 1.0 1.0 1 1 1)` | ran (no return value) |
+| Python | `delete_checked_waters_baddies(0, 20.0, 1.5, 1.0, 1.0, 1, 1, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(delete-checked-waters-baddies 0 20.0 1.5 1.0 1.0 1 1 1)` | ran (no return value, nothing visible changed) |
 
 ### highly_coordinated_waters
 
@@ -80,8 +80,12 @@ Also available in Python as `metal_coordination_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `metal_coordination(0, 1.0)` | ran, returned `False` |
-| Scheme | `(metal-coordination-scm 0 1.0)` | ran, returned `#f` |
+| Python | `metal_coordination(read_pdb("1ehz.pdb"), 3.0)` | ran, returned `False`; changed: new molecule 3 (model, 1ehz.pdb); rotation centre moved 51.0 A to (67.6, 49.7, 28.6); graphics_n_molecules(): 3 -> 4 |
+| Scheme | `(metal-coordination-scm (read-pdb "1ehz.pdb") 3.0)` | ran, returned `#f`; changed: new molecule 3 (model, 1ehz.pdb); rotation centre moved 51.0 A to (67.6, 49.7, 28.6); graphics_n_molecules(): 3 -> 4 |
+
+Example written and checked by hand on the test data. Expected: prints the metal-ligand distances up to 3 A for the MG/MN ions of 1ehz to the terminal; the return value is always False.
+
+Note: Both versions always return False (the result list is never filled in the upstream code); the information only goes to the terminal.
 
 Python and Scheme gave the same answer.
 
@@ -94,8 +98,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_check_waters_b_factor_limit(1.0)` | ran (no return value) |
-| Scheme | `(set-check-waters-b-factor-limit 1.0)` | ran (no return value) |
+| Python | `set_check_waters_b_factor_limit(1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-check-waters-b-factor-limit 1.0)` | ran (no return value, nothing visible changed) |
 
 ### set_check_waters_by_difference_map_sigma_level
 
@@ -106,8 +110,10 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_check_waters_by_difference_map_sigma_level(1.0)` | ran (no return value) |
-| Scheme | `(set-check-waters-by-difference-map-sigma-level 1.0)` | ran (no return value) |
+| Python | `set_check_waters_by_difference_map_sigma_level(1.0)` | ran (no return value); changed: check_waters_by_difference_map_sigma_level_state(): 3.5 -> 1 |
+| Scheme | `(set-check-waters-by-difference-map-sigma-level 1.0)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: check_waters_by_difference_map_sigma_level_state was 3.5, set to 5.75, read back 5.75; Scheme: check-waters-by-difference-map-sigma-level-state was 3.5, set to 5.75, read back 5.75.
 
 ### set_check_waters_map_sigma_limit
 
@@ -118,8 +124,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_check_waters_map_sigma_limit(1.0)` | ran (no return value) |
-| Scheme | `(set-check-waters-map-sigma-limit 1.0)` | ran (no return value) |
+| Python | `set_check_waters_map_sigma_limit(1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-check-waters-map-sigma-limit 1.0)` | ran (no return value, nothing visible changed) |
 
 ### set_check_waters_max_dist_limit
 
@@ -130,8 +136,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_check_waters_max_dist_limit(1.0)` | ran (no return value) |
-| Scheme | `(set-check-waters-max-dist-limit 1.0)` | ran (no return value) |
+| Python | `set_check_waters_max_dist_limit(1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-check-waters-max-dist-limit 1.0)` | ran (no return value, nothing visible changed) |
 
 ### set_check_waters_min_dist_limit
 
@@ -142,6 +148,6 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_check_waters_min_dist_limit(1.0)` | ran (no return value) |
-| Scheme | `(set-check-waters-min-dist-limit 1.0)` | ran (no return value) |
+| Python | `set_check_waters_min_dist_limit(1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-check-waters-min-dist-limit 1.0)` | ran (no return value, nothing visible changed) |
 

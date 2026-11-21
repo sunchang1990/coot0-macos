@@ -15,8 +15,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `add_symmetry_on_to_preferences_and_apply()` | ran (no return value) |
-| Scheme | `(add-symmetry-on-to-preferences-and-apply)` | ran (no return value) |
+| Python | `add_symmetry_on_to_preferences_and_apply()` | ran (no return value); changed: get_show_symmetry(): 0 -> 1 |
+| Scheme | `(add-symmetry-on-to-preferences-and-apply)` | ran (no return value, nothing visible changed) |
 
 ### first_molecule_with_symmetry_displayed
 
@@ -31,8 +31,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `first_molecule_with_symmetry_displayed()` | ran, returned `0` |
-| Scheme | `(first-molecule-with-symmetry-displayed)` | ran, returned `0` |
+| Python | first `set_show_symmetry_master(1)`, then `first_molecule_with_symmetry_displayed()` | ran, returned `0` |
+| Scheme | first `(set-show-symmetry-master 1)`, then `(first-molecule-with-symmetry-displayed)` | ran, returned `0` |
+
+Example written and checked by hand on the test data. Expected: 0 (molecule 0 shows symmetry once the master switch is on); -1 if no molecule shows symmetry.
 
 Python and Scheme gave the same answer.
 
@@ -47,8 +49,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `get_show_symmetry()` | ran, returned `0` |
-| Scheme | `(get-show-symmetry)` | ran, returned `0` |
+| Python | first `set_show_symmetry_master(1)`, then `get_show_symmetry()` | ran, returned `1` |
+| Scheme | first `(set-show-symmetry-master 1)`, then `(get-show-symmetry)` | ran, returned `1` |
+
+Example written and checked by hand on the test data. Expected: 1 when the symmetry master display switch is on, 0 when off (default 0).
 
 Python and Scheme gave the same answer.
 
@@ -79,8 +83,8 @@ Arguments: imol (a whole number). Returns: `double*`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `get_symmetry_bonds_colour(0)` | ran, returned `<Swig Object of type 'double *' at 0x10a26d920>` |
-| Scheme | `(get-symmetry-bonds-colour 0)` | ran, returned `#<swig-pointer double * 8145df680>` |
+| Python | `get_symmetry_bonds_colour(0)` | ran, returned `<Swig Object of type 'double *' at 0x10b833630>` |
+| Scheme | `(get-symmetry-bonds-colour 0)` | ran, returned `#<swig-pointer double * 94b868b40>` |
 
 ### get_text_for_symmetry_size_widget
 
@@ -125,8 +129,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `move_reference_chain_to_symm_chain_position()` | ran, returned `0` |
-| Scheme | `(move-reference-chain-to-symm-chain-position)` | ran, returned `0` |
+| Python | first `set_show_symmetry_master(1)`, then `move_reference_chain_to_symm_chain_position()` | ran, returned `0` |
+| Scheme | first `(set-show-symmetry-master 1)`, then `(move-reference-chain-to-symm-chain-position)` | ran, returned `0` |
+
+Example written and checked by hand on the test data. Expected: 0 here: it works on the active (last-clicked) symmetry atom, which a script cannot set without a window; then it moves the chain to that symmetry position.
 
 Python and Scheme gave the same answer.
 
@@ -184,8 +190,8 @@ Arguments: imol (a whole number), filename (text), symop_no (a whole number), sh
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `save_symmetry_coords(0, "tutorial-modern.pdb", 1, 1, 1, 1, 1, 1, 1)` | ran (no return value) |
-| Scheme | `(save-symmetry-coords 0 "tutorial-modern.pdb" 1 1 1 1 1 1 1)` | ran (no return value) |
+| Python | `save_symmetry_coords(0, "tutorial-modern.pdb", 1, 1, 1, 1, 1, 1, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(save-symmetry-coords 0 "tutorial-modern.pdb" 1 1 1 1 1 1 1)` | ran (no return value, nothing visible changed) |
 
 ### set_show_symmetry_master
 
@@ -198,8 +204,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_show_symmetry_master(1)` | ran (no return value) |
-| Scheme | `(set-show-symmetry-master 1)` | ran (no return value) |
+| Python | `set_show_symmetry_master(1)` | ran (no return value); changed: get_show_symmetry(): 0 -> 1 |
+| Scheme | `(set-show-symmetry-master 1)` | ran (no return value, nothing visible changed) |
 
 ### set_show_symmetry_molecule
 
@@ -214,8 +220,8 @@ Arguments: mol_no (a whole number), state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_show_symmetry_molecule(1, 1)` | ran (no return value) |
-| Scheme | `(set-show-symmetry-molecule 1 1)` | ran (no return value) |
+| Python | `set_show_symmetry_molecule(1, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-show-symmetry-molecule 1 1)` | ran (no return value, nothing visible changed) |
 
 ### set_space_group
 
@@ -236,8 +242,10 @@ Arguments: imol (a whole number), spg (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_space_group(0, "hello")` | ran, returned `0` |
-| Scheme | `(set-space-group 0 "hello")` | ran, returned `0` |
+| Python | `set_space_group(0, "P 1")` | ran, returned `1`; changed: get_symmetry(0): ['x,y,z', '-x+1/2,-y,z+1/2', 'x+1/2,-y+1/2,-z', '-x,y+1/2,-z -> ['x,y,z']; n_symops(0): 4 -> 1; show_spacegroup(0): 'P 21 21 21' -> 'P 1'; space_group(0): 'P 21 21 21' -> 'P 1' |
+| Scheme | `(set-space-group 0 "P 1")` | ran, returned `1` |
+
+Example written and checked by hand on the test data. Expected: returns 1 and the model's space group becomes P 1.
 
 Python and Scheme gave the same answer.
 
@@ -252,8 +260,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_symmetry_atom_labels_expanded(1)` | ran (no return value) |
-| Scheme | `(set-symmetry-atom-labels-expanded 1)` | ran (no return value) |
+| Python | `set_symmetry_atom_labels_expanded(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-symmetry-atom-labels-expanded 1)` | ran (no return value, nothing visible changed) |
 
 ### set_symmetry_colour_by_symop
 
@@ -266,8 +274,8 @@ Arguments: imol (a whole number), state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_symmetry_colour_by_symop(0, 1)` | ran (no return value) |
-| Scheme | `(set-symmetry-colour-by-symop 0 1)` | ran (no return value) |
+| Python | `set_symmetry_colour_by_symop(0, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-symmetry-colour-by-symop 0 1)` | ran (no return value, nothing visible changed) |
 
 ### set_symmetry_molecule_rotate_colour_map
 
@@ -281,8 +289,10 @@ Arguments: imol (a whole number), state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_symmetry_molecule_rotate_colour_map(0, 1)` | ran (no return value) |
-| Scheme | `(set-symmetry-molecule-rotate-colour-map 0 1)` | ran (no return value) |
+| Python | `set_symmetry_molecule_rotate_colour_map(0, 1)` | ran (no return value); changed: symmetry_molecule_rotate_colour_map_state(0): 0 -> 1 |
+| Scheme | `(set-symmetry-molecule-rotate-colour-map 0 1)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back; NOT all read back): Python: symmetry_molecule_rotate_colour_map_state was -1, set to 0, read back -1 (not taken); Scheme: symmetry-molecule-rotate-colour-map-state was -1, set to 0, read back -1 (not taken).
 
 ### set_symmetry_shift_search_size
 
@@ -300,8 +310,8 @@ Arguments: shift (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_symmetry_shift_search_size(1)` | ran (no return value) |
-| Scheme | `(set-symmetry-shift-search-size 1)` | ran (no return value) |
+| Python | `set_symmetry_shift_search_size(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-symmetry-shift-search-size 1)` | ran (no return value, nothing visible changed) |
 
 ### set_symmetry_size
 
@@ -314,8 +324,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_symmetry_size(1.0)` | ran (no return value) |
-| Scheme | `(set-symmetry-size 1.0)` | ran (no return value) |
+| Python | `set_symmetry_size(1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-symmetry-size 1.0)` | ran (no return value, nothing visible changed) |
 
 ### set_symmetry_size_from_widget
 
@@ -328,8 +338,8 @@ Arguments: text (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_symmetry_size_from_widget("hello")` | ran (no return value) |
-| Scheme | `(set-symmetry-size-from-widget "hello")` | ran (no return value) |
+| Python | `set_symmetry_size_from_widget("hello")` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-symmetry-size-from-widget "hello")` | ran (no return value, nothing visible changed) |
 
 ### set_symmetry_whole_chain
 
@@ -342,8 +352,8 @@ Arguments: imol (a whole number), state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_symmetry_whole_chain(0, 1)` | ran (no return value) |
-| Scheme | `(set-symmetry-whole-chain 0 1)` | ran (no return value) |
+| Python | `set_symmetry_whole_chain(0, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-symmetry-whole-chain 0 1)` | ran (no return value, nothing visible changed) |
 
 ### set_unit_cell_and_space_group
 
@@ -358,7 +368,7 @@ Arguments: imol (a whole number), a (a number), b (a number), c (a number), alph
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_unit_cell_and_space_group(0, 1.0, 0.5, 1.0, 1.0, 1.0, 1.0, "hello")` | ran, returned `1` |
+| Python | `set_unit_cell_and_space_group(0, 1.0, 0.5, 1.0, 1.0, 1.0, 1.0, "hello")` | ran, returned `1`; changed: first_molecule_with_symmetry_displayed(): 0 -> -1; get_symmetry(0): ['x,y,z', '-x+1/2,-y,z+1/2', 'x+1/2,-y+1/2,-z', '-x,y+1/2,-z -> []; n_symops(0): 4 -> -1; show_spacegroup(0): 'P 21 21 21' -> 'No spacegroup' ... |
 | Scheme | `(set-unit-cell-and-space-group 0 1.0 0.5 1.0 1.0 1.0 1.0 "hello")` | ran, returned `1` |
 
 Python and Scheme gave the same answer.
@@ -390,8 +400,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `setup_save_symmetry_coords()` | ran (no return value) |
-| Scheme | `(setup-save-symmetry-coords)` | ran (no return value) |
+| Python | `setup_save_symmetry_coords()` | ran (no return value, nothing visible changed) |
+| Scheme | `(setup-save-symmetry-coords)` | ran (no return value, nothing visible changed) |
 
 ### symmetry_as_calphas
 
@@ -406,8 +416,8 @@ Arguments: mol_no (a whole number), state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `symmetry_as_calphas(1, 1)` | ran (no return value) |
-| Scheme | `(symmetry-as-calphas 1 1)` | ran (no return value) |
+| Python | `symmetry_as_calphas(1, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(symmetry-as-calphas 1 1)` | ran (no return value, nothing visible changed) |
 
 ### symmetry_molecule_rotate_colour_map_state
 
@@ -440,8 +450,12 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `undo_symmetry_view()` | ran, returned `0` |
-| Scheme | `(undo-symmetry-view)` | ran, returned `0` |
+| Python | `undo_symmetry_view()` | ran, returned `0`; changed: rotation centre moved 29.6 A to (55.8, -8.7, -6.5) |
+| Scheme | `(undo-symmetry-view)` | ran, returned `0`; changed: rotation centre moved 29.6 A to (41.6, 8.7, 12.9) |
+
+Example written and checked by hand on the test data. Expected: translates the view back from a symmetry copy to the main molecule; returns 0.
+
+Note: Even without a previous symmetry view the centre is moved (29.6 A, to the nearest point of the main molecule's cell origin?); harmless but surprising.
 
 Python and Scheme gave the same answer.
 

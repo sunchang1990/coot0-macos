@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="357ce28dc4a8823907cfb84270ae4bc730da33e3">
+<meta name="coot0-source-sha1" content="466e178d0231ebce9098095507e4e9d002777e64">
 <title>Add Terminal Residue Functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -35,8 +35,9 @@ Scheme: <code>(add-terminal-residue imol chain-id residue-number residue-type im
 <p>Returns 0 on failure, 1 on success</p>
 <p>Arguments: imol (a whole number), chain_id (text), residue_number (a whole number), residue_type (text), immediate_add (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>add_terminal_residue(0, "A", 41, "ALA", 1)</code></td><td>ran, returned <code>0</code></td></tr>
-<tr><td>Scheme</td><td><code>(add-terminal-residue 0 "A" 41 "ALA" 1)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>add_terminal_residue(0, "A", 93, "auto", 1)</code></td><td>ran, returned <code>1</code>; changed: molecule 0: added 1 residue(s) (A94); molecule 0: coordinates of 1 residue(s) (A93); n_atoms(0): 1465 -&gt; 1470; n_residues(0): 189 -&gt; 190</td></tr>
+<tr><td>Scheme</td><td><code>(add-terminal-residue 0 "A" 93 "auto" 1)</code></td><td>ran, returned <code>1</code>; changed: molecule 0: added 1 residue(s) (A94); molecule 0: coordinates of 1 residue(s) (A93); n_atoms(0): 1465 -&gt; 1470; n_residues(0): 189 -&gt; 190</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns 1 and a new residue appears after the C-terminal residue A93 (fitted to the refinement map).</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="add_terminal_residue_do_post_refine_state">add_terminal_residue_do_post_refine_state</h3>
 <p>Python: <code>add_terminal_residue_do_post_refine_state()</code><br>
@@ -62,24 +63,27 @@ Scheme: <code>(add-terminal-residue-using-phi-psi imol chain-id res-no residue-t
 <p>Returns the success status, 0 on failure, 1 on success</p>
 <p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), residue_type (text), phi (a number), psi (a number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>add_terminal_residue_using_phi_psi(0, "A", 41, "ALA", 10.0, 10.0)</code></td><td>ran, returned <code>0</code></td></tr>
-<tr><td>Scheme</td><td><code>(add-terminal-residue-using-phi-psi 0 "A" 41 "ALA" 10.0 10.0)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>add_terminal_residue_using_phi_psi(0, "A", 93, "ALA", -57.0, -47.0)</code></td><td>ran, returned <code>1</code>; changed: molecule 0: added 1 residue(s) (A94); molecule 0: coordinates of 1 residue(s) (A93); n_atoms(0): 1465 -&gt; 1470; n_residues(0): 189 -&gt; 190</td></tr>
+<tr><td>Scheme</td><td><code>(add-terminal-residue-using-phi-psi 0 "A" 93 "GLY" -57.0 -47.0)</code></td><td>ran, returned <code>1</code>; changed: molecule 0: added 1 residue(s) (A94); molecule 0: coordinates of 1 residue(s) (A93); n_atoms(0): 1465 -&gt; 1470; n_residues(0): 189 -&gt; 190</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns 1 and adds a residue of the given type after A93 with helical phi/psi.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="do_add_terminal_residue">do_add_terminal_residue</h3>
 <p>Python: <code>do_add_terminal_residue(state)</code><br>
 Scheme: <code>(do-add-terminal-residue state)</code></p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>do_add_terminal_residue(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(do-add-terminal-residue 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>do_add_terminal_residue(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(do-add-terminal-residue 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="find_terminal_residue_type">find_terminal_residue_type</h3>
 <p>Python: <code>find_terminal_residue_type(imol, chain_id, resno)</code><br>
 Scheme: <code>(find-terminal-residue-type imol chain-id resno)</code></p>
 <p>Arguments: imol (a whole number), chain_id (text), resno (a whole number). Returns: a value (see the result of the example).
 Also available in Python as <code>find_terminal_residue_type_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>find_terminal_residue_type(0, "A", 41)</code></td><td>ran, returned <code>False</code></td></tr>
-<tr><td>Scheme</td><td><code>(find-terminal-residue-type 0 "A" 41)</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>assign_sequence_from_string(0, "A", "DVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLIDQTC")</code>, then <code>find_terminal_residue_type(0, "A", 94)</code></td><td>ran, returned <code>'GLN'</code></td></tr>
+<tr><td>Scheme</td><td>first <code>(assign-sequence-from-string 0 "A" "DVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLIDQTC")</code>, then <code>(find-terminal-residue-type 0 "A" 94)</code></td><td>ran, returned <code>"GLN"</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the residue type the assigned sequence has at the new position A94 (GLN); False/#f when no sequence is assigned to the chain.</p>
+<p>Note: resno is the number of the residue to be ADDED (94), not the current terminal residue.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="set_add_terminal_residue_add_other_residue_flag">set_add_terminal_residue_add_other_residue_flag</h3>
 <p>Python: <code>set_add_terminal_residue_add_other_residue_flag(i)</code><br>
@@ -88,24 +92,24 @@ Scheme: <code>(set-add-terminal-residue-add-other-residue-flag i)</code></p>
  see both residues - default is 0 (off).</p>
 <p>Arguments: i (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_add_terminal_residue_add_other_residue_flag(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-add-terminal-residue-add-other-residue-flag 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_add_terminal_residue_add_other_residue_flag(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-add-terminal-residue-add-other-residue-flag 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_add_terminal_residue_debug_trials">set_add_terminal_residue_debug_trials</h3>
 <p>Python: <code>set_add_terminal_residue_debug_trials(debug_state)</code><br>
 Scheme: <code>(set-add-terminal-residue-debug-trials debug-state)</code></p>
 <p>remove this for 0.9, wraps above</p>
 <p>Arguments: debug_state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_add_terminal_residue_debug_trials(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-add-terminal-residue-debug-trials 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_add_terminal_residue_debug_trials(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-add-terminal-residue-debug-trials 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_add_terminal_residue_default_residue_type">set_add_terminal_residue_default_residue_type</h3>
 <p>Python: <code>set_add_terminal_residue_default_residue_type(type)</code><br>
 Scheme: <code>(set-add-terminal-residue-default-residue-type type)</code></p>
 <p>set the residue type of an added terminal residue.</p>
 <p>Arguments: type (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_add_terminal_residue_default_residue_type("ALA")</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-add-terminal-residue-default-residue-type "ALA")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_add_terminal_residue_default_residue_type("ALA")</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-add-terminal-residue-default-residue-type "ALA")</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_add_terminal_residue_do_post_refine">set_add_terminal_residue_do_post_refine</h3>
 <p>Python: <code>set_add_terminal_residue_do_post_refine(istat)</code><br>
 Scheme: <code>(set-add-terminal-residue-do-post-refine istat)</code></p>
@@ -113,15 +117,16 @@ Scheme: <code>(set-add-terminal-residue-do-post-refine istat)</code></p>
  addition.</p>
 <p>Arguments: istat (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_add_terminal_residue_do_post_refine(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-add-terminal-residue-do-post-refine 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_add_terminal_residue_do_post_refine(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-add-terminal-residue-do-post-refine 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Setting checked (set to another value and read back, then put back): Python: add_terminal_residue_do_post_refine_state was 0, set to 1, read back 1; Scheme: add-terminal-residue-do-post-refine-state was 0, set to 1, read back 1.</p>
 <h3 id="set_add_terminal_residue_do_rigid_body_refine">set_add_terminal_residue_do_rigid_body_refine</h3>
 <p>Python: <code>set_add_terminal_residue_do_rigid_body_refine(v)</code><br>
 Scheme: <code>(set-add-terminal-residue-do-rigid-body-refine v)</code></p>
 <p>Arguments: v (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_add_terminal_residue_do_rigid_body_refine(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-add-terminal-residue-do-rigid-body-refine 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_add_terminal_residue_do_rigid_body_refine(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-add-terminal-residue-do-rigid-body-refine 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_add_terminal_residue_immediate_addition">set_add_terminal_residue_immediate_addition</h3>
 <p>Python: <code>set_add_terminal_residue_immediate_addition(i)</code><br>
 Scheme: <code>(set-add-terminal-residue-immediate-addition i)</code></p>
@@ -129,21 +134,22 @@ Scheme: <code>(set-add-terminal-residue-immediate-addition i)</code></p>
 <p>call with i=1 for immediate addtion</p>
 <p>Arguments: i (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_add_terminal_residue_immediate_addition(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-add-terminal-residue-immediate-addition 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_add_terminal_residue_immediate_addition(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-add-terminal-residue-immediate-addition 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Setting checked (set to another value and read back, then put back): Python: add_terminal_residue_immediate_addition_state was 1, set to 0, read back 0; Scheme: add-terminal-residue-immediate-addition-state was 1, set to 0, read back 0.</p>
 <h3 id="set_add_terminal_residue_n_phi_psi_trials">set_add_terminal_residue_n_phi_psi_trials</h3>
 <p>Python: <code>set_add_terminal_residue_n_phi_psi_trials(n)</code><br>
 Scheme: <code>(set-add-terminal-residue-n-phi-psi-trials n)</code></p>
 <p>mmdb_manager.h)</p>
 <p>Arguments: n (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_add_terminal_residue_n_phi_psi_trials(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-add-terminal-residue-n-phi-psi-trials 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_add_terminal_residue_n_phi_psi_trials(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-add-terminal-residue-n-phi-psi-trials 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_terminal_residue_do_rigid_body_refine">set_terminal_residue_do_rigid_body_refine</h3>
 <p>Python: <code>set_terminal_residue_do_rigid_body_refine(v)</code><br>
 Scheme: <code>(set-terminal-residue-do-rigid-body-refine v)</code></p>
 <p>Arguments: v (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_terminal_residue_do_rigid_body_refine(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-terminal-residue-do-rigid-body-refine 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_terminal_residue_do_rigid_body_refine(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-terminal-residue-do-rigid-body-refine 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 </body></html>

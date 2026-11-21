@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="c5844cf3aad3390230ea3ed844e5052d2af958f3">
+<meta name="coot0-source-sha1" content="927ad05be17c92771b59964fe78f71c94f7205c8">
 <title>Align and Mutate - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -23,16 +23,19 @@ Scheme: <code>(align-and-mutate imol chain-id fasta-maybe renumber-residues-flag
 <p>align and mutate the given chain to the given sequence</p>
 <p>Arguments: imol (a whole number), chain_id (text), fasta_maybe (text), renumber_residues_flag (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>align_and_mutate(0, "A", "hello", 1)</code></td><td>not run: not run automatically (align_and_mutate: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(align-and-mutate 0 "A" "hello" 1)</code></td><td>not run: not run automatically (align_and_mutate: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>align_and_mutate(0, "A", "DVSGTACLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLIDQTC", 0)</code></td><td>ran (no return value); changed: molecule 0: atoms of 1 residue(s) (A6); n_atoms(0): 1465 -&gt; 1463</td></tr>
+<tr><td>Scheme</td><td><code>(align-and-mutate 0 "B" "DVSGTACLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLIDQTC" 0)</code></td><td>ran (no return value); changed: molecule 0: atoms of 1 residue(s) (B6); n_atoms(0): 1465 -&gt; 1463</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: chain is aligned to the sequence and mismatching residues are mutated (here V6A).</p>
 <h3 id="alignment_results">alignment_results</h3>
 <p>Python: <code>alignment_results(imol, chain_id, seq)</code><br>
 Scheme: <code>(alignment-results-scm imol chain-id seq)</code></p>
 <p>Arguments: imol (a whole number), chain_id (text), seq (text). Returns: a value (see the result of the example).
 Also available in Python as <code>alignment_results_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>alignment_results(0, "A", "ACDEFGHIKLMNPQRSTVWY")</code></td><td>ran, returned <code>False</code></td></tr>
-<tr><td>Scheme</td><td><code>(alignment-results-scm 0 "A" "ACDEFGHIKLMNPQRSTVWY")</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>alignment_results(0, "A", "DVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLIDQTC")</code></td><td>ran, returned <code>False</code></td></tr>
+<tr><td>Scheme</td><td><code>(alignment-results-scm 0 "A" "DVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLIDQTC")</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: should return the alignment of the chain against the sequence.</p>
+<p>Note: Both C++ functions (alignment_results_py / alignment_results_scm) are empty stubs in 0.9.8.96: they always return False/#f.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="nearest_residue_by_sequence">nearest_residue_by_sequence</h3>
 <p>Python: <code>nearest_residue_by_sequence(imol, chain_id, resno, ins_code)</code><br>
@@ -52,6 +55,6 @@ Scheme: <code>(set-alignment-gap-and-space-penalty wgap wspace)</code></p>
 <p>set the penalty for affine gap and space when aligning, defaults -3.0 and -0.4</p>
 <p>Arguments: wgap (a number), wspace (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_alignment_gap_and_space_penalty(1.0, 1.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-alignment-gap-and-space-penalty 1.0 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_alignment_gap_and_space_penalty(1.0, 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-alignment-gap-and-space-penalty 1.0 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 </body></html>

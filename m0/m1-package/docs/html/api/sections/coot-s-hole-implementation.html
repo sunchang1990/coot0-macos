@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="f3a2009d4b52a29fa0a22d52b8add7ad78889240">
+<meta name="coot0-source-sha1" content="5fb4f63df7f339eb3cd37ea5ef0582f21f34cfba">
 <title>Coot&#x27;s Hole implementation - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -26,8 +26,8 @@ Scheme: <code>(hole imol start-x start-y start-z end-x end-y end-z colour-map-mu
 export the surface dots.</p>
 <p>Arguments: imol (a whole number), start_x (a number), start_y (a number), start_z (a number), end_x (a number), end_y (a number), end_z (a number), colour_map_multiplier (a number), colour_map_offset (a number), n_runs (a whole number), show_probe_radius_graph_flag (true or false), export_surface_dots_file_name (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>hole(0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1, True, "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(hole 0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1 1 "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>hole(0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1, True, "tutorial-modern.pdb")</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(hole 0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1 1 "tutorial-modern.pdb")</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="link_info">link_info</h3>
 <p>Python: <code>link_info(imol)</code><br>
 Scheme: <code>(link-info imol)</code></p>
@@ -46,35 +46,39 @@ Scheme: <code>(make-link imol spec-1 spec-2 link-name length)</code></p>
 <p>make a link between the specified atoms</p>
 <p>Arguments: imol (a whole number), spec_1 (a list or value), spec_2 (a list or value), link_name (text), length (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>make_link(0, ["A", 41, ""], ["A", 41, ""], "my-name", 1.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(make-link 0 (list "A" 41 "") (list "A" 41 "") "my-name" 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>make_link(0, ["A", 41, ""], ["A", 41, ""], "my-name", 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(make-link 0 (list "A" 41 "") (list "A" 41 "") "my-name" 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="probe_radius_graph_close_callback">probe_radius_graph_close_callback</h3>
 <p>Python: <code>probe_radius_graph_close_callback(button, dialog)</code><br>
 Scheme: <code>(probe-radius-graph-close-callback button dialog)</code></p>
 <p>GUI stuff</p>
 <p>Arguments: button (<code>GtkWidget *</code>), dialog (<code>GtkWidget *</code>). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>probe_radius_graph_close_callback(button, dialog)</code></td><td>not run: GTK button callback (takes widgets); internal to the HOLE graph window</td></tr>
+<tr><td>Scheme</td><td>(no example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: GTK callback that closes the HOLE probe-radius graph window.</p>
 <h3 id="show_hole_probe_radius_graph">show_hole_probe_radius_graph</h3>
 <p>Python: <code>show_hole_probe_radius_graph(hole_path, path_length)</code><br>
 Scheme: <code>(show-hole-probe-radius-graph hole-path path-length)</code></p>
 <p>Arguments: hole_path (a list), path_length (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td>(no example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: draws the HOLE probe-radius graph window from a path (C++ list of (position, radius)).</p>
 <h3 id="show_hole_probe_radius_graph_basic">show_hole_probe_radius_graph_basic</h3>
 <p>Python: <code>show_hole_probe_radius_graph_basic(hole_path, path_length)</code><br>
 Scheme: <code>(show-hole-probe-radius-graph-basic hole-path path-length)</code></p>
 <p>Arguments: hole_path (a list), path_length (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td>(no example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: draws the HOLE probe-radius graph window from a path (C++ list of (position, radius)).</p>
 <h3 id="show_hole_probe_radius_graph_goocanvas">show_hole_probe_radius_graph_goocanvas</h3>
 <p>Python: <code>show_hole_probe_radius_graph_goocanvas(hole_path, path_length)</code><br>
 Scheme: <code>(show-hole-probe-radius-graph-goocanvas hole-path path-length)</code></p>
 <p>Arguments: hole_path (a list), path_length (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td>(no example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: draws the HOLE probe-radius graph window from a path (C++ list of (position, radius)).</p>
 </body></html>

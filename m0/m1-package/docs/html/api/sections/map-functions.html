@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="671cb7dba156de54d0b99c70043b0ffdb76f977a">
+<meta name="coot0-source-sha1" content="a663245065af96b80bdf760b52dfcd114ec68780">
 <title>Map Functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -29,8 +29,10 @@ Scheme: <code>(average-map map-number-and-scales)</code></p>
 Also available in Python as <code>average_map_py</code>.
 Also available in Scheme as <code>average-map-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>imap2 = map_from_mtz_by_calc_phases("rnasa-1.8-all_refmac1.mtz", "FGMP18", "SIGFGMP18", 0)</code>, then <code>average_map([[1, 1.0], [imap2, 1.0]])</code></td><td>ran, returned <code>4</code>; changed: new molecule 4 (map, averaged-map); graphics_n_molecules(): 4 -&gt; 5</td></tr>
+<tr><td>Scheme</td><td>first <code>(define imap2 (map-from-mtz-by-calc-phases "rnasa-1.8-all_refmac1.mtz" "FGMP18" "SIGFGMP18" 0))</code>, then <code>(average-map (list (list 1 1.0) (list imap2 1.0)))</code></td><td>ran, returned <code>4</code>; changed: new molecule 4 (map, averaged-map); graphics_n_molecules(): 4 -&gt; 5</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns a new map that is the scaled average of the listed [map, scale] pairs (on the first map's grid).</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="calc_phases_generic">calc_phases_generic</h3>
 <p>Python: <code>calc_phases_generic(mtz_file_name)</code><br>
 Scheme: <code>(calc-phases-generic mtz-file-name)</code></p>
@@ -39,8 +41,8 @@ Scheme: <code>(calc-phases-generic mtz-file-name)</code></p>
  map_from_mtz_by_refmac_calc_phases()</p>
 <p>Arguments: mtz_file_name (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>calc_phases_generic("rnasa-1.8-all_refmac1.mtz")</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(calc-phases-generic "rnasa-1.8-all_refmac1.mtz")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>calc_phases_generic("rnasa-1.8-all_refmac1.mtz")</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(calc-phases-generic "rnasa-1.8-all_refmac1.mtz")</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="calculate_maps_and_stats_py">calculate_maps_and_stats_py</h3>
 <p>Python: <code>calculate_maps_and_stats_py(imol_model, imol_map_with_data_attached, imol_map_2fofc, imol_map_fofc)</code></p>
 <p>Calculate structure factors and make a 2FoFC map and a Fo-Fc map updating the given
@@ -57,8 +59,9 @@ Scheme: <code>(data-resolution imol)</code></p>
  Return negative number on error, otherwise resolution in A (eg. 2.0)</p>
 <p>Arguments: imol (a whole number). Returns: a number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>data_resolution(0)</code></td><td>ran, returned <code>-1.0</code></td></tr>
-<tr><td>Scheme</td><td><code>(data-resolution 0)</code></td><td>ran, returned <code>-1.0</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>data_resolution(1)</code></td><td>ran, returned <code>1.8460990190505981</code></td></tr>
+<tr><td>Scheme</td><td><code>(data-resolution 1)</code></td><td>ran, returned <code>1.8460990190505981</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the resolution (A) of the data behind map 1; negative on error.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="difference_map">difference_map</h3>
 <p>Python: <code>difference_map(imol1, imol2, map_scale)</code><br>
@@ -68,8 +71,9 @@ Scheme: <code>(difference-map imol1 imol2 map-scale)</code></p>
  Return -1 on failure.</p>
 <p>Arguments: imol1 (a whole number), imol2 (a whole number), map_scale (a number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>difference_map(0, 0, 1.0)</code></td><td>ran, returned <code>-1</code></td></tr>
-<tr><td>Scheme</td><td><code>(difference-map 0 0 1.0)</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>imap2 = map_from_mtz_by_calc_phases("rnasa-1.8-all_refmac1.mtz", "FGMP18", "SIGFGMP18", 0)</code>, then <code>difference_map(1, imap2, 1.0)</code></td><td>ran, returned <code>4</code>; changed: new molecule 4 (map, difference-map); graphics_n_molecules(): 4 -&gt; 5</td></tr>
+<tr><td>Scheme</td><td>first <code>(define imap2 (map-from-mtz-by-calc-phases "rnasa-1.8-all_refmac1.mtz" "FGMP18" "SIGFGMP18" 0))</code>, then <code>(difference-map 1 imap2 1.0)</code></td><td>ran, returned <code>4</code>; changed: new molecule 4 (map, difference-map); graphics_n_molecules(): 4 -&gt; 5</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the new map molecule (map1 - scale*map2 on map1's grid), marked as a difference map; -1 if either is not a map.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="export_map">export_map</h3>
 <p>Python: <code>export_map(imol, filename)</code><br>
@@ -79,8 +83,9 @@ Scheme: <code>(export-map imol filename)</code></p>
 <p> Return 0 on failure, 1 on success.</p>
 <p>Arguments: imol (a whole number), filename (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>export_map(0, "tutorial-modern.pdb")</code></td><td>ran, returned <code>0</code></td></tr>
-<tr><td>Scheme</td><td><code>(export-map 0 "tutorial-modern.pdb")</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>export_map(1, "map1.map")</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(export-map 1 "map1.map")</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns 1 and writes the whole map as a CCP4 map file; 0 on failure.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="export_map_fragment">export_map_fragment</h3>
 <p>Python: <code>export_map_fragment(imol, x, y, z, radius, filename)</code><br>
@@ -88,8 +93,9 @@ Scheme: <code>(export-map-fragment imol x y z radius filename)</code></p>
 <p>export a fragment of the map about (x,y,z)</p>
 <p>Arguments: imol (a whole number), x (a number), y (a number), z (a number), radius (a number), filename (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>export_map_fragment(0, 54.5, 9.4, 12.3, 5.0, "tutorial-modern.pdb")</code></td><td>ran, returned <code>0</code></td></tr>
-<tr><td>Scheme</td><td><code>(export-map-fragment 0 54.5 9.4 12.3 5.0 "tutorial-modern.pdb")</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>export_map_fragment(1, 47.1, 10.6, 17.4, 8.0, "frag.map")</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(export-map-fragment 1 47.1 10.6 17.4 8.0 "frag.map")</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns 1 and writes a CCP4 map of the density within the radius of (x, y, z).</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="export_map_fragment_to_plain_file">export_map_fragment_to_plain_file</h3>
 <p>Python: <code>export_map_fragment_to_plain_file(imol, x, y, z, radius, filename)</code><br>
@@ -97,8 +103,9 @@ Scheme: <code>(export-map-fragment-to-plain-file imol x y z radius filename)</co
 <p>tmp interface for Hamish</p>
 <p>Arguments: imol (a whole number), x (a number), y (a number), z (a number), radius (a number), filename (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>export_map_fragment_to_plain_file(0, 54.5, 9.4, 12.3, 5.0, "tutorial-modern.pdb")</code></td><td>ran, returned <code>0</code></td></tr>
-<tr><td>Scheme</td><td><code>(export-map-fragment-to-plain-file 0 54.5 9.4 12.3 5.0 "tutorial-modern.pdb")</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>export_map_fragment_to_plain_file(1, 47.1, 10.6, 17.4, 4.0, "frag.txt")</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(export-map-fragment-to-plain-file 1 47.1 10.6 17.4 4.0 "frag.txt")</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns 1 and writes the density values around the point to a plain text file.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="export_map_fragment_with_origin_shift">export_map_fragment_with_origin_shift</h3>
 <p>Python: <code>export_map_fragment_with_origin_shift(imol, x, y, z, radius, filename)</code><br>
@@ -106,8 +113,9 @@ Scheme: <code>(export-map-fragment-with-origin-shift imol x y z radius filename)
 <p>export a fragment of the map about (x,y,z)</p>
 <p>Arguments: imol (a whole number), x (a number), y (a number), z (a number), radius (a number), filename (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>export_map_fragment_with_origin_shift(0, 54.5, 9.4, 12.3, 5.0, "tutorial-modern.pdb")</code></td><td>ran, returned <code>0</code></td></tr>
-<tr><td>Scheme</td><td><code>(export-map-fragment-with-origin-shift 0 54.5 9.4 12.3 5.0 "tutorial-modern.pdb")</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>export_map_fragment_with_origin_shift(1, 47.1, 10.6, 17.4, 8.0, "frag-shift.map")</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(export-map-fragment-with-origin-shift 1 47.1 10.6 17.4 8.0 "frag-shift.map")</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns 1 and writes a CCP4 map fragment whose origin is moved to the fragment.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="export_map_fragment_with_text_radius">export_map_fragment_with_text_radius</h3>
 <p>Python: <code>export_map_fragment_with_text_radius(imol, radius_text, filename)</code><br>
@@ -115,8 +123,10 @@ Scheme: <code>(export-map-fragment-with-text-radius imol radius-text filename)</
 <p>convenience function, called from callbacks.c</p>
 <p>Arguments: imol (a whole number), radius_text (text), filename (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>export_map_fragment_with_text_radius(0, "hello", "tutorial-modern.pdb")</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
-<tr><td>Scheme</td><td><code>(export-map-fragment-with-text-radius 0 "hello" "tutorial-modern.pdb")</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>set_rotation_centre(47.1, 10.6, 17.4)</code>, then <code>export_map_fragment_with_text_radius(1, "10", "frag-text.map")</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td>first <code>(set-rotation-centre 47.1 10.6 17.4)</code>, then <code>(export-map-fragment-with-text-radius 1 "10" "frag-text.map")</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: writes a map fragment of the given radius (as text, an integer) around the rotation centre.</p>
+<p>Note: The radius text is parsed as an integer; the earlier automatic example with a non-number string stopped Coot (uncaught exception).</p>
 <h3 id="get_active_map_drag_flag">get_active_map_drag_flag</h3>
 <p>Python: <code>get_active_map_drag_flag()</code><br>
 Scheme: <code>(get-active-map-drag-flag)</code></p>
@@ -149,8 +159,9 @@ Scheme: <code>(get-contour-level-in-sigma imol)</code></p>
 Scheme: <code>(get-map-colour imol)</code></p>
 <p>Arguments: imol (a whole number). Returns: a value (see the result of the example).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>get_map_colour(0)</code></td><td>ran, returned <code>False</code></td></tr>
-<tr><td>Scheme</td><td><code>(get-map-colour 0)</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>get_map_colour(1)</code></td><td>ran, returned <code>[0.19999998807907104, 0.38333338499069214, 0.699999988079071]</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-map-colour 1)</code></td><td>ran, returned <code>(0.19999998807907104 0.38333338499069214 0.699999988079071)</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the map's RGB colour (0-1 each); False if not a map.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="map_from_mtz_by_calc_phases">map_from_mtz_by_calc_phases</h3>
 <p>Python: <code>map_from_mtz_by_calc_phases(mtz_file_name, f_col, sigf_col, imol_coords)</code><br>
@@ -159,8 +170,11 @@ Scheme: <code>(map-from-mtz-by-calc-phases mtz-file-name f-col sigf-col imol-coo
  Returns the new molecule number.</p>
 <p>Arguments: mtz_file_name (text), f_col (text), sigf_col (text), imol_coords (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>map_from_mtz_by_calc_phases("rnasa-1.8-all_refmac1.mtz", "FWT", "hello", 0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
-<tr><td>Scheme</td><td><code>(map-from-mtz-by-calc-phases "rnasa-1.8-all_refmac1.mtz" "FWT" "hello" 0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>map_from_mtz_by_calc_phases("rnasa-1.8-all_refmac1.mtz", "FGMP18", "SIGFGMP18", 0)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, rnasa-1.8-all_refmac1.mtz); graphics_n_molecules(): 3 -&gt; 4</td></tr>
+<tr><td>Scheme</td><td><code>(map-from-mtz-by-calc-phases "rnasa-1.8-all_refmac1.mtz" "FGMP18" "SIGFGMP18" 0)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, rnasa-1.8-all_refmac1.mtz); graphics_n_molecules(): 3 -&gt; 4</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the new map molecule made from Fobs and phases calculated from the model; -1 on failure.</p>
+<p>Note: With column names that are not in the file ("FP", "SIGFP") Coot aborts (Abort trap: uncaught exception) instead of returning -1.</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="map_from_mtz_by_refmac_calc_phases">map_from_mtz_by_refmac_calc_phases</h3>
 <p>Python: <code>map_from_mtz_by_refmac_calc_phases(mtz_file_name, f_col, sigf_col, imol_coords)</code><br>
 Scheme: <code>(map-from-mtz-by-refmac-calc-phases mtz-file-name f-col sigf-col imol-coords)</code></p>
@@ -170,8 +184,9 @@ Scheme: <code>(map-from-mtz-by-refmac-calc-phases mtz-file-name f-col sigf-col i
 <p>Returns the new molecule number, -1 on a problem.</p>
 <p>Arguments: mtz_file_name (text), f_col (text), sigf_col (text), imol_coords (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>map_from_mtz_by_refmac_calc_phases("rnasa-1.8-all_refmac1.mtz", "FWT", "hello", 0)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(map-from-mtz-by-refmac-calc-phases "rnasa-1.8-all_refmac1.mtz" "FWT" "hello" 0)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>map_from_mtz_by_refmac_calc_phases("rnasa-1.8-all_refmac1.mtz", "FGMP18", "SIGFGMP18", 0)</code></td><td>not run: runs refmac</td></tr>
+<tr><td>Scheme</td><td><code>(map-from-mtz-by-refmac-calc-phases "rnasa-1.8-all_refmac1.mtz" "FGMP18" "SIGFGMP18" 0)</code></td><td>not run: runs refmac</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns a new map molecule calculated with refmac phases from the model (see map_from_mtz_by_calc_phases for the internal version).</p>
 <h3 id="model_resolution">model_resolution</h3>
 <p>Python: <code>model_resolution(imol)</code><br>
 Scheme: <code>(model-resolution imol)</code></p>
@@ -182,6 +197,7 @@ Scheme: <code>(model-resolution imol)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>model_resolution(0)</code></td><td>ran, returned <code>-1.0</code></td></tr>
 <tr><td>Scheme</td><td><code>(model-resolution 0)</code></td><td>ran, returned <code>-1.0</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the resolution from the coordinate file header; -1 when the header has none (correct for tutorial-modern.pdb, whose REMARK 3 gives no parsed resolution).</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="reinterp_map">reinterp_map</h3>
 <p>Python: <code>reinterp_map(map_no, reference_map_no)</code><br>
@@ -191,8 +207,8 @@ Scheme: <code>(reinterp-map map-no reference-map-no)</code></p>
 <p>Return the new map molecule number - return -1 on failure</p>
 <p>Arguments: map_no (a whole number), reference_map_no (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>reinterp_map(1, 1)</code></td><td>ran, returned <code>2</code></td></tr>
-<tr><td>Scheme</td><td><code>(reinterp-map 1 1)</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>reinterp_map(1, 1)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, map 1 re-interprolated to match 1); graphics_n_molecules(): 3 -&gt; 4</td></tr>
+<tr><td>Scheme</td><td><code>(reinterp-map 1 1)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, map 1 re-interprolated to match 1); graphics_n_molecules(): 3 -&gt; 4</td></tr></tbody></table>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="restore_previous_map_colour">restore_previous_map_colour</h3>
 <p>Python: <code>restore_previous_map_colour(imol)</code><br>
@@ -200,24 +216,24 @@ Scheme: <code>(restore-previous-map-colour imol)</code></p>
 <p>restore previous colour map for molecule number imol</p>
 <p>Arguments: imol (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>restore_previous_map_colour(0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(restore-previous-map-colour 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>restore_previous_map_colour(0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(restore-previous-map-colour 0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="save_previous_map_colour">save_previous_map_colour</h3>
 <p>Python: <code>save_previous_map_colour(imol)</code><br>
 Scheme: <code>(save-previous-map-colour imol)</code></p>
 <p>save previous colour map for molecule number imol</p>
 <p>Arguments: imol (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>save_previous_map_colour(0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(save-previous-map-colour 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>save_previous_map_colour(0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(save-previous-map-colour 0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="scroll_wheel_map">scroll_wheel_map</h3>
 <p>Python: <code>scroll_wheel_map()</code><br>
 Scheme: <code>(scroll-wheel-map)</code></p>
 <p>the contouring of which map is altered when the scroll wheel changes?</p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>scroll_wheel_map()</code></td><td>ran, returned <code>1</code></td></tr>
-<tr><td>Scheme</td><td><code>(scroll-wheel-map)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>scroll_wheel_map()</code></td><td>ran, returned <code>-1</code></td></tr>
+<tr><td>Scheme</td><td><code>(scroll-wheel-map)</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="set_active_map_drag_flag">set_active_map_drag_flag</h3>
 <p>Python: <code>set_active_map_drag_flag(t)</code><br>
@@ -227,8 +243,9 @@ Scheme: <code>(set-active-map-drag-flag t)</code></p>
 set t=0.</p>
 <p>Arguments: t (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_active_map_drag_flag(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-active-map-drag-flag 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_active_map_drag_flag(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-active-map-drag-flag 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Setting checked (set to another value and read back, then put back): Python: get_active_map_drag_flag was 1, set to 0, read back 0; Scheme: get-active-map-drag-flag was 1, set to 0, read back 0.</p>
 <h3 id="set_auto_updating_sfcalc_genmap">set_auto_updating_sfcalc_genmap</h3>
 <p>Python: <code>set_auto_updating_sfcalc_genmap(imol_model, imol_map_with_data_attached, imol_updating_difference_map)</code><br>
 Scheme: <code>(set-auto-updating-sfcalc-genmap imol-model imol-map-with-data-attached imol-updating-difference-map)</code></p>
@@ -237,8 +254,8 @@ Scheme: <code>(set-auto-updating-sfcalc-genmap imol-model imol-map-with-data-att
  the imol_model molecule</p>
 <p>Arguments: imol_model (a whole number), imol_map_with_data_attached (a whole number), imol_updating_difference_map (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_auto_updating_sfcalc_genmap(0, 1, 1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-auto-updating-sfcalc-genmap 0 1 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_auto_updating_sfcalc_genmap(0, 1, 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-auto-updating-sfcalc-genmap 0 1 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_auto_updating_sfcalc_genmaps">set_auto_updating_sfcalc_genmaps</h3>
 <p>Python: <code>set_auto_updating_sfcalc_genmaps(imol_model, imol_map_with_data_attached, imol_updating_2fofc_map, imol_updating_difference_map)</code><br>
 Scheme: <code>(set-auto-updating-sfcalc-genmaps imol-model imol-map-with-data-attached imol-updating-2fofc-map imol-updating-difference-map)</code></p>
@@ -247,8 +264,8 @@ Scheme: <code>(set-auto-updating-sfcalc-genmaps imol-model imol-map-with-data-at
  the imol_model molecule</p>
 <p>Arguments: imol_model (a whole number), imol_map_with_data_attached (a whole number), imol_updating_2fofc_map (a whole number), imol_updating_difference_map (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_auto_updating_sfcalc_genmaps(0, 1, 1, 1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-auto-updating-sfcalc-genmaps 0 1 1 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_auto_updating_sfcalc_genmaps(0, 1, 1, 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-auto-updating-sfcalc-genmaps 0 1 1 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_contour_by_sigma_step_by_mol">set_contour_by_sigma_step_by_mol</h3>
 <p>Python: <code>set_contour_by_sigma_step_by_mol(f, state, imol)</code><br>
 Scheme: <code>(set-contour-by-sigma-step-by-mol f state imol)</code></p>
@@ -258,48 +275,50 @@ Scheme: <code>(set-contour-by-sigma-step-by-mol f state imol)</code></p>
  level)</p>
 <p>Arguments: f (a number), state (a whole number), imol (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_contour_by_sigma_step_by_mol(1.0, 1, 0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-contour-by-sigma-step-by-mol 1.0 1 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_contour_by_sigma_step_by_mol(1.0, 1, 0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-contour-by-sigma-step-by-mol 1.0 1 0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_contour_level_absolute">set_contour_level_absolute</h3>
 <p>Python: <code>set_contour_level_absolute(imol_map, level)</code><br>
 Scheme: <code>(set-contour-level-absolute imol-map level)</code></p>
 <p>set the contour level, direct control</p>
 <p>Arguments: imol_map (a whole number), level (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_contour_level_absolute(1, 1.5)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-contour-level-absolute 1 1.5)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_contour_level_absolute(1, 1.5)</code></td><td>ran (no return value); changed: map 1 contour level: 0.56 -&gt; 1.5; get_contour_level_absolute(1): 0.56 -&gt; 1.5; get_contour_level_in_sigma(1): 1.499 -&gt; 4.016</td></tr>
+<tr><td>Scheme</td><td><code>(set-contour-level-absolute 1 1.5)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Setting checked (set to another value and read back, then put back): Python: get_contour_level_absolute was 0.5600000023841858, set to 1.34, read back 1.340000033378601; Scheme: get-contour-level-absolute was 0.5600000023841858, set to 1.34, read back 1.340000033378601.</p>
 <h3 id="set_contour_level_in_sigma">set_contour_level_in_sigma</h3>
 <p>Python: <code>set_contour_level_in_sigma(imol_map, level)</code><br>
 Scheme: <code>(set-contour-level-in-sigma imol-map level)</code></p>
 <p>set the contour level, direct control in r.m.s.d. (if you like that sort of thing)</p>
 <p>Arguments: imol_map (a whole number), level (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_contour_level_in_sigma(1, 1.5)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-contour-level-in-sigma 1 1.5)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_contour_level_in_sigma(1, 1.5)</code></td><td>ran (no return value); changed: map 1 contour level: 1.5 -&gt; 0.5602; get_contour_level_absolute(1): 1.5 -&gt; 0.5602; get_contour_level_in_sigma(1): 4.016 -&gt; 1.5</td></tr>
+<tr><td>Scheme</td><td><code>(set-contour-level-in-sigma 1 1.5)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Setting checked (set to another value and read back, then put back): Python: get_contour_level_in_sigma was 1.4993457794189453, set to 2.749, read back 2.749000072479248; Scheme: get-contour-level-in-sigma was 1.4993457794189453, set to 2.749, read back 2.749000072479248.</p>
 <h3 id="set_last_map_colour">set_last_map_colour</h3>
 <p>Python: <code>set_last_map_colour(f1, f2, f3)</code><br>
 Scheme: <code>(set-last-map-colour f1 f2 f3)</code></p>
 <p>set the colour of the last (highest molecule number) map</p>
 <p>Arguments: f1 (a number), f2 (a number), f3 (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_last_map_colour(1.0, 1.0, 1.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-last-map-colour 1.0 1.0 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_last_map_colour(1.0, 1.0, 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-last-map-colour 1.0 1.0 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_last_map_sigma_step">set_last_map_sigma_step</h3>
 <p>Python: <code>set_last_map_sigma_step(f)</code><br>
 Scheme: <code>(set-last-map-sigma-step f)</code></p>
 <p>set the sigma step of the last map to f sigma</p>
 <p>Arguments: f (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_last_map_sigma_step(1.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-last-map-sigma-step 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_last_map_sigma_step(1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-last-map-sigma-step 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_map_colour">set_map_colour</h3>
 <p>Python: <code>set_map_colour(imol, red, green, blue)</code><br>
 Scheme: <code>(set-map-colour imol red green blue)</code></p>
 <p>set the colour of the imolth map</p>
 <p>Arguments: imol (a whole number), red (a number), green (a number), blue (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_map_colour(0, 0.5, 0.5, 0.5)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-map-colour 0 0.5 0.5 0.5)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_map_colour(0, 0.5, 0.5, 0.5)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-map-colour 0 0.5 0.5 0.5)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_scroll_wheel_map">set_scroll_wheel_map</h3>
 <p>Python: <code>set_scroll_wheel_map(imap)</code><br>
 Scheme: <code>(set-scroll-wheel-map imap)</code></p>
@@ -307,8 +326,9 @@ Scheme: <code>(set-scroll-wheel-map imap)</code></p>
  change_contour_level().</p>
 <p>Arguments: imap (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_scroll_wheel_map(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-scroll-wheel-map 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_scroll_wheel_map(1)</code></td><td>ran (no return value); changed: scroll_wheel_map(): -1 -&gt; 1</td></tr>
+<tr><td>Scheme</td><td><code>(set-scroll-wheel-map 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Setting checked (set to another value and read back, then put back; NOT all read back): Python: scroll_wheel_map was 1, set to 0, read back 1 (not taken); Scheme: scroll-wheel-map was 1, set to 0, read back 1 (not taken).</p>
 <h3 id="set_scrollable_map">set_scrollable_map</h3>
 <p>Python: <code>set_scrollable_map(imol)</code><br>
 Scheme: <code>(set-scrollable-map imol)</code></p>
@@ -316,8 +336,8 @@ Scheme: <code>(set-scrollable-map imol)</code></p>
  scrolling the mouse wheel to molecule number imol (same as set_scroll_wheel_map()).</p>
 <p>Arguments: imol (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_scrollable_map(0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-scrollable-map 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_scrollable_map(0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-scrollable-map 0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="sfcalc_genmap">sfcalc_genmap</h3>
 <p>Python: <code>sfcalc_genmap(imol_model, imol_map_with_data_attached, imol_updating_difference_map)</code><br>
 Scheme: <code>(sfcalc-genmap imol-model imol-map-with-data-attached imol-updating-difference-map)</code></p>
@@ -325,8 +345,8 @@ Scheme: <code>(sfcalc-genmap imol-model imol-map-with-data-attached imol-updatin
  map accordingly</p>
 <p>Arguments: imol_model (a whole number), imol_map_with_data_attached (a whole number), imol_updating_difference_map (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>sfcalc_genmap(0, 1, 1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(sfcalc-genmap 0 1 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>sfcalc_genmap(0, 1, 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(sfcalc-genmap 0 1 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="smooth_map">smooth_map</h3>
 <p>Python: <code>smooth_map(map_no, sampling_multiplier)</code><br>
 Scheme: <code>(smooth-map map-no sampling-multiplier)</code></p>
@@ -335,8 +355,8 @@ Scheme: <code>(smooth-map map-no sampling-multiplier)</code></p>
  sampling factor of more than 1 makes the output maps smoother)</p>
 <p>Arguments: map_no (a whole number), sampling_multiplier (a number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>smooth_map(1, 1.0)</code></td><td>ran, returned <code>2</code></td></tr>
-<tr><td>Scheme</td><td><code>(smooth-map 1 1.0)</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>smooth_map(1, 1.0)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, map 1 re-interprolated by factor 1.00); graphics_n_molecules(): 3 -&gt; 4</td></tr>
+<tr><td>Scheme</td><td><code>(smooth-map 1 1.0)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, map 1 re-interprolated by factor 1.00); graphics_n_molecules(): 3 -&gt; 4</td></tr></tbody></table>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="transform_map_raw">transform_map_raw</h3>
 <p>Python: <code>transform_map_raw(imol, r00, r01, r02, r10, r11, r12, r20, r21, r22, t0, t1, t2, pt0, pt1, pt2, box_half_size, ref_space_group, cell_a, cell_b, cell_c, alpha, beta, gamma)</code><br>
@@ -346,7 +366,8 @@ Scheme: <code>(transform-map-raw imol r00 r01 r02 r10 r11 r12 r20 r21 r22 t0 t1 
  a colon-separated string of symmetry operators.</p>
 <p>Arguments: imol (a whole number), r00 (a number), r01 (a number), r02 (a number), r10 (a number), r11 (a number), r12 (a number), r20 (a number), r21 (a number), r22 (a number), t0 (a number), t1 (a number), t2 (a number), pt0 (a number), pt1 (a number), pt2 (a number), box_half_size (a number), ref_space_group (text), cell_a (a number), cell_b (a number), cell_c (a number), alpha (a number), beta (a number), gamma (a number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>transform_map_raw(0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, "hello", 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)</code></td><td>ran, returned <code>-1</code></td></tr>
-<tr><td>Scheme</td><td><code>(transform-map-raw 0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 "hello" 1.0 1.0 1.0 1.0 1.0 1.0)</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>transform_map_raw(1, 1,0,0, 0,1,0, 0,0,1, 0,0,0, 47.1,10.6,17.4, 10.0, "P 21 21 21", 64.897, 78.323, 38.792, 90, 90, 90)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, Transformed map); graphics_n_molecules(): 3 -&gt; 4</td></tr>
+<tr><td>Scheme</td><td><code>(transform-map-raw 1 1 0 0 0 1 0 0 0 1 0 0 0 47.1 10.6 17.4 10.0 "P 21 21 21" 64.897 78.323 38.792 90 90 90)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, Transformed map); graphics_n_molecules(): 3 -&gt; 4</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the number of a new map: a box of the given half-size around the point, transformed by the rotation/translation, in the given cell and space group.</p>
 <p>Python and Scheme gave the same answer.</p>
 </body></html>

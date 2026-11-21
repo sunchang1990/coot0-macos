@@ -31,6 +31,8 @@ Arguments: none. Returns: a whole number.
 | Python | `movie_frame_number()` | ran, returned `0` |
 | Scheme | `(movie-frame-number)` | ran, returned `0` |
 
+Example written and checked by hand on the test data. Expected: returns the current movie frame counter (0 at start).
+
 Python and Scheme gave the same answer.
 
 ### set_make_movie_mode
@@ -42,8 +44,8 @@ Arguments: make_movies_flag (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_make_movie_mode(1)` | ran (no return value) |
-| Scheme | `(set-make-movie-mode 1)` | ran (no return value) |
+| Python | `set_make_movie_mode(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-make-movie-mode 1)` | ran (no return value, nothing visible changed) |
 
 ### set_movie_file_name_prefix
 
@@ -54,8 +56,8 @@ Arguments: file_name (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_movie_file_name_prefix("tutorial-modern.pdb")` | ran (no return value) |
-| Scheme | `(set-movie-file-name-prefix "tutorial-modern.pdb")` | ran (no return value) |
+| Python | `set_movie_file_name_prefix("tutorial-modern.pdb")` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-movie-file-name-prefix "tutorial-modern.pdb")` | ran (no return value, nothing visible changed) |
 
 ### set_movie_frame_number
 
@@ -66,6 +68,8 @@ Arguments: frame_number (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_movie_frame_number(1)` | ran (no return value) |
-| Scheme | `(set-movie-frame-number 1)` | ran (no return value) |
+| Python | `set_movie_frame_number(1)` | ran (no return value); changed: movie_frame_number(): 0 -> 1 |
+| Scheme | `(set-movie-frame-number 1)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: movie_frame_number was 0, set to 1, read back 1; Scheme: movie-frame-number was 0, set to 1, read back 1.
 

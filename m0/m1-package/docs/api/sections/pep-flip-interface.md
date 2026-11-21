@@ -13,8 +13,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `do_pepflip(1)` | ran (no return value) |
-| Scheme | `(do-pepflip 1)` | ran (no return value) |
+| Python | `do_pepflip(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(do-pepflip 1)` | ran (no return value, nothing visible changed) |
 
 ### pepflip
 
@@ -27,8 +27,8 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), insco
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `pepflip(0, "A", 41, "", "")` | ran (no return value) |
-| Scheme | `(pepflip 0 "A" 41 "" "")` | ran (no return value) |
+| Python | `pepflip(0, "A", 41, "", "")` | ran (no return value); changed: molecule 0: coordinates of 2 residue(s) (A41, A42) |
+| Scheme | `(pepflip 0 "A" 41 "" "")` | ran (no return value); changed: molecule 0: coordinates of 2 residue(s) (A41, A42) |
 
 ### pepflip_intermediate_atoms
 
@@ -39,8 +39,12 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `pepflip_intermediate_atoms()` | ran, returned `0` |
-| Scheme | `(pepflip-intermediate-atoms)` | ran, returned `0` |
+| Python | `(refine_zone(0, "A", 41, 43, ""), pepflip_intermediate_atoms())[1]` | ran, returned `1` |
+| Scheme | `(begin (refine-zone 0 "A" 41 43 "") (pepflip-intermediate-atoms))` | ran, returned `1` |
+
+Example written and checked by hand on the test data. Expected: flips the peptide at the intermediate-atom pointer during a refinement and returns 1; 0 when there are no moving atoms.
+
+Note: needs moving atoms: the example starts a refinement in the same expression (headless Coot keeps them until cleared)
 
 Python and Scheme gave the same answer.
 
@@ -53,8 +57,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `pepflip_intermediate_atoms_other_peptide()` | ran, returned `0` |
-| Scheme | `(pepflip-intermediate-atoms-other-peptide)` | ran, returned `0` |
+| Python | `(refine_zone(0, "A", 41, 43, ""), pepflip_intermediate_atoms_other_peptide())[1]` | ran, returned `1` |
+| Scheme | `(begin (refine-zone 0 "A" 41 43 "") (pepflip-intermediate-atoms-other-peptide))` | ran, returned `1` |
+
+Example written and checked by hand on the test data. Expected: flips the other peptide of the residue during a refinement; 1 if done, 0 when there are no moving atoms.
 
 Python and Scheme gave the same answer.
 

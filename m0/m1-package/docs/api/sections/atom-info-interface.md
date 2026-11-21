@@ -15,6 +15,6 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_c
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `output_atom_info_as_text(0, "A", 41, "", " CA ", "")` | ran (no return value) |
-| Scheme | `(output-atom-info-as-text 0 "A" 41 "" " CA " "")` | ran (no return value) |
+| Python | `output_atom_info_as_text(0, "A", 41, "", " CA ", "")` | ran (no return value, nothing visible changed) |
+| Scheme | `(output-atom-info-as-text 0 "A" 41 "" " CA " "")` | ran (no return value, nothing visible changed) |
 

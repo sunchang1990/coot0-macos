@@ -1,4 +1,4 @@
-# Coot scripting reference (coot0 0.9.8.96-b30)
+# Coot scripting reference (coot0 0.9.8.96-b31)
 
 Every function that Coot 0.9.8.96 offers to Python and Scheme scripts: 1735 functions, 1717 in Python and 1689 in Scheme. For each one: its Python and Scheme names, what Coot's own source says about it, a concrete example on the test data, and what happened when the example was tried.
 
@@ -9,17 +9,26 @@ For recipes that do whole tasks (refine, edit, customize the toolbar, batch scri
 - **Names.** Python uses `_`, Scheme uses `-`: Python `residue_name(0, "A", 41, "")` is Scheme `(residue-name 0 "A" 41 "")`.
 - **Examples** use the test data in the package (`test-data/`): molecule **0** is `tutorial-modern.pdb` (chains A and B, residues 1-93 and 1-96; residue A41 is a glutamate), molecule **1** is the 2Fo-Fc map made from `rnasa-1.8-all_refmac1.mtz` (`make_and_draw_map("rnasa-1.8-all_refmac1.mtz", "FWT", "PHWT", "", 0, 0)`). Load them in this order in a new Coot and every example runs as written. With your own data, change the molecule number, chain, residue number and file names.
 - **Residue specs** are lists: `["A", 41, ""]` in Python, `(list "A" 41 "")` in Scheme (chain, residue number, insertion code). **Atom names** have 4 characters as in a PDB file: `" CA "`.
-- **The examples were made by a program** from the argument names (a chain gets `"A"`, a residue number 41, a flag 1, ...). For most functions that gives a sensible call; for some the values are only placeholders (`"hello"` for a text, 1 for a number) that you should replace.
-- **"When tried"** is what happened when the example was run on the test data by `tests/run-api-examples.sh`, without a window: *ran* (with the value it returned), *error* (with Coot's message; usually the example needs other values), *stopped Coot (no window)* (the function needs the graphics window; it was not checked with one), *not run* (it would quit Coot, use the network, run an external program, or needs a widget). *Ran* means that Coot accepted the call; the value itself was checked only by comparing the two languages (next section) and, for the functions the cookbook uses, by the cookbook's own checks.
+- **Most examples were made by a program** from the argument names (a chain gets `"A"`, a residue number 41, a flag 1, ...). Where that gave no sensible call, the example was written by hand and checked on the test data (541 functions; their pages say *written and checked by hand* and what a correct result is). Some examples start with set-up lines (*first ..., then ...*).
+- **"When tried"** is what happened when the example was run on the test data by `tests/run-api-examples.sh`, without a window: *ran* (with the value it returned), *error* (with Coot's message; usually the example needs other values), *stopped Coot (no window)* (the function needs the graphics window; it was not checked with one), *not run* (it would quit Coot, use the network, run an external program, or needs a widget). For every call the run also compares Coot before and after: the atoms of every model (added, deleted, moved, B-factors, occupancies), the maps (level, sigma, colour), new or closed molecules, the view centre and zoom, and about 100 settings that have a getter. What changed is listed after the value (*changed: ...*); *nothing visible changed* means none of these did (the call may still have done something these do not show, such as a window setting).
 
 ## Results of trying the examples
 
 | | Ran | Error | Stopped Coot (no window) | No answer in 60 s | Not run |
 |---|---|---|---|---|---|
-| Python | 1399 | 18 | 64 | 7 | 229 |
-| Scheme | 1369 | 26 | 62 | 7 | 225 |
+| Python | 1595 | 1 | 0 | 0 | 121 |
+| Scheme | 1558 | 6 | 0 | 0 | 125 |
 
-Where both languages ran and returned a value that can be compared (570 functions), Python and Scheme gave the same answer for 528. The other 42 are listed on their pages as *different answers*; mostly that is because the Python example ran first and changed the data (a counter, a new molecule, a restraint added), or because one language returns the same information in another shape. Values that are objects (pointers) are not compared.
+What the calls that ran showed (each function counted once per language; -1, #f and False are often Coot's answer for *not found* or *failed*, but for a yes/no question False is a fine answer):
+
+| | Returned a value | Changed something | Returned -1, #f or False | Nothing visible | Examples written by hand |
+|---|---|---|---|---|---|
+| Python | 513 | 282 | 24 | 776 | 528 |
+| Scheme | 503 | 196 | 28 | 831 | 516 |
+
+Settings: 105 `set_...` functions have a getter (`..._state`, `get_...`). Each was set to a different value, read back and put back, in both languages: 195 of 210 calls read back the new value. The others were not taken (for example a map setting given a model molecule, which Coot rightly refuses, or a window setting without a window) or gave an error; their pages say which.
+
+Where both languages ran and returned a value that can be compared (660 functions), Python and Scheme gave the same answer for 596. The other 64 are listed on their pages as *different answers*; mostly that is because the Python example ran first and changed the data (a counter, a new molecule, a restraint added), or because one language returns the same information in another shape. Values that are objects (pointers) are not compared.
 
 ## Sections
 
@@ -195,4 +204,6 @@ Coot's own section names, in alphabetical order. Also: [all functions A-Z](A-Z.m
 
 ## How this reference is made
 
-`m0/tools/gen_api_index.py` reads Coot's SWIG wrappers (the functions really available) and its headers (signatures and descriptions); `tests/run-api-examples.sh` tries every example in Python and Scheme; `m0/tools/gen_api_docs.py` writes these pages. To check your own installation run `tests/run-api-examples.sh` (30-90 minutes).
+`m0/tools/gen_api_index.py` reads Coot's SWIG wrappers (the functions really available) and its headers (signatures and descriptions); `tests/run-api-examples.sh` tries every example in Python and Scheme; `m0/tools/gen_api_docs.py` writes these pages. To check your own installation run `tests/run-api-examples.sh` (1-2 hours). The hand-written examples are in `m0/tools/api_examples_curated.json` of the source repository.
+
+To try calls of your own the same way, without a window, write them in a text file (`py: ...` or `scm: ...`, one per line; a blank line starts a fresh Coot) and run `tests/api-try.sh FILE`: it prints each value and what the call changed, on the same test data as this reference.

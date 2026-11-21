@@ -15,8 +15,8 @@ Arguments: imol_map (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `map_histogram(1)` | ran (no return value) |
-| Scheme | `(map-histogram 1)` | ran (no return value) |
+| Python | `map_histogram(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(map-histogram 1)` | ran (no return value, nothing visible changed) |
 
 ### scale_cell
 
@@ -31,8 +31,12 @@ Arguments: imol_map (a whole number), fac_u (a number), fac_v (a number), fac_w 
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `scale_cell(1, 1.0, 1.0, 1.0)` | ran, returned `0` |
-| Scheme | `(scale-cell 1 1.0 1.0 1.0)` | ran, returned `0` |
+| Python | `scale_cell(1, 1.01, 1.01, 1.01)` | ran, returned `0` |
+| Scheme | `(scale-cell 1 0.99 0.99 0.99)` | ran, returned `0` |
+
+Example written and checked by hand on the test data. Expected: the cell of map 1 is scaled by 1% on each axis (see cell(1)); return value is always 0.
+
+Note: Return value is always 0 (molecule_class_info_t::scale_cell never sets it), even on success.
 
 Python and Scheme gave the same answer.
 
@@ -49,8 +53,8 @@ Arguments: imol_map (a whole number), low_level (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `segment_map(1, 1.5)` | ran (no return value) |
-| Scheme | `(segment-map 1 1.5)` | ran (no return value) |
+| Python | `segment_map(1, 1.5)` | ran (no return value); changed: new molecule 10 (map, Map 1 Segment 7); new molecule 100 (map, Map 1 Segment 97); new molecule 101 (map, Map 1 Segment 98); new molecule 102 (map, Map 1 Segment 99) ... |
+| Scheme | `(segment-map 1 1.5)` | ran (no return value); changed: new molecule 10 (map, Map 1 Segment 7); new molecule 100 (map, Map 1 Segment 97); new molecule 101 (map, Map 1 Segment 98); new molecule 102 (map, Map 1 Segment 99) ... |
 
 ### segment_map_multi_scale
 
@@ -61,8 +65,8 @@ Arguments: imol_map (a whole number), low_level (a number), b_factor_inc (a numb
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `segment_map_multi_scale(1, 1.5, 20.0, 1)` | ran (no return value) |
-| Scheme | `(segment-map-multi-scale 1 1.5 20.0 1)` | ran (no return value) |
+| Python | `segment_map_multi_scale(1, 1.5, 20.0, 1)` | ran (no return value); changed: new molecule 10 (map, Map 1 Segment 7); new molecule 3 (map, Map 1 Segment 0); new molecule 4 (map, Map 1 Segment 1); new molecule 5 (map, Map 1 Segment 2) ... |
+| Scheme | `(segment-map-multi-scale 1 1.5 20.0 1)` | ran (no return value); changed: new molecule 10 (map, Map 1 Segment 7); new molecule 3 (map, Map 1 Segment 0); new molecule 4 (map, Map 1 Segment 1); new molecule 5 (map, Map 1 Segment 2) ... |
 
 ### set_ignore_pseudo_zeros_for_map_stats
 
@@ -75,6 +79,6 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_ignore_pseudo_zeros_for_map_stats(1)` | ran (no return value) |
-| Scheme | `(set-ignore-pseudo-zeros-for-map-stats 1)` | ran (no return value) |
+| Python | `set_ignore_pseudo_zeros_for_map_stats(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-ignore-pseudo-zeros-for-map-stats 1)` | ran (no return value, nothing visible changed) |
 

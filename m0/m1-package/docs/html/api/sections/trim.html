@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="1f5a14fc1f2245010667ba6bd96f58418ae6a200">
+<meta name="coot0-source-sha1" content="a4b4bdd8eefd0be127af97314cb85d71270ecc08">
 <title>Trim - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -23,8 +23,8 @@ Scheme: <code>(pLDDT-to-b-factor imol)</code></p>
 <p>convert the value in the B-factor column (typically pLDDT for AlphaFold models) to a temperature factor</p>
 <p>Arguments: imol (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>pLDDT_to_b_factor(0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(pLDDT-to-b-factor 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>pLDDT_to_b_factor(0)</code></td><td>ran (no return value); changed: molecule 0: B-factors of 189 residue(s) (A1, A2, A3, A4 ...)</td></tr>
+<tr><td>Scheme</td><td><code>(pLDDT-to-b-factor 0)</code></td><td>ran (no return value); changed: molecule 0: B-factors of 189 residue(s) (A1, A2, A3, A4 ...)</td></tr></tbody></table>
 <h3 id="trim_molecule_by_b_factor">trim_molecule_by_b_factor</h3>
 <p>Python: <code>trim_molecule_by_b_factor(imol, limit, keep_higher)</code><br>
 Scheme: <code>(trim-molecule-by-b-factor imol limit keep-higher)</code></p>
@@ -32,8 +32,8 @@ Scheme: <code>(trim-molecule-by-b-factor imol limit keep-higher)</code></p>
 <p>If an atom in a residue has a "B-factor" above (or below, if keep_higher is true) limit, then the whole residue is deleted</p>
 <p>Arguments: imol (a whole number), limit (a number), keep_higher (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>trim_molecule_by_b_factor(0, 1.0, 1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(trim-molecule-by-b-factor 0 1.0 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>trim_molecule_by_b_factor(0, 1.0, 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(trim-molecule-by-b-factor 0 1.0 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="trim_molecule_by_map">trim_molecule_by_map</h3>
 <p>Python: <code>trim_molecule_by_map(imol_coords, imol_map, map_level, delete_or_zero_occ_flag)</code><br>
 Scheme: <code>(trim-molecule-by-map imol-coords imol-map map-level delete-or-zero-occ-flag)</code></p>
@@ -41,6 +41,6 @@ Scheme: <code>(trim-molecule-by-map imol-coords imol-map map-level delete-or-zer
  molecule if they are below the given map (absolute) level.</p>
 <p>Arguments: imol_coords (a whole number), imol_map (a whole number), map_level (a number), delete_or_zero_occ_flag (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>trim_molecule_by_map(0, 1, 1.5, 1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(trim-molecule-by-map 0 1 1.5 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>trim_molecule_by_map(0, 1, 1.5, 1)</code></td><td>ran (no return value); changed: molecule 0: occupancies of 189 residue(s) (A1, A2, A3, A4 ...)</td></tr>
+<tr><td>Scheme</td><td><code>(trim-molecule-by-map 0 1 1.5 1)</code></td><td>ran (no return value); changed: molecule 0: occupancies of 189 residue(s) (A1, A2, A3, A4 ...)</td></tr></tbody></table>
 </body></html>

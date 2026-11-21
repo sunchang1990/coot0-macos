@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="52e1895e77e98238b7ac727efab3608402da1205">
+<meta name="coot0-source-sha1" content="ba1f567c7100b3421014b77e9929ca593c92fe95">
 <title>Intermediate Atom Manipulation Interface - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -28,7 +28,8 @@ does not).</p>
 Also available in Python as <code>add_target_position_restraint_for_intermediate_atom_py</code>.
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>refine_zone(0, "A", 41, 43, ""); print(add_target_position_restraint_for_intermediate_atom(["A", 42, "", " CA ", ""], [45.0, 10.4, 15.0]))</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: during a refinement adds a target-position restraint pulling that atom to the position and refines on.</p>
 <h3 id="add_target_position_restraints_for_intermediate_atoms">add_target_position_restraints_for_intermediate_atoms</h3>
 <p>Python: <code>add_target_position_restraints_for_intermediate_atoms(atom_spec_position_list)</code></p>
 <p>and the multiple-atom version of that (so that they can be applied at the same time)</p>
@@ -36,7 +37,9 @@ Also available in Python as <code>add_target_position_restraint_for_intermediate
 Also available in Python as <code>add_target_position_restraints_for_intermediate_atoms_py</code>.
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>add_target_position_restraints_for_intermediate_atoms(["A", 41, "", " CA ", ""])</code></td><td>error: SystemError: &lt;built-in function add_target_position_restraints_for_intermediate_atoms_py&gt; returned a result with an exception set</td></tr></tbody></table>
+<tr><td>Python</td><td><code>refine_zone(0, "A", 41, 43, ""); print(add_target_position_restraints_for_intermediate_atoms([[["A", 42, "", " CA ", ""], [45.0, 10.4, 15.0]]]))</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: during a refinement adds target-position restraints for several atoms at once and refines; the return value is always False.</p>
+<p>Note: Segmentation fault (Coot stopped, rc 139) with a two-atom list in a headless refinement; one-atom list survived. Possible bug in graphics_info_t::add_target_position_restraints_for_intermediate_atoms (threaded refinement).</p>
 <h3 id="drag_intermediate_atom">drag_intermediate_atom</h3>
 <p>Python: <code>drag_intermediate_atom(atom_spec, position)</code><br>
 Scheme: <code>(drag-intermediate-atom atom-spec position)</code></p>
@@ -44,6 +47,8 @@ Scheme: <code>(drag-intermediate-atom atom-spec position)</code></p>
 Also available in Python as <code>drag_intermediate_atom_py</code>.
 Also available in Scheme as <code>drag-intermediate-atom-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>refine_zone(0, "A", 41, 43, ""); print(drag_intermediate_atom(["A", 42, "", " CA ", ""], [45.0, 10.4, 15.0]))</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(begin (refine-zone 0 "A" 41 43 "") (drag-intermediate-atom (list "A" 42 "" " CA " "") (list 45.0 10.4 15.0)))</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: during a refinement (intermediate atoms present) moves that atom to the position and lets the refinement follow; nothing to drag otherwise.</p>
+<p>Python and Scheme gave the same answer.</p>
 </body></html>

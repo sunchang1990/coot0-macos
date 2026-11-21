@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="5e1343d7132c18b3534ecfe0475c6199b1dd0b0f">
+<meta name="coot0-source-sha1" content="7e2f08b33f1212eec0427bdb3eb4d209ba70a72a">
 <title>Map and Molecule Control - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -22,29 +22,29 @@ table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; 
 Scheme: <code>(add-map-and-mol-display-control-widgets)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>add_map_and_mol_display_control_widgets()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(add-map-and-mol-display-control-widgets)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>add_map_and_mol_display_control_widgets()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(add-map-and-mol-display-control-widgets)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="add_map_display_control_widgets">add_map_display_control_widgets</h3>
 <p>Python: <code>add_map_display_control_widgets()</code><br>
 Scheme: <code>(add-map-display-control-widgets)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>add_map_display_control_widgets()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(add-map-display-control-widgets)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>add_map_display_control_widgets()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(add-map-display-control-widgets)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="add_mol_display_control_widgets">add_mol_display_control_widgets</h3>
 <p>Python: <code>add_mol_display_control_widgets()</code><br>
 Scheme: <code>(add-mol-display-control-widgets)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>add_mol_display_control_widgets()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(add-mol-display-control-widgets)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>add_mol_display_control_widgets()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(add-mol-display-control-widgets)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="close_graphics_display_control_window">close_graphics_display_control_window</h3>
 <p>Python: <code>close_graphics_display_control_window()</code><br>
 Scheme: <code>(close-graphics-display-control-window)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>close_graphics_display_control_window()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(close-graphics-display-control-window)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>close_graphics_display_control_window()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(close-graphics-display-control-window)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="display_maps">display_maps</h3>
 <p>Python: <code>display_maps(pyo)</code><br>
 Scheme: <code>(display-maps maps-list)</code></p>
@@ -52,16 +52,17 @@ Scheme: <code>(display-maps maps-list)</code></p>
 Also available in Python as <code>display_maps_py</code>.
 Also available in Scheme as <code>display-maps-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>imap2 = map_from_mtz_by_calc_phases("rnasa-1.8-all_refmac1.mtz", "FGMP18", "SIGFGMP18", 0)</code>, then <code>display_maps([imap2])</code></td><td>ran (no return value); changed: map 1 displayed: 1 -&gt; 0</td></tr>
+<tr><td>Scheme</td><td>first <code>(define imap2 (map-from-mtz-by-calc-phases "rnasa-1.8-all_refmac1.mtz" "FGMP18" "SIGFGMP18" 0))</code>, then <code>(display-maps (list imap2))</code></td><td>ran (no return value); changed: map 1 displayed: 1 -&gt; 0</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: displays the listed maps and undisplays every other map.</p>
 <h3 id="display_only_active">display_only_active</h3>
 <p>Python: <code>display_only_active()</code><br>
 Scheme: <code>(display-only-active)</code></p>
 <p>display only the active mol and the refinement map</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>display_only_active()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(display-only-active)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>display_only_active()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(display-only-active)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="map_is_displayed">map_is_displayed</h3>
 <p>Python: <code>map_is_displayed(imol)</code><br>
 Scheme: <code>(map-is-displayed imol)</code></p>
@@ -69,8 +70,9 @@ Scheme: <code>(map-is-displayed imol)</code></p>
  Returns 1 for on, 0 for off</p>
 <p>Arguments: imol (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>map_is_displayed(0)</code></td><td>ran, returned <code>0</code></td></tr>
-<tr><td>Scheme</td><td><code>(map-is-displayed 0)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>map_is_displayed(1)</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(map-is-displayed 1)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: 1 when the map is displayed, 0 when not.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="merge_molecules">merge_molecules</h3>
 <p>Python: <code>merge_molecules(add_molecules, imol)</code><br>
@@ -114,15 +116,16 @@ Scheme: <code>(post-display-control-window)</code></p>
 <p>display the Display Constrol window</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>post_display_control_window()</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
-<tr><td>Scheme</td><td><code>(post-display-control-window)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>post_display_control_window()</code></td><td>not run: needs the graphics window (stops Coot without a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(post-display-control-window)</code></td><td>not run: needs the graphics window (stops Coot without a screen)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: opens the Display Manager window.</p>
 <h3 id="reset_graphics_display_control_window">reset_graphics_display_control_window</h3>
 <p>Python: <code>reset_graphics_display_control_window()</code><br>
 Scheme: <code>(reset-graphics-display-control-window)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>reset_graphics_display_control_window()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(reset-graphics-display-control-window)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>reset_graphics_display_control_window()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(reset-graphics-display-control-window)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_all_maps_displayed">set_all_maps_displayed</h3>
 <p>Python: <code>set_all_maps_displayed(on_or_off)</code><br>
 Scheme: <code>(set-all-maps-displayed on-or-off)</code></p>
@@ -130,8 +133,8 @@ Scheme: <code>(set-all-maps-displayed on-or-off)</code></p>
  values of on_or_off turn on all maps</p>
 <p>Arguments: on_or_off (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_all_maps_displayed(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-all-maps-displayed 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_all_maps_displayed(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-all-maps-displayed 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_all_models_displayed_and_active">set_all_models_displayed_and_active</h3>
 <p>Python: <code>set_all_models_displayed_and_active(on_or_off)</code><br>
 Scheme: <code>(set-all-models-displayed-and-active on-or-off)</code></p>
@@ -139,8 +142,8 @@ Scheme: <code>(set-all-models-displayed-and-active on-or-off)</code></p>
  for other values of on_or_off turn on all models.</p>
 <p>Arguments: on_or_off (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_all_models_displayed_and_active(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-all-models-displayed-and-active 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_all_models_displayed_and_active(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-all-models-displayed-and-active 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_display_only_model_mol">set_display_only_model_mol</h3>
 <p>Python: <code>set_display_only_model_mol(imol)</code><br>
 Scheme: <code>(set-display-only-model-mol imol)</code></p>
@@ -148,16 +151,16 @@ Scheme: <code>(set-display-only-model-mol imol)</code></p>
 <p>This stops flashing/delayed animations with many molecules</p>
 <p>Arguments: imol (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_display_only_model_mol(0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-display-only-model-mol 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_display_only_model_mol(0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-display-only-model-mol 0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_map_displayed">set_map_displayed</h3>
 <p>Python: <code>set_map_displayed(imol, state)</code><br>
 Scheme: <code>(set-map-displayed imol state)</code></p>
 <p>make the map displayed/undisplayed, 0 for off, 1 for on</p>
 <p>Arguments: imol (a whole number), state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_map_displayed(0, 1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-map-displayed 0 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_map_displayed(0, 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-map-displayed 0 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_merge_molecules_ligand_spec">set_merge_molecules_ligand_spec</h3>
 <p>Python: <code>set_merge_molecules_ligand_spec(ligand_spec_py)</code><br>
 Scheme: <code>(set-merge-molecules-ligand-spec ligand-spec-scm)</code></p>
@@ -165,8 +168,8 @@ Scheme: <code>(set-merge-molecules-ligand-spec ligand-spec-scm)</code></p>
 Also available in Python as <code>set_merge_molecules_ligand_spec_py</code>.
 Also available in Scheme as <code>set-merge-molecules-ligand-spec-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_merge_molecules_ligand_spec(["A", 41, ""])</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-merge-molecules-ligand-spec (list "A" 41 ""))</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_merge_molecules_ligand_spec(["A", 41, ""])</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-merge-molecules-ligand-spec (list "A" 41 ""))</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_mol_active">set_mol_active</h3>
 <p>Python: <code>set_mol_active(imol, state)</code><br>
 Scheme: <code>(set-mol-active imol state)</code></p>
@@ -174,24 +177,24 @@ Scheme: <code>(set-mol-active imol state)</code></p>
  for off, 1 for on</p>
 <p>Arguments: imol (a whole number), state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_mol_active(0, 1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-mol-active 0 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_mol_active(0, 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-mol-active 0 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_mol_displayed">set_mol_displayed</h3>
 <p>Python: <code>set_mol_displayed(imol, state)</code><br>
 Scheme: <code>(set-mol-displayed imol state)</code></p>
 <p>make the coordinates molecule displayed/undisplayed, 0 for off, 1 for on</p>
 <p>Arguments: imol (a whole number), state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_mol_displayed(0, 1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-mol-displayed 0 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_mol_displayed(0, 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-mol-displayed 0 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_only_last_model_molecule_displayed">set_only_last_model_molecule_displayed</h3>
 <p>Python: <code>set_only_last_model_molecule_displayed()</code><br>
 Scheme: <code>(set-only-last-model-molecule-displayed)</code></p>
 <p>only display the last model molecule</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_only_last_model_molecule_displayed()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-only-last-model-molecule-displayed)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_only_last_model_molecule_displayed()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-only-last-model-molecule-displayed)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="show_spacegroup">show_spacegroup</h3>
 <p>Python: <code>show_spacegroup(imol)</code><br>
 Scheme: <code>(show-spacegroup imol)</code></p>
@@ -234,6 +237,8 @@ Scheme: <code>(symmetry-operators-&gt;xHM symmetry-operators)</code></p>
 Also available in Python as <code>symmetry_operators_to_xHM_py</code>.
 Also available in Scheme as <code>symmetry-operators-to-xHM-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>symmetry_operators_to_xHM(symmetry_operators(0))</code></td><td>ran, returned <code>'P 21 21 21'</code></td></tr>
+<tr><td>Scheme</td><td><code>(symmetry-operators-&gt;xHM (list "x,y,z" "-x+1/2,-y,z+1/2" "-x,y+1/2,-z+1/2" "x+1/2,-y+1/2,-z"))</code></td><td>ran, returned <code>"P 21 21 21"</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the Hermann-Mauguin symbol of the space group made from the symmetry operator strings; False if they do not form a group.</p>
+<p>Python and Scheme gave the same answer.</p>
 </body></html>

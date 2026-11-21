@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="807d45a10409f6baa3c62f0842fe84dea7c5f848">
+<meta name="coot0-source-sha1" content="0b08d2c6b32314edb2d98b837ffca279632052c1">
 <title>State Functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -23,32 +23,34 @@ Scheme: <code>(run-state-file)</code></p>
 <p>just do it</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>run_state_file()</code></td><td>not run: not run automatically (run: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(run-state-file)</code></td><td>not run: not run automatically (run: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>run_state_file()</code></td><td>ran (no return value); changed: new molecule 3 (model, tutorial-modern-coot-0.pdb); new molecule 4 (map, rnasa-1.8-all_refmac1.mtz FWT PHWT); rotation centre moved 42.3 A to (41.6, 8.7, 12.9); graphics_n_molecules(): 3 -&gt; 5 ...</td></tr>
+<tr><td>Scheme</td><td><code>(run-state-file)</code></td><td>ran (no return value); changed: new molecule 3 (model, tutorial-modern-coot-0.pdb); new molecule 4 (map, rnasa-1.8-all_refmac1.mtz FWT PHWT); graphics_n_molecules(): 3 -&gt; 5; scroll_wheel_map(): -1 -&gt; 4</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: runs the state file 0-coot.state.py/.scm of the current directory (saved by save_state()); does nothing when there is none.</p>
 <h3 id="run_state_file_maybe">run_state_file_maybe</h3>
 <p>Python: <code>run_state_file_maybe()</code><br>
 Scheme: <code>(run-state-file-maybe)</code></p>
 <p>run the state file depending on the state variables</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>run_state_file_maybe()</code></td><td>not run: not run automatically (run: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(run-state-file-maybe)</code></td><td>not run: not run automatically (run: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>run_state_file_maybe()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(run-state-file-maybe)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: runs the state file if one exists and the run-state-file status allows it (asks with a dialog when status is 1).</p>
 <h3 id="save_state">save_state</h3>
 <p>Python: <code>save_state()</code><br>
 Scheme: <code>(save-state)</code></p>
 <p>save the current state to the default filename</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>save_state()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(save-state)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>save_state()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(save-state)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="save_state_file">save_state_file</h3>
 <p>Python: <code>save_state_file(filename)</code><br>
 Scheme: <code>(save-state-file filename)</code></p>
 <p>save the current state to file filename</p>
 <p>Arguments: filename (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>save_state_file("tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(save-state-file "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>save_state_file("tutorial-modern.pdb")</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(save-state-file "tutorial-modern.pdb")</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="save_state_file_name">save_state_file_name</h3>
 <p>Python: <code>save_state_file_name()</code><br>
 Scheme: <code>(save-state-file-name-scm)</code></p>
@@ -78,14 +80,15 @@ Scheme: <code>(set-run-state-file-status istat)</code></p>
 2: run it, no questions</p>
 <p>Arguments: istat (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_run_state_file_status(1)</code></td><td>not run: not run automatically (run: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(set-run-state-file-status 1)</code></td><td>not run: not run automatically (run: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_run_state_file_status(0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-run-state-file-status 0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: 0 = never run 0-coot.state.py/.scm at start, 1 = ask, 2 = run without asking; nothing visible changes at once.</p>
 <h3 id="set_save_state_file_name">set_save_state_file_name</h3>
 <p>Python: <code>set_save_state_file_name(filename)</code><br>
 Scheme: <code>(set-save-state-file-name filename)</code></p>
 <p>set the filename</p>
 <p>Arguments: filename (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_save_state_file_name("tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-save-state-file-name "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_save_state_file_name("tutorial-modern.pdb")</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-save-state-file-name "tutorial-modern.pdb")</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 </body></html>

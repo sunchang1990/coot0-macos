@@ -17,6 +17,6 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_draw_axes(1)` | ran (no return value) |
-| Scheme | `(set-draw-axes 1)` | ran (no return value) |
+| Python | `set_draw_axes(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-draw-axes 1)` | ran (no return value, nothing visible changed) |
 

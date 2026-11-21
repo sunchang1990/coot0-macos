@@ -15,8 +15,8 @@ Arguments: type (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `do_base_mutation("ALA")` | ran (no return value) |
-| Scheme | `(do-base-mutation "ALA")` | ran (no return value) |
+| Python | `do_base_mutation("ALA")` | ran (no return value, nothing visible changed) |
+| Scheme | `(do-base-mutation "ALA")` | ran (no return value, nothing visible changed) |
 
 ### do_mutation
 
@@ -27,8 +27,8 @@ Arguments: type (text), is_stub_flag (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `do_mutation("ALA", 1)` | ran (no return value) |
-| Scheme | `(do-mutation "ALA" 1)` | ran (no return value) |
+| Python | `do_mutation("ALA", 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(do-mutation "ALA" 1)` | ran (no return value, nothing visible changed) |
 
 ### handle_residue_type_chooser_entry_chose_type
 
@@ -39,8 +39,8 @@ Arguments: entry_text (text), stub_mode (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `handle_residue_type_chooser_entry_chose_type("hello", 1)` | ran (no return value) |
-| Scheme | `(handle-residue-type-chooser-entry-chose-type "hello" 1)` | ran (no return value) |
+| Python | `handle_residue_type_chooser_entry_chose_type("hello", 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(handle-residue-type-chooser-entry-chose-type "hello" 1)` | ran (no return value, nothing visible changed) |
 
 ### mutate
 
@@ -57,8 +57,8 @@ Arguments: imol (a whole number), chain_id (text), ires (a whole number), inscod
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `mutate(0, "A", 41, "", "ALA")` | ran, returned `1` |
-| Scheme | `(mutate 0 "A" 41 "" "ALA")` | ran, returned `1` |
+| Python | `mutate(0, "A", 41, "", "ALA")` | ran, returned `1`; changed: molecule 0: atoms of 1 residue(s) (A41); n_atoms(0): 1465 -> 1461 |
+| Scheme | `(mutate 0 "A" 41 "" "ALA")` | ran, returned `1`; changed: molecule 0: atoms of 1 residue(s) (A41); n_atoms(0): 1465 -> 1461 |
 
 Python and Scheme gave the same answer.
 
@@ -73,8 +73,10 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `mutate_active_residue()` | stopped Coot when tried without a window (not checked with a window) |
-| Scheme | `(mutate-active-residue)` | stopped Coot when tried without a window (not checked with a window) |
+| Python | `mutate_active_residue()` | not run: needs the graphics window (stops Coot without a screen) |
+| Scheme | `(mutate-active-residue)` | not run: needs the graphics window (stops Coot without a screen) |
+
+Example written and checked by hand on the test data. Expected: opens the residue-type chooser to mutate the active residue (the one at the centre of the screen).
 
 ### mutate_auto_fit_do_post_refine_state
 
@@ -119,8 +121,12 @@ Arguments: ires (a whole number), inscode (text), chain_id (text), imol (a whole
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | `mutate_single_residue_by_seqno(41, "", "A", 0, "A")` | ran, returned `1`; changed: molecule 0: atoms of 1 residue(s) (A41); n_atoms(0): 1465 -> 1461 |
+| Scheme | `(mutate-single-residue-by-seqno 41 "" "A" 0 #\A)` | ran, returned `1`; changed: molecule 0: atoms of 1 residue(s) (A41); n_atoms(0): 1465 -> 1461 |
+
+Example written and checked by hand on the test data. Expected: returns 1 and mutates residue A41 to the one-letter target type (A = ALA); argument order is resno, inscode, chain, imol, type.
+
+Python and Scheme gave the same answer.
 
 ### mutate_single_residue_by_serial_number
 
@@ -144,8 +150,12 @@ Arguments: ires_ser (a whole number), chain_id (text), imol (a whole number), ta
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | `mutate_single_residue_by_serial_number(2, "A", 0, "G")` | ran, returned `1`; changed: molecule 0: atoms of 1 residue(s) (A3); n_atoms(0): 1465 -> 1463 |
+| Scheme | `(mutate-single-residue-by-serial-number 2 "A" 0 #\G)` | ran, returned `1`; changed: molecule 0: atoms of 1 residue(s) (A3); n_atoms(0): 1465 -> 1463 |
+
+Example written and checked by hand on the test data. Expected: returns 1 and mutates the residue with that serial number (0-based position in the chain, not the residue number) to the one-letter type.
+
+Python and Scheme gave the same answer.
 
 ### nudge_residue_sequence
 
@@ -164,8 +174,8 @@ Arguments: imol (a whole number), chain_id (text), res_no_range_start (a whole n
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `nudge_residue_sequence(0, "A", 41, 45, 1, 1)` | ran, returned `1` |
-| Scheme | `(nudge-residue-sequence 0 "A" 41 45 1 1)` | ran, returned `1` |
+| Python | `nudge_residue_sequence(0, "A", 41, 45, 1, 1)` | ran, returned `1`; changed: molecule 0: deleted 1 residue(s) (A45); molecule 0: atoms of 5 residue(s) (A40, A41, A42, A43 ...); n_atoms(0): 1465 -> 1467 |
+| Scheme | `(nudge-residue-sequence 0 "A" 41 45 1 1)` | ran, returned `1`; changed: molecule 0: deleted 1 residue(s) (A45); molecule 0: atoms of 5 residue(s) (A40, A41, A42, A43 ...); n_atoms(0): 1465 -> 1467 |
 
 Python and Scheme gave the same answer.
 
@@ -215,8 +225,10 @@ Arguments: istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_mutate_auto_fit_do_post_refine(1)` | ran (no return value) |
-| Scheme | `(set-mutate-auto-fit-do-post-refine 1)` | ran (no return value) |
+| Python | `set_mutate_auto_fit_do_post_refine(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-mutate-auto-fit-do-post-refine 1)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: mutate_auto_fit_do_post_refine_state was 0, set to 1, read back 1; Scheme: mutate-auto-fit-do-post-refine-state was 0, set to 1, read back 1.
 
 ### set_residue_type_chooser_stub_state
 
@@ -230,8 +242,8 @@ Arguments: istat (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_residue_type_chooser_stub_state(1)` | ran (no return value) |
-| Scheme | `(set-residue-type-chooser-stub-state 1)` | ran (no return value) |
+| Python | `set_residue_type_chooser_stub_state(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-residue-type-chooser-stub-state 1)` | ran (no return value, nothing visible changed) |
 
 ### set_rotamer_auto_fit_do_post_refine
 
@@ -247,8 +259,10 @@ Arguments: istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_rotamer_auto_fit_do_post_refine(1)` | ran (no return value) |
-| Scheme | `(set-rotamer-auto-fit-do-post-refine 1)` | ran (no return value) |
+| Python | `set_rotamer_auto_fit_do_post_refine(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-rotamer-auto-fit-do-post-refine 1)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: rotamer_auto_fit_do_post_refine_state was 0, set to 1, read back 1; Scheme: rotamer-auto-fit-do-post-refine-state was 0, set to 1, read back 1.
 
 ### setup_mutate
 
@@ -261,8 +275,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `setup_mutate(1)` | ran (no return value) |
-| Scheme | `(setup-mutate 1)` | ran (no return value) |
+| Python | `setup_mutate(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(setup-mutate 1)` | ran (no return value, nothing visible changed) |
 
 ### setup_mutate_auto_fit
 
@@ -277,6 +291,6 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `setup_mutate_auto_fit(1)` | ran (no return value) |
-| Scheme | `(setup-mutate-auto-fit 1)` | ran (no return value) |
+| Python | `setup_mutate_auto_fit(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(setup-mutate-auto-fit 1)` | ran (no return value, nothing visible changed) |
 

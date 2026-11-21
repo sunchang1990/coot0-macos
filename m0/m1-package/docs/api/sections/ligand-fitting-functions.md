@@ -13,8 +13,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `add_ligand_clear_ligands()` | ran (no return value) |
-| Scheme | `(add-ligand-clear-ligands)` | ran (no return value) |
+| Python | `add_ligand_clear_ligands()` | ran (no return value, nothing visible changed) |
+| Scheme | `(add-ligand-clear-ligands)` | ran (no return value, nothing visible changed) |
 
 ### add_ligand_search_ligand_molecule
 
@@ -28,8 +28,8 @@ Arguments: imol_ligand (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `add_ligand_search_ligand_molecule(0)` | ran (no return value) |
-| Scheme | `(add-ligand-search-ligand-molecule 0)` | ran (no return value) |
+| Python | `add_ligand_search_ligand_molecule(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(add-ligand-search-ligand-molecule 0)` | ran (no return value, nothing visible changed) |
 
 ### add_ligand_search_wiggly_ligand_molecule
 
@@ -43,8 +43,8 @@ Arguments: imol_ligand (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `add_ligand_search_wiggly_ligand_molecule(0)` | ran (no return value) |
-| Scheme | `(add-ligand-search-wiggly-ligand-molecule 0)` | ran (no return value) |
+| Python | `add_ligand_search_wiggly_ligand_molecule(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(add-ligand-search-wiggly-ligand-molecule 0)` | ran (no return value, nothing visible changed) |
 
 ### analyse_ligand_differences
 
@@ -88,8 +88,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `do_find_ligands_dialog()` | ran (no return value) |
-| Scheme | `(do-find-ligands-dialog)` | ran (no return value) |
+| Python | `do_find_ligands_dialog()` | ran (no return value, nothing visible changed) |
+| Scheme | `(do-find-ligands-dialog)` | ran (no return value, nothing visible changed) |
 
 ### exchange_ligand
 
@@ -109,8 +109,10 @@ Arguments: imol_lig (a whole number), chain_id_lig (text), resno_lig (a whole nu
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `exchange_ligand(0, "A", 41, "")` | ran, returned `-1` |
-| Scheme | `(exchange-ligand 0 "A" 41 "")` | ran, returned `-1` |
+| Python | first `imol_nag = read_pdb("nag_only.pdb")`, then `exchange_ligand(imol_nag, "A", 1, "")` | ran, returned `-1` |
+| Scheme | first `(define imol-nag (read-pdb "nag_only.pdb"))`, then `(exchange-ligand imol-nag "A" 1 "")` | ran, returned `-1` |
+
+Example written and checked by hand on the test data. Expected: a stub upstream ('just pondering'): always returns -1 and does nothing.
 
 Python and Scheme gave the same answer.
 
@@ -124,7 +126,7 @@ Arguments: none. Returns: a value (see the result of the example).
 | | Example | When tried (test data, no window) |
 |---|---|---|
 | Python | `execute_ligand_search()` | ran, returned `[]` |
-| Scheme | `(execute-ligand-search)` | ran (no return value) |
+| Scheme | `(execute-ligand-search)` | ran (no return value, nothing visible changed) |
 
 Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
@@ -141,8 +143,8 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number). Retur
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `flip_ligand(0, "A", 41)` | ran (no return value) |
-| Scheme | `(flip-ligand 0 "A" 41)` | ran (no return value) |
+| Python | `flip_ligand(0, "A", 41)` | ran (no return value); changed: molecule 0: coordinates of 1 residue(s) (A41) |
+| Scheme | `(flip-ligand 0 "A" 41)` | ran (no return value); changed: molecule 0: coordinates of 1 residue(s) (A41) |
 
 ### jed_flip
 
@@ -153,8 +155,8 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `jed_flip(0, "A", 41, "", " CA ", "", 1)` | ran (no return value) |
-| Scheme | `(jed-flip 0 "A" 41 "" " CA " "" 1)` | ran (no return value) |
+| Python | `jed_flip(0, "A", 41, "", " CA ", "", 1)` | ran (no return value); changed: molecule 0: coordinates of 1 residue(s) (A41) |
+| Scheme | `(jed-flip 0 "A" 41 "" " CA " "" 1)` | ran (no return value); changed: molecule 0: coordinates of 1 residue(s) (A41) |
 
 ### ligand_expert
 
@@ -168,8 +170,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `ligand_expert()` | ran (no return value) |
-| Scheme | `(ligand-expert)` | ran (no return value) |
+| Python | `ligand_expert()` | ran (no return value, nothing visible changed) |
+| Scheme | `(ligand-expert)` | ran (no return value, nothing visible changed) |
 
 ### match_ligand_atom_names
 
@@ -187,8 +189,8 @@ Arguments: imol_ligand (a whole number), chain_id_ligand (text), resno_ligand (a
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `match_ligand_atom_names(0, "A", 41, "", 0, "A", 41, "")` | ran (no return value) |
-| Scheme | `(match-ligand-atom-names 0 "A" 41 "" 0 "A" 41 "")` | ran (no return value) |
+| Python | `match_ligand_atom_names(0, "A", 41, "", 0, "A", 41, "")` | ran (no return value, nothing visible changed) |
+| Scheme | `(match-ligand-atom-names 0 "A" 41 "" 0 "A" 41 "")` | ran (no return value, nothing visible changed) |
 
 ### match_ligand_atom_names_to_comp_id
 
@@ -209,8 +211,8 @@ Arguments: imol_ligand (a whole number), chain_id_ligand (text), resno_ligand (a
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `match_ligand_atom_names_to_comp_id(0, "A", 41, "", "hello")` | ran (no return value) |
-| Scheme | `(match-ligand-atom-names-to-comp-id 0 "A" 41 "" "hello")` | ran (no return value) |
+| Python | `match_ligand_atom_names_to_comp_id(0, "A", 41, "", "hello")` | ran (no return value, nothing visible changed) |
+| Scheme | `(match-ligand-atom-names-to-comp-id 0 "A" 41 "" "hello")` | ran (no return value, nothing visible changed) |
 
 ### match_ligand_torsions
 
@@ -221,8 +223,8 @@ Arguments: imol_ligand (a whole number), imol_ref (a whole number), chain_id_ref
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `match_ligand_torsions(0, 0, "A", 41)` | ran (no return value) |
-| Scheme | `(match-ligand-torsions 0 0 "A" 41)` | ran (no return value) |
+| Python | `match_ligand_torsions(0, 0, "A", 41)` | ran (no return value); changed: molecule 0: coordinates of 1 residue(s) (A1) |
+| Scheme | `(match-ligand-torsions 0 0 "A" 41)` | ran (no return value, nothing visible changed) |
 
 ### overlap_ligands
 
@@ -243,8 +245,8 @@ Also available in Python as `overlap_ligands_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `overlap_ligands(0, 0, "A", 41)` | ran, returned `[[[-0.3411510827580073, 0.9094183451757436, -0.23785334176935846, -0.3879130702516574, -0.36668437654081165, -0.84561576 ...` |
-| Scheme | `(overlap-ligands 0 0 "A" 41)` | ran, returned `(((-0.3411510827580073 0.9094183451757436 -0.23785334176935846 -0.3879130702516574 -0.36668437654081165 -0.8456157625829 ...` |
+| Python | `overlap_ligands(0, 0, "A", 41)` | ran, returned `[[[-0.3411510827580073, 0.9094183451757436, -0.23785334176935846, -0.3879130702516574, -0.36668437654081165, -0.84561576 ...`; changed: molecule 0: deleted 188 residue(s) (A2, A3, A4, A5 ...); molecule 0: coordinates of 1 residue(s) (A1); first_small_coords_imol(): -1 -> 0; n_atoms(0): 1465 -> 8 ... |
+| Scheme | `(overlap-ligands 0 0 "A" 41)` | ran, returned `(((-0.3411510827580073 0.9094183451757436 -0.23785334176935846 -0.3879130702516574 -0.36668437654081165 -0.8456157625829 ...`; changed: molecule 0: deleted 188 residue(s) (A2, A3, A4, A5 ...); molecule 0: coordinates of 1 residue(s) (A1); first_small_coords_imol(): -1 -> 0; n_atoms(0): 1465 -> 8 ... |
 
 Python and Scheme gave the same answer.
 
@@ -261,8 +263,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_find_ligand_do_real_space_refinement(1)` | ran (no return value) |
-| Scheme | `(set-find-ligand-do-real-space-refinement 1)` | ran (no return value) |
+| Python | `set_find_ligand_do_real_space_refinement(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-find-ligand-do-real-space-refinement 1)` | ran (no return value, nothing visible changed) |
 
 ### set_find_ligand_here_cluster
 
@@ -275,8 +277,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_find_ligand_here_cluster(1)` | ran (no return value) |
-| Scheme | `(set-find-ligand-here-cluster 1)` | ran (no return value) |
+| Python | `set_find_ligand_here_cluster(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-find-ligand-here-cluster 1)` | ran (no return value, nothing visible changed) |
 
 ### set_find_ligand_mask_waters
 
@@ -292,8 +294,8 @@ Arguments: istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_find_ligand_mask_waters(1)` | ran (no return value) |
-| Scheme | `(set-find-ligand-mask-waters 1)` | ran (no return value) |
+| Python | `set_find_ligand_mask_waters(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-find-ligand-mask-waters 1)` | ran (no return value, nothing visible changed) |
 
 ### set_find_ligand_multi_solutions_per_cluster
 
@@ -319,8 +321,8 @@ Arguments: lim_1 (a number), lim_2 (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_find_ligand_multi_solutions_per_cluster(1.0, 1.0)` | ran (no return value) |
-| Scheme | `(set-find-ligand-multi-solutions-per-cluster 1.0 1.0)` | ran (no return value) |
+| Python | `set_find_ligand_multi_solutions_per_cluster(1.0, 1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-find-ligand-multi-solutions-per-cluster 1.0 1.0)` | ran (no return value, nothing visible changed) |
 
 ### set_find_ligand_n_top_ligands
 
@@ -335,8 +337,8 @@ Arguments: n (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_find_ligand_n_top_ligands(1)` | ran (no return value) |
-| Scheme | `(set-find-ligand-n-top-ligands 1)` | ran (no return value) |
+| Python | `set_find_ligand_n_top_ligands(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-find-ligand-n-top-ligands 1)` | ran (no return value, nothing visible changed) |
 
 ### set_ligand_acceptable_fit_fraction
 
@@ -350,8 +352,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_ligand_acceptable_fit_fraction(1.0)` | ran (no return value) |
-| Scheme | `(set-ligand-acceptable-fit-fraction 1.0)` | ran (no return value) |
+| Python | `set_ligand_acceptable_fit_fraction(1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-ligand-acceptable-fit-fraction 1.0)` | ran (no return value, nothing visible changed) |
 
 ### set_ligand_cluster_sigma_level
 
@@ -365,8 +367,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_ligand_cluster_sigma_level(1.0)` | ran (no return value) |
-| Scheme | `(set-ligand-cluster-sigma-level 1.0)` | ran (no return value) |
+| Python | `set_ligand_cluster_sigma_level(1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-ligand-cluster-sigma-level 1.0)` | ran (no return value, nothing visible changed) |
 
 ### set_ligand_flexible_ligand_n_samples
 
@@ -381,8 +383,8 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_ligand_flexible_ligand_n_samples(1)` | ran (no return value) |
-| Scheme | `(set-ligand-flexible-ligand-n-samples 1)` | ran (no return value) |
+| Python | `set_ligand_flexible_ligand_n_samples(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-ligand-flexible-ligand-n-samples 1)` | ran (no return value, nothing visible changed) |
 
 ### set_ligand_search_map_molecule
 
@@ -395,8 +397,8 @@ Arguments: imol_map (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_ligand_search_map_molecule(1)` | ran (no return value) |
-| Scheme | `(set-ligand-search-map-molecule 1)` | ran (no return value) |
+| Python | `set_ligand_search_map_molecule(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-ligand-search-map-molecule 1)` | ran (no return value, nothing visible changed) |
 
 ### set_ligand_search_protein_molecule
 
@@ -409,8 +411,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_ligand_search_protein_molecule(0)` | ran (no return value) |
-| Scheme | `(set-ligand-search-protein-molecule 0)` | ran (no return value) |
+| Python | `set_ligand_search_protein_molecule(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-ligand-search-protein-molecule 0)` | ran (no return value, nothing visible changed) |
 
 ### set_ligand_verbose_reporting
 
@@ -423,6 +425,6 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_ligand_verbose_reporting(1)` | ran (no return value) |
-| Scheme | `(set-ligand-verbose-reporting 1)` | ran (no return value) |
+| Python | `set_ligand_verbose_reporting(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-ligand-verbose-reporting 1)` | ran (no return value, nothing visible changed) |
 

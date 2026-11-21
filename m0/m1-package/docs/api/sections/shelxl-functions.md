@@ -13,8 +13,10 @@ Arguments: imol (a whole number), string (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `add_shelx_string_to_molecule(0, "hello")` | not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(add-shelx-string-to-molecule 0 "hello")` | not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen) |
+| Python | first `write_shelx_ins_file(0, "tut.ins")`, then `imol_s = read_shelx_ins_file("tut.ins", 0)`, then `add_shelx_string_to_molecule(imol_s, "DFIX 1.54 C_41 CA_41")` | ran (no return value, nothing visible changed) |
+| Scheme | first `(write-shelx-ins-file 0 "tut.ins")`, then `(define imol-s (read-shelx-ins-file "tut.ins" 0))`, then `(add-shelx-string-to-molecule imol-s "DFIX 1.54 C_41 CA_41")` | ran (no return value, nothing visible changed) |
+
+Example written and checked by hand on the test data. Expected: adds the line to the SHELX molecule's instructions; it appears in the next written .ins file.
 
 ### chain_id_for_shelxl_residue_number
 
@@ -29,8 +31,12 @@ Also available in Python as `chain_id_for_shelxl_residue_number_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `chain_id_for_shelxl_residue_number(0, 41)` | not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(chain-id-for-shelxl-residue-number 0 41)` | not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen) |
+| Python | first `write_shelx_ins_file(0, "tut.ins")`, then `imol_s = read_shelx_ins_file("tut.ins", 0)`, then `chain_id_for_shelxl_residue_number(imol_s, 1041)` | ran, returned `'B'` |
+| Scheme | first `(write-shelx-ins-file 0 "tut.ins")`, then `(define imol-s (read-shelx-ins-file "tut.ins" 0))`, then `(chain-id-for-shelxl-residue-number imol-s 1041)` | ran, returned `"B"` |
+
+Example written and checked by hand on the test data. Expected: the chain that holds SHELXL residue number 1041 (chain B's residues get +1000 in the .ins file); False if none.
+
+Python and Scheme gave the same answer.
 
 ### handle_shelx_fcf_file_internal
 
@@ -43,8 +49,14 @@ Arguments: filename (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `handle_shelx_fcf_file_internal("tutorial-modern.pdb")` | not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(handle-shelx-fcf-file-internal "tutorial-modern.pdb")` | not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen) |
+| Python | `handle_shelx_fcf_file_internal("rnasa-sm-data.cif")` | ran, returned `3`; changed: new molecule 3 (map, rnasa-sm-data.cif SigmaA); new molecule 4 (map, rnasa-sm-data.cif Diff-SigmaA); graphics_n_molecules(): 3 -> 5; scroll_wheel_map(): -1 -> 3 |
+| Scheme | `(handle-shelx-fcf-file-internal "rnasa-sm-data.cif")` | ran, returned `3`; changed: new molecule 3 (map, rnasa-sm-data.cif SigmaA); new molecule 4 (map, rnasa-sm-data.cif Diff-SigmaA); graphics_n_molecules(): 3 -> 5; scroll_wheel_map(): -1 -> 3 |
+
+Example written and checked by hand on the test data. Expected: same as read_small_molecule_data_cif (that is all it does in 0.9.8.96): returns the SigmaA map molecule number of a SHELXL .fcf (LIST 6) / data CIF.
+
+Note: rnasa-sm.cif and rnasa-sm-data.cif (in test-data) are a small-molecule style CIF made from residues A39-41 of the test model and the rnasa reflections, only to show the call.
+
+Python and Scheme gave the same answer.
 
 ### is_shelx_molecule
 
@@ -57,8 +69,12 @@ Arguments: imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `is_shelx_molecule(0)` | not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(is-shelx-molecule 0)` | not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen) |
+| Python | first `write_shelx_ins_file(0, "tut.ins")`, then `imol_s = read_shelx_ins_file("tut.ins", 0)`, then `is_shelx_molecule(imol_s)` | ran, returned `1` |
+| Scheme | first `(write-shelx-ins-file 0 "tut.ins")`, then `(define imol-s (read-shelx-ins-file "tut.ins" 0))`, then `(is-shelx-molecule imol-s)` | ran, returned `1` |
+
+Example written and checked by hand on the test data. Expected: 1 for a molecule read from a SHELXL .ins file, 0 for a PDB model such as molecule 0.
+
+Python and Scheme gave the same answer.
 
 ### read_shelx_ins_file
 
@@ -71,8 +87,12 @@ Arguments: filename (text), recentre_flag (a whole number). Returns: a whole num
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `read_shelx_ins_file("tutorial-modern.pdb", 1)` | not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(read-shelx-ins-file "tutorial-modern.pdb" 1)` | not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen) |
+| Python | first `write_shelx_ins_file(0, "tut.ins")`, then `read_shelx_ins_file("tut.ins", 0)` | ran, returned `3`; changed: new molecule 3 (model, tut.ins); graphics_n_molecules(): 3 -> 4 |
+| Scheme | first `(write-shelx-ins-file 0 "tut.ins")`, then `(read-shelx-ins-file "tut.ins" 0)` | ran, returned `3`; changed: new molecule 3 (model, tut.ins); graphics_n_molecules(): 3 -> 4 |
+
+Example written and checked by hand on the test data. Expected: returns the new molecule number of the model read from the .ins file (recentre flag 0: the view stays).
+
+Python and Scheme gave the same answer.
 
 ### write_shelx_ins_file
 
@@ -85,6 +105,10 @@ Arguments: imol (a whole number), filename (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `write_shelx_ins_file(0, "tutorial-modern.pdb")` | not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(write-shelx-ins-file 0 "tutorial-modern.pdb")` | not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen) |
+| Python | `write_shelx_ins_file(0, "tut.ins")` | ran, returned `1` |
+| Scheme | `(write-shelx-ins-file 0 "tut.ins")` | ran, returned `1` |
+
+Example written and checked by hand on the test data. Expected: returns 1 and writes molecule 0 as a SHELXL .ins file.
+
+Python and Scheme gave the same answer.
 

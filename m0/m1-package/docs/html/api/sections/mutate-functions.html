@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="09a637ab5435364317681f6199415f8332779bde">
+<meta name="coot0-source-sha1" content="7de845c57d667e3f5ebe71e104bfbdc913bb77ff">
 <title>Mutate Functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -23,22 +23,22 @@ Scheme: <code>(do-base-mutation type)</code></p>
 <p>an internal function - not useful for scripting:</p>
 <p>Arguments: type (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>do_base_mutation("ALA")</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(do-base-mutation "ALA")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>do_base_mutation("ALA")</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(do-base-mutation "ALA")</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="do_mutation">do_mutation</h3>
 <p>Python: <code>do_mutation(type, is_stub_flag)</code><br>
 Scheme: <code>(do-mutation type is-stub-flag)</code></p>
 <p>Arguments: type (text), is_stub_flag (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>do_mutation("ALA", 1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(do-mutation "ALA" 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>do_mutation("ALA", 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(do-mutation "ALA" 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="handle_residue_type_chooser_entry_chose_type">handle_residue_type_chooser_entry_chose_type</h3>
 <p>Python: <code>handle_residue_type_chooser_entry_chose_type(entry_text, stub_mode)</code><br>
 Scheme: <code>(handle-residue-type-chooser-entry-chose-type entry-text stub-mode)</code></p>
 <p>Arguments: entry_text (text), stub_mode (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>handle_residue_type_chooser_entry_chose_type("hello", 1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(handle-residue-type-chooser-entry-chose-type "hello" 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>handle_residue_type_chooser_entry_chose_type("hello", 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(handle-residue-type-chooser-entry-chose-type "hello" 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="mutate">mutate</h3>
 <p>Python: <code>mutate(imol, chain_id, ires, inscode, target_res_type)</code><br>
 Scheme: <code>(mutate imol chain-id ires inscode target-res-type)</code></p>
@@ -47,8 +47,8 @@ Scheme: <code>(mutate imol chain-id ires inscode target-res-type)</code></p>
 <p>Return 1 on a good mutate.</p>
 <p>Arguments: imol (a whole number), chain_id (text), ires (a whole number), inscode (text), target_res_type (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>mutate(0, "A", 41, "", "ALA")</code></td><td>ran, returned <code>1</code></td></tr>
-<tr><td>Scheme</td><td><code>(mutate 0 "A" 41 "" "ALA")</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>mutate(0, "A", 41, "", "ALA")</code></td><td>ran, returned <code>1</code>; changed: molecule 0: atoms of 1 residue(s) (A41); n_atoms(0): 1465 -&gt; 1461</td></tr>
+<tr><td>Scheme</td><td><code>(mutate 0 "A" 41 "" "ALA")</code></td><td>ran, returned <code>1</code>; changed: molecule 0: atoms of 1 residue(s) (A41); n_atoms(0): 1465 -&gt; 1461</td></tr></tbody></table>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="mutate_active_residue">mutate_active_residue</h3>
 <p>Python: <code>mutate_active_residue()</code><br>
@@ -56,8 +56,9 @@ Scheme: <code>(mutate-active-residue)</code></p>
 <p>display a dialog that allows the choice of residue type to which to mutate</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>mutate_active_residue()</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
-<tr><td>Scheme</td><td><code>(mutate-active-residue)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>mutate_active_residue()</code></td><td>not run: needs the graphics window (stops Coot without a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(mutate-active-residue)</code></td><td>not run: needs the graphics window (stops Coot without a screen)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: opens the residue-type chooser to mutate the active residue (the one at the centre of the screen).</p>
 <h3 id="mutate_auto_fit_do_post_refine_state">mutate_auto_fit_do_post_refine_state</h3>
 <p>Python: <code>mutate_auto_fit_do_post_refine_state()</code><br>
 Scheme: <code>(mutate-auto-fit-do-post-refine-state)</code></p>
@@ -82,8 +83,10 @@ Scheme: <code>(mutate-single-residue-by-seqno ires inscode chain-id imol target-
 <p>ires is the seqnum of the residue (conventional)</p>
 <p>Arguments: ires (a whole number), inscode (text), chain_id (text), imol (a whole number), target_res_type (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>mutate_single_residue_by_seqno(41, "", "A", 0, "A")</code></td><td>ran, returned <code>1</code>; changed: molecule 0: atoms of 1 residue(s) (A41); n_atoms(0): 1465 -&gt; 1461</td></tr>
+<tr><td>Scheme</td><td><code>(mutate-single-residue-by-seqno 41 "" "A" 0 #\A)</code></td><td>ran, returned <code>1</code>; changed: molecule 0: atoms of 1 residue(s) (A41); n_atoms(0): 1465 -&gt; 1461</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns 1 and mutates residue A41 to the one-letter target type (A = ALA); argument order is resno, inscode, chain, imol, type.</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="mutate_single_residue_by_serial_number">mutate_single_residue_by_serial_number</h3>
 <p>Python: <code>mutate_single_residue_by_serial_number(ires_ser, chain_id, imol, target_res_type)</code><br>
 Scheme: <code>(mutate-single-residue-by-serial-number ires-ser chain-id imol target-res-type)</code></p>
@@ -98,8 +101,10 @@ Scheme: <code>(mutate-single-residue-by-serial-number ires-ser chain-id imol tar
  backslash A for ALA.</p>
 <p>Arguments: ires_ser (a whole number), chain_id (text), imol (a whole number), target_res_type (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>mutate_single_residue_by_serial_number(2, "A", 0, "G")</code></td><td>ran, returned <code>1</code>; changed: molecule 0: atoms of 1 residue(s) (A3); n_atoms(0): 1465 -&gt; 1463</td></tr>
+<tr><td>Scheme</td><td><code>(mutate-single-residue-by-serial-number 2 "A" 0 #\G)</code></td><td>ran, returned <code>1</code>; changed: molecule 0: atoms of 1 residue(s) (A3); n_atoms(0): 1465 -&gt; 1463</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns 1 and mutates the residue with that serial number (0-based position in the chain, not the residue number) to the one-letter type.</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="nudge_residue_sequence">nudge_residue_sequence</h3>
 <p>Python: <code>nudge_residue_sequence(imol, chain_id, res_no_range_start, res_no_range_end, nudge_by, nudge_residue_numbers_also)</code><br>
 Scheme: <code>(nudge-residue-sequence imol chain-id res-no-range-start res-no-range-end nudge-by nudge-residue-numbers-also)</code></p>
@@ -110,8 +115,8 @@ onto what is currently residue 21. The mainchain numbering and atoms is not chan
  and 1 for success.</p>
 <p>Arguments: imol (a whole number), chain_id (text), res_no_range_start (a whole number), res_no_range_end (a whole number), nudge_by (a whole number), nudge_residue_numbers_also (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>nudge_residue_sequence(0, "A", 41, 45, 1, 1)</code></td><td>ran, returned <code>1</code></td></tr>
-<tr><td>Scheme</td><td><code>(nudge-residue-sequence 0 "A" 41 45 1 1)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>nudge_residue_sequence(0, "A", 41, 45, 1, 1)</code></td><td>ran, returned <code>1</code>; changed: molecule 0: deleted 1 residue(s) (A45); molecule 0: atoms of 5 residue(s) (A40, A41, A42, A43 ...); n_atoms(0): 1465 -&gt; 1467</td></tr>
+<tr><td>Scheme</td><td><code>(nudge-residue-sequence 0 "A" 41 45 1 1)</code></td><td>ran, returned <code>1</code>; changed: molecule 0: deleted 1 residue(s) (A45); molecule 0: atoms of 5 residue(s) (A40, A41, A42, A43 ...); n_atoms(0): 1465 -&gt; 1467</td></tr></tbody></table>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="progressive_residues_in_chain_check">progressive_residues_in_chain_check</h3>
 <p>Python: <code>progressive_residues_in_chain_check(chain_id, imol)</code><br>
@@ -139,8 +144,9 @@ Scheme: <code>(set-mutate-auto-fit-do-post-refine istate)</code></p>
 <p> 1 for yes, 0 for no.</p>
 <p>Arguments: istate (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_mutate_auto_fit_do_post_refine(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-mutate-auto-fit-do-post-refine 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_mutate_auto_fit_do_post_refine(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-mutate-auto-fit-do-post-refine 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Setting checked (set to another value and read back, then put back): Python: mutate_auto_fit_do_post_refine_state was 0, set to 1, read back 1; Scheme: mutate-auto-fit-do-post-refine-state was 0, set to 1, read back 1.</p>
 <h3 id="set_residue_type_chooser_stub_state">set_residue_type_chooser_stub_state</h3>
 <p>Python: <code>set_residue_type_chooser_stub_state(istat)</code><br>
 Scheme: <code>(set-residue-type-chooser-stub-state istat)</code></p>
@@ -148,8 +154,8 @@ Scheme: <code>(set-residue-type-chooser-stub-state istat)</code></p>
  auto-fit mutate should only be added as a stub (mainchain + CB)</p>
 <p>Arguments: istat (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_residue_type_chooser_stub_state(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-residue-type-chooser-stub-state 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_residue_type_chooser_stub_state(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-residue-type-chooser-stub-state 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_rotamer_auto_fit_do_post_refine">set_rotamer_auto_fit_do_post_refine</h3>
 <p>Python: <code>set_rotamer_auto_fit_do_post_refine(istate)</code><br>
 Scheme: <code>(set-rotamer-auto-fit-do-post-refine istate)</code></p>
@@ -158,16 +164,17 @@ Scheme: <code>(set-rotamer-auto-fit-do-post-refine istate)</code></p>
 <p> 1 for yes, 0 for no.</p>
 <p>Arguments: istate (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_rotamer_auto_fit_do_post_refine(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-rotamer-auto-fit-do-post-refine 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_rotamer_auto_fit_do_post_refine(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-rotamer-auto-fit-do-post-refine 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Setting checked (set to another value and read back, then put back): Python: rotamer_auto_fit_do_post_refine_state was 0, set to 1, read back 1; Scheme: rotamer-auto-fit-do-post-refine-state was 0, set to 1, read back 1.</p>
 <h3 id="setup_mutate">setup_mutate</h3>
 <p>Python: <code>setup_mutate(state)</code><br>
 Scheme: <code>(setup-mutate state)</code></p>
 <p>c-interface-build</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>setup_mutate(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(setup-mutate 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>setup_mutate(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(setup-mutate 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="setup_mutate_auto_fit">setup_mutate_auto_fit</h3>
 <p>Python: <code>setup_mutate_auto_fit(state)</code><br>
 Scheme: <code>(setup-mutate-auto-fit state)</code></p>
@@ -175,6 +182,6 @@ Scheme: <code>(setup-mutate-auto-fit state)</code></p>
 <p> that we have a map define is checked first</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>setup_mutate_auto_fit(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(setup-mutate-auto-fit 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>setup_mutate_auto_fit(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(setup-mutate-auto-fit 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 </body></html>

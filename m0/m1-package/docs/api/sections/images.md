@@ -16,5 +16,9 @@ Arguments: text_info_dict (a list or value). Returns: text.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | `len(text_png_as_string({"text": "Coot", "font-size": 20, "fg-colour": "#202080"}))` | ran, returned `1031` |
+
+Example written and checked by hand on the test data. Expected: returns a PNG image (as a string) of the text with the given font, size and colours.
+
+Note: Returns the PNG data as a (binary) string; the example shows only its length.
 

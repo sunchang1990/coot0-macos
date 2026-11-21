@@ -15,8 +15,10 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `run_state_file()` | not run: not run automatically (run: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(run-state-file)` | not run: not run automatically (run: exits, uses the network, an external program, files or a screen) |
+| Python | `run_state_file()` | ran (no return value); changed: new molecule 3 (model, tutorial-modern-coot-0.pdb); new molecule 4 (map, rnasa-1.8-all_refmac1.mtz FWT PHWT); rotation centre moved 42.3 A to (41.6, 8.7, 12.9); graphics_n_molecules(): 3 -> 5 ... |
+| Scheme | `(run-state-file)` | ran (no return value); changed: new molecule 3 (model, tutorial-modern-coot-0.pdb); new molecule 4 (map, rnasa-1.8-all_refmac1.mtz FWT PHWT); graphics_n_molecules(): 3 -> 5; scroll_wheel_map(): -1 -> 4 |
+
+Example written and checked by hand on the test data. Expected: runs the state file 0-coot.state.py/.scm of the current directory (saved by save_state()); does nothing when there is none.
 
 ### run_state_file_maybe
 
@@ -29,8 +31,10 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `run_state_file_maybe()` | not run: not run automatically (run: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(run-state-file-maybe)` | not run: not run automatically (run: exits, uses the network, an external program, files or a screen) |
+| Python | `run_state_file_maybe()` | ran (no return value, nothing visible changed) |
+| Scheme | `(run-state-file-maybe)` | ran (no return value, nothing visible changed) |
+
+Example written and checked by hand on the test data. Expected: runs the state file if one exists and the run-state-file status allows it (asks with a dialog when status is 1).
 
 ### save_state
 
@@ -43,8 +47,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `save_state()` | ran (no return value) |
-| Scheme | `(save-state)` | ran (no return value) |
+| Python | `save_state()` | ran (no return value, nothing visible changed) |
+| Scheme | `(save-state)` | ran (no return value, nothing visible changed) |
 
 ### save_state_file
 
@@ -57,8 +61,8 @@ Arguments: filename (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `save_state_file("tutorial-modern.pdb")` | ran (no return value) |
-| Scheme | `(save-state-file "tutorial-modern.pdb")` | ran (no return value) |
+| Python | `save_state_file("tutorial-modern.pdb")` | ran (no return value, nothing visible changed) |
+| Scheme | `(save-state-file "tutorial-modern.pdb")` | ran (no return value, nothing visible changed) |
 
 ### save_state_file_name
 
@@ -110,8 +114,10 @@ Arguments: istat (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_run_state_file_status(1)` | not run: not run automatically (run: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(set-run-state-file-status 1)` | not run: not run automatically (run: exits, uses the network, an external program, files or a screen) |
+| Python | `set_run_state_file_status(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-run-state-file-status 0)` | ran (no return value, nothing visible changed) |
+
+Example written and checked by hand on the test data. Expected: 0 = never run 0-coot.state.py/.scm at start, 1 = ask, 2 = run without asking; nothing visible changes at once.
 
 ### set_save_state_file_name
 
@@ -124,6 +130,6 @@ Arguments: filename (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_save_state_file_name("tutorial-modern.pdb")` | ran (no return value) |
-| Scheme | `(set-save-state-file-name "tutorial-modern.pdb")` | ran (no return value) |
+| Python | `set_save_state_file_name("tutorial-modern.pdb")` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-save-state-file-name "tutorial-modern.pdb")` | ran (no return value, nothing visible changed) |
 

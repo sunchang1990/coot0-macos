@@ -1,4 +1,32 @@
-# Coot 0.9.8.96 on Apple Silicon: test round 30 (build 30 = build 29 + five scripting functions fixed + every scripting function tried)
+# Coot 0.9.8.96 on Apple Silicon: test round 31 (build 31 = build 30 + every scripting example checked + four Coot bugs fixed)
+
+**From you** (20 Nov): LL1, LL2 pass; LL3 failed only because my instructions had a placeholder path (`read-pdb` gave -1); with the real
+path it gives `((1 "") (1 "") 0.4996...)` (checked without a window). Asked tonight: check all the Python and Scheme functions with test
+data and update the documentation.
+
+1. **What "ran" meant**: in build 30, 812 functions returned nothing and the run never looked at what they did; 253 returned -1 or #f,
+   mostly because the generated example used placeholders. Now every call is compared before and after (models, maps, molecules,
+   view, ~100 settings), and the reference says what changed. 542 examples were written by hand and tried in both languages; 105
+   settings were set to another value and read back.
+2. **Four Coot bugs fixed** (new `bin/coot-bin`): `write_cif_file` wrote the model again on every call (third file: every atom three
+   times); Scheme `kullback-liebler` always #f; Scheme `probe-clash-score-from-scm` lost the 5th number; Scheme
+   `register-interesting-positions-list-scm` stopped Coot. Other odd results of Coot's own code are noted on the function pages.
+3. **New tool**: `tests/api-try.sh FILE` tries your own lines without a window and shows what they changed.
+
+**Verified without a window only.** About 120 functions per language need the graphics window, quit Coot, use the network or run an
+external program; they were not tried and their pages say why. **New tests**: `python-api` 21 -> 22, `scheme-api` 30 -> 33, `api-docs` 8 -> 12
+(build 30 fails all 8). Evidence: `evidence/checks_b30_vs_b31.txt`.
+
+## MM. Round 31 checks (about 5 minutes)
+
+| # | Do | Expected |
+|---|---|---|
+| MM1 | Help > Scripting Reference (all functions): read "Results of trying the examples". | Three short tables/paragraphs: what ran, what the calls showed (value / changed something / nothing visible), and the settings that were read back (195 of 210). |
+| MM2 | Help > Search Menus and Docs...: type `delete_residue`, double-click it. | The result line says what changed: `changed: molecule 0: deleted 1 residue(s) (A41)` (and the atom count). |
+| MM3 | Open any model, then Calculate > Scripting > Python...: `[ (write_cif_file(0, "/tmp/coot0-twice.cif"), os.path.getsize("/tmp/coot0-twice.cif")) for i in range(3) ]` (use your model's molecule number instead of 0). | Three pairs with the SAME size, e.g. `[(0, 140435), (0, 140435), (0, 140435)]`; build 30 gave a bigger file each time. |
+| MM4 | Calculate > Scripting > Scheme...: `(kullback-liebler (list 1.0 2.0 3.0 4.0 5.0 2.5 3.5) (list 1.5 2.0 3.0 4.0 6.0 2.2 3.1))` | A list of two numbers; build 30 showed `#f`. |
+
+# Earlier round (LL1, LL2 confirmed 20 Nov; LL3 = placeholder path, fine with the real path): Coot 0.9.8.96 on Apple Silicon: test round 30 (build 30 = build 29 + five scripting functions fixed + every scripting function tried)
 
 **From you** (20 Nov): KK1, KK2 pass. Asked: check the Python and Scheme functions with the test data and update the documentation
 (most functions showed "not tried").

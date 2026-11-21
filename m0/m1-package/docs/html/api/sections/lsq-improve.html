@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="a095efcd1b2a375cad0dd91daaa1f96d8fd130f1">
+<meta name="coot0-source-sha1" content="50e34ba5674896577535722747401988a13268fc">
 <title>LSQ-improve - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -23,8 +23,8 @@ Scheme: <code>(load-tutorial-model-and-data)</code></p>
 <p>load tutorial model and data</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>load_tutorial_model_and_data()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(load-tutorial-model-and-data)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>load_tutorial_model_and_data()</code></td><td>ran (no return value); changed: new molecule 3 (model, tutorial-modern.pdb); new molecule 4 (map, rnasa-1.8-all_refmac1.mtz FWT PHWT); new molecule 5 (map, rnasa-1.8-all_refmac1.mtz DELFWT PHDELWT); graphics_n_molecules(): 3 -&gt; 6 ...</td></tr>
+<tr><td>Scheme</td><td><code>(load-tutorial-model-and-data)</code></td><td>ran (no return value); changed: new molecule 3 (model, tutorial-modern.pdb); new molecule 4 (map, rnasa-1.8-all_refmac1.mtz FWT PHWT); new molecule 5 (map, rnasa-1.8-all_refmac1.mtz DELFWT PHDELWT); graphics_n_molecules(): 3 -&gt; 6 ...</td></tr></tbody></table>
 <h3 id="lsq_improve">lsq_improve</h3>
 <p>Python: <code>lsq_improve(imol_ref, ref_selection, imol_moving, moving_selection, n_res, dist_crit)</code><br>
 Scheme: <code>(lsq-improve imol-ref ref-selection imol-moving moving-selection n-res dist-crit)</code></p>
@@ -37,29 +37,31 @@ Scheme: <code>(lsq-improve imol-ref ref-selection imol-moving moving-selection n
 <p> Kleywegt and Jones set n_res to 4 and dist_crit to 6.0.</p>
 <p>Arguments: imol_ref (a whole number), ref_selection (text), imol_moving (a whole number), moving_selection (text), n_res (a whole number), dist_crit (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>lsq_improve(0, "//A/41-45", 0, "//A/41-45", 1, 1.0)</code></td><td>not run: not run automatically (lsq_improve: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(lsq-improve 0 "//A/41-45" 0 "//A/41-45" 1 1.0)</code></td><td>not run: not run automatically (lsq_improve: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>imol2 = read_pdb("tutorial-modern.pdb")</code>, then <code>clear_lsq_matches()</code>, then <code>add_lsq_match(10, 30, "A", 10, 30, "B", 1)</code>, then <code>apply_lsq_matches_simple(0, imol2)</code>, then <code>lsq_improve(0, "//A", imol2, "//B", 4, 2.0)</code></td><td>ran (no return value); changed: molecule 3: coordinates of 189 residue(s) (A1, A2, A3, A4 ...)</td></tr>
+<tr><td>Scheme</td><td>first <code>(define imol2 (read-pdb "tutorial-modern.pdb"))</code>, then <code>(clear-lsq-matches)</code>, then <code>(add-lsq-match 10 30 "A" 10 30 "B" 1)</code>, then <code>(apply-lsq-matches-simple 0 imol2)</code>, then <code>(lsq-improve 0 "//A" imol2 "//B" 4 2.0)</code></td><td>ran (no return value); changed: molecule 3: coordinates of 189 residue(s) (A1, A2, A3, A4 ...)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: improves an existing rough superposition of the moving selection onto the reference (Kleywegt &amp; Jones lsq_improve) and moves the molecule.</p>
+<p>Note: Not an external program (the old 'not run' classification was wrong). Starting from unsuperposed copies nothing moves; it needs a rough superposition first.</p>
 <h3 id="set_visible_toolbar_multi_refine_cancel_button">set_visible_toolbar_multi_refine_cancel_button</h3>
 <p>Python: <code>set_visible_toolbar_multi_refine_cancel_button(state)</code><br>
 Scheme: <code>(set-visible-toolbar-multi-refine-cancel-button state)</code></p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_visible_toolbar_multi_refine_cancel_button(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-visible-toolbar-multi-refine-cancel-button 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_visible_toolbar_multi_refine_cancel_button(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-visible-toolbar-multi-refine-cancel-button 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_visible_toolbar_multi_refine_continue_button">set_visible_toolbar_multi_refine_continue_button</h3>
 <p>Python: <code>set_visible_toolbar_multi_refine_continue_button(state)</code><br>
 Scheme: <code>(set-visible-toolbar-multi-refine-continue-button state)</code></p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_visible_toolbar_multi_refine_continue_button(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-visible-toolbar-multi-refine-continue-button 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_visible_toolbar_multi_refine_continue_button(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-visible-toolbar-multi-refine-continue-button 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_visible_toolbar_multi_refine_stop_button">set_visible_toolbar_multi_refine_stop_button</h3>
 <p>Python: <code>set_visible_toolbar_multi_refine_stop_button(state)</code><br>
 Scheme: <code>(set-visible-toolbar-multi-refine-stop-button state)</code></p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_visible_toolbar_multi_refine_stop_button(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-visible-toolbar-multi-refine-stop-button 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_visible_toolbar_multi_refine_stop_button(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-visible-toolbar-multi-refine-stop-button 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="toolbar_multi_refine_button_set_sensitive">toolbar_multi_refine_button_set_sensitive</h3>
 <p>Python: <code>toolbar_multi_refine_button_set_sensitive(button_type, state)</code><br>
 Scheme: <code>(toolbar-multi-refine-button-set-sensitive button-type state)</code></p>
@@ -67,27 +69,27 @@ Scheme: <code>(toolbar-multi-refine-button-set-sensitive button-type state)</cod
  state is 1 for on, 0 for off.</p>
 <p>Arguments: button_type (text), state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>toolbar_multi_refine_button_set_sensitive("hello", 1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(toolbar-multi-refine-button-set-sensitive "hello" 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>toolbar_multi_refine_button_set_sensitive("hello", 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(toolbar-multi-refine-button-set-sensitive "hello" 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="toolbar_multi_refine_cancel">toolbar_multi_refine_cancel</h3>
 <p>Python: <code>toolbar_multi_refine_cancel()</code><br>
 Scheme: <code>(toolbar-multi-refine-cancel)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>toolbar_multi_refine_cancel()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(toolbar-multi-refine-cancel)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>toolbar_multi_refine_cancel()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(toolbar-multi-refine-cancel)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="toolbar_multi_refine_continue">toolbar_multi_refine_continue</h3>
 <p>Python: <code>toolbar_multi_refine_continue()</code><br>
 Scheme: <code>(toolbar-multi-refine-continue)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>toolbar_multi_refine_continue()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(toolbar-multi-refine-continue)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>toolbar_multi_refine_continue()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(toolbar-multi-refine-continue)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="toolbar_multi_refine_stop">toolbar_multi_refine_stop</h3>
 <p>Python: <code>toolbar_multi_refine_stop()</code><br>
 Scheme: <code>(toolbar-multi-refine-stop)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>toolbar_multi_refine_stop()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(toolbar-multi-refine-stop)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>toolbar_multi_refine_stop()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(toolbar-multi-refine-stop)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 </body></html>

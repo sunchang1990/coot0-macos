@@ -15,8 +15,10 @@ Arguments: imol (a whole number), chain_id (text), iresno (a whole number), atom
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `add_atom_label(0, "A", 41, "hello")` | ran, returned `-1` |
-| Scheme | `(add-atom-label 0 "A" 41 "hello")` | ran, returned `-1` |
+| Python | `add_atom_label(0, "A", 41, " CA ")` | ran, returned `295` |
+| Scheme | `(add-atom-label 0 "A" 41 " CA ")` | ran, returned `295` |
+
+Example written and checked by hand on the test data. Expected: returns the atom index of the labelled atom; the label shows in the graphics window.
 
 Python and Scheme gave the same answer.
 
@@ -61,8 +63,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `remove_all_atom_labels()` | ran (no return value) |
-| Scheme | `(remove-all-atom-labels)` | ran (no return value) |
+| Python | `remove_all_atom_labels()` | ran (no return value, nothing visible changed) |
+| Scheme | `(remove-all-atom-labels)` | ran (no return value, nothing visible changed) |
 
 ### remove_atom_label
 
@@ -73,8 +75,10 @@ Arguments: imol (a whole number), chain_id (text), iresno (a whole number), atom
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `remove_atom_label(0, "A", 41, "hello")` | ran, returned `-1` |
-| Scheme | `(remove-atom-label 0 "A" 41 "hello")` | ran, returned `-1` |
+| Python | first `add_atom_label(0, "A", 41, " CA ")`, then `remove_atom_label(0, "A", 41, " CA ")` | ran, returned `295` |
+| Scheme | first `(add-atom-label 0 "A" 41 " CA ")`, then `(remove-atom-label 0 "A" 41 " CA ")` | ran, returned `295` |
+
+Example written and checked by hand on the test data. Expected: returns the atom index of the atom whose label was removed.
 
 Python and Scheme gave the same answer.
 
@@ -91,8 +95,10 @@ Arguments: istat (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_brief_atom_labels(1)` | ran (no return value) |
-| Scheme | `(set-brief-atom-labels 1)` | ran (no return value) |
+| Python | `set_brief_atom_labels(1)` | ran (no return value); changed: brief_atom_labels_state(): 0 -> 1 |
+| Scheme | `(set-brief-atom-labels 1)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: brief_atom_labels_state was 0, set to 1, read back 1; Scheme: brief-atom-labels-state was 0, set to 1, read back 1.
 
 ### set_label_on_recentre_flag
 
@@ -103,8 +109,8 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_label_on_recentre_flag(1)` | ran (no return value) |
-| Scheme | `(set-label-on-recentre-flag 1)` | ran (no return value) |
+| Python | `set_label_on_recentre_flag(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-label-on-recentre-flag 1)` | ran (no return value, nothing visible changed) |
 
 ### set_seg_ids_in_atom_labels
 
@@ -117,6 +123,6 @@ Arguments: istat (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_seg_ids_in_atom_labels(1)` | ran (no return value) |
-| Scheme | `(set-seg-ids-in-atom-labels 1)` | ran (no return value) |
+| Python | `set_seg_ids_in_atom_labels(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-seg-ids-in-atom-labels 1)` | ran (no return value, nothing visible changed) |
 

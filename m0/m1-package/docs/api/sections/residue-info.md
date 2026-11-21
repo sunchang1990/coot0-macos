@@ -13,8 +13,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `clear_last_simple_distance()` | ran (no return value) |
-| Scheme | `(clear-last-simple-distance)` | ran (no return value) |
+| Python | `clear_last_simple_distance()` | ran (no return value, nothing visible changed) |
+| Scheme | `(clear-last-simple-distance)` | ran (no return value, nothing visible changed) |
 
 ### clear_residue_info_edit_list
 
@@ -25,8 +25,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `clear_residue_info_edit_list()` | ran (no return value) |
-| Scheme | `(clear-residue-info-edit-list)` | ran (no return value) |
+| Python | `clear_residue_info_edit_list()` | ran (no return value, nothing visible changed) |
+| Scheme | `(clear-residue-info-edit-list)` | ran (no return value, nothing visible changed) |
 
 ### clear_simple_distances
 
@@ -37,8 +37,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `clear_simple_distances()` | ran (no return value) |
-| Scheme | `(clear-simple-distances)` | ran (no return value) |
+| Python | `clear_simple_distances()` | ran (no return value, nothing visible changed) |
+| Scheme | `(clear-simple-distances)` | ran (no return value, nothing visible changed) |
 
 ### do_angle_define
 
@@ -49,8 +49,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `do_angle_define()` | ran (no return value) |
-| Scheme | `(do-angle-define)` | ran (no return value) |
+| Python | `do_angle_define()` | ran (no return value, nothing visible changed) |
+| Scheme | `(do-angle-define)` | ran (no return value, nothing visible changed) |
 
 ### do_distance_define
 
@@ -63,8 +63,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `do_distance_define()` | ran (no return value) |
-| Scheme | `(do-distance-define)` | ran (no return value) |
+| Python | `do_distance_define()` | ran (no return value, nothing visible changed) |
+| Scheme | `(do-distance-define)` | ran (no return value, nothing visible changed) |
 
 ### do_residue_info_dialog
 
@@ -77,8 +77,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `do_residue_info_dialog()` | ran (no return value) |
-| Scheme | `(do-residue-info-dialog)` | ran (no return value) |
+| Python | `do_residue_info_dialog()` | ran (no return value, nothing visible changed) |
+| Scheme | `(do-residue-info-dialog)` | ran (no return value, nothing visible changed) |
 
 ### do_torsion_define
 
@@ -89,8 +89,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `do_torsion_define()` | ran (no return value) |
-| Scheme | `(do-torsion-define)` | ran (no return value) |
+| Python | `do_torsion_define()` | ran (no return value, nothing visible changed) |
+| Scheme | `(do-torsion-define)` | ran (no return value, nothing visible changed) |
 
 ### output_residue_info_as_text
 
@@ -101,8 +101,8 @@ Arguments: atom_index (a whole number), imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `output_residue_info_as_text(0, 0)` | ran (no return value) |
-| Scheme | `(output-residue-info-as-text 0 0)` | ran (no return value) |
+| Python | `output_residue_info_as_text(0, 0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(output-residue-info-as-text 0 0)` | ran (no return value, nothing visible changed) |
 
 ### output_residue_info_dialog
 
@@ -115,8 +115,10 @@ Arguments: imol (a whole number), atom_index (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `output_residue_info_dialog(0, 0)` | stopped Coot when tried without a window (not checked with a window) |
-| Scheme | `(output-residue-info-dialog 0 0)` | stopped Coot when tried without a window (not checked with a window) |
+| Python | `output_residue_info_dialog(0, 10)` | not run: needs the graphics window (stops Coot without a screen) |
+| Scheme | `(output-residue-info-dialog 0 10)` | not run: needs the graphics window (stops Coot without a screen) |
+
+Example written and checked by hand on the test data. Expected: opens the Residue Info window for the residue of atom index 10 of molecule 0.
 
 ### residue_info_apply_all_checkbutton_toggled
 
@@ -127,8 +129,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `residue_info_apply_all_checkbutton_toggled()` | ran (no return value) |
-| Scheme | `(residue-info-apply-all-checkbutton-toggled)` | ran (no return value) |
+| Python | `residue_info_apply_all_checkbutton_toggled()` | ran (no return value, nothing visible changed) |
+| Scheme | `(residue-info-apply-all-checkbutton-toggled)` | ran (no return value, nothing visible changed) |
 
 ### residue_info_dialog
 
@@ -141,8 +143,10 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_c
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `residue_info_dialog(0, "A", 41, "")` | stopped Coot when tried without a window (not checked with a window) |
-| Scheme | `(residue-info-dialog 0 "A" 41 "")` | stopped Coot when tried without a window (not checked with a window) |
+| Python | `residue_info_dialog(0, "A", 41, "")` | not run: needs the graphics window (stops Coot without a screen) |
+| Scheme | `(residue-info-dialog 0 "A" 41 "")` | not run: needs the graphics window (stops Coot without a screen) |
+
+Example written and checked by hand on the test data. Expected: opens the Residue Info window for A41 (atom names, occupancies, B-factors).
 
 ### residue_info_dialog_is_displayed
 
@@ -155,6 +159,8 @@ Arguments: none. Returns: a whole number.
 |---|---|---|
 | Python | `residue_info_dialog_is_displayed()` | ran, returned `0` |
 | Scheme | `(residue-info-dialog-is-displayed)` | ran, returned `0` |
+
+Example written and checked by hand on the test data. Expected: returns 1 if the Residue Info window is open, else 0 (correct here).
 
 Python and Scheme gave the same answer.
 
@@ -169,6 +175,6 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `unset_residue_info_widget()` | ran (no return value) |
-| Scheme | `(unset-residue-info-widget)` | ran (no return value) |
+| Python | `unset_residue_info_widget()` | ran (no return value, nothing visible changed) |
+| Scheme | `(unset-residue-info-widget)` | ran (no return value, nothing visible changed) |
 

@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="b96ad2a33340241d62adbfab7912102568784e66">
+<meta name="coot0-source-sha1" content="bca96f2dcedf5334b2c199f5c6548de896f9cec6">
 <title>Water Fitting Functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -23,23 +23,25 @@ Scheme: <code>(execute-find-blobs imol-model imol-for-map cut-off interactive-fl
 <p>find blobs</p>
 <p>Arguments: imol_model (a whole number), imol_for_map (a whole number), cut_off (a number), interactive_flag (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>execute_find_blobs(0, 1, 1.0, 1)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
-<tr><td>Scheme</td><td><code>(execute-find-blobs 0 1 1.0 1)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>execute_find_blobs(0, 1, 1.5, 0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(execute-find-blobs 0 1 1.5 0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: finds unmodelled density blobs above 1.5 sigma in map 1 (not covered by model 0); with interactive_flag 1 it opens the Blobs dialog (that needs a screen: Coot stopped headless).</p>
+<p>Note: interactive_flag 1 stops Coot without a screen.</p>
 <h3 id="execute_find_waters_real">execute_find_waters_real</h3>
 <p>Python: <code>execute_find_waters_real(imol_for_map, imol_for_protein, new_waters_mol_flag, rmsd_cut_off)</code><br>
 Scheme: <code>(execute-find-waters-real imol-for-map imol-for-protein new-waters-mol-flag rmsd-cut-off)</code></p>
 <p>find waters</p>
 <p>Arguments: imol_for_map (a whole number), imol_for_protein (a whole number), new_waters_mol_flag (a whole number), rmsd_cut_off (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>execute_find_waters_real(1, 0, 1, 1.5)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(execute-find-waters-real 1 0 1 1.5)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>execute_find_waters_real(1, 0, 1, 1.5)</code></td><td>ran (no return value); changed: new molecule 3 (model, waters); first_small_coords_imol(): -1 -&gt; 3; graphics_n_molecules(): 3 -&gt; 4</td></tr>
+<tr><td>Scheme</td><td><code>(execute-find-waters-real 1 0 1 1.5)</code></td><td>ran (no return value); changed: new molecule 3 (model, waters); first_small_coords_imol(): -1 -&gt; 3; graphics_n_molecules(): 3 -&gt; 4</td></tr></tbody></table>
 <h3 id="find_waters">find_waters</h3>
 <p>Python: <code>find_waters(imol_for_map, imol_for_protein, new_waters_mol_flag, rmsd_cut_off, show_blobs_dialog)</code><br>
 Scheme: <code>(find-waters imol-for-map imol-for-protein new-waters-mol-flag rmsd-cut-off show-blobs-dialog)</code></p>
 <p>Arguments: imol_for_map (a whole number), imol_for_protein (a whole number), new_waters_mol_flag (a whole number), rmsd_cut_off (a number), show_blobs_dialog (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>find_waters(1, 0, 1, 1.5, 1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(find-waters 1 0 1 1.5 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>find_waters(1, 0, 1, 1.5, 1)</code></td><td>ran (no return value); changed: new molecule 3 (model, waters); first_small_coords_imol(): -1 -&gt; 3; graphics_n_molecules(): 3 -&gt; 4</td></tr>
+<tr><td>Scheme</td><td><code>(find-waters 1 0 1 1.5 1)</code></td><td>ran (no return value); changed: new molecule 3 (model, waters); first_small_coords_imol(): -1 -&gt; 3; graphics_n_molecules(): 3 -&gt; 4</td></tr></tbody></table>
 <h3 id="get_text_for_find_waters_sigma_cut_off">get_text_for_find_waters_sigma_cut_off</h3>
 <p>Python: <code>get_text_for_find_waters_sigma_cut_off()</code><br>
 Scheme: <code>(get-text-for-find-waters-sigma-cut-off)</code></p>
@@ -56,8 +58,9 @@ Scheme: <code>(max-water-distance imol)</code></p>
  move_waters_to_around_protein() funtion.</p>
 <p>Arguments: imol (a whole number). Returns: a number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>max_water_distance(0)</code></td><td>ran, returned <code>-1.0</code></td></tr>
-<tr><td>Scheme</td><td><code>(max-water-distance 0)</code></td><td>ran, returned <code>-1.0</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>max_water_distance(read_pdb("1ehz.pdb"))</code></td><td>ran, returned <code>4.518393516540527</code>; changed: new molecule 3 (model, 1ehz.pdb); rotation centre moved 51.0 A to (67.6, 49.7, 28.6); graphics_n_molecules(): 3 -&gt; 4</td></tr>
+<tr><td>Scheme</td><td><code>(max-water-distance (read-pdb "1ehz.pdb"))</code></td><td>ran, returned <code>4.518393516540527</code>; changed: new molecule 3 (model, 1ehz.pdb); rotation centre moved 51.0 A to (67.6, 49.7, 28.6); graphics_n_molecules(): 3 -&gt; 4</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: the largest distance of any water to its nearest non-water atom in 1ehz.pdb (4.5 A); -1.0 for a molecule without waters.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="move_hetgroups_to_around_protein">move_hetgroups_to_around_protein</h3>
 <p>Python: <code>move_hetgroups_to_around_protein(imol)</code><br>
@@ -66,8 +69,8 @@ Scheme: <code>(move-hetgroups-to-around-protein imol)</code></p>
  imol so that they are around the protein.</p>
 <p>Arguments: imol (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>move_hetgroups_to_around_protein(0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(move-hetgroups-to-around-protein 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>move_hetgroups_to_around_protein(0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(move-hetgroups-to-around-protein 0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="move_waters_to_around_protein">move_waters_to_around_protein</h3>
 <p>Python: <code>move_waters_to_around_protein(imol)</code><br>
 Scheme: <code>(move-waters-to-around-protein imol)</code></p>
@@ -75,8 +78,9 @@ Scheme: <code>(move-waters-to-around-protein imol)</code></p>
 <p>Returns the number of moved waters.</p>
 <p>Arguments: imol (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>move_waters_to_around_protein(0)</code></td><td>ran, returned <code>0</code></td></tr>
-<tr><td>Scheme</td><td><code>(move-waters-to-around-protein 0)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>move_waters_to_around_protein(read_pdb("1ehz.pdb"))</code></td><td>ran, returned <code>71</code>; changed: new molecule 3 (model, 1ehz.pdb); rotation centre moved 51.0 A to (67.6, 49.7, 28.6); graphics_n_molecules(): 3 -&gt; 4</td></tr>
+<tr><td>Scheme</td><td><code>(move-waters-to-around-protein (read-pdb "1ehz.pdb"))</code></td><td>ran, returned <code>71</code>; changed: new molecule 3 (model, 1ehz.pdb); rotation centre moved 51.0 A to (67.6, 49.7, 28.6); graphics_n_molecules(): 3 -&gt; 4</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the number of waters moved to their symmetry copy closest to the macromolecule (71 for 1ehz.pdb).</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="renumber_waters">renumber_waters</h3>
 <p>Python: <code>renumber_waters(imol)</code><br>
@@ -84,16 +88,16 @@ Scheme: <code>(renumber-waters imol)</code></p>
 <p>Renumber the waters of molecule number imol with consecutive numbering</p>
 <p>Arguments: imol (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>renumber_waters(0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(renumber-waters 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>renumber_waters(0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(renumber-waters 0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_ligand_water_n_cycles">set_ligand_water_n_cycles</h3>
 <p>Python: <code>set_ligand_water_n_cycles(i)</code><br>
 Scheme: <code>(set-ligand-water-n-cycles i)</code></p>
 <p>set the number of cycles of water searching</p>
 <p>Arguments: i (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_ligand_water_n_cycles(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-ligand-water-n-cycles 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_ligand_water_n_cycles(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-ligand-water-n-cycles 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_ligand_water_to_protein_distance_limits">set_ligand_water_to_protein_distance_limits</h3>
 <p>Python: <code>set_ligand_water_to_protein_distance_limits(f1, f2)</code><br>
 Scheme: <code>(set-ligand-water-to-protein-distance-limits f1 f2)</code></p>
@@ -101,15 +105,15 @@ Scheme: <code>(set-ligand-water-to-protein-distance-limits f1 f2)</code></p>
 <p> f1 is the minimum distance, f2 is the maximum distance</p>
 <p>Arguments: f1 (a number), f2 (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_ligand_water_to_protein_distance_limits(1.0, 1.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-ligand-water-to-protein-distance-limits 1.0 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_ligand_water_to_protein_distance_limits(1.0, 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-ligand-water-to-protein-distance-limits 1.0 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_value_for_find_waters_sigma_cut_off">set_value_for_find_waters_sigma_cut_off</h3>
 <p>Python: <code>set_value_for_find_waters_sigma_cut_off(f)</code><br>
 Scheme: <code>(set-value-for-find-waters-sigma-cut-off f)</code></p>
 <p>Arguments: f (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_value_for_find_waters_sigma_cut_off(1.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-value-for-find-waters-sigma-cut-off 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_value_for_find_waters_sigma_cut_off(1.0)</code></td><td>ran (no return value); changed: get_text_for_find_waters_sigma_cut_off(): '  1.4' -&gt; '  1.0'</td></tr>
+<tr><td>Scheme</td><td><code>(set-value-for-find-waters-sigma-cut-off 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_water_check_spherical_variance_limit">set_water_check_spherical_variance_limit</h3>
 <p>Python: <code>set_water_check_spherical_variance_limit(f)</code><br>
 Scheme: <code>(set-water-check-spherical-variance-limit f)</code></p>
@@ -118,15 +122,15 @@ Scheme: <code>(set-water-check-spherical-variance-limit f)</code></p>
 <p>default 0.12.</p>
 <p>Arguments: f (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_water_check_spherical_variance_limit(1.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-water-check-spherical-variance-limit 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_water_check_spherical_variance_limit(1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-water-check-spherical-variance-limit 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_write_peaksearched_waters">set_write_peaksearched_waters</h3>
 <p>Python: <code>set_write_peaksearched_waters()</code><br>
 Scheme: <code>(set-write-peaksearched-waters)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_write_peaksearched_waters()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-write-peaksearched-waters)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_write_peaksearched_waters()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-write-peaksearched-waters)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="split_water">split_water</h3>
 <p>Python: <code>split_water(imol, chain_id, res_no, ins_code)</code><br>
 Scheme: <code>(split-water imol chain-id res-no ins-code)</code></p>
@@ -137,14 +141,15 @@ anything.</p>
 <p>If the given atom does not have an alt conf of "", don't do anything.</p>
 <p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>split_water(0, "A", 41, "")</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(split-water 0 "A" 41 "")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>split_water(0, "A", 41, "")</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(split-water 0 "A" 41 "")</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="wrapped_create_find_waters_dialog">wrapped_create_find_waters_dialog</h3>
 <p>Python: <code>wrapped_create_find_waters_dialog()</code><br>
 Scheme: <code>(wrapped-create-find-waters-dialog)</code></p>
 <p>create a dialog for water fitting</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>wrapped_create_find_waters_dialog()</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
-<tr><td>Scheme</td><td><code>(wrapped-create-find-waters-dialog)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>wrapped_create_find_waters_dialog()</code></td><td>not run: needs the graphics window (stops Coot without a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(wrapped-create-find-waters-dialog)</code></td><td>not run: needs the graphics window (stops Coot without a screen)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: opens the Find Waters dialog (Calculate &gt; Other Modelling Tools &gt; Find Waters...).</p>
 </body></html>

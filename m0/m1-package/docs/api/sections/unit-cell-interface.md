@@ -15,8 +15,10 @@ Arguments: imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `get_show_unit_cell(0)` | ran, returned `0` |
-| Scheme | `(get-show-unit-cell 0)` | ran, returned `0` |
+| Python | first `set_show_unit_cell(0, 1)`, then `get_show_unit_cell(0)` | ran, returned `1` |
+| Scheme | first `(set-show-unit-cell 0 1)`, then `(get-show-unit-cell 0)` | ran, returned `1` |
+
+Example written and checked by hand on the test data. Expected: 1 when the unit cell of molecule 0 is displayed, 0 otherwise (default 0).
 
 Python and Scheme gave the same answer.
 
@@ -34,8 +36,10 @@ Arguments: imol (a whole number), istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_show_unit_cell(0, 1)` | ran (no return value) |
-| Scheme | `(set-show-unit-cell 0 1)` | ran (no return value) |
+| Python | `set_show_unit_cell(0, 1)` | ran (no return value); changed: get_show_unit_cell(0): 0 -> 1 |
+| Scheme | `(set-show-unit-cell 0 1)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: get_show_unit_cell was 0, set to 1, read back 1; Scheme: get-show-unit-cell was 0, set to 1, read back 1.
 
 ### set_show_unit_cells_all
 
@@ -51,8 +55,8 @@ Arguments: istate (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_show_unit_cells_all(1)` | ran (no return value) |
-| Scheme | `(set-show-unit-cells-all 1)` | ran (no return value) |
+| Python | `set_show_unit_cells_all(1)` | ran (no return value); changed: get_show_unit_cell(1): 0 -> 1 |
+| Scheme | `(set-show-unit-cells-all 1)` | ran (no return value, nothing visible changed) |
 
 ### set_unit_cell_colour
 
@@ -63,6 +67,6 @@ Arguments: red (a number), green (a number), blue (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_unit_cell_colour(0.5, 0.5, 0.5)` | ran (no return value) |
-| Scheme | `(set-unit-cell-colour 0.5 0.5 0.5)` | ran (no return value) |
+| Python | `set_unit_cell_colour(0.5, 0.5, 0.5)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-unit-cell-colour 0.5 0.5 0.5)` | ran (no return value, nothing visible changed) |
 

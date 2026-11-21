@@ -15,8 +15,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `graphics_draw()` | ran (no return value) |
-| Scheme | `(graphics-draw)` | ran (no return value) |
+| Python | `graphics_draw()` | ran (no return value, nothing visible changed) |
+| Scheme | `(graphics-draw)` | ran (no return value, nothing visible changed) |
 
 ### graphics_window_size_and_position_to_preferences
 
@@ -30,8 +30,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `graphics_window_size_and_position_to_preferences()` | ran (no return value) |
-| Scheme | `(graphics-window-size-and-position-to-preferences)` | ran (no return value) |
+| Python | `graphics_window_size_and_position_to_preferences()` | ran (no return value, nothing visible changed) |
+| Scheme | `(graphics-window-size-and-position-to-preferences)` | ran (no return value, nothing visible changed) |
 
 ### hardware_stereo_angle_factor_state
 
@@ -60,8 +60,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `hardware_stereo_mode()` | ran (no return value) |
-| Scheme | `(hardware-stereo-mode)` | ran (no return value) |
+| Python | `hardware_stereo_mode()` | ran (no return value, nothing visible changed) |
+| Scheme | `(hardware-stereo-mode)` | ran (no return value, nothing visible changed) |
 
 ### mono_mode
 
@@ -74,8 +74,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `mono_mode()` | ran (no return value) |
-| Scheme | `(mono-mode)` | ran (no return value) |
+| Python | `mono_mode()` | ran (no return value, nothing visible changed) |
+| Scheme | `(mono-mode)` | ran (no return value, nothing visible changed) |
 
 ### set_accept_reject_dialog_position
 
@@ -88,8 +88,8 @@ Arguments: x_pos (a whole number), y_pos (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_accept_reject_dialog_position(1, 1)` | ran (no return value) |
-| Scheme | `(set-accept-reject-dialog-position 1 1)` | ran (no return value) |
+| Python | `set_accept_reject_dialog_position(1, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-accept-reject-dialog-position 1 1)` | ran (no return value, nothing visible changed) |
 
 ### set_delete_dialog_position
 
@@ -102,8 +102,8 @@ Arguments: x_pos (a whole number), y_pos (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_delete_dialog_position(1, 1)` | ran (no return value) |
-| Scheme | `(set-delete-dialog-position 1 1)` | ran (no return value) |
+| Python | `set_delete_dialog_position(1, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-delete-dialog-position 1 1)` | ran (no return value, nothing visible changed) |
 
 ### set_display_control_dialog_position
 
@@ -116,8 +116,8 @@ Arguments: x_pos (a whole number), y_pos (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_display_control_dialog_position(1, 1)` | ran (no return value) |
-| Scheme | `(set-display-control-dialog-position 1 1)` | ran (no return value) |
+| Python | `set_display_control_dialog_position(1, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-display-control-dialog-position 1 1)` | ran (no return value, nothing visible changed) |
 
 ### set_dti_stereo_mode
 
@@ -130,8 +130,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_dti_stereo_mode(1)` | ran (no return value) |
-| Scheme | `(set-dti-stereo-mode 1)` | ran (no return value) |
+| Python | `set_dti_stereo_mode(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-dti-stereo-mode 1)` | ran (no return value, nothing visible changed) |
 
 ### set_edit_chi_angles_dialog_position
 
@@ -144,8 +144,8 @@ Arguments: x_pos (a whole number), y_pos (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_edit_chi_angles_dialog_position(1, 1)` | ran (no return value) |
-| Scheme | `(set-edit-chi-angles-dialog-position 1 1)` | ran (no return value) |
+| Python | `set_edit_chi_angles_dialog_position(1, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-edit-chi-angles-dialog-position 1 1)` | ran (no return value, nothing visible changed) |
 
 ### set_go_to_atom_window_position
 
@@ -158,8 +158,8 @@ Arguments: x_pos (a whole number), y_pos (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_go_to_atom_window_position(1, 1)` | ran (no return value) |
-| Scheme | `(set-go-to-atom-window-position 1 1)` | ran (no return value) |
+| Python | `set_go_to_atom_window_position(1, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-go-to-atom-window-position 1 1)` | ran (no return value, nothing visible changed) |
 
 ### set_graphics_window_position
 
@@ -172,8 +172,8 @@ Arguments: x_pos (a whole number), y_pos (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_graphics_window_position(1, 1)` | ran (no return value) |
-| Scheme | `(set-graphics-window-position 1 1)` | ran (no return value) |
+| Python | `set_graphics_window_position(1, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-graphics-window-position 1 1)` | ran (no return value, nothing visible changed) |
 
 ### set_graphics_window_size
 
@@ -186,8 +186,8 @@ Arguments: x_size (a whole number), y_size (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_graphics_window_size(10, 10)` | ran (no return value) |
-| Scheme | `(set-graphics-window-size 10 10)` | ran (no return value) |
+| Python | `set_graphics_window_size(10, 10)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-graphics-window-size 10 10)` | ran (no return value, nothing visible changed) |
 
 ### set_hardware_stereo_angle_factor
 
@@ -202,8 +202,10 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_hardware_stereo_angle_factor(1.0)` | ran (no return value) |
-| Scheme | `(set-hardware-stereo-angle-factor 1.0)` | ran (no return value) |
+| Python | `set_hardware_stereo_angle_factor(1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-hardware-stereo-angle-factor 1.0)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: hardware_stereo_angle_factor_state was 1.0, set to 2.0, read back 2.0; Scheme: hardware-stereo-angle-factor-state was 1.0, set to 2.0, read back 2.0.
 
 ### set_model_display_radius
 
@@ -214,8 +216,8 @@ Arguments: state (a whole number), radius (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_model_display_radius(1, 5.0)` | ran (no return value) |
-| Scheme | `(set-model-display-radius 1 5.0)` | ran (no return value) |
+| Python | `set_model_display_radius(1, 5.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-model-display-radius 1 5.0)` | ran (no return value, nothing visible changed) |
 
 ### set_model_fit_refine_dialog_position
 
@@ -228,8 +230,8 @@ Arguments: x_pos (a whole number), y_pos (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_model_fit_refine_dialog_position(1, 1)` | ran (no return value) |
-| Scheme | `(set-model-fit-refine-dialog-position 1 1)` | ran (no return value) |
+| Python | `set_model_fit_refine_dialog_position(1, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-model-fit-refine-dialog-position 1 1)` | ran (no return value, nothing visible changed) |
 
 ### set_ramachandran_plot_dialog_position
 
@@ -242,8 +244,8 @@ Arguments: x_pos (a whole number), y_pos (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_ramachandran_plot_dialog_position(1, 1)` | ran (no return value) |
-| Scheme | `(set-ramachandran-plot-dialog-position 1 1)` | ran (no return value) |
+| Python | `set_ramachandran_plot_dialog_position(1, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-ramachandran-plot-dialog-position 1 1)` | ran (no return value, nothing visible changed) |
 
 ### set_rotamer_selection_dialog_position
 
@@ -256,8 +258,8 @@ Arguments: x_pos (a whole number), y_pos (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_rotamer_selection_dialog_position(1, 1)` | ran (no return value) |
-| Scheme | `(set-rotamer-selection-dialog-position 1 1)` | ran (no return value) |
+| Python | `set_rotamer_selection_dialog_position(1, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-rotamer-selection-dialog-position 1 1)` | ran (no return value, nothing visible changed) |
 
 ### set_rotate_translate_dialog_position
 
@@ -270,8 +272,8 @@ Arguments: x_pos (a whole number), y_pos (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_rotate_translate_dialog_position(1, 1)` | ran (no return value) |
-| Scheme | `(set-rotate-translate-dialog-position 1 1)` | ran (no return value) |
+| Python | `set_rotate_translate_dialog_position(1, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-rotate-translate-dialog-position 1 1)` | ran (no return value, nothing visible changed) |
 
 ### set_stereo_style
 
@@ -287,8 +289,8 @@ Arguments: mode (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_stereo_style(1)` | ran (no return value) |
-| Scheme | `(set-stereo-style 1)` | ran (no return value) |
+| Python | `set_stereo_style(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-stereo-style 1)` | ran (no return value, nothing visible changed) |
 
 ### side_by_side_stereo_mode
 
@@ -301,8 +303,8 @@ Arguments: use_wall_eye_mode (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `side_by_side_stereo_mode(1)` | ran (no return value) |
-| Scheme | `(side-by-side-stereo-mode 1)` | ran (no return value) |
+| Python | `side_by_side_stereo_mode(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(side-by-side-stereo-mode 1)` | ran (no return value, nothing visible changed) |
 
 ### stereo_mode_state
 
@@ -333,8 +335,8 @@ Arguments: x_pos (a whole number), y_pos (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `store_graphics_window_position(1, 1)` | ran (no return value) |
-| Scheme | `(store-graphics-window-position 1 1)` | ran (no return value) |
+| Python | `store_graphics_window_position(1, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(store-graphics-window-position 1 1)` | ran (no return value, nothing visible changed) |
 
 ### zalman_stereo_mode
 
@@ -347,6 +349,6 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `zalman_stereo_mode()` | ran (no return value) |
-| Scheme | `(zalman-stereo-mode)` | ran (no return value) |
+| Python | `zalman_stereo_mode()` | ran (no return value, nothing visible changed) |
+| Scheme | `(zalman-stereo-mode)` | ran (no return value, nothing visible changed) |
 

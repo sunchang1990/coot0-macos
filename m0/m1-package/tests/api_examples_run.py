@@ -6,6 +6,8 @@
 # the process ends with code 3 and the driver starts a fresh Coot for the next function.
 import os, sys, json, io, contextlib, time
 import coot
+sys.path.insert(0, os.path.dirname(os.path.abspath(os.environ.get("API_TESTS_DIR", ".") + "/x")))
+from api_state import Snapshot   # build 31: what each call changed
 
 IDX = os.environ["API_INDEX"]; RES = os.environ["API_RESULTS"]; ONLY = os.environ.get("API_ONLY", "")
 g = globals()
@@ -36,11 +38,22 @@ def fingerprint():
                 round(coot.map_sigma_py(1), 4) if hasattr(coot, "map_sigma_py") else None)
     except Exception as e:
         return ("error", str(e))
+snap = Snapshot(g, entries)       # (before fp0: building it calls every getter once)
 fp0 = fingerprint()
 
 def short(v, n=300):
     s = repr(v)
     return s if len(s) <= n else s[:n] + " ..."
+
+import ast
+def run_py(text, ns):
+    """an expression, or statements whose last line may be an expression (its value is the result) -- build 31"""
+    try: return eval(compile(text, "<example>", "eval"), ns)
+    except SyntaxError: pass
+    tree = ast.parse(text)
+    last = tree.body.pop() if tree.body and isinstance(tree.body[-1], ast.Expr) else None
+    exec(compile(tree, "<example>", "exec"), ns)
+    return eval(compile(ast.Expression(last.value), "<example>", "eval"), ns) if last else None
 
 def run_scheme(text):
     lit = '"' + text.replace("\\", "\\\\").replace('"', '\\"') + '"'
@@ -57,6 +70,8 @@ SKIP_WORDS = ("exit", "quit", "fetch", "network", "curl", "url", "ebi", "pdbe", 
               "render", "screendump", "png", "make_image", "lsq_improve", "clustalw", "align_and_mutate", "run_", "remote")
 def skip_reason(e):
     k = e["key"].lower()
+    if e.get("skip"): return e["skip"]                       # build 31: hand-checked reason (docs/api examples file)
+    if e.get("curated"): return None                         # a hand-written example is safe to run
     if e.get("gui_internal"): return "used by Coot's own windows (takes a widget or pointer)"
     for w in SKIP_WORDS:
         if w in k: return "not run automatically (%s: exits, uses the network, an external program, files or a screen)" % w.strip("_")
@@ -72,20 +87,37 @@ for e in entries:
         if why:
             log({"ev": "end", "key": e["key"], "lang": lang, "status": "skipped", "why": why}); continue
         log({"ev": "start", "key": e["key"], "lang": lang, "ex": ex})
+        setup = e.get(lang + "_setup") or []
+        st, val = "ok", None
+        ns = dict(g)                                          # the example's own names stay out of this script
+        with contextlib.redirect_stdout(io.StringIO()):         # set-up lines of a hand-written example (not timed)
+            for s in setup:
+                try:
+                    if lang == "py": exec(compile(s, "<setup>", "exec"), ns)
+                    else:
+                        r = run_scheme(s)
+                        if r[0] != "ok": raise RuntimeError(r[1])
+                except Exception as x:
+                    st, val = "error", "set-up line %r failed: %s" % (s, str(x)[:200]); break
+        before = snap.take()
         t0 = time.time(); out = io.StringIO()
         try:
-            with contextlib.redirect_stdout(out):
-                if lang == "py":
-                    v = eval(ex, g); st, val = "ok", short(v)
-                else:
-                    st, val, sout = run_scheme(ex); out.write(sout)
+            if st == "ok":
+                with contextlib.redirect_stdout(out):
+                    if lang == "py":
+                        v = run_py(ex, ns); st, val = "ok", short(v)
+                    else:
+                        st, val, sout = run_scheme(ex); out.write(sout)
         except Exception as x:
             st, val = "error", "%s: %s" % (type(x).__name__, str(x)[:300])
+        secs = round(time.time() - t0, 2)
         try:
             with contextlib.redirect_stdout(io.StringIO()): coot.clear_up_moving_atoms()
         except Exception: pass
-        log({"ev": "end", "key": e["key"], "lang": lang, "status": st, "value": val, "secs": round(time.time() - t0, 2),
-             "printed": out.getvalue()[-300:]})
+        try: changed = snap.diff(before, snap.take())
+        except Exception as x: changed = ["(could not compare: %s)" % x]
+        log({"ev": "end", "key": e["key"], "lang": lang, "status": st, "value": val, "secs": secs,
+             "printed": out.getvalue()[-300:], "changed": changed[:12]})
         count += 1
         if fingerprint() != fp0:
             log({"ev": "restart", "key": e["key"], "lang": lang}); f.close(); os._exit(3)

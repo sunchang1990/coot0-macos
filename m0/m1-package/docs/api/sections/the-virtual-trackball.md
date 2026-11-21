@@ -17,8 +17,8 @@ Arguments: mode (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `vt_surface(1)` | ran (no return value) |
-| Scheme | `(vt-surface 1)` | ran (no return value) |
+| Python | `vt_surface(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(vt-surface 1)` | ran (no return value, nothing visible changed) |
 
 ### vt_surface_status
 

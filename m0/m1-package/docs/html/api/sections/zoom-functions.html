@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="1fa791ba179b65b1ab3d6d182d72572b6430c5f9">
+<meta name="coot0-source-sha1" content="f0e4a13f47b2a0317a613dee68ec5a6ef32acae3">
 <title>Zoom Functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -26,16 +26,16 @@ Scheme: <code>(scale-zoom f)</code></p>
  Values outside the range 0.5 to 1.8 are filtered out</p>
 <p>Arguments: f (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>scale_zoom(1.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(scale-zoom 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>scale_zoom(1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(scale-zoom 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="scale_zoom_internal">scale_zoom_internal</h3>
 <p>Python: <code>scale_zoom_internal(f)</code><br>
 Scheme: <code>(scale-zoom-internal f)</code></p>
 <p>internal interface</p>
 <p>Arguments: f (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>scale_zoom_internal(1.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(scale-zoom-internal 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>scale_zoom_internal(1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(scale-zoom-internal 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_smooth_scroll_do_zoom">set_smooth_scroll_do_zoom</h3>
 <p>Python: <code>set_smooth_scroll_do_zoom(i)</code><br>
 Scheme: <code>(set-smooth-scroll-do-zoom i)</code></p>
@@ -43,23 +43,25 @@ Scheme: <code>(set-smooth-scroll-do-zoom i)</code></p>
  @param i 0 means no, 1 means yes: (default 0)</p>
 <p>Arguments: i (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_smooth_scroll_do_zoom(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-smooth-scroll-do-zoom 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_smooth_scroll_do_zoom(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-smooth-scroll-do-zoom 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Setting checked (set to another value and read back, then put back): Python: smooth_scroll_do_zoom was 0, set to 1, read back 1; Scheme: smooth-scroll-do-zoom was 0, set to 1, read back 1.</p>
 <h3 id="set_smooth_scroll_zoom_limit">set_smooth_scroll_zoom_limit</h3>
 <p>Python: <code>set_smooth_scroll_zoom_limit(f)</code><br>
 Scheme: <code>(set-smooth-scroll-zoom-limit f)</code></p>
 <p>Arguments: f (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_smooth_scroll_zoom_limit(1.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-smooth-scroll-zoom-limit 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_smooth_scroll_zoom_limit(1.0)</code></td><td>ran (no return value); changed: smooth_scroll_zoom_limit(): 30 -&gt; 1</td></tr>
+<tr><td>Scheme</td><td><code>(set-smooth-scroll-zoom-limit 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Setting checked (set to another value and read back, then put back): Python: smooth_scroll_zoom_limit was 30.0, set to 45.5, read back 45.5; Scheme: smooth-scroll-zoom-limit was 30.0, set to 45.5, read back 45.5.</p>
 <h3 id="set_zoom">set_zoom</h3>
 <p>Python: <code>set_zoom(f)</code><br>
 Scheme: <code>(set-zoom f)</code></p>
 <p>set the zoom factor (absolute value) - maybe should be called set_zoom_factor()</p>
 <p>Arguments: f (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_zoom(1.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-zoom 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_zoom(1.0)</code></td><td>ran (no return value); changed: zoom: 100.0 -&gt; 1.0</td></tr>
+<tr><td>Scheme</td><td><code>(set-zoom 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="smooth_scroll_do_zoom">smooth_scroll_do_zoom</h3>
 <p>Python: <code>smooth_scroll_do_zoom()</code><br>
 Scheme: <code>(smooth-scroll-do-zoom)</code></p>
@@ -68,6 +70,7 @@ Scheme: <code>(smooth-scroll-do-zoom)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>smooth_scroll_do_zoom()</code></td><td>ran, returned <code>0</code></td></tr>
 <tr><td>Scheme</td><td><code>(smooth-scroll-do-zoom)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: 0: the smooth-scroll zoom setting is off by default (state query).</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="smooth_scroll_zoom_limit">smooth_scroll_zoom_limit</h3>
 <p>Python: <code>smooth_scroll_zoom_limit()</code><br>

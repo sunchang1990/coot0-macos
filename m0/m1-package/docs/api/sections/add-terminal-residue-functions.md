@@ -37,8 +37,10 @@ Arguments: imol (a whole number), chain_id (text), residue_number (a whole numbe
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `add_terminal_residue(0, "A", 41, "ALA", 1)` | ran, returned `0` |
-| Scheme | `(add-terminal-residue 0 "A" 41 "ALA" 1)` | ran, returned `0` |
+| Python | `add_terminal_residue(0, "A", 93, "auto", 1)` | ran, returned `1`; changed: molecule 0: added 1 residue(s) (A94); molecule 0: coordinates of 1 residue(s) (A93); n_atoms(0): 1465 -> 1470; n_residues(0): 189 -> 190 |
+| Scheme | `(add-terminal-residue 0 "A" 93 "auto" 1)` | ran, returned `1`; changed: molecule 0: added 1 residue(s) (A94); molecule 0: coordinates of 1 residue(s) (A93); n_atoms(0): 1465 -> 1470; n_residues(0): 189 -> 190 |
+
+Example written and checked by hand on the test data. Expected: returns 1 and a new residue appears after the C-terminal residue A93 (fitted to the refinement map).
 
 Python and Scheme gave the same answer.
 
@@ -85,8 +87,10 @@ Arguments: imol (a whole number), chain_id (text), res_no (a whole number), resi
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `add_terminal_residue_using_phi_psi(0, "A", 41, "ALA", 10.0, 10.0)` | ran, returned `0` |
-| Scheme | `(add-terminal-residue-using-phi-psi 0 "A" 41 "ALA" 10.0 10.0)` | ran, returned `0` |
+| Python | `add_terminal_residue_using_phi_psi(0, "A", 93, "ALA", -57.0, -47.0)` | ran, returned `1`; changed: molecule 0: added 1 residue(s) (A94); molecule 0: coordinates of 1 residue(s) (A93); n_atoms(0): 1465 -> 1470; n_residues(0): 189 -> 190 |
+| Scheme | `(add-terminal-residue-using-phi-psi 0 "A" 93 "GLY" -57.0 -47.0)` | ran, returned `1`; changed: molecule 0: added 1 residue(s) (A94); molecule 0: coordinates of 1 residue(s) (A93); n_atoms(0): 1465 -> 1470; n_residues(0): 189 -> 190 |
+
+Example written and checked by hand on the test data. Expected: returns 1 and adds a residue of the given type after A93 with helical phi/psi.
 
 Python and Scheme gave the same answer.
 
@@ -99,8 +103,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `do_add_terminal_residue(1)` | ran (no return value) |
-| Scheme | `(do-add-terminal-residue 1)` | ran (no return value) |
+| Python | `do_add_terminal_residue(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(do-add-terminal-residue 1)` | ran (no return value, nothing visible changed) |
 
 ### find_terminal_residue_type
 
@@ -112,8 +116,12 @@ Also available in Python as `find_terminal_residue_type_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `find_terminal_residue_type(0, "A", 41)` | ran, returned `False` |
-| Scheme | `(find-terminal-residue-type 0 "A" 41)` | ran, returned `#f` |
+| Python | first `assign_sequence_from_string(0, "A", "DVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLIDQTC")`, then `find_terminal_residue_type(0, "A", 94)` | ran, returned `'GLN'` |
+| Scheme | first `(assign-sequence-from-string 0 "A" "DVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLIDQTC")`, then `(find-terminal-residue-type 0 "A" 94)` | ran, returned `"GLN"` |
+
+Example written and checked by hand on the test data. Expected: returns the residue type the assigned sequence has at the new position A94 (GLN); False/#f when no sequence is assigned to the chain.
+
+Note: resno is the number of the residue to be ADDED (94), not the current terminal residue.
 
 Python and Scheme gave the same answer.
 
@@ -129,8 +137,8 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_add_terminal_residue_add_other_residue_flag(1)` | ran (no return value) |
-| Scheme | `(set-add-terminal-residue-add-other-residue-flag 1)` | ran (no return value) |
+| Python | `set_add_terminal_residue_add_other_residue_flag(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-add-terminal-residue-add-other-residue-flag 1)` | ran (no return value, nothing visible changed) |
 
 ### set_add_terminal_residue_debug_trials
 
@@ -143,8 +151,8 @@ Arguments: debug_state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_add_terminal_residue_debug_trials(1)` | ran (no return value) |
-| Scheme | `(set-add-terminal-residue-debug-trials 1)` | ran (no return value) |
+| Python | `set_add_terminal_residue_debug_trials(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-add-terminal-residue-debug-trials 1)` | ran (no return value, nothing visible changed) |
 
 ### set_add_terminal_residue_default_residue_type
 
@@ -157,8 +165,8 @@ Arguments: type (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_add_terminal_residue_default_residue_type("ALA")` | ran (no return value) |
-| Scheme | `(set-add-terminal-residue-default-residue-type "ALA")` | ran (no return value) |
+| Python | `set_add_terminal_residue_default_residue_type("ALA")` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-add-terminal-residue-default-residue-type "ALA")` | ran (no return value, nothing visible changed) |
 
 ### set_add_terminal_residue_do_post_refine
 
@@ -172,8 +180,10 @@ Arguments: istat (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_add_terminal_residue_do_post_refine(1)` | ran (no return value) |
-| Scheme | `(set-add-terminal-residue-do-post-refine 1)` | ran (no return value) |
+| Python | `set_add_terminal_residue_do_post_refine(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-add-terminal-residue-do-post-refine 1)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: add_terminal_residue_do_post_refine_state was 0, set to 1, read back 1; Scheme: add-terminal-residue-do-post-refine-state was 0, set to 1, read back 1.
 
 ### set_add_terminal_residue_do_rigid_body_refine
 
@@ -184,8 +194,8 @@ Arguments: v (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_add_terminal_residue_do_rigid_body_refine(1)` | ran (no return value) |
-| Scheme | `(set-add-terminal-residue-do-rigid-body-refine 1)` | ran (no return value) |
+| Python | `set_add_terminal_residue_do_rigid_body_refine(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-add-terminal-residue-do-rigid-body-refine 1)` | ran (no return value, nothing visible changed) |
 
 ### set_add_terminal_residue_immediate_addition
 
@@ -200,8 +210,10 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_add_terminal_residue_immediate_addition(1)` | ran (no return value) |
-| Scheme | `(set-add-terminal-residue-immediate-addition 1)` | ran (no return value) |
+| Python | `set_add_terminal_residue_immediate_addition(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-add-terminal-residue-immediate-addition 1)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: add_terminal_residue_immediate_addition_state was 1, set to 0, read back 0; Scheme: add-terminal-residue-immediate-addition-state was 1, set to 0, read back 0.
 
 ### set_add_terminal_residue_n_phi_psi_trials
 
@@ -214,8 +226,8 @@ Arguments: n (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_add_terminal_residue_n_phi_psi_trials(1)` | ran (no return value) |
-| Scheme | `(set-add-terminal-residue-n-phi-psi-trials 1)` | ran (no return value) |
+| Python | `set_add_terminal_residue_n_phi_psi_trials(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-add-terminal-residue-n-phi-psi-trials 1)` | ran (no return value, nothing visible changed) |
 
 ### set_terminal_residue_do_rigid_body_refine
 
@@ -226,6 +238,6 @@ Arguments: v (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_terminal_residue_do_rigid_body_refine(1)` | ran (no return value) |
-| Scheme | `(set-terminal-residue-do-rigid-body-refine 1)` | ran (no return value) |
+| Python | `set_terminal_residue_do_rigid_body_refine(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-terminal-residue-do-rigid-body-refine 1)` | ran (no return value, nothing visible changed) |
 

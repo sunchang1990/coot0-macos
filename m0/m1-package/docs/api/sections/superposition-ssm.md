@@ -19,8 +19,8 @@ Arguments: imol1 (a whole number), imol2 (a whole number), move_imol2_flag (a wh
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `superpose(0, 0, 0)` | ran (no return value) |
-| Scheme | `(superpose 0 0 0)` | ran (no return value) |
+| Python | `superpose(0, 0, 0)` | ran (no return value); changed: molecule 0: coordinates of 189 residue(s) (A1, A2, A3, A4 ...); first_molecule_with_symmetry_displayed(): 0 -> -1; get_symmetry(0): ['x,y,z', '-x+1/2,-y,z+1/2', 'x+1/2,-y+1/2,-z', '-x,y+1/2,-z -> []; n_symops(0): 4 -> -1 |
+| Scheme | `(superpose 0 0 0)` | ran (no return value); changed: molecule 0: coordinates of 189 residue(s) (A1, A2, A3, A4 ...); first_molecule_with_symmetry_displayed(): 0 -> -1; get_symmetry(0): ['x,y,z', '-x+1/2,-y,z+1/2', 'x+1/2,-y+1/2,-z', '-x,y+1/2,-z -> []; n_symops(0): 4 -> -1 |
 
 ### superpose_with_atom_selection
 
@@ -42,8 +42,10 @@ Arguments: imol1 (a whole number), imol2 (a whole number), mmdb_atom_sel_str_1 (
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `superpose_with_atom_selection(0, 0, "//A/41-45", "//A/41-45", 0)` | ran, returned `-1` |
-| Scheme | `(superpose-with-atom-selection 0 0 "//A/41-45" "//A/41-45" 0)` | ran, returned `-1` |
+| Python | first `imol2 = read_pdb("tutorial-modern.pdb")`, then `superpose_with_atom_selection(0, imol2, "//A/10-60", "//B/10-60", 1)` | ran, returned `4`; changed: new molecule 4 (model, Copy_of_tutorial-modern.pdb); graphics_n_molecules(): 4 -> 5 |
+| Scheme | first `(define imol2 (read-pdb "tutorial-modern.pdb"))`, then `(superpose-with-atom-selection 0 imol2 "//A/10-60" "//B/10-60" 1)` | ran, returned `4`; changed: new molecule 4 (model, Copy_of_tutorial-modern.pdb); graphics_n_molecules(): 4 -> 5 |
+
+Example written and checked by hand on the test data. Expected: returns the molecule number of the superposed copy (move flag 1 = copy here, despite the doc's wording); -1 on failure.
 
 Python and Scheme gave the same answer.
 
@@ -62,6 +64,6 @@ Arguments: imol1 (a whole number), imol2 (a whole number), chain_imol1 (text), c
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `superpose_with_chain_selection(0, 0, "A", "B", 0, 0, 0)` | ran (no return value) |
-| Scheme | `(superpose-with-chain-selection 0 0 "A" "B" 0 0 0)` | ran (no return value) |
+| Python | `superpose_with_chain_selection(0, 0, "A", "B", 0, 0, 0)` | ran (no return value); changed: molecule 0: coordinates of 189 residue(s) (A1, A2, A3, A4 ...); first_molecule_with_symmetry_displayed(): 0 -> -1; get_symmetry(0): ['x,y,z', '-x+1/2,-y,z+1/2', 'x+1/2,-y+1/2,-z', '-x,y+1/2,-z -> []; n_symops(0): 4 -> -1 |
+| Scheme | `(superpose-with-chain-selection 0 0 "A" "B" 0 0 0)` | ran (no return value); changed: molecule 0: coordinates of 189 residue(s) (A1, A2, A3, A4 ...); first_molecule_with_symmetry_displayed(): 0 -> -1; get_symmetry(0): ['x,y,z', '-x+1/2,-y,z+1/2', 'x+1/2,-y+1/2,-z', '-x,y+1/2,-z -> []; n_symops(0): 4 -> -1 |
 

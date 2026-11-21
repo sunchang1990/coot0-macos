@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="c7c7271b3030db0d6fdc437ce77d994e4d464e30">
+<meta name="coot0-source-sha1" content="84c38bbf0d32bc4458acdfdd944005f0439516c2">
 <title>Simplex Refinement Interface - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -23,15 +23,17 @@ Scheme: <code>(fit-residue-range-to-map-by-simplex res1 res2 altloc chain-id imo
 <p>refine residue range using simplex optimization</p>
 <p>Arguments: res1 (a whole number), res2 (a whole number), altloc (text), chain_id (text), imol (a whole number), imol_for_map (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>fit_residue_range_to_map_by_simplex(1, 1, "", "A", 0, 1)</code></td><td>no answer within 60 s (slow, or waits for something)</td></tr>
-<tr><td>Scheme</td><td><code>(fit-residue-range-to-map-by-simplex 1 1 "" "A" 0 1)</code></td><td>no answer within 60 s (slow, or waits for something)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>fit_residue_range_to_map_by_simplex(41, 43, "", "A", 0, 1)</code></td><td>ran (no return value); changed: molecule 0: coordinates of 3 residue(s) (A41, A42, A43)</td></tr>
+<tr><td>Scheme</td><td><code>(fit-residue-range-to-map-by-simplex 41 43 "" "A" 0 1)</code></td><td>ran (no return value); changed: molecule 0: coordinates of 3 residue(s) (A41, A42, A43)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: rigid-body/simplex fit of residues A41-43 of model 0 into map 1; the three residues move.</p>
+<p>Note: Earlier generated example timed out (long range); a 3-residue range takes 0.3 s.</p>
 <h3 id="score_residue_range_fit_to_map">score_residue_range_fit_to_map</h3>
 <p>Python: <code>score_residue_range_fit_to_map(res1, res2, altloc, chain_id, imol, imol_for_map)</code><br>
 Scheme: <code>(score-residue-range-fit-to-map res1 res2 altloc chain-id imol imol-for-map)</code></p>
 <p>simply score the residue range fit to map</p>
 <p>Arguments: res1 (a whole number), res2 (a whole number), altloc (text), chain_id (text), imol (a whole number), imol_for_map (a whole number). Returns: a number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>score_residue_range_fit_to_map(1, 1, "", "A", 0, 1)</code></td><td>ran, returned <code>5.491945266723633</code></td></tr>
-<tr><td>Scheme</td><td><code>(score-residue-range-fit-to-map 1 1 "" "A" 0 1)</code></td><td>ran, returned <code>5.491945266723633</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>score_residue_range_fit_to_map(1, 1, "", "A", 0, 1)</code></td><td>ran, returned <code>5.4941911697387695</code></td></tr>
+<tr><td>Scheme</td><td><code>(score-residue-range-fit-to-map 1 1 "" "A" 0 1)</code></td><td>ran, returned <code>5.4941911697387695</code></td></tr></tbody></table>
 <p>Python and Scheme gave the same answer.</p>
 </body></html>

@@ -13,8 +13,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `add_map_and_mol_display_control_widgets()` | ran (no return value) |
-| Scheme | `(add-map-and-mol-display-control-widgets)` | ran (no return value) |
+| Python | `add_map_and_mol_display_control_widgets()` | ran (no return value, nothing visible changed) |
+| Scheme | `(add-map-and-mol-display-control-widgets)` | ran (no return value, nothing visible changed) |
 
 ### add_map_display_control_widgets
 
@@ -25,8 +25,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `add_map_display_control_widgets()` | ran (no return value) |
-| Scheme | `(add-map-display-control-widgets)` | ran (no return value) |
+| Python | `add_map_display_control_widgets()` | ran (no return value, nothing visible changed) |
+| Scheme | `(add-map-display-control-widgets)` | ran (no return value, nothing visible changed) |
 
 ### add_mol_display_control_widgets
 
@@ -37,8 +37,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `add_mol_display_control_widgets()` | ran (no return value) |
-| Scheme | `(add-mol-display-control-widgets)` | ran (no return value) |
+| Python | `add_mol_display_control_widgets()` | ran (no return value, nothing visible changed) |
+| Scheme | `(add-mol-display-control-widgets)` | ran (no return value, nothing visible changed) |
 
 ### close_graphics_display_control_window
 
@@ -49,8 +49,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `close_graphics_display_control_window()` | ran (no return value) |
-| Scheme | `(close-graphics-display-control-window)` | ran (no return value) |
+| Python | `close_graphics_display_control_window()` | ran (no return value, nothing visible changed) |
+| Scheme | `(close-graphics-display-control-window)` | ran (no return value, nothing visible changed) |
 
 ### display_maps
 
@@ -63,8 +63,10 @@ Also available in Scheme as `display-maps-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | first `imap2 = map_from_mtz_by_calc_phases("rnasa-1.8-all_refmac1.mtz", "FGMP18", "SIGFGMP18", 0)`, then `display_maps([imap2])` | ran (no return value); changed: map 1 displayed: 1 -> 0 |
+| Scheme | first `(define imap2 (map-from-mtz-by-calc-phases "rnasa-1.8-all_refmac1.mtz" "FGMP18" "SIGFGMP18" 0))`, then `(display-maps (list imap2))` | ran (no return value); changed: map 1 displayed: 1 -> 0 |
+
+Example written and checked by hand on the test data. Expected: displays the listed maps and undisplays every other map.
 
 ### display_only_active
 
@@ -77,8 +79,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `display_only_active()` | ran (no return value) |
-| Scheme | `(display-only-active)` | ran (no return value) |
+| Python | `display_only_active()` | ran (no return value, nothing visible changed) |
+| Scheme | `(display-only-active)` | ran (no return value, nothing visible changed) |
 
 ### map_is_displayed
 
@@ -92,8 +94,10 @@ Arguments: imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `map_is_displayed(0)` | ran, returned `0` |
-| Scheme | `(map-is-displayed 0)` | ran, returned `0` |
+| Python | `map_is_displayed(1)` | ran, returned `1` |
+| Scheme | `(map-is-displayed 1)` | ran, returned `1` |
+
+Example written and checked by hand on the test data. Expected: 1 when the map is displayed, 0 when not.
 
 Python and Scheme gave the same answer.
 
@@ -168,8 +172,10 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `post_display_control_window()` | stopped Coot when tried without a window (not checked with a window) |
-| Scheme | `(post-display-control-window)` | stopped Coot when tried without a window (not checked with a window) |
+| Python | `post_display_control_window()` | not run: needs the graphics window (stops Coot without a screen) |
+| Scheme | `(post-display-control-window)` | not run: needs the graphics window (stops Coot without a screen) |
+
+Example written and checked by hand on the test data. Expected: opens the Display Manager window.
 
 ### reset_graphics_display_control_window
 
@@ -180,8 +186,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `reset_graphics_display_control_window()` | ran (no return value) |
-| Scheme | `(reset-graphics-display-control-window)` | ran (no return value) |
+| Python | `reset_graphics_display_control_window()` | ran (no return value, nothing visible changed) |
+| Scheme | `(reset-graphics-display-control-window)` | ran (no return value, nothing visible changed) |
 
 ### set_all_maps_displayed
 
@@ -195,8 +201,8 @@ Arguments: on_or_off (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_all_maps_displayed(1)` | ran (no return value) |
-| Scheme | `(set-all-maps-displayed 1)` | ran (no return value) |
+| Python | `set_all_maps_displayed(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-all-maps-displayed 1)` | ran (no return value, nothing visible changed) |
 
 ### set_all_models_displayed_and_active
 
@@ -210,8 +216,8 @@ Arguments: on_or_off (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_all_models_displayed_and_active(1)` | ran (no return value) |
-| Scheme | `(set-all-models-displayed-and-active 1)` | ran (no return value) |
+| Python | `set_all_models_displayed_and_active(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-all-models-displayed-and-active 1)` | ran (no return value, nothing visible changed) |
 
 ### set_display_only_model_mol
 
@@ -226,8 +232,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_display_only_model_mol(0)` | ran (no return value) |
-| Scheme | `(set-display-only-model-mol 0)` | ran (no return value) |
+| Python | `set_display_only_model_mol(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-display-only-model-mol 0)` | ran (no return value, nothing visible changed) |
 
 ### set_map_displayed
 
@@ -240,8 +246,8 @@ Arguments: imol (a whole number), state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_map_displayed(0, 1)` | ran (no return value) |
-| Scheme | `(set-map-displayed 0 1)` | ran (no return value) |
+| Python | `set_map_displayed(0, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-map-displayed 0 1)` | ran (no return value, nothing visible changed) |
 
 ### set_merge_molecules_ligand_spec
 
@@ -254,8 +260,8 @@ Also available in Scheme as `set-merge-molecules-ligand-spec-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_merge_molecules_ligand_spec(["A", 41, ""])` | ran (no return value) |
-| Scheme | `(set-merge-molecules-ligand-spec (list "A" 41 ""))` | ran (no return value) |
+| Python | `set_merge_molecules_ligand_spec(["A", 41, ""])` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-merge-molecules-ligand-spec (list "A" 41 ""))` | ran (no return value, nothing visible changed) |
 
 ### set_mol_active
 
@@ -269,8 +275,8 @@ Arguments: imol (a whole number), state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_mol_active(0, 1)` | ran (no return value) |
-| Scheme | `(set-mol-active 0 1)` | ran (no return value) |
+| Python | `set_mol_active(0, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-mol-active 0 1)` | ran (no return value, nothing visible changed) |
 
 ### set_mol_displayed
 
@@ -283,8 +289,8 @@ Arguments: imol (a whole number), state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_mol_displayed(0, 1)` | ran (no return value) |
-| Scheme | `(set-mol-displayed 0 1)` | ran (no return value) |
+| Python | `set_mol_displayed(0, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-mol-displayed 0 1)` | ran (no return value, nothing visible changed) |
 
 ### set_only_last_model_molecule_displayed
 
@@ -297,8 +303,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_only_last_model_molecule_displayed()` | ran (no return value) |
-| Scheme | `(set-only-last-model-molecule-displayed)` | ran (no return value) |
+| Python | `set_only_last_model_molecule_displayed()` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-only-last-model-molecule-displayed)` | ran (no return value, nothing visible changed) |
 
 ### show_spacegroup
 
@@ -368,6 +374,10 @@ Also available in Scheme as `symmetry-operators-to-xHM-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | `symmetry_operators_to_xHM(symmetry_operators(0))` | ran, returned `'P 21 21 21'` |
+| Scheme | `(symmetry-operators->xHM (list "x,y,z" "-x+1/2,-y,z+1/2" "-x,y+1/2,-z+1/2" "x+1/2,-y+1/2,-z"))` | ran, returned `"P 21 21 21"` |
+
+Example written and checked by hand on the test data. Expected: returns the Hermann-Mauguin symbol of the space group made from the symmetry operator strings; False if they do not form a group.
+
+Python and Scheme gave the same answer.
 

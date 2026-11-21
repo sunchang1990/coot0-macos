@@ -32,8 +32,10 @@ Arguments: imol (a whole number), chain_id (text), start_res (a whole number), l
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `renumber_residue_range(0, "A", 41, 45, 1)` | ran, returned `0` |
-| Scheme | `(renumber-residue-range 0 "A" 41 45 1)` | ran, returned `0` |
+| Python | `renumber_residue_range(0, "A", 41, 45, 100)` | ran, returned `1`; changed: molecule 0: added 5 residue(s) (A141, A142, A143, A144 ...); molecule 0: deleted 5 residue(s) (A41, A42, A43, A44 ...) |
+| Scheme | `(renumber-residue-range 0 "A" 41 45 100)` | ran, returned `1`; changed: molecule 0: added 5 residue(s) (A141, A142, A143, A144 ...); molecule 0: deleted 5 residue(s) (A41, A42, A43, A44 ...) |
+
+Example written and checked by hand on the test data. Expected: returns 1 and adds the offset to the residue numbers of A41-A45.
 
 Python and Scheme gave the same answer.
 

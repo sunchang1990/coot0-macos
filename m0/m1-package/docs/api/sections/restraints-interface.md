@@ -38,8 +38,10 @@ Arguments: dp (a list). Returns: a value (see the result of the example).
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | (no example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no example) | not run: no automatic example (it takes a list, a widget or an object) |
+
+Example written and checked by hand on the test data. Expected: internal: converts a C++ (dipole, imol) pair to a script value.
 
 ### get_residue_by_type
 
@@ -52,8 +54,14 @@ Arguments: ? (a whole number), residue_type (text). Returns: a value (see the re
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `get_residue_by_type(1, "ALA")` | ran, returned `False` |
-| Scheme | `(get-residue-by-type 0 "ALA")` | ran, returned `#<collectable-swig-pointer coot::residue_spec_t * 814d5bcf0>` |
+| Python | `get_residue_by_type(0, "ALA")` | ran, returned `[True, 'A', 10, '']` |
+| Scheme | `(get-residue-by-type-scm 0 "ALA")` | ran, returned `(#t "A" 10 "")` |
+
+Example written and checked by hand on the test data. Expected: returns the residue spec of the first residue of that type, or False if there is none.
+
+Note: Scheme: the name get-residue-by-type is the C++ function and returns a raw #<swig-pointer residue_spec_t>; use get-residue-by-type-scm
+
+Python and Scheme gave the same answer.
 
 ### get_residue_specs_in_mol
 
@@ -67,7 +75,7 @@ Arguments: imol (a whole number), residue_type (text). Returns: a value (see the
 | | Example | When tried (test data, no window) |
 |---|---|---|
 | Python | `get_residue_specs_in_mol(0, "ALA")` | ran, returned `[[True, 'A', 10, ''], [True, 'A', 15, ''], [True, 'A', 23, ''], [True, 'A', 62, ''], [True, 'A', 75, ''], [True, 'A', 87 ...` |
-| Scheme | `(get-residue-specs-in-mol 0 "ALA")` | ran, returned `#<collectable-swig-pointer std::vector< coot::residue_spec_t > * 8145dfc40>` |
+| Scheme | `(get-residue-specs-in-mol 0 "ALA")` | ran, returned `#<collectable-swig-pointer std::vector< coot::residue_spec_t > * 94b868c20>` |
 
 ### list_nomenclature_errors
 
@@ -127,8 +135,12 @@ Arguments: python_command (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `pyrun_simple_string("hello")` | not run: not run automatically (run: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(pyrun-simple-string "hello")` | not run: not run automatically (run: exits, uses the network, an external program, files or a screen) |
+| Python | `pyrun_simple_string("print('hi from pyrun'); set_rotation_centre(5, 5, 5)")` | ran, returned `0`; changed: rotation centre moved 37.6 A to (5.0, 5.0, 5.0) |
+| Scheme | `(pyrun-simple-string "print('hi from scheme via pyrun')")` | ran, returned `0` |
+
+Example written and checked by hand on the test data. Expected: runs the Python text in Coot's Python; returns 0 on success.
+
+Python and Scheme gave the same answer.
 
 ### residue_spec_from_py
 
@@ -139,8 +151,8 @@ Arguments: residue_in (a list or value). Returns: `coot::residue_spec_t`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `residue_spec_from_py(["A", 41, ""])` | ran, returned `<coot.residue_spec_t; proxy of <Swig Object of type 'coot::residue_spec_t *' at 0x1077a5260> >` |
-| Scheme | `(residue-spec-from-scm (list "A" 41 ""))` | ran, returned `#<collectable-swig-pointer coot::residue_spec_t * 77f04e9e0>` |
+| Python | `residue_spec_from_py(["A", 41, ""])` | ran, returned `<coot.residue_spec_t; proxy of <Swig Object of type 'coot::residue_spec_t *' at 0x10785f8d0> >` |
+| Scheme | `(residue-spec-from-scm (list "A" 41 ""))` | ran, returned `#<collectable-swig-pointer coot::residue_spec_t * a44c39c20>` |
 
 ### residue_spec_make_triple
 
@@ -169,8 +181,12 @@ Arguments: res (`coot::residue_spec_t`). Returns: a value (see the result of the
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | `residue_spec_to_py(residue_spec_t("A", 41, ""))` | ran, returned `[True, 'A', 41, '']` |
+| Scheme | `(residue-spec-to-scm (new-residue-spec-t "A" 41 ""))` | ran, returned `(#t "A" 41 "")` |
+
+Example written and checked by hand on the test data. Expected: converts a SWIG residue_spec_t object into a script list [True, chain, resno, ins].
+
+Python and Scheme gave the same answer.
 
 ### run-python-command
 
@@ -181,7 +197,9 @@ Arguments: python-command (text). Returns: a value (see the result of the exampl
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Scheme | `(run-python-command "hello")` | not run: not run automatically (run: exits, uses the network, an external program, files or a screen) |
+| Scheme | `(run-python-command "2 + 3")` | ran, returned `5` |
+
+Example written and checked by hand on the test data. Expected: evaluates a Python expression from Scheme and returns its value converted to Scheme.
 
 ### run_scheme_command
 
@@ -194,7 +212,9 @@ Arguments: scheme_command (text). Returns: a value (see the result of the exampl
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `run_scheme_command("hello")` | not run: not run automatically (run: exits, uses the network, an external program, files or a screen) |
+| Python | `run_scheme_command("(+ 2 3)")` | ran, returned `5` |
+
+Example written and checked by hand on the test data. Expected: evaluates a Scheme expression from Python and returns its value converted to Python.
 
 ### set_monomer_restraints
 
@@ -210,8 +230,12 @@ Also available in Python as `set_monomer_restraints_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | first `r = monomer_restraints("ALA")`, then `r["_chem_comp_bond"] = [b if b[:2] != [" N  ", " CA "] else [b[0], b[1], b[2], 1.50, b[4]] for b in r["_chem_comp_bond"]]`, then `set_monomer_restraints("ALA", r)` | ran, returned `True` |
+| Scheme | `(set-monomer-restraints "ALA" (monomer-restraints "ALA"))` | ran, returned `#t` |
+
+Example written and checked by hand on the test data. Expected: replaces the ALA dictionary restraints by the given ones (as returned by monomer_restraints); True on success.
+
+Python and Scheme gave the same answer.
 
 ### show_fix_nomenclature_errors_gui
 
@@ -222,6 +246,8 @@ Arguments: imol (a whole number), nomenclature_errors (a list). Returns: nothing
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `show_fix_nomenclature_errors_gui(0, "hello")` | error: TypeError: in method 'show_fix_nomenclature_errors_gui', argument 2 of type 'std::vector< std::pair< std::string,coot::residue_spec_t >,std: ... |
-| Scheme | `(show-fix-nomenclature-errors-gui 0 "hello")` | error: In procedure show-fix-nomenclature-errors-gui: Wrong type argument in position 2: "hello" |
+| Python | `show_fix_nomenclature_errors_gui(0, "hello")` | not run: needs a C++ vector of (string, residue_spec_t) pairs and opens a dialog; not callable from scripts |
+| Scheme | `(show-fix-nomenclature-errors-gui 0 "hello")` | not run: needs a C++ vector of (string, residue_spec_t) pairs and opens a dialog; not callable from scripts |
+
+Example written and checked by hand on the test data. Expected: shows a dialog listing nomenclature errors to fix.
 

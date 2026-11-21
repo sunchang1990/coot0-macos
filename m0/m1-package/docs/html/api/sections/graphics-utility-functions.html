@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="b3ea05fdc4011abbacf21216bcbdd8a4f6bed9a4">
+<meta name="coot0-source-sha1" content="42cfa34a0ab91f9b156ad0f6db814d376c25f8d1">
 <title>Graphics Utility Functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -23,8 +23,8 @@ Scheme: <code>(allow-duplicate-sequence-numbers)</code></p>
 <p>enable reading PDB/pdbx files with duplicate sequence numbers</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>allow_duplicate_sequence_numbers()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(allow-duplicate-sequence-numbers)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>allow_duplicate_sequence_numbers()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(allow-duplicate-sequence-numbers)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="assign_hetatms">assign_hetatms</h3>
 <p>Python: <code>assign_hetatms(imol)</code><br>
 Scheme: <code>(assign-hetatms imol)</code></p>
@@ -33,17 +33,18 @@ Scheme: <code>(assign-hetatms imol)</code></p>
  PDB definition.</p>
 <p>Arguments: imol (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>assign_hetatms(0)</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Python</td><td>first <code>imol_nag = read_pdb("nag_only.pdb")</code>, then <code>assign_hetatms(imol_nag)</code></td><td>ran, returned <code>30</code></td></tr>
 <tr><td>Scheme</td><td><code>(assign-hetatms 0)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
-<p>Python and Scheme gave the same answer.</p>
+<p>Example written and checked by hand on the test data. Expected: returns the number of atoms changed to HETATM in non-standard residues; 0 for a pure protein.</p>
+<p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 <h3 id="check_for_dark_blue_density">check_for_dark_blue_density</h3>
 <p>Python: <code>check_for_dark_blue_density()</code><br>
 Scheme: <code>(check-for-dark-blue-density)</code></p>
 <p>give a warning dialog if density it too dark (blue)</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>check_for_dark_blue_density()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(check-for-dark-blue-density)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>check_for_dark_blue_density()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(check-for-dark-blue-density)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="clear_and_update_model_molecule_from_file">clear_and_update_model_molecule_from_file</h3>
 <p>Python: <code>clear_and_update_model_molecule_from_file(molecule_number, file_name)</code><br>
 Scheme: <code>(clear-and-update-model-molecule-from-file molecule-number file-name)</code></p>
@@ -51,8 +52,9 @@ Scheme: <code>(clear-and-update-model-molecule-from-file molecule-number file-na
  Return -1 on failure. Else return molecule_number</p>
 <p>Arguments: molecule_number (a whole number), file_name (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>clear_and_update_model_molecule_from_file(0, "tutorial-modern.pdb")</code></td><td>ran, returned <code>0</code></td></tr>
-<tr><td>Scheme</td><td><code>(clear-and-update-model-molecule-from-file 0 "tutorial-modern.pdb")</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>imol2 = read_pdb("tutorial-modern.pdb")</code>, then <code>clear_and_update_model_molecule_from_file(imol2, "standard-residues.pdb")</code></td><td>ran, returned <code>3</code>; changed: molecule 3: added 26 residue(s) (A912, A957, A888, A876 ...); molecule 3: deleted 181 residue(s) (A2, A3, A4, A5 ...); molecule 3: atoms of 8 residue(s) (A1, A6, A7, A14 ...); first_small_coords_imol(): -1 -&gt; 3</td></tr>
+<tr><td>Scheme</td><td>first <code>(define imol2 (read-pdb "tutorial-modern.pdb"))</code>, then <code>(clear-and-update-model-molecule-from-file imol2 "standard-residues.pdb")</code></td><td>ran, returned <code>3</code>; changed: molecule 3: added 26 residue(s) (A912, A957, A888, A876 ...); molecule 3: deleted 181 residue(s) (A2, A3, A4, A5 ...); molecule 3: atoms of 8 residue(s) (A1, A6, A7, A14 ...); first_small_coords_imol(): -1 -&gt; 3</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: replaces the coordinates of the molecule by those in the file, keeping its molecule number; returns that number, -1 on failure.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="copy_residue_range">copy_residue_range</h3>
 <p>Python: <code>copy_residue_range(imol_target, chain_id_target, imol_reference, chain_id_reference, resno_range_start, resno_range_end)</code><br>
@@ -61,8 +63,11 @@ Scheme: <code>(copy-residue-range imol-target chain-id-target imol-reference cha
 <p>resno_range_start and resno_range_end are inclusive.</p>
 <p>Arguments: imol_target (a whole number), chain_id_target (text), imol_reference (a whole number), chain_id_reference (text), resno_range_start (a whole number), resno_range_end (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>copy_residue_range(0, "A", 0, "A", 41, 45)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
-<tr><td>Scheme</td><td><code>(copy-residue-range 0 "A" 0 "A" 41 45)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>imol2 = read_pdb("tutorial-modern.pdb")</code>, then <code>copy_residue_range(imol2, "B", 0, "A", 10, 20)</code></td><td>ran, returned <code>0</code>; changed: molecule 3: B-factors of 11 residue(s) (B10, B11, B12, B13 ...); molecule 3: coordinates of 11 residue(s) (B10, B11, B12, B13 ...)</td></tr>
+<tr><td>Scheme</td><td>first <code>(define imol2 (read-pdb "tutorial-modern.pdb"))</code>, then <code>(copy-residue-range imol2 "B" 0 "A" 10 20)</code></td><td>ran, returned <code>0</code>; changed: molecule 3: B-factors of 11 residue(s) (B10, B11, B12, B13 ...); molecule 3: coordinates of 11 residue(s) (B10, B11, B12, B13 ...)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: copies coordinates of the residue range from the reference chain onto the same residues of the target chain (no superposition).</p>
+<p>Note: Returns 0 although 11 residues were copied (the old automatic run stopped Coot only because of placeholder arguments). The return status looks unreliable.</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="do_gl_lighting_state">do_GL_lighting_state</h3>
 <p>Python: <code>do_GL_lighting_state()</code><br>
 Scheme: <code>(do-GL-lighting-state)</code></p>
@@ -87,9 +92,9 @@ Scheme: <code>(get-idle-function-rock-target-angle)</code></p>
 <p>used by above to set the angle to rotate to (time dependent)</p>
 <p>Arguments: none. Returns: a number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>get_idle_function_rock_target_angle()</code></td><td>ran, returned <code>0.007305599456073013</code></td></tr>
-<tr><td>Scheme</td><td><code>(get-idle-function-rock-target-angle)</code></td><td>ran, returned <code>0.007117656556372816</code></td></tr></tbody></table>
-<p>Python and Scheme gave the same answer.</p>
+<tr><td>Python</td><td><code>get_idle_function_rock_target_angle()</code></td><td>ran, returned <code>-0.05417729701955092</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-idle-function-rock-target-angle)</code></td><td>ran, returned <code>-0.05486917173613091</code></td></tr></tbody></table>
+<p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 <h3 id="get-input-model-was-cif-state-scm">get-input-model-was-cif-state-scm</h3>
 <p>Scheme: <code>(get-input-model-was-cif-state-scm imol)</code></p>
 <ul><li>get the name state of the input model. Return false if there was an erro with the molecule index</li></ul>
@@ -97,6 +102,7 @@ Scheme: <code>(get-idle-function-rock-target-angle)</code></p>
 <strong>Scheme only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Scheme</td><td><code>(get-input-model-was-cif-state-scm 0)</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: #f for a model read from PDB format, #t for mmCIF, #f for an invalid molecule.</p>
 <h3 id="get_input_molecule_was_in_mmcif_state">get_input_molecule_was_in_mmcif_state</h3>
 <p>Python: <code>get_input_molecule_was_in_mmcif_state(imol)</code></p>
 <ul><li>get the name state of the input model</li></ul>
@@ -105,13 +111,15 @@ Also available in Python as <code>get_input_molecule_was_in_mmcif_state_py</code
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>get_input_molecule_was_in_mmcif_state(0)</code></td><td>ran, returned <code>False</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: False for a molecule read from PDB format, True for one read from mmCIF.</p>
 <h3 id="get_solid_density_surface_opacity">get_solid_density_surface_opacity</h3>
 <p>Python: <code>get_solid_density_surface_opacity(imol)</code><br>
 Scheme: <code>(get-solid-density-surface-opacity imol)</code></p>
 <p>Arguments: imol (a whole number). Returns: a number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>get_solid_density_surface_opacity(0)</code></td><td>ran, returned <code>-1.0</code></td></tr>
-<tr><td>Scheme</td><td><code>(get-solid-density-surface-opacity 0)</code></td><td>ran, returned <code>-1.0</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>get_solid_density_surface_opacity(1)</code></td><td>ran, returned <code>0.5</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-solid-density-surface-opacity 1)</code></td><td>ran, returned <code>0.5</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the opacity of the map's solid surface (0.5 default).</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="graphics_n_molecules">graphics_n_molecules</h3>
 <p>Python: <code>graphics_n_molecules()</code><br>
@@ -121,8 +129,8 @@ Scheme: <code>(graphics-n-molecules)</code></p>
 <p> Returns the number of molecules (closed molecules are not counted)</p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>graphics_n_molecules()</code></td><td>ran, returned <code>2</code></td></tr>
-<tr><td>Scheme</td><td><code>(graphics-n-molecules)</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>graphics_n_molecules()</code></td><td>ran, returned <code>3</code></td></tr>
+<tr><td>Scheme</td><td><code>(graphics-n-molecules)</code></td><td>ran, returned <code>3</code></td></tr></tbody></table>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="handle_read_draw_molecule">handle_read_draw_molecule</h3>
 <p>Python: <code>handle_read_draw_molecule(filename)</code><br>
@@ -131,8 +139,8 @@ Scheme: <code>(handle-read-draw-molecule filename)</code></p>
  filename (can be pdb, cif or shelx format)</p>
 <p>Arguments: filename (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>handle_read_draw_molecule("tutorial-modern.pdb")</code></td><td>ran, returned <code>2</code></td></tr>
-<tr><td>Scheme</td><td><code>(handle-read-draw-molecule "tutorial-modern.pdb")</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>handle_read_draw_molecule("tutorial-modern.pdb")</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (model, tutorial-modern.pdb); graphics_n_molecules(): 3 -&gt; 4</td></tr>
+<tr><td>Scheme</td><td><code>(handle-read-draw-molecule "tutorial-modern.pdb")</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (model, tutorial-modern.pdb); graphics_n_molecules(): 3 -&gt; 4</td></tr></tbody></table>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="handle_read_draw_molecule_and_move_molecule_here">handle_read_draw_molecule_and_move_molecule_here</h3>
 <p>Python: <code>handle_read_draw_molecule_and_move_molecule_here(filename)</code><br>
@@ -141,8 +149,8 @@ Scheme: <code>(handle-read-draw-molecule-and-move-molecule-here filename)</code>
  molecule at the screen rotation centre.</p>
 <p>Arguments: filename (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>handle_read_draw_molecule_and_move_molecule_here("tutorial-modern.pdb")</code></td><td>ran, returned <code>2</code></td></tr>
-<tr><td>Scheme</td><td><code>(handle-read-draw-molecule-and-move-molecule-here "tutorial-modern.pdb")</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>handle_read_draw_molecule_and_move_molecule_here("tutorial-modern.pdb")</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (model, tutorial-modern.pdb); graphics_n_molecules(): 3 -&gt; 4</td></tr>
+<tr><td>Scheme</td><td><code>(handle-read-draw-molecule-and-move-molecule-here "tutorial-modern.pdb")</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (model, tutorial-modern.pdb); graphics_n_molecules(): 3 -&gt; 4</td></tr></tbody></table>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="handle_read_draw_molecule_with_recentre">handle_read_draw_molecule_with_recentre</h3>
 <p>Python: <code>handle_read_draw_molecule_with_recentre(filename, recentre_on_read_pdb_flag)</code><br>
@@ -152,8 +160,8 @@ Scheme: <code>(handle-read-draw-molecule-with-recentre filename recentre-on-read
  recentre on the new coordinates.</p>
 <p>Arguments: filename (text), recentre_on_read_pdb_flag (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>handle_read_draw_molecule_with_recentre("tutorial-modern.pdb", 1)</code></td><td>ran, returned <code>2</code></td></tr>
-<tr><td>Scheme</td><td><code>(handle-read-draw-molecule-with-recentre "tutorial-modern.pdb" 1)</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>handle_read_draw_molecule_with_recentre("tutorial-modern.pdb", 1)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (model, tutorial-modern.pdb); graphics_n_molecules(): 3 -&gt; 4</td></tr>
+<tr><td>Scheme</td><td><code>(handle-read-draw-molecule-with-recentre "tutorial-modern.pdb" 1)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (model, tutorial-modern.pdb); graphics_n_molecules(): 3 -&gt; 4</td></tr></tbody></table>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="het_group_n_atoms">het_group_n_atoms</h3>
 <p>Python: <code>het_group_n_atoms(comp_id)</code><br>
@@ -184,8 +192,10 @@ Scheme: <code>(hetify-residue imol chain-id resno ins-code)</code></p>
 <p>Return 1 on atoms changes, 0 on not. Return -1 if residue not found.</p>
 <p>Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_code (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>hetify_residue(0, "A", 41, "")</code></td><td>ran, returned <code>-1</code></td></tr>
-<tr><td>Scheme</td><td><code>(hetify-residue 0 "A" 41 "")</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>imol_nag = read_pdb("nag_only.pdb")</code>, then <code>hetify_residue(imol_nag, "A", 1, "")</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td>first <code>(define imol-nag (read-pdb "nag_only.pdb"))</code>, then <code>(hetify-residue imol-nag "A" 1 "")</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns 1 when a non-standard residue's atoms are made HETATMs; a standard residue is left alone.</p>
+<p>Note: For a standard residue that exists (GLU A41) it returns -1 although the doc says -1 = residue not found and 0 = no change (the code only sets 1 when atoms changed, else keeps -1).</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="idle_function_rotate_angle">idle_function_rotate_angle</h3>
 <p>Python: <code>idle_function_rotate_angle()</code><br>
@@ -203,8 +213,8 @@ Scheme: <code>(make-updating-model-molecule filename)</code></p>
 If the file updates, then the model will be updated.</p>
 <p>Arguments: filename (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>make_updating_model_molecule("tutorial-modern.pdb")</code></td><td>ran, returned <code>1</code></td></tr>
-<tr><td>Scheme</td><td><code>(make-updating-model-molecule "tutorial-modern.pdb")</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>make_updating_model_molecule("tutorial-modern.pdb")</code></td><td>ran, returned <code>1</code>; changed: new molecule 3 (model, tutorial-modern.pdb); graphics_n_molecules(): 3 -&gt; 4</td></tr>
+<tr><td>Scheme</td><td><code>(make-updating-model-molecule "tutorial-modern.pdb")</code></td><td>ran, returned <code>1</code>; changed: new molecule 3 (model, tutorial-modern.pdb); graphics_n_molecules(): 3 -&gt; 4</td></tr></tbody></table>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="molecule_has_hydrogens_raw">molecule_has_hydrogens_raw</h3>
 <p>Python: <code>molecule_has_hydrogens_raw(imol)</code><br>
@@ -215,8 +225,9 @@ Scheme: <code>(molecule-has-hydrogens-raw imol)</code></p>
  boolean True or False.</p>
 <p>Arguments: imol (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>molecule_has_hydrogens_raw(0)</code></td><td>ran, returned <code>0</code></td></tr>
-<tr><td>Scheme</td><td><code>(molecule-has-hydrogens-raw 0)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>imol_nag = read_pdb("nag_only.pdb")</code>, then <code>molecule_has_hydrogens_raw(imol_nag)</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td>first <code>(define imol-nag (read-pdb "nag_only.pdb"))</code>, then <code>(molecule-has-hydrogens-raw imol-nag)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: 1 if the molecule has at least one hydrogen, 0 if not (0 is correct for tutorial-modern.pdb).</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="own_molecule_number">own_molecule_number</h3>
 <p>Python: <code>own_molecule_number(imol)</code><br>
@@ -228,8 +239,9 @@ Scheme: <code>(own-molecule-number imol)</code></p>
 <p>Arguments: imol (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>own_molecule_number(0)</code></td><td>ran, returned <code>0</code></td></tr>
-<tr><td>Scheme</td><td><code>(own-molecule-number 0)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
-<p>Python and Scheme gave the same answer.</p>
+<tr><td>Scheme</td><td><code>(own-molecule-number 1)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the same number it was given (debug check that a molecule knows its own number).</p>
+<p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 <h3 id="python_at_prompt_at_startup_state">python_at_prompt_at_startup_state</h3>
 <p>Python: <code>python_at_prompt_at_startup_state()</code><br>
 Scheme: <code>(python-at-prompt-at-startup-state)</code></p>
@@ -246,8 +258,8 @@ Scheme: <code>(read-pdb filename)</code></p>
 <p>read coordinates from filename</p>
 <p>Arguments: filename (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_pdb("tutorial-modern.pdb")</code></td><td>ran, returned <code>2</code></td></tr>
-<tr><td>Scheme</td><td><code>(read-pdb "tutorial-modern.pdb")</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>read_pdb("tutorial-modern.pdb")</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (model, tutorial-modern.pdb); graphics_n_molecules(): 3 -&gt; 4</td></tr>
+<tr><td>Scheme</td><td><code>(read-pdb "tutorial-modern.pdb")</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (model, tutorial-modern.pdb); graphics_n_molecules(): 3 -&gt; 4</td></tr></tbody></table>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="replace_fragment">replace_fragment</h3>
 <p>Python: <code>replace_fragment(imol_target, imol_fragment, atom_selection)</code><br>
@@ -265,8 +277,10 @@ Scheme: <code>(replace-residues-from-mol-scm imol-target imol-ref residue-specs-
 <p>Arguments: imol_target (a whole number), imol_ref (a whole number), residue_specs_list_ref_py (a list or value). Returns: a whole number.
 Also available in Python as <code>replace_residues_from_mol_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>replace_residues_from_mol(0, 0, ["A", 41, ""])</code></td><td>error: SystemError: &lt;built-in function replace_residues_from_mol_py&gt; returned a result with an exception set</td></tr>
-<tr><td>Scheme</td><td><code>(replace-residues-from-mol-scm 0 0 (list "A" 41 ""))</code></td><td>error: In procedure length: Wrong type argument in position 1: "A"</td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>imol2 = read_pdb("tutorial-modern.pdb")</code>, then <code>delete_residue(imol2, "A", 41, "")</code>, then <code>replace_residues_from_mol(imol2, 0, [["A", 41, ""], ["A", 42, ""]])</code></td><td>ran, returned <code>1</code>; changed: molecule 3: added 1 residue(s) (A41)</td></tr>
+<tr><td>Scheme</td><td>first <code>(define imol2 (read-pdb "tutorial-modern.pdb"))</code>, then <code>(delete-residue imol2 "A" 41 "")</code>, then <code>(replace-residues-from-mol-scm imol2 0 (list (list "A" 41 "") (list "A" 42 "")))</code></td><td>ran, returned <code>1</code>; changed: molecule 3: added 1 residue(s) (A41)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: replaces (or adds) the listed residues in the target molecule with those of the reference molecule; returns 1 on success.</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="reset_view">reset_view</h3>
 <p>Python: <code>reset_view()</code><br>
 Scheme: <code>(reset-view)</code></p>
@@ -276,8 +290,10 @@ Scheme: <code>(reset-view)</code></p>
  go to the previous molecule, if we are there, then go to the origin.</p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>reset_view()</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Python</td><td><code>reset_view()</code></td><td>ran, returned <code>0</code>; changed: zoom: 100.0 -&gt; 145.85</td></tr>
 <tr><td>Scheme</td><td><code>(reset-view)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: centres on the last-read molecule and resets the zoom (the view does move; see note).</p>
+<p>Note: Doc says 'return 1 if we moved', but it returned 0 although the centre moved 3.8 A and the zoom changed.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="residue_has_hetatms">residue_has_hetatms</h3>
 <p>Python: <code>residue_has_hetatms(imol, chain_id, resno, ins_code)</code><br>
@@ -287,9 +303,10 @@ Scheme: <code>(residue-has-hetatms imol chain-id resno ins-code)</code></p>
 return 0. If residue not found, return -1.</p>
 <p>Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_code (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>residue_has_hetatms(0, "A", 41, "")</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Python</td><td>first <code>imol_nag = read_pdb("nag_only.pdb")</code>, then <code>residue_has_hetatms(imol_nag, "A", 1, "")</code></td><td>ran, returned <code>1</code></td></tr>
 <tr><td>Scheme</td><td><code>(residue-has-hetatms 0 "A" 41 "")</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
-<p>Python and Scheme gave the same answer.</p>
+<p>Example written and checked by hand on the test data. Expected: 1 if all atoms of the residue are HETATMs, 0 if not, -1 if no such residue.</p>
+<p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 <h3 id="screendump_image">screendump_image</h3>
 <p>Python: <code>screendump_image(filename)</code><br>
 Scheme: <code>(screendump-image filename)</code></p>
@@ -298,8 +315,9 @@ Scheme: <code>(screendump-image filename)</code></p>
 make movies</p>
 <p>Arguments: filename (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>screendump_image("tutorial-modern.pdb")</code></td><td>not run: not run automatically (screendump: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(screendump-image "tutorial-modern.pdb")</code></td><td>not run: not run automatically (screendump: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>screendump_image("view.ppm")</code></td><td>not run: needs the graphics window (reads the OpenGL frame buffer)</td></tr>
+<tr><td>Scheme</td><td><code>(screendump-image "view.ppm")</code></td><td>not run: needs the graphics window (reads the OpenGL frame buffer)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: writes the current graphics view to the image file.</p>
 <h3 id="set_convert_to_v2_atom_names">set_convert_to_v2_atom_names</h3>
 <p>Python: <code>set_convert_to_v2_atom_names(state)</code><br>
 Scheme: <code>(set-convert-to-v2-atom-names state)</code></p>
@@ -311,8 +329,8 @@ transparently.</p>
 <p>default off (0).</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_convert_to_v2_atom_names(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-convert-to-v2-atom-names 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_convert_to_v2_atom_names(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-convert-to-v2-atom-names 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_do_gl_lighting">set_do_GL_lighting</h3>
 <p>Python: <code>set_do_GL_lighting(state)</code><br>
 Scheme: <code>(set-do-GL-lighting state)</code></p>
@@ -320,16 +338,18 @@ Scheme: <code>(set-do-GL-lighting state)</code></p>
 <p> slows down the display of simple lines</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_do_GL_lighting(1)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
-<tr><td>Scheme</td><td><code>(set-do-GL-lighting 1)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_do_GL_lighting(1)</code></td><td>not run: needs the graphics window (stops Coot without a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(set-do-GL-lighting 1)</code></td><td>not run: needs the graphics window (stops Coot without a screen)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: turns OpenGL lighting on (1) or off (0) for solid objects.</p>
 <h3 id="set_do_anti_aliasing">set_do_anti_aliasing</h3>
 <p>Python: <code>set_do_anti_aliasing(state)</code><br>
 Scheme: <code>(set-do-anti-aliasing state)</code></p>
 <p>set the bond lines to be antialiased</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_do_anti_aliasing(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-do-anti-aliasing 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_do_anti_aliasing(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-do-anti-aliasing 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Setting checked (set to another value and read back, then put back): Python: do_anti_aliasing_state was 0, set to 1, read back 1; Scheme: do-anti-aliasing-state was 0, set to 1, read back 1.</p>
 <h3 id="set_draw_map_standard_lines">set_draw_map_standard_lines</h3>
 <p>Python: <code>set_draw_map_standard_lines(imol, state)</code><br>
 Scheme: <code>(set-draw-map-standard-lines imol state)</code></p>
@@ -340,8 +360,8 @@ Scheme: <code>(set-draw-map-standard-lines imol state)</code></p>
  set_map_displayed().</p>
 <p>Arguments: imol (a whole number), state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_draw_map_standard_lines(0, 1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-draw-map-standard-lines 0 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_draw_map_standard_lines(0, 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-draw-map-standard-lines 0 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_draw_solid_density_surface">set_draw_solid_density_surface</h3>
 <p>Python: <code>set_draw_solid_density_surface(imol, state)</code><br>
 Scheme: <code>(set-draw-solid-density-surface imol state)</code></p>
@@ -349,8 +369,8 @@ Scheme: <code>(set-draw-solid-density-surface imol state)</code></p>
  (transparent) solid surface.</p>
 <p>Arguments: imol (a whole number), state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_draw_solid_density_surface(0, 1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-draw-solid-density-surface 0 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_draw_solid_density_surface(0, 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-draw-solid-density-surface 0 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_flat_shading_for_solid_density_surface">set_flat_shading_for_solid_density_surface</h3>
 <p>Python: <code>set_flat_shading_for_solid_density_surface(state)</code><br>
 Scheme: <code>(set-flat-shading-for-solid-density-surface state)</code></p>
@@ -359,8 +379,8 @@ Scheme: <code>(set-flat-shading-for-solid-density-surface state)</code></p>
 <p>Default is 1 (on.</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_flat_shading_for_solid_density_surface(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-flat-shading-for-solid-density-surface 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_flat_shading_for_solid_density_surface(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-flat-shading-for-solid-density-surface 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_idle_function_rotate_angle">set_idle_function_rotate_angle</h3>
 <p>Python: <code>set_idle_function_rotate_angle(f)</code><br>
 Scheme: <code>(set-idle-function-rotate-angle f)</code></p>
@@ -368,8 +388,9 @@ Scheme: <code>(set-idle-function-rotate-angle f)</code></p>
  computer? set this to 0.1</p>
 <p>Arguments: f (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_idle_function_rotate_angle(1.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-idle-function-rotate-angle 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_idle_function_rotate_angle(1.0)</code></td><td>ran (no return value); changed: idle_function_rotate_angle(): 0.15 -&gt; 1</td></tr>
+<tr><td>Scheme</td><td><code>(set-idle-function-rotate-angle 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Setting checked (set to another value and read back, then put back): Python: idle_function_rotate_angle was 0.15000000596046448, set to 0.725, read back 0.7250000238418579; Scheme: idle-function-rotate-angle was 0.15000000596046448, set to 0.725, read back 0.7250000238418579.</p>
 <h3 id="set_rocking_factors">set_rocking_factors</h3>
 <p>Python: <code>set_rocking_factors(width_scale, frequency_scale)</code><br>
 Scheme: <code>(set-rocking-factors width-scale frequency-scale)</code></p>
@@ -377,8 +398,8 @@ Scheme: <code>(set-rocking-factors width-scale frequency-scale)</code></p>
  default rocking rates (defaults 1 and 1)</p>
 <p>Arguments: width_scale (a number), frequency_scale (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_rocking_factors(1.0, 1.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-rocking-factors 1.0 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_rocking_factors(1.0, 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-rocking-factors 1.0 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_solid_density_surface_opacity">set_solid_density_surface_opacity</h3>
 <p>Python: <code>set_solid_density_surface_opacity(imol, opacity)</code><br>
 Scheme: <code>(set-solid-density-surface-opacity imol opacity)</code></p>
@@ -389,8 +410,9 @@ objects are no longer depth sorted) considerably faster to render.
 0.3 is a reasonable number.</p>
 <p>Arguments: imol (a whole number), opacity (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_solid_density_surface_opacity(0, 1.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-solid-density-surface-opacity 0 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_solid_density_surface_opacity(0, 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-solid-density-surface-opacity 0 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Setting checked (set to another value and read back, then put back): Python: get_solid_density_surface_opacity was -1.0, set to -1.0, read back -1.0; Scheme: get-solid-density-surface-opacity was -1.0, set to -1.0, read back -1.0.</p>
 <h3 id="show_calculate_updating_maps_gui">show_calculate_updating_maps_gui</h3>
 <p>Python: <code>show_calculate_updating_maps_gui()</code><br>
 Scheme: <code>(show-calculate-updating-maps-gui)</code></p>
@@ -398,8 +420,8 @@ Scheme: <code>(show-calculate-updating-maps-gui)</code></p>
 <p>this function is called from callbacks.c and calls a python gui function</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>show_calculate_updating_maps_gui()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(show-calculate-updating-maps-gui)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>show_calculate_updating_maps_gui()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(show-calculate-updating-maps-gui)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="start_graphics_interface">start_graphics_interface</h3>
 <p>Python: <code>start_graphics_interface()</code><br>
 Scheme: <code>(start-graphics-interface)</code></p>
@@ -409,8 +431,9 @@ Scheme: <code>(start-graphics-interface)</code></p>
 <p> An interface for Ralf</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>start_graphics_interface()</code></td><td>no answer within 60 s (slow, or waits for something)</td></tr>
-<tr><td>Scheme</td><td><code>(start-graphics-interface)</code></td><td>no answer within 60 s (slow, or waits for something)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>start_graphics_interface()</code></td><td>not run: starts the GTK main loop (blocks; for scripts run with --no-graphics that want the window); no answer in 60 s</td></tr>
+<tr><td>Scheme</td><td><code>(start-graphics-interface)</code></td><td>not run: starts the GTK main loop (blocks; for scripts run with --no-graphics that want the window); no answer in 60 s</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: opens the main window when Coot was started without graphics.</p>
 <h3 id="test_internal">test_internal</h3>
 <p>Python: <code>test_internal()</code><br>
 Scheme: <code>(test-internal)</code></p>
@@ -420,6 +443,7 @@ Also available in Scheme as <code>test-internal-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>test_internal()</code></td><td>ran, returned <code>False</code></td></tr>
 <tr><td>Scheme</td><td><code>(test-internal)</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: runs Coot's built-in developer tests; False here because they need the developer's test data (greg-data), which is not shipped.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="test_internal_single">test_internal_single</h3>
 <p>Python: <code>test_internal_single()</code><br>
@@ -437,16 +461,16 @@ Scheme: <code>(toggle-idle-rock-function)</code></p>
 <p>Rock (not roll) (self-timed)</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>toggle_idle_rock_function()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(toggle-idle-rock-function)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>toggle_idle_rock_function()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(toggle-idle-rock-function)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="toggle_idle_spin_function">toggle_idle_spin_function</h3>
 <p>Python: <code>toggle_idle_spin_function()</code><br>
 Scheme: <code>(toggle-idle-spin-function)</code></p>
 <p>Spin spin spin (or not)</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>toggle_idle_spin_function()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(toggle-idle-spin-function)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>toggle_idle_spin_function()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(toggle-idle-spin-function)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="use_graphics_interface_state">use_graphics_interface_state</h3>
 <p>Python: <code>use_graphics_interface_state()</code><br>
 Scheme: <code>(use-graphics-interface-state)</code></p>

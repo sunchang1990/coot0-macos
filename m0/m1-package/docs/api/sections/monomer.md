@@ -16,8 +16,8 @@ Arguments: s (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `add_non_auto_load_residue_name("hello")` | ran (no return value) |
-| Scheme | `(add-non-auto-load-residue-name "hello")` | ran (no return value) |
+| Python | `add_non_auto_load_residue_name("hello")` | ran (no return value, nothing visible changed) |
+| Scheme | `(add-non-auto-load-residue-name "hello")` | ran (no return value, nothing visible changed) |
 
 ### auto_load_dictionary
 
@@ -72,8 +72,8 @@ Arguments: comp_id (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `get_monomer("ALA")` | ran, returned `2` |
-| Scheme | `(get-monomer "ALA")` | ran, returned `2` |
+| Python | `get_monomer("ALA")` | ran, returned `3`; changed: new molecule 3 (model, ALA_from_dict); first_small_coords_imol(): -1 -> 3; graphics_n_molecules(): 3 -> 4 |
+| Scheme | `(get-monomer "ALA")` | ran, returned `3`; changed: new molecule 3 (model, ALA_from_dict); first_small_coords_imol(): -1 -> 3; graphics_n_molecules(): 3 -> 4 |
 
 Python and Scheme gave the same answer.
 
@@ -88,8 +88,8 @@ Arguments: comp_id (text), imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `get_monomer_for_molecule("ALA", 0)` | ran, returned `2` |
-| Scheme | `(get-monomer-for-molecule "ALA" 0)` | ran, returned `2` |
+| Python | `get_monomer_for_molecule("ALA", 0)` | ran, returned `3`; changed: new molecule 3 (model, ALA_from_dict); first_small_coords_imol(): -1 -> 3; graphics_n_molecules(): 3 -> 4 |
+| Scheme | `(get-monomer-for-molecule "ALA" 0)` | ran, returned `3`; changed: new molecule 3 (model, ALA_from_dict); first_small_coords_imol(): -1 -> 3; graphics_n_molecules(): 3 -> 4 |
 
 Python and Scheme gave the same answer.
 
@@ -102,8 +102,8 @@ Arguments: dict_idx (a whole number), imol_enc (a whole number). Returns: a whol
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `get_monomer_for_molecule_by_index(1, 0)` | ran, returned `2` |
-| Scheme | `(get-monomer-for-molecule-by-index 1 0)` | ran, returned `2` |
+| Python | `get_monomer_for_molecule_by_index(1, 0)` | ran, returned `3`; changed: new molecule 3 (model, ASP_from_dict); first_small_coords_imol(): -1 -> 3; graphics_n_molecules(): 3 -> 4 |
+| Scheme | `(get-monomer-for-molecule-by-index 1 0)` | ran, returned `3`; changed: new molecule 3 (model, ASP_from_dict); first_small_coords_imol(): -1 -> 3; graphics_n_molecules(): 3 -> 4 |
 
 Python and Scheme gave the same answer.
 
@@ -121,8 +121,8 @@ Arguments: comp_id (text), idealised_flag (a whole number). Returns: a whole num
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `get_monomer_from_dictionary("ALA", 1)` | ran, returned `2` |
-| Scheme | `(get-monomer-from-dictionary "ALA" 1)` | ran, returned `2` |
+| Python | `get_monomer_from_dictionary("ALA", 1)` | ran, returned `3`; changed: new molecule 3 (model, ALA_from_dict); first_small_coords_imol(): -1 -> 3; graphics_n_molecules(): 3 -> 4 |
+| Scheme | `(get-monomer-from-dictionary "ALA" 1)` | ran, returned `3`; changed: new molecule 3 (model, ALA_from_dict); first_small_coords_imol(): -1 -> 3; graphics_n_molecules(): 3 -> 4 |
 
 Python and Scheme gave the same answer.
 
@@ -137,8 +137,10 @@ Arguments: module_name (text), use_namespace (a whole number). Returns: a whole 
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `import_python_module("my-name", 1)` | ran, returned `-1` |
-| Scheme | `(import-python-module "my-name" 1)` | ran, returned `-1` |
+| Python | `import_python_module("json", 1)` | ran, returned `0` |
+| Scheme | `(import-python-module "json" 1)` | ran, returned `0` |
+
+Example written and checked by hand on the test data. Expected: imports a Python module into Coot's Python; returns 0 on success (-1 if it fails, e.g. no such module).
 
 Python and Scheme gave the same answer.
 
@@ -189,8 +191,8 @@ Arguments: s (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `remove_non_auto_load_residue_name("hello")` | ran (no return value) |
-| Scheme | `(remove-non-auto-load-residue-name "hello")` | ran (no return value) |
+| Python | `remove_non_auto_load_residue_name("hello")` | ran (no return value, nothing visible changed) |
+| Scheme | `(remove-non-auto-load-residue-name "hello")` | ran (no return value, nothing visible changed) |
 
 ### run_guile_script
 
@@ -203,8 +205,10 @@ Arguments: filename (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `run_guile_script("tutorial-modern.pdb")` | not run: not run automatically (run: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(run-guile-script "tutorial-modern.pdb")` | not run: not run automatically (run: exits, uses the network, an external program, files or a screen) |
+| Python | first `open("hello.scm", "w").write("(display \"hello from scheme\")(newline)(set-rotation-centre 1 2 3)\n")`, then `run_guile_script("hello.scm")` | ran (no return value); changed: rotation centre moved 13.9 A to (1.0, 2.0, 3.0) |
+| Scheme | first `(call-with-output-file "hello.scm" (lambda (port) (display "(display \"hello from scheme\")(newline)(set-rotation-centre 1 2 3)\n" port)))`, then `(run-guile-script "hello.scm")` | ran (no return value, nothing visible changed) |
+
+Example written and checked by hand on the test data. Expected: runs the Scheme file: its output is printed and its calls take effect.
 
 ### run_python_script
 
@@ -217,8 +221,10 @@ Arguments: filename (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `run_python_script("tutorial-modern.pdb")` | not run: not run automatically (run: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(run-python-script "tutorial-modern.pdb")` | not run: not run automatically (run: exits, uses the network, an external program, files or a screen) |
+| Python | first `open("hello.py", "w").write("print('hello from a script')\nset_rotation_centre(10, 20, 30)\n")`, then `run_python_script("hello.py")` | ran (no return value); changed: rotation centre moved 33.7 A to (10.0, 20.0, 30.0) |
+| Scheme | first `(call-with-output-file "hello.py" (lambda (port) (display "print('hello from a script')\nset_rotation_centre(10, 20, 30)\n" port)))`, then `(run-python-script "hello.py")` | ran (no return value, nothing visible changed) |
+
+Example written and checked by hand on the test data. Expected: runs the Python file: its output is printed and its calls take effect.
 
 ### run_script
 
@@ -231,6 +237,8 @@ Arguments: filename (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `run_script("tutorial-modern.pdb")` | not run: not run automatically (run: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(run-script "tutorial-modern.pdb")` | not run: not run automatically (run: exits, uses the network, an external program, files or a screen) |
+| Python | first `open("hello.py", "w").write("print('hello from a script')\nset_rotation_centre(10, 20, 30)\n")`, then `run_script("hello.py")` | ran (no return value, nothing visible changed) |
+| Scheme | first `(call-with-output-file "hello.scm" (lambda (port) (display "(display \"hello from scheme\")(newline)(set-rotation-centre 1 2 3)\n" port)))`, then `(run-script "hello.scm")` | ran (no return value); changed: rotation centre moved 33.7 A to (1.0, 2.0, 3.0) |
+
+Example written and checked by hand on the test data. Expected: runs a script file, Python (.py) or Scheme (.scm) chosen by the extension.
 

@@ -32,6 +32,8 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_draw_crosshairs(1)` | ran (no return value) |
-| Scheme | `(set-draw-crosshairs 1)` | ran (no return value) |
+| Python | `set_draw_crosshairs(1)` | ran (no return value); changed: draw_crosshairs_state(): 0 -> 1 |
+| Scheme | `(set-draw-crosshairs 1)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: draw_crosshairs_state was 0, set to 1, read back 1; Scheme: draw-crosshairs-state was 0, set to 1, read back 1.
 

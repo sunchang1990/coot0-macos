@@ -22,6 +22,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `recover_session()` | stopped Coot when tried without a window (not checked with a window) |
-| Scheme | `(recover-session)` | stopped Coot when tried without a window (not checked with a window) |
+| Python | `recover_session()` | not run: needs the graphics window (stops Coot without a screen) |
+| Scheme | `(recover-session)` | not run: needs the graphics window (stops Coot without a screen) |
+
+Example written and checked by hand on the test data. Expected: opens a dialog offering the newest backup of each model (or 'nothing to recover').
 

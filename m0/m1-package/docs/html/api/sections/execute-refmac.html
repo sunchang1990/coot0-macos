@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="437507f9eb4dafc04600e7987d4a94025880e3b6">
+<meta name="coot0-source-sha1" content="4b18db000b79d7297631d94e0c3905b16fa3415a">
 <title>Execute Refmac - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -22,57 +22,67 @@ table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; 
 Scheme: <code>(add-refmac-ncycle-no cycle)</code></p>
 <p>Arguments: cycle (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>add_refmac_ncycle_no(1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(add-refmac-ncycle-no 1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>add_refmac_ncycle_no(15)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(add-refmac-ncycle-no 20)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: adds 15 to the list of cycle numbers offered in the Run Refmac dialog.</p>
+<p>Note: Only stores a setting for the next Refmac run; does not run Refmac.</p>
 <h3 id="add_refmac_sad_atom">add_refmac_sad_atom</h3>
 <p>Python: <code>add_refmac_sad_atom(atom_name, fp, fpp, lambda)</code><br>
 Scheme: <code>(add-refmac-sad-atom atom-name fp fpp lambda)</code></p>
 <p>Arguments: atom_name (text), fp (a number), fpp (a number), lambda (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>add_refmac_sad_atom(" CA ", 1.0, 1.0, 1.0)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(add-refmac-sad-atom " CA " 1.0 1.0 1.0)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>add_refmac_sad_atom("SE", -8.0, 4.5, 0.9792)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(add-refmac-sad-atom "SE" -8.0 4.5 0.9792)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: registers Se with f' -8.0, f'' 4.5 at 0.9792 A for a SAD Refmac run.</p>
+<p>Note: Only stores a setting for the next Refmac run; does not run Refmac.</p>
 <h3 id="add_refmac_sad_atom_fp">add_refmac_sad_atom_fp</h3>
 <p>Python: <code>add_refmac_sad_atom_fp(atom_name, fp, fpp)</code><br>
 Scheme: <code>(add-refmac-sad-atom-fp atom-name fp fpp)</code></p>
 <p>Arguments: atom_name (text), fp (a number), fpp (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>add_refmac_sad_atom_fp(" CA ", 1.0, 1.0)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(add-refmac-sad-atom-fp " CA " 1.0 1.0)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>add_refmac_sad_atom_fp("S", 0.3, 0.6)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(add-refmac-sad-atom-fp "S" 0.3 0.6)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: registers S with f' 0.3, f'' 0.6 for a SAD Refmac run.</p>
+<p>Note: Only stores a setting for the next Refmac run; does not run Refmac.</p>
 <h3 id="add_refmac_sad_atom_lambda">add_refmac_sad_atom_lambda</h3>
 <p>Python: <code>add_refmac_sad_atom_lambda(atom_name, lambda)</code><br>
 Scheme: <code>(add-refmac-sad-atom-lambda atom-name lambda)</code></p>
 <p>Arguments: atom_name (text), lambda (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>add_refmac_sad_atom_lambda(" CA ", 1.0)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(add-refmac-sad-atom-lambda " CA " 1.0)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>add_refmac_sad_atom_lambda("ZN", 1.2827)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(add-refmac-sad-atom-lambda "ZN" 1.2827)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: registers Zn at wavelength 1.2827 A (Refmac computes f'/f'') for a SAD run.</p>
+<p>Note: Only stores a setting for the next Refmac run; does not run Refmac.</p>
 <h3 id="add_to_database">add_to_database</h3>
 <p>Python: <code>add_to_database(command_strings)</code><br>
 Scheme: <code>(add-to-database command-strings)</code></p>
 <p>Arguments: command_strings (a list). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>add_to_database("hello")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Python</td><td><code>add_to_database("hello")</code></td><td>ran (no return value, nothing visible changed)</td></tr>
 <tr><td>Scheme</td><td><code>(add-to-database "hello")</code></td><td>error: In procedure add-to-database: Wrong type argument in position 1: "hello"</td></tr></tbody></table>
 <h3 id="add_to_history">add_to_history</h3>
 <p>Python: <code>add_to_history(ls)</code><br>
 Scheme: <code>(add-to-history ls)</code></p>
 <p>Arguments: ls (a list). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>add_to_history("hello")</code></td><td>ran (no return value)</td></tr>
+<tr><td>Python</td><td><code>add_to_history("hello")</code></td><td>ran (no return value, nothing visible changed)</td></tr>
 <tr><td>Scheme</td><td><code>(add-to-history "hello")</code></td><td>error: In procedure add-to-history: Wrong type argument in position 1: "hello"</td></tr></tbody></table>
 <h3 id="add_to_history_simple">add_to_history_simple</h3>
 <p>Python: <code>add_to_history_simple(cmd)</code><br>
 Scheme: <code>(add-to-history-simple cmd)</code></p>
 <p>Arguments: cmd (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>add_to_history_simple("hello")</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(add-to-history-simple "hello")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>add_to_history_simple("hello")</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(add-to-history-simple "hello")</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="add_to_history_typed">add_to_history_typed</h3>
 <p>Python: <code>add_to_history_typed(command, args)</code><br>
 Scheme: <code>(add-to-history-typed command args)</code></p>
 <p>Arguments: command (text), args (a list). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td>(no example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: C++ helper that records a command in Coot's history.</p>
+<p>Note: Exported by SWIG to both languages but unusable from scripts.</p>
 <h3 id="ccp4_project_directory">ccp4_project_directory</h3>
 <p>Python: <code>ccp4_project_directory(ccp4_project_name)</code><br>
 Scheme: <code>(ccp4-project-directory ccp4-project-name)</code></p>
@@ -86,58 +96,77 @@ Scheme: <code>(ccp4-project-directory ccp4-project-name)</code></p>
 Scheme: <code>(clear-refmac-sad-atoms)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>clear_refmac_sad_atoms()</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(clear-refmac-sad-atoms)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>add_refmac_sad_atom("SE", -8.0, 4.5, 0.9792)</code>, then <code>clear_refmac_sad_atoms()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td>first <code>(add-refmac-sad-atom "SE" -8.0 4.5 0.9792)</code>, then <code>(clear-refmac-sad-atoms)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: removes all SAD atoms registered with add_refmac_sad_atom*.</p>
+<p>Note: Only stores a setting for the next Refmac run; does not run Refmac.</p>
 <h3 id="compare_mtimes">compare_mtimes</h3>
 <p>Python: <code>compare_mtimes(a, b)</code><br>
 Scheme: <code>(compare-mtimes a b)</code></p>
 <p>Arguments: a (<code>coot::str_mtime</code>), b (<code>coot::str_mtime</code>). Returns: true or false.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td>(no example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: C++ sort helper: True when a is newer than b.</p>
 <h3 id="execute_refmac_real">execute_refmac_real</h3>
 <p>Python: <code>execute_refmac_real(pdb_in_filename, pdb_out_filename, mtz_in_filename, mtz_out_filename, cif_lib_filename, fobs_col_name, sigfobs_col_name, r_free_col_name, have_sensible_free_r_flag, make_molecules_flag, refmac_count_string, swap_map_colours_post_refmac_flag, imol_refmac_map, diff_map_flag, phase_combine_flag, phib_string, fom_string, ccp4i_project_dir)</code><br>
 Scheme: <code>(execute-refmac-real pdb-in-filename pdb-out-filename mtz-in-filename mtz-out-filename cif-lib-filename fobs-col-name sigfobs-col-name r-free-col-name have-sensible-free-r-flag make-molecules-flag refmac-count-string swap-map-colours-post-refmac-flag imol-refmac-map diff-map-flag phase-combine-flag phib-string fom-string ccp4i-project-dir)</code></p>
 <p>Arguments: pdb_in_filename (text), pdb_out_filename (text), mtz_in_filename (text), mtz_out_filename (text), cif_lib_filename (text), fobs_col_name (text), sigfobs_col_name (text), r_free_col_name (text), have_sensible_free_r_flag (a whole number), make_molecules_flag (a whole number), refmac_count_string (text), swap_map_colours_post_refmac_flag (a whole number), imol_refmac_map (a whole number), diff_map_flag (a whole number), phase_combine_flag (a whole number), phib_string (text), fom_string (text), ccp4i_project_dir (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>execute_refmac_real("tutorial-modern.pdb", "tutorial-modern.pdb", "rnasa-1.8-all_refmac1.mtz", "rnasa-1.8-all_refmac1.mtz", "tutorial-modern.pdb", "my-name", "my-name", "my-name", 1, 1, "hello", 1, 1, ...</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(execute-refmac-real "tutorial-modern.pdb" "tutorial-modern.pdb" "rnasa-1.8-all_refmac1.mtz" "rnasa-1.8-all_refmac1.mtz" "tutorial-modern.pdb" "my-name" "my-name" "my-name" 1 1 "hello" 1 1 1 1 "hello" ...</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>execute_refmac_real("tutorial-modern.pdb", "tutorial-modern.pdb", "rnasa-1.8-all_refmac1.mtz", "rnasa-1.8-all_refmac1.mtz", "tutorial-modern.pdb", "my-name", "my-name", "my-name", 1, 1, "hello", 1, 1, ...</code></td><td>not run: runs Refmac (long external program); use run_refmac_by_filename / the Run Refmac dialog</td></tr>
+<tr><td>Scheme</td><td><code>(execute-refmac-real "tutorial-modern.pdb" "tutorial-modern.pdb" "rnasa-1.8-all_refmac1.mtz" "rnasa-1.8-all_refmac1.mtz" "tutorial-modern.pdb" "my-name" "my-name" "my-name" 1 1 "hello" 1 1 1 1 "hello" ...</code></td><td>not run: runs Refmac (long external program); use run_refmac_by_filename / the Run Refmac dialog</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: runs Refmac on the given files and reads the results.</p>
 <h3 id="get_refmac_ncycles">get_refmac_ncycles</h3>
 <p>Python: <code>get_refmac_ncycles()</code><br>
 Scheme: <code>(get-refmac-ncycles)</code></p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>get_refmac_ncycles()</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(get-refmac-ncycles)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>get_refmac_ncycles()</code></td><td>ran, returned <code>5</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-refmac-ncycles)</code></td><td>ran, returned <code>5</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the number of Refmac cycles (default 5).</p>
+<p>Note: Only stores a setting for the next Refmac run; does not run Refmac.</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="get_refmac_phase_input">get_refmac_phase_input</h3>
 <p>Python: <code>get_refmac_phase_input()</code><br>
 Scheme: <code>(get-refmac-phase-input)</code></p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>get_refmac_phase_input()</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(get-refmac-phase-input)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>get_refmac_phase_input()</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-refmac-phase-input)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the phase input mode: 0 none (default), 1 PHI/FOM, 2 HL, 3 SAD.</p>
+<p>Note: Only stores a setting for the next Refmac run; does not run Refmac.</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="get_refmac_refinement_method">get_refmac_refinement_method</h3>
 <p>Python: <code>get_refmac_refinement_method()</code><br>
 Scheme: <code>(get-refmac-refinement-method)</code></p>
 <p>some methods to get refmac run parameters</p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>get_refmac_refinement_method()</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(get-refmac-refinement-method)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>get_refmac_refinement_method()</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-refmac-refinement-method)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the refinement method: 0 restrained (default), 1 rigid body, 2 restrained + TLS.</p>
+<p>Note: Only stores a setting for the next Refmac run; does not run Refmac.</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="get_refmac_used_mtz_file_state">get_refmac_used_mtz_file_state</h3>
 <p>Python: <code>get_refmac_used_mtz_file_state()</code><br>
 Scheme: <code>(get-refmac-used-mtz-file-state)</code></p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>get_refmac_used_mtz_file_state()</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(get-refmac-used-mtz-file-state)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>get_refmac_used_mtz_file_state()</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-refmac-used-mtz-file-state)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns 1 when Refmac takes its data from an MTZ file, 0 when from a map's stored parameters.</p>
+<p>Note: Only stores a setting for the next Refmac run; does not run Refmac.</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="get_saved_refmac_file_filename">get_saved_refmac_file_filename</h3>
 <p>Python: <code>get_saved_refmac_file_filename()</code><br>
 Scheme: <code>(get-saved-refmac-file-filename)</code></p>
 <p>Arguments: none. Returns: text.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>get_saved_refmac_file_filename()</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(get-saved-refmac-file-filename)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>get_saved_refmac_file_filename()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(get-saved-refmac-file-filename)</code></td><td>ran, returned <code>()</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the MTZ file name chosen for Refmac, nothing when none was chosen.</p>
+<p>Note: Only stores a setting for the next Refmac run; does not run Refmac. Python returns None, Scheme returns '() when unset.</p>
+<p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 <h3 id="languagize_command">languagize_command</h3>
 <p>Python: <code>languagize_command(command_parts)</code><br>
 Scheme: <code>(languagize-command command-parts)</code></p>
@@ -151,15 +180,19 @@ Scheme: <code>(merge-molecules-by-vector add-molecules imol)</code></p>
 <p>return the status and vector of chain-ids of the new chain ids.</p>
 <p>Arguments: add_molecules (a list), imol (a whole number). Returns: a list.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>merge_molecules_by_vector([read_pdb("nag_only.pdb")], 0)</code></td><td>ran, returned <code>&lt;Swig Object of type 'std::pair&lt; int,std::vector&lt; merge_molecule_results_info_t,std::allocator&lt; merge_molecule_results_i ...</code>; changed: molecule 0: added 1 residue(s) (C1); new molecule 3 (model, nag_only.pdb); rotation centre moved 44.4 A to (-0.0, -0.0, -0.0); first_small_coords_imol(): -1 -&gt; 3 ...</td></tr>
+<tr><td>Scheme</td><td><code>(merge-molecules-by-vector (list (read-pdb "nag_only.pdb")) 0)</code></td><td>ran, returned <code>#&lt;collectable-swig-pointer std::pair&lt; int,std::vector&lt; merge_molecule_results_info_t &gt; &gt; * 92d003b00&gt;</code>; changed: molecule 0: added 1 residue(s) (C1); new molecule 3 (model, nag_only.pdb); rotation centre moved 44.4 A to (-0.0, -0.0, -0.0); first_small_coords_imol(): -1 -&gt; 3 ...</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: merges the listed molecules into molecule 0 (the merge works); the result is a C++ object.</p>
+<p>Note: Works, but returns an opaque SWIG pointer; scripts should use merge_molecules(list, imol) which returns a readable result.</p>
 <h3 id="parse_ccp4i_defs">parse_ccp4i_defs</h3>
 <p>Python: <code>parse_ccp4i_defs(filename)</code><br>
 Scheme: <code>(parse-ccp4i-defs filename)</code></p>
 <p>Arguments: filename (text). Returns: a list.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>parse_ccp4i_defs("tutorial-modern.pdb")</code></td><td>not run: not run automatically (ccp4i: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(parse-ccp4i-defs "tutorial-modern.pdb")</code></td><td>not run: not run automatically (ccp4i: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>open("directories.def", "w").write("PROJECT_ALIAS,1 _text myproject\nPROJECT_PATH,1 _text /tmp/myproject\n")</code>, then <code>parse_ccp4i_defs("directories.def")</code></td><td>ran, returned <code>&lt;Swig Object of type 'std::vector&lt; std::pair&lt; std::string,std::string &gt;,std::allocator&lt; std::pair&lt; std::string,std::stri ...</code></td></tr>
+<tr><td>Scheme</td><td>first <code>(call-with-output-file "directories.def" (lambda (p) (display "PROJECT_ALIAS,1 _text myproject\nPROJECT_PATH,1 _text /tmp/myproject\n" p)))</code>, then <code>(parse-ccp4i-defs "directories.def")</code></td><td>ran, returned <code>#&lt;collectable-swig-pointer std::vector&lt; std::pair&lt; std::string,std::string &gt; &gt; * 97ed8ca60&gt;</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: parses a CCP4i directories.def file into (alias, path) pairs.</p>
+<p>Note: Returns an opaque SWIG pointer in both languages (C++ return type not converted); use ccp4i_projects() from scripts.</p>
 <h3 id="pythonize_command_name">pythonize_command_name</h3>
 <p>Python: <code>pythonize_command_name(s)</code><br>
 Scheme: <code>(pythonize-command-name s)</code></p>
@@ -173,8 +206,11 @@ Scheme: <code>(pythonize-command-name s)</code></p>
 Scheme: <code>(refmac-imol-coords)</code></p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>refmac_imol_coords()</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(refmac-imol-coords)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>set_refmac_molecule(0)</code>, then <code>refmac_imol_coords()</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td>first <code>(set-refmac-molecule 0)</code>, then <code>(refmac-imol-coords)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the molecule chosen for Refmac (0 = tutorial-modern.pdb here).</p>
+<p>Note: Only stores a setting for the next Refmac run; does not run Refmac.</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="refmac_name">refmac_name</h3>
 <p>Python: <code>refmac_name(imol)</code><br>
 Scheme: <code>(refmac-name imol)</code></p>
@@ -182,57 +218,79 @@ Scheme: <code>(refmac-name imol)</code></p>
 <p> Returns a stub name used in the construction of filename for refmac output</p>
 <p>Arguments: imol (a whole number). Returns: text.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>refmac_name(0)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(refmac-name 0)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>refmac_name(0)</code></td><td>ran, returned <code>'tutorial-modern_refmac0-pre.pdb'</code></td></tr>
+<tr><td>Scheme</td><td><code>(refmac-name 0)</code></td><td>ran, returned <code>"tutorial-modern_refmac0-pre.pdb"</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the file name Coot will write molecule 0 to before running Refmac.</p>
+<p>Note: Only stores a setting for the next Refmac run; does not run Refmac.</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="refmac_use_intensities_state">refmac_use_intensities_state</h3>
 <p>Python: <code>refmac_use_intensities_state()</code><br>
 Scheme: <code>(refmac-use-intensities-state)</code></p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>refmac_use_intensities_state()</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(refmac-use-intensities-state)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>refmac_use_intensities_state()</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(refmac-use-intensities-state)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns 1 when Refmac uses intensities (default 0, amplitudes).</p>
+<p>Note: Only stores a setting for the next Refmac run; does not run Refmac.</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="refmac_use_ncs_state">refmac_use_ncs_state</h3>
 <p>Python: <code>refmac_use_ncs_state()</code><br>
 Scheme: <code>(refmac-use-ncs-state)</code></p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>refmac_use_ncs_state()</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(refmac-use-ncs-state)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>refmac_use_ncs_state()</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(refmac-use-ncs-state)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns 1 when Refmac uses NCS restraints.</p>
+<p>Note: Only stores a setting for the next Refmac run; does not run Refmac.</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="refmac_use_sad_state">refmac_use_sad_state</h3>
 <p>Python: <code>refmac_use_sad_state()</code><br>
 Scheme: <code>(refmac-use-sad-state)</code></p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>refmac_use_sad_state()</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(refmac-use-sad-state)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>refmac_use_sad_state()</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(refmac-use-sad-state)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns 1 when Refmac does SAD refinement (default 0).</p>
+<p>Note: Only stores a setting for the next Refmac run; does not run Refmac.</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="refmac_use_tls_state">refmac_use_tls_state</h3>
 <p>Python: <code>refmac_use_tls_state()</code><br>
 Scheme: <code>(refmac-use-tls-state)</code></p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>refmac_use_tls_state()</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(refmac-use-tls-state)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>refmac_use_tls_state()</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td><code>(refmac-use-tls-state)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns 1 when Refmac uses TLS.</p>
+<p>Note: Only stores a setting for the next Refmac run; does not run Refmac.</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="refmac_use_twin_state">refmac_use_twin_state</h3>
 <p>Python: <code>refmac_use_twin_state()</code><br>
 Scheme: <code>(refmac-use-twin-state)</code></p>
 <p>Arguments: none. Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>refmac_use_twin_state()</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(refmac-use-twin-state)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>refmac_use_twin_state()</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(refmac-use-twin-state)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns 1 when Refmac does twin refinement (default 0).</p>
+<p>Note: Only stores a setting for the next Refmac run; does not run Refmac.</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="save_refmac_params_to_map">save_refmac_params_to_map</h3>
 <p>Python: <code>save_refmac_params_to_map(imol_map, mtz_filename, fobs_col, sigfobs_col, r_free_col, r_free_flag_sensible)</code><br>
 Scheme: <code>(save-refmac-params-to-map imol-map mtz-filename fobs-col sigfobs-col r-free-col r-free-flag-sensible)</code></p>
 <p>Arguments: imol_map (a whole number), mtz_filename (text), fobs_col (text), sigfobs_col (text), r_free_col (text), r_free_flag_sensible (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>save_refmac_params_to_map(1, "rnasa-1.8-all_refmac1.mtz", "FWT", "hello", "hello", 1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(save-refmac-params-to-map 1 "rnasa-1.8-all_refmac1.mtz" "FWT" "hello" "hello" 1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>save_refmac_params_to_map(1, "rnasa-1.8-all_refmac1.mtz", "FGMP18", "SIGFGMP18", "FreeR_flag", 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(save-refmac-params-to-map 1 "rnasa-1.8-all_refmac1.mtz" "FGMP18" "SIGFGMP18" "FreeR_flag" 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: stores Fobs/SigF/Rfree columns with map 1 (refmac_parameters(1) shows them).</p>
+<p>Note: Only stores a setting for the next Refmac run; does not run Refmac.</p>
 <h3 id="save_refmac_phase_params_to_map">save_refmac_phase_params_to_map</h3>
 <p>Python: <code>save_refmac_phase_params_to_map(imol_map, phi, fom, hla, hlb, hlc, hld)</code><br>
 Scheme: <code>(save-refmac-phase-params-to-map imol-map phi fom hla hlb hlc hld)</code></p>
 <p>Arguments: imol_map (a whole number), phi (text), fom (text), hla (text), hlb (text), hlc (text), hld (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>save_refmac_phase_params_to_map(1, "PHWT", "", "hello", "hello", "hello", "hello")</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(save-refmac-phase-params-to-map 1 "PHWT" "" "hello" "hello" "hello" "hello")</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>save_refmac_phase_params_to_map(1, "PHIC", "FOM", "", "", "", "")</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(save-refmac-phase-params-to-map 1 "PHIC" "FOM" "" "" "" "")</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: stores phase (PHI/FOM or HL) columns with map 1 for a Refmac run with phase input.</p>
+<p>Note: Only stores a setting for the next Refmac run; does not run Refmac.</p>
 <h3 id="schemize_command_name">schemize_command_name</h3>
 <p>Python: <code>schemize_command_name(s)</code><br>
 Scheme: <code>(schemize-command-name s)</code></p>
@@ -247,78 +305,110 @@ Scheme: <code>(set-refmac-molecule imol)</code></p>
 <p>this is the option menu callback - does nothing.</p>
 <p>Arguments: imol (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_refmac_molecule(0)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(set-refmac-molecule 0)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_refmac_molecule(0)</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(set-refmac-molecule 0)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: chooses molecule 0 for Refmac; returns 0 (option-menu callback).</p>
+<p>Note: Only stores a setting for the next Refmac run; does not run Refmac.</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="set_refmac_ncycles">set_refmac_ncycles</h3>
 <p>Python: <code>set_refmac_ncycles(no_cycles)</code><br>
 Scheme: <code>(set-refmac-ncycles no-cycles)</code></p>
 <p>Arguments: no_cycles (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_refmac_ncycles(1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(set-refmac-ncycles 1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_refmac_ncycles(10)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-refmac-ncycles 3)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: sets the number of Refmac cycles.</p>
+<p>Note: Only stores a setting for the next Refmac run; does not run Refmac.</p>
+<p>Setting checked (set to another value and read back, then put back): Python: get_refmac_ncycles was 5, set to 0, read back 0; Scheme: get-refmac-ncycles was 5, set to 0, read back 0.</p>
 <h3 id="set_refmac_phase_input">set_refmac_phase_input</h3>
 <p>Python: <code>set_refmac_phase_input(phase_flag)</code><br>
 Scheme: <code>(set-refmac-phase-input phase-flag)</code></p>
 <p>Arguments: phase_flag (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_refmac_phase_input(1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(set-refmac-phase-input 1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_refmac_phase_input(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-refmac-phase-input 2)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: sets the phase input mode (0 none, 1 PHI/FOM, 2 HL, 3 SAD).</p>
+<p>Note: Only stores a setting for the next Refmac run; does not run Refmac.</p>
+<p>Setting checked (set to another value and read back, then put back): Python: get_refmac_phase_input was 0, set to 1, read back 1; Scheme: get-refmac-phase-input was 0, set to 1, read back 1.</p>
 <h3 id="set_refmac_refinement_method">set_refmac_refinement_method</h3>
 <p>Python: <code>set_refmac_refinement_method(method)</code><br>
 Scheme: <code>(set-refmac-refinement-method method)</code></p>
 <p>Arguments: method (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_refmac_refinement_method(1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(set-refmac-refinement-method 1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_refmac_refinement_method(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-refmac-refinement-method 2)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: sets the method (0 restrained, 1 rigid body, 2 restrained + TLS).</p>
+<p>Note: Only stores a setting for the next Refmac run; does not run Refmac.</p>
+<p>Setting checked (set to another value and read back, then put back): Python: get_refmac_refinement_method was 0, set to 1, read back 1; Scheme: get-refmac-refinement-method was 0, set to 1, read back 1.</p>
 <h3 id="set_refmac_use_intensities">set_refmac_use_intensities</h3>
 <p>Python: <code>set_refmac_use_intensities(state)</code><br>
 Scheme: <code>(set-refmac-use-intensities state)</code></p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_refmac_use_intensities(1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(set-refmac-use-intensities 1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_refmac_use_intensities(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-refmac-use-intensities 0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: sets the Refmac intensities option (read back with refmac_use_intensities_state()).</p>
+<p>Note: Only stores a setting for the next Refmac run; does not run Refmac.</p>
+<p>Setting checked (set to another value and read back, then put back): Python: refmac_use_intensities_state was 0, set to 1, read back 1; Scheme: refmac-use-intensities-state was 0, set to 1, read back 1.</p>
 <h3 id="set_refmac_use_ncs">set_refmac_use_ncs</h3>
 <p>Python: <code>set_refmac_use_ncs(state)</code><br>
 Scheme: <code>(set-refmac-use-ncs state)</code></p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_refmac_use_ncs(1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(set-refmac-use-ncs 1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_refmac_use_ncs(0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-refmac-use-ncs 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: sets the Refmac ncs option (read back with refmac_use_ncs_state()).</p>
+<p>Note: Only stores a setting for the next Refmac run; does not run Refmac.</p>
+<p>Setting checked (set to another value and read back, then put back): Python: refmac_use_ncs_state was 1, set to 0, read back 0; Scheme: refmac-use-ncs-state was 1, set to 0, read back 0.</p>
 <h3 id="set_refmac_use_sad">set_refmac_use_sad</h3>
 <p>Python: <code>set_refmac_use_sad(state)</code><br>
 Scheme: <code>(set-refmac-use-sad state)</code></p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_refmac_use_sad(1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(set-refmac-use-sad 1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_refmac_use_sad(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-refmac-use-sad 0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: sets the Refmac sad option (read back with refmac_use_sad_state()).</p>
+<p>Note: Only stores a setting for the next Refmac run; does not run Refmac.</p>
+<p>Setting checked (set to another value and read back, then put back): Python: refmac_use_sad_state was 0, set to 1, read back 1; Scheme: refmac-use-sad-state was 0, set to 1, read back 1.</p>
 <h3 id="set_refmac_use_tls">set_refmac_use_tls</h3>
 <p>Python: <code>set_refmac_use_tls(state)</code><br>
 Scheme: <code>(set-refmac-use-tls state)</code></p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_refmac_use_tls(1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(set-refmac-use-tls 1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_refmac_use_tls(0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-refmac-use-tls 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: sets the Refmac tls option (read back with refmac_use_tls_state()).</p>
+<p>Note: Only stores a setting for the next Refmac run; does not run Refmac.</p>
+<p>Setting checked (set to another value and read back, then put back): Python: refmac_use_tls_state was 1, set to 0, read back 0; Scheme: refmac-use-tls-state was 1, set to 0, read back 0.</p>
 <h3 id="set_refmac_use_twin">set_refmac_use_twin</h3>
 <p>Python: <code>set_refmac_use_twin(state)</code><br>
 Scheme: <code>(set-refmac-use-twin state)</code></p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_refmac_use_twin(1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(set-refmac-use-twin 1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_refmac_use_twin(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-refmac-use-twin 0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: sets the Refmac twin option (read back with refmac_use_twin_state()).</p>
+<p>Note: Only stores a setting for the next Refmac run; does not run Refmac.</p>
+<p>Setting checked (set to another value and read back, then put back): Python: refmac_use_twin_state was 0, set to 1, read back 1; Scheme: refmac-use-twin-state was 0, set to 1, read back 1.</p>
 <h3 id="set_refmac_used_mtz_file">set_refmac_used_mtz_file</h3>
 <p>Python: <code>set_refmac_used_mtz_file(state)</code><br>
 Scheme: <code>(set-refmac-used-mtz-file state)</code></p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_refmac_used_mtz_file(1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(set-refmac-used-mtz-file 1)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_refmac_used_mtz_file(0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-refmac-used-mtz-file 0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: chooses whether Refmac data come from an MTZ file (1) or from a map's stored parameters (0).</p>
+<p>Note: Only stores a setting for the next Refmac run; does not run Refmac.</p>
+<p>Setting checked (set to another value and read back, then put back): Python: get_refmac_used_mtz_file_state was 1, set to 0, read back 0; Scheme: get-refmac-used-mtz-file-state was 1, set to 0, read back 0.</p>
 <h3 id="set_stored_refmac_file_mtz_filename">set_stored_refmac_file_mtz_filename</h3>
 <p>Python: <code>set_stored_refmac_file_mtz_filename(imol, mtz_filename)</code><br>
 Scheme: <code>(set-stored-refmac-file-mtz-filename imol mtz-filename)</code></p>
 <p>Arguments: imol (a whole number), mtz_filename (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_stored_refmac_file_mtz_filename(0, "rnasa-1.8-all_refmac1.mtz")</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(set-stored-refmac-file-mtz-filename 0 "rnasa-1.8-all_refmac1.mtz")</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_stored_refmac_file_mtz_filename(0, "rnasa-1.8-all_refmac1.mtz")</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-stored-refmac-file-mtz-filename 0 "rnasa-1.8-all_refmac1.mtz")</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: stores the MTZ file to use with molecule 0 in Refmac runs.</p>
+<p>Note: Only stores a setting for the next Refmac run; does not run Refmac.</p>
 <h3 id="single_quote">single_quote</h3>
 <p>Python: <code>single_quote(s)</code><br>
 Scheme: <code>(single-quote s)</code></p>

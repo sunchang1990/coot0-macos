@@ -15,8 +15,10 @@ Arguments: filename (text), imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `handle_cns_data_file("tutorial-modern.pdb", 0)` | stopped Coot when tried without a window (not checked with a window) |
-| Scheme | `(handle-cns-data-file "tutorial-modern.pdb" 0)` | stopped Coot when tried without a window (not checked with a window) |
+| Python | `handle_cns_data_file("data.hkl", 0)` | not run: needs a CNS reflection file (none in the test data); the earlier attempt stopped Coot without a screen |
+| Scheme | `(handle-cns-data-file "data.hkl" 0)` | not run: needs a CNS reflection file (none in the test data); the earlier attempt stopped Coot without a screen |
+
+Example written and checked by hand on the test data. Expected: reads a CNS reflection file and makes a map using the cell of molecule 0.
 
 ### handle_cns_data_file_with_cell
 
@@ -33,6 +35,8 @@ Arguments: filename (text), imol (a whole number), a (a number), b (a number), c
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `handle_cns_data_file_with_cell("tutorial-modern.pdb", 0, 1.0, 0.5, 1.0, 1.0, 1.0, 1.0, "hello")` | stopped Coot when tried without a window (not checked with a window) |
-| Scheme | `(handle-cns-data-file-with-cell "tutorial-modern.pdb" 0 1.0 0.5 1.0 1.0 1.0 1.0 "hello")` | stopped Coot when tried without a window (not checked with a window) |
+| Python | `handle_cns_data_file_with_cell("data.hkl", 0, 64.9, 78.3, 38.8, 90.0, 90.0, 90.0, "P 21 21 21")` | not run: needs a CNS reflection file (none in the test data); the earlier attempt stopped Coot without a screen |
+| Scheme | `(handle-cns-data-file-with-cell "data.hkl" 0 64.9 78.3 38.8 90.0 90.0 90.0 "P 21 21 21")` | not run: needs a CNS reflection file (none in the test data); the earlier attempt stopped Coot without a screen |
+
+Example written and checked by hand on the test data. Expected: reads a CNS reflection file with the given cell and space group and makes a map.
 

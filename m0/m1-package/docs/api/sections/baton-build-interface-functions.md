@@ -15,8 +15,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `accept_baton_position()` | ran (no return value) |
-| Scheme | `(accept-baton-position)` | ran (no return value) |
+| Python | `accept_baton_position()` | ran (no return value); changed: new molecule 3 (model, Baton Atoms); rotation centre moved 43.5 A to (0.0, 0.0, 3.8); first_small_coords_imol(): -1 -> 3; graphics_n_molecules(): 3 -> 4 |
+| Scheme | `(accept-baton-position)` | ran (no return value); changed: new molecule 3 (model, Baton Atoms); rotation centre moved 43.5 A to (0.0, 0.0, 3.8); first_small_coords_imol(): -1 -> 3; graphics_n_molecules(): 3 -> 4 |
 
 ### baton_build_delete_last_residue
 
@@ -29,8 +29,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `baton_build_delete_last_residue()` | ran (no return value) |
-| Scheme | `(baton-build-delete-last-residue)` | ran (no return value) |
+| Python | `baton_build_delete_last_residue()` | ran (no return value); changed: graphics_n_molecules(): 3 -> 4 |
+| Scheme | `(baton-build-delete-last-residue)` | ran (no return value); changed: graphics_n_molecules(): 3 -> 4 |
 
 ### baton_tip_previous
 
@@ -43,8 +43,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `baton_tip_previous()` | ran (no return value) |
-| Scheme | `(baton-tip-previous)` | ran (no return value) |
+| Python | `baton_tip_previous()` | ran (no return value, nothing visible changed) |
+| Scheme | `(baton-tip-previous)` | ran (no return value, nothing visible changed) |
 
 ### baton_tip_try_another
 
@@ -57,8 +57,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `baton_tip_try_another()` | ran (no return value) |
-| Scheme | `(baton-tip-try-another)` | ran (no return value) |
+| Python | `baton_tip_try_another()` | ran (no return value, nothing visible changed) |
+| Scheme | `(baton-tip-try-another)` | ran (no return value, nothing visible changed) |
 
 ### lengthen_baton
 
@@ -71,8 +71,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `lengthen_baton()` | ran (no return value) |
-| Scheme | `(lengthen-baton)` | ran (no return value) |
+| Python | `lengthen_baton()` | ran (no return value, nothing visible changed) |
+| Scheme | `(lengthen-baton)` | ran (no return value, nothing visible changed) |
 
 ### reverse_direction_of_fragment
 
@@ -92,8 +92,8 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number). Retur
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `reverse_direction_of_fragment(0, "A", 41)` | ran (no return value) |
-| Scheme | `(reverse-direction-of-fragment 0 "A" 41)` | ran (no return value) |
+| Python | `reverse_direction_of_fragment(0, "A", 41)` | ran (no return value); changed: molecule 0: atoms of 93 residue(s) (A1, A2, A3, A4 ...); n_atoms(0): 1465 -> 838 |
+| Scheme | `(reverse-direction-of-fragment 0 "A" 41)` | ran (no return value); changed: molecule 0: atoms of 93 residue(s) (A1, A2, A3, A4 ...); n_atoms(0): 1465 -> 838 |
 
 ### set_baton_build_params
 
@@ -107,8 +107,8 @@ Arguments: istart_resno (a whole number), chain_id (text), direction (text). Ret
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_baton_build_params(41, "A", ".")` | ran (no return value) |
-| Scheme | `(set-baton-build-params 41 "A" ".")` | ran (no return value) |
+| Python | `set_baton_build_params(41, "A", ".")` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-baton-build-params 41 "A" ".")` | ran (no return value, nothing visible changed) |
 
 ### set_baton_mode
 
@@ -121,8 +121,8 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_baton_mode(1)` | ran (no return value) |
-| Scheme | `(set-baton-mode 1)` | ran (no return value) |
+| Python | `set_baton_mode(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-baton-mode 1)` | ran (no return value, nothing visible changed) |
 
 ### setup_reverse_direction
 
@@ -133,8 +133,8 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `setup_reverse_direction(1)` | ran (no return value) |
-| Scheme | `(setup-reverse-direction 1)` | ran (no return value) |
+| Python | `setup_reverse_direction(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(setup-reverse-direction 1)` | ran (no return value, nothing visible changed) |
 
 ### shorten_baton
 
@@ -147,8 +147,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `shorten_baton()` | ran (no return value) |
-| Scheme | `(shorten-baton)` | ran (no return value) |
+| Python | `shorten_baton()` | ran (no return value, nothing visible changed) |
+| Scheme | `(shorten-baton)` | ran (no return value, nothing visible changed) |
 
 ### try_set_draw_baton
 
@@ -161,6 +161,8 @@ Arguments: i (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `try_set_draw_baton(1)` | stopped Coot when tried without a window (not checked with a window) |
-| Scheme | `(try-set-draw-baton 1)` | stopped Coot when tried without a window (not checked with a window) |
+| Python | `try_set_draw_baton(1)` | not run: needs the graphics window (stops Coot without a screen) |
+| Scheme | `(try-set-draw-baton 1)` | not run: needs the graphics window (stops Coot without a screen) |
+
+Example written and checked by hand on the test data. Expected: switches baton (CA-trace building) drawing on.
 

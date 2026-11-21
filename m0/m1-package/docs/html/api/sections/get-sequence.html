@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="a1f164453c9aed1ad176333495e8d0f0c5ebe317">
+<meta name="coot0-source-sha1" content="5f38beb029a9d25c6555bce37970a150b98c49c6">
 <title>Get Sequence - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -27,16 +27,17 @@ Return the molecule number and chain id if successful, return -1 as the
 molecule number if not.</p>
 <p>Arguments: target_seq (text), match_fraction (a number). Returns: a value (see the result of the example).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>align_to_closest_chain("ACDEFGHIKLMNPQRSTVWY", 0.5)</code></td><td>ran, returned <code>False</code></td></tr>
-<tr><td>Scheme</td><td><code>(align-to-closest-chain "ACDEFGHIKLMNPQRSTVWY" 0.5)</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
-<p>Python and Scheme gave the same answer.</p>
+<tr><td>Python</td><td><code>align_to_closest_chain("DVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLID", 0.9)</code></td><td>ran, returned <code>[0, 'A']</code></td></tr>
+<tr><td>Scheme</td><td><code>(align-to-closest-chain "DVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHEYTVITPGARTRGTRRIICGEATQEDYYTGDHYATFSLID" 0.9)</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns [molecule, chain id] of the chain (in any molecule) whose sequence matches the target best, if at least match_fraction matches; False otherwise.</p>
+<p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 <h3 id="decode_ints">decode_ints</h3>
 <p>Python: <code>decode_ints(i)</code><br>
 Scheme: <code>(decode-ints i)</code></p>
 <p>Arguments: i (a whole number). Returns: a list.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>decode_ints(1)</code></td><td>ran, returned <code>&lt;Swig Object of type 'std::pair&lt; int,int &gt; *' at 0x10b8e1230&gt;</code></td></tr>
-<tr><td>Scheme</td><td><code>(decode-ints 1)</code></td><td>ran, returned <code>#&lt;collectable-swig-pointer std::pair&lt; int,int &gt; * bd70e7090&gt;</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>decode_ints(1)</code></td><td>ran, returned <code>&lt;Swig Object of type 'std::pair&lt; int,int &gt; *' at 0x10c4230f0&gt;</code></td></tr>
+<tr><td>Scheme</td><td><code>(decode-ints 1)</code></td><td>ran, returned <code>#&lt;collectable-swig-pointer std::pair&lt; int,int &gt; * aab178020&gt;</code></td></tr></tbody></table>
 <h3 id="encode_ints">encode_ints</h3>
 <p>Python: <code>encode_ints(i1, i2)</code><br>
 Scheme: <code>(encode-ints i1 i2)</code></p>
@@ -63,8 +64,9 @@ Scheme: <code>(graphics-to-phenix-geo-representation imol mode g)</code></p>
 <p>phenix GEO bonds representation</p>
 <p>Arguments: imol (a whole number), mode (a whole number), g (<code>coot::phenix_geo_bonds</code>). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>graphics_to_phenix_geo_representation(0, 0, "model.geo")</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(graphics-to-phenix-geo-representation 0 0 "model.geo")</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: redraws molecule 0's bonds from a phenix.refine .geo restraints file (no change without such a file).</p>
 <h3 id="key_sym_code">key_sym_code</h3>
 <p>Python: <code>key_sym_code(po)</code><br>
 Scheme: <code>(key-sym-code s-scm)</code></p>
@@ -72,8 +74,10 @@ Scheme: <code>(key-sym-code s-scm)</code></p>
 Also available in Python as <code>key_sym_code_py</code>.
 Also available in Scheme as <code>key-sym-code-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>key_sym_code("F5")</code></td><td>ran, returned <code>65474</code></td></tr>
+<tr><td>Scheme</td><td><code>(key-sym-code "F5")</code></td><td>ran, returned <code>65474</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the GDK key code for a key name (as used by add_key_binding); -1 if not a string.</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="molecule_atom_overlaps">molecule_atom_overlaps</h3>
 <p>Python: <code>molecule_atom_overlaps(imol)</code><br>
 Scheme: <code>(molecule-atom-overlaps imol)</code></p>
@@ -89,7 +93,8 @@ Also available in Scheme as <code>molecule-atom-overlaps-scm</code>.</p>
 <p>Arguments: mtz_file_name (text), fp_col (text), sigfp_col (text). Returns: a value (see the result of the example).
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>pathology_data("rnasa-1.8-all_refmac1.mtz", "hello", "hello")</code></td><td>ran, returned <code>False</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>pathology_data("rnasa-1.8-all_refmac1.mtz", "FGMP18", "SIGFGMP18")[0]</code></td><td>ran, returned <code>0.2933195233345032</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns data for the data-pathology plots: [max 1/d^2, [1/d^2, F], [1/d^2, F/sigF], [F, sigF], [F, F/sigF]].</p>
 <h3 id="prodrg_import_function">prodrg_import_function</h3>
 <p>Python: <code>prodrg_import_function(file_name, comp_id)</code><br>
 Scheme: <code>(prodrg-import-function file-name comp-id)</code></p>
@@ -99,42 +104,49 @@ prodrg-in.mdl file has been made. We no longer have a timeout
 function waiting for prodrg-in.mdl to be updated/written.</p>
 <p>Arguments: file_name (text), comp_id (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>prodrg_import_function("tutorial-modern.pdb", "ALA")</code></td><td>not run: not run automatically (prodrg: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(prodrg-import-function "tutorial-modern.pdb" "ALA")</code></td><td>not run: not run automatically (prodrg: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>prodrg_import_function("ligand.mdl", "LIG")</code></td><td>not run: runs an external program (PRODRG or the configured 3D generator)</td></tr>
+<tr><td>Scheme</td><td><code>(prodrg-import-function "ligand.mdl" "LIG")</code></td><td>not run: runs an external program (PRODRG or the configured 3D generator)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: imports an MDL file (e.g. from Lidia) through PRODRG/acedrg and loads the result.</p>
 <h3 id="py_symop_strings_to_space_group">py_symop_strings_to_space_group</h3>
 <p>Python: <code>py_symop_strings_to_space_group(symop_string_list)</code></p>
 <p>Arguments: symop_string_list (a list or value). Returns: <code>clipper::Spacegroup</code>.
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>py_symop_strings_to_space_group(["x,y,z", "-x,-y,z"])</code></td><td>ran, returned <code>&lt;Swig Object of type 'clipper::Spacegroup *' at 0x10b9517d0&gt;</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: internal C++ helper: returns a clipper::Spacegroup object that scripts cannot use; use symmetry_operators_to_xHM for a usable answer.</p>
 <h3 id="py_to_residue_specs">py_to_residue_specs</h3>
 <p>Python: <code>py_to_residue_specs(s)</code></p>
 <p>Arguments: s (a list or value). Returns: a list.
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>py_to_residue_specs([["A", 41, ""]])</code></td><td>ran, returned <code>&lt;Swig Object of type 'std::vector&lt; coot::residue_spec_t,std::allocator&lt; coot::residue_spec_t &gt; &gt; *' at 0x10b953060&gt;</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: internal C++ helper converting a list of residue specs to a C++ vector; nothing usable from a script.</p>
 <h3 id="register_interesting_positions_list">register_interesting_positions_list</h3>
 <p>Python: <code>register_interesting_positions_list(pos_list)</code><br>
 Scheme: <code>(register-interesting-positions-list-scm pos-list)</code></p>
 <p>Arguments: pos_list (a list or value). Returns: nothing.
 Also available in Python as <code>register_interesting_positions_list_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>register_interesting_positions_list([[[47.1, 10.6, 17.4], "Glu A41 CA"], [[21.2, 9.9, 10.8], "Cys B72 CA"]])</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(register-interesting-positions-list-scm (list (list (list 47.1 10.6 17.4) "Glu A41 CA")))</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: registers user-defined interesting positions [[x, y, z], label] that the 'next interesting position' key walks through.</p>
+<p>Note: Fixed in coot0 build 31: the Scheme version stopped Coot on any call (it read the list with a C integer, and took the label from the position). Call it as register-interesting-positions-list-scm.</p>
 <h3 id="resolve_clashing_sidechains_by_deletion">resolve_clashing_sidechains_by_deletion</h3>
 <p>Python: <code>resolve_clashing_sidechains_by_deletion(imol)</code><br>
 Scheme: <code>(resolve-clashing-sidechains-by-deletion imol)</code></p>
 <p>Arguments: imol (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>resolve_clashing_sidechains_by_deletion(0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(resolve-clashing-sidechains-by-deletion 0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>resolve_clashing_sidechains_by_deletion(0)</code></td><td>ran (no return value); changed: molecule 0: atoms of 2 residue(s) (A41, A89); n_atoms(0): 1465 -&gt; 1455</td></tr>
+<tr><td>Scheme</td><td><code>(resolve-clashing-sidechains-by-deletion 0)</code></td><td>ran (no return value); changed: molecule 0: atoms of 2 residue(s) (A41, A89); n_atoms(0): 1465 -&gt; 1455</td></tr></tbody></table>
 <h3 id="resolve_clashing_sidechains_by_rebuilding">resolve_clashing_sidechains_by_rebuilding</h3>
 <p>Python: <code>resolve_clashing_sidechains_by_rebuilding(imol)</code><br>
 Scheme: <code>(resolve-clashing-sidechains-by-rebuilding imol)</code></p>
 <p>Arguments: imol (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>resolve_clashing_sidechains_by_rebuilding(0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
-<tr><td>Scheme</td><td><code>(resolve-clashing-sidechains-by-rebuilding 0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>resolve_clashing_sidechains_by_rebuilding(0)</code></td><td>not run: needs the graphics window (stops Coot without a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(resolve-clashing-sidechains-by-rebuilding 0)</code></td><td>not run: needs the graphics window (stops Coot without a screen)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: rebuilds side chains that clash, fitting them to the refinement map.</p>
+<p>Note: Segfaults headless after the first mutation; probably a redraw/GUI call. Not checked with a window.</p>
 <h3 id="sbase_import_function">sbase_import_function</h3>
 <p>Python: <code>sbase_import_function(comp_id)</code><br>
 Scheme: <code>(sbase-import-function comp-id)</code></p>
@@ -144,55 +156,58 @@ SBase comp_id is required. We no longer have a timeout
 function waiting for prodrg-in.mdl to be updated/written.</p>
 <p>Arguments: comp_id (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>sbase_import_function("ALA")</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(sbase-import-function "ALA")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>sbase_import_function("ALA")</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(sbase-import-function "ALA")</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="scm-symop-strings-to-space-group">scm-symop-strings-to-space-group</h3>
 <p>Scheme: <code>(scm-symop-strings-to-space-group symop-string-list)</code></p>
 <p>Arguments: symop-string-list (a list or value). Returns: <code>clipper::Spacegroup</code>.
 <strong>Scheme only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Scheme</td><td><code>(scm-symop-strings-to-space-group (list "x,y,z" "-x,-y,z"))</code></td><td>ran, returned <code>#&lt;collectable-swig-pointer clipper::Spacegroup * 88b05fe40&gt;</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: internal C++ helper returning a clipper::Spacegroup; use symmetry-operators-&gt;xHM for a usable answer.</p>
 <h3 id="scm-to-residue-specs">scm-to-residue-specs</h3>
 <p>Scheme: <code>(scm-to-residue-specs s)</code></p>
 <p>Arguments: s (a list or value). Returns: a list.
 <strong>Scheme only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Scheme</td><td><code>(scm-to-residue-specs (list (list "A" 41 "")))</code></td><td>ran, returned <code>#&lt;collectable-swig-pointer std::vector&lt; coot::residue_spec_t &gt; * 88b19fa20&gt;</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: internal C++ helper converting residue specs to a C++ vector; nothing usable from a script.</p>
 <h3 id="set_python_draw_function">set_python_draw_function</h3>
 <p>Python: <code>set_python_draw_function(command_string)</code></p>
 <p>client/server functions</p>
 <p>Arguments: command_string (text). Returns: nothing.
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_python_draw_function("hello")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_python_draw_function("hello")</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="simple_text_dialog">simple_text_dialog</h3>
 <p>Python: <code>simple_text_dialog(dialog_title, text, geom_x, geom_y)</code><br>
 Scheme: <code>(simple-text-dialog dialog-title text geom-x geom-y)</code></p>
 <p>make a simple text dialog.</p>
 <p>Arguments: dialog_title (text), text (text), geom_x (a whole number), geom_y (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>simple_text_dialog("hello", "hello", 1, 1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(simple-text-dialog "hello" "hello" 1 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>simple_text_dialog("hello", "hello", 1, 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(simple-text-dialog "hello" "hello" 1 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="spherical-density-overlap">spherical-density-overlap</h3>
 <p>Scheme: <code>(spherical-density-overlap i-scm j-scm)</code></p>
 <p>Arguments: i-scm (a list or value), j-scm (a list or value). Returns: a value (see the result of the example).
 <strong>Scheme only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Scheme</td><td><code>(spherical-density-overlap 0 1)</code></td><td>not run: developer test: computes structure factors for the whole model and writes map-fragment-at-origin.map; did not finish in  ...</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: experimental: overlap of model 0 (as spheres) with map 1 around the origin (hard-coded centre).</p>
 <h3 id="store_keyed_user_name">store_keyed_user_name</h3>
 <p>Python: <code>store_keyed_user_name(key, user_name, passwd)</code><br>
 Scheme: <code>(store-keyed-user-name key user-name passwd)</code></p>
 <p>store username and password for the database.</p>
 <p>Arguments: key (text), user_name (text), passwd (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>store_keyed_user_name("hello", "my-name", "hello")</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(store-keyed-user-name "hello" "my-name" "hello")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>store_keyed_user_name("hello", "my-name", "hello")</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(store-keyed-user-name "hello" "my-name" "hello")</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="write_sequence">write_sequence</h3>
 <p>Python: <code>write_sequence(imol, file_name)</code><br>
 Scheme: <code>(write-sequence imol file-name)</code></p>
 <p>write the sequence for imol as fasta</p>
 <p>Arguments: imol (a whole number), file_name (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>write_sequence(0, "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(write-sequence 0 "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>write_sequence(0, "tutorial-modern.pdb")</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(write-sequence 0 "tutorial-modern.pdb")</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 </body></html>

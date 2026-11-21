@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="dfb63fb62e19bed7b75f64c9814ae0ce16aaaab1">
+<meta name="coot0-source-sha1" content="2a54613f29da4b8aba9d94e6d3a55a1e5e78e19e">
 <title>Skeletonization Interface - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -23,23 +23,23 @@ Scheme: <code>(get-text-for-skeleton-box-size-entry)</code></p>
 <p>MOVE-ME to c-interface-gtk-widgets.h</p>
 <p>Arguments: none. Returns: text.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>get_text_for_skeleton_box_size_entry()</code></td><td>ran, returned <code>&lt;Swig Object of type 'gchar *' at 0x10a26d740&gt;</code></td></tr>
-<tr><td>Scheme</td><td><code>(get-text-for-skeleton-box-size-entry)</code></td><td>ran, returned <code>#&lt;swig-pointer gchar * 814678210&gt;</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>get_text_for_skeleton_box_size_entry()</code></td><td>ran, returned <code>&lt;Swig Object of type 'gchar *' at 0x10b8338a0&gt;</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-text-for-skeleton-box-size-entry)</code></td><td>ran, returned <code>#&lt;swig-pointer gchar * 94ad7b780&gt;</code></td></tr></tbody></table>
 <h3 id="get_text_for_skeletonization_level_entry">get_text_for_skeletonization_level_entry</h3>
 <p>Python: <code>get_text_for_skeletonization_level_entry()</code><br>
 Scheme: <code>(get-text-for-skeletonization-level-entry)</code></p>
 <p>MOVE-ME to c-interface-gtk-widgets.h</p>
 <p>Arguments: none. Returns: text.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>get_text_for_skeletonization_level_entry()</code></td><td>ran, returned <code>&lt;Swig Object of type 'gchar *' at 0x10a26c9c0&gt;</code></td></tr>
-<tr><td>Scheme</td><td><code>(get-text-for-skeletonization-level-entry)</code></td><td>ran, returned <code>#&lt;swig-pointer gchar * 814768130&gt;</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>get_text_for_skeletonization_level_entry()</code></td><td>ran, returned <code>&lt;Swig Object of type 'gchar *' at 0x10b833690&gt;</code></td></tr>
+<tr><td>Scheme</td><td><code>(get-text-for-skeletonization-level-entry)</code></td><td>ran, returned <code>#&lt;swig-pointer gchar * 94e571690&gt;</code></td></tr></tbody></table>
 <h3 id="set_initial_map_for_skeletonize">set_initial_map_for_skeletonize</h3>
 <p>Python: <code>set_initial_map_for_skeletonize()</code><br>
 Scheme: <code>(set-initial-map-for-skeletonize)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_initial_map_for_skeletonize()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-initial-map-for-skeletonize)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_initial_map_for_skeletonize()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-initial-map-for-skeletonize)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_max_skeleton_search_depth">set_max_skeleton_search_depth</h3>
 <p>Python: <code>set_max_skeleton_search_depth(v)</code><br>
 Scheme: <code>(set-max-skeleton-search-depth v)</code></p>
@@ -48,46 +48,46 @@ Scheme: <code>(set-max-skeleton-search-depth v)</code></p>
  limit needs to be increased to 20 or so for high res maps (it is 10 by default)</p>
 <p>Arguments: v (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_max_skeleton_search_depth(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-max-skeleton-search-depth 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_max_skeleton_search_depth(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-max-skeleton-search-depth 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_skeleton_box_size">set_skeleton_box_size</h3>
 <p>Python: <code>set_skeleton_box_size(f)</code><br>
 Scheme: <code>(set-skeleton-box-size f)</code></p>
 <p>the box size (in Angstroms) for which the skeleton is displayed</p>
 <p>Arguments: f (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_skeleton_box_size(1.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-skeleton-box-size 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_skeleton_box_size(1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-skeleton-box-size 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_skeleton_box_size_from_widget">set_skeleton_box_size_from_widget</h3>
 <p>Python: <code>set_skeleton_box_size_from_widget(txt)</code><br>
 Scheme: <code>(set-skeleton-box-size-from-widget txt)</code></p>
 <p>MOVE-ME to c-interface-gtk-widgets.h</p>
 <p>Arguments: txt (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_skeleton_box_size_from_widget("hello")</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-skeleton-box-size-from-widget "hello")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_skeleton_box_size_from_widget("hello")</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-skeleton-box-size-from-widget "hello")</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_skeletonization_level_from_widget">set_skeletonization_level_from_widget</h3>
 <p>Python: <code>set_skeletonization_level_from_widget(txt)</code><br>
 Scheme: <code>(set-skeletonization-level-from-widget txt)</code></p>
 <p>MOVE-ME to c-interface-gtk-widgets.h</p>
 <p>Arguments: txt (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_skeletonization_level_from_widget("hello")</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-skeletonization-level-from-widget "hello")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_skeletonization_level_from_widget("hello")</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-skeletonization-level-from-widget "hello")</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="skel_greer_off">skel_greer_off</h3>
 <p>Python: <code>skel_greer_off()</code><br>
 Scheme: <code>(skel-greer-off)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>skel_greer_off()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(skel-greer-off)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>skel_greer_off()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(skel-greer-off)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="skel_greer_on">skel_greer_on</h3>
 <p>Python: <code>skel_greer_on()</code><br>
 Scheme: <code>(skel-greer-on)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>skel_greer_on()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(skel-greer-on)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>skel_greer_on()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(skel-greer-on)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="skeletonize_map">skeletonize_map</h3>
 <p>Python: <code>skeletonize_map(imol, prune_flag)</code><br>
 Scheme: <code>(skeletonize-map imol prune-flag)</code></p>
@@ -97,8 +97,9 @@ Scheme: <code>(skeletonize-map imol prune-flag)</code></p>
  (now the molecule number comes first).</p>
 <p>Arguments: imol (a whole number), prune_flag (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>skeletonize_map(0, 1)</code></td><td>ran, returned <code>0</code></td></tr>
-<tr><td>Scheme</td><td><code>(skeletonize-map 0 1)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>skeletonize_map(1, 0)</code></td><td>ran, returned <code>0</code></td></tr>
+<tr><td>Scheme</td><td><code>(skeletonize-map 1 0)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: computes the skeleton of map 1 (drawn in the graphics); always returns 0.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="unskeletonize_map">unskeletonize_map</h3>
 <p>Python: <code>unskeletonize_map(imol)</code><br>
@@ -106,7 +107,8 @@ Scheme: <code>(unskeletonize-map imol)</code></p>
 <p>undisplay the skeleton on molecule number imol</p>
 <p>Arguments: imol (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>unskeletonize_map(0)</code></td><td>ran, returned <code>0</code></td></tr>
-<tr><td>Scheme</td><td><code>(unskeletonize-map 0)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>skeletonize_map(1, 0)</code>, then <code>unskeletonize_map(1)</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td>first <code>(skeletonize-map 1 0)</code>, then <code>(unskeletonize-map 1)</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: hides the skeleton of map 1 and returns the map molecule number (1).</p>
 <p>Python and Scheme gave the same answer.</p>
 </body></html>

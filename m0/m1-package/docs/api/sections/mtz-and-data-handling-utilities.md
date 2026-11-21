@@ -41,8 +41,8 @@ Arguments: filename (text). Returns: `mtz_column_types_info_t`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `get_mtz_columns("tutorial-modern.pdb")` | ran, returned `<coot.mtz_column_types_info_t; proxy of <Swig Object of type 'coot::mtz_column_types_info_t *' at 0x10a26d200> >` |
-| Scheme | `(get-mtz-columns "tutorial-modern.pdb")` | ran, returned `#<collectable-swig-pointer coot::mtz_column_types_info_t * 8154681c0>` |
+| Python | `get_mtz_columns("tutorial-modern.pdb")` | ran, returned `<coot.mtz_column_types_info_t; proxy of <Swig Object of type 'coot::mtz_column_types_info_t *' at 0x10b831770> >` |
+| Scheme | `(get-mtz-columns "tutorial-modern.pdb")` | ran, returned `#<collectable-swig-pointer coot::mtz_column_types_info_t * 94cc8ed80>` |
 
 ### get_phi_cols
 
@@ -113,8 +113,8 @@ Arguments: filename (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `manage_column_selector("tutorial-modern.pdb")` | ran (no return value) |
-| Scheme | `(manage-column-selector "tutorial-modern.pdb")` | ran (no return value) |
+| Python | `manage_column_selector("tutorial-modern.pdb")` | ran (no return value, nothing visible changed) |
+| Scheme | `(manage-column-selector "tutorial-modern.pdb")` | ran (no return value, nothing visible changed) |
 
 ### my_combo_box_text_add_items
 
@@ -125,6 +125,8 @@ Arguments: combobox (`GtkComboBox *`), labels (a list), active_label_index (a wh
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | (no example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Scheme | (no example) | not run: no automatic example (it takes a list, a widget or an object) |
+
+Example written and checked by hand on the test data. Expected: adds text items to a GtkComboBox (internal GUI helper).
 

@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="59f26c9240e41c21e82206304992869887c3bd9a">
+<meta name="coot0-source-sha1" content="56ecf9c229cd60bf3f00addec8b82670eaf86dd4">
 <title>Map to Model Correlation - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -34,8 +34,9 @@ Scheme: <code>(map-mean-scm imol)</code></p>
 <p>Arguments: imol (a whole number). Returns: a value (see the result of the example).
 Also available in Python as <code>map_mean_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>map_mean(0)</code></td><td>ran, returned <code>False</code></td></tr>
-<tr><td>Scheme</td><td><code>(map-mean-scm 0)</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>map_mean(1)</code></td><td>ran, returned <code>9.449976641917601e-05</code></td></tr>
+<tr><td>Scheme</td><td><code>(map-mean-scm 1)</code></td><td>ran, returned <code>9.449976641917601e-5</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the mean density of map 1 (about 0 for a 2Fo-Fc map); False if not a map.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="map_sigma">map_sigma</h3>
 <p>Python: <code>map_sigma(imol)</code><br>
@@ -44,8 +45,9 @@ Scheme: <code>(map-sigma imol)</code></p>
 Also available in Python as <code>map_sigma_py</code>.
 Also available in Scheme as <code>map-sigma-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>map_sigma(0)</code></td><td>ran, returned <code>False</code></td></tr>
-<tr><td>Scheme</td><td><code>(map-sigma 0)</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>map_sigma(1)</code></td><td>ran, returned <code>0.37349623441696167</code></td></tr>
+<tr><td>Scheme</td><td><code>(map-sigma 1)</code></td><td>ran, returned <code>0.37349623441696167</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the rms (sigma) of map 1; False if not a map.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="map_statistics">map_statistics</h3>
 <p>Python: <code>map_statistics(imol)</code><br>
@@ -54,8 +56,10 @@ Scheme: <code>(map-statistics imol)</code></p>
 Also available in Python as <code>map_statistics_py</code>.
 Also available in Scheme as <code>map-statistics-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>map_statistics(0)</code></td><td>ran, returned <code>False</code></td></tr>
-<tr><td>Scheme</td><td><code>(map-statistics 0)</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>map_statistics(1)</code></td><td>ran, returned <code>[1.3091280948174244e-10, 0.3733606442952185, 0.07638043081814125, 6.456661785908296]</code></td></tr>
+<tr><td>Scheme</td><td><code>(map-statistics 1)</code></td><td>ran, returned <code>(1.3091280948174244e-10 0.3733606442952185 0.07638043081814125 6.456661785908296)</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns [mean, standard deviation, skew, kurtosis] of the map.</p>
+<p>Note: mean here (1.3e-10) differs from map_mean(1) (9.4e-05): different averaging (with/without pseudo-zeros?).</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="map_to_model_correlation">map_to_model_correlation</h3>
 <p>Python: <code>map_to_model_correlation(imol, residue_specs, neighb_residue_specs, atom_mask_mode, imol_map)</code><br>
@@ -70,8 +74,11 @@ Scheme: <code>(map-to-model-correlation imol residue-specs neighb-residue-specs 
 10: atom radius is dependent atom atom B-factor</p>
 <p>Arguments: imol (a whole number), residue_specs (a list or value), neighb_residue_specs (a list or value), atom_mask_mode (a whole number), imol_map (a whole number). Returns: a value (see the result of the example).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>map_to_model_correlation(0, [["A", 41, ""], ["A", 42, ""]], ["A", 41, ""], 1, 1)</code></td><td>error: SystemError: &lt;built-in function map_to_model_correlation_py&gt; returned a result with an exception set</td></tr>
-<tr><td>Scheme</td><td><code>(map-to-model-correlation 0 (list (list "A" 41 "") (list "A" 42 "")) (list "A" 41 "") 1 1)</code></td><td>error: In procedure length: Wrong type argument in position 1: "A"</td></tr></tbody></table>
+<tr><td>Python</td><td><code>map_to_model_correlation(0, [["A", 41, ""], ["A", 42, ""]], [], 0, 1)</code></td><td>ran, returned <code>0.534332811832428</code></td></tr>
+<tr><td>Scheme</td><td><code>(map-to-model-correlation 0 (list (list "A" 41 "") (list "A" 42 "")) (list) 0 1)</code></td><td>ran, returned <code>0.534332811832428</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the map-model correlation (a number between -1 and 1) for the residues; nothing changes.</p>
+<p>Note: neighb_residue_specs must be a LIST of residue specs (possibly empty); a single spec as in the old example raises SystemError in Python</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="map_to_model_correlation_per_residue">map_to_model_correlation_per_residue</h3>
 <p>Python: <code>map_to_model_correlation_per_residue(imol, residue_specs, atom_mask_mode, imol_map)</code><br>
 Scheme: <code>(map-to-model-correlation-per-residue imol residue-specs atom-mask-mode imol-map)</code></p>
@@ -103,8 +110,11 @@ Scheme: <code>(map-to-model-correlation-stats imol residue-specs neighb-residue-
 5: side-chain atoms if is standard amino-acid, else nothing</p>
 <p>Arguments: imol (a whole number), residue_specs (a list or value), neighb_residue_specs (a list or value), atom_mask_mode (a whole number), imol_map (a whole number). Returns: a value (see the result of the example).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>map_to_model_correlation_stats(0, [["A", 41, ""], ["A", 42, ""]], ["A", 41, ""], 1, 1)</code></td><td>error: SystemError: &lt;built-in function map_to_model_correlation_stats_py&gt; returned a result with an exception set</td></tr>
-<tr><td>Scheme</td><td><code>(map-to-model-correlation-stats 0 (list (list "A" 41 "") (list "A" 42 "")) (list "A" 41 "") 1 1)</code></td><td>error: In procedure length: Wrong type argument in position 1: "A"</td></tr></tbody></table>
+<tr><td>Python</td><td><code>map_to_model_correlation_stats(0, [["A", 41, ""], ["A", 42, ""]], [["A", 40, ""]], 0, 1)</code></td><td>ran, returned <code>[0.548732629869392, 0.3522034760120561, 0.20996179099783185, 1129.0, 758.1366588845849, 223.62884630216286]</code></td></tr>
+<tr><td>Scheme</td><td><code>(map-to-model-correlation-stats 0 (list (list "A" 41 "") (list "A" 42 "")) (list (list "A" 40 "")) 0 1)</code></td><td>ran, returned <code>(0.548732629869392 0.3522034760120561 0.20996179099783185 1129 758.1366588845849 223.62884630216286 0.16908523276233844  ...</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns a list of statistics, first the correlation, then variances, number of grid points and sums.</p>
+<p>Note: Python returns 6 values, Scheme returns 12 (Scheme adds more sums/means); same first 6</p>
+<p>Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).</p>
 <h3 id="map-to-model-correlation-stats-per-residue-scm">map-to-model-correlation-stats-per-residue-scm</h3>
 <p>Scheme: <code>(map-to-model-correlation-stats-per-residue-scm imol residue-specs-scm atom-mask-mode atom-radius-for-masking imol-map)</code></p>
 <p>map to model stats</p>
@@ -130,8 +140,9 @@ Scheme: <code>(qq-plot-map-and-model imol residue-specs-scm neigh-residue-specs-
 Also available in Python as <code>qq_plot_map_and_model_py</code>.
 Also available in Scheme as <code>qq-plot-map-and-model-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>qq_plot_map_and_model(0, [["A", 41, ""], ["A", 42, ""]], ["A", 41, ""], 1, 1)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
-<tr><td>Scheme</td><td><code>(qq-plot-map-and-model 0 (list (list "A" 41 "") (list "A" 42 "")) (list "A" 41 "") 1 1)</code></td><td>error: In procedure length: Wrong type argument in position 1: "A"</td></tr></tbody></table>
+<tr><td>Python</td><td><code>qq_plot_map_and_model(0, [["A", 41, ""], ["A", 42, ""]], [], 0, 1)</code></td><td>not run: opens a plot window (goograph); needs the graphics window (stops Coot without a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(qq-plot-map-and-model 0 (list (list "A" 41 "") (list "A" 42 "")) (list) 0 1)</code></td><td>not run: opens a plot window (goograph); needs the graphics window (stops Coot without a screen)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: opens a Q-Q plot window of map vs model density for the residues.</p>
 <h3 id="set_map_correlation_atom_radius">set_map_correlation_atom_radius</h3>
 <p>Python: <code>set_map_correlation_atom_radius(r)</code><br>
 Scheme: <code>(set-map-correlation-atom-radius r)</code></p>
@@ -139,6 +150,6 @@ Scheme: <code>(set-map-correlation-atom-radius r)</code></p>
  functions, let's set it here (default is 1.5A)</p>
 <p>Arguments: r (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_map_correlation_atom_radius(0.5)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-map-correlation-atom-radius 0.5)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_map_correlation_atom_radius(0.5)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-map-correlation-atom-radius 0.5)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 </body></html>

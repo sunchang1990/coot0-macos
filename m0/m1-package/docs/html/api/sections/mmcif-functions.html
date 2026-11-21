@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="c3b26f5a9eaf8b847c954707c70e77c080d3aea2">
+<meta name="coot0-source-sha1" content="a907bc47f332cb3ac2536699f95e3d0ec7f80f4d">
 <title>mmCIF Functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -22,8 +22,10 @@ table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; 
 Scheme: <code>(auto-read-cif-data-with-phases filename)</code></p>
 <p>Arguments: filename (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>auto_read_cif_data_with_phases("tutorial-modern.pdb")</code></td><td>ran, returned <code>-1</code></td></tr>
-<tr><td>Scheme</td><td><code>(auto-read-cif-data-with-phases "tutorial-modern.pdb")</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>auto_read_cif_data_with_phases("rnasa-sf.cif")</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, rnasa-sf.cif SigmaA); new molecule 4 (map, rnasa-sf.cif Difference SigmaA); graphics_n_molecules(): 3 -&gt; 5; scroll_wheel_map(): -1 -&gt; 4</td></tr>
+<tr><td>Scheme</td><td><code>(auto-read-cif-data-with-phases "rnasa-sf.cif")</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, rnasa-sf.cif SigmaA); new molecule 4 (map, rnasa-sf.cif Difference SigmaA); graphics_n_molecules(): 3 -&gt; 5; scroll_wheel_map(): -1 -&gt; 4</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the SigmaA map molecule number; the difference SigmaA map is made too.</p>
+<p>Note: rnasa-sf.cif (in test-data) is a structure-factor mmCIF made from rnasa-1.8-all_refmac1.mtz with gemmi mtz2cif.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="handle_cif_dictionary">handle_cif_dictionary</h3>
 <p>Python: <code>handle_cif_dictionary(filename)</code><br>
@@ -31,8 +33,10 @@ Scheme: <code>(handle-cif-dictionary filename)</code></p>
 <p>return the number of bonds read (&gt; 0 can be treated as success)</p>
 <p>Arguments: filename (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>handle_cif_dictionary("tutorial-modern.pdb")</code></td><td>ran, returned <code>-1</code></td></tr>
-<tr><td>Scheme</td><td><code>(handle-cif-dictionary "tutorial-modern.pdb")</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>handle_cif_dictionary("NAG.cif")</code></td><td>ran, returned <code>36</code></td></tr>
+<tr><td>Scheme</td><td><code>(handle-cif-dictionary "NAG.cif")</code></td><td>ran, returned <code>36</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: reads the NAG dictionary; returns its index in the dictionary store (&gt; 0 is success), -1 on failure.</p>
+<p>Note: The doc says 'number of bonds read'; the code returns the monomer index of the dictionary (36 here, varies with what was read before).</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="handle_cif_dictionary_for_molecule">handle_cif_dictionary_for_molecule</h3>
 <p>Python: <code>handle_cif_dictionary_for_molecule(filename, imol_enc, new_molecule_from_dictionary_cif_checkbutton_state)</code><br>
@@ -43,8 +47,9 @@ Scheme: <code>(handle-cif-dictionary-for-molecule filename imol-enc new-molecule
  IMOL_ENC_ANY = -999999, IMOL_ENC_AUTO = -999998, IMOL_ENC_UNSET = -999997</p>
 <p>Arguments: filename (text), imol_enc (a whole number), new_molecule_from_dictionary_cif_checkbutton_state (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>handle_cif_dictionary_for_molecule("tutorial-modern.pdb", 0, 1)</code></td><td>ran, returned <code>-1</code></td></tr>
-<tr><td>Scheme</td><td><code>(handle-cif-dictionary-for-molecule "tutorial-modern.pdb" 0 1)</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>handle_cif_dictionary_for_molecule("NAG.cif", -999999, 1)</code></td><td>ran, returned <code>36</code>; changed: new molecule 3 (model, NAG_from_dict); first_small_coords_imol(): -1 -&gt; 3; graphics_n_molecules(): 3 -&gt; 4</td></tr>
+<tr><td>Scheme</td><td><code>(handle-cif-dictionary-for-molecule "NAG.cif" -999999 1)</code></td><td>ran, returned <code>36</code>; changed: new molecule 3 (model, NAG_from_dict); first_small_coords_imol(): -1 -&gt; 3; graphics_n_molecules(): 3 -&gt; 4</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: reads the dictionary for all molecules (-999999 = IMOL_ENC_ANY) and, with the last argument 1, makes a molecule from it; returns the dictionary index. With imol_enc 0 no molecule is made.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="import_all_refmac_cifs">import_all_refmac_cifs</h3>
 <p>Python: <code>import_all_refmac_cifs()</code><br>
@@ -53,8 +58,9 @@ Scheme: <code>(import-all-refmac-cifs)</code></p>
  in subdirectories and import them all.</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>import_all_refmac_cifs()</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(import-all-refmac-cifs)</code></td><td>not run: not run automatically (refmac: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>import_all_refmac_cifs()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(import-all-refmac-cifs)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: reads every .cif dictionary under $COOT_REFMAC_LIB_DIR; does nothing when the variable is not set.</p>
 <h3 id="non_standard_residue_names">non_standard_residue_names</h3>
 <p>Python: <code>non_standard_residue_names(imol)</code><br>
 Scheme: <code>(non-standard-residue-names imol)</code></p>
@@ -72,72 +78,97 @@ Scheme: <code>(open-cif-dictionary-file-selector-dialog)</code></p>
 <p>open the cif dictionary file selector dialog</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>open_cif_dictionary_file_selector_dialog()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(open-cif-dictionary-file-selector-dialog)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>open_cif_dictionary_file_selector_dialog()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(open-cif-dictionary-file-selector-dialog)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="read_cif_data">read_cif_data</h3>
 <p>Python: <code>read_cif_data(filename, imol_coords)</code><br>
 Scheme: <code>(read-cif-data filename imol-coords)</code></p>
 <p>Arguments: filename (text), imol_coords (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_cif_data("tutorial-modern.pdb", 0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
-<tr><td>Scheme</td><td><code>(read-cif-data "tutorial-modern.pdb" 0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>read_cif_data("rnasa-sf.cif", 0)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, rnasa-sf.cif); graphics_n_molecules(): 3 -&gt; 4</td></tr>
+<tr><td>Scheme</td><td><code>(read-cif-data "rnasa-sf.cif" 0)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, rnasa-sf.cif); graphics_n_molecules(): 3 -&gt; 4</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the new map molecule number: a map calculated from F_meas and the phases of model molecule 0.</p>
+<p>Note: rnasa-sf.cif (in test-data) is a structure-factor mmCIF made from rnasa-1.8-all_refmac1.mtz with gemmi mtz2cif.</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="read_cif_data_2fofc_map">read_cif_data_2fofc_map</h3>
 <p>Python: <code>read_cif_data_2fofc_map(filename, imol_coords)</code><br>
 Scheme: <code>(read-cif-data-2fofc-map filename imol-coords)</code></p>
 <p>Arguments: filename (text), imol_coords (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_cif_data_2fofc_map("tutorial-modern.pdb", 0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
-<tr><td>Scheme</td><td><code>(read-cif-data-2fofc-map "tutorial-modern.pdb" 0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>read_cif_data_2fofc_map("rnasa-sf.cif", 0)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, rnasa-sf.cif); graphics_n_molecules(): 3 -&gt; 4</td></tr>
+<tr><td>Scheme</td><td><code>(read-cif-data-2fofc-map "rnasa-sf.cif" 0)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, rnasa-sf.cif); graphics_n_molecules(): 3 -&gt; 4</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the new map molecule number: a 2Fo-Fc map from the F_meas data and model 0.</p>
+<p>Note: rnasa-sf.cif (in test-data) is a structure-factor mmCIF made from rnasa-1.8-all_refmac1.mtz with gemmi mtz2cif.</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="read_cif_data_fofc_map">read_cif_data_fofc_map</h3>
 <p>Python: <code>read_cif_data_fofc_map(filename, imol_coords)</code><br>
 Scheme: <code>(read-cif-data-fofc-map filename imol-coords)</code></p>
 <p>Arguments: filename (text), imol_coords (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_cif_data_fofc_map("tutorial-modern.pdb", 0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
-<tr><td>Scheme</td><td><code>(read-cif-data-fofc-map "tutorial-modern.pdb" 0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>read_cif_data_fofc_map("rnasa-sf.cif", 0)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, rnasa-sf.cif); graphics_n_molecules(): 3 -&gt; 4</td></tr>
+<tr><td>Scheme</td><td><code>(read-cif-data-fofc-map "rnasa-sf.cif" 0)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, rnasa-sf.cif); graphics_n_molecules(): 3 -&gt; 4</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the new map molecule number: an Fo-Fc difference map from the F_meas data and model 0.</p>
+<p>Note: rnasa-sf.cif (in test-data) is a structure-factor mmCIF made from rnasa-1.8-all_refmac1.mtz with gemmi mtz2cif.</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="read_cif_data_with_phases_2fo_fc">read_cif_data_with_phases_2fo_fc</h3>
 <p>Python: <code>read_cif_data_with_phases_2fo_fc(filename)</code><br>
 Scheme: <code>(read-cif-data-with-phases-2fo-fc filename)</code></p>
 <p>Arguments: filename (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_cif_data_with_phases_2fo_fc("tutorial-modern.pdb")</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
-<tr><td>Scheme</td><td><code>(read-cif-data-with-phases-2fo-fc "tutorial-modern.pdb")</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>read_cif_data_with_phases_2fo_fc("rnasa-sf.cif")</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, rnasa-sf.cif 2Fo-Fc); graphics_n_molecules(): 3 -&gt; 4; scroll_wheel_map(): -1 -&gt; 3</td></tr>
+<tr><td>Scheme</td><td><code>(read-cif-data-with-phases-2fo-fc "rnasa-sf.cif")</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, rnasa-sf.cif 2Fo-Fc); graphics_n_molecules(): 3 -&gt; 4; scroll_wheel_map(): -1 -&gt; 3</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the new map molecule number of a 2Fo-Fc map.</p>
+<p>Note: rnasa-sf.cif (in test-data) is a structure-factor mmCIF made from rnasa-1.8-all_refmac1.mtz with gemmi mtz2cif.</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="read_cif_data_with_phases_diff_sigmaa">read_cif_data_with_phases_diff_sigmaa</h3>
 <p>Python: <code>read_cif_data_with_phases_diff_sigmaa(filename)</code><br>
 Scheme: <code>(read-cif-data-with-phases-diff-sigmaa filename)</code></p>
 <p>Arguments: filename (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_cif_data_with_phases_diff_sigmaa("tutorial-modern.pdb")</code></td><td>ran, returned <code>-1</code></td></tr>
-<tr><td>Scheme</td><td><code>(read-cif-data-with-phases-diff-sigmaa "tutorial-modern.pdb")</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>read_cif_data_with_phases_diff_sigmaa("rnasa-sf.cif")</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, rnasa-sf.cif Difference SigmaA); graphics_n_molecules(): 3 -&gt; 4; scroll_wheel_map(): -1 -&gt; 3</td></tr>
+<tr><td>Scheme</td><td><code>(read-cif-data-with-phases-diff-sigmaa "rnasa-sf.cif")</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, rnasa-sf.cif Difference SigmaA); graphics_n_molecules(): 3 -&gt; 4; scroll_wheel_map(): -1 -&gt; 3</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the new map molecule number of the difference (mFo-DFc) map from the phases in the file.</p>
+<p>Note: rnasa-sf.cif (in test-data) is a structure-factor mmCIF made from rnasa-1.8-all_refmac1.mtz with gemmi mtz2cif.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="read_cif_data_with_phases_fo_alpha_calc">read_cif_data_with_phases_fo_alpha_calc</h3>
 <p>Python: <code>read_cif_data_with_phases_fo_alpha_calc(filename)</code><br>
 Scheme: <code>(read-cif-data-with-phases-fo-alpha-calc filename)</code></p>
 <p>Arguments: filename (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_cif_data_with_phases_fo_alpha_calc("tutorial-modern.pdb")</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
-<tr><td>Scheme</td><td><code>(read-cif-data-with-phases-fo-alpha-calc "tutorial-modern.pdb")</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>read_cif_data_with_phases_fo_alpha_calc("rnasa-sf.cif")</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, rnasa-sf.cif Fo ac); graphics_n_molecules(): 3 -&gt; 4; scroll_wheel_map(): -1 -&gt; 3</td></tr>
+<tr><td>Scheme</td><td><code>(read-cif-data-with-phases-fo-alpha-calc "rnasa-sf.cif")</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, rnasa-sf.cif Fo ac); graphics_n_molecules(): 3 -&gt; 4; scroll_wheel_map(): -1 -&gt; 3</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the new map molecule number of an Fo, alpha-calc map.</p>
+<p>Note: rnasa-sf.cif (in test-data) is a structure-factor mmCIF made from rnasa-1.8-all_refmac1.mtz with gemmi mtz2cif.</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="read_cif_data_with_phases_fo_fc">read_cif_data_with_phases_fo_fc</h3>
 <p>Python: <code>read_cif_data_with_phases_fo_fc(filename)</code><br>
 Scheme: <code>(read-cif-data-with-phases-fo-fc filename)</code></p>
 <p>Arguments: filename (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_cif_data_with_phases_fo_fc("tutorial-modern.pdb")</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
-<tr><td>Scheme</td><td><code>(read-cif-data-with-phases-fo-fc "tutorial-modern.pdb")</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>read_cif_data_with_phases_fo_fc("rnasa-sf.cif")</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, rnasa-sf.cif Fo-Fc); graphics_n_molecules(): 3 -&gt; 4; scroll_wheel_map(): -1 -&gt; 3</td></tr>
+<tr><td>Scheme</td><td><code>(read-cif-data-with-phases-fo-fc "rnasa-sf.cif")</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, rnasa-sf.cif Fo-Fc); graphics_n_molecules(): 3 -&gt; 4; scroll_wheel_map(): -1 -&gt; 3</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the new map molecule number of an Fo-Fc map.</p>
+<p>Note: rnasa-sf.cif (in test-data) is a structure-factor mmCIF made from rnasa-1.8-all_refmac1.mtz with gemmi mtz2cif.</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="read_cif_data_with_phases_nfo_fc">read_cif_data_with_phases_nfo_fc</h3>
 <p>Python: <code>read_cif_data_with_phases_nfo_fc(filename, map_type)</code><br>
 Scheme: <code>(read-cif-data-with-phases-nfo-fc filename map-type)</code></p>
 <p>Arguments: filename (text), map_type (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_cif_data_with_phases_nfo_fc("tutorial-modern.pdb", 1)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
-<tr><td>Scheme</td><td><code>(read-cif-data-with-phases-nfo-fc "tutorial-modern.pdb" 1)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>read_cif_data_with_phases_nfo_fc("rnasa-sf.cif", 1)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, rnasa-sf.cif 2Fo-Fc); graphics_n_molecules(): 3 -&gt; 4; scroll_wheel_map(): -1 -&gt; 3</td></tr>
+<tr><td>Scheme</td><td><code>(read-cif-data-with-phases-nfo-fc "rnasa-sf.cif" 1)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, rnasa-sf.cif 2Fo-Fc); graphics_n_molecules(): 3 -&gt; 4; scroll_wheel_map(): -1 -&gt; 3</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: map_type 0 SigmaA, 1 2Fo-Fc, 2 Fo-Fc, 3 Fo alpha-calc, 4 difference SigmaA; returns the new map molecule number.</p>
+<p>Note: rnasa-sf.cif (in test-data) is a structure-factor mmCIF made from rnasa-1.8-all_refmac1.mtz with gemmi mtz2cif.</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="read_cif_data_with_phases_sigmaa">read_cif_data_with_phases_sigmaa</h3>
 <p>Python: <code>read_cif_data_with_phases_sigmaa(filename)</code><br>
 Scheme: <code>(read-cif-data-with-phases-sigmaa filename)</code></p>
 <p>Arguments: filename (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_cif_data_with_phases_sigmaa("tutorial-modern.pdb")</code></td><td>ran, returned <code>-1</code></td></tr>
-<tr><td>Scheme</td><td><code>(read-cif-data-with-phases-sigmaa "tutorial-modern.pdb")</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>read_cif_data_with_phases_sigmaa("rnasa-sf.cif")</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, rnasa-sf.cif SigmaA); graphics_n_molecules(): 3 -&gt; 4; scroll_wheel_map(): -1 -&gt; 3</td></tr>
+<tr><td>Scheme</td><td><code>(read-cif-data-with-phases-sigmaa "rnasa-sf.cif")</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, rnasa-sf.cif SigmaA); graphics_n_molecules(): 3 -&gt; 4; scroll_wheel_map(): -1 -&gt; 3</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the new map molecule number of the SigmaA (2mFo-DFc) map from the phases in the file.</p>
+<p>Note: rnasa-sf.cif (in test-data) is a structure-factor mmCIF made from rnasa-1.8-all_refmac1.mtz with gemmi mtz2cif.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="read_cif_dictionary">read_cif_dictionary</h3>
 <p>Python: <code>read_cif_dictionary(filename)</code><br>
@@ -146,39 +177,48 @@ Scheme: <code>(read-cif-dictionary filename)</code></p>
 <p>return the number of bonds read (&gt; 0 can be treated as success)</p>
 <p>Arguments: filename (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_cif_dictionary("tutorial-modern.pdb")</code></td><td>ran, returned <code>-1</code></td></tr>
-<tr><td>Scheme</td><td><code>(read-cif-dictionary "tutorial-modern.pdb")</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>read_cif_dictionary("ATP.cif")</code></td><td>ran, returned <code>36</code></td></tr>
+<tr><td>Scheme</td><td><code>(read-cif-dictionary "ATP.cif")</code></td><td>ran, returned <code>36</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: same as handle_cif_dictionary: returns the dictionary index (&gt; 0 success), -1 on failure.</p>
+<p>Note: Returns the monomer index, not a number of bonds as documented.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="read_small_molecule_cif">read_small_molecule_cif</h3>
 <p>Python: <code>read_small_molecule_cif(file_name)</code><br>
 Scheme: <code>(read-small-molecule-cif file-name)</code></p>
 <p>Arguments: file_name (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_small_molecule_cif("tutorial-modern.pdb")</code></td><td>ran, returned <code>-1</code></td></tr>
-<tr><td>Scheme</td><td><code>(read-small-molecule-cif "tutorial-modern.pdb")</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>read_small_molecule_cif("rnasa-sm.cif")</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (model, rnasa-sm.cif); first_small_coords_imol(): -1 -&gt; 3; graphics_n_molecules(): 3 -&gt; 4</td></tr>
+<tr><td>Scheme</td><td><code>(read-small-molecule-cif "rnasa-sm.cif")</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (model, rnasa-sm.cif); first_small_coords_imol(): -1 -&gt; 3; graphics_n_molecules(): 3 -&gt; 4</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the new model molecule number made from the atoms (_atom_site_fract_*) of a small-molecule CIF; -1 on failure.</p>
+<p>Note: rnasa-sm.cif and rnasa-sm-data.cif (in test-data) are a small-molecule style CIF made from residues A39-41 of the test model and the rnasa reflections, only to show the call.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="read_small_molecule_data_cif">read_small_molecule_data_cif</h3>
 <p>Python: <code>read_small_molecule_data_cif(file_name)</code><br>
 Scheme: <code>(read-small-molecule-data-cif file-name)</code></p>
 <p>Arguments: file_name (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_small_molecule_data_cif("tutorial-modern.pdb")</code></td><td>ran, returned <code>-1</code></td></tr>
-<tr><td>Scheme</td><td><code>(read-small-molecule-data-cif "tutorial-modern.pdb")</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>read_small_molecule_data_cif("rnasa-sm-data.cif")</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, rnasa-sm-data.cif SigmaA); new molecule 4 (map, rnasa-sm-data.cif Diff-SigmaA); graphics_n_molecules(): 3 -&gt; 5; scroll_wheel_map(): -1 -&gt; 3</td></tr>
+<tr><td>Scheme</td><td><code>(read-small-molecule-data-cif "rnasa-sm-data.cif")</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, rnasa-sm-data.cif SigmaA); new molecule 4 (map, rnasa-sm-data.cif Diff-SigmaA); graphics_n_molecules(): 3 -&gt; 5; scroll_wheel_map(): -1 -&gt; 3</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the molecule number of the SigmaA map made from the reflections (F_meas + F_calc/phase_calc) of a small-molecule data CIF; a difference map is made too.</p>
+<p>Note: rnasa-sm.cif and rnasa-sm-data.cif (in test-data) are a small-molecule style CIF made from residues A39-41 of the test model and the rnasa reflections, only to show the call.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="read_small_molecule_data_cif_and_make_map_using_coords">read_small_molecule_data_cif_and_make_map_using_coords</h3>
 <p>Python: <code>read_small_molecule_data_cif_and_make_map_using_coords(file_name, imol_coords)</code><br>
 Scheme: <code>(read-small-molecule-data-cif-and-make-map-using-coords file-name imol-coords)</code></p>
 <p>Arguments: file_name (text), imol_coords (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_small_molecule_data_cif_and_make_map_using_coords("tutorial-modern.pdb", 0)</code></td><td>ran, returned <code>-1</code></td></tr>
-<tr><td>Scheme</td><td><code>(read-small-molecule-data-cif-and-make-map-using-coords "tutorial-modern.pdb" 0)</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>read_small_molecule_data_cif_and_make_map_using_coords("rnasa-sm-data.cif", 0)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, rnasa-sm-data.cif SigmaA); new molecule 4 (map, rnasa-sm-data.cif Diff-SigmaA); graphics_n_molecules(): 3 -&gt; 5; scroll_wheel_map(): -1 -&gt; 3</td></tr>
+<tr><td>Scheme</td><td><code>(read-small-molecule-data-cif-and-make-map-using-coords "rnasa-sm-data.cif" 0)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, rnasa-sm-data.cif SigmaA); new molecule 4 (map, rnasa-sm-data.cif Diff-SigmaA); graphics_n_molecules(): 3 -&gt; 5; scroll_wheel_map(): -1 -&gt; 3</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the new SigmaA map molecule number, phases from the coordinates of model 0; a difference map is made too.</p>
+<p>Note: rnasa-sm.cif and rnasa-sm-data.cif (in test-data) are a small-molecule style CIF made from residues A39-41 of the test model and the rnasa reflections, only to show the call.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="write_connectivity">write_connectivity</h3>
 <p>Python: <code>write_connectivity(monomer_name, filename)</code><br>
 Scheme: <code>(write-connectivity monomer-name filename)</code></p>
 <p>Arguments: monomer_name (text), filename (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>write_connectivity("my-name", "tutorial-modern.pdb")</code></td><td>ran, returned <code>0</code></td></tr>
-<tr><td>Scheme</td><td><code>(write-connectivity "my-name" "tutorial-modern.pdb")</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>handle_cif_dictionary("NAG.cif")</code>, then <code>write_connectivity("NAG", "nag-connect.txt")</code></td><td>ran, returned <code>1</code></td></tr>
+<tr><td>Scheme</td><td>first <code>(handle-cif-dictionary "NAG.cif")</code>, then <code>(write-connectivity "NAG" "nag-connect.txt")</code></td><td>ran, returned <code>1</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns 1 and writes a CONECT-style connectivity file for NAG; 0 when the dictionary for that type is not loaded yet (it is not loaded on demand).</p>
 <p>Python and Scheme gave the same answer.</p>
 </body></html>

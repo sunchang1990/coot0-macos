@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="f41db5daa7ac6f55d65c424760a07a70cf28a20a">
+<meta name="coot0-source-sha1" content="4a873ccaa8496ce8eb659d0ebdc445856ab2609d">
 <title>Parameters from map - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -40,8 +40,9 @@ Scheme: <code>(map-parameters imol)</code></p>
 Also available in Python as <code>map_parameters_py</code>.
 Also available in Scheme as <code>map-parameters-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>map_parameters(0)</code></td><td>ran, returned <code>False</code></td></tr>
-<tr><td>Scheme</td><td><code>(map-parameters 0)</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>map_parameters(1)</code></td><td>ran, returned <code>['rnasa-1.8-all_refmac1.mtz', 'FWT', 'PHWT', '', False]</code></td></tr>
+<tr><td>Scheme</td><td><code>(map-parameters 1)</code></td><td>ran, returned <code>("rnasa-1.8-all_refmac1.mtz" "FWT" "PHWT" "" #f)</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the MTZ file, F, phase and weight column names and the use-weights flag of map 1 (False for a model).</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="mtz_fp_for_map">mtz_fp_for_map</h3>
 <p>Python: <code>mtz_fp_for_map(imol_map)</code><br>
@@ -91,6 +92,7 @@ Scheme: <code>(mtz-use-weight-for-map imol-map)</code></p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>mtz_use_weight_for_map(1)</code></td><td>ran, returned <code>0</code></td></tr>
 <tr><td>Scheme</td><td><code>(mtz-use-weight-for-map 1)</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns 0: map 1 was made without a weight column (1 when a FOM/weight column was used).</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="mtz_weight_for_map">mtz_weight_for_map</h3>
 <p>Python: <code>mtz_weight_for_map(imol_map)</code><br>

@@ -15,8 +15,8 @@ Arguments: none. Returns: text.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `get_text_for_rotation_centre_cube_size()` | ran, returned `<Swig Object of type 'gchar *' at 0x10a26c9c0>` |
-| Scheme | `(get-text-for-rotation-centre-cube-size)` | ran, returned `#<swig-pointer gchar * 81473ed10>` |
+| Python | `get_text_for_rotation_centre_cube_size()` | ran, returned `<Swig Object of type 'gchar *' at 0x10b833840>` |
+| Scheme | `(get-text-for-rotation-centre-cube-size)` | ran, returned `#<swig-pointer gchar * 94a4d7db0>` |
 
 ### go_to_ligand
 
@@ -31,7 +31,7 @@ Arguments: none. Returns: a value (see the result of the example).
 | | Example | When tried (test data, no window) |
 |---|---|---|
 | Python | `go_to_ligand()` | ran, returned `[0.0, 0.0, 0.0]` |
-| Scheme | `(go-to-ligand)` | ran (no return value) |
+| Scheme | `(go-to-ligand)` | ran (no return value, nothing visible changed) |
 
 Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
@@ -76,8 +76,8 @@ Arguments: n_atom_min (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_go_to_ligand_n_atoms_limit(1)` | ran (no return value) |
-| Scheme | `(set-go-to-ligand-n-atoms-limit 1)` | ran (no return value) |
+| Python | `set_go_to_ligand_n_atoms_limit(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-go-to-ligand-n-atoms-limit 1)` | ran (no return value, nothing visible changed) |
 
 ### set_recentre_on_read_pdb
 
@@ -90,8 +90,10 @@ Arguments: int (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_recentre_on_read_pdb(1)` | ran (no return value) |
-| Scheme | `(set-recentre-on-read-pdb 1)` | ran (no return value) |
+| Python | `set_recentre_on_read_pdb(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-recentre-on-read-pdb 1)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: recentre_on_read_pdb was 1, set to 0, read back 0; Scheme: recentre-on-read-pdb was 1, set to 0, read back 0.
 
 ### set_reorienting_next_residue_mode
 
@@ -106,8 +108,8 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_reorienting_next_residue_mode(1)` | ran (no return value) |
-| Scheme | `(set-reorienting-next-residue-mode 1)` | ran (no return value) |
+| Python | `set_reorienting_next_residue_mode(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-reorienting-next-residue-mode 1)` | ran (no return value, nothing visible changed) |
 
 ### set_rotation_centre
 
@@ -120,8 +122,8 @@ Arguments: x (a number), y (a number), z (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_rotation_centre(54.5, 9.4, 12.3)` | ran (no return value) |
-| Scheme | `(set-rotation-centre 54.5 9.4 12.3)` | ran (no return value) |
+| Python | `set_rotation_centre(54.5, 9.4, 12.3)` | ran (no return value); changed: rotation centre moved 9.1 A to (54.5, 9.4, 12.3) |
+| Scheme | `(set-rotation-centre 54.5 9.4 12.3)` | ran (no return value, nothing visible changed) |
 
 ### set_rotation_centre_internal
 
@@ -134,8 +136,8 @@ Arguments: x (a number), y (a number), z (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_rotation_centre_internal(54.5, 9.4, 12.3)` | ran (no return value) |
-| Scheme | `(set-rotation-centre-internal 54.5 9.4 12.3)` | ran (no return value) |
+| Python | `set_rotation_centre_internal(54.5, 9.4, 12.3)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-rotation-centre-internal 54.5 9.4 12.3)` | ran (no return value, nothing visible changed) |
 
 ### set_rotation_centre_size
 
@@ -148,8 +150,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_rotation_centre_size(1.0)` | ran (no return value) |
-| Scheme | `(set-rotation-centre-size 1.0)` | ran (no return value) |
+| Python | `set_rotation_centre_size(1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-rotation-centre-size 1.0)` | ran (no return value, nothing visible changed) |
 
 ### set_rotation_centre_size_from_widget
 
@@ -162,6 +164,8 @@ Arguments: text (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_rotation_centre_size_from_widget("hello")` | error: TypeError: in method 'set_rotation_centre_size_from_widget', argument 1 of type 'gchar const *' |
-| Scheme | `(set-rotation-centre-size-from-widget "hello")` | error: In procedure set-rotation-centre-size-from-widget: Wrong type argument in position 1: "hello" |
+| Python | `set_rotation_centre_size_from_widget("0.5")` | not run: not callable from scripting: the gchar* argument type is not wrapped in either language (GUI callback) |
+| Scheme | `(set-rotation-centre-size-from-widget "0.5")` | not run: not callable from scripting: the gchar* argument type is not wrapped in either language (GUI callback) |
+
+Example written and checked by hand on the test data. Expected: internal callback of the rotation-centre size entry; not usable from scripts (its gchar* argument is not wrapped); use set_rotation_centre_size(0.5) instead.
 

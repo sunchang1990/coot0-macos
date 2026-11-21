@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="5045a39da1953484d223f79fea1ba2fc76b19c68">
+<meta name="coot0-source-sha1" content="54de8bd328363ad9ad41c68b603891c615442319">
 <title>Atom Information functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -38,16 +38,16 @@ Scheme: <code>(add-hydrogen-atoms-to-residue imol chain-id res-no ins-code)</cod
 <p>add hydrogen atoms to the specified residue</p>
 <p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>add_hydrogen_atoms_to_residue(0, "A", 41, "")</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(add-hydrogen-atoms-to-residue 0 "A" 41 "")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>add_hydrogen_atoms_to_residue(0, "A", 41, "")</code></td><td>ran (no return value); changed: molecule 0: atoms of 1 residue(s) (A41); n_atoms(0): 1465 -&gt; 1471</td></tr>
+<tr><td>Scheme</td><td><code>(add-hydrogen-atoms-to-residue 0 "A" 41 "")</code></td><td>ran (no return value); changed: molecule 0: atoms of 1 residue(s) (A41); n_atoms(0): 1465 -&gt; 1471</td></tr></tbody></table>
 <h3 id="add_hydrogens_from_file">add_hydrogens_from_file</h3>
 <p>Python: <code>add_hydrogens_from_file(imol, pdb_with_Hs_file_name)</code><br>
 Scheme: <code>(add-hydrogens-from-file imol pdb-with-Hs-file-name)</code></p>
 <p>Add hydrogens to imol from the given pdb file</p>
 <p>Arguments: imol (a whole number), pdb_with_Hs_file_name (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>add_hydrogens_from_file(0, "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(add-hydrogens-from-file 0 "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>add_hydrogens_from_file(0, "tutorial-modern.pdb")</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(add-hydrogens-from-file 0 "tutorial-modern.pdb")</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="add_molecule">add_molecule</h3>
 <p>Python: <code>add_molecule(molecule_expression, name)</code><br>
 Scheme: <code>(add-molecule molecule-expression name)</code></p>
@@ -55,8 +55,11 @@ Scheme: <code>(add-molecule molecule-expression name)</code></p>
 <p>Arguments: molecule_expression (a list or value), name (text). Returns: a whole number.
 Also available in Python as <code>add_molecule_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>add_molecule([[[ch[0], [[r[0], r[1], r[2], [a[:3] for a in r[3]]] for r in ch[1]]] for ch in m] for m in python_representation(0)], "copy of molecule 0")</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (model, copy of molecule 0); graphics_n_molecules(): 3 -&gt; 4</td></tr>
+<tr><td>Scheme</td><td><code>(add-molecule (scheme-representation 0) "copy of molecule 0")</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (model, copy of molecule 0); graphics_n_molecules(): 3 -&gt; 4</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the new molecule number; a model molecule with the same atoms as molecule 0 appears.</p>
+<p>Note: python_representation() atoms carry a 4th element (atom index) that add_molecule rejects ('bad atom expression'): add_molecule(python_representation(0), ...) returns a molecule number but the molecule is EMPTY/invalid. The example strips the 4th element (a[:3]). Scheme round-trips directly. Likely bug (Python representation not compatible with its reader).</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="atom_info_string">atom_info_string</h3>
 <p>Python: <code>atom_info_string(imol, chain_id, resno, ins_code, atname, altconf)</code><br>
 Scheme: <code>(atom-info-string imol chain-id resno ins-code atname altconf)</code></p>
@@ -79,6 +82,8 @@ Also available in Scheme as <code>chain-fragments-scm</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>chain_fragments(0, 1)</code></td><td>ran, returned <code>False</code></td></tr>
 <tr><td>Scheme</td><td><code>(chain-fragments 0 1)</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: should return the chain fragments of molecule 0.</p>
+<p>Note: Both chain_fragments_py and chain_fragments_scm compute the fragments but never fill the return value: always False/#f (stub in 0.9.8.96).</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="clear_and_update_molecule">clear_and_update_molecule</h3>
 <p>Python: <code>clear_and_update_molecule(molecule_number, molecule_expression)</code><br>
@@ -89,8 +94,11 @@ there first though.</p>
 <p>Arguments: molecule_number (a whole number), molecule_expression (a list or value). Returns: a whole number.
 Also available in Python as <code>clear_and_update_molecule_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>clear_and_update_molecule(0, [[[c[0], [[r[0], r[1], r[2], [a[:3] for a in r[3]]] for r in c[1]]] for c in python_representation(0)[0] if c[0] == "A"]])</code></td><td>ran, returned <code>1</code>; changed: molecule 0: deleted 96 residue(s) (B1, B2, B3, B4 ...); n_atoms(0): 1465 -&gt; 720; n_chains(0): 2 -&gt; 1; n_residues(0): 189 -&gt; 93</td></tr>
+<tr><td>Scheme</td><td><code>(clear-and-update-molecule 0 (list (list (car (car (scheme-representation 0))))))</code></td><td>ran, returned <code>1</code>; changed: molecule 0: deleted 96 residue(s) (B1, B2, B3, B4 ...); first_molecule_with_symmetry_displayed(): 0 -&gt; -1; get_symmetry(0): ['x,y,z', '-x+1/2,-y,z+1/2', 'x+1/2,-y+1/2,-z', '-x,y+1/2,-z -&gt; []; n_atoms(0): 1465 -&gt; 720 ...</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns 1 and molecule 0 is replaced by the given representation (here only chain A is kept).</p>
+<p>Note: A malformed Python expression (e.g. residues as [[1,'','ALA'], atoms] or python_representation() atoms with the extra index) gives an empty model, still returns 1 and closes the molecule (is_valid_model_molecule -&gt; 0). Python representation needs the a[:3] strip, see add_molecule.</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="closest_atom">closest_atom</h3>
 <p>Python: <code>closest_atom(imol)</code><br>
 Scheme: <code>(closest-atom imol)</code></p>
@@ -114,8 +122,8 @@ create a new molecule, run reduce on that, import hydrogens from
 the result and apply them to the molecule of the active residue.</p>
 <p>Arguments: radius (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>hydrogenate_region(5.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(hydrogenate-region 5.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>hydrogenate_region(5.0)</code></td><td>ran (no return value); changed: molecule 0: atoms of 10 residue(s) (A1, A39, A40, A41 ...); n_atoms(0): 1465 -&gt; 1543</td></tr>
+<tr><td>Scheme</td><td><code>(hydrogenate-region 5.0)</code></td><td>ran (no return value); changed: molecule 0: atoms of 10 residue(s) (A1, A39, A40, A41 ...); n_atoms(0): 1465 -&gt; 1543</td></tr></tbody></table>
 <h3 id="molecule_to_pdb_string_py">molecule_to_pdb_string_py</h3>
 <p>Python: <code>molecule_to_pdb_string_py(imol)</code><br>
 Scheme: <code>(molecule-to-pdb-string-scm imol)</code></p>
@@ -195,5 +203,5 @@ Returns -1 on failure to find the residue</p>
 Also available in Python as <code>set_b_factor_residues_py</code>.
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_b_factor_residues(0, ["A", 41, ""])</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_b_factor_residues(0, ["A", 41, ""])</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 </body></html>

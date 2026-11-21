@@ -15,8 +15,8 @@ Arguments: name (text), version (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `register_extension("my-name", "hello")` | ran (no return value) |
-| Scheme | `(register-extension "my-name" "hello")` | ran (no return value) |
+| Python | `register_extension("my-name", "hello")` | ran (no return value, nothing visible changed) |
+| Scheme | `(register-extension "my-name" "hello")` | ran (no return value, nothing visible changed) |
 
 ### remove_file_curlew_menu_item_maybe
 
@@ -27,8 +27,10 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `remove_file_curlew_menu_item_maybe()` | not run: not run automatically (curl: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(remove-file-curlew-menu-item-maybe)` | not run: not run automatically (curl: exits, uses the network, an external program, files or a screen) |
+| Python | `remove_file_curlew_menu_item_maybe()` | ran (no return value, nothing visible changed) |
+| Scheme | `(remove-file-curlew-menu-item-maybe)` | ran (no return value, nothing visible changed) |
+
+Example written and checked by hand on the test data. Expected: removes File > Curlew from the menubar when Coot was built without Curlew; called at start-up, no effect when called again.
 
 ### version_for_extension
 

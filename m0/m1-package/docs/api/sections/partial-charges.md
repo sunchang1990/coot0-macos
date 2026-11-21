@@ -16,6 +16,6 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_c
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `show_partial_charge_info(0, "A", 41, "")` | ran (no return value) |
-| Scheme | `(show-partial-charge-info 0 "A" 41 "")` | ran (no return value) |
+| Python | `show_partial_charge_info(0, "A", 41, "")` | ran (no return value, nothing visible changed) |
+| Scheme | `(show-partial-charge-info 0 "A" 41 "")` | ran (no return value, nothing visible changed) |
 

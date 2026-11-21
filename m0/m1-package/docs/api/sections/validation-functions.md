@@ -32,8 +32,8 @@ Also available in Scheme as `c-beta-deviations-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `c_beta_deviations_py(0)` | ran, returned `[[[True, 'A', 20, ''], {'': 0.07846646398291499}], [[True, 'A', 21, ''], {'': 0.08318442018770937}], [[True, 'A', 22, '' ...` |
-| Scheme | `(c-beta-deviations 0)` | ran, returned `(((#t "A" 19 "") (("" 0.07497434605080751))) ((#t "A" 18 "") (("" 0.08964755866427819))) ((#t "A" 17 "") (("" 0.13465415 ...` |
+| Python | `c_beta_deviations_py(0)` | ran, returned `[[[True, 'A', 17, ''], {'': 0.13465415823304944}], [[True, 'A', 1, ''], {'': 0.16953483228562496}], [[True, 'A', 2, ''], ...` |
+| Scheme | `(c-beta-deviations 0)` | ran, returned `(((#t "A" 25 "") (("" 0.0779894024924761))) ((#t "A" 20 "") (("" 0.07846646398291499))) ((#t "A" 21 "") (("" 0.083184420 ...` |
 
 Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
@@ -46,8 +46,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `clear_diff_map_peaks()` | ran (no return value) |
-| Scheme | `(clear-diff-map-peaks)` | ran (no return value) |
+| Python | `clear_diff_map_peaks()` | ran (no return value, nothing visible changed) |
+| Scheme | `(clear-diff-map-peaks)` | ran (no return value, nothing visible changed) |
 
 ### clear_multi_residue_torsion_mode
 
@@ -60,8 +60,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `clear_multi_residue_torsion_mode()` | ran (no return value) |
-| Scheme | `(clear-multi-residue-torsion-mode)` | ran (no return value) |
+| Python | `clear_multi_residue_torsion_mode()` | ran (no return value, nothing visible changed) |
+| Scheme | `(clear-multi-residue-torsion-mode)` | ran (no return value, nothing visible changed) |
 
 ### deviant_geometry
 
@@ -72,8 +72,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `deviant_geometry(0)` | ran (no return value) |
-| Scheme | `(deviant-geometry 0)` | ran (no return value) |
+| Python | `deviant_geometry(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(deviant-geometry 0)` | ran (no return value, nothing visible changed) |
 
 ### difference_map_peaks
 
@@ -92,8 +92,8 @@ Arguments: imol (a whole number), imol_coords (a whole number), level (a number)
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `difference_map_peaks(0, 0, 1.5, 1.0, 1, 1, 1)` | ran (no return value) |
-| Scheme | `(difference-map-peaks 0 0 1.5 1.0 1 1 1)` | ran (no return value) |
+| Python | `difference_map_peaks(0, 0, 1.5, 1.0, 1, 1, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(difference-map-peaks 0 0 1.5 1.0 1 1 1)` | ran (no return value, nothing visible changed) |
 
 ### difference_map_peaks_max_closeness
 
@@ -138,8 +138,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `gln_asn_b_factor_outliers(0)` | ran (no return value) |
-| Scheme | `(gln-asn-b-factor-outliers 0)` | ran (no return value) |
+| Python | `gln_asn_b_factor_outliers(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(gln-asn-b-factor-outliers 0)` | ran (no return value, nothing visible changed) |
 
 ### is_valid_map_molecule
 
@@ -150,8 +150,10 @@ Arguments: imol (a whole number). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `is_valid_map_molecule(0)` | ran, returned `0` |
-| Scheme | `(is-valid-map-molecule 0)` | ran, returned `0` |
+| Python | `is_valid_map_molecule(1)` | ran, returned `1` |
+| Scheme | `(is-valid-map-molecule 1)` | ran, returned `1` |
+
+Example written and checked by hand on the test data. Expected: 1 for map molecule 1, 0 for the model molecule 0 or an unused number.
 
 Python and Scheme gave the same answer.
 
@@ -228,7 +230,9 @@ Also available in Python as `map_peaks_near_point_from_list_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | `map_peaks_near_point_from_list(1, [[48.3, 7.4, 16.9], [10.0, 10.0, 10.0]], 48.0, 7.0, 17.0, 5.0)` | ran, returned `[[48.3, 7.4, 16.9]]` |
+
+Example written and checked by hand on the test data. Expected: the peaks of the given list that lie within 5 A of (48, 7, 17): only the first one. (Python only.).
 
 ### multi_residue_torsion
 
@@ -243,8 +247,10 @@ Also available in Scheme as `multi-residue-torsion-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `multi_residue_torsion(0, ["A", 41, ""])` | stopped Coot when tried without a window (not checked with a window) |
-| Scheme | `(multi-residue-torsion 0 (list "A" 41 ""))` | error: In procedure length: Wrong type argument in position 1: "A" |
+| Python | `multi_residue_torsion(0, [[True, "A", 41, ""], [True, "A", 42, ""]])` | not run: needs the graphics window (stops Coot without a screen) |
+| Scheme | `(multi-residue-torsion 0 (list (list #t "A" 41 "") (list #t "A" 42 "")))` | not run: needs the graphics window (stops Coot without a screen) |
+
+Example written and checked by hand on the test data. Expected: opens the multi-residue torsion dialog for residues A41-A42 (the torsions can then be dragged).
 
 ### probe_clash_score_as_py
 
@@ -255,8 +261,14 @@ Arguments: p (`coot::probe_clash_score_t`). Returns: a value (see the result of 
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | `probe_clash_score_as_py(probe_clash_score_from_py([2, 10, 30, 400, 900]))` | ran, returned `[2, 10, 30, 400, 900]` |
+| Scheme | `(probe-clash-score-as-scm (probe-clash-score-from-scm (list 2 10 30 400 900)))` | ran, returned `(2 10 30 400 900)` |
+
+Example written and checked by hand on the test data. Expected: the clash score as a list [bad overlaps, H-bonds, small overlaps, close contacts, wide contacts]; round trip gives the input back.
+
+Note: Fixed in coot0 build 31: Scheme's probe-clash-score-from-scm took the 5th number (wide contacts) from the 4th element, so (2 10 30 400 900) came back as (2 10 30 400 400).
+
+Python and Scheme gave the same answer.
 
 ### probe_clash_score_from_py
 
@@ -267,8 +279,12 @@ Arguments: p (a list or value). Returns: `coot::probe_clash_score_t`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | `probe_clash_score_from_py([2, 10, 30, 400, 900])` | ran, returned `<coot.probe_clash_score_t; proxy of <Swig Object of type 'coot::probe_clash_score_t *' at 0x10bf2f810> >` |
+| Scheme | `(probe-clash-score-from-scm (list 2 10 30 400 900))` | ran, returned `#<collectable-swig-pointer coot::probe_clash_score_t * 92ad41a60>` |
+
+Example written and checked by hand on the test data. Expected: a C++ probe clash score object from 5 numbers; prints 'debug::' lines to the terminal.
+
+Note: Fixed in coot0 build 31: the 5th number (wide contacts) was taken from the 4th element in Scheme.
 
 ### screen_vectors
 
@@ -282,7 +298,7 @@ Also available in Python as `screen_vectors_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `screen_vectors()` | ran (no return value) |
+| Python | `screen_vectors()` | ran (no return value, nothing visible changed) |
 
 ### set_difference_map_peaks_max_closeness
 
@@ -299,8 +315,10 @@ Arguments: m (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_difference_map_peaks_max_closeness(1.0)` | ran (no return value) |
-| Scheme | `(set-difference-map-peaks-max-closeness 1.0)` | ran (no return value) |
+| Python | `set_difference_map_peaks_max_closeness(1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-difference-map-peaks-max-closeness 1.0)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: difference_map_peaks_max_closeness was 2.0, set to 3.5, read back 3.5; Scheme: difference-map-peaks-max-closeness was 2.0, set to 3.5, read back 3.5.
 
 ### set_multi_residue_torsion_reverse_mode
 
@@ -311,8 +329,8 @@ Arguments: mode (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_multi_residue_torsion_reverse_mode(1)` | ran (no return value) |
-| Scheme | `(set-multi-residue-torsion-reverse-mode 1)` | ran (no return value) |
+| Python | `set_multi_residue_torsion_reverse_mode(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-multi-residue-torsion-reverse-mode 1)` | ran (no return value, nothing visible changed) |
 
 ### set_torsion
 
@@ -344,8 +362,10 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `setup_multi_residue_torsion()` | stopped Coot when tried without a window (not checked with a window) |
-| Scheme | `(setup-multi-residue-torsion)` | stopped Coot when tried without a window (not checked with a window) |
+| Python | `setup_multi_residue_torsion()` | not run: needs the graphics window (stops Coot without a screen) |
+| Scheme | `(setup-multi-residue-torsion)` | not run: needs the graphics window (stops Coot without a screen) |
+
+Example written and checked by hand on the test data. Expected: starts the pick mode / dialog for choosing the residues of a multi-residue torsion edit.
 
 ### show_multi_residue_torsion_dialog
 
@@ -356,6 +376,6 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `show_multi_residue_torsion_dialog()` | ran (no return value) |
-| Scheme | `(show-multi-residue-torsion-dialog)` | ran (no return value) |
+| Python | `show_multi_residue_torsion_dialog()` | ran (no return value, nothing visible changed) |
+| Scheme | `(show-multi-residue-torsion-dialog)` | ran (no return value, nothing visible changed) |
 

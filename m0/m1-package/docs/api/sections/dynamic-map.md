@@ -16,6 +16,8 @@ Arguments: none. Returns: a whole number.
 | Python | `get_dynamic_map_sampling()` | ran, returned `0` |
 | Scheme | `(get-dynamic-map-sampling)` | ran, returned `0` |
 
+Example written and checked by hand on the test data. Expected: returns 0: dynamic map sampling is off by default.
+
 Python and Scheme gave the same answer.
 
 ### get_dynamic_map_size_display
@@ -30,6 +32,8 @@ Arguments: none. Returns: a whole number.
 | Python | `get_dynamic_map_size_display()` | ran, returned `0` |
 | Scheme | `(get-dynamic-map-size-display)` | ran, returned `0` |
 
+Example written and checked by hand on the test data. Expected: returns 0: dynamic map size display is off by default.
+
 Python and Scheme gave the same answer.
 
 ### set_dynamic_map_sampling_off
@@ -41,8 +45,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_dynamic_map_sampling_off()` | ran (no return value) |
-| Scheme | `(set-dynamic-map-sampling-off)` | ran (no return value) |
+| Python | `set_dynamic_map_sampling_off()` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-dynamic-map-sampling-off)` | ran (no return value, nothing visible changed) |
 
 ### set_dynamic_map_sampling_on
 
@@ -53,8 +57,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_dynamic_map_sampling_on()` | ran (no return value) |
-| Scheme | `(set-dynamic-map-sampling-on)` | ran (no return value) |
+| Python | `set_dynamic_map_sampling_on()` | ran (no return value); changed: get_dynamic_map_sampling(): 0 -> 1 |
+| Scheme | `(set-dynamic-map-sampling-on)` | ran (no return value, nothing visible changed) |
 
 ### set_dynamic_map_size_display_off
 
@@ -65,8 +69,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_dynamic_map_size_display_off()` | ran (no return value) |
-| Scheme | `(set-dynamic-map-size-display-off)` | ran (no return value) |
+| Python | `set_dynamic_map_size_display_off()` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-dynamic-map-size-display-off)` | ran (no return value, nothing visible changed) |
 
 ### set_dynamic_map_size_display_on
 
@@ -79,8 +83,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_dynamic_map_size_display_on()` | ran (no return value) |
-| Scheme | `(set-dynamic-map-size-display-on)` | ran (no return value) |
+| Python | `set_dynamic_map_size_display_on()` | ran (no return value); changed: get_dynamic_map_size_display(): 0 -> 1 |
+| Scheme | `(set-dynamic-map-size-display-on)` | ran (no return value, nothing visible changed) |
 
 ### set_dynamic_map_zoom_offset
 
@@ -91,8 +95,8 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_dynamic_map_zoom_offset(1)` | ran (no return value) |
-| Scheme | `(set-dynamic-map-zoom-offset 1)` | ran (no return value) |
+| Python | `set_dynamic_map_zoom_offset(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-dynamic-map-zoom-offset 1)` | ran (no return value, nothing visible changed) |
 
 ### toggle_dynamic_map_display_size
 
@@ -103,8 +107,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `toggle_dynamic_map_display_size()` | ran (no return value) |
-| Scheme | `(toggle-dynamic-map-display-size)` | ran (no return value) |
+| Python | `toggle_dynamic_map_display_size()` | ran (no return value); changed: get_dynamic_map_size_display(): 0 -> 1 |
+| Scheme | `(toggle-dynamic-map-display-size)` | ran (no return value); changed: get_dynamic_map_size_display(): 1 -> 0 |
 
 ### toggle_dynamic_map_sampling
 
@@ -115,6 +119,6 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `toggle_dynamic_map_sampling()` | ran (no return value) |
-| Scheme | `(toggle-dynamic-map-sampling)` | ran (no return value) |
+| Python | `toggle_dynamic_map_sampling()` | ran (no return value); changed: get_dynamic_map_sampling(): 0 -> 1 |
+| Scheme | `(toggle-dynamic-map-sampling)` | ran (no return value); changed: get_dynamic_map_sampling(): 1 -> 0 |
 

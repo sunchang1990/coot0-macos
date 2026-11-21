@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="ae646f17f7c06d2ae39349d2186e5824020d48ba">
+<meta name="coot0-source-sha1" content="96ce081fa0bf1dd062dbfcec3fdfd9ad66facea4">
 <title>Smooth Scrolling - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -50,24 +50,24 @@ Scheme: <code>(set-smooth-scroll-flag v)</code></p>
 <p> @param v use v=1 to turn on smooth scrolling, v=0 for off (default on).</p>
 <p>Arguments: v (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_smooth_scroll_flag(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-smooth-scroll-flag 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_smooth_scroll_flag(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-smooth-scroll-flag 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_smooth_scroll_limit">set_smooth_scroll_limit</h3>
 <p>Python: <code>set_smooth_scroll_limit(lim)</code><br>
 Scheme: <code>(set-smooth-scroll-limit lim)</code></p>
 <p>do not scroll for distances greater this limit</p>
 <p>Arguments: lim (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_smooth_scroll_limit(1.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-smooth-scroll-limit 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_smooth_scroll_limit(1.0)</code></td><td>ran (no return value); changed: get_text_for_smooth_scroll_limit(): '10.0 ' -&gt; '1.0  '</td></tr>
+<tr><td>Scheme</td><td><code>(set-smooth-scroll-limit 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_smooth_scroll_limit_str">set_smooth_scroll_limit_str</h3>
 <p>Python: <code>set_smooth_scroll_limit_str(t)</code><br>
 Scheme: <code>(set-smooth-scroll-limit-str t)</code></p>
 <p>MOVE-ME to c-interface-gtk-widgets.h</p>
 <p>Arguments: t (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_smooth_scroll_limit_str("hello")</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-smooth-scroll-limit-str "hello")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_smooth_scroll_limit_str("hello")</code></td><td>ran (no return value); changed: get_text_for_smooth_scroll_limit(): '1.0  ' -&gt; '10.0 '</td></tr>
+<tr><td>Scheme</td><td><code>(set-smooth-scroll-limit-str "hello")</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_smooth_scroll_steps">set_smooth_scroll_steps</h3>
 <p>Python: <code>set_smooth_scroll_steps(i)</code><br>
 Scheme: <code>(set-smooth-scroll-steps i)</code></p>
@@ -75,14 +75,14 @@ Scheme: <code>(set-smooth-scroll-steps i)</code></p>
 <p> Set more steps (e.g. 50) for more smoothness (default 10).</p>
 <p>Arguments: i (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_smooth_scroll_steps(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-smooth-scroll-steps 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_smooth_scroll_steps(1)</code></td><td>ran (no return value); changed: get_text_for_smooth_scroll_steps(): '40   ' -&gt; '1    '</td></tr>
+<tr><td>Scheme</td><td><code>(set-smooth-scroll-steps 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="set_smooth_scroll_steps_str">set_smooth_scroll_steps_str</h3>
 <p>Python: <code>set_smooth_scroll_steps_str(t)</code><br>
 Scheme: <code>(set-smooth-scroll-steps-str t)</code></p>
 <p>MOVE-ME to c-interface-gtk-widgets.h</p>
 <p>Arguments: t (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_smooth_scroll_steps_str("hello")</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-smooth-scroll-steps-str "hello")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_smooth_scroll_steps_str("hello")</code></td><td>ran (no return value); changed: get_text_for_smooth_scroll_steps(): '1    ' -&gt; '10   '</td></tr>
+<tr><td>Scheme</td><td><code>(set-smooth-scroll-steps-str "hello")</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 </body></html>

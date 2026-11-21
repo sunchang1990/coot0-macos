@@ -15,8 +15,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `apply_redo()` | ran, returned `0` |
-| Scheme | `(apply-redo)` | ran, returned `0` |
+| Python | first `delete_residue(0, "A", 41, "")`, then `apply_undo()`, then `apply_redo()` | ran, returned `1`; changed: molecule 0: deleted 1 residue(s) (A41); n_atoms(0): 1465 -> 1456; n_residues(0): 189 -> 188 |
+| Scheme | first `(delete-residue 0 "A" 42 "")`, then `(apply-undo)`, then `(apply-redo)` | ran, returned `1`; changed: molecule 0: deleted 1 residue(s) (A42); n_atoms(0): 1465 -> 1459; n_residues(0): 189 -> 188 |
+
+Example written and checked by hand on the test data. Expected: returns 1 and re-applies the change that was undone.
 
 Python and Scheme gave the same answer.
 
@@ -31,8 +33,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `apply_undo()` | ran, returned `0` |
-| Scheme | `(apply-undo)` | ran, returned `0` |
+| Python | first `delete_residue(0, "A", 41, "")`, then `apply_undo()` | ran, returned `1`; changed: molecule 0: added 1 residue(s) (A41); n_atoms(0): 1456 -> 1465; n_residues(0): 188 -> 189 |
+| Scheme | first `(delete-residue 0 "A" 42 "")`, then `(apply-undo)` | ran, returned `1`; changed: molecule 0: added 1 residue(s) (A42); n_atoms(0): 1459 -> 1465; n_residues(0): 188 -> 189 |
+
+Example written and checked by hand on the test data. Expected: returns 1 and undoes the last change (the deleted residue comes back).
 
 Python and Scheme gave the same answer.
 
@@ -114,8 +118,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `make_backup(0)` | ran (no return value) |
-| Scheme | `(make-backup 0)` | ran (no return value) |
+| Python | `make_backup(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(make-backup 0)` | ran (no return value, nothing visible changed) |
 
 ### set_backup_compress_files
 
@@ -128,8 +132,10 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_backup_compress_files(1)` | ran (no return value) |
-| Scheme | `(set-backup-compress-files 1)` | ran (no return value) |
+| Python | `set_backup_compress_files(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-backup-compress-files 1)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: backup_compress_files_state was 1, set to 0, read back 0; Scheme: backup-compress-files-state was 1, set to 0, read back 0.
 
 ### set_decoloned_backup_file_names
 
@@ -146,8 +152,10 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_decoloned_backup_file_names(1)` | ran (no return value) |
-| Scheme | `(set-decoloned-backup-file-names 1)` | ran (no return value) |
+| Python | `set_decoloned_backup_file_names(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-decoloned-backup-file-names 1)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: decoloned_backup_file_names_state was 0, set to 1, read back 1; Scheme: decoloned-backup-file-names-state was 0, set to 1, read back 1.
 
 ### set_have_unsaved_changes
 
@@ -160,8 +168,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_have_unsaved_changes(0)` | ran (no return value) |
-| Scheme | `(set-have-unsaved-changes 0)` | ran (no return value) |
+| Python | `set_have_unsaved_changes(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-have-unsaved-changes 0)` | ran (no return value, nothing visible changed) |
 
 ### set_undo_molecule
 
@@ -175,8 +183,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_undo_molecule(0)` | ran (no return value) |
-| Scheme | `(set-undo-molecule 0)` | ran (no return value) |
+| Python | `set_undo_molecule(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-undo-molecule 0)` | ran (no return value, nothing visible changed) |
 
 ### set_unpathed_backup_file_names
 
@@ -193,8 +201,10 @@ Arguments: state (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_unpathed_backup_file_names(1)` | ran (no return value) |
-| Scheme | `(set-unpathed-backup-file-names 1)` | ran (no return value) |
+| Python | `set_unpathed_backup_file_names(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-unpathed-backup-file-names 1)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: unpathed_backup_file_names_state was 0, set to 1, read back 1; Scheme: unpathed-backup-file-names-state was 0, set to 1, read back 1.
 
 ### show_set_undo_molecule_chooser
 
@@ -208,8 +218,10 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `show_set_undo_molecule_chooser()` | stopped Coot when tried without a window (not checked with a window) |
-| Scheme | `(show-set-undo-molecule-chooser)` | stopped Coot when tried without a window (not checked with a window) |
+| Python | `show_set_undo_molecule_chooser()` | not run: opens a dialog; needs the graphics window (stops Coot without a screen) |
+| Scheme | `(show-set-undo-molecule-chooser)` | not run: opens a dialog; needs the graphics window (stops Coot without a screen) |
+
+Example written and checked by hand on the test data. Expected: opens the dialog to choose the molecule for Undo.
 
 ### turn_off_backup
 
@@ -222,8 +234,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `turn_off_backup(0)` | ran (no return value) |
-| Scheme | `(turn-off-backup 0)` | ran (no return value) |
+| Python | `turn_off_backup(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(turn-off-backup 0)` | ran (no return value, nothing visible changed) |
 
 ### turn_on_backup
 
@@ -236,8 +248,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `turn_on_backup(0)` | ran (no return value) |
-| Scheme | `(turn-on-backup 0)` | ran (no return value) |
+| Python | `turn_on_backup(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(turn-on-backup 0)` | ran (no return value, nothing visible changed) |
 
 ### unpathed_backup_file_names_state
 

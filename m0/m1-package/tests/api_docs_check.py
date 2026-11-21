@@ -27,7 +27,7 @@ def py_examples_parse():
     bad = []
     for e in idx:
         if e.get("py_ex"):
-            try: ast.parse(e["py_ex"], mode="eval")
+            try: ast.parse(e["py_ex"])            # (build 31: a hand-written example may be statements; the last line is its value)
             except SyntaxError: bad.append(e["py_ex"])
     return True if not bad else bad[:5]
 def counts():
@@ -82,6 +82,42 @@ def html_index():
     kinds = {}
     for e in idx: kinds[e["kind"]] = kinds.get(e["kind"], 0) + 1
     return True if kinds.get("Function", 0) > 1600 and kinds.get("Cookbook", 0) > 80 else kinds
+# (build 31) the example run records what each call changed (tests/api_state.py), and the examples that the program
+# could not make sensibly were written and checked by hand
+def snapshot_diff():
+    sys.path.insert(0, os.path.join(here, "tests"))
+    from api_state import Snapshot
+    import io, contextlib
+    with contextlib.redirect_stdout(io.StringIO()):
+        im = coot.read_pdb(os.path.join(here, "test-data", "tutorial-modern.pdb"))
+    s = Snapshot(g, idx)
+    a = s.take(); coot.set_draw_hydrogens(im, 0); coot.delete_residue(im, "A", 41, ""); b = s.take()
+    d = s.diff(a, b); coot.close_molecule(im)
+    want = ["molecule %d: deleted 1 residue(s) (A41)" % im, "draw_hydrogens_state(%d): 1 -> 0" % im] if im <= 1 else \
+           ["molecule %d: deleted 1 residue(s) (A41)" % im]
+    return True if all(w in d for w in want) else d
+def hand_examples():
+    cur = [e for e in idx if e.get("curated")]
+    bad = [e["key"] for e in cur if not e.get("expect")]
+    for e in cur:
+        for s in e.get("py_setup") or []:
+            try: ast.parse(s)
+            except SyntaxError: bad.append(e["key"] + " setup")
+    return True if len(cur) > 300 and not bad else (len(cur), bad[:5])
+def pages_say_what_changed():
+    n = 0
+    for f in os.listdir(os.path.join(here, "docs", "api", "sections")):
+        n += open(os.path.join(here, "docs", "api", "sections", f), encoding="utf-8").read().count("; changed: ")
+    return True if n > 300 else "only %d results list what changed" % n
+def setters_read_back():
+    n = 0
+    for f in os.listdir(os.path.join(here, "docs", "api", "sections")):
+        n += open(os.path.join(here, "docs", "api", "sections", f), encoding="utf-8").read().count("Setting checked (set to another value")
+    return True if n > 90 else "only %d settings checked" % n
+check("api-examples: a snapshot before/after a call lists a deleted residue and a changed setting", snapshot_diff)
+check("docs/api: more than 300 examples written by hand, each with its expected result", hand_examples)
+check("docs/api: the results say what each example changed (more than 300 do)", pages_say_what_changed)
+check("docs/api: more than 90 settings were set, read back and put back", setters_read_back)
 check("docs/html: a page for every Markdown document, made from its current text", html_pages)
 check("docs/html: every link between the pages leads to a page and heading that exist", html_links)
 check("docs/html: the search index has every function and every recipe", html_index)

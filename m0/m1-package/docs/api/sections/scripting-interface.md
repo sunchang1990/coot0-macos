@@ -15,8 +15,10 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `post_python_scripting_window()` | stopped Coot when tried without a window (not checked with a window) |
-| Scheme | `(post-python-scripting-window)` | stopped Coot when tried without a window (not checked with a window) |
+| Python | `post_python_scripting_window()` | not run: needs the graphics window (stops Coot without a screen) |
+| Scheme | `(post-python-scripting-window)` | not run: needs the graphics window (stops Coot without a screen) |
+
+Example written and checked by hand on the test data. Expected: opens the Python scripting window (Calculate > Scripting > Python...).
 
 ### post_scheme_scripting_window
 
@@ -29,8 +31,10 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `post_scheme_scripting_window()` | stopped Coot when tried without a window (not checked with a window) |
-| Scheme | `(post-scheme-scripting-window)` | stopped Coot when tried without a window (not checked with a window) |
+| Python | `post_scheme_scripting_window()` | not run: needs the graphics window (stops Coot without a screen) |
+| Scheme | `(post-scheme-scripting-window)` | not run: needs the graphics window (stops Coot without a screen) |
+
+Example written and checked by hand on the test data. Expected: opens the Scheme scripting window (Calculate > Scripting > Scheme...).
 
 ### post_scripting_window
 
@@ -43,8 +47,10 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `post_scripting_window()` | stopped Coot when tried without a window (not checked with a window) |
-| Scheme | `(post-scripting-window)` | stopped Coot when tried without a window (not checked with a window) |
+| Python | `post_scripting_window()` | not run: needs the graphics window (stops Coot without a screen) |
+| Scheme | `(post-scripting-window)` | not run: needs the graphics window (stops Coot without a screen) |
+
+Example written and checked by hand on the test data. Expected: compatibility name: opens the Scheme scripting window in this build (Guile is built in).
 
 ### probe_available_p
 
@@ -60,8 +66,12 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `probe_available_p()` | not run: not run automatically (probe: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(probe-available-p)` | not run: not run automatically (probe: exits, uses the network, an external program, files or a screen) |
+| Python | `probe_available_p()` | ran, returned `1` |
+| Scheme | `(probe-available-p)` | ran, returned `1` |
+
+Example written and checked by hand on the test data. Expected: 1 if the probe program is found (CCP4/Phenix found by run-coot.sh), 0 if not. Only checks; does not run probe.
+
+Python and Scheme gave the same answer.
 
 ### run_command_line_scripts
 
@@ -74,8 +84,10 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `run_command_line_scripts()` | not run: not run automatically (run: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(run-command-line-scripts)` | not run: not run automatically (run: exits, uses the network, an external program, files or a screen) |
+| Python | `run_command_line_scripts()` | not run: would run the start-up --script files a second time (here the test driver itself); called by Coot at start-up only |
+| Scheme | `(run-command-line-scripts)` | not run: would run the start-up --script files a second time (here the test driver itself); called by Coot at start-up only |
+
+Example written and checked by hand on the test data. Expected: runs the --script/--python/--scheme files given on the command line (done once by Coot at start-up).
 
 ### set_found_coot_gui
 
@@ -86,8 +98,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_found_coot_gui()` | ran (no return value) |
-| Scheme | `(set-found-coot-gui)` | ran (no return value) |
+| Python | `set_found_coot_gui()` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-found-coot-gui)` | ran (no return value, nothing visible changed) |
 
 ### set_found_coot_python_gui
 
@@ -98,8 +110,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_found_coot_python_gui()` | ran (no return value) |
-| Scheme | `(set-found-coot-python-gui)` | ran (no return value) |
+| Python | `set_found_coot_python_gui()` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-found-coot-python-gui)` | ran (no return value, nothing visible changed) |
 
 ### set_guile_gui_loaded_flag
 
@@ -110,8 +122,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_guile_gui_loaded_flag()` | ran (no return value) |
-| Scheme | `(set-guile-gui-loaded-flag)` | ran (no return value) |
+| Python | `set_guile_gui_loaded_flag()` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-guile-gui-loaded-flag)` | ran (no return value, nothing visible changed) |
 
 ### set_python_gui_loaded_flag
 
@@ -122,6 +134,6 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_python_gui_loaded_flag()` | ran (no return value) |
-| Scheme | `(set-python-gui-loaded-flag)` | ran (no return value) |
+| Python | `set_python_gui_loaded_flag()` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-python-gui-loaded-flag)` | ran (no return value, nothing visible changed) |
 

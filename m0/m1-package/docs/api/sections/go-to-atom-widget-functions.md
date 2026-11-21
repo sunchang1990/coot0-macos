@@ -31,8 +31,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `autobuild_ca_off()` | ran (no return value) |
-| Scheme | `(autobuild-ca-off)` | ran (no return value) |
+| Python | `autobuild_ca_off()` | ran (no return value, nothing visible changed) |
+| Scheme | `(autobuild-ca-off)` | ran (no return value, nothing visible changed) |
 
 ### do_skeleton_prune
 
@@ -43,8 +43,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `do_skeleton_prune()` | ran (no return value) |
-| Scheme | `(do-skeleton-prune)` | ran (no return value) |
+| Python | `do_skeleton_prune()` | ran (no return value, nothing visible changed) |
+| Scheme | `(do-skeleton-prune)` | ran (no return value, nothing visible changed) |
 
 ### full_atom_spec_to_atom_index
 
@@ -72,8 +72,14 @@ Also available in Python as `glyco_tree_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | first `set_add_linked_residue_do_fit_and_refine(0)`, then `add_linked_residue(0, "A", 39, "", "NAG", "NAG-ASN", 1)`, then `glyco_tree(0, ["A", 39, ""])` | ran, returned `False` |
+| Scheme | first `(set-add-linked-residue-do-fit-and-refine 0)`, then `(add-linked-residue 0 "A" 39 "" "NAG" "NAG-ASN" 1)`, then `(glyco-tree-scm 0 (list "A" 39 ""))` | ran, returned `#f` |
+
+Example written and checked by hand on the test data. Expected: unfinished upstream: always returns False (the source says 'incomplete, doesn't work'); use glyco_tree_residues.
+
+Note: Always False even on a real ASN-NAG tree; the C++ body builds the tree but never fills the result.
+
+Python and Scheme gave the same answer.
 
 ### glyco_tree_compare_trees
 
@@ -99,8 +105,10 @@ Arguments: imol (a whole number), residue_spec (a list or value), file_name (tex
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `glyco_tree_internal_distances_fn_py(0, ["A", 41, ""], "tutorial-modern.pdb")` | ran, returned `False` |
-| Scheme | `(glyco-tree-internal-distances-fn-scm 0 (list "A" 41 "") "tutorial-modern.pdb")` | ran, returned `#f` |
+| Python | first `set_add_linked_residue_do_fit_and_refine(0)`, then `add_linked_residue(0, "A", 39, "", "NAG", "NAG-ASN", 1)`, then `glyco_tree_internal_distances_fn_py(0, ["A", 39, ""], "glyco-dist.txt")` | ran, returned `False` |
+| Scheme | first `(set-add-linked-residue-do-fit-and-refine 0)`, then `(add-linked-residue 0 "A" 39 "" "NAG" "NAG-ASN" 1)`, then `(glyco-tree-internal-distances-fn-scm 0 (list "A" 39 "") "glyco-dist.txt")` | ran, returned `#f` |
+
+Example written and checked by hand on the test data. Expected: testing function: writes the atom-pair distances inside the glycan tree to the file; the return value is always False.
 
 Python and Scheme gave the same answer.
 
@@ -114,10 +122,12 @@ Also available in Python as `glyco_tree_matched_residue_pairs_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `glyco_tree_matched_residue_pairs(0, ["A", 41, ""], 0, ["A", 41, ""])` | ran, returned `False` |
-| Scheme | `(glyco-tree-matched-residue-pairs-scm 0 (list "A" 41 "") 0 (list "A" 41 ""))` | ran, returned `#f` |
+| Python | first `set_add_linked_residue_do_fit_and_refine(0)`, then `add_linked_residue(0, "A", 39, "", "NAG", "NAG-ASN", 1)`, then `imol2 = read_pdb("tutorial-modern.pdb")`, then `add_linked_residue(imol2, "A", 39, "", "NAG", "NAG-ASN", 1)`, then `glyco_tree_matched_residue_pairs(0, ["A", 39, ""], imol2, ["A", 39, ""])` | ran, returned `[[[True, 'A', 94, ''], [True, 'A', 94, '']], [[True, 'A', 39, ''], [True, 'A', 39, '']]]` |
+| Scheme | first `(set-add-linked-residue-do-fit-and-refine 0)`, then `(add-linked-residue 0 "A" 39 "" "NAG" "NAG-ASN" 1)`, then `(define imol2 (read-pdb "tutorial-modern.pdb"))`, then `(add-linked-residue imol2 "A" 39 "" "NAG" "NAG-ASN" 1)`, then `(glyco-tree-matched-residue-pairs-scm 0 (list "A" 39 "") imol2 (list "A" 39 ""))` | ran, returned `(((#t "A" 39 "") (#t "A" 39 "")) ((#t "A" 94 "") (#t "A" 94 "")))` |
 
-Python and Scheme gave the same answer.
+Example written and checked by hand on the test data. Expected: returns the pairs of matching residues of two glycan trees.
+
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
 ### glyco_tree_residue_id
 
@@ -130,10 +140,14 @@ Also available in Scheme as `glyco-tree-residue-id-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `glyco_tree_residue_id(0, ["A", 41, ""])` | ran, returned `False` |
-| Scheme | `(glyco-tree-residue-id 0 (list "A" 41 ""))` | ran, returned `#f` |
+| Python | first `set_add_linked_residue_do_fit_and_refine(0)`, then `add_linked_residue(0, "A", 39, "", "NAG", "NAG-ASN", 1)`, then `glyco_tree_residue_id(0, ["A", 94, ""])` | ran, returned `[1, 'unset', 'NAG', 'pyr-ASN', 'ASN', [True, 'A', 39, '']]` |
+| Scheme | first `(set-add-linked-residue-do-fit-and-refine 0)`, then `(add-linked-residue 0 "A" 39 "" "NAG" "NAG-ASN" 1)`, then `(glyco-tree-residue-id 0 (list "A" 94 ""))` | ran, returned `(1 unset "NAG" "pyr-ASN" "ASN" (#t "A" 39 ""))` |
 
-Python and Scheme gave the same answer.
+Example written and checked by hand on the test data. Expected: returns [level, prime-arm flag, residue type, link type, parent type, parent spec] for a sugar in a glycan tree; False for a residue that is not a sugar in a tree.
+
+Note: Python gives the prime-arm flag as the string 'unset', Scheme as the symbol unset.
+
+Python and Scheme gave different answers (see the table: often only because the example changed the data, or a list is ordered differently).
 
 ### glyco_tree_residues
 
@@ -146,8 +160,12 @@ Also available in Scheme as `glyco-tree-residues-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | first `set_add_linked_residue_do_fit_and_refine(0)`, then `add_linked_residue(0, "A", 39, "", "NAG", "NAG-ASN", 1)`, then `glyco_tree_residues(0, ["A", 39, ""])` | ran, returned `[[True, 'A', 39, ''], [True, 'A', 94, '']]` |
+| Scheme | first `(set-add-linked-residue-do-fit-and-refine 0)`, then `(add-linked-residue 0 "A" 39 "" "NAG" "NAG-ASN" 1)`, then `(glyco-tree-residues 0 (list "A" 39 ""))` | ran, returned `((#t "A" 39 "") (#t "A" 94 ""))` |
+
+Example written and checked by hand on the test data. Expected: returns the residue specs of the glycan tree on that ASN (the ASN itself and the sugars).
+
+Python and Scheme gave the same answer.
 
 ### glyco_tree_test
 
@@ -160,8 +178,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `glyco_tree_test()` | ran (no return value) |
-| Scheme | `(glyco-tree-test)` | ran (no return value) |
+| Python | `glyco_tree_test()` | ran (no return value, nothing visible changed) |
+| Scheme | `(glyco-tree-test)` | ran (no return value, nothing visible changed) |
 
 ### go_to_atom_alt_conf
 
@@ -238,8 +256,10 @@ Arguments: none. Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `go_to_atom_molecule_number()` | ran, returned `0` |
-| Scheme | `(go-to-atom-molecule-number)` | ran, returned `0` |
+| Python | first `set_go_to_atom_molecule(0)`, then `go_to_atom_molecule_number()` | ran, returned `0` |
+| Scheme | first `(set-go-to-atom-molecule 0)`, then `(go-to-atom-molecule-number)` | ran, returned `0` |
+
+Example written and checked by hand on the test data. Expected: returns the molecule the Go To Atom functions work on (0 here, the model).
 
 Python and Scheme gave the same answer.
 
@@ -270,8 +290,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `post_go_to_atom_window()` | ran (no return value) |
-| Scheme | `(post-go-to-atom-window)` | ran (no return value) |
+| Python | `post_go_to_atom_window()` | ran (no return value, nothing visible changed) |
+| Scheme | `(post-go-to-atom-window)` | ran (no return value, nothing visible changed) |
 
 ### set_go_to_atom_chain_residue_atom_name
 
@@ -290,7 +310,7 @@ Arguments: t1_chain_id (text), iresno (a whole number), t3_atom_name (text). Ret
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_go_to_atom_chain_residue_atom_name("A", 41, " CA ")` | ran, returned `1` |
+| Python | `set_go_to_atom_chain_residue_atom_name("A", 41, " CA ")` | ran, returned `1`; changed: rotation centre moved 7.3 A to (47.1, 10.6, 17.4) |
 | Scheme | `(set-go-to-atom-chain-residue-atom-name "A" 41 " CA ")` | ran, returned `1` |
 
 Python and Scheme gave the same answer.
@@ -328,8 +348,10 @@ Arguments: t1 (text), iresno (a whole number), t3 (text), make_the_move_flag (a 
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_go_to_atom_chain_residue_atom_name_no_redraw("hello", 41, "hello", 1)` | ran, returned `0` |
-| Scheme | `(set-go-to-atom-chain-residue-atom-name-no-redraw "hello" 41 "hello" 1)` | ran, returned `0` |
+| Python | `set_go_to_atom_chain_residue_atom_name_no_redraw("A", 41, " CA ", 1)` | ran, returned `1` |
+| Scheme | `(set-go-to-atom-chain-residue-atom-name-no-redraw "A" 41 " CA " 1)` | ran, returned `1` |
+
+Example written and checked by hand on the test data. Expected: returns 1 when the atom is found; with make_the_move_flag 1 the view centres on it.
 
 Python and Scheme gave the same answer.
 
@@ -342,8 +364,12 @@ Arguments: t1 (text), t2 (text), txt (text). Returns: a whole number.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_go_to_atom_chain_residue_atom_name_strings("hello", "hello", "hello")` | error: TypeError: in method 'set_go_to_atom_chain_residue_atom_name_strings', argument 1 of type 'gchar const *' |
-| Scheme | `(set-go-to-atom-chain-residue-atom-name-strings "hello" "hello" "hello")` | error: In procedure set-go-to-atom-chain-residue-atom-name-strings: Wrong type argument in position 1: "hello" |
+| Python | `set_go_to_atom_chain_residue_atom_name_strings("B", "72", " SG ")` | error: TypeError: in method 'set_go_to_atom_chain_residue_atom_name_strings', argument 1 of type 'gchar const *' |
+| Scheme | `(set-go-to-atom-chain-residue-atom-name-strings "B" "72" " SG ")` | error: In procedure set-go-to-atom-chain-residue-atom-name-strings: Wrong type argument in position 1: "B" |
+
+Example written and checked by hand on the test data. Expected: should return 1 and centre on SG of Cys B72; use set_go_to_atom_chain_residue_atom_name("B", 72, " SG ") instead.
+
+Note: Not callable from either scripting language: the arguments are declared gchar* and SWIG has no typemap for gchar, so every string is rejected. Likely a wrapper bug (declare const char*).
 
 ### set_go_to_atom_molecule
 
@@ -373,8 +399,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_go_to_atom_molecule(0)` | ran (no return value) |
-| Scheme | `(set-go-to-atom-molecule 0)` | ran (no return value) |
+| Python | `set_go_to_atom_molecule(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-go-to-atom-molecule 0)` | ran (no return value, nothing visible changed) |
 
 ### test_fragment
 
@@ -385,8 +411,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `test_fragment()` | ran (no return value) |
-| Scheme | `(test-fragment)` | ran (no return value) |
+| Python | `test_fragment()` | ran (no return value, nothing visible changed) |
+| Scheme | `(test-fragment)` | ran (no return value, nothing visible changed) |
 
 ### test_function
 
@@ -397,8 +423,14 @@ Arguments: i (a list or value), j (a list or value). Returns: a value (see the r
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | `test_function(0, 1)` | ran, returned `False`; changed: graphics_n_molecules(): 3 -> 4 |
+| Scheme | `(test-function 0 1)` | ran, returned `#f` |
+
+Example written and checked by hand on the test data. Expected: developer test hook; returns False when its hard-coded test files are absent.
+
+Note: Developer test function: Python version creates an empty molecule as a side effect. Not for users.
+
+Python and Scheme gave the same answer.
 
 ### unset_go_to_atom_widget
 
@@ -411,8 +443,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `unset_go_to_atom_widget()` | ran (no return value) |
-| Scheme | `(unset-go-to-atom-widget)` | ran (no return value) |
+| Python | `unset_go_to_atom_widget()` | ran (no return value, nothing visible changed) |
+| Scheme | `(unset-go-to-atom-widget)` | ran (no return value, nothing visible changed) |
 
 ### update_go_to_atom_from_current_position
 
@@ -426,8 +458,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `update_go_to_atom_from_current_position()` | ran (no return value) |
-| Scheme | `(update-go-to-atom-from-current-position)` | ran (no return value) |
+| Python | `update_go_to_atom_from_current_position()` | ran (no return value); changed: rotation centre moved 3.8 A to (44.4, 10.4, 15.0) |
+| Scheme | `(update-go-to-atom-from-current-position)` | ran (no return value, nothing visible changed) |
 
 ### update_go_to_atom_residue_list
 
@@ -441,8 +473,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `update_go_to_atom_residue_list(0)` | ran (no return value) |
-| Scheme | `(update-go-to-atom-residue-list 0)` | ran (no return value) |
+| Python | `update_go_to_atom_residue_list(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(update-go-to-atom-residue-list 0)` | ran (no return value, nothing visible changed) |
 
 ### update_go_to_atom_window_on_changed_mol
 
@@ -455,8 +487,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `update_go_to_atom_window_on_changed_mol(0)` | ran (no return value) |
-| Scheme | `(update-go-to-atom-window-on-changed-mol 0)` | ran (no return value) |
+| Python | `update_go_to_atom_window_on_changed_mol(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(update-go-to-atom-window-on-changed-mol 0)` | ran (no return value, nothing visible changed) |
 
 ### update_go_to_atom_window_on_new_mol
 
@@ -470,8 +502,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `update_go_to_atom_window_on_new_mol()` | ran (no return value) |
-| Scheme | `(update-go-to-atom-window-on-new-mol)` | ran (no return value) |
+| Python | `update_go_to_atom_window_on_new_mol()` | ran (no return value, nothing visible changed) |
+| Scheme | `(update-go-to-atom-window-on-new-mol)` | ran (no return value, nothing visible changed) |
 
 ### update_go_to_atom_window_on_other_molecule_chosen
 
@@ -482,6 +514,6 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `update_go_to_atom_window_on_other_molecule_chosen(0)` | ran (no return value) |
-| Scheme | `(update-go-to-atom-window-on-other-molecule-chosen 0)` | ran (no return value) |
+| Python | `update_go_to_atom_window_on_other_molecule_chosen(0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(update-go-to-atom-window-on-other-molecule-chosen 0)` | ran (no return value, nothing visible changed) |
 

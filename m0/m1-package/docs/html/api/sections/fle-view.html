@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="ea7f99e1459619de761a634238fc91a54e6aab9c">
+<meta name="coot0-source-sha1" content="ebd7f7930a5a2debeb261843c4da3276f991be83">
 <title>FLE-View - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -22,16 +22,17 @@ table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; 
 Scheme: <code>(fle-view-internal imol chain-id res-no ins-code imol-ligand-fragment prodrg-output-flat-mol-file-name prodrg-output-flat-pdb-file-name prodrg-output-3d-pdb-file-name prodrg-output-dict-cif-file-name)</code></p>
 <p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text), imol_ligand_fragment (a whole number), prodrg_output_flat_mol_file_name (text), prodrg_output_flat_pdb_file_name (text), prodrg_output_3d_pdb_file_name (text), prodrg_output_dict_cif_file_name (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>fle_view_internal(0, "A", 41, "", 0, "tutorial-modern.pdb", "tutorial-modern.pdb", "tutorial-modern.pdb", "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(fle-view-internal 0 "A" 41 "" 0 "tutorial-modern.pdb" "tutorial-modern.pdb" "tutorial-modern.pdb" "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>fle_view_internal(0, "A", 41, "", 0, "tutorial-modern.pdb", "tutorial-modern.pdb", "tutorial-modern.pdb", "tutorial-modern.pdb")</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(fle-view-internal 0 "A" 41 "" 0 "tutorial-modern.pdb" "tutorial-modern.pdb" "tutorial-modern.pdb" "tutorial-modern.pdb")</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="fle_view_internal_to_png">fle_view_internal_to_png</h3>
 <p>Python: <code>fle_view_internal_to_png(imol, chain_id, res_no, ins_code, imol_ligand_fragment, prodrg_output_flat_mol_file_name, prodrg_output_flat_pdb_file_name, prodrg_output_3d_pdb_file_name, prodrg_output_dict_cif_file_name, output_to_png_file_flag, png_file_name)</code><br>
 Scheme: <code>(fle-view-internal-to-png imol chain-id res-no ins-code imol-ligand-fragment prodrg-output-flat-mol-file-name prodrg-output-flat-pdb-file-name prodrg-output-3d-pdb-file-name prodrg-output-dict-cif-file-name output-to-png-file-flag png-file-name)</code></p>
 <p>for command-line operation</p>
 <p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text), imol_ligand_fragment (a whole number), prodrg_output_flat_mol_file_name (text), prodrg_output_flat_pdb_file_name (text), prodrg_output_3d_pdb_file_name (text), prodrg_output_dict_cif_file_name (text), output_to_png_file_flag (a whole number), png_file_name (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>fle_view_internal_to_png(0, "A", 41, "", 0, "tutorial-modern.pdb", "tutorial-modern.pdb", "tutorial-modern.pdb", "tutorial-modern.pdb", 1, "tutorial-modern.pdb")</code></td><td>not run: not run automatically (png: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(fle-view-internal-to-png 0 "A" 41 "" 0 "tutorial-modern.pdb" "tutorial-modern.pdb" "tutorial-modern.pdb" "tutorial-modern.pdb" 1 "tutorial-modern.pdb")</code></td><td>not run: not run automatically (png: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>fle_view_internal_to_png(0, "A", 41, "", 0, "tutorial-modern.pdb", "tutorial-modern.pdb", "tutorial-modern.pdb", "tutorial-modern.pdb", 1, "tutorial-modern.pdb")</code></td><td>not run: needs PRODRG output files (flat mol/pdb, 3d pdb, dictionary) from an external program</td></tr>
+<tr><td>Scheme</td><td><code>(fle-view-internal-to-png 0 "A" 41 "" 0 "tutorial-modern.pdb" "tutorial-modern.pdb" "tutorial-modern.pdb" "tutorial-modern.pdb" 1 "tutorial-modern.pdb")</code></td><td>not run: needs PRODRG output files (flat mol/pdb, 3d pdb, dictionary) from an external program</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: draws the 2D ligand environment (FLEV) from PRODRG output files into a PNG.</p>
 <h3 id="fle_view_set_h_bond_dist_max">fle_view_set_h_bond_dist_max</h3>
 <p>Python: <code>fle_view_set_h_bond_dist_max(h_bond_dist_max)</code><br>
 Scheme: <code>(fle-view-set-h-bond-dist-max h-bond-dist-max)</code></p>
@@ -39,8 +40,8 @@ Scheme: <code>(fle-view-set-h-bond-dist-max h-bond-dist-max)</code></p>
 <p>default 3.9 A.</p>
 <p>Arguments: h_bond_dist_max (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>fle_view_set_h_bond_dist_max(1.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(fle-view-set-h-bond-dist-max 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>fle_view_set_h_bond_dist_max(1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(fle-view-set-h-bond-dist-max 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="fle_view_set_water_dist_max">fle_view_set_water_dist_max</h3>
 <p>Python: <code>fle_view_set_water_dist_max(dist_max)</code><br>
 Scheme: <code>(fle-view-set-water-dist-max dist-max)</code></p>
@@ -48,36 +49,37 @@ Scheme: <code>(fle-view-set-water-dist-max dist-max)</code></p>
 <p>default 3.25 A.</p>
 <p>Arguments: dist_max (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>fle_view_set_water_dist_max(1.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(fle-view-set-water-dist-max 1.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>fle_view_set_water_dist_max(1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(fle-view-set-water-dist-max 1.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="fle_view_with_rdkit">fle_view_with_rdkit</h3>
 <p>Python: <code>fle_view_with_rdkit(imol, chain_id, res_no, ins_code, residues_near_radius)</code><br>
 Scheme: <code>(fle-view-with-rdkit imol chain-id res-no ins-code residues-near-radius)</code></p>
 <p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text), residues_near_radius (a number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>fle_view_with_rdkit(0, "A", 41, "", 5.0)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(fle-view-with-rdkit 0 "A" 41 "" 5.0)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>fle_view_with_rdkit(0, "A", 41, "", 5.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(fle-view-with-rdkit 0 "A" 41 "" 5.0)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="fle_view_with_rdkit_internal">fle_view_with_rdkit_internal</h3>
 <p>Python: <code>fle_view_with_rdkit_internal(imol, chain_id, res_no, ins_code, residues_near_radius, file_format, file_name)</code><br>
 Scheme: <code>(fle-view-with-rdkit-internal imol chain-id res-no ins-code residues-near-radius file-format file-name)</code></p>
 <p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text), residues_near_radius (a number), file_format (text), file_name (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>fle_view_with_rdkit_internal(0, "A", 41, "", 5.0, "tutorial-modern.pdb", "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(fle-view-with-rdkit-internal 0 "A" 41 "" 5.0 "tutorial-modern.pdb" "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>fle_view_with_rdkit_internal(0, "A", 41, "", 5.0, "tutorial-modern.pdb", "tutorial-modern.pdb")</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(fle-view-with-rdkit-internal 0 "A" 41 "" 5.0 "tutorial-modern.pdb" "tutorial-modern.pdb")</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="fle_view_with_rdkit_to_png">fle_view_with_rdkit_to_png</h3>
 <p>Python: <code>fle_view_with_rdkit_to_png(imol, chain_id, res_no, ins_code, residues_near_radius, png_file_name)</code><br>
 Scheme: <code>(fle-view-with-rdkit-to-png imol chain-id res-no ins-code residues-near-radius png-file-name)</code></p>
 <p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text), residues_near_radius (a number), png_file_name (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>fle_view_with_rdkit_to_png(0, "A", 41, "", 5.0, "tutorial-modern.pdb")</code></td><td>not run: not run automatically (png: exits, uses the network, an external program, files or a screen)</td></tr>
-<tr><td>Scheme</td><td><code>(fle-view-with-rdkit-to-png 0 "A" 41 "" 5.0 "tutorial-modern.pdb")</code></td><td>not run: not run automatically (png: exits, uses the network, an external program, files or a screen)</td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>read_cif_dictionary("NAG.cif")</code>, then <code>fle_view_with_rdkit_to_png(read_pdb("nag_only.pdb"), "A", 1, "", 4.0, "nag-fle.png")</code></td><td>ran (no return value); changed: new molecule 3 (model, nag_only.pdb); rotation centre moved 44.4 A to (-0.0, -0.0, -0.0); first_small_coords_imol(): -1 -&gt; 3; graphics_n_molecules(): 3 -&gt; 4</td></tr>
+<tr><td>Scheme</td><td>first <code>(read-cif-dictionary "NAG.cif")</code>, then <code>(fle-view-with-rdkit-to-png (read-pdb "nag_only.pdb") "A" 1 "" 4.0 "nag-fle.png")</code></td><td>ran (no return value); changed: new molecule 3 (model, nag_only.pdb); rotation centre moved 44.4 A to (-0.0, -0.0, -0.0); first_small_coords_imol(): -1 -&gt; 3; graphics_n_molecules(): 3 -&gt; 4</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: writes a 2D ligand-environment picture of NAG A1 (residues within 4 A) to nag-fle.png.</p>
 <h3 id="fle_view_with_rdkit_to_svg">fle_view_with_rdkit_to_svg</h3>
 <p>Python: <code>fle_view_with_rdkit_to_svg(imol, chain_id, res_no, ins_code, residues_near_radius, svg_file_name)</code><br>
 Scheme: <code>(fle-view-with-rdkit-to-svg imol chain-id res-no ins-code residues-near-radius svg-file-name)</code></p>
 <p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text), residues_near_radius (a number), svg_file_name (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>fle_view_with_rdkit_to_svg(0, "A", 41, "", 5.0, "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(fle-view-with-rdkit-to-svg 0 "A" 41 "" 5.0 "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>fle_view_with_rdkit_to_svg(0, "A", 41, "", 5.0, "tutorial-modern.pdb")</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(fle-view-with-rdkit-to-svg 0 "A" 41 "" 5.0 "tutorial-modern.pdb")</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="sprout_hydrogens">sprout_hydrogens</h3>
 <p>Python: <code>sprout_hydrogens(imol, chain_id, res_no, ins_code)</code><br>
 Scheme: <code>(sprout-hydrogens imol chain-id res-no ins-code)</code></p>
@@ -86,7 +88,9 @@ Scheme: <code>(sprout-hydrogens imol chain-id res-no ins-code)</code></p>
 <p>use RDKit for enterprise version</p>
 <p>Arguments: imol (a whole number), chain_id (text), res_no (a whole number), ins_code (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>sprout_hydrogens(0, "A", 41, "")</code></td><td>ran, returned <code>0</code></td></tr>
-<tr><td>Scheme</td><td><code>(sprout-hydrogens 0 "A" 41 "")</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>read_cif_dictionary("NAG.cif")</code>, then <code>imol_nag = read_pdb("nag_only.pdb")</code>, then <code>delete_hydrogens(imol_nag)</code>, then <code>sprout_hydrogens(imol_nag, "A", 1, "")</code></td><td>ran, returned <code>1</code>; changed: molecule 3: atoms of 1 residue(s) (A1)</td></tr>
+<tr><td>Scheme</td><td>first <code>(read-cif-dictionary "NAG.cif")</code>, then <code>(define imol-nag (read-pdb "nag_only.pdb"))</code>, then <code>(delete-hydrogens imol-nag)</code>, then <code>(sprout-hydrogens imol-nag "A" 1 "")</code></td><td>ran, returned <code>1</code>; changed: molecule 3: atoms of 1 residue(s) (A1)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns 1 and adds the dictionary's hydrogens to the residue (needs a dictionary; the residue must have no hydrogens yet).</p>
+<p>Note: On a protein residue (0 "A" 41) and on a residue that already has hydrogens it returns 0 (RDKit add_hydrogens refuses ligands with some H; the info_dialog message is invisible headless).</p>
 <p>Python and Scheme gave the same answer.</p>
 </body></html>

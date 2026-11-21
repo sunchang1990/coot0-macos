@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="28201868ed970b835f0226c020717fb5d2a86a7e">
+<meta name="coot0-source-sha1" content="0d9cee4529433e7100849094d95347f59a16500f">
 <title>Change Chain ID - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -23,8 +23,8 @@ Scheme: <code>(change-chain-id imol from-chain-id to-chain-id use-res-range-flag
 <p>change the chain id of the specified residue</p>
 <p>Arguments: imol (a whole number), from_chain_id (text), to_chain_id (text), use_res_range_flag (a whole number), from_resno (a whole number), to_resno (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>change_chain_id(0, "A", "A", 1, 41, 41)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(change-chain-id 0 "A" "A" 1 41 41)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>change_chain_id(0, "A", "A", 1, 41, 41)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(change-chain-id 0 "A" "A" 1 41 41)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="change_chain_id_with_result">change_chain_id_with_result</h3>
 <p>Python: <code>change_chain_id_with_result(imol, from_chain_id, to_chain_id, use_res_range_flag, from_resno, to_resno)</code><br>
 Scheme: <code>(change-chain-id-with-result-scm imol from-chain-id to-chain-id use-res-range-flag from-resno to-resno)</code></p>

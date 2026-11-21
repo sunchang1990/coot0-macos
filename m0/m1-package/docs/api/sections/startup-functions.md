@@ -42,6 +42,6 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_prefer_python()` | ran (no return value) |
-| Scheme | `(set-prefer-python)` | ran (no return value) |
+| Python | `set_prefer_python()` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-prefer-python)` | ran (no return value, nothing visible changed) |
 

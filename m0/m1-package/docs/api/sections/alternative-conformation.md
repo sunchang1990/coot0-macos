@@ -20,8 +20,12 @@ Also available in Scheme as `add-alt-conf-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `add_alt_conf(0, "A", 41, "", "", 1)` | ran, returned `False` |
-| Scheme | `(add-alt-conf 0 "A" 41 "" "" 1)` | ran, returned `#f` |
+| Python | `add_alt_conf(0, "A", 41, "", "", 0)` | ran, returned `False`; changed: molecule 0: atoms of 1 residue(s) (A41); n_atoms(0): 1465 -> 1474 |
+| Scheme | `(add-alt-conf 0 "A" 41 "" "" 0)` | ran, returned `#f`; changed: molecule 0: atoms of 1 residue(s) (A41); n_atoms(0): 1465 -> 1474 |
+
+Example written and checked by hand on the test data. Expected: splits residue A41 into two alternative conformations; documented to return the new alt conf string.
+
+Note: alt_conf must be the EXISTING alt conf of the atoms to split ("" for an ordinary residue). The split works but the return value is False/#f although the source returns the new alt conf on success; likely the bool from split_residue is false after a successful split (suspicious).
 
 Python and Scheme gave the same answer.
 
@@ -50,8 +54,10 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `altconf()` | stopped Coot when tried without a window (not checked with a window) |
-| Scheme | `(altconf)` | stopped Coot when tried without a window (not checked with a window) |
+| Python | `altconf()` | not run: needs the graphics window (stops Coot without a screen) |
+| Scheme | `(altconf)` | not run: needs the graphics window (stops Coot without a screen) |
+
+Example written and checked by hand on the test data. Expected: starts the alt-conf pick mode (click an atom in the graphics window).
 
 ### fill_occupancy_residue_range
 
@@ -62,8 +68,8 @@ Arguments: imol (a whole number), chain_id (text), ires1 (a whole number), ires2
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `fill_occupancy_residue_range(0, "A", 1, 1)` | ran (no return value) |
-| Scheme | `(fill-occupancy-residue-range 0 "A" 1 1)` | ran (no return value) |
+| Python | `fill_occupancy_residue_range(0, "A", 1, 1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(fill-occupancy-residue-range 0 "A" 1 1)` | ran (no return value, nothing visible changed) |
 
 ### get_add_alt_conf_new_atoms_occupancy
 
@@ -90,8 +96,8 @@ Arguments: imol (a whole number), chain_id (text), ires1 (a whole number), ires2
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `reset_b_factor_residue_range(0, "A", 1, 1)` | ran (no return value) |
-| Scheme | `(reset-b-factor-residue-range 0 "A" 1 1)` | ran (no return value) |
+| Python | `reset_b_factor_residue_range(0, "A", 1, 1)` | ran (no return value); changed: molecule 0: B-factors of 1 residue(s) (A1) |
+| Scheme | `(reset-b-factor-residue-range 0 "A" 1 1)` | ran (no return value, nothing visible changed) |
 
 ### set_add_alt_conf_new_atoms_occupancy
 
@@ -104,8 +110,10 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_add_alt_conf_new_atoms_occupancy(1.0)` | ran (no return value) |
-| Scheme | `(set-add-alt-conf-new-atoms-occupancy 1.0)` | ran (no return value) |
+| Python | `set_add_alt_conf_new_atoms_occupancy(1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-add-alt-conf-new-atoms-occupancy 1.0)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: get_add_alt_conf_new_atoms_occupancy was 0.5, set to 1.25, read back 1.25; Scheme: get-add-alt-conf-new-atoms-occupancy was 0.5, set to 1.25, read back 1.25.
 
 ### set_add_alt_conf_split_type_number
 
@@ -116,8 +124,8 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_add_alt_conf_split_type_number(1)` | ran (no return value) |
-| Scheme | `(set-add-alt-conf-split-type-number 1)` | ran (no return value) |
+| Python | `set_add_alt_conf_split_type_number(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-add-alt-conf-split-type-number 1)` | ran (no return value, nothing visible changed) |
 
 ### set_b_factor_residue_range
 
@@ -128,8 +136,8 @@ Arguments: imol (a whole number), chain_id (text), ires1 (a whole number), ires2
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_b_factor_residue_range(0, "A", 1, 1, 1.0)` | ran (no return value) |
-| Scheme | `(set-b-factor-residue-range 0 "A" 1 1 1.0)` | ran (no return value) |
+| Python | `set_b_factor_residue_range(0, "A", 1, 1, 1.0)` | ran (no return value); changed: molecule 0: B-factors of 1 residue(s) (A1) |
+| Scheme | `(set-b-factor-residue-range 0 "A" 1 1 1.0)` | ran (no return value, nothing visible changed) |
 
 ### set_occupancy_residue_range
 
@@ -140,8 +148,8 @@ Arguments: imol (a whole number), chain_id (text), ires1 (a whole number), ires2
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_occupancy_residue_range(0, "A", 1, 1, 1.0)` | ran (no return value) |
-| Scheme | `(set-occupancy-residue-range 0 "A" 1 1 1.0)` | ran (no return value) |
+| Python | `set_occupancy_residue_range(0, "A", 1, 1, 1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-occupancy-residue-range 0 "A" 1 1 1.0)` | ran (no return value, nothing visible changed) |
 
 ### set_show_alt_conf_intermediate_atoms
 
@@ -152,8 +160,10 @@ Arguments: i (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_show_alt_conf_intermediate_atoms(1)` | ran (no return value) |
-| Scheme | `(set-show-alt-conf-intermediate-atoms 1)` | ran (no return value) |
+| Python | `set_show_alt_conf_intermediate_atoms(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-show-alt-conf-intermediate-atoms 1)` | ran (no return value, nothing visible changed) |
+
+Setting checked (set to another value and read back, then put back): Python: show_alt_conf_intermediate_atoms_state was 0, set to 1, read back 1; Scheme: show-alt-conf-intermediate-atoms-state was 0, set to 1, read back 1.
 
 ### show_alt_conf_intermediate_atoms_state
 
@@ -181,8 +191,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `unset_add_alt_conf_define()` | ran (no return value) |
-| Scheme | `(unset-add-alt-conf-define)` | ran (no return value) |
+| Python | `unset_add_alt_conf_define()` | ran (no return value, nothing visible changed) |
+| Scheme | `(unset-add-alt-conf-define)` | ran (no return value, nothing visible changed) |
 
 ### unset_add_alt_conf_dialog
 
@@ -193,8 +203,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `unset_add_alt_conf_dialog()` | ran (no return value) |
-| Scheme | `(unset-add-alt-conf-dialog)` | ran (no return value) |
+| Python | `unset_add_alt_conf_dialog()` | ran (no return value, nothing visible changed) |
+| Scheme | `(unset-add-alt-conf-dialog)` | ran (no return value, nothing visible changed) |
 
 ### zero_occupancy_residue_range
 
@@ -205,6 +215,6 @@ Arguments: imol (a whole number), chain_id (text), ires1 (a whole number), ires2
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `zero_occupancy_residue_range(0, "A", 1, 1)` | ran (no return value) |
-| Scheme | `(zero-occupancy-residue-range 0 "A" 1 1)` | ran (no return value) |
+| Python | `zero_occupancy_residue_range(0, "A", 1, 1)` | ran (no return value); changed: molecule 0: occupancies of 1 residue(s) (A1) |
+| Scheme | `(zero-occupancy-residue-range 0 "A" 1 1)` | ran (no return value, nothing visible changed) |
 

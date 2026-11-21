@@ -1,5 +1,6 @@
 #!/bin/bash
 # run-api-examples.sh [RESULTS.jsonl] [ONLY-substring]   (build 26; build 30: fresh test data before each start)
+# (build 31) API_SCRIPT=api_setters_run.py: instead, set every setting that has a getter to another value and read it back.
 # Tries the example of every Python and Scheme scripting function listed in docs/api (about 1,700 functions,
 # 30-60 minutes) without a window, on the test data, and writes one JSON line per call.  A call that stops Coot
 # (no screen, OpenGL) or hangs (more than 60 s) is recorded and the run goes on in a fresh Coot.
@@ -12,7 +13,7 @@ W="$STATE/work/api-examples"; mkdir -p "$W/home"   # (its own home: no function 
 RES="${1:-$W/api-examples.jsonl}"; ONLY="$2"
 INDEX="$HERE/docs/api/api-index.json"
 [ -f "$INDEX" ] || { echo "no $INDEX"; exit 2; }
-cp "$HERE"/test-data/tutorial-modern.pdb "$HERE"/test-data/rnasa-1.8-all_refmac1.mtz "$W/"
+"$HERE/tests/api-data.sh" "$W"
 touch "$RES"
 lines() { wc -l < "$RES" | tr -d ' '; }
 last_start() { tail -1 "$RES" | grep '"ev": "start"'; }
@@ -26,9 +27,9 @@ runs=0
 while :; do
   runs=$((runs+1)); [ $runs -gt 3000 ] && { echo "too many restarts"; break; }
   grep -q '"ev": "done"' "$RES" && break
-  rm -f "$W/rnasa-map.map"; cp "$HERE"/test-data/tutorial-modern.pdb "$HERE"/test-data/rnasa-1.8-all_refmac1.mtz "$W/"   # fresh copies: an example may overwrite them (build 30)
-  ( cd "$W" && COOT_HOME_OVERRIDE="$W/home" API_INDEX="$INDEX" API_RESULTS="$RES" API_ONLY="$ONLY" COOT_NO_SPLASH=1 COOT_NO_DEFAULT_TOOLBAR=1 COOT_KEEP_CWD=1 \
-      "$HERE/run-coot.sh" --no-graphics --python --no-state-script --no-startup-scripts --script "$HERE/tests/api_examples_run.py" > "$W/last-run.log" 2>&1 ) &
+  "$HERE/tests/api-data.sh" "$W"   # fresh copies: an example may overwrite them (build 30; build 31: all test files)
+  ( cd "$W" && COOT_HOME_OVERRIDE="$W/home" API_TESTS_DIR="$HERE/tests" API_INDEX="$INDEX" API_RESULTS="$RES" API_ONLY="$ONLY" COOT_NO_SPLASH=1 COOT_NO_DEFAULT_TOOLBAR=1 COOT_KEEP_CWD=1 \
+      "$HERE/run-coot.sh" --no-graphics --python --no-state-script --no-startup-scripts --script "$HERE/tests/${API_SCRIPT:-api_examples_run.py}" < /dev/null > "$W/last-run.log" 2>&1 ) &
   pid=$!; n=$(lines); idle=0; limit=150
   while kill -0 $pid 2>/dev/null; do
     sleep 1; m=$(lines)

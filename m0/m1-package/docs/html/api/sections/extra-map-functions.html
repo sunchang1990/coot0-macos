@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="8ff0ec4434e605c5d20674d90854235c7b1af55c">
+<meta name="coot0-source-sha1" content="ba05998b77fc7cbd8c7f2b37a0becdded79095a4">
 <title>Extra Map Functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -22,16 +22,18 @@ table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; 
 Scheme: <code>(add-map-colour-mol-menu-item imol name sub-menu callback)</code></p>
 <p>Arguments: imol (a whole number), name (text), sub_menu (<code>GtkWidget *</code>), callback (<code>GtkSignalFunc</code>). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td>(no example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: adds a molecule entry to a GTK menu (internal menu building).</p>
 <h3 id="add_map_scroll_wheel_mol_menu_item">add_map_scroll_wheel_mol_menu_item</h3>
 <p>Python: <code>add_map_scroll_wheel_mol_menu_item(imol, name, menu, callback)</code><br>
 Scheme: <code>(add-map-scroll-wheel-mol-menu-item imol name menu callback)</code></p>
 <p>Actually this function is generic and could be renamed so.</p>
 <p>Arguments: imol (a whole number), name (text), menu (<code>GtkWidget *</code>), callback (<code>GtkSignalFunc</code>). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td>(no example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
+<tr><td>Scheme</td><td>(no example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: adds a molecule entry to a GTK menu (internal menu building).</p>
 <h3 id="amplitude_vs_resolution_py">amplitude_vs_resolution_py</h3>
 <p>Python: <code>amplitude_vs_resolution_py(mol_map)</code><br>
 Scheme: <code>(amplitude-vs-resolution-scm mol-map)</code></p>
@@ -45,7 +47,8 @@ Scheme: <code>(amplitude-vs-resolution-scm mol-map)</code></p>
 <p>Arguments: map_number_list (a list or value), imol_map_mask (a whole number). Returns: a whole number.
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>multi_sharpen_blur_map_py(1, [-20.0, 0.0])</code>, then <code>analyse_map_point_density_change_py([1, 3, 4], 1)</code></td><td>ran, returned <code>5</code>; changed: new molecule 5 (map, zde); graphics_n_molecules(): 5 -&gt; 6</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns a new map of the per-point density change across the listed maps (here map 1 and two blurred copies), masked by map 1.</p>
 <h3 id="auto_read_make_and_draw_maps">auto_read_make_and_draw_maps</h3>
 <p>Python: <code>auto_read_make_and_draw_maps(filename)</code><br>
 Scheme: <code>(auto-read-make-and-draw-maps filename)</code></p>
@@ -87,6 +90,8 @@ Returns -1 when given a bad map or there were no data beyond 4.5A</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
 <tr><td>Python</td><td><code>b_factor_from_map(1)</code></td><td>ran, returned <code>-1.0</code></td></tr>
 <tr><td>Scheme</td><td><code>(b-factor-from-map 1)</code></td><td>ran, returned <code>-1.0</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: should return the B-factor estimated from map 1's amplitude fall-off.</p>
+<p>Note: Always returns -1: the C++ computes b and prints it but returns the unchanged b_factor = -1 (bug in 0.9.8.96).</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="flip_hand">flip_hand</h3>
 <p>Python: <code>flip_hand(imol_map)</code><br>
@@ -96,8 +101,8 @@ in case it was accidentally generated on the wrong one.
 Returns the molecule number of the flipped map.</p>
 <p>Arguments: imol_map (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>flip_hand(1)</code></td><td>ran, returned <code>2</code></td></tr>
-<tr><td>Scheme</td><td><code>(flip-hand 1)</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>flip_hand(1)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, Map 1 Flipped Hand); graphics_n_molecules(): 3 -&gt; 4</td></tr>
+<tr><td>Scheme</td><td><code>(flip-hand 1)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, Map 1 Flipped Hand); graphics_n_molecules(): 3 -&gt; 4</td></tr></tbody></table>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="go_to_map_molecule_centre">go_to_map_molecule_centre</h3>
 <p>Python: <code>go_to_map_molecule_centre(imol_map)</code><br>
@@ -106,24 +111,27 @@ Scheme: <code>(go-to-map-molecule-centre imol-map)</code></p>
  and recontour at a sensible value.</p>
 <p>Arguments: imol_map (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>go_to_map_molecule_centre(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(go-to-map-molecule-centre 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>go_to_map_molecule_centre(1)</code></td><td>ran (no return value); changed: map 1 contour level: 0.56 -&gt; 0.8904; rotation centre moved 32.3 A to (33.2, 39.3, 18.9); get_contour_level_absolute(1): 0.56 -&gt; 0.8904; get_contour_level_in_sigma(1): 1.499 -&gt; 2.384</td></tr>
+<tr><td>Scheme</td><td><code>(go-to-map-molecule-centre 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="handle_read_ccp4_map">handle_read_ccp4_map</h3>
 <p>Python: <code>handle_read_ccp4_map(filename, is_diff_map_flag)</code><br>
 Scheme: <code>(handle-read-ccp4-map filename is-diff-map-flag)</code></p>
 <p>same function as above - old name for the function. Deleted from the API at some stage</p>
 <p>Arguments: filename (text), is_diff_map_flag (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>handle_read_ccp4_map("tutorial-modern.pdb", 1)</code></td><td>ran, returned <code>-1</code></td></tr>
-<tr><td>Scheme</td><td><code>(handle-read-ccp4-map "tutorial-modern.pdb" 1)</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>handle_read_ccp4_map("rnasa-map.map", 0)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, rnasa-map.map); graphics_n_molecules(): 3 -&gt; 4; scroll_wheel_map(): -1 -&gt; 3</td></tr>
+<tr><td>Scheme</td><td><code>(handle-read-ccp4-map "rnasa-map.map" 0)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, rnasa-map.map); graphics_n_molecules(): 3 -&gt; 4; scroll_wheel_map(): -1 -&gt; 3</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the new map molecule number; the CCP4 map file is read (second argument 1 = difference map).</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="handle_read_emdb_data">handle_read_emdb_data</h3>
 <p>Python: <code>handle_read_emdb_data(dir_name)</code><br>
 Scheme: <code>(handle-read-emdb-data dir-name)</code></p>
 <p>Arguments: dir_name (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>handle_read_emdb_data(".")</code></td><td>ran, returned <code>0</code></td></tr>
-<tr><td>Scheme</td><td><code>(handle-read-emdb-data ".")</code></td><td>ran, returned <code>0</code></td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>import os, shutil; os.makedirs("emd_0001/map", exist_ok=True); shutil.copy("rnasa-map.map", "emd_0001/map/emd_0001.map")</code>, then <code>handle_read_emdb_data("emd_0001")</code></td><td>ran, returned <code>0</code>; changed: new molecule 3 (map, emd_0001.map); graphics_n_molecules(): 3 -&gt; 4; scroll_wheel_map(): -1 -&gt; 3</td></tr>
+<tr><td>Scheme</td><td>first <code>(begin (mkdir "emd_0002") (mkdir "emd_0002/map") (copy-file "rnasa-map.map" "emd_0002/map/emd_0002.map"))</code>, then <code>(handle-read-emdb-data "emd_0002")</code></td><td>ran, returned <code>0</code>; changed: new molecule 3 (map, emd_0002.map); graphics_n_molecules(): 3 -&gt; 4; scroll_wheel_map(): -1 -&gt; 3</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: reads every map/<em>.map and fittedModels/PDB/</em>.ent of an EMDB entry directory; returns 0.</p>
+<p>Note: Return value is always 0 (status never set), also on success.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="map_colour_components">map_colour_components</h3>
 <p>Python: <code>map_colour_components(imol)</code><br>
@@ -133,8 +141,9 @@ e.g.: [0.4, 0.6, 0.8]. If invalid imol return Py_False.</p>
 <p>Arguments: imol (a whole number). Returns: a value (see the result of the example).
 Also available in Python as <code>map_colour_components_py</code>.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>map_colour_components(0)</code></td><td>ran, returned <code>False</code></td></tr>
-<tr><td>Scheme</td><td><code>(map-colour-components 0)</code></td><td>ran, returned <code>#f</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>map_colour_components(1)</code></td><td>ran, returned <code>[0.19999998807907104, 0.38333338499069214, 0.699999988079071]</code></td></tr>
+<tr><td>Scheme</td><td><code>(map-colour-components 1)</code></td><td>ran, returned <code>(0.19999998807907104 0.38333338499069214 0.699999988079071)</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the [red, green, blue] colour of map 1.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="multi_sharpen_blur_map_py">multi_sharpen_blur_map_py</h3>
 <p>Python: <code>multi_sharpen_blur_map_py(imol_map, b_factors_list)</code><br>
@@ -143,16 +152,18 @@ Scheme: <code>(multi-sharpen-blur-map-scm imol-map b-factors-list)</code></p>
 blurred maps are generated by using a positive value of b_factor.</p>
 <p>Arguments: imol_map (a whole number), b_factors_list (a list or value). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr>
-<tr><td>Scheme</td><td>(no automatic example)</td><td>not run: no automatic example (it takes a list, a widget or an object)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>multi_sharpen_blur_map_py(1, [-20.0, 0.0, 30.0])</code></td><td>ran (no return value); changed: new molecule 3 (map, Map Sharpen -20.00); new molecule 4 (map, Map Blur 0.00); new molecule 5 (map, Map Blur 30.00); graphics_n_molecules(): 3 -&gt; 6</td></tr>
+<tr><td>Scheme</td><td><code>(multi-sharpen-blur-map-scm 1 (list -10.0 40.0))</code></td><td>ran (no return value); changed: new molecule 3 (map, Map Sharpen -10.00); new molecule 4 (map, Map Blur 40.00); graphics_n_molecules(): 3 -&gt; 5</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: one new map per B-factor in the list (negative = sharpen, positive = blur).</p>
 <h3 id="read_ccp4_map">read_ccp4_map</h3>
 <p>Python: <code>read_ccp4_map(filename, is_diff_map_flag)</code><br>
 Scheme: <code>(read-ccp4-map filename is-diff-map-flag)</code></p>
 <p>read a CCP4 map or a CNS map (despite the name).</p>
 <p>Arguments: filename (text), is_diff_map_flag (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>read_ccp4_map("tutorial-modern.pdb", 1)</code></td><td>ran, returned <code>-1</code></td></tr>
-<tr><td>Scheme</td><td><code>(read-ccp4-map "tutorial-modern.pdb" 1)</code></td><td>ran, returned <code>-1</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>read_ccp4_map("rnasa-map.map", 0)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, rnasa-map.map); graphics_n_molecules(): 3 -&gt; 4; scroll_wheel_map(): -1 -&gt; 3</td></tr>
+<tr><td>Scheme</td><td><code>(read-ccp4-map "rnasa-map.map" 0)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, rnasa-map.map); graphics_n_molecules(): 3 -&gt; 4; scroll_wheel_map(): -1 -&gt; 3</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: returns the new map molecule number.</p>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="res_tracer">res_tracer</h3>
 <p>Python: <code>res_tracer(imol_map, pir_file_name)</code><br>
@@ -161,8 +172,8 @@ Scheme: <code>(res-tracer imol-map pir-file-name)</code></p>
 the given pir file</p>
 <p>Arguments: imol_map (a whole number), pir_file_name (text). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>res_tracer(1, "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(res-tracer 1 "tutorial-modern.pdb")</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>res_tracer(1, "tutorial-modern.pdb")</code></td><td>ran (no return value); changed: new molecule 4 (map, Map); graphics_n_molecules(): 3 -&gt; 5</td></tr>
+<tr><td>Scheme</td><td><code>(res-tracer 1 "tutorial-modern.pdb")</code></td><td>ran (no return value); changed: new molecule 4 (map, Map); graphics_n_molecules(): 3 -&gt; 5</td></tr></tbody></table>
 <h3 id="sharpen_blur_map">sharpen_blur_map</h3>
 <p>Python: <code>sharpen_blur_map(imol_map, b_factor)</code><br>
 Scheme: <code>(sharpen-blur-map imol-map b-factor)</code></p>
@@ -172,8 +183,8 @@ Returns the index of the map created by applying a b-factor
  to the given map. Return -1 on failure.</p>
 <p>Arguments: imol_map (a whole number), b_factor (a number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>sharpen_blur_map(1, 20.0)</code></td><td>ran, returned <code>2</code></td></tr>
-<tr><td>Scheme</td><td><code>(sharpen-blur-map 1 20.0)</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>sharpen_blur_map(1, 20.0)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, rnasa-1.8-all_refmac1.mtz FWT PHWT Blur 20.00); graphics_n_molecules(): 3 -&gt; 4</td></tr>
+<tr><td>Scheme</td><td><code>(sharpen-blur-map 1 20.0)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, rnasa-1.8-all_refmac1.mtz FWT PHWT Blur 20.00); graphics_n_molecules(): 3 -&gt; 4</td></tr></tbody></table>
 <p>Python and Scheme gave the same answer.</p>
 <h3 id="sharpen_blur_map_with_resampling">sharpen_blur_map_with_resampling</h3>
 <p>Python: <code>sharpen_blur_map_with_resampling(imol_map, b_factor, resample_factor)</code><br>
@@ -185,7 +196,7 @@ Returns the index of the map created by applying a b-factor
  to the given map. Return -1 on failure.</p>
 <p>Arguments: imol_map (a whole number), b_factor (a number), resample_factor (a number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>sharpen_blur_map_with_resampling(1, 20.0, 1.0)</code></td><td>ran, returned <code>2</code></td></tr>
-<tr><td>Scheme</td><td><code>(sharpen-blur-map-with-resampling 1 20.0 1.0)</code></td><td>ran, returned <code>2</code></td></tr></tbody></table>
+<tr><td>Python</td><td><code>sharpen_blur_map_with_resampling(1, 20.0, 1.0)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, rnasa-1.8-all_refmac1.mtz FWT PHWT Blur 20.00); graphics_n_molecules(): 3 -&gt; 4</td></tr>
+<tr><td>Scheme</td><td><code>(sharpen-blur-map-with-resampling 1 20.0 1.0)</code></td><td>ran, returned <code>3</code>; changed: new molecule 3 (map, rnasa-1.8-all_refmac1.mtz FWT PHWT Blur 20.00); graphics_n_molecules(): 3 -&gt; 4</td></tr></tbody></table>
 <p>Python and Scheme gave the same answer.</p>
 </body></html>

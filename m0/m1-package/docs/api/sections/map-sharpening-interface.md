@@ -29,8 +29,8 @@ Arguments: f (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_map_sharpening_scale_limit(1.0)` | ran (no return value) |
-| Scheme | `(set-map-sharpening-scale-limit 1.0)` | ran (no return value) |
+| Python | `set_map_sharpening_scale_limit(1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-map-sharpening-scale-limit 1.0)` | ran (no return value, nothing visible changed) |
 
 ### sharpen
 
@@ -44,8 +44,8 @@ Arguments: imol (a whole number), b_factor (a number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `sharpen(0, 20.0)` | ran (no return value) |
-| Scheme | `(sharpen 0 20.0)` | ran (no return value) |
+| Python | `sharpen(0, 20.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(sharpen 0 20.0)` | ran (no return value, nothing visible changed) |
 
 ### sharpen_with_gompertz_scaling
 
@@ -56,6 +56,6 @@ Arguments: imol (a whole number), b_factor (a number), try_gompertz (a whole num
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `sharpen_with_gompertz_scaling(0, 20.0, 1, 1.0)` | ran (no return value) |
-| Scheme | `(sharpen-with-gompertz-scaling 0 20.0 1 1.0)` | ran (no return value) |
+| Python | `sharpen_with_gompertz_scaling(0, 20.0, 1, 1.0)` | ran (no return value, nothing visible changed) |
+| Scheme | `(sharpen-with-gompertz-scaling 0 20.0 1 1.0)` | ran (no return value, nothing visible changed) |
 

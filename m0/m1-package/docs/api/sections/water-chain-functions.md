@@ -20,6 +20,8 @@ Also available in Scheme as `water-chain-scm`.
 | Python | `water_chain(0)` | ran, returned `False` |
 | Scheme | `(water-chain 0)` | ran, returned `#f` |
 
+Example written and checked by hand on the test data. Expected: the chain id of a chain that holds only waters; False when there is none (as in both test models).
+
 Python and Scheme gave the same answer.
 
 ### water_chain_from_shelx_ins
@@ -37,6 +39,12 @@ Also available in Scheme as `water-chain-from-shelx-ins-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `water_chain_from_shelx_ins(0)` | not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(water-chain-from-shelx-ins 0)` | not run: not run automatically (shelx: exits, uses the network, an external program, files or a screen) |
+| Python | first `write_shelx_ins_file(0, "tut.ins")`, then `imol_s = read_shelx_ins_file("tut.ins", 0)`, then `water_chain_from_shelx_ins(imol_s)` | ran, returned `'B'` |
+| Scheme | first `(write-shelx-ins-file 0 "tut.ins")`, then `(define imol-s (read-shelx-ins-file "tut.ins" 0))`, then `(water-chain-from-shelx-ins imol-s)` | ran, returned `"B"` |
+
+Example written and checked by hand on the test data. Expected: the chain id that waters of the SHELX molecule go into; False if no chain or not a SHELX molecule.
+
+Note: Returns 'B' although the model has no waters (B is a protein chain); it seems to report the last chain.
+
+Python and Scheme gave the same answer.
 

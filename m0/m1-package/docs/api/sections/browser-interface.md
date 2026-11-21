@@ -15,8 +15,10 @@ Arguments: url (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `browser_url("hello")` | not run: not run automatically (url: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(browser-url "hello")` | not run: not run automatically (url: exits, uses the network, an external program, files or a screen) |
+| Python | `browser_url("https://www2.mrc-lmb.cam.ac.uk/personal/pemsley/coot/")` | not run: opens a web browser / uses the network |
+| Scheme | `(browser-url "https://www2.mrc-lmb.cam.ac.uk/personal/pemsley/coot/")` | not run: opens a web browser / uses the network |
+
+Example written and checked by hand on the test data. Expected: opens the URL in the web browser set by set_browser_interface.
 
 ### handle_online_coot_search_request
 
@@ -31,8 +33,8 @@ Arguments: entry_text (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `handle_online_coot_search_request("hello")` | ran (no return value) |
-| Scheme | `(handle-online-coot-search-request "hello")` | ran (no return value) |
+| Python | `handle_online_coot_search_request("hello")` | ran (no return value, nothing visible changed) |
+| Scheme | `(handle-online-coot-search-request "hello")` | ran (no return value, nothing visible changed) |
 
 ### set_browser_interface
 
@@ -47,6 +49,8 @@ Arguments: browser (text). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `set_browser_interface("hello")` | not run: not run automatically (browser: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(set-browser-interface "hello")` | not run: not run automatically (browser: exits, uses the network, an external program, files or a screen) |
+| Python | `set_browser_interface("open")` | ran (no return value, nothing visible changed) |
+| Scheme | `(set-browser-interface "open")` | ran (no return value, nothing visible changed) |
+
+Example written and checked by hand on the test data. Expected: sets the command used to open web pages (on macOS "open").
 

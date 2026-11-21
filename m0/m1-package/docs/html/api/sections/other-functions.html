@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="7ecd8d91755589a23cc51ec5f4a06a76408ea98a">
+<meta name="coot0-source-sha1" content="fa40ef9b6b0bc3ffd79263c78b7ae881ef45da3b">
 <title>Other functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -24,30 +24,34 @@ Scheme: <code>(clear-generic-objects-dialog-pointer)</code></p>
  Coot Scripting Interface - Generic objects</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>clear_generic_objects_dialog_pointer()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(clear-generic-objects-dialog-pointer)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>clear_generic_objects_dialog_pointer()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(clear-generic-objects-dialog-pointer)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="close_all_generic_objects">close_all_generic_objects</h3>
 <p>Python: <code>close_all_generic_objects()</code><br>
 Scheme: <code>(close-all-generic-objects)</code></p>
 <p>close all generic display objects</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>close_all_generic_objects()</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(close-all-generic-objects)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>close_all_generic_objects()</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(close-all-generic-objects)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="compare_atom_specs_user_float">compare_atom_specs_user_float</h3>
 <p>Python: <code>compare_atom_specs_user_float()</code><br>
 Scheme: <code>(compare-atom-specs-user-float)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>compare_atom_specs_user_float()</code></td><td>error: TypeError: compare_atom_specs_user_float() missing 2 required positional arguments: 'a1' and 'a2'</td></tr>
-<tr><td>Scheme</td><td><code>(compare-atom-specs-user-float)</code></td><td>error: Wrong number of arguments to #&lt;procedure compare-atom-specs-user-float (_ _)&gt;</td></tr></tbody></table>
+<tr><td>Python</td><td>first <code>spec1 = atom_spec_t("A", 41, "", " CA ", ""); spec1.float_user_data = 1.0</code>, then <code>spec2 = atom_spec_t("A", 42, "", " CA ", ""); spec2.float_user_data = 2.0</code>, then <code>compare_atom_specs_user_float(spec1, spec2)</code></td><td>ran, returned <code>True</code></td></tr>
+<tr><td>Scheme</td><td>first <code>(define s1 (new-atom-spec-t "A" 41 "" " CA " ""))</code>, then <code>(define s2 (new-atom-spec-t "A" 42 "" " CA " ""))</code>, then <code>(atom-spec-t-float-user-data-set s1 1.0)</code>, then <code>(atom-spec-t-float-user-data-set s2 2.0)</code>, then <code>(compare-atom-specs-user-float s1 s2)</code></td><td>ran, returned <code>#t</code></td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: C++ sort helper: True when the first spec's float_user_data is smaller than the second's.</p>
+<p>Note: Takes atom_spec_t objects (from atom_spec_from_python_expression), not lists.</p>
+<p>Python and Scheme gave the same answer.</p>
 <h3 id="compare_atom_specs_user_float_in_pair">compare_atom_specs_user_float_in_pair</h3>
 <p>Python: <code>compare_atom_specs_user_float_in_pair()</code><br>
 Scheme: <code>(compare-atom-specs-user-float-in-pair)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>compare_atom_specs_user_float_in_pair()</code></td><td>error: TypeError: compare_atom_specs_user_float_in_pair() missing 2 required positional arguments: 'a' and 'b'</td></tr>
-<tr><td>Scheme</td><td><code>(compare-atom-specs-user-float-in-pair)</code></td><td>error: Wrong number of arguments to #&lt;procedure compare-atom-specs-user-float-in-pair (_ _)&gt;</td></tr></tbody></table>
+<tr><td>Python</td><td><code>compare_atom_specs_user_float_in_pair()</code></td><td>not run: internal C++ helper: needs a std::pair&lt;atom_spec_t, std::string&gt;, which scripts cannot build</td></tr>
+<tr><td>Scheme</td><td><code>(compare-atom-specs-user-float-in-pair)</code></td><td>not run: internal C++ helper: needs a std::pair&lt;atom_spec_t, std::string&gt;, which scripts cannot build</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: C++ sort helper on (atom_spec_t, string) pairs.</p>
 <h3 id="coot_version">coot_version</h3>
 <p>Python: <code>coot_version()</code><br>
 Scheme: <code>(coot-version)</code></p>
@@ -74,33 +78,35 @@ Scheme: <code>(generic-objects-gui-wrapper)</code></p>
  called from a callback.</p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>generic_objects_gui_wrapper()</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
-<tr><td>Scheme</td><td><code>(generic-objects-gui-wrapper)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>generic_objects_gui_wrapper()</code></td><td>not run: needs the graphics window (stops Coot without a screen)</td></tr>
+<tr><td>Scheme</td><td><code>(generic-objects-gui-wrapper)</code></td><td>not run: needs the graphics window (stops Coot without a screen)</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: opens the Generic Display Objects window.</p>
 <h3 id="link_atoms">link_atoms</h3>
 <p>Python: <code>link_atoms()</code><br>
 Scheme: <code>(link-atoms)</code></p>
 <p>Arguments: none. Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>link_atoms()</code></td><td>error: TypeError: Wrong number or type of arguments for overloaded function 'link_atoms'.   Possible C/C++ prototypes are:     coot::link_atoms(mmd ...</td></tr>
-<tr><td>Scheme</td><td><code>(link-atoms)</code></td><td>error: In procedure link-atoms: No matching method for generic function 'link_atoms'</td></tr></tbody></table>
+<tr><td>Python</td><td><code>link_atoms()</code></td><td>not run: internal C++ helper: needs an mmdb::Link/LinkR pointer, which scripts cannot obtain</td></tr>
+<tr><td>Scheme</td><td><code>(link-atoms)</code></td><td>not run: internal C++ helper: needs an mmdb::Link/LinkR pointer, which scripts cannot obtain</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: C++ helper returning the two atom specs of an mmdb Link record.</p>
 <h3 id="set_display_all_generic_objects">set_display_all_generic_objects</h3>
 <p>Python: <code>set_display_all_generic_objects(state)</code><br>
 Scheme: <code>(set-display-all-generic-objects state)</code></p>
 <p>display (1) or undisplay (0) all generic display objects</p>
 <p>Arguments: state (a whole number). Returns: nothing.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>set_display_all_generic_objects(1)</code></td><td>ran (no return value)</td></tr>
-<tr><td>Scheme</td><td><code>(set-display-all-generic-objects 1)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>set_display_all_generic_objects(1)</code></td><td>ran (no return value, nothing visible changed)</td></tr>
+<tr><td>Scheme</td><td><code>(set-display-all-generic-objects 1)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="try_load_python_extras_dir">try_load_python_extras_dir</h3>
 <p>Python: <code>try_load_python_extras_dir()</code></p>
 <p>Arguments: none. Returns: nothing.
 <strong>Python only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>try_load_python_extras_dir()</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>try_load_python_extras_dir()</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 <h3 id="try-load-scheme-extras-dir">try-load-scheme-extras-dir</h3>
 <p>Scheme: <code>(try-load-scheme-extras-dir)</code></p>
 <p>Arguments: none. Returns: nothing.
 <strong>Scheme only</strong> (see <a href="../one-language-only.html">one-language-only</a>).</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Scheme</td><td><code>(try-load-scheme-extras-dir)</code></td><td>ran (no return value)</td></tr></tbody></table>
+<tr><td>Scheme</td><td><code>(try-load-scheme-extras-dir)</code></td><td>ran (no return value, nothing visible changed)</td></tr></tbody></table>
 </body></html>

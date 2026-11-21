@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="0ae0522b8616c2edf3818e6bbb2fa07d9c08b694">
+<meta name="coot0-source-sha1" content="6b786e03d01846b2f6be7b9576bd9d1da0d3fa6a">
 <title>CNS Data Functions - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -23,8 +23,9 @@ Scheme: <code>(handle-cns-data-file filename imol)</code></p>
 <p>read CNS data (currently only a placeholder)</p>
 <p>Arguments: filename (text), imol (a whole number). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>handle_cns_data_file("tutorial-modern.pdb", 0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
-<tr><td>Scheme</td><td><code>(handle-cns-data-file "tutorial-modern.pdb" 0)</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>handle_cns_data_file("data.hkl", 0)</code></td><td>not run: needs a CNS reflection file (none in the test data); the earlier attempt stopped Coot without a screen</td></tr>
+<tr><td>Scheme</td><td><code>(handle-cns-data-file "data.hkl" 0)</code></td><td>not run: needs a CNS reflection file (none in the test data); the earlier attempt stopped Coot without a screen</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: reads a CNS reflection file and makes a map using the cell of molecule 0.</p>
 <h3 id="handle_cns_data_file_with_cell">handle_cns_data_file_with_cell</h3>
 <p>Python: <code>handle_cns_data_file_with_cell(filename, imol, a, b, c, alpha, beta, gamma, spg_info)</code><br>
 Scheme: <code>(handle-cns-data-file-with-cell filename imol a b c alpha beta gamma spg-info)</code></p>
@@ -34,6 +35,7 @@ the space group info, either ;-delimited symmetry operators or the
 space group name</p>
 <p>Arguments: filename (text), imol (a whole number), a (a number), b (a number), c (a number), alpha (a number), beta (a number), gamma (a number), spg_info (text). Returns: a whole number.</p>
 <table><thead><tr><th></th><th>Example</th><th>When tried (test data, no window)</th></tr></thead><tbody>
-<tr><td>Python</td><td><code>handle_cns_data_file_with_cell("tutorial-modern.pdb", 0, 1.0, 0.5, 1.0, 1.0, 1.0, 1.0, "hello")</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr>
-<tr><td>Scheme</td><td><code>(handle-cns-data-file-with-cell "tutorial-modern.pdb" 0 1.0 0.5 1.0 1.0 1.0 1.0 "hello")</code></td><td>stopped Coot when tried without a window (not checked with a window)</td></tr></tbody></table>
+<tr><td>Python</td><td><code>handle_cns_data_file_with_cell("data.hkl", 0, 64.9, 78.3, 38.8, 90.0, 90.0, 90.0, "P 21 21 21")</code></td><td>not run: needs a CNS reflection file (none in the test data); the earlier attempt stopped Coot without a screen</td></tr>
+<tr><td>Scheme</td><td><code>(handle-cns-data-file-with-cell "data.hkl" 0 64.9 78.3 38.8 90.0 90.0 90.0 "P 21 21 21")</code></td><td>not run: needs a CNS reflection file (none in the test data); the earlier attempt stopped Coot without a screen</td></tr></tbody></table>
+<p>Example written and checked by hand on the test data. Expected: reads a CNS reflection file with the given cell and space group and makes a map.</p>
 </body></html>

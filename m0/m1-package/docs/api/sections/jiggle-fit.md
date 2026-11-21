@@ -86,8 +86,8 @@ Arguments: imol (a whole number), chain_id (text), resno (a whole number), ins_c
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `fit_to_map_by_random_jiggle(0, "A", 41, "", 1, 1.0)` | ran, returned `19.296470642089844` |
-| Scheme | `(fit-to-map-by-random-jiggle 0 "A" 41 "" 1 1.0)` | ran, returned `19.296470642089844` |
+| Python | `fit_to_map_by_random_jiggle(0, "A", 41, "", 1, 1.0)` | ran, returned `19.296470642089844`; changed: molecule 0: coordinates of 1 residue(s) (A41) |
+| Scheme | `(fit-to-map-by-random-jiggle 0 "A" 41 "" 1 1.0)` | ran, returned `19.296470642089844`; changed: molecule 0: coordinates of 1 residue(s) (A41) |
 
 Python and Scheme gave the same answer.
 

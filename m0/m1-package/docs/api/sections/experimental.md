@@ -13,8 +13,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `add_ligand_builder_menu_item_maybe()` | ran (no return value) |
-| Scheme | `(add-ligand-builder-menu-item-maybe)` | ran (no return value) |
+| Python | `add_ligand_builder_menu_item_maybe()` | ran (no return value, nothing visible changed) |
+| Scheme | `(add-ligand-builder-menu-item-maybe)` | ran (no return value, nothing visible changed) |
 
 ### all_molecule_ramachandran_region
 
@@ -57,8 +57,8 @@ Also available in Python as `all_molecule_rotamer_score_py`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `all_molecule_rotamer_score(0)` | ran, returned `[-197.50514814092332, 160]` |
-| Scheme | `(all-molecule-rotamer-score 0)` | ran, returned `(-197.50514814092332 160)` |
+| Python | `all_molecule_rotamer_score(0)` | ran, returned `[-195.6084282377372, 159]` |
+| Scheme | `(all-molecule-rotamer-score 0)` | ran, returned `(-195.6084282377372 159)` |
 
 Python and Scheme gave the same answer.
 
@@ -71,8 +71,10 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `fetch_and_superpose_alphafold_models_using_active_molecule()` | not run: not run automatically (fetch: exits, uses the network, an external program, files or a screen) |
-| Scheme | `(fetch-and-superpose-alphafold-models-using-active-molecule)` | not run: not run automatically (fetch: exits, uses the network, an external program, files or a screen) |
+| Python | `fetch_and_superpose_alphafold_models_using_active_molecule()` | not run: uses the network |
+| Scheme | `(fetch-and-superpose-alphafold-models-using-active-molecule)` | not run: uses the network |
+
+Example written and checked by hand on the test data. Expected: downloads AlphaFold models for the active molecule's sequence and superposes them.
 
 ### full_screen
 
@@ -83,8 +85,8 @@ Arguments: mode (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `full_screen(1)` | ran (no return value) |
-| Scheme | `(full-screen 1)` | ran (no return value) |
+| Python | `full_screen(1)` | ran (no return value, nothing visible changed) |
+| Scheme | `(full-screen 1)` | ran (no return value, nothing visible changed) |
 
 ### globularize
 
@@ -100,8 +102,8 @@ Arguments: imol (a whole number). Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `globularize(0)` | ran (no return value) |
-| Scheme | `(globularize 0)` | ran (no return value) |
+| Python | `globularize(0)` | ran (no return value); changed: molecule 0: coordinates of 76 residue(s) (A5, A6, A7, A8 ...) |
+| Scheme | `(globularize 0)` | ran (no return value); changed: molecule 0: coordinates of 76 residue(s) (A5, A6, A7, A8 ...) |
 
 ### start_ligand_builder_gui
 
@@ -114,8 +116,8 @@ Arguments: none. Returns: nothing.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | `start_ligand_builder_gui()` | ran (no return value) |
-| Scheme | `(start-ligand-builder-gui)` | ran (no return value) |
+| Python | `start_ligand_builder_gui()` | ran (no return value, nothing visible changed) |
+| Scheme | `(start-ligand-builder-gui)` | ran (no return value, nothing visible changed) |
 
 ### user_defined_click
 
@@ -128,6 +130,10 @@ Also available in Scheme as `user-defined-click-scm`.
 
 | | Example | When tried (test data, no window) |
 |---|---|---|
-| Python | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
-| Scheme | (no automatic example) | not run: no automatic example (it takes a list, a widget or an object) |
+| Python | `user_defined_click(1, lambda *args: print("clicked", args))` | ran (no return value, nothing visible changed) |
+| Scheme | `(user-defined-click 1 (lambda args (display args)))` | ran (no return value, nothing visible changed) |
+
+Example written and checked by hand on the test data. Expected: the function is called with the clicked atom specs after n_clicks clicks; nothing happens until atoms are clicked.
+
+Note: Only arming verified headless; the callback itself needs clicks in the graphics window.
 
