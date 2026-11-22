@@ -30,9 +30,10 @@ OTHER PROGRAMS (optional)
 
 LICENCE
   Coot is free software by Paul Emsley et al. (GPL-3.0-or-later).  The coot0 changes for macOS: Copyright (C) 2026
-  Chang Sun, GPL-3.0.  The package as a whole is distributed under GPL-3.0; bundled libraries keep their own licences.
+  Chang Sun, GPL-3.0-or-later.  The package as a whole is distributed under GPL-3.0; bundled libraries keep their own licences.
   See LICENSING.md, LICENSE, THIRD_PARTY_LICENSES.md, licenses/ and CORRESPONDING_SOURCE.md (how to get the source).
-  coot0 is an unofficial build, not supported by the Coot developers: report problems to its author, not to them.
+  coot0 is an unofficial build, not supported by the Coot developers: report problems at
+  https://github.com/sunchang1990/coot0-macos/issues, not to them.
 
 HELP
   coot0 --legacy        standard (non-Retina) resolution for the 3D view

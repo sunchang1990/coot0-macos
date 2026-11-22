@@ -77,3 +77,7 @@ The licence texts each package ships are in `licenses/<package>/`.  Where to get
 | RCrane (Kevin Keating) | as in Coot 0.9.8.96 | ECL-2.0 | share/coot/python/rcrane/ | part of the Coot 0.9.8.96 source |
 | Python standard library | 3.11 | PSF-2.0 | lib/python3.11/ | https://www.python.org/downloads/source/ |
 | Guile Scheme modules | 3.0.10 | LGPL-3.0-or-later | share/guile/, lib/guile/ | https://ftp.gnu.org/gnu/guile/ |
+
+## Credits required by a licence
+
+- FreeType (lib/libfreetype.6.dylib, used under the FreeType License, FTL): Portions of this software are copyright © 2026 The FreeType Project (www.freetype.org). All rights reserved.

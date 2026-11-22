@@ -7,6 +7,7 @@
   concrete example on the test data and the result of trying it.
   - [All functions A-Z](api/A-Z.md)
   - [Functions in only one language](api/one-language-only.md)
+- [How Refine/Improve Ramachandran Plot (try peptide flips) decides](try-peptide-flips.md), and how to change its limits.
 
 In coot0 (build 28 or later): **Help > Search Menus and Docs...** finds menu entries (and runs the one you pick), cookbook recipes,
 scripting functions and documentation sections (they open in your web browser); **Help > Keyboard Shortcuts...** lists Coot's keys

@@ -20,6 +20,5 @@ to build it. For coot0 that is:
 
 **Written offer.** For at least three years after we distribute a binary package, we will give anyone who asks a copy
 of the complete corresponding source code of that package (items 1-6) on a common medium or for download, for no more
-than the cost of providing it. Ask the author of coot0, Chang Sun (for example through the person who gave you the
-package). The patches and scripts (items 2, 3 and 5) are kept in the coot0 source repository,
-https://github.com/sunchang1990/coot0-macos (access on request while it is private).
+than the cost of providing it. Ask by opening an issue at https://github.com/sunchang1990/coot0-macos/issues. The
+patches and scripts (items 2, 3 and 5) are in the coot0 source repository, https://github.com/sunchang1990/coot0-macos.

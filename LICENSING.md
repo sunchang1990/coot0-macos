@@ -15,7 +15,8 @@ any Coot code.
 
 Copyright (C) 2026 Chang Sun.
 
-Licensed under the **GNU General Public License, version 3** (GPL-3.0-only). This covers the work of this project:
+Licensed under the **GNU General Public License, version 3 or (at your option) any later version** (GPL-3.0-or-later),
+the same terms as Coot itself. This covers the work of this project:
 
 - the patches in `m0/patches/` (the changes made to Coot's source files, and the new files they add, such as the
   macOS OpenGL view `compat/gl-seam/`, the PyGTK-2 replacement `compat/pygtk2/` and the splash helper);
@@ -23,9 +24,14 @@ Licensed under the **GNU General Public License, version 3** (GPL-3.0-only). Thi
 - the launcher, installer, uninstaller, tests and documents in `m0/m1-package/`.
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-License version 3 as published by the Free Software Foundation. It is distributed in the hope that it will be useful,
+License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
+version. It is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 See the GNU General Public License for more details.
+
+**Notice of modification.** coot0 is a modified version of Coot 0.9.8.96. It was modified by Chang Sun from November
+2026 onwards to run on macOS on Apple Silicon. Every change is one of the numbered patches in `m0/patches/` of the
+source repository, whose git history records when each was made. `CHANGELOG.md` lists the changes build by build.
 
 ## 3. Third-party components in the binary package
 
@@ -37,11 +43,12 @@ repository: in `m0/m1-package/`).
 ## The binary package as a whole
 
 The program in the package combines parts 1-3 and is distributed under **GPL-3.0**: Coot's "version 3 or later"
-permits version 3, the coot0 modifications are version 3, and some bundled libraries (e.g. GNU Readline) are
-"version 3 only". The source of everything is available: [`CORRESPONDING_SOURCE.md`](CORRESPONDING_SOURCE.md).
+permits version 3, the coot0 modifications are "version 3 or later", and some bundled libraries (e.g. GNU Readline)
+are "version 3 only". The coot0 source itself (Coot plus the patches, without those libraries) can be used under
+version 3 or any later version. The source of everything is available: [`CORRESPONDING_SOURCE.md`](CORRESPONDING_SOURCE.md).
 
 ## Not an official Coot release
 
 coot0 is an independent, unofficial build of Coot 0.9.8.96 for Apple Silicon Macs. It is not made by the Coot
-developers, and they do not provide support for it: please report problems with coot0 to its author (Chang Sun),
-not to the Coot developers. The name "Coot" is used only to say what this program is.
+developers, and they do not provide support for it: please report problems with coot0 in the Issues of its
+repository, https://github.com/sunchang1990/coot0-macos/issues, not to the Coot developers. The name "Coot" is used only to say what this program is.

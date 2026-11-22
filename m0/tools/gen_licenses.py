@@ -72,6 +72,9 @@ def main():
     L += ["", "## Not from conda packages", "", "| Component | Version | Licence (SPDX) | In the package | Source |", "|---|---|---|---|---|"]
     for c in EXTRA:
         L.append("| %s | %s | %s | %s | %s |" % c)
+    L += ["", "## Credits required by a licence", "",
+          "- FreeType (lib/libfreetype.6.dylib, used under the FreeType License, FTL): Portions of this software are copyright \u00a9 "
+          "2026 The FreeType Project (www.freetype.org). All rights reserved."]
     if unknown:
         L += ["", "## Not attributed (check by hand)", ""] + ["- " + u for u in sorted(unknown)]
     open(os.path.join(out, "THIRD_PARTY_LICENSES.md"), "w").write("\n".join(L) + "\n")
