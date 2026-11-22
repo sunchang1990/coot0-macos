@@ -14120,58 +14120,65 @@
 },
 {
 "kind": "Docs",
-"title": "coot0: Coot 0.9.8.96 for Apple Silicon Macs",
-"where": "coot0: Coot 0.9.8.96 for Apple Silicon Macs",
+"title": "coot0: Coot 0.9 for Apple Silicon Macs",
+"where": "coot0: Coot 0.9 for Apple Silicon Macs",
 "page": "coot0-README.html",
 "anchor": ""
 },
 {
 "kind": "Docs",
-"title": "What works",
-"where": "coot0: Coot 0.9.8.96 for Apple Silicon Macs",
+"title": "What it gives you",
+"where": "coot0: Coot 0.9 for Apple Silicon Macs",
 "page": "coot0-README.html",
-"anchor": "what-works"
+"anchor": "what-it-gives-you"
 },
 {
 "kind": "Docs",
-"title": "Changes from the original Coot 0.9.8.96",
-"where": "coot0: Coot 0.9.8.96 for Apple Silicon Macs",
+"title": "What is different from the original Coot 0.9.8.96",
+"where": "coot0: Coot 0.9 for Apple Silicon Macs",
 "page": "coot0-README.html",
-"anchor": "changes-from-the-original-coot-09896"
+"anchor": "what-is-different-from-the-original-coot-09896"
 },
 {
 "kind": "Docs",
 "title": "Install",
-"where": "coot0: Coot 0.9.8.96 for Apple Silicon Macs",
+"where": "coot0: Coot 0.9 for Apple Silicon Macs",
 "page": "coot0-README.html",
 "anchor": "install"
 },
 {
 "kind": "Docs",
-"title": "How coot0 relates to other Coot versions",
-"where": "coot0: Coot 0.9.8.96 for Apple Silicon Macs",
+"title": "Which Coot should I use?",
+"where": "coot0: Coot 0.9 for Apple Silicon Macs",
 "page": "coot0-README.html",
-"anchor": "how-coot0-relates-to-other-coot-versions"
+"anchor": "which-coot-should-i-use"
 },
 {
 "kind": "Docs",
 "title": "Building from source",
-"where": "coot0: Coot 0.9.8.96 for Apple Silicon Macs",
+"where": "coot0: Coot 0.9 for Apple Silicon Macs",
 "page": "coot0-README.html",
 "anchor": "building-from-source"
 },
 {
 "kind": "Docs",
 "title": "Licence",
-"where": "coot0: Coot 0.9.8.96 for Apple Silicon Macs",
+"where": "coot0: Coot 0.9 for Apple Silicon Macs",
 "page": "coot0-README.html",
 "anchor": "licence"
 },
 {
 "kind": "Docs",
 "title": "Credits",
-"where": "coot0: Coot 0.9.8.96 for Apple Silicon Macs",
+"where": "coot0: Coot 0.9 for Apple Silicon Macs",
 "page": "coot0-README.html",
 "anchor": "credits"
+},
+{
+"kind": "Docs",
+"title": "How Refine/Improve Ramachandran Plot (try peptide flips) decides",
+"where": "How Refine/Improve Ramachandran Plot (try peptide flips) decides",
+"page": "try-peptide-flips.html",
+"anchor": ""
 }
 ]

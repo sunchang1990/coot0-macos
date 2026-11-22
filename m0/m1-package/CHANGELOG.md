@@ -6,6 +6,21 @@ applied to the pristine tree by `setup.sh`) or a change of the packaged data / s
 round, `TEST-PROTOCOL.md` has the user-facing explanation and the checks for you (newest round first).  A "build" is one delivered zip.
 "Verified" means a headless test (no window server in the build environment); what only a screen can show is marked "on screen: not verified".
 
+## Build 32  (patch 0050 about-dialog-coot0-notice (C++); new `bin/coot-bin`; licence: coot0 changes now GPL-3.0-or-later; source archive)
+- Licence (user, 22 Nov): the coot0 changes are now **GPL-3.0-or-later**, the same terms as Coot itself (before: GPL-3.0-only), so
+  the Coot developers can take any of them back unchanged. `LICENSING.md` has a notice of modification; the source offer
+  (`CORRESPONDING_SOURCE.md`), `README-FIRST.txt` and `LICENSING.md` point to the GitHub Issues for questions and problem reports;
+  `THIRD_PARTY_LICENSES.md` carries the credit line that FreeType's licence asks for.
+- **Help > About** (Coot's own About window) now says that this is Coot 0.9.8.96 modified for macOS on Apple Silicon by Chang Sun
+  (2026), that it is not an official Coot release, where the changes and the source are and that the licence is GPL v3 or later
+  (GPL v3 section 5). Coot's own copyright lines and the GPL text are unchanged. On screen: not verified (checked from a test that
+  builds the window and reads its texts).
+- **Source archive**: each release now has `coot0-<version>-source.tar.gz` next to the Mac package: the exact Coot tree that was
+  compiled (release + patches) and the coot0 repository (`m0/tools/make_source_tarball.sh`; checked by `m0/tools/check_source_tarball.py`).
+- README rewritten for readers who use Coot rather than build it; the rules of Refine/Improve Ramachandran Plot (try peptide flips)
+  moved to `docs/try-peptide-flips.md`.
+- Tests: `gui-dialogs` 89 -> 90 (build 31 fails the new About check); source archive check 13 checks (build 31 has no archive).
+
 ## Build 31  (patch 0049 scheme-wrappers-write-cif-once (C++); new `bin/coot-bin`; scripting reference: every example checked)
 - Scripting reference (docs/api): "ran" was not enough: 812 functions had returned nothing and 253 a failure value (-1, #f), mostly
   because the program-made example used placeholders (`"hello"`, molecule 0 for a map, a PDB file where a dictionary is needed).

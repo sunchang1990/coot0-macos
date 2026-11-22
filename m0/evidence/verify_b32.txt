@@ -1,0 +1,39 @@
+Build 32 verification of the TARBALL (22 Nov), unpacked into a folder with spaces, env -i
+
+python-api                 SUMMARY 22 / 22
+scheme-api                 SUMMARY 33 / 33
+data-and-maps              SUMMARY 39 / 39
+ondemand-read              SUMMARY 3 / 3
+refine-zone                SUMMARY 7 / 7
+process-helpers            SUMMARY 10 / 10
+api-docs                   SUMMARY 11 / 12
+    FAIL docs/html: every link between the pages leads to a page and heading that exist             "2 broken links: ['coot0-README.html -> ../../issues', 'coot0-README.html -> m0/m1-package/THIRD_PAR
+bundle-python              SUMMARY 19 / 19
+bundle-scheme              SUMMARY 6 / 6
+rdkit-python               SUMMARY 10 / 10
+rdkit-scheme               SUMMARY 3 / 3
+gtk2compat                 SUMMARY 12 / 12
+gui-scripts                SUMMARY 16 / 16
+gui-dialogs                SUMMARY 90 / 90
+gui-glyco                  SUMMARY 14 / 14
+gui-toolbar                SUMMARY 13 / 13
+gui-rcrane                 SUMMARY 21 / 21
+refmac-run                 SUMMARY 11 / 11
+cookbook                   SUMMARY 166 / 166
+installer                  SUMMARY 26 / 26
+startup-dictionaries       SUMMARY 1 / 1
+SWEEP 21 | Edit > Settings... > Python: Install Template Keybindings button '   X   Edit Chi Angles' | CRASH (process died: OpenGL call without a graphics conte
+SWEEP 36 | Calculate > Map Tools... > Brighten Maps | CRASH (process died: OpenGL call without a graphics context, or hang)
+SWEEP 108 | Draw > Representation Tools... > Ball & Stick... button '  OK  ' | CRASH (process died: OpenGL call without a graphics context, or hang)
+SWEEP 117 | Draw > Representation Tools... > Highlight Interesting Site (here)... | CRASH (process died: OpenGL call without a graphics context, or hang)
+SWEEP 124 | Draw > Representation Tools... > 3D Annotations... > Save Annotations... | CRASH (process died: OpenGL call without a graphics context, or hang)
+SWEEP 152 | Ligand > Find Ligands... | CRASH (process died: OpenGL call without a graphics context, or hang)
+SWEEP 193 | Cryo-EM > Align and Mutate using ClustalW2 | CRASH (process died: OpenGL call without a graphics context, or hang)
+SUMMARY 1 / 1
+
+[exited with code 0]
+
+api-docs 11/12 above = 2 README links in docs/html (../../issues, m0/m1-package/THIRD_PARTY_LICENSES.md); fixed in gen_docs_html.py, repacked (only docs/html differ), api-docs on the repacked tarball: 12 / 12; final tarball (changelog line corrected, docs regenerated): only CHANGELOG.md and docs/html differ from the tested one, api-docs 12 / 12; sha256 cdb1155d433bcacc561795f7d047edb70deddcb448c4fbc01686f2b173ff47e8
+real window (tests/run-real-window-checks.sh): 12 / 12
+bundle_check: 211 Mach-O, minos 11.0, OK
+patch series: setup.sh from the pristine tree, 50 patches: IDENTICAL

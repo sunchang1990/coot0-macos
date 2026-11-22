@@ -65,9 +65,11 @@ def link_target(url, src):
         rel = os.path.relpath(os.path.join(OUT, PAGES[target]), os.path.dirname(os.path.join(OUT, PAGES[src])))
         return rel + ("#" + frag if frag else "")
     if src == os.path.join(REPO, "README.md"):           # the repository README: its root files sit at the package root
+        if path.startswith("m0/m1-package/") and path[len("m0/m1-package/"):] in ("THIRD_PARTY_LICENSES.md",): path = path[len("m0/m1-package/"):]   # build 32
         if path in ("LICENSE", "LICENSING.md", "CORRESPONDING_SOURCE.md", "THIRD_PARTY_LICENSES.md"):
             return os.path.relpath(os.path.join(OUT, "..", "..", path), os.path.dirname(os.path.join(OUT, PAGES[src])))
         if path == "../../releases": return "https://github.com/sunchang1990/coot0-macos/releases"
+        if path == "../../issues": return "https://github.com/sunchang1990/coot0-macos/issues"   # build 32
     return url
 
 def inline_plain(text, src):

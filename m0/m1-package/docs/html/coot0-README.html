@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="2a4bc29292060c4f41f598635c5931557e4dd9ca">
-<title>coot0: Coot 0.9.8.96 for Apple Silicon Macs - coot0</title><style>
+<meta name="coot0-source-sha1" content="341cffb7f622ab48155e1b11506bfdc1234dbd0b">
+<title>coot0: Coot 0.9 for Apple Silicon Macs - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
 body { background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Helvetica Neue", sans-serif; max-width:980px; margin:0 auto; padding:16px 24px 64px; }
@@ -14,87 +14,60 @@ table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; 
 </style></head>
 <body>
 <div class="nav"><a href="README.html">coot0 documentation</a></div>
-<h1 id="coot0-coot-09896-for-apple-silicon-macs">coot0: Coot 0.9.8.96 for Apple Silicon Macs</h1>
-<p><strong>coot0</strong> is an unofficial build of <a href="https://www2.mrc-lmb.cam.ac.uk/personal/pemsley/coot/">Coot</a> 0.9.8.96, the
-macromolecular model-building program by Paul Emsley and colleagues, that runs natively on Apple Silicon Macs
-(macOS 26 Tahoe tested) without XQuartz. It aims to be <strong>Coot 0.9 as you know it</strong>: the same menus, dialogs, keyboard
-and mouse behaviour, the same Python and Scheme scripting API, so existing scripts, habits and teaching material keep
-working. It changes only what has to change for Coot 0.9 to run on a current Mac.</p>
-<p>It is not made, endorsed or supported by the Coot developers. Please report problems here.</p>
-<h2 id="what-works">What works</h2>
-<ul><li>The full Coot 0.9.8.96 interface (GTK 2, drawn natively by macOS), with sharp Retina rendering of the 3D view.</li><li><strong>Coot's Python scripting and its Python GUI</strong> (Python 3.11): the extension menus and dialogs that Coot 0.9 builds in Python (Glyco, NCS, PISA, PDB-REDO, Fit Loop, the various sliders, RCrane for RNA, ...) run as written, on a replacement for the old PyGTK 2 library. Your own PyGTK-based Coot 0.9 scripts should work too.</li><li><strong>Scheme scripting</strong> (Guile 3): Calculate &gt; Scripting &gt; Scheme..., <code>--script file.scm</code>, start-up scripts. (Coot's Scheme <em>GUI</em> scripts, written for guile-gtk, are not available; their functions are provided by the Python versions.)</li><li><strong>Documentation for scripting</strong> (build 26), in the package folder <code>docs/</code> (here: <a href="README.html"><code>m0/m1-package/docs</code></a>): a <a href="cookbook/README.html">cookbook</a> of about 85 recipes for everyday tasks (files and maps, the view, selections, refinement, editing, your own toolbar buttons / menus / keys, batch scripts and hooks, validation, NCS, ligands), each in Python and Scheme and all run by the test suite; and a <a href="api/README.html">scripting reference</a> of every Python and Scheme function (about 1,700), each with a concrete example on the test data and what happened when it was tried, plus the <a href="api/one-language-only.html">functions that exist in only one language</a>.</li><li>RDKit-based ligand tools (Lidia, SMILES import), the CCP4 monomer library, reference structures, Ramachandran data.</li><li>CCP4 (refmac5, acedrg, ...) and Phenix/CCP4 reduce + probe are found automatically when installed; they are optional.</li><li>21 automated test suites (about 500 checks) and a real-window audit of every menu entry and toolbar button.</li></ul>
-<h2 id="changes-from-the-original-coot-09896">Changes from the original Coot 0.9.8.96</h2>
-<p>Besides what it takes to run on a current Mac (native macOS windows instead of X11, Python 3, Retina drawing), coot0 fixes
-some things that did not work in the original 0.9.8.96 release. The changes you will notice most:</p>
-<ul><li><strong>Calculate &gt; All Molecule... &gt; Refine/Improve Ramachandran Plot...</strong> is back in the menu (build 20). The code was in Coot 0.9.8.96, but a mis-indented line meant the menu entry was never created. It runs Stepped Refine with Ramachandran restraints switched on, residue by residue over the whole molecule.</li><li><strong>New: Calculate &gt; All Molecule... &gt; Refine/Improve Ramachandran Plot (try peptide flips)...</strong> (build 21). Ramachandran restraints alone cannot turn a peptide that is built the wrong way round (it is about 180 degrees away). This entry refines every residue twice, once as it is and once with the peptide to the next residue flipped, and keeps the flip only if it is better, and the map has the last word (build 23): the flipped carbonyl O and the peptide must not lose density, and then either a Ramachandran region gets better, or (same regions) the carbonyl O sits at least 1 sigma deeper in the density. A better Ramachandran plot alone never makes a flip. Residues with alternate conformations are included: if the peptide itself is split into conformers, the flip is tried for each conformer (build 22). At the end, or when you press Stop, a report lists the peptides that turned, in two groups (build 24): those <strong>flipped by the flip try</strong>, and those <strong>turned by the refinement itself</strong> (a badly flipped peptide is often put back by ordinary refinement already, before the flip is tried). The original entry does not try flips; at its end the terminal and status bar list the peptides its refinement turned (build 24). In the tests, peptides flipped on purpose were all put back and correct ones left alone. How the decision is made, and how to change it: <a href="#how-try-peptide-flips-decides">below</a>.</li><li>Both Refine/Improve Ramachandran Plot entries work on <strong>amino acids only</strong> (build 22): ligands, waters and nucleotides are not refined, also not as neighbours of an amino acid.</li><li><strong>Fill Partial Residues</strong> lists in the terminal which residues it filled, with the atoms added, and which it could not fill (build 22). It asks which model to use only when more than one is loaded.</li><li><strong>The Scheme scripting window works</strong> (build 25). In Coot 0.9.8.96 without the guile-gtk Scheme GUI (as here), Calculate &gt; Scripting &gt; Scheme... opened a window that said "For now this is a placeholder only!": it ran what you typed but showed nothing. Now the window shows each command, what it printed, its result (<code>=&gt; "HIS"</code>) and errors, keeps a history (Up / Down) and accepts an expression over several lines. What Scheme prints (<code>display</code>, <code>format #t</code>) also reaches the terminal at once (before, coot0's log copy made Guile hold it back, often until Coot quit).</li><li><strong>The Python scripting window shows what your commands print</strong> (build 26). Calculate &gt; Scripting &gt; Python... now looks and works like the Scheme window: the command, what it printed (before: only in the terminal), its result (<code>=&gt; 'GLU'</code>) and errors with their traceback, Up / Down history, and blocks over several lines as at the Python prompt (a line ending in <code>:</code> continues, an empty line runs the block). Coot's extra line for each Scheme command ("debug:: g.safe_scheme_command() ...") is gone from the terminal (<code>COOT_DEBUG_SCHEME=1</code> shows it again).</li><li><strong>Trackpads and the Magic Mouse have no middle button.</strong> A two-finger click on a trackpad (a right-click without dragging) works as Coot's middle-click: it re-centres the view on the atom under the pointer. Right-button drags still zoom as before. <code>COOT_RIGHT_CLICK_CENTRE=0</code> turns this off.</li><li><strong>You can watch whole-molecule refinement</strong> (build 20 for Fit Protein; build 14 for Stepped Refine). Fit Protein, Stepped Refine and both Refine/Improve Ramachandran Plot entries now show each residue being refined in Coot's usual refinement style (the highlighted "intermediate atoms") for a moment before accepting it, instead of the atoms jumping to their result. The map is re-contoured around each residue, the <strong>Stop</strong> button on the toolbar works at any time, and no "Accept Refinement?" window is left behind. <code>COOT_STEPPED_REFINE_SHOW=&lt;seconds&gt;</code> sets how long each residue is shown (default 0.6; 0 = the old immediate behaviour).</li><li>Stepped Refine and Fit Protein also work on <strong>RNA / DNA</strong> (residues without CA are centred on C1'). Fit Protein's rotamer search itself is for protein side chains.</li></ul>
-<p>The full list, build by build: <a href="CHANGELOG.html"><code>m0/m1-package/CHANGELOG.md</code></a> (in the package: <code>CHANGELOG.md</code>).</p>
-<h3 id="how-try-peptide-flips-decides">How (try peptide flips) decides</h3>
-<p>For each residue <em>i</em> that is joined to <em>i</em>+1 by a peptide bond, the zone <em>i</em>-1 .. <em>i</em>+1 is refined twice with
-Ramachandran restraints: <strong>A</strong> as it is, and <strong>B</strong> after Coot's Pep-flip of the peptide <em>i</em> / <em>i</em>+1 (the C=O of <em>i</em>
-turned 180 degrees round the CA(<em>i</em>)-CA(<em>i</em>+1) axis). Each result is scored with numbers Coot itself provides:</p>
-<pre class="text"><code>rho(x)     = density of the refinement map at point x (Coot's density_at_point, linear interpolation), in map units
-sigma      = r.m.s. deviation of the map from its mean (Coot's map_sigma)
-O          = rho(O_i) / sigma                                     carbonyl O of residue i, in sigma
-P          = ( rho(C_i) + rho(O_i) + rho(N_i+1) ) / sigma         the peptide C, O, N together, in sigma
-F          = sum over the atoms a of residues i and i+1 of  rho(a) * occupancy(a)     (Coot's density_score_residue)
-R          = sum over residues i and i+1 of their Ramachandran region (outlier 0, allowed 1, favoured 2; Coot's own classification)</code></pre>
-<p>(With alternate conformations each conformer is scored on its own atoms plus the shared ones.) Flip B is kept over A
-only if all of these hold:</p>
-<pre class="text"><code>R_B &gt;= R_A                                    (no residue goes to a worse Ramachandran region)
-O_B &gt;= O_A - rama_flip_max_o_loss             (default 0.3 sigma)
-P_B &gt;= P_A - rama_flip_max_peptide_loss       (default 0.6 sigma)
-F_B &gt;= F_A - rama_flip_max_fit_loss * |F_A|   (default 0.02, i.e. 2 %)</code></pre>
-<p>and then either <code>R_B &gt; R_A</code>, or (same regions) <code>O_B &gt;= O_A + rama_flip_o_gain</code> and <code>P_B &gt;= P_A + rama_flip_o_gain</code>
-(default 1.0 sigma) and <code>F_B &gt; F_A + rama_flip_density_gain * |F_A|</code> (default 0). Without a map nothing is flipped. So
-"the carbonyl O left the density" means: after the flip, the map value at the O position dropped (for example from 7.3
-to -0.8 sigma), which the old rule (Ramachandran first) accepted and this one does not.</p>
-<p>The report counts a peptide as <strong>turned</strong> when its carbonyl O ends up more than <code>rama_flip_turn_angle</code> (default 90)
-degrees from where it was at the start of the run, measured round the CA(<em>i</em>)-CA(<em>i</em>+1) axis. The terminal shows both
-scores of every try (<code>INFO:: rama flip A 43 '' kept original A (R, n, F, O, P) B (...)</code>).</p>
-<p><strong>Changing the limits.</strong> They are Python variables. Type the new value in Calculate &gt; Scripting &gt; Python... before the
-run, for example <code>rama_flip_o_gain = 1.5</code> (stricter: a flip with the same regions needs 1.5 sigma more at the O) or
-<code>rama_flip_max_o_loss = 0.0</code>. To keep them, put such lines in a <code>.py</code> file in coot0's preferences folder, which is
-<code>~/Library/Application Support/coot0/home/.coot-preferences/</code> when installed with <code>install.sh</code> (coot0 uses its own
-home, so your <code>~/.coot-preferences</code> is not read unless you start it with <code>COOT_USE_HOME=1</code>).</p>
-<table><thead><tr><th>Variable</th><th>Default</th><th>Meaning</th></tr></thead><tbody>
-<tr><td><code>rama_flip_max_o_loss</code></td><td>0.3</td><td>the flipped carbonyl O may lose at most this much density (sigma)</td></tr>
-<tr><td><code>rama_flip_max_peptide_loss</code></td><td>0.6</td><td>the peptide C + O + N may lose at most this much (sigma, sum)</td></tr>
-<tr><td><code>rama_flip_max_fit_loss</code></td><td>0.02</td><td>the map fit of residues <em>i</em>, <em>i</em>+1 may drop at most this fraction</td></tr>
-<tr><td><code>rama_flip_o_gain</code></td><td>1.0</td><td>same Ramachandran regions: O and C + O + N must each gain this much (sigma)</td></tr>
-<tr><td><code>rama_flip_density_gain</code></td><td>0.0</td><td>same regions: extra fraction by which the map fit must improve</td></tr>
-<tr><td><code>rama_flip_turn_angle</code></td><td>90</td><td>degrees the carbonyl O must turn for the report to count a peptide as turned</td></tr></tbody></table>
+<h1 id="coot0-coot-09-for-apple-silicon-macs">coot0: Coot 0.9 for Apple Silicon Macs</h1>
+<p><strong>Coot 0.9, exactly as you know it, running natively on today's Macs.</strong></p>
+<p><a href="https://www2.mrc-lmb.cam.ac.uk/personal/pemsley/coot/">Coot</a>, by Paul Emsley and colleagues, is one of the most widely
+used programs for building and fixing protein and nucleic-acid models in X-ray and cryo-EM maps. Many labs still work
+in, and teach with, its 0.9 series: the menus people know by heart, the keyboard and mouse habits, and years of lab
+scripts and plug-ins written for its Python and Scheme interface.</p>
+<p>On a current Mac, Coot 0.9 has become hard to run. The old builds need XQuartz, an X11 server that Apple no longer
+ships. They were made for Intel Macs and run poorly, if at all, on recent versions of macOS. Coot 1 runs natively, but it is a redesign with a new interface and a new scripting interface. Moving to
+it means retraining people and rewriting scripts.</p>
+<p><strong>coot0 removes that choice.</strong> It is Coot 0.9.8.96 rebuilt for Apple Silicon (M1 and later). There is no XQuartz and no
+Rosetta, and the 3D view is sharp on Retina screens. The interface, the menus and the scripting functions are those of
+Coot 0.9, so a lab can keep its workflows, scripts and teaching material, and new members learn from the same material.</p>
+<p>coot0 is an independent, unofficial build. The Coot developers did not make it and do not support it. Please report
+problems in this repository's <a href="https://github.com/sunchang1990/coot0-macos/issues">Issues</a>.</p>
+<h2 id="what-it-gives-you">What it gives you</h2>
+<ul><li><strong>No new interface to learn.</strong> Coot 0.9.8.96's own windows, menus, dialogs, keys and mouse actions, drawn by macOS itself, with Retina rendering of the 3D view. A trackpad two-finger click stands in for the middle mouse button.</li><li><strong>Your scripts keep working.</strong> Python 3 and Scheme (Guile 3) scripting with Coot 0.9's function names. The extension menus and dialogs that Coot 0.9 builds in Python run as written: Glyco, NCS, PISA, PDB-REDO, Fit Loop, RCrane for RNA and the others.</li><li><strong>Scripting you can look up.</strong> All of Coot 0.9's roughly 1,700 Python and Scheme functions are documented, with an example for each one that was run on test data and a note of what it actually did. There is also a cookbook of 85 everyday recipes in both languages, and you can search menus and documentation from the Help menu.</li><li><strong>Some things work better than in the original 0.9.8.96.</strong> Several features that were broken in the released 0.9.8.96 now work, and a few were added for Ramachandran clean-up and for watching whole-molecule refinement (see below).</li><li><strong>Your other programs are found.</strong> CCP4 (refmac5, acedrg, ...) and the reduce and probe tools of CCP4 or Phenix are picked up automatically when installed. RDKit ligand tools (Lidia, SMILES import) and the CCP4 monomer library are included.</li><li><strong>Tested.</strong> Every menu entry and toolbar button has been tried in a real window, about 530 automated checks run against every release, and members of a structural biology lab have tested each release on their own data.</li></ul>
+<h2 id="what-is-different-from-the-original-coot-09896">What is different from the original Coot 0.9.8.96</h2>
+<p>coot0 changes as little as possible. Besides what it takes to run on a current Mac, the changes you will notice most
+are these:</p>
+<ul><li><strong>Refine/Improve Ramachandran Plot is back</strong> (Calculate &gt; All Molecule...). The code was in 0.9.8.96, but the menu entry was never created.</li><li><strong>New: Refine/Improve Ramachandran Plot (try peptide flips).</strong> It tries flipping each peptide and keeps a flip only when the map supports it. At the end it reports which peptides turned. How it decides: <a href="try-peptide-flips.html">docs/try-peptide-flips.md</a>.</li><li><strong>You can watch whole-molecule refinement.</strong> Fit Protein, Stepped Refine and both Ramachandran entries show each residue being refined, re-contour the map as they go, and stop when you press Stop. They also work on RNA and DNA.</li><li><strong>The Python and Scheme scripting windows show results.</strong> Each window shows the command, what it printed, its result and any error, and keeps a history. In 0.9.8.96 the Scheme window showed nothing.</li><li><strong>Bugs found while testing every function are fixed.</strong> For example, mmCIF files written from a script no longer repeat the model, and several Scheme functions now return what their Python versions return.</li></ul>
+<p>The full list, build by build, is in <a href="CHANGELOG.html">CHANGELOG.md</a>.</p>
 <h2 id="install">Install</h2>
+<p>Requirements: an Apple Silicon Mac (M1 or later), macOS 11 or newer, and about 1 GB of disk space. It has been tested on
+macOS 26. Intel Macs and Linux are not supported.</p>
 <p>Download <code>coot0-&lt;version&gt;-macos-arm64.tar.gz</code> from <a href="https://github.com/sunchang1990/coot0-macos/releases">Releases</a>, then in Terminal:</p>
 <pre class="text"><code>tar -xzf coot0-&lt;version&gt;-macos-arm64.tar.gz
 cd coot0-&lt;version&gt;
 ./install.sh</code></pre>
-<p>The installer checks your Mac, installs into <code>~/.local/share/coot0/&lt;version&gt;</code> (you can choose another folder), creates
-the command <code>coot0</code> and tells you how to use it. Then, in a new Terminal window: <code>coot0 --pdb model.pdb --auto data.mtz</code>.
-Details: <code>README-FIRST.txt</code> in the package.</p>
-<p>Requirements: an Apple Silicon Mac (M1 or later), macOS 11 or newer (macOS 26 tested), about 1 GB of disk space.
-Intel Macs and Linux are not supported.</p>
-<h2 id="how-coot0-relates-to-other-coot-versions">How coot0 relates to other Coot versions</h2>
-<table><thead><tr><th></th><th><strong>Coot 0.9.x</strong> (upstream)</th><th><strong>Coot 1.x</strong> (upstream)</th><th><strong>Bandicoot</strong></th><th><strong>coot0</strong> (this project)</th></tr></thead><tbody>
-<tr><td>What it is</td><td>The original Coot 0.9 series by Paul Emsley et al. (GTK 2, fixed-function OpenGL)</td><td>The current Coot, redesigned and actively developed (GTK 4, modern OpenGL)</td><td>A fork of Coot 0.9.8.95 by the Fraser lab (UCSF), turned into a separate project with its own new features</td><td>Coot 0.9.8.96 kept as it is, ported to run on Apple Silicon</td></tr>
-<tr><td>On a current Mac</td><td>Older builds depend on XQuartz and do not run well on recent macOS</td><td>Runs natively (e.g. via CCP4 or Homebrew)</td><td>Runs natively (macOS and Linux)</td><td>Runs natively (macOS on Apple Silicon only)</td></tr>
-<tr><td>Interface</td><td>Coot 0.9</td><td>New interface</td><td>New wxWidgets interface, reorganised menus, many new features</td><td>Coot 0.9, unchanged</td></tr>
-<tr><td>Python / Scheme scripts of Coot 0.9</td><td>Yes (Python 2 era)</td><td>New API</td><td>Python 3; many Python dialogs rewritten in C++; no Scheme</td><td>Python 3 with the Coot 0.9 Python GUI working as written; Scheme scripting</td></tr>
-<tr><td>When to choose it</td><td></td><td>For new work and new features: the version the Coot developers recommend and support</td><td>A modernised Coot 0.9 with new features, or Linux</td><td>You want Coot 0.9 exactly as you know it on an Apple Silicon Mac, including its scripts and plugins</td></tr></tbody></table>
-<p>coot0 and Bandicoot started from the same problem and solved parts of it in similar ways (GTK 2 on macOS's own
-graphics, Retina-aware drawing, Python 3), but independently and with different aims. If you want new features, look at
-Coot 1 and Bandicoot first.</p>
+<p>The installer checks your Mac, installs coot0 into <code>~/.local/share/coot0/&lt;version&gt;</code> (you can choose another folder) and
+creates the command <code>coot0</code>. Then, in a new Terminal window:</p>
+<pre class="text"><code>coot0 --pdb model.pdb --auto data.mtz</code></pre>
+<p>More details are in <code>README-FIRST.txt</code> in the download.</p>
+<h2 id="which-coot-should-i-use">Which Coot should I use?</h2>
+<table><thead><tr><th></th><th><strong>coot0</strong> (this project)</th><th><strong>Coot 1.x</strong></th><th><strong>Bandicoot</strong></th></tr></thead><tbody>
+<tr><td>What it is</td><td>Coot 0.9.8.96 kept as it is, rebuilt for Apple Silicon</td><td>The current Coot, redesigned and actively developed by the Coot team</td><td>A fork of Coot 0.9.8.95 by the Fraser lab (UCSF), with a new interface and new features</td></tr>
+<tr><td>Interface</td><td>Coot 0.9, unchanged</td><td>New</td><td>New (wxWidgets)</td></tr>
+<tr><td>Coot 0.9 scripts and plug-ins</td><td>Python and Scheme, as written</td><td>New scripting interface</td><td>Python 3; no Scheme</td></tr>
+<tr><td>Platforms</td><td>macOS on Apple Silicon</td><td>macOS and Linux (and others)</td><td>macOS, Linux</td></tr>
+<tr><td>Choose it if</td><td>You want Coot 0.9 exactly as you know it on a current Mac</td><td>You want the newest features and the version the Coot developers support</td><td>You want a modernised Coot 0.9 with new features, or Linux</td></tr></tbody></table>
 <h2 id="building-from-source">Building from source</h2>
-<p>The program is built from the Coot 0.9.8.96 release tarball plus the numbered patches in <code>m0/patches/</code>
-(<code>m0/setup.sh</code> applies them). Build and packaging tools are in <code>m0/tools/</code>; the technical notes of every build are in
-<code>m0/README-m0.txt</code>; the build environments are pinned in <code>env/</code>. See <code>CORRESPONDING_SOURCE.md</code>.</p>
+<p>coot0 is built from the Coot 0.9.8.96 release tarball plus the numbered patches in <code>m0/patches/</code>, which <code>m0/setup.sh</code>
+applies. The build and packaging tools are in <code>m0/tools/</code>, the notes for every build are in <code>m0/README-m0.txt</code>, and the
+build environments are pinned in <code>env/</code>. Where to get every part of the source:
+<a href="../../CORRESPONDING_SOURCE.md">CORRESPONDING_SOURCE.md</a>.</p>
 <h2 id="licence">Licence</h2>
-<p>Coot itself is licensed by its authors under GPL-3.0-or-later; the coot0 modifications (patches, tools, installer)
-are Copyright (C) 2026 Chang Sun under GPL-3.0; the bundled third-party libraries keep their own licences. The package
-as a whole is distributed under GPL-3.0. Details: <a href="../../LICENSING.md"><code>LICENSING.md</code></a>; licence text: <a href="../../LICENSE"><code>LICENSE</code></a>.</p>
+<p>coot0 is free software under the GNU General Public License, version 3. Coot itself is licensed by its authors under
+GPL-3.0-or-later. The coot0 changes (patches, tools and installer) are Copyright (C) 2026 Chang Sun, under the same
+licence, GPL-3.0-or-later.
+The bundled third-party libraries keep their own licences. Details are in <a href="../../LICENSING.md">LICENSING.md</a>, and the licence
+text is in <a href="../../LICENSE">LICENSE</a>.</p>
 <h2 id="credits">Credits</h2>
-<p>Coot: Paul Emsley, Kevin Cowtan, Bernhard Lohkamp and the Coot contributors. RCrane: Kevin Keating. The libraries in
-the package are listed in <code>m0/m1-package/THIRD_PARTY_LICENSES.md</code>.</p>
-<p>The macOS / Apple Silicon port: Chang Sun.</p>
+<p>Coot: Paul Emsley, Kevin Cowtan, Bernhard Lohkamp and the Coot contributors. RCrane: Kevin Keating. The bundled
+libraries are listed in <a href="../../THIRD_PARTY_LICENSES.md">THIRD_PARTY_LICENSES.md</a>.</p>
+<p>Port to macOS and Apple Silicon: Chang Sun.</p>
 <p>Thanks to the members of Huilin Li's lab for testing coot0 and for their feedback, and to Paul Emsley for supporting
 the project.</p>
 </body></html>

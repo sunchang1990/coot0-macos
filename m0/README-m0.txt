@@ -543,3 +543,14 @@ Round 31 (build 31, 20 Nov evening; patch 0049 scheme-wrappers-write-cif-once; c
   copy_residue_range, watson_crick_pair, reset_view, hetify_residue, match_residue_and_dictionary); set_go_to_atom_chain_residue_
   atom_name_strings (gchar*: not callable); python_representation atoms carry an index add_molecule rejects; make_variance_map of
   identical maps NaN; read_phs_* bad file -> molecule slot; map_from_mtz_by_calc_phases bad columns abort.
+
+Round 32 (build 32, 22 Nov; patch 0050 about-dialog-coot0-notice; coot-bin m0/bin_b32 from obj_b32 = obj_b31 + src/gtk2-interface,
+  relinked by tools/relink_b31.sh m0/obj_b32 m0/bin_b32).  Before going public (VAI 22 Nov: fine as the user's own project under the
+  GNU licences).  coot0 changes GPL-3.0-only -> GPL-3.0-or-later (user's choice: same as Coot, upstream can take changes back).
+  GPL v3 s.5(a)/(d): create_aboutdialog() copyright + "macOS / Apple Silicon changes (coot0): Copyright (C) 2026 Chang Sun", comments
+  = notice of modification + GitHub + licence; test gui_python_dialogs.py about_notice (ctypes: create_aboutdialog,
+  gtk_about_dialog_get_*): b31 89/90, b32 90/90.  s.6(d): m0/tools/make_source_tarball.sh VERSION OUTDIR (git archive of coot-src
+  HEAD = patched tree + repo HEAD; needs everything committed; run AFTER the build commit) -> attach to the Release next to the Mac
+  package; m0/tools/check_source_tarball.py DIR VERSION (b31: no archive -> FAIL).  LICENSING.md notice of modification;
+  CORRESPONDING_SOURCE.md / README-FIRST.txt / LICENSING.md -> GitHub Issues (no "private"); FreeType FTL credit in
+  THIRD_PARTY_LICENSES.md (also in gen_licenses.py).  README rewritten impact-first; try-peptide-flips rules -> docs/try-peptide-flips.md.

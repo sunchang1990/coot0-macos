@@ -1,4 +1,27 @@
-# Coot 0.9.8.96 on Apple Silicon: test round 31 (build 31 = build 30 + every scripting example checked + four Coot bugs fixed)
+# Coot 0.9.8.96 on Apple Silicon: test round 32 (build 32 = build 31 + licence notices: GPL v3 or later, Help > About, source archive)
+
+**From you** (22 Nov): MM1-MM4 pass (after installing build 31). VAI: fine to publish coot0 publicly as your own project, following the
+GNU licences. You chose GPL v3 **or later** for the coot0 changes, the README rewrite and the new GitHub description; the repository
+stays private until you have looked at it.
+
+1. **Licence**: the coot0 changes are GPL-3.0-or-later, like Coot. `LICENSING.md` says that coot0 is a modified Coot and by whom;
+   questions and problems go to the GitHub Issues; FreeType's credit line is in `THIRD_PARTY_LICENSES.md`.
+2. **Help > About** says the same inside the program (new `bin/coot-bin`): Coot's copyright, then "macOS / Apple Silicon changes
+   (coot0): Copyright (C) 2026 Chang Sun", and under the version: modified by whom and when, not official, where the changes and the
+   source are, GPL v3 or later.
+3. **Source archive** `coot0-<version>-source.tar.gz` for each release (Coot tree as compiled + the coot0 repository).
+
+**Verified without a window only**: the About texts were read from the window object in a test; how the window looks is not seen.
+**New tests**: `gui-dialogs` 89 -> 90; source archive check (build 31 fails both).
+
+## NN. Round 32 checks (about 2 minutes)
+
+| # | Do | Expected |
+|---|---|---|
+| NN1 | Install build 32 (`./install.sh` in the unpacked folder), start `coot0`, then Help > About... | Under "Coot 0.9.8.96": "Marina Bay", then "coot0: this is Coot 0.9.8.96 modified for macOS on Apple Silicon by Chang Sun (2026)." and the GitHub address. The copyright lines end with "macOS / Apple Silicon changes (coot0): Copyright (C) 2026 Chang Sun". The License button still shows the GPL. |
+| NN2 | (Tomorrow, on GitHub) read README, LICENSING.md, CORRESPONDING_SOURCE.md. | Clear to a colleague; nothing private; nothing says "private" any more. |
+
+# Earlier round (MM1-MM4 confirmed 22 Nov): Coot 0.9.8.96 on Apple Silicon: test round 31 (build 31 = build 30 + every scripting example checked + four Coot bugs fixed)
 
 **From you** (20 Nov): LL1, LL2 pass; LL3 failed only because my instructions had a placeholder path (`read-pdb` gave -1); with the real
 path it gives `((1 "") (1 "") 0.4996...)` (checked without a window). Asked tonight: check all the Python and Scheme functions with test

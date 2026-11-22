@@ -1,0 +1,15 @@
+Build 32 regression checks: build 31 vs build 32 (22 Nov)
+
+gui-dialogs with the build 31 coot-bin:
+PASS gtk.TRUE/FALSE, Alignment, AboutDialog (set_*, action_area) and scrollbars exist in the compatibility layer                                                     
+PASS Help menu: the last menu, with search, keys, the documents, and Coot's About entries                                                                            
+FAIL Help > About says coot0 is a modified Coot 0.9.8.96 (who, when, licence, where the source is)                                                                     "missing: copyright line of the c
+SUMMARY 89 / 90
+
+gui-dialogs with the build 32 coot-bin:
+PASS Help > About says coot0 is a modified Coot 0.9.8.96 (who, when, licence, where the source is)                                                                   
+SUMMARY 90 / 90
+
+check_source_tarball.py on build 31 (no source archive):
+FAIL coot0-0.9.8.96-b31-source.tar.gz exists
+SUMMARY 0 / 1

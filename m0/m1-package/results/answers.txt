@@ -1,9 +1,8 @@
 # One line per check: PASS / FAIL / PARTIAL and a few words.  (You can also just tell me in chat.)
-# Round 31 (see TEST-PROTOCOL.md, section MM):
-MM1 Scripting reference: results show what ran, what changed, settings read back:
-MM2 Help search delete_residue: the "When tried" column says "changed: molecule 0: deleted 1 residue(s) (A41)":
-MM3 Python write_cif_file three times: same size each time:
-MM4 Scheme (kullback-liebler (list 1.0 1.0 1.0 2.0) (list 1.0 2.0 2.0 2.0)) gives (0.549... 0.549...), not #f:
+# Round 32 (see TEST-PROTOCOL.md, section NN):
+NN1 Help > About shows the coot0 notice (modified by, 2026, GitHub address, copyright line):
+NN2 GitHub README / LICENSING.md / CORRESPONDING_SOURCE.md clear, nothing private:
+# Round 31 (section MM): MM1-MM4 confirmed 22 Nov.
 # Round 30 (section LL): LL1, LL2 confirmed 20 Nov; LL3 failed only on the placeholder path (fine with the real path).
 # Round 29 (section KK): KK1, KK2 confirmed 20 Nov.
 # Round 28 (section JJ): JJ1, JJ2, JJ4, JJ5 confirmed 20 Nov; JJ3 (double-click / Enter) -> build 29.
