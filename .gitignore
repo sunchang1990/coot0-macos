@@ -52,3 +52,6 @@ m0/evidence/user_data_checks_b12.txt
 canvas/coot-canvas-build-scripts.tar.gz
 canvas/coot-canvas-libs-arm64-prefix.tar.gz
 *.swp
+
+# Claude Code settings for this machine only
+.claude/settings.local.json

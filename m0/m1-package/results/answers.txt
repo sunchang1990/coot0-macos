@@ -1,9 +1,9 @@
 # One line per check: PASS / FAIL / PARTIAL and a few words.  (You can also just tell me in chat.)
 # Round 31 (see TEST-PROTOCOL.md, section MM):
 MM1 Scripting reference: results show what ran, what changed, settings read back:
-MM2 Help search delete_residue: result says "changed: molecule 0: deleted 1 residue(s) (A41)":
+MM2 Help search delete_residue: the "When tried" column says "changed: molecule 0: deleted 1 residue(s) (A41)":
 MM3 Python write_cif_file three times: same size each time:
-MM4 Scheme kullback-liebler gives two numbers (not #f):
+MM4 Scheme (kullback-liebler (list 1.0 1.0 1.0 2.0) (list 1.0 2.0 2.0 2.0)) gives (0.549... 0.549...), not #f:
 # Round 30 (section LL): LL1, LL2 confirmed 20 Nov; LL3 failed only on the placeholder path (fine with the real path).
 # Round 29 (section KK): KK1, KK2 confirmed 20 Nov.
 # Round 28 (section JJ): JJ1, JJ2, JJ4, JJ5 confirmed 20 Nov; JJ3 (double-click / Enter) -> build 29.

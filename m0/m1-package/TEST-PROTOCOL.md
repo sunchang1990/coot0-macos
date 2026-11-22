@@ -22,9 +22,9 @@ external program; they were not tried and their pages say why. **New tests**: `p
 | # | Do | Expected |
 |---|---|---|
 | MM1 | Help > Scripting Reference (all functions): read "Results of trying the examples". | Three short tables/paragraphs: what ran, what the calls showed (value / changed something / nothing visible), and the settings that were read back (195 of 210). |
-| MM2 | Help > Search Menus and Docs...: type `delete_residue`, double-click it. | The result line says what changed: `changed: molecule 0: deleted 1 residue(s) (A41)` (and the atom count). |
+| MM2 | First check that `coot0` starts build 31 (title bar or `coot0 --diagnose`; after installing, the `coot0` command points to the new folder). Help > Search Menus and Docs...: type `delete_residue`, double-click it. | On the page that opens, the table row for `delete_residue` has a right-hand column "When tried". It reads `ran (no return value); changed: molecule 0: deleted 1 residue(s) (A41); n_atoms(0): 1465 -> 1456; ...`. Build 30 showed only `ran (no return value)`. |
 | MM3 | Open any model, then Calculate > Scripting > Python...: `[ (write_cif_file(0, "/tmp/coot0-twice.cif"), os.path.getsize("/tmp/coot0-twice.cif")) for i in range(3) ]` (use your model's molecule number instead of 0). | Three pairs with the SAME size, e.g. `[(0, 140435), (0, 140435), (0, 140435)]`; build 30 gave a bigger file each time. |
-| MM4 | Calculate > Scripting > Scheme...: `(kullback-liebler (list 1.0 2.0 3.0 4.0 5.0 2.5 3.5) (list 1.5 2.0 3.0 4.0 6.0 2.2 3.1))` | A list of two numbers; build 30 showed `#f`. |
+| MM4 | Calculate > Scripting > Scheme...: `(kullback-liebler (list 1.0 1.0 1.0 2.0) (list 1.0 2.0 2.0 2.0))` | `(0.5493061443340548 0.5493061443340548)` (that is ln 3 / 2); build 30 showed `#f` for any input. Coot sorts the numbers into bins 0.05 wide and only counts bins both lists use, so lists with no shared values give `(0.0 0.0)`. |
 
 # Earlier round (LL1, LL2 confirmed 20 Nov; LL3 = placeholder path, fine with the real path): Coot 0.9.8.96 on Apple Silicon: test round 30 (build 30 = build 29 + five scripting functions fixed + every scripting function tried)
 
