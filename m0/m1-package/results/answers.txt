@@ -1,6 +1,9 @@
 # One line per check: PASS / FAIL / PARTIAL and a few words.  (You can also just tell me in chat.)
-# Round 34 (see TEST-PROTOCOL.md, section PP):
-PP1 coot0 --self-test after installing build 34: all 21 lines N / N:
+# Round 35 (see TEST-PROTOCOL.md, section QQ):
+QQ1 Updating Maps: terminal shows calculate_maps_and_stats_py(...):
+QQ2 that line pasted into the Python window runs:
+QQ3 coot0 --script 0-coot-history.py replays the session:
+# Round 34 (section PP): PP1 confirmed 23 Nov.
 # Round 33 (section OO): OO1-OO3 confirmed 23 Nov.
 # Round 32 (section NN): NN1 remarks 23 Nov -> build 33.
 # Round 31 (section MM): MM1-MM4 confirmed 22 Nov.

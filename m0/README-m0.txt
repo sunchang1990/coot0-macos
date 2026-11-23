@@ -568,3 +568,20 @@ Round 34 (build 34, 23 Nov; tests only, coot-bin = m0/bin_b33).  User's coot0 --
   folder (installed copies: $STATE/.cache, STATE = ~/Library/Application Support/coot0) -> now: file in folder or XDG_CACHE_HOME,
   >= 10 loaders, all inside the folder; installer_test.sh cp -Rc of HERE kept .coot0-installed -> run-coot.sh set COOT_RETINA=1 for
   the "unpacked" copy -> rm -f "$PKG/.coot0-installed".  Verification adds: install the tarball into a throw-away HOME, coot0 --self-test.
+
+Round 35 (build 35, 23 Nov; patch 0052 replayable-command-history; coot-bin m0/bin_b35 from obj_b35 = obj_b33 + graphics-info-state,
+  c-interface, -info, -build, -maps, -build-main-chain, -build-side-chain; relink_b31.sh).  User: Updating Maps echoed
+  (calculate-maps-and-stats 3 1 1 2); wants the terminal output replayable, Python by default.  graphics-info-state.cc:
+  coot0_history_line(cs, python) / coot0_resolve_command_name: candidates own name, base (suffix _py/_scm/-scm stripped), base_py
+  or base-scm, checked in __main__ (PyDict, callable) or guile-user (scm_module_variable, bound, procedure); positive answers
+  cached; before Py_IsInitialized / scm_initialized_p: Coot's old swap (first try crashed in scm_c_resolve_module from
+  make_preferences_internal before boot).  No function in a language -> "# ..."/"; ..." comment with the other language's call;
+  '!' first char = non-replayable record (replace_residues_from_mol_*: residue list never recorded).  True/False <-> #t/#f.
+  Echo: getenv COOT_COMMAND_ECHO (default python); coot0_set_command_echo() in coot_utils.py sets it.  print_all_history_in_* and
+  save_history use it; pythonize/schemize_command_strings (also used to RUN commands) unchanged.  Names fixed: get-symmety...,
+  graphics-to-user-defined-colours (2 functions), output-residue-info (-> -dialog, args imol, atom_index), replace-fragement,
+  set-auto-read-do-dfference..., try-set-draw-baton, set-model-fit-refine-place-atom..., set-map-radius-em,
+  set-scroll-by-wheel-mouse, set-add-terminal-residue-debug-trials, set-find-hydrogen-torsions.  26 string params now
+  single_quote()d (heuristic scan by function parameters; edit-text by hand).  Not scriptable (comments): move-molecule-here,
+  set-density-size-em (junk.cc toggle-* not compiled).  Note: --no-state-script does not stop the history file being written.
+  Tests: tests/history_replay_test.sh (suite history-replay, 10; b34 1/10, b35 10/10); m0/tools/check_history_names.py SRC INDEX (b34 1/3).

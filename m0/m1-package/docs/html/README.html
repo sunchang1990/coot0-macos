@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="71361a7d6784b1cec1d4e8f7cf4aa026bd2b7821">
+<meta name="coot0-source-sha1" content="548d9635cad64d5e1ea0a8bacc99930096173f25">
 <title>coot0 documentation - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -21,6 +21,13 @@ scripting functions and documentation sections (they open in your web browser); 
 and your own key bindings. These pages are also in <code>docs/html/</code> of the package.</p>
 <p>Where to type commands: Calculate &gt; Scripting &gt; Python... or Scheme... (both show the command, what it printed,
 the result and errors). A whole file: Calculate &gt; Run Script..., or <code>coot0 --script my-file.py</code> in a Terminal.</p>
+<p><strong>Replaying what you did</strong> (build 35). Coot writes each command it runs to the terminal as a line you can paste into
+Calculate &gt; Scripting &gt; Python... and run again, for example <code>calculate_maps_and_stats_py(0, 1, 1, 2)</code> after Updating Maps.
+<code>coot0_set_command_echo("scheme")</code> switches the terminal to Scheme (<code>coot0_set_command_echo("python")</code> back). When Coot quits it
+writes the whole session as <code>0-coot-history.py</code> and <code>0-coot-history.scm</code> in the folder you started it from; either file can be run
+again (Calculate &gt; Run Script..., or <code>coot0 --script 0-coot-history.py</code>). A command that exists in only one language is a comment
+in the other file, with the call in the language that has it; a few records that Coot cannot replay (it did not keep all their
+details) are comments that say so.</p>
 <p>Coot's own documentation (user manual, tutorials) is at <a href="https://www2.mrc-lmb.cam.ac.uk/personal/pemsley/coot/">https://www2.mrc-lmb.cam.ac.uk/personal/pemsley/coot/</a> ;
 its scripting part describes Coot 0.9 as well.</p>
 </body></html>

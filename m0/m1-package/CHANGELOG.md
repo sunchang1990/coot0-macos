@@ -6,6 +6,22 @@ applied to the pristine tree by `setup.sh`) or a change of the packaged data / s
 round, `TEST-PROTOCOL.md` has the user-facing explanation and the checks for you (newest round first).  A "build" is one delivered zip.
 "Verified" means a headless test (no window server in the build environment); what only a screen can show is marked "on screen: not verified".
 
+## Build 35  (patch 0052 replayable-command-history (C++ + Python); new `bin/coot-bin`)
+- **The commands Coot writes can be run again** (user, 23 Nov: Updating Maps printed `(calculate-maps-and-stats 3 1 1 2)`, a
+  function that exists in neither language). Coot records every command it runs (terminal, and `0-coot-history.py` /
+  `0-coot-history.scm` when it quits); 0.9.8.96 made the name by swapping `-` and `_`, wrote 18 names wrongly (typos such as
+  `replace-fragement`, other functions' names, wrong argument order for `output-residue-info`) and recorded 26 text arguments
+  without quotes (`(does-residue-exist-p 0 A 41 )`). Now:
+  1. each line uses the function's real name in that language, looked up in the running Python / Scheme (so
+     `calculate_maps_and_stats_py(3, 1, 1, 2)`); true/false are `True`/`False` in Python and `#t`/`#f` in Scheme;
+  2. a command with no function in one language is a comment in that language's file, with the call in the other language
+     (`; (calculate-maps-and-stats 0 1 1 2)   -- Python only: calculate_maps_and_stats_py(0, 1, 1, 2)`); the two
+     replace-residues records that never kept their residue list say so;
+  3. the 12 wrong names in Coot's source and the 26 unquoted arguments are corrected;
+  4. **the terminal shows Python by default** (user's choice); `coot0_set_command_echo("scheme")` switches it.
+- Tests: new suite `history-replay` (10 checks: a session's history replays in Python and in Scheme to the same result; build 34:
+  1 / 10); `m0/tools/check_history_names.py` checks every logged name in the source (build 34: 1 / 3).
+
 ## Build 34  (tests only; `bin/coot-bin` as in build 33)
 - `coot0 --self-test` (the self-test of an INSTALLED copy) showed two FAILs (user, 23 Nov). Both were mistakes in the tests, not in
   coot0; they appear only when the tests run from an installed copy, and the tests of each build had run from the unpacked folder:

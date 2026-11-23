@@ -54,6 +54,11 @@ if [ -f "$HERE/share/coot/python/_gtk2core.py" ]; then   # scripted GUI layer (P
   run refmac-run      "--python" "$HERE/tests/refmac_run_python.py" 480
   run cookbook        "--python" "$HERE/tests/cookbook_run.py" 900       # (build 26) every recipe of docs/cookbook, Python and Scheme
 fi
+# (build 35) the command log (terminal echo, 0-coot-history.py / .scm) replays in Python and in Scheme
+if [ -x "$HERE/tests/history_replay_test.sh" ]; then
+  bash "$HERE/tests/history_replay_test.sh" > "$OUT/history-replay.txt" 2>&1
+  printf "%-26s %s\n" "history-replay" "$(grep -h '^SUMMARY' "$OUT/history-replay.txt" | tail -1)"; grep -h '^FAIL' "$OUT/history-replay.txt" | sed 's/^/    /'
+fi
 # (build 17) install.sh / coot0 / uninstall.sh in throw-away home folders
 if [ -x "$HERE/tests/installer_test.sh" ]; then
   bash "$HERE/tests/installer_test.sh" > "$OUT/installer.txt" 2>&1

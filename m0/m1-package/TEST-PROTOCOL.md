@@ -1,4 +1,25 @@
-# Coot 0.9.8.96 on Apple Silicon: test round 34 (build 34 = build 33 + two self-test checks corrected)
+# Coot 0.9.8.96 on Apple Silicon: test round 35 (build 35 = build 34 + a command log you can replay)
+
+**From you** (23 Nov): PP1 passes (self-test all N / N). The qtRView toolbar is CCP4's own (same outside coot0). Updating Maps printed
+`(calculate-maps-and-stats 3 1 1 2)`, which is not a function: you asked that the terminal output can be replayed, in Python by default.
+
+1. **Every command line Coot writes can be run again**: real names (`calculate_maps_and_stats_py(3, 1, 1, 2)`), quoted text, and a
+   comment where a command does not exist in that language. 12 wrong names and 26 unquoted arguments in Coot's source corrected.
+2. **The terminal shows Python** by default; `coot0_set_command_echo("scheme")` switches to Scheme.
+3. `0-coot-history.py` and `0-coot-history.scm` (written when Coot quits, in the folder you started it from) replay.
+
+**Verified without a window only**: a session (model, two maps, settings, a delete, calculate_maps_and_stats_py) was replayed from
+both files in fresh Coots to the same result. The Updating Maps menu itself was not clicked.
+
+## QQ. Round 35 checks (about 5 minutes)
+
+| # | Do | Expected |
+|---|---|---|
+| QQ1 | Install build 35, open a model and its MTZ (`coot0 --pdb model.pdb --auto data.mtz`), Calculate > Updating Maps... and start it. | The terminal shows `calculate_maps_and_stats_py(…)` (no brackets around the whole line, underscores). |
+| QQ2 | Copy that line into Calculate > Scripting > Python... and press Enter. | The maps are recalculated again, no error. |
+| QQ3 | Quit Coot, then in the same Terminal folder: `coot0 --script 0-coot-history.py` | Coot opens with the model and maps as you left them (the history replays). Optional: the same with `0-coot-history.scm`. |
+
+# Earlier round (PP1 confirmed 23 Nov): Coot 0.9.8.96 on Apple Silicon: test round 34 (build 34 = build 33 + two self-test checks corrected)
 
 **From you** (23 Nov): OO1, OO2 pass; OO3: Credits without the port line (done). Your `coot0 --self-test` had two FAILs.
 

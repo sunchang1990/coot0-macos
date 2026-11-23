@@ -1,0 +1,529 @@
+diff --git a/python/coot_utils.py b/python/coot_utils.py
+index dd439e0..0b36cfa 100644
+--- a/python/coot_utils.py
++++ b/python/coot_utils.py
+@@ -5031,3 +5031,15 @@ use_mogul = True
+ if (not command_in_path_qm("mogul")):
+     use_mogul = False
+ 
++
++# macOS port (build 35): the language of the command echo in the terminal.  Coot writes each command it runs as a line you can
++# paste and run again: in Python by default (as in Calculate > Scripting > Python...), or in Scheme.  The history files
++# 0-coot-history.py and 0-coot-history.scm are written in both languages either way.
++def coot0_set_command_echo(language):
++    """coot0_set_command_echo("python") or coot0_set_command_echo("scheme"); returns the language now in use"""
++    import os
++    lang = str(language).strip().lower()
++    if lang not in ("python", "scheme"):
++        raise ValueError('coot0_set_command_echo: use "python" or "scheme"')
++    os.environ["COOT_COMMAND_ECHO"] = lang
++    return lang
+diff --git a/src/c-interface-build-main-chain.cc b/src/c-interface-build-main-chain.cc
+index 7d43275..340f13f 100644
+--- a/src/c-interface-build-main-chain.cc
++++ b/src/c-interface-build-main-chain.cc
+@@ -183,7 +183,7 @@ void set_add_terminal_residue_debug_trials(short int debug_state) {
+    graphics_info_t g;
+    g.add_terminal_residue_debug_trials = debug_state;
+    std::vector<std::string> command_strings;
+-   command_strings.push_back("set-terminal-residue-debug-trials");
++   command_strings.push_back("set-add-terminal-residue-debug-trials");
+    command_strings.push_back(graphics_info_t::int_to_string(debug_state));
+    add_to_history(command_strings);
+ 
+@@ -300,7 +300,7 @@ int try_set_draw_baton(short int i) {
+ 
+    graphics_info_t g;
+    g.try_set_draw_baton(i);
+-   std::string cmd = "set-draw-baton";
++   std::string cmd = "try-set-draw-baton";
+    std::vector<coot::command_arg_t> args;
+    args.push_back(i);
+    add_to_history_typed(cmd, args);
+diff --git a/src/c-interface-build-side-chain.cc b/src/c-interface-build-side-chain.cc
+index b093084..ffc17d1 100644
+--- a/src/c-interface-build-side-chain.cc
++++ b/src/c-interface-build-side-chain.cc
+@@ -151,7 +151,7 @@ void delete_residue_sidechain(int imol, const char *chain_id, int resno, const c
+    args.push_back(imol);
+    args.push_back(coot::util::single_quote(chain_id));
+    args.push_back(resno);
+-   args.push_back(ins_code);
++   args.push_back(single_quote(ins_code));
+    add_to_history_typed(cmd, args);
+ }
+ 
+@@ -866,7 +866,7 @@ void set_edit_chi_angles_reverse_fragment_state(short int istate) {
+ void set_find_hydrogen_torsions(short int state) {
+    graphics_info_t g;
+    g.find_hydrogen_torsions_flag = static_cast<bool>(state);
+-   std::string cmd = "set-find-hydrogen-torsion";
++   std::string cmd = "set-find-hydrogen-torsions";
+    std::vector<coot::command_arg_t> args;
+    args.push_back(state);
+    add_to_history_typed(cmd, args);
+diff --git a/src/c-interface-build.cc b/src/c-interface-build.cc
+index 1689730..f60a991 100644
+--- a/src/c-interface-build.cc
++++ b/src/c-interface-build.cc
+@@ -125,15 +125,15 @@ void set_model_fit_refine_rotate_translate_zone_label(const char *txt) {
+    }
+    std::vector<std::string> command_strings;
+    command_strings.push_back("set-model-fit-refine-rotate-translate-zone-label");
+-   command_strings.push_back(txt);
++   command_strings.push_back(single_quote(txt));
+    add_to_history(command_strings);
+ }
+ 
+ void set_model_fit_refine_place_atom_at_pointer_label(const char *txt) {
+    graphics_info_t::model_fit_refine_place_atom_at_pointer_string = txt;
+    std::vector<std::string> command_strings;
+-   command_strings.push_back("set-model-fit-refine-atom-at-pointer-label");
+-   command_strings.push_back(txt);
++   command_strings.push_back("set-model-fit-refine-place-atom-at-pointer-label");
++   command_strings.push_back(single_quote(txt));
+    add_to_history(command_strings);
+ }
+ 
+@@ -297,7 +297,7 @@ int replace_fragment(int imol_target, int imol_fragment,
+       }
+    }
+    std::vector<std::string> command_strings;
+-   command_strings.push_back("replace-fragement");
++   command_strings.push_back("replace-fragment");
+    command_strings.push_back(graphics_info_t::int_to_string(imol_target));
+    command_strings.push_back(graphics_info_t::int_to_string(imol_fragment));
+    command_strings.push_back(single_quote(mmdb_atom_selection_str));
+@@ -329,7 +329,7 @@ int replace_residues_from_mol_scm(int imol_target,
+    if (false) {
+       // we can't yet add the residue_spec_list_scm
+       std::vector<std::string> command_strings;
+-      command_strings.push_back("replace-fragement-from-mol-scm");
++      command_strings.push_back("!replace-residues-from-mol-scm: residues replaced from another molecule (Coot does not record the residue list; not replayable)");
+       command_strings.push_back(graphics_info_t::int_to_string(imol_target));
+       add_to_history(command_strings);
+    }
+@@ -361,7 +361,7 @@ int replace_residues_from_mol_py(int imol_target,
+    if (false) {
+       // we can't yet add the residue_spec_list_py
+       std::vector<std::string> command_strings;
+-      command_strings.push_back("replace-fragement-from-mol-py");
++      command_strings.push_back("!replace_residues_from_mol_py: residues replaced from another molecule (Coot does not record the residue list; not replayable)");
+       command_strings.push_back(graphics_info_t::int_to_string(imol_target));
+       add_to_history(command_strings);
+    }
+@@ -3151,10 +3151,10 @@ void transform_zone(int imol, const char *chain_id, int resno_start, int resno_e
+       std::string cmd = "transform-zone";
+       std::vector<coot::command_arg_t> args;
+       args.push_back(imol);
+-      args.push_back(chain_id);
++      args.push_back(single_quote(chain_id));
+       args.push_back(resno_start);
+       args.push_back(resno_end);
+-      args.push_back(ins_code);
++      args.push_back(single_quote(ins_code));
+       args.push_back(m11);
+       args.push_back(m12);
+       args.push_back(m13);
+diff --git a/src/c-interface-info.cc b/src/c-interface-info.cc
+index 34087fe..c729c1d 100644
+--- a/src/c-interface-info.cc
++++ b/src/c-interface-info.cc
+@@ -36,6 +36,9 @@
+ 
+ #include <stdlib.h>
+ #include <string.h> // strncmp
++#include <string>
++#include <vector>
++std::string coot0_history_line(const std::vector<std::string> &command_strings, bool python);   // macOS port (build 35): graphics-info-state.cc
+ #include <iostream>
+ #include <fstream>
+ #include <stdexcept>
+@@ -374,10 +377,10 @@ void output_residue_info_dialog(int imol, int atom_index) {
+       }
+    }
+ 
+-   std::string cmd = "output-residue-info";
++   std::string cmd = "output-residue-info-dialog";   // macOS port (build 35): the real function, arguments in its order
+    std::vector<coot::command_arg_t> args;
+-   args.push_back(atom_index);
+    args.push_back(imol);
++   args.push_back(atom_index);
+    add_to_history_typed(cmd, args);
+ }
+ 
+@@ -562,11 +565,11 @@ output_atom_info_as_text(int imol, const char *chain_id, int resno,
+    std::string cmd = "output-atom-info-as-text";
+    std::vector<coot::command_arg_t> args;
+    args.push_back(imol);
+-   args.push_back(chain_id);
++   args.push_back(single_quote(chain_id));
+    args.push_back(resno);
+-   args.push_back(inscode);
+-   args.push_back(atname);
+-   args.push_back(altconf);
++   args.push_back(single_quote(inscode));
++   args.push_back(single_quote(atname));
++   args.push_back(single_quote(altconf));
+    add_to_history_typed(cmd, args);
+ 
+ }
+@@ -776,11 +779,11 @@ PyObject *atom_info_string_py(int imol, const char *chain_id, int resno,
+    std::string cmd = "atom_info_string";
+    std::vector<coot::command_arg_t> args;
+    args.push_back(imol);
+-   args.push_back(chain_id);
++   args.push_back(single_quote(chain_id));
+    args.push_back(resno);
+-   args.push_back(ins_code);
+-   args.push_back(atname);
+-   args.push_back(altconf);
++   args.push_back(single_quote(ins_code));
++   args.push_back(single_quote(atname));
++   args.push_back(single_quote(altconf));
+    add_to_history_typed(cmd, args);
+ 
+    return r;
+@@ -3324,13 +3327,13 @@ void add_to_history(const std::vector<std::string> &command_strings) {
+ #endif // MINGW
+       }
+ 
+-#if defined USE_GUILE && !defined WINDOWS_MINGW
+-      std::cout << graphics_info_t::schemize_command_strings(command_strings);
+-#else
+-#ifdef USE_PYTHON
+-      std::cout << graphics_info_t::pythonize_command_strings(command_strings);
+-#endif // USE_PYTHON
+-#endif // USE_GUILE/MINGW
++      // macOS port (build 35): the echo is a line you can paste and run: Python by default (the language of
++      // Calculate > Scripting > Python...), Scheme with COOT_COMMAND_ECHO=scheme (coot0_set_command_echo("scheme"))
++      {
++         const char *e = getenv("COOT_COMMAND_ECHO");
++         bool echo_python = ! (e && std::string(e) == "scheme");
++         std::cout << coot0_history_line(command_strings, echo_python);
++      }
+ 
+       if (g.console_display_commands.hilight_flag) {// hilight off
+ #ifdef WINDOWS_MINGW
+@@ -3496,7 +3499,7 @@ void print_all_history_in_scheme() {
+    graphics_info_t g;
+    std::vector<std::vector<std::string> > ls = g.history_list.history_list();
+    for (unsigned int i=0; i<ls.size(); i++)
+-      std::cout << i << "  " << graphics_info_t::schemize_command_strings(ls[i]) << "\n";
++      std::cout << i << "  " << coot0_history_line(ls[i], false) << "\n";   // macOS port (build 35)
+ 
+    add_to_history_simple("print-all-history-in-scheme");
+ 
+@@ -3507,7 +3510,7 @@ void print_all_history_in_python() {
+    graphics_info_t g;
+    std::vector<std::vector<std::string> > ls = g.history_list.history_list();
+    for (unsigned int i=0; i<ls.size(); i++)
+-      std::cout << i << "  " << graphics_info_t::pythonize_command_strings(ls[i]) << "\n";
++      std::cout << i << "  " << coot0_history_line(ls[i], true) << "\n";    // macOS port (build 35)
+    add_to_history_simple("print-all-history-in-python");
+ }
+ 
+@@ -3669,9 +3672,9 @@ int does_residue_exist_p(int imol, char *chain_id, int resno, char *inscode) {
+    std::string cmd = "does-residue-exist-p";
+    std::vector<coot::command_arg_t> args;
+    args.push_back(imol);
+-   args.push_back(chain_id);
++   args.push_back(single_quote(chain_id));
+    args.push_back(resno);
+-   args.push_back(inscode);
++   args.push_back(single_quote(inscode));
+    add_to_history_typed(cmd, args);
+    return istate;
+ }
+@@ -3888,7 +3891,7 @@ int place_text(const char *text, float x, float y, float z, int size) {
+                                                     // pushed.
+    std::string cmd = "place-text";
+    std::vector<coot::command_arg_t> args;
+-   args.push_back(text);
++   args.push_back(single_quote(text));
+    args.push_back(x);
+    args.push_back(y);
+    args.push_back(z);
+@@ -3932,7 +3935,7 @@ void edit_text(int text_handle, const char *str) {
+    std::string cmd = "edit-text";
+    std::vector<coot::command_arg_t> args;
+    args.push_back(text_handle);
+-   args.push_back(str);
++   args.push_back(single_quote(str));
+    add_to_history_typed(cmd, args);
+    graphics_draw();
+ }
+diff --git a/src/c-interface-maps.cc b/src/c-interface-maps.cc
+index 44db1e1..f665c5b 100644
+--- a/src/c-interface-maps.cc
++++ b/src/c-interface-maps.cc
+@@ -82,9 +82,9 @@ int map_from_mtz_by_calc_phases(const char *mtz_file_name,
+    }
+    std::vector<std::string> command_strings;
+    command_strings.push_back("map-from-mtz-by-calc-phases");
+-   command_strings.push_back(mtz_file_name);
+-   command_strings.push_back(f_col);
+-   command_strings.push_back(sigf_col);
++   command_strings.push_back(single_quote(mtz_file_name));
++   command_strings.push_back(single_quote(f_col));
++   command_strings.push_back(single_quote(sigf_col));
+    command_strings.push_back(graphics_info_t::int_to_string(imol_coords));
+    add_to_history(command_strings);
+    return ir;
+@@ -134,7 +134,7 @@ void calc_phases_generic(const char *mtz_file_name) {
+       }
+       std::vector<std::string> command_strings;
+       command_strings.push_back("calc-phases-generic");
+-      command_strings.push_back(mtz_file_name);
++      command_strings.push_back(single_quote(mtz_file_name));
+       add_to_history(command_strings);
+    }
+ }
+@@ -155,9 +155,9 @@ int map_from_mtz_by_refmac_calc_phases(const char *mtz_file_name,
+ 
+    std::vector<std::string> command_strings;
+    command_strings.push_back("map-from-mtz-by-refmac-calc-phases");
+-   command_strings.push_back(mtz_file_name);
+-   command_strings.push_back(f_col);
+-   command_strings.push_back(sigf_col);
++   command_strings.push_back(single_quote(mtz_file_name));
++   command_strings.push_back(single_quote(f_col));
++   command_strings.push_back(single_quote(sigf_col));
+    command_strings.push_back(graphics_info_t::int_to_string(imol_coords));
+    add_to_history(command_strings);
+    return istat;
+@@ -972,7 +972,7 @@ int auto_read_do_difference_map_too_state() {
+ void set_auto_read_do_difference_map_too(int i) {
+ 
+    graphics_info_t::auto_read_do_difference_map_too_flag = i;
+-   std::string cmd = "set-auto-read-do-dfference-map-too";
++   std::string cmd = "set-auto-read-do-difference-map-too";
+    std::vector<coot::command_arg_t> args;
+    args.push_back(i);
+    add_to_history_typed(cmd, args);
+diff --git a/src/c-interface.cc b/src/c-interface.cc
+index 0a621dc..d42568a 100644
+--- a/src/c-interface.cc
++++ b/src/c-interface.cc
+@@ -1516,8 +1516,8 @@ void set_auto_read_column_labels(const char *fwt, const char *phwt,
+ 
+    std::string cmd = "set-auto-read-column-labels";
+    std::vector<coot::command_arg_t> args;
+-   args.push_back(fwt);
+-   args.push_back(phwt);
++   args.push_back(single_quote(fwt));
++   args.push_back(single_quote(phwt));
+    args.push_back(is_for_diff_map_flag);
+    add_to_history_typed(cmd, args);
+ 
+@@ -1807,7 +1807,7 @@ void quanta_like_zoom() {
+ 
+ void set_scroll_by_wheel_mouse(int istate) {
+    graphics_info_t::do_scroll_by_wheel_mouse_flag = istate;
+-   std::string cmd = "set-scroll-by-mouse-wheel";
++   std::string cmd = "set-scroll-by-wheel-mouse";
+    std::vector<coot::command_arg_t> args;
+    args.push_back(istate);
+    add_to_history_typed(cmd, args);
+@@ -2091,7 +2091,7 @@ void set_map_radius_em(float radius) {
+    for (int ii=0; ii<g.n_molecules(); ii++)
+       g.molecules[ii].update_map(true);
+    graphics_draw();
+-   std::string cmd = "set-radius-em";
++   std::string cmd = "set-map-radius-em";
+    std::vector<coot::command_arg_t> args;
+    args.push_back(radius);
+    add_to_history_typed(cmd, args);
+@@ -2636,7 +2636,7 @@ short int get_symmetry_as_calphas_state(int imol) {
+    if (is_valid_model_molecule(imol))
+       r = g.molecules[imol].symmetry_as_calphas;
+        
+-   std::string cmd = "get-symmety-as-calphas-state";
++   std::string cmd = "get-symmetry-as-calphas-state";
+    std::vector<coot::command_arg_t> args;
+    args.push_back(imol);
+    add_to_history_typed(cmd, args);
+@@ -5132,7 +5132,7 @@ void graphics_to_user_defined_atom_colours_representation(int imol) {
+       bool all_atoms_flag = false;
+       g.molecules[imol].user_defined_colours_representation(g.Geom_p(), all_atoms_flag, g.draw_missing_loops_flag);
+       std::vector<std::string> command_strings;
+-      command_strings.push_back("graphics-to-user-defined-colours-representation");
++      command_strings.push_back("graphics-to-user-defined-atom-colours-representation");
+       command_strings.push_back(graphics_info_t::int_to_string(imol));
+       add_to_history(command_strings);
+    } else {
+@@ -5151,7 +5151,7 @@ void graphics_to_user_defined_atom_colours_all_atoms_representation(int imol) {
+       bool all_atoms_flag = true;
+       g.molecules[imol].user_defined_colours_representation(g.Geom_p(), all_atoms_flag, g.draw_missing_loops_flag);
+       std::vector<std::string> command_strings;
+-      command_strings.push_back("graphics-to-user-defined-colours-representation");
++      command_strings.push_back("graphics-to-user-defined-atom-colours-all-atoms-representation");
+       command_strings.push_back(graphics_info_t::int_to_string(imol));
+       add_to_history(command_strings);
+    } else {
+@@ -9063,7 +9063,7 @@ int add_spin_view(const char *view_name, int n_steps, float degrees_total) {
+ 
+    std::string cmd = "add-spin-view";
+    std::vector<coot::command_arg_t> args;
+-   args.push_back(view_name);
++   args.push_back(single_quote(view_name));
+    args.push_back(n_steps);
+    args.push_back(degrees_total);
+    add_to_history_typed(cmd, args);
+diff --git a/src/graphics-info-state.cc b/src/graphics-info-state.cc
+index 8e61e3d..1af32e6 100644
+--- a/src/graphics-info-state.cc
++++ b/src/graphics-info-state.cc
+@@ -30,6 +30,8 @@
+ #endif
+ 
+ #include <fstream>
++#include <map>
++#include <cstring>
+ #include <algorithm>
+ 
+ #include <gtk/gtk.h>
+@@ -1057,6 +1059,126 @@ graphics_info_t::add_history_command(const std::vector<std::string> &command_str
+ // Being a maniac, I thought to write out the history in scm and py.
+ // On reflection, I think I might be a nutter (200402xx?).
+ //
++// macOS port (build 35): history and the terminal echo that can be replayed.
++// Coot records each command once (name + arguments as text) and writes it in Python or Scheme form.  0.9.8.96 derived the
++// name by swapping '-' and '_' only, so commands whose scripting name differs (calculate_maps_and_stats_py, *-scm, ...) or that
++// exist in one language only produced lines that fail when replayed.  Here the name is looked up in the running interpreter:
++//   Python: <name>, <name>_py (from a -scm/_scm or _py name: the base name first);   Scheme: <name>, <name>-scm (likewise)
++// A command with no function in that language is written as a comment that says so (and gives the other language's call),
++// so a history file replays without stopping.  Booleans are written True/False (Python) and #t/#f (Scheme).
++static bool coot0_python_has(const std::string &name) {
++#ifdef USE_PYTHON
++   if (! Py_IsInitialized()) return false;
++   PyGILState_STATE gs = PyGILState_Ensure();
++   bool r = false;
++   PyObject *m = PyImport_AddModule("__main__");                 // borrowed
++   if (m) {
++      PyObject *d = PyModule_GetDict(m);                        // borrowed
++      PyObject *f = d ? PyDict_GetItemString(d, name.c_str()) : NULL;   // borrowed
++      r = f && PyCallable_Check(f);
++   }
++   PyGILState_Release(gs);
++   return r;
++#else
++   return false;
++#endif
++}
++
++static bool coot0_language_ready(bool python) {   // commands logged at startup come before the interpreters are up
++#ifdef USE_PYTHON
++   if (python) return Py_IsInitialized();
++#endif
++#ifdef USE_GUILE
++   if (! python) return scm_initialized_p != 0;
++#endif
++   return false;
++}
++
++static bool coot0_scheme_has(const std::string &name) {
++#ifdef USE_GUILE
++   SCM module = scm_c_resolve_module("guile-user");
++   SCM var = scm_module_variable(module, scm_from_locale_symbol(name.c_str()));
++   if (scm_is_false(var)) return false;
++   if (scm_is_false(scm_variable_bound_p(var))) return false;
++   return scm_is_true(scm_procedure_p(scm_variable_ref(var)));
++#else
++   return false;
++#endif
++}
++
++static std::string coot0_base_command_name(const std::string &raw) {   // a-b_c-scm -> a_b_c  (language suffix removed)
++   std::string n = raw;
++   for (auto &c : n) if (c == '-') c = '_';
++   for (const char *suf : {"_scm", "_py"}) {
++      size_t l = strlen(suf);
++      if (n.size() > l && n.compare(n.size() - l, l, suf) == 0) { n = n.substr(0, n.size() - l); break; }
++   }
++   return n;
++}
++
++// the scripting name of a recorded command in one language, "" when there is none
++std::string coot0_resolve_command_name(const std::string &raw, bool python) {
++   static std::map<std::string, std::string> cache_py, cache_scm;     // positive answers only (startup loads functions late)
++   std::map<std::string, std::string> &cache = python ? cache_py : cache_scm;
++   auto it = cache.find(raw);
++   if (it != cache.end()) return it->second;
++   if (! coot0_language_ready(python)) {           // not up yet: Coot's own conversion (swap - and _), not remembered
++      std::string own = raw;
++      for (auto &c : own) { if (python && c == '-') c = '_'; if (! python && c == '_') c = '-'; }
++      return own;
++   }
++   std::string base = coot0_base_command_name(raw);
++   std::vector<std::string> cands;
++   if (python) {
++      std::string own = raw; for (auto &c : own) if (c == '-') c = '_';
++      cands = { own, base, base + "_py" };
++   } else {
++      std::string own = raw; for (auto &c : own) if (c == '_') c = '-';
++      std::string b = base; for (auto &c : b) if (c == '_') c = '-';
++      cands = { own, b, b + "-scm" };
++   }
++   for (const auto &c : cands) {
++      if (python ? coot0_python_has(c) : coot0_scheme_has(c)) { cache[raw] = c; return c; }
++   }
++   return "";
++}
++
++std::string coot0_history_line(const std::vector<std::string> &command_strings, bool python) {
++   if (command_strings.empty()) return "";
++#ifdef USE_GUILE
++   if (command_strings.size() == 2 && command_strings[0] == DIRECT_SCM_STRING) {
++      if (! python) return command_strings[1];
++      return "# " + command_strings[1] + "   -- a Scheme expression; not available as a Python command";
++   }
++#endif
++   if (command_strings[0].size() > 1 && command_strings[0][0] == '!')   // a record that cannot be replayed (Coot did not keep all
++      return (python ? "# " : "; ") + command_strings[0].substr(1);      // the arguments): a comment that says what happened
++   auto format = [] (const std::string &name, const std::vector<std::string> &cs, bool py) {
++      std::string line = py ? name + "(" : "(" + name;
++      for (unsigned int i=1; i<cs.size(); i++) {
++         std::string a = cs[i];
++         if (py) { if (a == "#t") a = "True"; else if (a == "#f") a = "False"; }
++         else    { if (a == "True") a = "#t"; else if (a == "False") a = "#f"; }
++         if (py) { if (i > 1) line += ", "; line += a; }
++         else    { line += " "; line += a; }
++      }
++      line += ")";
++      return line;
++   };
++   std::string name = coot0_resolve_command_name(command_strings[0], python);
++   if (! name.empty()) return format(name, command_strings, python);
++   // none in this language: a comment, with the other language's call when there is one
++   std::string other = coot0_resolve_command_name(command_strings[0], ! python);
++   std::string shown = python ? coot0_base_command_name(command_strings[0]) : command_strings[0];
++   if (! python) for (auto &c : shown) if (c == '_') c = '-';
++   std::string line = (python ? "# " : "; ") + format(shown, command_strings, python);
++   if (! other.empty())
++      line += std::string("   -- ") + (python ? "Scheme only: " : "Python only: ") + format(other, command_strings, ! python);
++   else
++      line += "   -- not available as a scripting command";
++   return line;
++}
++
+ // Well, it seems I am still a nutter, but instead of keeping 2
+ // histories, I will keep one history that can be formatted as either
+ // (20050328).
+@@ -1070,14 +1192,14 @@ graphics_info_t::save_history() const {
+    std::vector<std::string> languaged_commands;
+    if (python_history) { 
+       for (unsigned int i=0; i<raw_command_strings.size(); i++)
+-	 languaged_commands.push_back(pythonize_command_strings(raw_command_strings[i]));
++	 languaged_commands.push_back(coot0_history_line(raw_command_strings[i], true));   // macOS port (build 35): replayable
+       std::string file = history_file_name + ".py";
+       istate =  write_state(languaged_commands, file);
+    }
+    if (guile_history) {
+       languaged_commands.resize(0);
+       for (unsigned int i=0; i<raw_command_strings.size(); i++)
+-	 languaged_commands.push_back(schemize_command_strings(raw_command_strings[i]));
++	 languaged_commands.push_back(coot0_history_line(raw_command_strings[i], false));  // macOS port (build 35): replayable
+       std::string file = history_file_name + ".scm";
+       istate =  write_state(languaged_commands, file);
+    }

@@ -1,0 +1,60 @@
+Build 35 verification of the TARBALL (23 Nov), sha256 10b41f5692a0422e3a618c7427904b96f0544bbfed4f1510142d772db7a7b62b
+(1) unpacked into a folder with spaces, env -i; (2) installed with install.sh into a throw-away HOME, then coot0 --self-test
+
+== unpacked
+python-api                 SUMMARY 22 / 22
+scheme-api                 SUMMARY 33 / 33
+data-and-maps              SUMMARY 39 / 39
+ondemand-read              SUMMARY 3 / 3
+refine-zone                SUMMARY 7 / 7
+process-helpers            SUMMARY 10 / 10
+api-docs                   SUMMARY 12 / 12
+bundle-python              SUMMARY 19 / 19
+bundle-scheme              SUMMARY 6 / 6
+rdkit-python               SUMMARY 10 / 10
+rdkit-scheme               SUMMARY 3 / 3
+gtk2compat                 SUMMARY 12 / 12
+gui-scripts                SUMMARY 16 / 16
+gui-dialogs                SUMMARY 90 / 90
+gui-glyco                  SUMMARY 14 / 14
+gui-toolbar                SUMMARY 13 / 13
+gui-rcrane                 SUMMARY 21 / 21
+refmac-run                 SUMMARY 11 / 11
+cookbook                   SUMMARY 166 / 166
+history-replay             SUMMARY 10 / 10
+installer                  SUMMARY 26 / 26
+startup-dictionaries       SUMMARY 1 / 1
+SWEEP 21 | Edit > Settings... > Python: Install Template Keybindings button '   X   Edit Chi Angles' | CRASH (process died: OpenGL
+SWEEP 36 | Calculate > Map Tools... > Brighten Maps | CRASH (process died: OpenGL call without a graphics context, or hang)
+SWEEP 108 | Draw > Representation Tools... > Ball & Stick... button '  OK  ' | CRASH (process died: OpenGL call without a graphics
+SWEEP 117 | Draw > Representation Tools... > Highlight Interesting Site (here)... | CRASH (process died: OpenGL call without a gra
+SWEEP 124 | Draw > Representation Tools... > 3D Annotations... > Save Annotations... | CRASH (process died: OpenGL call without a 
+SWEEP 152 | Ligand > Find Ligands... | CRASH (process died: OpenGL call without a graphics context, or hang)
+SUMMARY 1 / 1
+install rc 0
+== installed coot0 --self-test
+python-api                 SUMMARY 22 / 22
+scheme-api                 SUMMARY 33 / 33
+data-and-maps              SUMMARY 39 / 39
+ondemand-read              SUMMARY 3 / 3
+refine-zone                SUMMARY 7 / 7
+process-helpers            SUMMARY 10 / 10
+api-docs                   SUMMARY 12 / 12
+bundle-python              SUMMARY 19 / 19
+bundle-scheme              SUMMARY 6 / 6
+rdkit-python               SUMMARY 10 / 10
+rdkit-scheme               SUMMARY 3 / 3
+gtk2compat                 SUMMARY 12 / 12
+gui-scripts                SUMMARY 16 / 16
+gui-dialogs                SUMMARY 90 / 90
+gui-glyco                  SUMMARY 14 / 14
+gui-toolbar                SUMMARY 13 / 13
+gui-rcrane                 SUMMARY 21 / 21
+refmac-run                 SUMMARY 11 / 11
+cookbook                   SUMMARY 166 / 166
+history-replay             SUMMARY 10 / 10
+installer                  SUMMARY 26 / 26
+startup-dictionaries       SUMMARY 1 / 1
+
+[exited with code 0]
+real window: 12 / 12; bundle_check: 211 Mach-O, minos 11.0, OK; patch series: 52 patches from the pristine tree: IDENTICAL

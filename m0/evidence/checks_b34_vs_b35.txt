@@ -1,0 +1,39 @@
+Build 35 regression checks: build 34 vs build 35 (23 Nov)
+
+tests/history_replay_test.sh with build 34's coot-bin and coot_utils.py:
+PASS Coot wrote 0-coot-history.py and 0-coot-history.scm
+FAIL terminal echo is Python by default and names the real function: calculate_maps_and_stats_py(0, 1, 1, 2)
+FAIL coot0_set_command_echo("scheme") switches the echo to Scheme: (set-map-radius-em 21.00)
+FAIL names that were wrong in 0.9.8.96 are recorded right (set-scroll-by-wheel-mouse, set-map-radius-em, get-symmetry-as-calphas-state, set-auto-read-do-difference-map-too)
+FAIL text arguments are recorded in quotes (0.9.8.96: (does-residue-exist-p 0 A 42 ))
+FAIL a Python-only command is a comment in the Scheme history, with its Python call
+FAIL 0-coot-history.py replays to the end without an error
+FAIL   ... and gives the same result (3 molecules, A41 deleted, A42 there)
+FAIL 0-coot-history.scm replays to the end without an error
+FAIL   ... and gives the same result (3 molecules, A41 deleted, A42 there)
+SUMMARY 1 / 10
+
+with build 35:
+PASS Coot wrote 0-coot-history.py and 0-coot-history.scm
+PASS terminal echo is Python by default and names the real function: calculate_maps_and_stats_py(0, 1, 1, 2)
+PASS coot0_set_command_echo("scheme") switches the echo to Scheme: (set-map-radius-em 21.00)
+PASS names that were wrong in 0.9.8.96 are recorded right (set-scroll-by-wheel-mouse, set-map-radius-em, get-symmetry-as-calphas-state, set-auto-read-do-difference-map-too)
+PASS text arguments are recorded in quotes (0.9.8.96: (does-residue-exist-p 0 A 42 ))
+PASS a Python-only command is a comment in the Scheme history, with its Python call
+PASS 0-coot-history.py replays to the end without an error
+PASS   ... and gives the same result (3 molecules, A41 deleted, A42 there)
+PASS 0-coot-history.scm replays to the end without an error
+PASS   ... and gives the same result (3 molecules, A41 deleted, A42 there)
+SUMMARY 10 / 10
+
+m0/tools/check_history_names.py on build 34's source (51 patches):
+FAIL 257 logged names are real scripting functions or listed as not scriptable  ['get-symmety-as-calphas-state', 'graphics-to-user-defined-colours-representation', 'output-residue-info', 'replace-fragement', 'replace-fragement-from-mol-py', 'replace-fragement-from-mol-scm', 'set-auto-read-do-dfferen
+FAIL text arguments are logged in quotes  ['c-interface-build-side-chain.cc delete_residue_sidechain(ins_code)', 'c-interface-build.cc set_model_fit_refine_rotate_translate_zone_label(txt)', 'c-interface-build.cc set_model_fit_refine_place_atom_at_pointer_label(txt)', 'c-interface-build.cc transform
+PASS the not-scriptable list is still needed (each name is still logged)
+SUMMARY 1 / 3
+
+on build 35's source:
+PASS 256 logged names are real scripting functions or listed as not scriptable
+PASS text arguments are logged in quotes
+PASS the not-scriptable list is still needed (each name is still logged)
+SUMMARY 3 / 3
