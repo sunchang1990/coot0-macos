@@ -6,6 +6,19 @@ applied to the pristine tree by `setup.sh`) or a change of the packaged data / s
 round, `TEST-PROTOCOL.md` has the user-facing explanation and the checks for you (newest round first).  A "build" is one delivered zip.
 "Verified" means a headless test (no window server in the build environment); what only a screen can show is marked "on screen: not verified".
 
+## Build 34  (tests only; `bin/coot-bin` as in build 33)
+- `coot0 --self-test` (the self-test of an INSTALLED copy) showed two FAILs (user, 23 Nov). Both were mistakes in the tests, not in
+  coot0; they appear only when the tests run from an installed copy, and the tests of each build had run from the unpacked folder:
+  1. `bundle-python` wanted gdk-pixbuf's loader list (needed for the toolbar icons) inside the coot0 folder; an installed copy keeps
+     it in `~/Library/Application Support/coot0/.cache` on purpose (build 17: the installed folder is never written to). The check
+     now accepts either place and checks what matters: every loader it lists is one of this folder's.
+  2. `installer` copies the folder it runs from to play a freshly unpacked download; from an installed copy that copy took the
+     install marker along, believed it was installed (Retina by default) and failed "keeps the standard resolution". The copy now
+     drops the marker.
+- From this build on, each build is also tested as `coot0 --self-test` from a fresh install (a throw-away home), not only from the
+  unpacked folder.
+- README: Credits without the line about the port (user).
+
 ## Build 33  (patch 0051 about-dialog-small-coot0-link (C++); new `bin/coot-bin`; wording of README / LICENSING / README-FIRST)
 - **Help > About** is Coot's own window again, plus one small line (user, 23 Nov: build 32's paragraph was too much): the copyright
   lines end with "macOS / Apple Silicon changes (coot0): Copyright (C) 2026 Chang Sun", and the word **coot0** is a link to the

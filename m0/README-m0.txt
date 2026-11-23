@@ -562,3 +562,9 @@ Round 33 (build 33, 23 Nov; patch 0051 about-dialog-small-coot0-link; coot-bin m
   Quartz).  Test about_notice: comments == "Marina Bay", label markup has the link, activate-link handler pending (b32 89/90, b33 90/90).
   Wording (user): README XQuartz paragraph dated Nov 2026; "independent build based on the Coot 0.9.8.96 source code from Paul
   Emsley's website" in README / LICENSING / README-FIRST / GitHub description; all "not supported by the Coot developers" removed.
+
+Round 34 (build 34, 23 Nov; tests only, coot-bin = m0/bin_b33).  User's coot0 --self-test (installed copy): bundle-python 18/19,
+  installer 25/26.  Causes (reproduced on a copy with .coot0-installed): bundle_python.py required GDK_PIXBUF_MODULE_FILE inside the
+  folder (installed copies: $STATE/.cache, STATE = ~/Library/Application Support/coot0) -> now: file in folder or XDG_CACHE_HOME,
+  >= 10 loaders, all inside the folder; installer_test.sh cp -Rc of HERE kept .coot0-installed -> run-coot.sh set COOT_RETINA=1 for
+  the "unpacked" copy -> rm -f "$PKG/.coot0-installed".  Verification adds: install the tarball into a throw-away HOME, coot0 --self-test.

@@ -1,4 +1,21 @@
-# Coot 0.9.8.96 on Apple Silicon: test round 33 (build 33 = build 32 + a smaller Help > About notice + README wording)
+# Coot 0.9.8.96 on Apple Silicon: test round 34 (build 34 = build 33 + two self-test checks corrected)
+
+**From you** (23 Nov): OO1, OO2 pass; OO3: Credits without the port line (done). Your `coot0 --self-test` had two FAILs.
+
+1. **Both FAILs were mistakes in the tests**, not in coot0, and showed only from an installed copy (my tests of each build ran from
+   the unpacked folder): `bundle-python` wanted a small cache file (the list of image loaders) inside the coot0 folder, but an
+   installed copy keeps it in `~/Library/Application Support/coot0` on purpose; `installer` made a copy to play an unpacked download,
+   but from an installed copy the copy took the install marker along and believed it was installed. Both corrected; reproduced
+   before and after on a copy marked as installed (`evidence/checks_b33_vs_b34.txt`).
+2. Each build is now also tested as `coot0 --self-test` from a fresh install.
+
+## PP. Round 34 checks (about 20 minutes, mostly waiting)
+
+| # | Do | Expected |
+|---|---|---|
+| PP1 | Install build 34 (`./install.sh` in the unpacked folder), then in Terminal: `coot0 --self-test` | 21 lines, every one N / N (installer 26 / 26, bundle-python 19 / 19). |
+
+# Earlier round (OO1-OO3 confirmed 23 Nov): Coot 0.9.8.96 on Apple Silicon: test round 33 (build 33 = build 32 + a smaller Help > About notice + README wording)
 
 **From you** (23 Nov): build 32's About window had too much coot0 text; the README's XQuartz sentence should hold whether or not
 XQuartz works again; drop the sentences about the Coot developers' support and say that coot0 is an independent build based on

@@ -13,6 +13,9 @@ VERSION="$(cat "$HERE/VERSION" 2>/dev/null || echo none)"
 PKG="$T/Down loads/Coot0 package"; mkdir -p "$T/Down loads"
 cp -Rc "$HERE" "$PKG" 2>/dev/null || ditto "$HERE" "$PKG"
 for d in logs work home results .cache; do [ -d "$PKG/$d" ] && find "$PKG/$d" -mindepth 1 -delete 2>/dev/null; done
+# (build 34) a self-test started from an INSTALLED copy (coot0 --self-test) copies its install marker too: without this line the
+# "unpacked folder" below believed it was installed (Retina by default, state in Application Support) and its check failed
+rm -f "$PKG/.coot0-installed"
 for f in bin/coot-bin run-coot.sh lib/libgtk-quartz-2.0.0.dylib; do xattr -w com.apple.quarantine "0083;6734a1b2;Safari;" "$PKG/$f" 2>/dev/null; done
 
 # ---- zsh user, default folder

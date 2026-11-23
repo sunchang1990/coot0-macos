@@ -29,7 +29,17 @@ files = sorted(glob.glob(os.path.join(here, "share/coot/pixmaps/*")))
 files = [f for f in files if f.lower().endswith((".png", ".svg", ".jpg", ".jpeg"))]
 bad = [os.path.basename(f) for f in files if not pb.gdk_pixbuf_new_from_file(f.encode(), None)]
 check("gdk-pixbuf loads %d of %d pixmaps (%d svg); failures: %s" % (len(files) - len(bad), len(files), sum(f.endswith(".svg") for f in files), bad[:3]), lambda: not bad and len(files) > 100)
-check("pixbuf loader cache in use points into the bundle", lambda: inside(os.environ["GDK_PIXBUF_MODULE_FILE"]) and all(m.group(1).startswith(here + os.sep) for m in (re.match(r'"(/[^"]+\.(?:so|dylib))"', l) for l in open(os.environ["GDK_PIXBUF_MODULE_FILE"])) if m))
+# (build 34) the cache FILE is in this folder (unpacked) or in the state folder's .cache (a copy installed by install.sh keeps
+# it in ~/Library/Application Support/coot0, so the installed folder is never written to); what matters is that every loader
+# it lists is one of this folder's.  Build 33's check wanted the file itself inside the folder and failed from installed copies.
+def pixbuf_cache():
+    f = os.environ["GDK_PIXBUF_MODULE_FILE"]
+    cache_dir = os.path.realpath(os.environ.get("XDG_CACHE_HOME", "/nonexistent"))
+    where_ok = inside(f) or os.path.realpath(f).startswith(cache_dir + os.sep)
+    loaders = [m.group(1) for m in (re.match(r'"(/[^"]+\.(?:so|dylib))"', l) for l in open(f)) if m]
+    outside = [l for l in loaders if not os.path.realpath(l).startswith(here + os.sep)]
+    return True if (where_ok and len(loaders) >= 10 and not outside) else (f, len(loaders), outside[:2])
+check("pixbuf loader cache in use lists this folder's loaders (cache file in the folder or in the state folder)", pixbuf_cache)
 
 # fontconfig with the bundled configuration
 fc = ctypes.CDLL(os.path.join(here, "lib/libfontconfig.1.dylib"))

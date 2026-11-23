@@ -1,0 +1,16 @@
+Build 34 regression checks: build 33 vs build 34 tests (23 Nov), on a copy marked as installed (.coot0-installed), as 'coot0 --self-test' runs
+
+build 33 tests:
+FAIL pixbuf loader cache in use points into the bundle                                                     False
+SUMMARY 18 / 19
+FAIL the unpacked folder (./run-coot.sh, not installed) keeps the standard resolution, and Coot starts
+SUMMARY 25 / 26
+
+build 34 tests, same copy:
+PASS pixbuf loader cache in use lists this folder's loaders (cache file in the folder or in the state folder)  True
+SUMMARY 19 / 19
+SUMMARY 26 / 26
+
+build 34 tests on the unpacked folder (not installed):
+<scratch>/b33/repro/inst3.txt:SUMMARY 26 / 26
+<scratch>/b33/repro/bp3.txt:SUMMARY 19 / 19
