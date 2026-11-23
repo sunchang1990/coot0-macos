@@ -1,0 +1,9 @@
+Build 33 regression check: build 32 vs build 33 (23 Nov)
+
+gui-dialogs (new About check) with the build 32 coot-bin:
+FAIL Help > About: Coot's window plus one small line 'macOS / Apple Silicon changes (coot0)', coot0 linked to the repository                                           'missing: no coot0 paragraph under the version (Coot\'s own \'Marina Bay\' only), the word coot0 links to the repository, the link is opened by coot0\'s handler (o
+SUMMARY 89 / 90
+
+with the build 33 coot-bin:
+PASS Help > About: Coot's window plus one small line 'macOS / Apple Silicon changes (coot0)', coot0 linked to the repository                                         
+SUMMARY 90 / 90

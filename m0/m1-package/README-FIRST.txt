@@ -1,6 +1,6 @@
 Coot 0.9.8.96 for Apple Silicon Macs ("coot0")
 ==============================================
-An unofficial build of Coot 0.9.8.96 (Paul Emsley et al., MRC-LMB) that runs natively on Apple Silicon Macs
+An independent build of Coot 0.9.8.96 (Paul Emsley et al., MRC-LMB) that runs natively on Apple Silicon Macs
 without XQuartz.  Menus, look and the Python / Scheme scripting are those of Coot 0.9.8.96.
 
 INSTALL (about 1 minute)
@@ -32,8 +32,8 @@ LICENCE
   Coot is free software by Paul Emsley et al. (GPL-3.0-or-later).  The coot0 changes for macOS: Copyright (C) 2026
   Chang Sun, GPL-3.0-or-later.  The package as a whole is distributed under GPL-3.0; bundled libraries keep their own licences.
   See LICENSING.md, LICENSE, THIRD_PARTY_LICENSES.md, licenses/ and CORRESPONDING_SOURCE.md (how to get the source).
-  coot0 is an unofficial build, not supported by the Coot developers: report problems at
-  https://github.com/sunchang1990/coot0-macos/issues, not to them.
+  coot0 is an independent build based on the Coot 0.9.8.96 source code from Paul Emsley's website.
+  Report problems at https://github.com/sunchang1990/coot0-macos/issues.
 
 HELP
   coot0 --legacy        standard (non-Retina) resolution for the 3D view

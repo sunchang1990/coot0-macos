@@ -7,16 +7,20 @@ used programs for building and fixing protein and nucleic-acid models in X-ray a
 in, and teach with, its 0.9 series: the menus people know by heart, the keyboard and mouse habits, and years of lab
 scripts and plug-ins written for its Python and Scheme interface.
 
-On a current Mac, Coot 0.9 has become hard to run. The old builds need XQuartz, an X11 server that Apple no longer
-ships. They were made for Intel Macs and run poorly, if at all, on recent versions of macOS. Coot 1 runs natively, but it is a redesign with a new interface and a new scripting interface. Moving to
-it means retraining people and rewriting scripts.
+The Mac builds of Coot 0.9 draw their windows through XQuartz, the X11 server for macOS. At the time of writing
+(November 2026), XQuartz was disrupted by the macOS 26 Tahoe update, and its developers are working to restore it.
+Coot 1 runs natively, but it is a redesign with a new interface and a new scripting interface; moving to it means
+retraining people and rewriting scripts.
 
-**coot0 removes that choice.** It is Coot 0.9.8.96 rebuilt for Apple Silicon (M1 and later). There is no XQuartz and no
-Rosetta, and the 3D view is sharp on Retina screens. The interface, the menus and the scripting functions are those of
-Coot 0.9, so a lab can keep its workflows, scripts and teaching material, and new members learn from the same material.
+**coot0 does not need XQuartz.** It is Coot 0.9.8.96 rebuilt for Apple Silicon (M1 and later), and it draws its
+windows by calling macOS's own Quartz graphics directly, so it works whatever the state of XQuartz. It also uses the
+full Retina resolution of a modern Mac for the 3D view. The interface, the menus and the scripting functions are those
+of Coot 0.9, so a lab can keep its workflows, scripts and teaching material, and new members learn from the same
+material.
 
-coot0 is an independent, unofficial build. The Coot developers did not make it and do not support it. Please report
-problems in this repository's [Issues](../../issues).
+coot0 is an independent build based on the Coot 0.9.8.96 source code from
+[Paul Emsley's website](https://www2.mrc-lmb.cam.ac.uk/personal/pemsley/coot/). Please report problems with coot0 in
+this repository's [Issues](../../issues).
 
 ## What it gives you
 

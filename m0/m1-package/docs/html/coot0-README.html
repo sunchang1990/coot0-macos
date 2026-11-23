@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="341cffb7f622ab48155e1b11506bfdc1234dbd0b">
+<meta name="coot0-source-sha1" content="940cb051e871049db38f30a76fcdec81076f6e26">
 <title>coot0: Coot 0.9 for Apple Silicon Macs - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -20,14 +20,18 @@ table { border-collapse:collapse; margin:8px 0; display:block; overflow-x:auto; 
 used programs for building and fixing protein and nucleic-acid models in X-ray and cryo-EM maps. Many labs still work
 in, and teach with, its 0.9 series: the menus people know by heart, the keyboard and mouse habits, and years of lab
 scripts and plug-ins written for its Python and Scheme interface.</p>
-<p>On a current Mac, Coot 0.9 has become hard to run. The old builds need XQuartz, an X11 server that Apple no longer
-ships. They were made for Intel Macs and run poorly, if at all, on recent versions of macOS. Coot 1 runs natively, but it is a redesign with a new interface and a new scripting interface. Moving to
-it means retraining people and rewriting scripts.</p>
-<p><strong>coot0 removes that choice.</strong> It is Coot 0.9.8.96 rebuilt for Apple Silicon (M1 and later). There is no XQuartz and no
-Rosetta, and the 3D view is sharp on Retina screens. The interface, the menus and the scripting functions are those of
-Coot 0.9, so a lab can keep its workflows, scripts and teaching material, and new members learn from the same material.</p>
-<p>coot0 is an independent, unofficial build. The Coot developers did not make it and do not support it. Please report
-problems in this repository's <a href="https://github.com/sunchang1990/coot0-macos/issues">Issues</a>.</p>
+<p>The Mac builds of Coot 0.9 draw their windows through XQuartz, the X11 server for macOS. At the time of writing
+(November 2026), XQuartz was disrupted by the macOS 26 Tahoe update, and its developers are working to restore it.
+Coot 1 runs natively, but it is a redesign with a new interface and a new scripting interface; moving to it means
+retraining people and rewriting scripts.</p>
+<p><strong>coot0 does not need XQuartz.</strong> It is Coot 0.9.8.96 rebuilt for Apple Silicon (M1 and later), and it draws its
+windows by calling macOS's own Quartz graphics directly, so it works whatever the state of XQuartz. It also uses the
+full Retina resolution of a modern Mac for the 3D view. The interface, the menus and the scripting functions are those
+of Coot 0.9, so a lab can keep its workflows, scripts and teaching material, and new members learn from the same
+material.</p>
+<p>coot0 is an independent build based on the Coot 0.9.8.96 source code from
+<a href="https://www2.mrc-lmb.cam.ac.uk/personal/pemsley/coot/">Paul Emsley's website</a>. Please report problems with coot0 in
+this repository's <a href="https://github.com/sunchang1990/coot0-macos/issues">Issues</a>.</p>
 <h2 id="what-it-gives-you">What it gives you</h2>
 <ul><li><strong>No new interface to learn.</strong> Coot 0.9.8.96's own windows, menus, dialogs, keys and mouse actions, drawn by macOS itself, with Retina rendering of the 3D view. A trackpad two-finger click stands in for the middle mouse button.</li><li><strong>Your scripts keep working.</strong> Python 3 and Scheme (Guile 3) scripting with Coot 0.9's function names. The extension menus and dialogs that Coot 0.9 builds in Python run as written: Glyco, NCS, PISA, PDB-REDO, Fit Loop, RCrane for RNA and the others.</li><li><strong>Scripting you can look up.</strong> All of Coot 0.9's roughly 1,700 Python and Scheme functions are documented, with an example for each one that was run on test data and a note of what it actually did. There is also a cookbook of 85 everyday recipes in both languages, and you can search menus and documentation from the Help menu.</li><li><strong>Some things work better than in the original 0.9.8.96.</strong> Several features that were broken in the released 0.9.8.96 now work, and a few were added for Ramachandran clean-up and for watching whole-molecule refinement (see below).</li><li><strong>Your other programs are found.</strong> CCP4 (refmac5, acedrg, ...) and the reduce and probe tools of CCP4 or Phenix are picked up automatically when installed. RDKit ligand tools (Lidia, SMILES import) and the CCP4 monomer library are included.</li><li><strong>Tested.</strong> Every menu entry and toolbar button has been tried in a real window, about 530 automated checks run against every release, and members of a structural biology lab have tested each release on their own data.</li></ul>
 <h2 id="what-is-different-from-the-original-coot-09896">What is different from the original Coot 0.9.8.96</h2>

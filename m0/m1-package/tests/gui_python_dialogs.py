@@ -1185,27 +1185,40 @@ def contact_dots_off():
     return True if "Coot All-Atom Contact Dots Off" in ligand else "no menu entry Ligand > Coot All-Atom Contact Dots Off"
 check("contact dots (Ctrl-1) can be switched off: coot0_contact_dots_off, Ligand > Coot All-Atom Contact Dots Off", contact_dots_off)
 
-# build 32: GPL v3 section 5 -- Help > About (Coot's own C dialog) says that this is a modified version, by whom and when,
-# and where the licence and the changes are (before: only Coot's original copyright and the GPL text)
+# build 32: GPL v3 section 5 -- Help > About (Coot's own C dialog) says that this is a modified version, by whom and when.
+# build 33 (user 23 Nov): kept small -- no coot0 paragraph under the version; the copyright line
+# "macOS / Apple Silicon changes (coot0): Copyright (C) 2026 Chang Sun" with the word coot0 linking to the repository
 def about_notice():
     import ctypes
     lib = ctypes.PyDLL(None)
     lib.create_aboutdialog.restype = ctypes.c_void_p
-    for n in ("gtk_about_dialog_get_copyright", "gtk_about_dialog_get_comments", "gtk_about_dialog_get_license"):
+    for n in ("gtk_about_dialog_get_copyright", "gtk_about_dialog_get_comments", "gtk_about_dialog_get_license", "gtk_label_get_label"):
         getattr(lib, n).restype = ctypes.c_char_p; getattr(lib, n).argtypes = [ctypes.c_void_p]
+    lib.g_signal_lookup.restype = ctypes.c_uint; lib.g_signal_lookup.argtypes = [ctypes.c_char_p, ctypes.c_size_t]
+    lib.g_signal_has_handler_pending.argtypes = [ctypes.c_void_p, ctypes.c_uint, ctypes.c_uint32, ctypes.c_int]
+    lib.gtk_label_get_type.restype = ctypes.c_size_t
     d = lib.create_aboutdialog()
     cr = (lib.gtk_about_dialog_get_copyright(d) or b"").decode()
     cm = (lib.gtk_about_dialog_get_comments(d) or b"").decode()
     lic = (lib.gtk_about_dialog_get_license(d) or b"").decode()
+    marks = []
+    for w in H.walk(_c.wrap(d)):
+        if type(w).__name__ == "Label":
+            mk = (lib.gtk_label_get_label(w._ptr) or b"").decode()
+            if "Chang Sun" in mk:
+                sid = lib.g_signal_lookup(b"activate-link", lib.gtk_label_get_type())
+                marks.append((mk, bool(lib.g_signal_has_handler_pending(w._ptr, sid, 0, 0))))
     lib.gtk_widget_destroy.argtypes = [ctypes.c_void_p]; lib.gtk_widget_destroy(d)
-    want = [("Copyright (C) 2026 Chang Sun" in cr, "copyright line of the coot0 changes"),
-            ("University of York" in cr, "Coot's own copyright kept"),
-            ("modified" in cm and "coot0" in cm and "2026" in cm, "notice of modification with date"),
-            ("CHANGELOG.md" in cm and "github.com/sunchang1990/coot0-macos" in cm, "where the changes and the source are"),
+    link = '(<a href="https://github.com/sunchang1990/coot0-macos">coot0</a>): Copyright (C) 2026 Chang Sun'
+    want = [("macOS / Apple Silicon changes (coot0): Copyright (C) 2026 Chang Sun" in cr, "copyright line of the coot0 changes"),
+            ("University of York" in cr and "Paul Emsley" in cr, "Coot's own copyright kept"),
+            (cm.strip() == "Marina Bay", "no coot0 paragraph under the version (Coot's own 'Marina Bay' only)"),
+            (any(link in mk for mk, _ in marks), "the word coot0 links to the repository"),
+            (any(h for _, h in marks), "the link is opened by coot0's handler (open)"),
             ("GNU GENERAL PUBLIC LICENSE" in lic, "the GPL text")]
     miss = [w for ok, w in want if not ok]
-    return True if not miss else "missing: %s (comments %r)" % (", ".join(miss), cm[:80])
-check("Help > About says coot0 is a modified Coot 0.9.8.96 (who, when, licence, where the source is)", about_notice)
+    return True if not miss else "missing: %s (comments %r, labels %r)" % (", ".join(miss), cm[:60], [m[0][:120] for m in marks])
+check("Help > About: Coot's window plus one small line 'macOS / Apple Silicon changes (coot0)', coot0 linked to the repository", about_notice)
 
 check("no exception in any GTK signal handler", lambda: True if not _c.CALLBACK_ERRORS else [e[1][-300:] for e in _c.CALLBACK_ERRORS][:2])
 w = max(len(r[0]) for r in res)

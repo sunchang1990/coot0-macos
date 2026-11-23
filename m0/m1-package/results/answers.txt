@@ -1,7 +1,9 @@
 # One line per check: PASS / FAIL / PARTIAL and a few words.  (You can also just tell me in chat.)
-# Round 32 (see TEST-PROTOCOL.md, section NN):
-NN1 Help > About shows the coot0 notice (modified by, 2026, GitHub address, copyright line):
-NN2 GitHub README / LICENSING.md / CORRESPONDING_SOURCE.md clear, nothing private:
+# Round 33 (see TEST-PROTOCOL.md, section OO):
+OO1 Help > About: Coot's own window plus the small line 'macOS / Apple Silicon changes (coot0)', coot0 underlined:
+OO2 clicking coot0 opens the GitHub page:
+OO3 GitHub README / LICENSING.md / CORRESPONDING_SOURCE.md read well, nothing private:
+# Round 32 (section NN): NN1 remarks 23 Nov -> build 33.
 # Round 31 (section MM): MM1-MM4 confirmed 22 Nov.
 # Round 30 (section LL): LL1, LL2 confirmed 20 Nov; LL3 failed only on the placeholder path (fine with the real path).
 # Round 29 (section KK): KK1, KK2 confirmed 20 Nov.

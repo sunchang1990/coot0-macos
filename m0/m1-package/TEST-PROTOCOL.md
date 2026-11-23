@@ -1,4 +1,26 @@
-# Coot 0.9.8.96 on Apple Silicon: test round 32 (build 32 = build 31 + licence notices: GPL v3 or later, Help > About, source archive)
+# Coot 0.9.8.96 on Apple Silicon: test round 33 (build 33 = build 32 + a smaller Help > About notice + README wording)
+
+**From you** (23 Nov): build 32's About window had too much coot0 text; the README's XQuartz sentence should hold whether or not
+XQuartz works again; drop the sentences about the Coot developers' support and say that coot0 is an independent build based on
+the Coot 0.9.8.96 source code from Paul Emsley's website.
+
+1. **Help > About** (new `bin/coot-bin`): Coot's own window, with one small line at the end of the copyright lines,
+   "macOS / Apple Silicon changes (coot0): Copyright (C) 2026 Chang Sun", where **coot0** is a link to the GitHub repository.
+2. **README**: the XQuartz paragraph is dated (November 2026) and says what coot0 does instead (Quartz directly, Retina).
+3. **"Independent build"**: README, LICENSING.md, README-FIRST.txt and the GitHub description say it in those words; the sentences about support are gone.
+
+**Verified without a window only**: the About texts, the link and its handler were read in a test; the window was not seen and
+the link was not clicked.
+
+## OO. Round 33 checks (about 2 minutes)
+
+| # | Do | Expected |
+|---|---|---|
+| OO1 | Install build 33, start `coot0`, Help > About... | Like Coot's own window: "Coot 0.9.8.96", "Marina Bay", the copyright lines, and last "macOS / Apple Silicon changes (coot0): Copyright (C) 2026 Chang Sun" in the same small font, with **coot0** underlined as a link. |
+| OO2 | Click **coot0** in that line. | Your web browser opens the coot0 GitHub page (you need to be signed in to GitHub while the repository is private). |
+| OO3 | (On GitHub) README, LICENSING.md, CORRESPONDING_SOURCE.md. | The XQuartz paragraph and "independent build" wording read well; nothing private. |
+
+# Earlier round (NN1 replaced by OO1 after your remark of 23 Nov): Coot 0.9.8.96 on Apple Silicon: test round 32 (build 32 = build 31 + licence notices: GPL v3 or later, Help > About, source archive)
 
 **From you** (22 Nov): MM1-MM4 pass (after installing build 31). VAI: fine to publish coot0 publicly as your own project, following the
 GNU licences. You chose GPL v3 **or later** for the coot0 changes, the README rewrite and the new GitHub description; the repository

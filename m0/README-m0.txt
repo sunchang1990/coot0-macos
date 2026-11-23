@@ -554,3 +554,11 @@ Round 32 (build 32, 22 Nov; patch 0050 about-dialog-coot0-notice; coot-bin m0/bi
   package; m0/tools/check_source_tarball.py DIR VERSION (b31: no archive -> FAIL).  LICENSING.md notice of modification;
   CORRESPONDING_SOURCE.md / README-FIRST.txt / LICENSING.md -> GitHub Issues (no "private"); FreeType FTL credit in
   THIRD_PARTY_LICENSES.md (also in gen_licenses.py).  README rewritten impact-first; try-peptide-flips rules -> docs/try-peptide-flips.md.
+
+Round 33 (build 33, 23 Nov; patch 0051 about-dialog-small-coot0-link; coot-bin m0/bin_b33 from obj_b33 = obj_b32 + src/gtk2-interface,
+  relink_b31.sh).  User 23 Nov (screenshot of build 32's About): too much coot0 text -> comments back to "Marina Bay\n"; the
+  copyright label (GtkAboutDialog escapes it) is found after construction (gtk_container_forall) and given markup with
+  <a href=REPO>coot0</a> inside <span size="small">; "activate-link" -> g_spawn_async /usr/bin/open (gtk_show_uri has no handler on
+  Quartz).  Test about_notice: comments == "Marina Bay", label markup has the link, activate-link handler pending (b32 89/90, b33 90/90).
+  Wording (user): README XQuartz paragraph dated Nov 2026; "independent build based on the Coot 0.9.8.96 source code from Paul
+  Emsley's website" in README / LICENSING / README-FIRST / GitHub description; all "not supported by the Coot developers" removed.

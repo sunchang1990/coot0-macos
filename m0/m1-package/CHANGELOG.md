@@ -6,6 +6,17 @@ applied to the pristine tree by `setup.sh`) or a change of the packaged data / s
 round, `TEST-PROTOCOL.md` has the user-facing explanation and the checks for you (newest round first).  A "build" is one delivered zip.
 "Verified" means a headless test (no window server in the build environment); what only a screen can show is marked "on screen: not verified".
 
+## Build 33  (patch 0051 about-dialog-small-coot0-link (C++); new `bin/coot-bin`; wording of README / LICENSING / README-FIRST)
+- **Help > About** is Coot's own window again, plus one small line (user, 23 Nov: build 32's paragraph was too much): the copyright
+  lines end with "macOS / Apple Silicon changes (coot0): Copyright (C) 2026 Chang Sun", and the word **coot0** is a link to the
+  coot0 repository (opened in your web browser). The paragraph under the version is Coot's own "Marina Bay" again.
+  On screen: not verified (a test builds the window and reads the label, its link and its handler).
+- README: the XQuartz paragraph says what holds whatever happens to XQuartz (dated: XQuartz disrupted by the macOS 26 update in
+  November 2026, its developers working on it; coot0 calls macOS's Quartz directly and uses the Retina resolution).
+- README, LICENSING.md, README-FIRST.txt and the GitHub description: coot0 is "an independent build based on the Coot 0.9.8.96
+  source code from Paul Emsley's website"; the sentences about the Coot developers' support are gone.
+- Tests: the About check of `gui-dialogs` now asks for the small line and the link (build 32 fails it).
+
 ## Build 32  (patch 0050 about-dialog-coot0-notice (C++); new `bin/coot-bin`; licence: coot0 changes now GPL-3.0-or-later; source archive)
 - Licence (user, 22 Nov): the coot0 changes are now **GPL-3.0-or-later**, the same terms as Coot itself (before: GPL-3.0-only), so
   the Coot developers can take any of them back unchanged. `LICENSING.md` has a notice of modification; the source offer

@@ -47,8 +47,8 @@ permits version 3, the coot0 modifications are "version 3 or later", and some bu
 are "version 3 only". The coot0 source itself (Coot plus the patches, without those libraries) can be used under
 version 3 or any later version. The source of everything is available: [`CORRESPONDING_SOURCE.md`](CORRESPONDING_SOURCE.md).
 
-## Not an official Coot release
+## An independent build
 
-coot0 is an independent, unofficial build of Coot 0.9.8.96 for Apple Silicon Macs. It is not made by the Coot
-developers, and they do not provide support for it: please report problems with coot0 in the Issues of its
-repository, https://github.com/sunchang1990/coot0-macos/issues, not to the Coot developers. The name "Coot" is used only to say what this program is.
+coot0 is an independent build for Apple Silicon Macs based on the source code of Coot 0.9.8.96 from Paul Emsley's
+website (https://www2.mrc-lmb.cam.ac.uk/personal/pemsley/coot/). Please report problems with coot0 in the Issues of
+its repository, https://github.com/sunchang1990/coot0-macos/issues. The name "Coot" is used only to say what this program is.
