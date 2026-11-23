@@ -111,7 +111,5 @@ text is in [LICENSE](LICENSE).
 Coot: Paul Emsley, Kevin Cowtan, Bernhard Lohkamp and the Coot contributors. RCrane: Kevin Keating. The bundled
 libraries are listed in [THIRD_PARTY_LICENSES.md](m0/m1-package/THIRD_PARTY_LICENSES.md).
 
-Port to macOS and Apple Silicon: Chang Sun.
-
 Thanks to the members of Huilin Li's lab for testing coot0 and for their feedback, and to Paul Emsley for supporting
 the project.
