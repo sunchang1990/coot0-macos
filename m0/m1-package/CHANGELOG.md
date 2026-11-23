@@ -6,6 +6,12 @@ applied to the pristine tree by `setup.sh`) or a change of the packaged data / s
 round, `TEST-PROTOCOL.md` has the user-facing explanation and the checks for you (newest round first).  A "build" is one delivered zip.
 "Verified" means a headless test (no window server in the build environment); what only a screen can show is marked "on screen: not verified".
 
+## Build 36  (patch 0053 history-exit-as-comment (C++); new `bin/coot-bin`)
+- `coot0 --script 0-coot-history.py` quit Coot (user, 23 Nov, check QQ3): the history also records how the session ended
+  (`coot_checked_exit(0)` when you quit), and replaying the file ran it. Quitting (coot_checked_exit, coot_real_exit, ...) is
+  now written as a comment in both files: `# coot_checked_exit(0)   -- Coot was quit here (not replayed)`.
+- Tests: `history-replay` 10 -> 11 (the session now ends with coot_checked_exit; build 35: 6 / 11, Coot quits during the replay).
+
 ## Build 35  (patch 0052 replayable-command-history (C++ + Python); new `bin/coot-bin`)
 - **The commands Coot writes can be run again** (user, 23 Nov: Updating Maps printed `(calculate-maps-and-stats 3 1 1 2)`, a
   function that exists in neither language). Coot records every command it runs (terminal, and `0-coot-history.py` /

@@ -33,7 +33,8 @@ residue_exists_qm(imol, "A", 42, "")
 calculate_maps_and_stats_py(imol, m, m, d)
 if "coot0_set_command_echo" in globals(): coot0_set_command_echo("scheme")   # (build 35)
 set_map_radius_em(21.0)
-coot_real_exit(0)
+save_coordinates(imol, "saved.pdb")    # no unsaved changes, so coot_checked_exit quits without asking
+coot_checked_exit(0)                   # (build 36) recorded in the history: replaying must not quit
 EOF
 run "$T/make.txt" "$T/make.py" "" "$T/make"
 # keep the two files as written by this run (each later Coot run writes its own history into the folder it runs in)
@@ -45,6 +46,7 @@ check "coot0_set_command_echo(\"scheme\") switches the echo to Scheme: (set-map-
 check "names that were wrong in 0.9.8.96 are recorded right (set-scroll-by-wheel-mouse, set-map-radius-em, get-symmetry-as-calphas-state, set-auto-read-do-difference-map-too)" \
       "grep -q '^(set-scroll-by-wheel-mouse 1)' '$T/0-coot-history.scm' && grep -q '^(set-map-radius-em 20.00)' '$T/0-coot-history.scm' && grep -q '^(get-symmetry-as-calphas-state 0)' '$T/0-coot-history.scm' && grep -q '^(set-auto-read-do-difference-map-too 1)' '$T/0-coot-history.scm'"
 check "text arguments are recorded in quotes (0.9.8.96: (does-residue-exist-p 0 A 42 ))" "grep -qF '(does-residue-exist-p 0 \"A\" 42 \"\")' '$T/0-coot-history.scm' && grep -qF 'does_residue_exist_p(0, \"A\", 42, \"\")' '$T/0-coot-history.py'"
+check "quitting is recorded as a comment in both files (build 35 replayed it and Coot quit)" "grep -qF '# coot_checked_exit(0)   -- Coot was quit here (not replayed)' '$T/0-coot-history.py' && grep -qF '; (coot-checked-exit 0)   -- Coot was quit here (not replayed)' '$T/0-coot-history.scm'"
 check "a Python-only command is a comment in the Scheme history, with its Python call" \
       "grep -qF '; (calculate-maps-and-stats 0 1 1 2)   -- Python only: calculate_maps_and_stats_py(0, 1, 1, 2)' '$T/0-coot-history.scm'"
 

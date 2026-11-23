@@ -1,4 +1,16 @@
-# Coot 0.9.8.96 on Apple Silicon: test round 35 (build 35 = build 34 + a command log you can replay)
+# Coot 0.9.8.96 on Apple Silicon: test round 36 (build 36 = build 35 + replaying a history file no longer quits Coot)
+
+**From you** (23 Nov): QQ1, QQ2 pass (the echo line `calculate_maps_and_stats_py(0, 1, 1, 2)` runs in the Python window). QQ3:
+`coot0 --script 0-coot-history.py` ended Coot: the history recorded your quit (`coot_checked_exit(0)`) and the replay ran it.
+Quitting is now a comment in both history files. Verified without a window (the replay test now ends its session by quitting).
+
+## RR. Round 36 checks (about 3 minutes)
+
+| # | Do | Expected |
+|---|---|---|
+| RR1 | Install build 36. In a data folder: `coot0 --pdb model.pdb --auto data.mtz`, do something (e.g. Updating Maps), quit Coot (File > Exit). Then `coot0 --script 0-coot-history.py`. | Coot opens with the model and maps and stays open. The file's last lines include `# coot_checked_exit(0)   -- Coot was quit here (not replayed)`. |
+
+# Earlier round (QQ1, QQ2 confirmed 23 Nov; QQ3 -> build 36): Coot 0.9.8.96 on Apple Silicon: test round 35 (build 35 = build 34 + a command log you can replay)
 
 **From you** (23 Nov): PP1 passes (self-test all N / N). The qtRView toolbar is CCP4's own (same outside coot0). Updating Maps printed
 `(calculate-maps-and-stats 3 1 1 2)`, which is not a function: you asked that the terminal output can be replayed, in Python by default.
@@ -60,8 +72,7 @@ the link was not clicked.
 
 # Earlier round (NN1 replaced by OO1 after your remark of 23 Nov): Coot 0.9.8.96 on Apple Silicon: test round 32 (build 32 = build 31 + licence notices: GPL v3 or later, Help > About, source archive)
 
-**From you** (22 Nov): MM1-MM4 pass (after installing build 31). VAI: fine to publish coot0 publicly as your own project, following the
-GNU licences. You chose GPL v3 **or later** for the coot0 changes, the README rewrite and the new GitHub description; the repository
+**From you** (22 Nov): MM1-MM4 pass (after installing build 31). Publishing coot0 publicly is cleared. You chose GPL v3 **or later** for the coot0 changes, the README rewrite and the new GitHub description; the repository
 stays private until you have looked at it.
 
 1. **Licence**: the coot0 changes are GPL-3.0-or-later, like Coot. `LICENSING.md` says that coot0 is a modified Coot and by whom;

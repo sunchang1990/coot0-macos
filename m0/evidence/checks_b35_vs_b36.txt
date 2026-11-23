@@ -1,0 +1,12 @@
+Build 36 regression check: build 35 vs build 36 (23 Nov) -- tests/history_replay_test.sh with coot_checked_exit recorded
+
+build 35 coot-bin:
+FAIL quitting is recorded as a comment in both files (build 35 replayed it and Coot quit)
+FAIL 0-coot-history.py replays to the end without an error
+FAIL   ... and gives the same result (3 molecules, A41 deleted, A42 there)
+FAIL 0-coot-history.scm replays to the end without an error
+FAIL   ... and gives the same result (3 molecules, A41 deleted, A42 there)
+SUMMARY 6 / 11
+
+build 36 coot-bin:
+SUMMARY 11 / 11

@@ -545,7 +545,7 @@ Round 31 (build 31, 20 Nov evening; patch 0049 scheme-wrappers-write-cif-once; c
   identical maps NaN; read_phs_* bad file -> molecule slot; map_from_mtz_by_calc_phases bad columns abort.
 
 Round 32 (build 32, 22 Nov; patch 0050 about-dialog-coot0-notice; coot-bin m0/bin_b32 from obj_b32 = obj_b31 + src/gtk2-interface,
-  relinked by tools/relink_b31.sh m0/obj_b32 m0/bin_b32).  Before going public (VAI 22 Nov: fine as the user's own project under the
+  relinked by tools/relink_b31.sh m0/obj_b32 m0/bin_b32).  Before going public (cleared 22 Nov to publish as the user's own project under the
   GNU licences).  coot0 changes GPL-3.0-only -> GPL-3.0-or-later (user's choice: same as Coot, upstream can take changes back).
   GPL v3 s.5(a)/(d): create_aboutdialog() copyright + "macOS / Apple Silicon changes (coot0): Copyright (C) 2026 Chang Sun", comments
   = notice of modification + GitHub + licence; test gui_python_dialogs.py about_notice (ctypes: create_aboutdialog,
@@ -585,3 +585,8 @@ Round 35 (build 35, 23 Nov; patch 0052 replayable-command-history; coot-bin m0/b
   single_quote()d (heuristic scan by function parameters; edit-text by hand).  Not scriptable (comments): move-molecule-here,
   set-density-size-em (junk.cc toggle-* not compiled).  Note: --no-state-script does not stop the history file being written.
   Tests: tests/history_replay_test.sh (suite history-replay, 10; b34 1/10, b35 10/10); m0/tools/check_history_names.py SRC INDEX (b34 1/3).
+
+Round 36 (build 36, 23 Nov night; patch 0053 history-exit-as-comment; coot-bin m0/bin_b36 = obj_b35 + graphics-info-state).
+  User QQ3: replaying 0-coot-history.py quit Coot: coot_checked_exit (logged before its unsaved-changes check) was in the history.
+  coot0_history_line writes coot-checked-exit / coot-real-exit / coot-no-state-real-exit / coot-save-state-and-exit as comments.
+  history_replay_test.sh: session ends save_coordinates + coot_checked_exit; new check; 11 (b35 6/11).

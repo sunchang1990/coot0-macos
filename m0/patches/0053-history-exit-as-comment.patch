@@ -1,0 +1,20 @@
+diff --git a/src/graphics-info-state.cc b/src/graphics-info-state.cc
+index 1af32e6..fad53f4 100644
+--- a/src/graphics-info-state.cc
++++ b/src/graphics-info-state.cc
+@@ -1151,6 +1151,15 @@ std::string coot0_history_line(const std::vector<std::string> &command_strings,
+       return "# " + command_strings[1] + "   -- a Scheme expression; not available as a Python command";
+    }
+ #endif
++   {  // (build 36) how the session ended: kept as a comment, so that replaying a history file leaves the replayed session open
++      std::string n = command_strings[0]; for (auto &c : n) if (c == '_') c = '-';
++      if (n == "coot-checked-exit" || n == "coot-real-exit" || n == "coot-no-state-real-exit" || n == "coot-save-state-and-exit") {
++         std::string name = python ? coot0_base_command_name(command_strings[0]) : n;
++         std::string line = python ? "# " + name + "(" : "; (" + name;
++         for (unsigned int i=1; i<command_strings.size(); i++) line += (python ? (i > 1 ? ", " : "") : " ") + command_strings[i];
++         return line + ")   -- Coot was quit here (not replayed)";
++      }
++   }
+    if (command_strings[0].size() > 1 && command_strings[0][0] == '!')   // a record that cannot be replayed (Coot did not keep all
+       return (python ? "# " : "; ") + command_strings[0].substr(1);      // the arguments): a comment that says what happened
+    auto format = [] (const std::string &name, const std::vector<std::string> &cs, bool py) {
