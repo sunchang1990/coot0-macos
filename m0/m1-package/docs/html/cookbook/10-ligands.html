@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="4be3a7d3337bf28df840dcfeacd0723ade438f76">
+<meta name="coot0-source-sha1" content="9cfee7985ef191495e7e924a58620ef5767d6597">
 <title>10. Ligands - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -26,14 +26,14 @@ print("ATP is molecule", imol_lig, "with residues", het_group_residues(imol_lig)
 <pre class="scheme"><code>(define imol-lig (get-monomer "ATP"))
 (format #t "ATP is molecule ~a~%" imol-lig)</code></pre>
 <h3 id="102-read-your-own-dictionary-from-acedrg-grade-elbow">10.2 Read your own dictionary (from acedrg, grade, eLBOW...)</h3>
-<pre class="python"><code># write a dictionary for the test first: the library's own NAG file
+<pre class="python"><code># write a dictionary for the test first: the monomer library's own NAG file (coot0 sets COOT_MONOMER_LIB_DIR to the library it uses)
 import os, shutil
-lib = os.path.join(os.environ["COOT_PREFIX"], "monomers", "n", "NAG.cif")
+lib = os.path.join(os.environ["COOT_MONOMER_LIB_DIR"], "n", "NAG.cif")
 shutil.copy(lib, "my-ligand.cif")
 
 read_cif_dictionary("my-ligand.cif")
 imol_lig = get_monomer("NAG")</code></pre>
-<pre class="scheme"><code>(copy-file (string-append (getenv "COOT_PREFIX") "/monomers/n/NAG.cif") "my-ligand.cif")
+<pre class="scheme"><code>(copy-file (string-append (getenv "COOT_MONOMER_LIB_DIR") "/n/NAG.cif") "my-ligand.cif")
 (read-cif-dictionary "my-ligand.cif")
 (define imol-lig (get-monomer "NAG"))</code></pre>
 <h3 id="103-put-a-ligand-at-a-place-and-add-it-to-the-protein">10.3 Put a ligand at a place and add it to the protein</h3>

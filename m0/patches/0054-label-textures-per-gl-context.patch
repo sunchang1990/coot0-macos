@@ -1,0 +1,54 @@
+diff --git a/compat/gl-seam/coot-gl-seam.mm b/compat/gl-seam/coot-gl-seam.mm
+index ac37dac..0a39802 100644
+--- a/compat/gl-seam/coot-gl-seam.mm
++++ b/compat/gl-seam/coot-gl-seam.mm
+@@ -42,6 +42,12 @@ - (BOOL)isOpaque { return YES; }
+    bool double_buffered;
+ };
+ 
++// (build 37) scene-text textures, per GL context (see 'Scene text' below)
++struct CootLabelDims { int w, h, baseline, pad; };
++struct CootLabelCache { std::unordered_map<std::string, GLuint> tex; std::unordered_map<std::string, CootLabelDims> dims; };
++static std::unordered_map<void *, CootLabelCache> g_label_caches;     // key: CGLContextObj
++static void coot_label_forget_context(void *cgl) { g_label_caches.erase(cgl); }   // the context deletes its own textures
++
+ struct CootGLState {
+    CootGLConfig *config = nullptr;
+    GtkWidget *widget = nullptr;
+@@ -218,7 +224,10 @@ void on_realize(GtkWidget *w, gpointer) {
+ void remove_view(CootGLState *st) {
+    if (st->heal_id) { g_source_remove(st->heal_id); st->heal_id = 0; }
+    st->have_frame = false;
+-   if (st->glview) { [st->glview removeFromSuperview]; st->glview = nil; st->ctx = nil; }
++   if (st->glview) {
++      if (st->ctx) coot_label_forget_context([st->ctx CGLContextObj]);
++      [st->glview removeFromSuperview]; st->glview = nil; st->ctx = nil;
++   }
+ }
+ void on_unrealize(GtkWidget *w, gpointer) { CootGLState *st = state_of(w); if (st) remove_view(st); }
+ void on_size_allocate(GtkWidget *w, GtkAllocation *, gpointer) { CootGLState *st = state_of(w); if (st) position_subview(w, st); }
+@@ -325,9 +334,11 @@ void coot_gl_pixel_size(GtkWidget *w, int *width_px, int *height_px) {
+ // in the current GL colour.  logical_px is the nominal font size in GTK units; it is multiplied by COOT_LABEL_SCALE
+ // (default 1.4: the 0.9 bitmap fonts are small) and by the surface scale (2 with COOT_RETINA on a Retina display),
+ // so text is the same physical size at 1x and Retina.  COOT_BITMAP_LABELS=1 selects the original GLUT bitmap fonts.
+-static std::unordered_map<std::string, GLuint> g_label_tex;
+-struct CootLabelDims { int w, h, baseline, pad; };
+-static std::unordered_map<std::string, CootLabelDims> g_label_dims;
++// (build 37) A texture belongs to the GL context (3D view) that made it.  Side-by-side stereo, and going back to mono, make
++// new 3D views (Coot 0.9 destroys the old drawing area); one shared cache then handed the new views texture names they do
++// not have, and GL drew each label as a filled box in the label colour.  The cache is now kept per context and a context's
++// entries are dropped when its view is removed.
++// (the per-context cache is defined at the top of this file)
+ 
+ int coot_gl_text_enabled(void) {
+    static int on = -1;
+@@ -369,6 +380,9 @@ void coot_gl_draw_text_at_raster_pos(const char *utf8, double logical_px) {
+                 GL_LIGHTING_BIT | GL_FOG_BIT | GL_POLYGON_BIT | GL_VIEWPORT_BIT);
+    glPushClientAttrib(GL_CLIENT_PIXEL_STORE_BIT);
+ 
++   CootLabelCache &cache = g_label_caches[(void *) CGLGetCurrentContext()];
++   std::unordered_map<std::string, GLuint> &g_label_tex = cache.tex;
++   std::unordered_map<std::string, CootLabelDims> &g_label_dims = cache.dims;
+    GLuint tex = 0;
+    auto it = g_label_tex.find(k);
+    if (it != g_label_tex.end()) {

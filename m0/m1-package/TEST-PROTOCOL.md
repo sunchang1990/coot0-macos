@@ -1,4 +1,31 @@
-# Coot 0.9.8.96 on Apple Silicon: test round 36 (build 36 = build 35 + replaying a history file no longer quits Coot)
+# Coot 0.9.8.96 on Apple Silicon: test round 37 (build 37 = stereo labels, no monomer library in the package, building from a fresh clone)
+
+**From you** (24 Nov): labels in side-by-side stereo were coloured boxes; bootstrap failed on another Mac (a local file missing from
+git); the monomer library should not be in the package: use CCP4's when it is installed, otherwise the installer asks to download it.
+
+1. **Stereo labels**: a label is drawn from a stored picture that belongs to one 3D view; stereo (and going back to mono) makes
+   new 3D views, which got the old view's pictures. Now kept per view. A real-window check saves the view as an image in mono,
+   stereo and mono again and requires text, not a box (build 36: boxes in stereo and after it).
+2. **Monomer library**: not in the package (the download is about half the size). coot0 uses CCP4's library when CCP4 is
+   installed; otherwise the installer offers the download, and `coot0 --fetch-monomers` does it any time.
+3. **From a fresh clone to the installer**: `./bootstrap.sh --make-envs` (builds the canvas libraries from GNOME's sources,
+   downloads Coot's source; checksums checked), `m0/tools/build_all.sh`, `m0/tools/make_binary_tarball.sh`; `BUILDING.md`
+   explains it. This build's package was made that way, from a clone in an empty folder. The clone's path must not contain
+   spaces (bootstrap says so).
+
+**Verified without a window only**: the installer's download (from a local copy standing in for GitHub). The stereo check ran in
+a real window (about 15 s) but compared the saved images by numbers; it was not looked at.
+
+## SS. Round 37 checks (about 5 minutes)
+
+| # | Do | Expected |
+|---|---|---|
+| SS1 | Install build 37 (`./install.sh`). | Under "Monomer library": `monomer library: CCP4's (/Applications/ccp4-9/lib/data/monomers); nothing to download`. |
+| SS2 | Open a model, add atom labels (click atoms), then Draw > Stereo... > Side-by-Side Stereo, then back to Mono. | Labels are text in both halves and after going back to mono. |
+| SS3 | (optional) `coot0 --fetch-monomers` | Downloads the tested library (about 110 MB) into ~/Library/Application Support/coot0/monomers; from then on coot0 uses that copy (`coot0 --diagnose` says which). |
+| SS4 | (optional, another Mac or folder) Follow BUILDING.md from `git clone` to the tarball. | It ends with the tarball and its checksum. |
+
+# Earlier round (RR1 not reported yet): Coot 0.9.8.96 on Apple Silicon: test round 36 (build 36 = build 35 + replaying a history file no longer quits Coot)
 
 **From you** (23 Nov): QQ1, QQ2 pass (the echo line `calculate_maps_and_stats_py(0, 1, 1, 2)` runs in the Python window). QQ3:
 `coot0 --script 0-coot-history.py` ended Coot: the history recorded your quit (`coot_checked_exit(0)`) and the replay ran it.

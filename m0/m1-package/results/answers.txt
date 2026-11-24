@@ -1,6 +1,10 @@
 # One line per check: PASS / FAIL / PARTIAL and a few words.  (You can also just tell me in chat.)
-# Round 36 (see TEST-PROTOCOL.md, section RR):
-RR1 coot0 --script 0-coot-history.py replays the session and Coot stays open:
+# Round 37 (see TEST-PROTOCOL.md, section SS):
+SS1 install.sh says it uses CCP4's monomer library:
+SS2 labels are text in side-by-side stereo and after going back to mono:
+SS3 (optional) coot0 --fetch-monomers:
+SS4 (optional) BUILDING.md from a fresh clone:
+# Round 36 (section RR): RR1 coot0 --script 0-coot-history.py replays the session and Coot stays open:
 # Round 35 (section QQ): QQ1, QQ2 confirmed 23 Nov; QQ3 -> build 36.
 # Round 34 (section PP): PP1 confirmed 23 Nov.
 # Round 33 (section OO): OO1-OO3 confirmed 23 Nov.

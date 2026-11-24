@@ -23,6 +23,11 @@ RUN
   you give --retina.  The environment variable COOT_RETINA=1 / 0 does the same.)
   Your Coot preferences and logs are kept in ~/Library/Application Support/coot0.
 
+MONOMER LIBRARY (restraint dictionaries: needed to refine, regularise and add ligands)
+  Not inside this folder.  With CCP4 installed, coot0 uses CCP4's library: nothing to do.  Without CCP4, install.sh offers
+  to download it (about 110 MB from github.com/MonomerLibrary/monomers); later:  coot0 --fetch-monomers
+  (or ./fetch-monomers.sh in this folder).  coot0 --fetch-monomers latest gets the newest version instead of the tested one.
+
 OTHER PROGRAMS (optional)
   CCP4 (/Applications/ccp4-*): Run Refmac, Ligand Builder > Apply and SMILES import (acedrg), ProSMART, Privateer ...
   reduce + probe (CCP4 or Phenix): Probe Clashes, Add Hydrogens.   Everything else works without them.
@@ -38,6 +43,7 @@ LICENCE
 HELP
   coot0 --legacy        standard (non-Retina) resolution for the 3D view
   coot0 --diagnose      what this Mac has, where the logs are
+  coot0 --fetch-monomers  download the monomer library (not needed when CCP4 is installed)
   coot0 --self-test     full self-test (about 15 minutes; send the result if something does not work)
   coot0 --uninstall     remove coot0
   CHANGELOG.md          what changed in each build;  TEST-PROTOCOL.md  the test notes of each build

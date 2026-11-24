@@ -127,9 +127,55 @@ def run(step=[0]):
         kw = coot0_keys_window()
         check("the Keyboard Shortcuts window opens", fn("gtk_widget_get_mapped", ctypes.c_int, [P])(kw._ptr) == 1 or "not mapped")
         kw.destroy()
+        label_checks()
     except Exception as e:
         import traceback; check("no exception", False, traceback.format_exc()[-400:])
     finish()
+# 3. (build 37) scene text after the 3D view is re-created.  Side-by-side stereo (and going back to mono) makes new 3D views;
+# build 36 still used the label pictures (textures) of the old view and drew every label as a filled box.  A text label is
+# placed at the centre of an empty scene, the view is saved as an image (screendump_image reads Coot's own GL buffer, not the
+# screen), and the lit pixels around the label must look like text (a box fills its whole rectangle).
+def pump(n=30):
+    import time
+    for i in range(n):
+        while gtk.events_pending(): gtk.main_iteration()
+        time.sleep(0.02)
+def lit_fill(ppm):
+    data = open(ppm, "rb").read()
+    toks, pos = [], 0                           # P6 [# comments] width height maxval, one whitespace byte, then the pixels
+    while len(toks) < 4:
+        while data[pos:pos + 1].isspace(): pos += 1
+        if data[pos:pos + 1] == b"#":
+            pos = data.index(b"\n", pos) + 1; continue
+        e = pos
+        while not data[e:e + 1].isspace(): e += 1
+        toks.append(data[pos:e]); pos = e
+    w, h = int(toks[1]), int(toks[2]); px = data[pos + 1:]
+    lit = [(i % w, i // w) for i in range(w * h) if max(px[3 * i], px[3 * i + 1], px[3 * i + 2]) > 100]
+    if not lit: return None, 0
+    xs = [x for x, y in lit]; ys = [y for x, y in lit]
+    area = (max(xs) - min(xs) + 1) * (max(ys) - min(ys) + 1)
+    return len(lit) / float(area), len(lit)
+def label_checks():
+    import tempfile
+    d = tempfile.mkdtemp()
+    set_draw_axes(0)
+    set_rotation_centre_size(0.0)
+    set_rotation_centre(0.0, 0.0, 0.0)
+    place_text("MMMWWWMMM", 0.0, 0.0, 0.0, 1)
+    results = []
+    for mode in ("mono", "side-by-side stereo", "mono again"):
+        if mode == "side-by-side stereo": side_by_side_stereo_mode(0)
+        if mode == "mono again": mono_mode()
+        pump(); graphics_draw(); pump(10)
+        f = os.path.join(d, mode.replace(" ", "-") + ".ppm")
+        screendump_image(f)
+        fill, n = lit_fill(f) if os.path.exists(f) else (None, 0)
+        results.append((mode, fill, n))
+    ok = all(fill is not None and n > 20 and fill < 0.75 for mode, fill, n in results)
+    check("text labels stay text after the 3D view is re-created (mono, side-by-side stereo, mono again)",
+          ok or "lit-pixel fill of the label area (a box is ~1.0): %r" % [(m, None if f is None else round(f, 2), n) for m, f, n in results])
+
 def finish():
     lines = [("PASS " if ok else "FAIL ") + n + (("  " + v) if v else "") for n, ok, v in res]
     lines.append("SUMMARY %d / %d" % (sum(1 for r in res if r[1]), len(res)))

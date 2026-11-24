@@ -70,6 +70,7 @@ def link_target(url, src):
             return os.path.relpath(os.path.join(OUT, "..", "..", path), os.path.dirname(os.path.join(OUT, PAGES[src])))
         if path == "../../releases": return "https://github.com/sunchang1990/coot0-macos/releases"
         if path == "../../issues": return "https://github.com/sunchang1990/coot0-macos/issues"   # build 32
+        if path in ("BUILDING.md",): return "https://github.com/sunchang1990/coot0-macos/blob/main/" + path   # build 37: not in the package
     return url
 
 def inline_plain(text, src):

@@ -3,7 +3,9 @@
 # -> @executable_path/../lib, ad hoc signature), as done by hand for builds 26-30 (README-m0 Round 26/28).
 set -e
 cd "$(dirname "$0")/../.."
-OBJ="$1"; BIN="$2"; E=~/.claude-science/conda/envs
+OBJ="$1"; BIN="$2"
+# conda environments: COOT0_ENVS, else envs/ of this clone (bootstrap.sh), else the folder of the earlier development sessions
+E="${COOT0_ENVS:-}"; [ -z "$E" ] && { [ -d "$(dirname "$0")/../../envs/coot-deps" ] && E="$(cd "$(dirname "$0")/../.." && pwd)/envs" || E=~/.claude-science/conda/envs; }
 export CONDA_PREFIX=$E/coot-deps PATH=$E/coot-deps/bin:$PATH
 cp m0/obj_b26/out.json out.json; mkdir -p "$BIN"
 python m0/tools/m0_link.py out.json "$OBJ" "$BIN/coot-bin" --prefix $PWD/canvas/prefix --seam m0/coot-src/compat/gl-seam/coot-gl-seam.mm --rdkit $E/coot-rdkit | tail -1

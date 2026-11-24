@@ -16,7 +16,8 @@ to build it. For coot0 that is:
 5. **Libraries we built ourselves**: libart_lgpl 2.3.21, libgnomecanvas 2.30.3, goocanvas 1.0.0 (GNOME release
    tarballs, https://download.gnome.org/sources/), built with `canvas/build-scripts/build_canvas.sh` (source URLs and
    checksums in `canvas/build-scripts/src/sources.json`).
-6. **The CCP4 monomer library**: https://github.com/MonomerLibrary/monomers (commit 0af022bf).
+6. **The CCP4 monomer library** (not in the package from build 37; coot0 uses CCP4's, or downloads it with
+   `coot0 --fetch-monomers`): https://github.com/MonomerLibrary/monomers (tested commit 0af022bf).
 
 **Written offer.** For at least three years after we distribute a binary package, we will give anyone who asks a copy
 of the complete corresponding source code of that package (items 1-6) on a common medium or for download, for no more

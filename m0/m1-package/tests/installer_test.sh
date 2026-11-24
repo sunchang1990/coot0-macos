@@ -16,6 +16,7 @@ for d in logs work home results .cache; do [ -d "$PKG/$d" ] && find "$PKG/$d" -m
 # (build 34) a self-test started from an INSTALLED copy (coot0 --self-test) copies its install marker too: without this line the
 # "unpacked folder" below believed it was installed (Retina by default, state in Application Support) and its check failed
 rm -f "$PKG/.coot0-installed"
+rm -rf "${PKG:?}/monomers"      # (build 37) the package has no monomer library; a development copy may have one
 for f in bin/coot-bin run-coot.sh lib/libgtk-quartz-2.0.0.dylib; do xattr -w com.apple.quarantine "0083;6734a1b2;Safari;" "$PKG/$f" 2>/dev/null; done
 
 # ---- zsh user, default folder
@@ -55,6 +56,8 @@ PROJ_REAL="$(cd "$PROJ" && pwd -P)"
 check "coot0 works in the folder it is started from" "grep -qF 'cwd: $PROJ_REAL |' '$T/run.txt'"
 check "logs and preferences go to ~/Library/Application Support/coot0, not into the installed copy" "ls '$ST'/logs/coot-*.log && [ -d '$ST/home' ] && [ -z \"\$(ls '$D1/logs')\" ]"
 check "launcher finds reduce of a Phenix 2.x in the home folder (bin/reduce)" "grep -qF 'reduce=$H1/phenix-9.9-0000/bin/reduce' '$T/run.txt'"
+check "(build 37) with CCP4 installed the installer downloads nothing and coot0 uses CCP4's monomer library" \
+      "grep -q \"monomer library: CCP4's\" '$T/install1.txt' && [ ! -e '$ST/monomers' ] && grep -q 'monomer library: .*lib/data/monomers/ (CCP4)' '$T/run.txt'"
 check "coot0 uses the Retina (2x) 3D view by default" "grep -q '| retina=1 |' '$T/run.txt'"
 ( cd "$PROJ" && env -i HOME="$H1" PATH=$SYS TMPDIR="$T" COOT_NO_SPLASH=1 COOT_NO_DEFAULT_TOOLBAR=1 \
     "$H1/.local/bin/coot0" --legacy --no-graphics --python --no-state-script --no-startup-scripts --script "$D1/tests/install_check.py" ) > "$T/legacy.txt" 2>&1 &
@@ -77,6 +80,40 @@ H2="$T/home bash"; mkdir -p "$H2"; echo "# my bashrc" > "$H2/.bashrc"
 D2R="$(cd "$H2/Applications/coot zero/$VERSION" 2>/dev/null && pwd -P)"
 check "--prefix: installed into the chosen folder" "[ -x '$H2/Applications/coot zero/$VERSION/bin/coot-bin' ] && [ -n '$D2R' ] && grep -qF 'COOT0_HOME=\"$D2R\"' '$H2/.local/bin/coot0'"
 check "bash user: PATH line in ~/.bash_profile (login shells) and ~/.bashrc, and in ~/.zshrc" "grep -q '^# coot0-install' '$H2/.bash_profile' && grep -q '^# coot0-install' '$H2/.bashrc' && grep -q '^# coot0-install' '$H2/.zshrc' && grep -q '^# my bashrc' '$H2/.bashrc'"
+
+# ---- (build 37) no CCP4: the installer downloads the monomer library (from a small local stand-in for GitHub, so this
+# test needs no network); coot0 --fetch-monomers knows it is there; --no-monomers downloads nothing; the launcher uses it
+MSRC=""
+for m in "${COOT_MONOMER_LIB_DIR:-}" "$HOME/Library/Application Support/coot0/monomers" $(ls -d /Applications/ccp4-*/lib/data/monomers 2>/dev/null | sort -r); do
+  [ -n "$m" ] && [ -f "$m/list/mon_lib_list.cif" ] && { MSRC="$m"; break; }
+done
+if [ -n "$MSRC" ]; then
+  MINI="$T/mini/monomers-test"; mkdir -p "$MINI"
+  ( cd "$MSRC" && cp -R list "$MINI/" && cp *.cif *.txt "$MINI/" 2>/dev/null
+    for r in a/ALA c/CYS a/ASP g/GLU p/PHE g/GLY h/HIS i/ILE l/LYS l/LEU m/MET a/ASN p/PRO g/GLN a/ARG s/SER t/THR v/VAL t/TRP t/TYR h/HOH; do
+      mkdir -p "$MINI/$(dirname $r)"; cp "$r.cif" "$MINI/$r.cif"; done )
+  ( cd "$T/mini" && tar -czf monomers.tar.gz monomers-test )
+  H3="$T/home no ccp4"; mkdir -p "$H3"
+  MURL="file://$T/mini/monomers.tar.gz"; MURL="${MURL// /%20}"       # the folder name has spaces
+  NOCCP4=(COOT0_MONOMERS_IGNORE_CCP4=1 "COOT0_MONOMERS_URL=$MURL")
+  ( cd "$PKG" && env -i HOME="$H3" PATH=$SYS TMPDIR="$T" COOT0_LOGIN_SHELL=/bin/zsh "${NOCCP4[@]}" ./install.sh --yes --no-self-test --no-monomers ) > "$T/install4.txt" 2>&1
+  check "(build 37) no CCP4, --no-monomers: nothing downloaded, the installer says how to get it" \
+        "[ ! -e '$H3/Library/Application Support/coot0/monomers' ] && grep -q 'coot0 --fetch-monomers' '$T/install4.txt'"
+  ( cd "$PKG" && env -i HOME="$H3" PATH=$SYS TMPDIR="$T" COOT0_LOGIN_SHELL=/bin/zsh "${NOCCP4[@]}" ./install.sh --yes --no-self-test ) > "$T/install5.txt" 2>&1
+  check "(build 37) no CCP4: the installer downloads the monomer library into ~/Library/Application Support/coot0/monomers" \
+        "[ -f '$H3/Library/Application Support/coot0/monomers/a/ALA.cif' ] && grep -q '0af022bf' '$H3/Library/Application Support/coot0/monomers/.coot0-monomers-version' && grep -q 'monomer library downloaded' '$T/install5.txt'"
+  ( env -i HOME="$H3" PATH=$SYS "${NOCCP4[@]}" "$H3/.local/bin/coot0" --fetch-monomers ) > "$T/fetch2.txt" 2>&1
+  check "(build 37) coot0 --fetch-monomers: an existing copy of the same version is kept" "grep -q 'is already in' '$T/fetch2.txt'"
+  ( env -i HOME="$H3" PATH=$SYS "${NOCCP4[@]}" "$H3/.local/bin/coot0" --diagnose ) > "$T/diag3.txt" 2>&1
+  check "(build 37) coot0 --diagnose reports the downloaded monomer library" "grep -q 'monomer library: .*coot0/monomers (0af022bf' '$T/diag3.txt'"
+  ( cd "$PROJ" && env -i HOME="$H3" PATH=$SYS TMPDIR="$T" COOT_NO_SPLASH=1 COOT_NO_DEFAULT_TOOLBAR=1 "${NOCCP4[@]}" \
+      "$H3/.local/bin/coot0" --no-graphics --python --no-state-script --no-startup-scripts --script "$D1/tests/install_check.py" ) > "$T/run3.txt" 2>&1 &
+  pid=$!; for i in $(seq 1 240); do sleep 1; kill -0 $pid 2>/dev/null || break; done; kill -9 $pid 2>/dev/null; wait $pid 2>/dev/null
+  check "(build 37) coot0 uses the downloaded monomer library and starts" \
+        "grep -q 'monomer library: .*coot0/monomers/ (coot0 --fetch-monomers)' '$T/run3.txt' && grep -q '^INSTALL-CHECK OK' '$T/run3.txt'"
+else
+  check "(build 37) a monomer library to build the test download from (CCP4's or a fetched one)" "false"
+fi
 
 # ---- uninstall (zsh user)
 ( env -i HOME="$H1" PATH=$SYS "$H1/.local/bin/coot0" --uninstall --yes ) > "$T/uninstall.txt" 2>&1

@@ -35,8 +35,8 @@ this repository's [Issues](../../issues).
 - **Some things work better than in the original 0.9.8.96.** Several features that were broken in the released 0.9.8.96
   now work, and a few were added for Ramachandran clean-up and for watching whole-molecule refinement (see below).
 - **Your other programs are found.** CCP4 (refmac5, acedrg, ...) and the reduce and probe tools of CCP4 or Phenix are
-  picked up automatically when installed. RDKit ligand tools (Lidia, SMILES import) and the CCP4 monomer library are
-  included.
+  picked up automatically when installed. RDKit ligand tools (Lidia, SMILES import) are included. The CCP4 monomer
+  library (the restraint dictionaries) is CCP4's when CCP4 is installed; otherwise the installer downloads it for you.
 - **Tested.** Every menu entry and toolbar button has been tried in a real window, about 530 automated checks run
   against every release, and members of a structural biology lab have tested each release on their own data.
 
@@ -62,7 +62,8 @@ The full list, build by build, is in [CHANGELOG.md](m0/m1-package/CHANGELOG.md).
 ## Install
 
 Requirements: an Apple Silicon Mac (M1 or later), macOS 11 or newer, and about 1 GB of disk space. It has been tested on
-macOS 26. Intel Macs and Linux are not supported.
+macOS 26. Intel Macs and Linux are not supported. CCP4 is optional: when it is installed, coot0 uses its programs and
+its monomer library.
 
 Download `coot0-<version>-macos-arm64.tar.gz` from [Releases](../../releases), then in Terminal:
 
@@ -73,7 +74,9 @@ cd coot0-<version>
 ```
 
 The installer checks your Mac, installs coot0 into `~/.local/share/coot0/<version>` (you can choose another folder) and
-creates the command `coot0`. Then, in a new Terminal window:
+creates the command `coot0`. When CCP4 is not installed, it offers to download the CCP4 monomer library (about 110 MB,
+from github.com/MonomerLibrary/monomers), which Coot needs to refine and to add ligands; `coot0 --fetch-monomers` does
+the same later. Then, in a new Terminal window:
 
 ```
 coot0 --pdb model.pdb --auto data.mtz
@@ -93,9 +96,9 @@ More details are in `README-FIRST.txt` in the download.
 
 ## Building from source
 
-coot0 is built from the Coot 0.9.8.96 release tarball plus the numbered patches in `m0/patches/`, which `m0/setup.sh`
-applies. The build and packaging tools are in `m0/tools/`, the notes for every build are in `m0/README-m0.txt`, and the
-build environments are pinned in `env/`. Where to get every part of the source:
+coot0 is built from the Coot 0.9.8.96 release tarball plus the numbered patches in `m0/patches/`. Three commands take a
+fresh clone to the installer tarball (`./bootstrap.sh --make-envs`, `m0/tools/build_all.sh`,
+`m0/tools/make_binary_tarball.sh`); see [BUILDING.md](BUILDING.md). Where every part of the source comes from:
 [CORRESPONDING_SOURCE.md](CORRESPONDING_SOURCE.md).
 
 ## Licence

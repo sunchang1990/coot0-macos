@@ -79,10 +79,6 @@ if [ -z "$COOT_KEEP_ENV" ]; then
   unset GUILE_LOAD_COMPILED_PATH GUILE_AUTO_COMPILE PYTHONSTARTUP PYTHONUSERBASE PYTHONEXECUTABLE
   unset COOT_REFMAC_LIB_DIR COOT_CCP4_LIB_DIR CLIB
 fi
-if [ -d "$HERE/monomers" ]; then
-  export CLIBD_MON="$HERE/monomers/"             # CCP4 monomer library (same directory for programs started from Coot)
-  export COOT_MONOMER_LIB_DIR="$HERE/monomers"   # the library itself ($DIR/a/ALA.cif, $DIR/list/mon_lib_list.cif, $DIR/ener_lib.cif)
-fi
 # Reference structures for Ca -> Mainchain / strand building (the same directory `make install` creates under share/coot)
 for _rs in "$COOT_DATA_DIR/reference-structures" "$HERE/reference-structures"; do
   if [ -d "$_rs" ]; then export COOT_REF_STRUCTS="$_rs"; break; fi
@@ -159,8 +155,32 @@ if [ -z "$CCP4" ] && [ -z "$COOT_CCP4_HOME" ]; then
   fi
 fi
 
+# (build 37) The CCP4 monomer library (restraint dictionaries) is no longer inside the package.  First found wins:
+#   COOT0_MONOMERS (a folder you name) > monomers/ in this folder (older packages, development copies) >
+#   the copy fetched by `coot0 --fetch-monomers` (~/Library/Application Support/coot0/monomers) > CCP4's (lib/data/monomers).
+# COOT0_MONOMERS_IGNORE_CCP4=1 skips CCP4's (tests).  Programs started from Coot get the same folder (CLIBD_MON).
+MONOMERS_FROM=""
+_ccp4_mon=""
+if [ -z "$COOT0_MONOMERS_IGNORE_CCP4" ]; then
+  for _c in "$COOT_CCP4_HOME" "$CCP4" $(ls -d /Applications/ccp4-* 2>/dev/null | sort -r); do
+    [ -n "$_c" ] && [ -f "$_c/lib/data/monomers/list/mon_lib_list.cif" ] && { _ccp4_mon="$_c/lib/data/monomers"; break; }
+  done
+fi
+for _m in "${COOT0_MONOMERS:-}|your folder (COOT0_MONOMERS)" "$HERE/monomers|this folder" \
+          "$REAL_HOME/Library/Application Support/coot0/monomers|coot0 --fetch-monomers" "$_ccp4_mon|CCP4"; do
+  _dir="${_m%%|*}"
+  if [ -n "$_dir" ] && [ -f "$_dir/list/mon_lib_list.cif" ]; then
+    export CLIBD_MON="$_dir/" COOT_MONOMER_LIB_DIR="$_dir"; MONOMERS_FROM="${_m#*|}"; break
+  fi
+done
+unset _m _dir _c _ccp4_mon
+if [ -z "$MONOMERS_FROM" ]; then
+  echo "coot0: NO MONOMER LIBRARY: refinement and ligands need it.  Get it once with:  coot0 --fetch-monomers"
+  echo "       (about 110 MB from github.com/MonomerLibrary/monomers; or install CCP4, whose library coot0 then uses)"
+fi
+
 echo "== Coot launch $(date) | $([ -n "$BUNDLED" ] && echo 'self-contained bundle' || echo "conda environment $ENV") =="
-echo "macOS $(sw_vers -productVersion) $(uname -m) | retina=${COOT_RETINA:-0} | monomer library: ${CLIBD_MON:-NOT FOUND} | cwd: $(pwd) | state: $STATE"
+echo "macOS $(sw_vers -productVersion) $(uname -m) | retina=${COOT_RETINA:-0} | monomer library: ${CLIBD_MON:-NOT FOUND}${MONOMERS_FROM:+ ($MONOMERS_FROM)} | cwd: $(pwd) | state: $STATE"
 echo "external tools: $(for t in reduce probe refmac5 acedrg; do printf '%s=%s  ' $t "$(command -v $t || echo none)"; done)"
 [ -n "$COOT_CCP4_HOME" ] && echo "CCP4 for child programs: $COOT_CCP4_HOME"
 echo "animation: COOT_ANIM_MS_PER_STEP=${COOT_ANIM_MS_PER_STEP:-default(16.7)}"

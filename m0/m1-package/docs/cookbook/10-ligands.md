@@ -25,9 +25,9 @@ print("ATP is molecule", imol_lig, "with residues", het_group_residues(imol_lig)
 ### 10.2 Read your own dictionary (from acedrg, grade, eLBOW...)
 
 ```python
-# write a dictionary for the test first: the library's own NAG file
+# write a dictionary for the test first: the monomer library's own NAG file (coot0 sets COOT_MONOMER_LIB_DIR to the library it uses)
 import os, shutil
-lib = os.path.join(os.environ["COOT_PREFIX"], "monomers", "n", "NAG.cif")
+lib = os.path.join(os.environ["COOT_MONOMER_LIB_DIR"], "n", "NAG.cif")
 shutil.copy(lib, "my-ligand.cif")
 
 read_cif_dictionary("my-ligand.cif")
@@ -35,7 +35,7 @@ imol_lig = get_monomer("NAG")
 ```
 
 ```scheme
-(copy-file (string-append (getenv "COOT_PREFIX") "/monomers/n/NAG.cif") "my-ligand.cif")
+(copy-file (string-append (getenv "COOT_MONOMER_LIB_DIR") "/n/NAG.cif") "my-ligand.cif")
 (read-cif-dictionary "my-ligand.cif")
 (define imol-lig (get-monomer "NAG"))
 ```

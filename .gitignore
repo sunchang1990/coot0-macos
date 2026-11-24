@@ -55,3 +55,12 @@ canvas/coot-canvas-libs-arm64-prefix.tar.gz
 
 # Claude Code settings for this machine only
 .claude/settings.local.json
+
+# (build 37) made by bootstrap.sh / canvas/build-scripts/build_all.sh / m0/tools/build_all.sh on each machine
+canvas/build-scripts/src/*.tar.bz2
+canvas/build-scripts/build/
+canvas/build-scripts/logs/
+canvas/build-scripts/prefix/
+canvas/build-scripts/tools/
+m0/pristine/
+m0/build/

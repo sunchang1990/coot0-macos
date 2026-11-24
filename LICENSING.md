@@ -35,7 +35,7 @@ source repository, whose git history records when each was made. `CHANGELOG.md` 
 
 ## 3. Third-party components in the binary package
 
-GTK 2, Python, Guile, RDKit, Clipper, MMDB2, the CCP4 monomer library and the other bundled libraries and data keep
+GTK 2, Python, Guile, RDKit, Clipper, MMDB2 and the other bundled libraries and data keep
 their own licences, all of which allow distribution together with GPL-3.0 code. The list with versions and licences is
 `THIRD_PARTY_LICENSES.md` and the licence texts are in `licenses/` (in the package: next to this file; in the source
 repository: in `m0/m1-package/`).

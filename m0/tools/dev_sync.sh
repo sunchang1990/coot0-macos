@@ -22,7 +22,7 @@ done < <( (git diff --name-only "$BASE"; git ls-files --others --exclude-standar
 # package files (tests, launcher, installer, docs): also NEW ones are copied (build 17)
 put() { local src=$1 dst=$2; [ -f "$src" ] || return 0; cmp -s "$src" "$dst" 2>/dev/null || { rm -f "$dst"; cp -p "$src" "$dst"; echo "synced ${dst#$B/}"; }; }
 for f in "$HERE"/m1-package/tests/*; do put "$f" "$B/tests/$(basename "$f")"; done
-for f in TEST-PROTOCOL.md CHANGELOG.md collect-results.sh run-coot.sh install.sh uninstall.sh "Install coot0.command" README-FIRST.txt VERSION; do put "$HERE/m1-package/$f" "$B/$f"; done
+for f in TEST-PROTOCOL.md CHANGELOG.md collect-results.sh run-coot.sh install.sh uninstall.sh fetch-monomers.sh "Install coot0.command" README-FIRST.txt VERSION; do put "$HERE/m1-package/$f" "$B/$f"; done
 # licence files (build 19): LICENSE / LICENSING.md / CORRESPONDING_SOURCE.md from the repository root, the generated list and texts from m1-package
 # (build 25) README.md too: the user looked for it in the package
 for f in LICENSE LICENSING.md CORRESPONDING_SOURCE.md README.md; do put "$HERE/../$f" "$B/$f"; done

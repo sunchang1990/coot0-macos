@@ -8,7 +8,7 @@ Layout of --out:
   lib/*.dylib                        flat; every non-system dependency is @rpath/<name>
   lib/gdk-pixbuf-2.0/2.10.0/loaders/ , lib/gtk-2.0/2.10.0/engines/ , lib/python3.11/ , lib/guile/3.0/{ccache,extensions}
   share/{guile,glib-2.0/schemas,icons,themes}, etc/fonts, ssl/cacert.pem
-  share/coot, test-data, tests, run-coot.sh ...   (copied from --stage; monomers/ is a symlink to the stage's)
+  share/coot, test-data, tests, run-coot.sh ...   (copied from --stage; the monomer library is not included: build 37)
   lib/gdk-pixbuf-loaders.cache.in    with @BUNDLE@ placeholders (the launcher fills them in per user)
 Every Mach-O is re-signed ad hoc.  Nothing outside --out is modified.
 """
@@ -127,9 +127,8 @@ rd = os.path.join(OUT, "etc/fonts/conf.d/README")
 if os.path.exists(rd): os.remove(rd)
 
 # stage = the Coot data, tests, launcher (not the old canvas libs / pixbuf cache)
+# (build 37) the CCP4 monomer library is not part of the bundle: coot0 uses CCP4's or fetches it (fetch-monomers.sh)
 rsync(STAGE, OUT, "logs", "work", "results", ".cache", "monomers", "lib/gdk-pixbuf-loaders.cache", "lib/*.dylib", "bin/coot-bin", "coot-backup", ".DS_Store")
-if os.path.isdir(os.path.join(STAGE, "monomers")):
-    os.symlink(os.path.join(STAGE, "monomers"), os.path.join(OUT, "monomers"))
 
 os.makedirs(os.path.join(OUT, "results"), exist_ok=True)
 if os.path.exists(os.path.join(STAGE, "results/answers.txt")): shutil.copy2(os.path.join(STAGE, "results/answers.txt"), os.path.join(OUT, "results/answers.txt"))

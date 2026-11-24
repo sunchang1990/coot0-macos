@@ -7,6 +7,7 @@
 #   ./install.sh --prefix DIR    install into DIR/<version> instead of ~/.local/share/coot0/<version>
 #   ./install.sh --diagnose      only report what this Mac has (also: coot0 --diagnose)
 #   ./install.sh --no-self-test  skip the 30-second start test at the end
+#   ./install.sh --no-monomers   do not offer to download the monomer library (when CCP4 is not installed)
 #
 # Nothing outside these places is changed: <install folder>, ~/.local/bin/coot0, one marked PATH line in ~/.zshrc
 # (and ~/.bash_profile / ~/.bashrc if you use bash), and ~/Library/Application Support/coot0 (your Coot preferences and logs,
@@ -18,7 +19,7 @@ MARK="# coot0-install"
 BASE_DEFAULT="$HOME/.local/share/coot0"
 BIN="$HOME/.local/bin"
 STATE="$HOME/Library/Application Support/coot0"
-ASK=1; PREFIX=""; DIAG_ONLY=""; SELFTEST=1
+ASK=1; PREFIX=""; DIAG_ONLY=""; SELFTEST=1; MONOMERS=1
 while [ $# -gt 0 ]; do
   case "$1" in
     --yes|-y) ASK="";;
@@ -26,7 +27,8 @@ while [ $# -gt 0 ]; do
     --prefix=*) PREFIX="${1#--prefix=}";;
     --diagnose) DIAG_ONLY=1;;
     --no-self-test) SELFTEST="";;
-    -h|--help) sed -n '2,14p' "$0" | sed 's/^# \{0,1\}//'; exit 0;;
+    --no-monomers) MONOMERS="";;
+    -h|--help) sed -n '2,15p' "$0" | sed 's/^# \{0,1\}//'; exit 0;;
     *) echo "install.sh: unknown option $1 (see ./install.sh --help)"; exit 2;;
   esac
   shift
@@ -40,6 +42,24 @@ bad()  { printf "  ${R}STOP${N}  %s\n" "$*"; }
 info() { printf "        %s\n" "$*"; }
 ask()  { # ask "question" default -> REPLY
   if [ -n "$ASK" ]; then printf "%s " "$1"; read -r REPLY || REPLY=""; [ -z "$REPLY" ] && REPLY="$2"; else REPLY="$2"; fi; }
+
+# (build 37) where Coot will find the monomer library (the same order as run-coot.sh): a copy fetched with
+# coot0 --fetch-monomers, else CCP4's.  COOT0_MONOMERS_IGNORE_CCP4=1 ignores CCP4's (tests).
+mon_status() {
+  MON_FOUND=""
+  local fetched="$STATE/monomers" d
+  if [ -f "$fetched/list/mon_lib_list.cif" ]; then
+    MON_FOUND="$fetched"; ok "monomer library: $fetched ($(cat "$fetched/.coot0-monomers-version" 2>/dev/null || echo 'version unknown'))"; return
+  fi
+  if [ -z "${COOT0_MONOMERS_IGNORE_CCP4:-}" ]; then
+    for d in "${CCP4:-}" $(ls -d /Applications/ccp4-* 2>/dev/null | sort -r); do
+      if [ -n "$d" ] && [ -f "$d/lib/data/monomers/list/mon_lib_list.cif" ]; then
+        MON_FOUND="$d/lib/data/monomers"; ok "monomer library: CCP4's ($MON_FOUND); nothing to download"; return
+      fi
+    done
+  fi
+  note "no monomer library found (CCP4 is not installed and none was downloaded yet)"
+}
 
 # ---------------------------------------------------------------- checks
 checks() {
@@ -95,7 +115,7 @@ existing() {
 }
 
 if [ -n "$DIAG_ONLY" ]; then
-  checks; echo; echo "${B}Installed${N}"; existing
+  checks; echo; echo "${B}Installed${N}"; existing; mon_status
   [ -d "$STATE/logs" ] && info "last log: $(ls -t "$STATE"/logs/coot-*.log 2>/dev/null | head -1)"
   exit 0
 fi
@@ -152,11 +172,13 @@ $MARK  (written $(date '+%Y-%m-%d') by $DEST/install.sh)
 #   coot0 --legacy       standard resolution instead of the Retina (2x) 3D view (the default: --retina)
 #   coot0 --diagnose     what this Mac has (CCP4, Phenix, ...) and where Coot keeps your preferences and logs
 #   coot0 --self-test    the full self-test (about 15 minutes)
+#   coot0 --fetch-monomers [latest]   download the monomer library (not needed with CCP4)
 #   coot0 --uninstall    remove coot0
 COOT0_HOME="$DEST"
 case "\${1:-}" in
   --diagnose)  exec "\$COOT0_HOME/install.sh" --diagnose;;
   --self-test) exec "\$COOT0_HOME/tests/run-headless-tests.sh";;
+  --fetch-monomers) shift; exec "\$COOT0_HOME/fetch-monomers.sh" "\$@";;
   --uninstall) shift; exec "\$COOT0_HOME/uninstall.sh" "\$@";;
 esac
 # Coot 0.9 writes coot-backup/ and 0-coot-history.py into the folder it is started from: stay here if it is writable
@@ -184,6 +206,20 @@ add_line "$HOME/.zshrc"                                                         
 case "$LOGIN_SHELL" in */bash) add_line "$HOME/.bash_profile";; *) [ -f "$HOME/.bash_profile" ] && add_line "$HOME/.bash_profile";; esac
 [ -f "$HOME/.bashrc" ] && add_line "$HOME/.bashrc"                               # bash started from another shell reads .bashrc
 case ":$PATH:" in *":$BIN:"*) ON_PATH=1;; *) ON_PATH="";; esac
+
+# ---------------------------------------------------------------- monomer library (build 37: not in the package)
+echo
+echo "${B}Monomer library${N} (restraint dictionaries: Coot needs them to refine, regularise and add ligands)"
+mon_status   # sets MON_FOUND
+if [ -z "$MON_FOUND" ]; then
+  if [ -n "$MONOMERS" ]; then
+    ask "  Download it now from github.com/MonomerLibrary/monomers (about 110 MB)? [Y/n]" "y"
+    case "$REPLY" in
+      n|N|no|No) note "not downloaded; get it later with:  coot0 --fetch-monomers";;
+      *) if "$DEST/fetch-monomers.sh"; then ok "monomer library downloaded"; else bad "the download did not work; try later:  coot0 --fetch-monomers"; fi;;
+    esac
+  else note "not downloaded (--no-monomers); get it later with:  coot0 --fetch-monomers"; fi
+fi
 
 # ---------------------------------------------------------------- self-test
 if [ -n "$SELFTEST" ]; then

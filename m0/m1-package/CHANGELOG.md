@@ -6,6 +6,28 @@ applied to the pristine tree by `setup.sh`) or a change of the packaged data / s
 round, `TEST-PROTOCOL.md` has the user-facing explanation and the checks for you (newest round first).  A "build" is one delivered zip.
 "Verified" means a headless test (no window server in the build environment); what only a screen can show is marked "on screen: not verified".
 
+## Build 37  (patch 0054 label-textures-per-gl-context (Objective-C++); new `bin/coot-bin`; monomer library no longer in the package; build from a fresh clone)
+- **Labels in side-by-side stereo** (user, 24 Nov: coloured boxes instead of text). coot0 draws each label once as a small
+  picture (texture) and reuses it; a texture belongs to the 3D view that made it. Switching to side-by-side stereo (and back to
+  mono) makes Coot 0.9 replace its 3D view, and the stored pictures of the old view were used in the new ones: GL drew each
+  label as a filled box in the label colour. Labels are now kept per 3D view and forgotten with it. (Not the same as the
+  build-10 ligand-label bug, which came from drawing labels inside Coot's display lists.) New real-window check: a text label
+  in mono, side-by-side stereo and mono again must look like text (build 36: the label area was 98-99 % filled in stereo and
+  after it, 40 % in mono).
+- **The CCP4 monomer library is no longer in the package** (user): the download is about half the size (111 of 207 MB were the
+  library). coot0 uses CCP4's library when CCP4 is installed; otherwise the installer offers to download it from
+  github.com/MonomerLibrary/monomers (the tested version, commit 0af022bf), and `coot0 --fetch-monomers [latest]` does it at any
+  time, into `~/Library/Application Support/coot0/monomers` (shared by every installed version). Order the launcher uses: a
+  folder you name (COOT0_MONOMERS), a downloaded copy, CCP4's. Without any, Coot starts and says what to run.
+  `coot0 --diagnose` reports which library is used. `bundle_check.py` now fails a package that contains one.
+- **Building from a fresh clone works** (user, 24 Nov: bootstrap failed on another Mac: the canvas libraries were a local file
+  that is not in git). `bootstrap.sh` now builds the three GNOME canvas libraries from download.gnome.org (checksums pinned,
+  minimum macOS 11; `canvas/build-scripts/build_all.sh`) and downloads the Coot 0.9.8.96 release tarball (sha256 checked).
+  New: `m0/tools/build_all.sh` (compile, link, data, bundle, check) and `m0/tools/make_binary_tarball.sh` (the installer
+  tarball), and `BUILDING.md`. Checked by cloning the repository into an empty folder with an empty home folder.
+- Tests: real-window checks 12 -> 13; `installer` 26 -> 32 (CCP4 present: nothing downloaded; no CCP4: download, kept copy,
+  --no-monomers, --diagnose, Coot starts with it).
+
 ## Build 36  (patch 0053 history-exit-as-comment (C++); new `bin/coot-bin`)
 - `coot0 --script 0-coot-history.py` quit Coot (user, 23 Nov, check QQ3): the history also records how the session ended
   (`coot_checked_exit(0)` when you quit), and replaying the file ran it. Quitting (coot_checked_exit, coot_real_exit, ...) is

@@ -1,0 +1,15 @@
+Build 37 regression checks (24 Nov)
+
+real-window checks with the build 36 coot-bin:
+FAIL text labels stay text after the 3D view is re-created (mono, side-by-side stereo, mono again)  lit-pixel fill of the label area (a box is ~1.0): [('mono', 0.4, 2702), ('side-by-side stereo', 0.98, 4238), ('mono again', 0.99, 7691)]
+SUMMARY 12 / 13
+
+with the build 37 coot-bin:
+PASS text labels stay text after the 3D view is re-created (mono, side-by-side stereo, mono again)
+SUMMARY 13 / 13
+
+installer_test.sh (26 checks before build 37; the 6 monomer checks are new: build 36 has no fetch-monomers.sh / --no-monomers / monomer step):
+build 37: SUMMARY 32 / 32 (working copy and the fresh-clone package)
+
+fresh clone (empty folder, empty HOME, PATH=/usr/bin:/bin:/usr/sbin:/sbin): build 36's bootstrap.sh stops at step 3 (canvas/coot-canvas-libs-arm64-prefix.tar.gz is not in git);
+build 37: bootstrap rc 0 (envs, canvas from GNOME sources, Coot tarball sha256, 54 patches), build_all rc 0 (bundle_check OK, 211 Mach-O), make_binary_tarball rc 0; a second build_all gives a byte-identical coot-bin

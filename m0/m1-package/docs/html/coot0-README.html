@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="coot0-source-sha1" content="6a4f09037b35026b52163d6dea10b752bf42cf3e">
+<meta name="coot0-source-sha1" content="f240312ecc172ab9a784a2bd74fb97c27015a51a">
 <title>coot0: Coot 0.9 for Apple Silicon Macs - coot0</title><style>
 :root { --bg:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --code:#f5f5f7; --link:#0066cc; }
 @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1f; --fg:#f5f5f7; --muted:#a1a1a6; --line:#424245; --code:#2c2c2e; --link:#4da3ff; } }
@@ -33,7 +33,7 @@ material.</p>
 <a href="https://www2.mrc-lmb.cam.ac.uk/personal/pemsley/coot/">Paul Emsley's website</a>. Please report problems with coot0 in
 this repository's <a href="https://github.com/sunchang1990/coot0-macos/issues">Issues</a>.</p>
 <h2 id="what-it-gives-you">What it gives you</h2>
-<ul><li><strong>No new interface to learn.</strong> Coot 0.9.8.96's own windows, menus, dialogs, keys and mouse actions, drawn by macOS itself, with Retina rendering of the 3D view. A trackpad two-finger click stands in for the middle mouse button.</li><li><strong>Your scripts keep working.</strong> Python 3 and Scheme (Guile 3) scripting with Coot 0.9's function names. The extension menus and dialogs that Coot 0.9 builds in Python run as written: Glyco, NCS, PISA, PDB-REDO, Fit Loop, RCrane for RNA and the others.</li><li><strong>Scripting you can look up.</strong> All of Coot 0.9's roughly 1,700 Python and Scheme functions are documented, with an example for each one that was run on test data and a note of what it actually did. There is also a cookbook of 85 everyday recipes in both languages, and you can search menus and documentation from the Help menu.</li><li><strong>Some things work better than in the original 0.9.8.96.</strong> Several features that were broken in the released 0.9.8.96 now work, and a few were added for Ramachandran clean-up and for watching whole-molecule refinement (see below).</li><li><strong>Your other programs are found.</strong> CCP4 (refmac5, acedrg, ...) and the reduce and probe tools of CCP4 or Phenix are picked up automatically when installed. RDKit ligand tools (Lidia, SMILES import) and the CCP4 monomer library are included.</li><li><strong>Tested.</strong> Every menu entry and toolbar button has been tried in a real window, about 530 automated checks run against every release, and members of a structural biology lab have tested each release on their own data.</li></ul>
+<ul><li><strong>No new interface to learn.</strong> Coot 0.9.8.96's own windows, menus, dialogs, keys and mouse actions, drawn by macOS itself, with Retina rendering of the 3D view. A trackpad two-finger click stands in for the middle mouse button.</li><li><strong>Your scripts keep working.</strong> Python 3 and Scheme (Guile 3) scripting with Coot 0.9's function names. The extension menus and dialogs that Coot 0.9 builds in Python run as written: Glyco, NCS, PISA, PDB-REDO, Fit Loop, RCrane for RNA and the others.</li><li><strong>Scripting you can look up.</strong> All of Coot 0.9's roughly 1,700 Python and Scheme functions are documented, with an example for each one that was run on test data and a note of what it actually did. There is also a cookbook of 85 everyday recipes in both languages, and you can search menus and documentation from the Help menu.</li><li><strong>Some things work better than in the original 0.9.8.96.</strong> Several features that were broken in the released 0.9.8.96 now work, and a few were added for Ramachandran clean-up and for watching whole-molecule refinement (see below).</li><li><strong>Your other programs are found.</strong> CCP4 (refmac5, acedrg, ...) and the reduce and probe tools of CCP4 or Phenix are picked up automatically when installed. RDKit ligand tools (Lidia, SMILES import) are included. The CCP4 monomer library (the restraint dictionaries) is CCP4's when CCP4 is installed; otherwise the installer downloads it for you.</li><li><strong>Tested.</strong> Every menu entry and toolbar button has been tried in a real window, about 530 automated checks run against every release, and members of a structural biology lab have tested each release on their own data.</li></ul>
 <h2 id="what-is-different-from-the-original-coot-09896">What is different from the original Coot 0.9.8.96</h2>
 <p>coot0 changes as little as possible. Besides what it takes to run on a current Mac, the changes you will notice most
 are these:</p>
@@ -41,13 +41,16 @@ are these:</p>
 <p>The full list, build by build, is in <a href="CHANGELOG.html">CHANGELOG.md</a>.</p>
 <h2 id="install">Install</h2>
 <p>Requirements: an Apple Silicon Mac (M1 or later), macOS 11 or newer, and about 1 GB of disk space. It has been tested on
-macOS 26. Intel Macs and Linux are not supported.</p>
+macOS 26. Intel Macs and Linux are not supported. CCP4 is optional: when it is installed, coot0 uses its programs and
+its monomer library.</p>
 <p>Download <code>coot0-&lt;version&gt;-macos-arm64.tar.gz</code> from <a href="https://github.com/sunchang1990/coot0-macos/releases">Releases</a>, then in Terminal:</p>
 <pre class="text"><code>tar -xzf coot0-&lt;version&gt;-macos-arm64.tar.gz
 cd coot0-&lt;version&gt;
 ./install.sh</code></pre>
 <p>The installer checks your Mac, installs coot0 into <code>~/.local/share/coot0/&lt;version&gt;</code> (you can choose another folder) and
-creates the command <code>coot0</code>. Then, in a new Terminal window:</p>
+creates the command <code>coot0</code>. When CCP4 is not installed, it offers to download the CCP4 monomer library (about 110 MB,
+from github.com/MonomerLibrary/monomers), which Coot needs to refine and to add ligands; <code>coot0 --fetch-monomers</code> does
+the same later. Then, in a new Terminal window:</p>
 <pre class="text"><code>coot0 --pdb model.pdb --auto data.mtz</code></pre>
 <p>More details are in <code>README-FIRST.txt</code> in the download.</p>
 <h2 id="which-coot-should-i-use">Which Coot should I use?</h2>
@@ -58,9 +61,9 @@ creates the command <code>coot0</code>. Then, in a new Terminal window:</p>
 <tr><td>Platforms</td><td>macOS on Apple Silicon</td><td>macOS and Linux (and others)</td><td>macOS, Linux</td></tr>
 <tr><td>Choose it if</td><td>You want Coot 0.9 exactly as you know it on a current Mac</td><td>You want the newest features and the version the Coot developers support</td><td>You want a modernised Coot 0.9 with new features, or Linux</td></tr></tbody></table>
 <h2 id="building-from-source">Building from source</h2>
-<p>coot0 is built from the Coot 0.9.8.96 release tarball plus the numbered patches in <code>m0/patches/</code>, which <code>m0/setup.sh</code>
-applies. The build and packaging tools are in <code>m0/tools/</code>, the notes for every build are in <code>m0/README-m0.txt</code>, and the
-build environments are pinned in <code>env/</code>. Where to get every part of the source:
+<p>coot0 is built from the Coot 0.9.8.96 release tarball plus the numbered patches in <code>m0/patches/</code>. Three commands take a
+fresh clone to the installer tarball (<code>./bootstrap.sh --make-envs</code>, <code>m0/tools/build_all.sh</code>,
+<code>m0/tools/make_binary_tarball.sh</code>); see <a href="https://github.com/sunchang1990/coot0-macos/blob/main/BUILDING.md">BUILDING.md</a>. Where every part of the source comes from:
 <a href="../../CORRESPONDING_SOURCE.md">CORRESPONDING_SOURCE.md</a>.</p>
 <h2 id="licence">Licence</h2>
 <p>coot0 is free software under the GNU General Public License, version 3. Coot itself is licensed by its authors under

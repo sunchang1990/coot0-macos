@@ -19,7 +19,6 @@ EXTRA = [  # (component, version, licence, where in the bundle, source)
     ("libart_lgpl", "2.3.21", "LGPL-2.0-or-later", "lib/libart_lgpl_2.2.dylib", "https://download.gnome.org/sources/libart_lgpl/2.3/"),
     ("libgnomecanvas", "2.30.3", "LGPL-2.0-or-later", "lib/libgnomecanvas-2.0.dylib", "https://download.gnome.org/sources/libgnomecanvas/2.30/"),
     ("goocanvas", "1.0.0", "LGPL-2.0-only", "lib/libgoocanvas.3.dylib", "https://download.gnome.org/sources/goocanvas/1.0/"),
-    ("Monomer library (CCP4 / MonomerLibrary)", "commit 0af022bf", "LGPL-3.0", "monomers/", "https://github.com/MonomerLibrary/monomers"),
     ("RCrane (Kevin Keating)", "as in Coot 0.9.8.96", "ECL-2.0", "share/coot/python/rcrane/", "part of the Coot 0.9.8.96 source"),
     ("Python standard library", "3.11", "PSF-2.0", "lib/python3.11/", "https://www.python.org/downloads/source/"),
     ("Guile Scheme modules", "3.0.10", "LGPL-3.0-or-later", "share/guile/, lib/guile/", "https://ftp.gnu.org/gnu/guile/"),

@@ -590,3 +590,18 @@ Round 36 (build 36, 23 Nov night; patch 0053 history-exit-as-comment; coot-bin m
   User QQ3: replaying 0-coot-history.py quit Coot: coot_checked_exit (logged before its unsaved-changes check) was in the history.
   coot0_history_line writes coot-checked-exit / coot-real-exit / coot-no-state-real-exit / coot-save-state-and-exit as comments.
   history_replay_test.sh: session ends save_coordinates + coot_checked_exit; new check; 11 (b35 6/11).
+
+Round 37 (build 37, 24 Nov; patch 0054 label-textures-per-gl-context).  (1) Stereo labels: side_by_side_stereo_mode()/mono_mode()
+  destroy the drawing area and make new ones (gl_extras) -> new NSOpenGLContexts; the seam's label texture cache was global ->
+  untextured quads (boxes).  Cache per CGLGetCurrentContext(), erased in remove_view.  Check in tests/real_window_checks.py:
+  place_text + screendump_image (PPM from Coot's GL buffer) in mono / side-by-side / mono: lit-pixel fill of the label bbox
+  (b36: 0.40 / 0.98 / 0.99; b37 < 0.75 all).  (2) Monomer library out: fetch-monomers.sh (curl codeload tarball of
+  MonomerLibrary/monomers 0af022bf6f7c, swap in when complete; COOT0_MONOMERS_URL for tests), run-coot.sh resolution after CCP4
+  detection, install.sh mon_status + offer (--no-monomers), coot0 --fetch-monomers, bundle_check fails a package with monomers/,
+  assemble_bundle no symlink, api-data.sh searches.  installer_test 26 -> 32 (mini library tarball from CCP4's: list/, top-level
+  cif/txt, 20 aa + HOH).  (3) Fresh clone: canvas/build-scripts/build_all.sh (download.gnome.org, sha256 from src/sources.json,
+  MACOSX_DEPLOYMENT_TARGET 11.0 (the old prefix was 15.5)), bootstrap.sh rewritten (envs/ by micromamba --file explicit, canvas,
+  Coot tarball sha256 c43fb6d7..., setup.sh), m0/tools/build_all.sh (compile, link, stage = m1-package + assemble_m1_data +
+  coot-splash, assemble_bundle, bundle_check), make_binary_tarball.sh.  First fresh test failed: clone path with a space ->
+  conda's shasum shebang "bad interpreter"; bootstrap/build_all now refuse such paths; system shasum used.  Delivered
+  packages b31-b36 carried test leftovers in test-data (0-coot-history.*, coot-backup/, nag_only.pdb); the fresh build has none.
