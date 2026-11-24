@@ -3,7 +3,8 @@
 **Coot 0.9, exactly as you know it, running natively on today's Macs.**
 
 [Coot](https://www2.mrc-lmb.cam.ac.uk/personal/pemsley/coot/), by Paul Emsley and colleagues, is one of the most widely
-used programs for building and fixing protein and nucleic-acid models in X-ray and cryo-EM maps. Many labs still work
+used programs for building and refining protein and nucleic-acid models as well as small-molecule ligands in X-ray and
+cryo-EM maps. Many labs still work
 in, and teach with, its 0.9 series: the menus people know by heart, the keyboard and mouse habits, and years of lab
 scripts and plug-ins written for its Python and Scheme interface.
 
@@ -25,7 +26,8 @@ this repository's [Issues](../../issues).
 ## What it gives you
 
 - **No new interface to learn.** Coot 0.9.8.96's own windows, menus, dialogs, keys and mouse actions, drawn by macOS
-  itself, with Retina rendering of the 3D view. A trackpad two-finger click stands in for the middle mouse button.
+  itself, with Retina rendering of the 3D view. **A trackpad two-finger click emulates the middle mouse button, great for
+  working on your MacBook.**
 - **Your scripts keep working.** Python 3 and Scheme (Guile 3) scripting with Coot 0.9's function names. The extension
   menus and dialogs that Coot 0.9 builds in Python run as written: Glyco, NCS, PISA, PDB-REDO, Fit Loop, RCrane for RNA
   and the others.
