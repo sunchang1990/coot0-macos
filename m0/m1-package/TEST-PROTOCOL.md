@@ -1,4 +1,23 @@
-# Coot 0.9.8.96 on Apple Silicon: test round 37 (build 37 = stereo labels, no monomer library in the package, building from a fresh clone)
+# Coot 0.9.8.96 on Apple Silicon: test round 38 (build 38 = build 37 + whole-molecule refinement leaves ions, waters and ligands alone)
+
+**From you** (24 Nov): SS1-SS4 pass. Stepped Refine on 1EHZ also refined the Mg2+ ions and moved one; it should refine protein and
+RNA/DNA residues only.
+
+1. **Cause**: Stepped Refine (and Fit Protein, and both Refine/Improve Ramachandran Plot entries) refined every residue except waters.
+   An ion was refined with its sequence neighbours; nothing holds a lone ion, so it was pulled into nearby density. Measured without a
+   window, a full Stepped Refine of 1EHZ with its map: Mg A580 moved 303 A (out of the structure), Mg A560 6.5 A.
+2. **Fix**: only amino acids and nucleotides joined to a neighbour in their chain are refined (modified residues such as 2MG, PSU
+   included); ions, waters and ligands are left as they are, and the terminal lists them. The same run now: 76 nucleotides refined,
+   all 9 ions unmoved (0.00 A).
+
+## TT. Round 38 checks (about 5 minutes)
+
+| # | Do | Expected |
+|---|---|---|
+| TT1 | Install build 38. Open `test-data/1ehz.pdb` and `test-data/1ehz_map.mtz` (from the coot0 folder), then Calculate > All Molecule... > Stepped Refine... | The terminal shows `INFO:: refining protein and nucleic-acid residues only; left as they are: 160 HOH (...); 6 MG (...); 3 MN (...)`; the run steps through the nucleotides and never visits an ion; the Mg ions stay where they were. |
+| TT2 | (optional) The same on a protein model of your own. | Every amino acid is refined, ligands and waters are not. |
+
+# Earlier round (SS1-SS4 confirmed 24 Nov): Coot 0.9.8.96 on Apple Silicon: test round 37 (build 37 = stereo labels, no monomer library in the package, building from a fresh clone)
 
 **From you** (24 Nov): labels in side-by-side stereo were coloured boxes; bootstrap failed on another Mac (a local file missing from
 git); the monomer library should not be in the package: use CCP4's when it is installed, otherwise the installer asks to download it.

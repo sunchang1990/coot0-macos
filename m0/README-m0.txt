@@ -605,3 +605,11 @@ Round 37 (build 37, 24 Nov; patch 0054 label-textures-per-gl-context).  (1) Ster
   coot-splash, assemble_bundle, bundle_check), make_binary_tarball.sh.  First fresh test failed: clone path with a space ->
   conda's shasum shebang "bad interpreter"; bootstrap/build_all now refuse such paths; system shasum used.  Delivered
   packages b31-b36 carried test leftovers in test-data (0-coot-history.*, coot-backup/, nag_only.pdb); the fresh build has none.
+
+Round 38 (build 38, 24 Nov; patch 0055 whole-molecule-runs-polymer-only; Python only).  User: Stepped Refine on 1EHZ refined Mg2+.
+  interruptible_fit_protein (Fit Protein, Stepped Refine, both Rama entries) took fit_protein_make_specs(all chains) minus HOH only;
+  refine_auto_range_any refined an ion as res-1..res+1.  Now coot0_polymer_specs: residue with CA and (N or C) bonded C(i-1)-N(i) or
+  C(i)-N(i+1) < 2.0 A, or with C1' and (P or O3') bonded O3'(i-1)-P(i) / O3'(i)-P(i+1); others listed in one INFO line.  (Cys A72
+  of tutorial-modern has no N: first rule version (N, CA, C all required) left it out; caught by the run's own INFO line.)
+  Measured, full stepped refine of 1EHZ + map without a window: old selection 245 residues, Mg A580 moved 302.7 A, A560 6.5 A;
+  new 76 residues, every ion 0.00 A.  gui-dialogs 90 -> 92 (b37 fails the 1EHZ check: 245 residues incl. HOH, MG, MN).

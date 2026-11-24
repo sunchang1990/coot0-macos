@@ -1,0 +1,18 @@
+Build 38 regression checks (24 Nov)
+
+gui-dialogs with build 37's fitting.py:
+FAIL Stepped Refine / Fit Protein on 1EHZ: all 76 nucleotides (modified ones too), no Mg / Mn ions, no waters                                                          "ions/waters would be refined: ['HOH', 'MG', 'MN'] (245 residue
+SUMMARY 90 / 91
+
+with build 38's:
+PASS Stepped Refine / Fit Protein on 1EHZ: all 76 nucleotides (modified ones too), no Mg / Mn ions, no waters                                                        
+PASS Stepped Refine / Fit Protein on the protein test model: every amino acid is refined (also an incomplete one)                                                    
+SUMMARY 92 / 92
+
+full Stepped Refine of 1EHZ with 1ehz_map.mtz, no window (fit_protein_stepped_refine_function over the run's residue list):
+build 37 selection:
+RESIDUES 245
+IONS moved (A): [(302.68, 'MG', 580), (6.48, 'MG', 560), (0.65, 'MN', 520), (0.33, 'MG', 510), (0.29, 'MN', 550), (0.27, 'MG', 590), (0.27, 'MG', 570), (0.13, 'MG', 540), (0.07, 'MN', 530)]
+build 38 selection:
+RESIDUES 76
+IONS moved (A): [(0.0, 'MN', 550), (0.0, 'MN', 530), (0.0, 'MN', 520), (0.0, 'MG', 590), (0.0, 'MG', 580), (0.0, 'MG', 570), (0.0, 'MG', 560), (0.0, 'MG', 540), (0.0, 'MG', 510)]

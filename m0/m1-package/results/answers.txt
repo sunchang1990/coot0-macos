@@ -1,9 +1,8 @@
 # One line per check: PASS / FAIL / PARTIAL and a few words.  (You can also just tell me in chat.)
-# Round 37 (see TEST-PROTOCOL.md, section SS):
-SS1 install.sh says it uses CCP4's monomer library:
-SS2 labels are text in side-by-side stereo and after going back to mono:
-SS3 (optional) coot0 --fetch-monomers:
-SS4 (optional) BUILDING.md from a fresh clone:
+# Round 38 (see TEST-PROTOCOL.md, section TT):
+TT1 Stepped Refine on 1EHZ: ions and waters left alone, Mg stays in place:
+TT2 (optional) own protein model: amino acids refined, ligands/waters not:
+# Round 37 (section SS): SS1-SS4 confirmed 24 Nov.
 # Round 36 (section RR): RR1 coot0 --script 0-coot-history.py replays the session and Coot stays open:
 # Round 35 (section QQ): QQ1, QQ2 confirmed 23 Nov; QQ3 -> build 36.
 # Round 34 (section PP): PP1 confirmed 23 Nov.

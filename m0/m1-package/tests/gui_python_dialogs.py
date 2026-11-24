@@ -458,6 +458,33 @@ def fit_protein_rna_centre():
     centre = [coot.rotation_centre_position(i) for i in range(3)]
     return True if c1 and math.dist(centre, c1[0]) < 2.0 else "view centre %r is not at C1' of A 40 %r" % (centre, c1)
 check("Fit Protein on RNA (1EHZ): the view moves to each nucleotide (C1') and its refinement is shown", fit_protein_rna_centre)
+# (build 38) Stepped Refine / Fit Protein on 1EHZ (tRNA with 6 Mg2+, 3 Mn2+, 160 waters, 11 modified nucleotides): the run must refine
+# every nucleotide (modified ones too) and leave ions and waters alone (user 24 Nov: a Mg2+ was moved off its site).  The run's own
+# residue list is recorded by a stand-in for the refinement function, driven through the run's idle function.
+def stepped_refine_polymer_only():
+    imol_s = coot.read_pdb(os.path.join(here, "test-data", "1ehz.pdb"))
+    seen = []
+    def record(spec, imol_map): seen.append((spec[1], spec[2], coot.residue_name(imol_s, spec[1], spec[2], spec[3])))
+    _m.interruptible_fit_protein(imol_s, record)
+    n = 0
+    while _m.multi_refine_idle_proc() and n < 5000: n += 1
+    _m.cancel_interruptible_fit_protein()
+    names = [x[2] for x in seen]
+    bad = sorted(set(x for x in names if x in ("MG", "MN", "HOH")))
+    nts = [x for x in seen if x[1] <= 76]
+    modified = sorted(set(x[2] for x in nts if x[2] not in ("A", "C", "G", "U")))
+    if bad: return "ions/waters would be refined: %r (%d residues in all)" % (bad, len(seen))
+    if len(nts) != 76 or len(seen) != 76: return "%d nucleotides of 76 (%d residues in all)" % (len(nts), len(seen))
+    return True if len(modified) >= 8 else "modified nucleotides missing: %r" % modified
+check("Stepped Refine / Fit Protein on 1EHZ: all 76 nucleotides (modified ones too), no Mg / Mn ions, no waters", stepped_refine_polymer_only)
+def stepped_refine_protein_all():   # the protein model: every amino acid stays in, also Cys A72, which has no N atom in this file
+    imol_s = coot.read_pdb(os.path.join(here, "test-data", "tutorial-modern.pdb"))
+    specs = _m.fit_protein_make_specs(imol_s, "all-chains")
+    aa = [sp for sp in specs if coot.residue_name(imol_s, sp[1], sp[2], sp[3]) not in ("HOH",)]
+    kept = _m.coot0_polymer_specs(imol_s, specs)
+    lost = [(sp[1], sp[2]) for sp in aa if sp not in kept]
+    return True if not lost else "amino acids left out: %r" % lost[:10]
+check("Stepped Refine / Fit Protein on the protein test model: every amino acid is refined (also an incomplete one)", stepped_refine_protein_all)
 def rama_shows():
     log, ok = shown_refinement(_m.fit_protein_rama_fit_function)
     if ok is not True: return ok

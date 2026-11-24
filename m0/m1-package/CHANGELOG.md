@@ -6,6 +6,17 @@ applied to the pristine tree by `setup.sh`) or a change of the packaged data / s
 round, `TEST-PROTOCOL.md` has the user-facing explanation and the checks for you (newest round first).  A "build" is one delivered zip.
 "Verified" means a headless test (no window server in the build environment); what only a screen can show is marked "on screen: not verified".
 
+## Build 38  (patch 0055 whole-molecule-runs-polymer-only (Python); `bin/coot-bin` as in build 37)
+- **Stepped Refine, Fit Protein and the two Refine/Improve Ramachandran Plot entries refine the polymer only** (user, 24 Nov:
+  Stepped Refine on 1EHZ moved a Mg2+ off its site). They refined every residue except waters, so an ion was refined together
+  with its sequence neighbours; a lone ion has no restraints to hold it and was pulled into nearby density. Now only amino acids
+  and nucleotides that are joined to a neighbour in their chain (peptide bond, phosphodiester bond) are refined; ions, waters
+  and ligands are left as they are, and the terminal says what was left out (`INFO:: refining protein and nucleic-acid residues
+  only; left as they are: 160 HOH (...); 6 MG (...); 3 MN (...)`). Modified residues (2MG, PSU, MSE ...) are polymer residues and
+  are refined; so is an amino acid with a missing N or C atom.
+- Tests: `gui-dialogs` 90 -> 92 (1EHZ: all 76 nucleotides, no ions or waters; the protein model: every amino acid). Build 37 fails
+  the 1EHZ check (245 residues, Mg, Mn and waters among them).
+
 ## Build 37  (patch 0054 label-textures-per-gl-context (Objective-C++); new `bin/coot-bin`; monomer library no longer in the package; build from a fresh clone)
 - **Labels in side-by-side stereo** (user, 24 Nov: coloured boxes instead of text). coot0 draws each label once as a small
   picture (texture) and reuses it; a texture belongs to the 3D view that made it. Switching to side-by-side stereo (and back to
