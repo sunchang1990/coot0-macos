@@ -67,7 +67,17 @@ Requirements: an Apple Silicon Mac (M1 or later), macOS 11 or newer, and about 1
 macOS 26. Intel Macs and Linux are not supported. CCP4 is optional: when it is installed, coot0 uses its programs and
 its monomer library.
 
-Download `coot0-<version>-macos-arm64.tar.gz` from [Releases](../../releases), then in Terminal:
+**With Homebrew** (the simplest way, if you use [Homebrew](https://brew.sh)):
+
+```
+brew install sunchang1990/coot0/coot0
+```
+
+Then start it with `coot0`. Update with `brew upgrade coot0`, remove with `brew uninstall coot0`. Without CCP4, run
+`coot0 --fetch-monomers` once to get the monomer library.
+
+**Or with the installer:** download `coot0-<version>-macos-arm64.tar.gz` from [Releases](../../releases), then in
+Terminal:
 
 ```
 tar -xzf coot0-<version>-macos-arm64.tar.gz

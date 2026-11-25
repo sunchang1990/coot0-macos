@@ -48,6 +48,15 @@ The CCP4 monomer library is not part of the package. coot0 uses CCP4's library w
 
 **3. `make_binary_tarball.sh`** writes the installer tarball, leaving out everything a test run leaves behind.
 
+## Releasing
+
+1. Create the GitHub release with the installer tarball and the source archive (`make_source_tarball.sh`, after the
+   last commit).
+2. Update the Homebrew tap (github.com/sunchang1990/homebrew-coot0) with `m0/tools/update_tap.sh <version>`. It points
+   the formula at the new tarball and builds the Homebrew bottle from it. It then uploads the bottle to the same
+   release, reinstalls from the bottle and runs `brew test`. It needs current Command Line Tools. Check the formula with
+   `git diff` in the tap, then commit and push the tap.
+
 ## Changing coot0
 
 - **Python, Scheme, data and tests:** edit the files under `m0/coot-src/{python,scheme,rcrane,compat/pygtk2}` and
